@@ -1636,7 +1636,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(6, COLOR_WHITE, COLOR_BLACK);
         init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(8, COLOR_CYAN, COLOR_BLACK);
-        init_pair(9, COLOR_WHITE, COLOR_WHITE);
+        init_pair(9, COLOR_CYAN, COLOR_CYAN);
         init_pair(10, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(11, COLOR_RED, COLOR_BLACK);
@@ -1653,8 +1653,8 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         init_pair(21, COLOR_YELLOW, COLOR_BLUE);
         init_pair(22, COLOR_WHITE, COLOR_BLACK);
-        init_pair(23, COLOR_WHITE, COLOR_RED);
-        init_pair(24, COLOR_WHITE, COLOR_WHITE);
+        init_pair(23, COLOR_RED, COLOR_WHITE);
+        init_pair(24, COLOR_CYAN, COLOR_CYAN);
         init_pair(25, COLOR_YELLOW, COLOR_BLACK);
         init_pair(26, COLOR_WHITE, COLOR_BLACK);
         init_pair(27, COLOR_RED, COLOR_BLACK);
@@ -1892,7 +1892,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         if (animated) {
             attron(A_BLINK);
         }
-        mvprintw(LINES - 1, max_x - 37, "%s", (animated) ? _("▶️ Running") : _("⏸️ Stopped"));
+        mvprintw(LINES - 1, max_x - 37, "%s", (animated) ? _("▶️  Running") : _("⏸️  Stopped"));
 
         if (animated) {
             attroff(A_BLINK);

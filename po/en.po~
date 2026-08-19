@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 14:27-0300\n"
+"POT-Creation-Date: 2026-08-19 17:17-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1108,11 +1108,11 @@ msgid " Action: F1..F9, F12, 0-8 "
 msgstr ""
 
 #: src/draw-chart.c:1895
-msgid "Running"
+msgid "▶️  Running"
 msgstr ""
 
 #: src/draw-chart.c:1895
-msgid "Stopped"
+msgid "⏸️  Stopped"
 msgstr ""
 
 #: src/draw-chart.c:1901
@@ -1878,10 +1878,6 @@ msgstr "Select Chart to Load"
 #: src/menu-box.c:1011
 msgid "Chart not found!"
 msgstr "Chart not found!"
-
-#: src/menu-box.c:1024
-msgid "Loaded chart data."
-msgstr "Loaded chart data."
 
 #: src/menu-box.c:1269
 msgid "Location: "
@@ -3927,3 +3923,6 @@ msgstr ""
 #: src/temperament.c:837
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
+
+#~ msgid "Loaded chart data."
+#~ msgstr "Loaded chart data."

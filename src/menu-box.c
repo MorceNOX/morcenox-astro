@@ -1021,7 +1021,7 @@ void load_chart() {
         }
         call_chart();
 
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Loaded chart data."));
+        //snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Loaded chart data."));
     }
 }
 

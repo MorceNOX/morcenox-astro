@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 14:27-0300\n"
+"POT-Creation-Date: 2026-08-19 17:17-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1334,12 +1334,12 @@ msgid " Action: F1..F9, F12, 0-8 "
 msgstr " Ação: F1..F9, F12, 0-8 "
 
 #: src/draw-chart.c:1895
-msgid "Running"
-msgstr "Rodando"
+msgid "▶️  Running"
+msgstr "▶️  Rodando"
 
 #: src/draw-chart.c:1895
-msgid "Stopped"
-msgstr "Parado"
+msgid "⏸️  Stopped"
+msgstr "⏸️  Parado"
 
 #: src/draw-chart.c:1901
 msgid "Speed Animation"
@@ -2098,10 +2098,6 @@ msgstr "Selecionar Mapa para Carregar"
 #: src/menu-box.c:1011
 msgid "Chart not found!"
 msgstr "Mapa não encontrado!"
-
-#: src/menu-box.c:1024
-msgid "Loaded chart data."
-msgstr "Mapa carregado com sucesso."
 
 #: src/menu-box.c:1269
 msgid "Location: "
@@ -4673,6 +4669,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Loaded chart data."
+#~ msgstr "Mapa carregado com sucesso."
 
 #~ msgid ""
 #~ "Use [←/→] to flip through Hyleg, Sun, Moon, ASC, MC, SAN, Part of Fortune "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 14:27-0300\n"
+"POT-Creation-Date: 2026-08-19 17:17-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1080,11 +1080,11 @@ msgid " Action: F1..F9, F12, 0-8 "
 msgstr ""
 
 #: src/draw-chart.c:1895
-msgid "Running"
+msgid "▶️  Running"
 msgstr ""
 
 #: src/draw-chart.c:1895
-msgid "Stopped"
+msgid "⏸️  Stopped"
 msgstr ""
 
 #: src/draw-chart.c:1901
@@ -1824,10 +1824,6 @@ msgstr ""
 
 #: src/menu-box.c:1011
 msgid "Chart not found!"
-msgstr ""
-
-#: src/menu-box.c:1024
-msgid "Loaded chart data."
 msgstr ""
 
 #: src/menu-box.c:1269

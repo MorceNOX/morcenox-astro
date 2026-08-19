@@ -166,11 +166,11 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     pontos_hyl.fortuna_lon = fortuna_lon; 
     pontos_hyl.sizigia_lon = san_lon;
 
-    int res_almuten_lua = {0};
-    get_almuten(lua_lon, &res_almuten_lua, aspecto_matrix, pontos_hyl, plots);
+    int res_almuten_lua[12] = {0};
+    int qtd_alm_lua = get_almuten(lua_lon, res_almuten_lua, aspecto_matrix, pontos_hyl, plots);
 
-    int res_figuris = {0};
-    calcular_almuten_figuris(pontos_hyl, plots, aspecto_matrix, converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), &res_figuris);
+    int res_figuris[12] = {0};
+    int qtd_alm_fig = calcular_almuten_figuris(pontos_hyl, plots, aspecto_matrix, converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), res_figuris);
 
     // 3. PROCESSAMENTO DOS SCORES DO TEMPERAMENTO VIA SQLITE
     ScoreTemperament score = {0, 0, 0, 0};
@@ -365,21 +365,25 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     }
 
     // Ponto 5: Almuten da Lua
-    if (get_planet_properties(res_almuten_lua, &prop)) {
-        if (prop.temperature > 0) score.total_quente += prop.temperature; 
-        else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
-        
-        if (prop.moisture > 0) score.total_umido += prop.moisture; 
-        else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+    for (int i = 0; i < qtd_alm_lua; i++) {
+        if (get_planet_properties(res_almuten_lua[i], &prop)) {
+            if (prop.temperature > 0) score.total_quente += prop.temperature; 
+            else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
+            
+            if (prop.moisture > 0) score.total_umido += prop.moisture; 
+            else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+        }
     }
 
     // Ponto 6: Almuten Figuris
-    if (get_planet_properties(res_figuris, &prop)) {
-        if (prop.temperature > 0) score.total_quente += prop.temperature; 
-        else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
-        
-        if (prop.moisture > 0) score.total_umido += prop.moisture; 
-        else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+    for (int i = 0; i < qtd_alm_fig; i++) {
+        if (get_planet_properties(res_figuris[i], &prop)) {
+            if (prop.temperature > 0) score.total_quente += prop.temperature; 
+            else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
+            
+            if (prop.moisture > 0) score.total_umido += prop.moisture; 
+            else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+        }
     }
 
     // Ponto 7: Fase Lunar (Mantém peso +1 para manter o equilíbrio com os planetas)
@@ -439,7 +443,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     desenhar_barra_temperamento(table_win, 9, col_bars, score.total_umido, total_eixo_moist, 12);  // Ciano/Verde
 
     mvwprintw(table_win, 11, 4, _("Dry:  "));
-    desenhar_barra_temperamento(table_win, 11, col_bars, score.total_seco, total_eixo_moist, 4);  // Amarelo
+    desenhar_barra_temperamento(table_win, 11, col_bars, score.total_seco, total_eixo_moist, 25);  // Amarelo
 
     wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 13, 4, "────────────────────────────────────────────────────────────────────────────────────");
