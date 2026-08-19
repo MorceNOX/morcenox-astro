@@ -32,6 +32,9 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 * **Animation Mode:** Visualize the past and future movement of celestial bodies by adjusting the animation pace.
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
 
+### 🌎 Multilingual Support
+* Currently only **English** and **Brazilian Portuguese** are available.
+
 ## 🛠 Technical Stack
 
 * **Core:** C
@@ -49,10 +52,42 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 
 ### Prerequisites
 Ensure you have the following libraries installed:
+
+#### Swiss Ephemeris
+
+Clone and build the Swiss Ephemeris repository:
+```
+git clone https://github.com/aloistr/swisseph.git
+
+cd swisseph
+make -j$(nproc)
+
+# copy the ephemeris files to your home directory
+cp -r ephe ~/ephe
+
+# create the environment variable
+echo "export SE_EPHE_PATH="$HOME"/ephe >> .bashrc
+```
+
+#### For Ubuntu/Debian based systems
 * `libncurses-dev`
-* `libswisseph-dev`
-* `libsqlite3-dev`
 * `libicu-dev`
+
+#### For Fedora/Red-Hat/CentOS
+* `ncurses-devel`
+* `libicu-dev`
+
+Clone and Build the SQLite database with libicu
+```
+git clone https://github.com/sqlite/sqlite.git
+cd sqlite
+
+export CFLAGS="-DSQLITE_ENABLE_ICU -licui18n -licuuc -licudata"
+../configure --enable-fts5 --with-icu-config --enable-icu-collations
+make -j$(nproc)
+sudo make install
+```
+
 
 ### Building from Source
 ```bash
@@ -61,7 +96,7 @@ git clone https://github.com/MorceNOX/morcenox-astro.git
 cd morcenox-astro
 
 # Compile
-make $(nproc)
+make -j$(nproc)
 
 # Create User Environment
 make setup-dir
@@ -72,7 +107,7 @@ sudo make install
 
 ## ⌨️ Usage & Navigation
 
-MorceNOX™ is designed for speed. Most actions require only one or two keystrokes.
+MorceNOX™ Astro is designed for speed. Most actions require only one or two keystrokes.
 
 * **Main Menu:** Use `Arrow Keys` to navigate and `Enter` to select.
 * **Chart Window:**
