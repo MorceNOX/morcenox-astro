@@ -181,7 +181,7 @@ package: all translate
 	# 3. Copy the translations
 	@cp -r locale/* $(PKG_DIR)/locale/ 2>/dev/null || true
 
-	# 4. Copy the "Assets" (Files that launcher.sh will move to $HOME)
+	# 4. Copy the "Assets" (Files that astro.sh will move to HOME)
 	@if [ -f ".env" ]; then cp .env $(PKG_DIR)/assets/ ; fi
 	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
