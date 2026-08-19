@@ -1,5 +1,7 @@
 # MorceNOX™ ASTRO
 
+[Logo](MorceNOX-ASTRO-logo.png)
+
 **Your advanced, terminal-based astrological companion.**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -81,6 +83,48 @@ MorceNOX™ is designed for speed. Most actions require only one or two keystrok
     * `[H]` - Display House Boundaries.
     * `[R]` - Reset Zoom and Pan.
 * **Sub-Modules:** Accessed via Function keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria).
+
+## Screenshots
+***
+### Main Menu
+***
+[Main Menu Portuguese](screenshots/01-main_menu.png)
+***
+
+### The Chart Wheel
+***
+[Main Menu English](screenshots/01-chart_wheel_example_02.png)
+***
+
+### The Chart Wheel
+***
+[Chart Wheel](screenshots/02-main_menu.png)
+***
+
+### Dignities and Rulership Table 1
+***
+[Dignities](screenshots/03-dignities_rulership_table.png)
+***
+
+### Aspects Table
+***
+[Aspects](screenshots/03a-aspects_table.png)
+***
+
+### Primary Directions
+***
+[Directions](screenshots/04-primary_directions_table.png)
+***
+
+### Firdaria
+***
+[Firdaria](screenshots/04-firdaria_table.png)
+***
+
+### Energy Profile Chart
+***
+[Energy](screenshots/07-energy_profile_chart.png)
+***
 
 ## 📜 License
 
