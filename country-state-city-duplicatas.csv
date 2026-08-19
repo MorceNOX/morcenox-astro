@@ -1,0 +1,643 @@
+
+╭────────┬─────────┬────────────────┬────────────────────────────┬────────────────────────────┬──────────────┬─────────────╮
+│   id   │ country │     state      │            city            │           native           │     lon      │     lat     │
+╞════════╪═════════╪════════════════╪════════════════════════════╪════════════════════════════╪══════════════╪═════════════╡
+│  19656 │ China   │ Anhui          │ Huangshan                  │ 黄山                       │  118.3324811 │  29.7172627 │
+│ 157201 │ China   │ Anhui          │ Huangshan                  │ 黄山                       │   117.762732 │  30.2546454 │
+│ 157185 │ China   │ Anhui          │ Suixi                      │ 遂溪                       │   116.354116 │  33.6271576 │
+│ 157329 │ China   │ Anhui          │ Suixi                      │ 遂溪                       │  116.7640522 │  33.9166455 │
+│ 157298 │ China   │ Fujian         │ Changtai                   │ 昌泰                       │  117.6208562 │  24.7302916 │
+│ 157332 │ China   │ Fujian         │ Changtai                   │ 昌泰                       │  117.8202813 │  24.7254693 │
+│ 157270 │ China   │ Fujian         │ Licheng                    │ 李城                       │  118.5228122 │  25.4235892 │
+│ 157284 │ China   │ Fujian         │ Licheng                    │ 李城                       │  118.5120204 │   24.906177 │
+│ 157297 │ China   │ Fujian         │ Longhai                    │ 龙海                       │  117.5395942 │  24.3469344 │
+│ 157333 │ China   │ Fujian         │ Longhai                    │ 龙海                       │  117.8132438 │  24.4490237 │
+│  19546 │ China   │ Guangdong      │ Gaoyao                     │ 高要                       │    112.44555 │    23.02432 │
+│ 157490 │ China   │ Guangdong      │ Gaoyao                     │ 高要                       │   112.452589 │  23.0279783 │
+│  19550 │ China   │ Guangdong      │ Gaozhou                    │ 高州                       │    110.84607 │    21.93924 │
+│ 157485 │ China   │ Guangdong      │ Gaozhou                    │ 高                         │  110.9644447 │  22.0461477 │
+│  19669 │ China   │ Guangdong      │ Huazhou                    │ 化州                       │    110.58333 │    21.63333 │
+│ 157486 │ China   │ Guangdong      │ Huazhou                    │ 化                         │  110.5300134 │  21.8302699 │
+│  19672 │ China   │ Guangdong      │ Huicheng                   │ 汇成                       │    116.28988 │    23.03845 │
+│ 157496 │ China   │ Guangdong      │ Huicheng                   │ 汇成                       │  114.4895969 │  23.1509763 │
+│  19821 │ China   │ Guangdong      │ Lianjiang                  │ 廉江                       │    110.28172 │    21.64673 │
+│ 157480 │ China   │ Guangdong      │ Lianjiang                  │ 廉江                       │   110.148109 │  21.6567913 │
+│  19826 │ China   │ Guangdong      │ Lianzhou                   │ 连州                       │     112.3712 │    24.78186 │
+│ 157530 │ China   │ Guangdong      │ Lianzhou                   │ 连                         │  112.4818454 │  24.9377373 │
+│  19982 │ China   │ Guangdong      │ Pingshan                   │ 坪山                       │    114.71311 │    22.99376 │
+│ 157450 │ China   │ Guangdong      │ Pingshan                   │ 平山                       │  114.3461882 │  22.7113827 │
+│  19996 │ China   │ Guangdong      │ Puning                     │ 普宁                       │    116.16869 │    23.31072 │
+│ 157548 │ China   │ Guangdong      │ Puning                     │ 普宁                       │   116.160937 │  23.3000453 │
+│  20057 │ China   │ Guangdong      │ Sanshui                    │ 三水                       │    112.89161 │    23.15486 │
+│ 157465 │ China   │ Guangdong      │ Sanshui                    │ 三水                       │  112.8848344 │  23.1719966 │
+│  20108 │ China   │ Guangdong      │ Shixing                    │ 始兴                       │    114.06572 │    24.94824 │
+│ 157436 │ China   │ Guangdong      │ Shixing                    │ 始兴                       │  114.0566468 │  24.9563552 │
+│  20160 │ China   │ Guangdong      │ Taishan                    │ 泰山                       │     112.7799 │    22.25135 │
+│ 157470 │ China   │ Guangdong      │ Taishan                    │ 泰山                       │  112.7128587 │  22.0638475 │
+│  20230 │ China   │ Guangdong      │ Wuchuan                    │ 吴川                       │    110.76591 │    21.45713 │
+│ 157482 │ China   │ Guangdong      │ Wuchuan                    │ 吴川                       │  110.6942289 │  21.4413258 │
+│  20296 │ China   │ Guangdong      │ Xingning                   │ 兴宁                       │    115.72272 │     24.1483 │
+│ 157508 │ China   │ Guangdong      │ Xingning                   │ 兴宁                       │  115.7531534 │  24.2579216 │
+│  20299 │ China   │ Guangdong      │ Xinhui                     │ 新会                       │     113.0482 │      22.456 │
+│ 157469 │ China   │ Guangdong      │ Xinhui                     │ 新会                       │  113.0328366 │  22.3836907 │
+│  20312 │ China   │ Guangdong      │ Xinyi                      │ 信宜                       │    110.94746 │    22.37303 │
+│ 157487 │ China   │ Guangdong      │ Xinyi                      │ 欣怡                       │   110.942291 │  22.3580316 │
+│  20341 │ China   │ Guangdong      │ Yangchun                   │ 阳春                       │    111.78333 │    22.16667 │
+│ 157522 │ China   │ Guangdong      │ Yangchun                   │ 阳春                       │  111.6936609 │  22.2518472 │
+│  19295 │ China   │ Guangxi        │ Babu                       │ 巴布                       │    111.51667 │    24.41667 │
+│ 159620 │ China   │ Guangxi        │ Babu                       │ 巴布                       │  111.7803928 │  24.3320844 │
+│  19303 │ China   │ Guangxi        │ Baise                      │ 百色市                     │  106.6148824 │  23.9053605 │
+│  19304 │ China   │ Guangxi        │ Baise                      │ 百色市                     │    106.61667 │        23.9 │
+│  19570 │ China   │ Guangxi        │ Guilin                     │ 桂林                       │  110.2910622 │  25.2779894 │
+│  19571 │ China   │ Guangxi        │ Guilin                     │ 桂林市                     │    110.28333 │    25.28333 │
+│  19572 │ China   │ Guangxi        │ Guiping                    │ 桂平                       │    110.07437 │    23.39336 │
+│ 159599 │ China   │ Guangxi        │ Guiping                    │ 桂平                       │  110.0967393 │  23.2817204 │
+│  19981 │ China   │ Guangxi        │ Pingnan                    │ 屏南                       │    110.38946 │    23.54218 │
+│ 159598 │ China   │ Guangxi        │ Pingnan                    │ 屏南                       │  110.3878006 │  23.5422149 │
+│  20346 │ China   │ Guangxi        │ Yangshuo                   │ 阳朔                       │    110.48967 │    24.78081 │
+│ 159565 │ China   │ Guangxi        │ Yangshuo                   │ 阳朔                       │  110.4871831 │  24.8630286 │
+│  19487 │ China   │ Guizhou        │ Duyun                      │ 都匀                       │    107.51667 │    26.26667 │
+│ 157633 │ China   │ Guizhou        │ Duyun                      │ 都云                       │  107.4526239 │  26.1908679 │
+│  20104 │ China   │ Guizhou        │ Shiqian                    │ 石前                       │    108.22806 │     27.5225 │
+│ 157600 │ China   │ Guizhou        │ Shiqian                    │ 石前                       │  108.2148546 │  27.5096513 │
+│  20216 │ China   │ Guizhou        │ Weining                    │ 威宁                       │    104.23333 │       26.85 │
+│ 157593 │ China   │ Guizhou        │ Weining                    │ 魏宁                       │   104.067332 │     27.0349 │
+│  20032 │ China   │ Hainan         │ Qionghai                   │ 琼海                       │    110.46417 │     19.2425 │
+│ 157661 │ China   │ Hainan         │ Qionghai                   │ 琼海                       │  110.4703445 │  19.2592373 │
+│  20034 │ China   │ Hainan         │ Qiongshan                  │ 琼山                       │    110.35417 │    20.00583 │
+│ 157647 │ China   │ Hainan         │ Qiongshan                  │ 琼山                       │  110.3801966 │  19.9858782 │
+│  20209 │ China   │ Hainan         │ Wanning                    │ 万宁                       │     110.3841 │    18.79931 │
+│ 157663 │ China   │ Hainan         │ Wanning                    │ 万宁                       │     110.2875 │   18.837778 │
+│  20217 │ China   │ Hainan         │ Wenchang                   │ 文昌                       │    110.74894 │     19.6157 │
+│ 157662 │ China   │ Hainan         │ Wenchang                   │ 文昌                       │  110.7932208 │  19.5452604 │
+│  20325 │ China   │ Hainan         │ Xiuying                    │ 秀英                       │    110.29359 │    20.00073 │
+│ 157645 │ China   │ Hainan         │ Xiuying                    │ 秀英                       │  110.2892742 │  20.0094864 │
+│  19349 │ China   │ Hebei          │ Botou                      │ 泊头                       │     116.5666 │    38.06667 │
+│ 157814 │ China   │ Hebei          │ Botou                      │ 博图                       │  116.5696393 │  38.0764217 │
+│  19368 │ China   │ Hebei          │ Changli                    │ 昌黎                       │    119.15056 │    39.70417 │
+│ 157716 │ China   │ Hebei          │ Changli                    │ 昌利                       │  119.2058701 │  39.5829102 │
+│  19461 │ China   │ Hebei          │ Dingzhou                   │ 定州                       │    114.99556 │    38.51306 │
+│ 157774 │ China   │ Hebei          │ Dingzhou                   │ 定                         │  114.9970044 │  38.5112175 │
+│  19509 │ China   │ Hebei          │ Fengrun                    │ 丰润                       │    118.11667 │    39.83333 │
+│ 157702 │ China   │ Hebei          │ Fengrun                    │ 丰润                       │  118.1555637 │  39.8314542 │
+│  19581 │ China   │ Hebei          │ Guye                       │ 古野                       │    118.44085 │    39.73054 │
+│ 157699 │ China   │ Hebei          │ Guye                       │ 盖伊                       │  118.4408381 │  39.7325497 │
+│  19853 │ China   │ Hebei          │ Linxi                      │ 临西                       │    118.44954 │    39.71183 │
+│ 157750 │ China   │ Hebei          │ Linxi                      │ 临西                       │  115.5001352 │  36.8475047 │
+│  19878 │ China   │ Hebei          │ Luancheng                  │ 栾城                       │    114.65167 │    37.87917 │
+│ 157682 │ China   │ Hebei          │ Luancheng                  │ 栾城                       │  118.6502236 │  39.7519063 │
+│  19940 │ China   │ Hebei          │ Nangong                    │ 南宫                       │    115.37444 │    37.35806 │
+│ 157751 │ China   │ Hebei          │ Nangong                    │ 南宫                       │  115.3920309 │  37.3560772 │
+│  20040 │ China   │ Hebei          │ Renqiu                     │ 任丘                       │    116.09361 │    38.69889 │
+│ 157815 │ China   │ Hebei          │ Renqiu                     │ 任丘                       │  116.1062203 │  38.7063767 │
+│  20071 │ China   │ Hebei          │ Shanhaiguan                │ 山海关                     │    119.74889 │     40.0025 │
+│ 157712 │ China   │ Hebei          │ Shanhaiguan                │ 山海关                     │  119.7563671 │  39.9987877 │
+│  20301 │ China   │ Hebei          │ Xinji                      │ 辛集                       │    115.20361 │    37.90278 │
+│ 157694 │ China   │ Hebei          │ Xinji                      │ 新集                       │  115.2537835 │  37.8837434 │
+│  20482 │ China   │ Hebei          │ Zunhua                     │ 遵化                       │    117.95861 │    40.17917 │
+│ 157708 │ China   │ Hebei          │ Zunhua                     │ 遵化                       │  117.9596297 │  40.1880998 │
+│  19272 │ China   │ Heilongjiang   │ Acheng                     │ 阿城                       │    126.97703 │    45.54545 │
+│ 157846 │ China   │ Heilongjiang   │ Acheng                     │ 阿城                       │  126.9694447 │  45.5362499 │
+│  19279 │ China   │ Heilongjiang   │ Anda                       │ 安达                       │    125.31454 │    46.40202 │
+│ 157954 │ China   │ Heilongjiang   │ Anda                       │ 安达                       │  125.4192927 │  46.5169806 │
+│  19302 │ China   │ Heilongjiang   │ Baiquan                    │ 百泉                       │    126.08481 │    47.60605 │
+│ 157871 │ China   │ Heilongjiang   │ Baiquan                    │ 百泉                       │   126.030847 │   47.576989 │
+│  19316 │ China   │ Heilongjiang   │ Baoqing                    │ 宝庆                       │    132.21111 │    46.33167 │
+│ 157896 │ China   │ Heilongjiang   │ Baoqing                    │ 宝庆                       │   132.432532 │  46.4282459 │
+│  19322 │ China   │ Heilongjiang   │ Bayan                      │ 巴彦                       │     127.3984 │    46.07556 │
+│ 157851 │ China   │ Heilongjiang   │ Bayan                      │ 巴彦                       │  127.3996815 │  46.0777848 │
+│  19347 │ China   │ Heilongjiang   │ Boli                       │ 博利                       │    130.57211 │    45.75279 │
+│ 157930 │ China   │ Heilongjiang   │ Boli                       │ 博利                       │  130.4878261 │  45.8166782 │
+│  19397 │ China   │ Heilongjiang   │ Chengzihe                  │ 城子河                     │    131.06667 │    45.33333 │
+│ 157877 │ China   │ Heilongjiang   │ Chengzihe                  │ 城子河                     │   131.019432 │   45.377197 │
+│  19473 │ China   │ Heilongjiang   │ Dongning                   │ 东宁                       │    131.12075 │    44.06219 │
+│ 157940 │ China   │ Heilongjiang   │ Dongning                   │ 东宁                       │  130.8926354 │  44.0697214 │
+│  19518 │ China   │ Heilongjiang   │ Fujin                      │ 富锦                       │    132.03222 │       47.26 │
+│ 157924 │ China   │ Heilongjiang   │ Fujin                      │ 风神                       │   132.516788 │   47.174394 │
+│  19528 │ China   │ Heilongjiang   │ Fuyu                       │ 扶余                       │    124.45731 │    47.79756 │
+│ 157868 │ China   │ Heilongjiang   │ Fuyu                       │ 芙玉                       │   124.564511 │   47.659918 │
+│  19530 │ China   │ Heilongjiang   │ Fuyuan                     │ 富源                       │    134.28917 │    48.36306 │
+│ 157925 │ China   │ Heilongjiang   │ Fuyuan                     │ 富源                       │  134.2574179 │    47.94063 │
+│  19535 │ China   │ Heilongjiang   │ Gannan                     │ 赣南                       │    123.50306 │    47.91472 │
+│ 157867 │ China   │ Heilongjiang   │ Gannan                     │ 赣南                       │  123.8597389 │   47.980015 │
+│  19588 │ China   │ Heilongjiang   │ Hailin                     │ 海林                       │    129.38539 │    44.57149 │
+│ 157937 │ China   │ Heilongjiang   │ Hailin                     │ 海林                       │   129.257006 │   44.861966 │
+│  19589 │ China   │ Heilongjiang   │ Hailun                     │ 海伦                       │    126.95368 │     47.4565 │
+│ 157956 │ China   │ Heilongjiang   │ Hailun                     │ 海伦                       │  126.8214728 │  47.4165095 │
+│  19624 │ China   │ Heilongjiang   │ Honggang                   │ 红岗                       │    124.88322 │    46.40124 │
+│ 157901 │ China   │ Heilongjiang   │ Honggang                   │ 红港                       │  124.8844111 │  46.3966917 │
+│  19645 │ China   │ Heilongjiang   │ Huanan                     │ 华南                       │      130.525 │     46.2207 │
+│ 157920 │ China   │ Heilongjiang   │ Huanan                     │ 华南                       │  130.7006906 │  46.2845347 │
+│  19676 │ China   │ Heilongjiang   │ Hulan                      │ 呼兰                       │        126.6 │    45.98333 │
+│ 157845 │ China   │ Heilongjiang   │ Hulan                      │ 呼兰                       │  126.6013646 │  45.9733487 │
+│  19718 │ China   │ Heilongjiang   │ Jidong                     │ 冀东                       │    131.08333 │    45.21667 │
+│ 157879 │ China   │ Heilongjiang   │ Jidong                     │ 冀东                       │  131.2998895 │  45.2611439 │
+│  19802 │ China   │ Heilongjiang   │ Lanxi                      │ 兰溪                       │    126.28269 │    46.25785 │
+│ 157949 │ China   │ Heilongjiang   │ Lanxi                      │ 兰溪                       │   126.207599 │   46.318105 │
+│  19841 │ China   │ Heilongjiang   │ Lingdong                   │ 岭东                       │    131.14528 │    46.56694 │
+│ 157891 │ China   │ Heilongjiang   │ Lingdong                   │ 岭东                       │  131.1566892 │  46.5904696 │
+│  19847 │ China   │ Heilongjiang   │ Linkou                     │ 林口                       │    130.26151 │    45.28606 │
+│ 157935 │ China   │ Heilongjiang   │ Linkou                     │ 林口                       │  130.0904711 │  45.4427775 │
+│  19865 │ China   │ Heilongjiang   │ Longfeng                   │ 龙凤                       │     125.1038 │    46.53168 │
+│ 157899 │ China   │ Heilongjiang   │ Longfeng                   │ 龙凤                       │  125.1377353 │  46.5675495 │
+│  19867 │ China   │ Heilongjiang   │ Longjiang                  │ 龙江                       │    123.17816 │    47.33072 │
+│ 157864 │ China   │ Heilongjiang   │ Longjiang                  │ 龙江                       │  123.1778544 │  47.2041505 │
+│  19921 │ China   │ Heilongjiang   │ Mingshui                   │ 明水                       │    125.90027 │     47.1815 │
+│ 157952 │ China   │ Heilongjiang   │ Mingshui                   │ 明水                       │  125.8813422 │  47.1747821 │
+│  19925 │ China   │ Heilongjiang   │ Mishan                     │ 密山                       │    131.88333 │       45.55 │
+│ 157881 │ China   │ Heilongjiang   │ Mishan                     │ 米山                       │  132.1986356 │  45.4701565 │
+│  19953 │ China   │ Heilongjiang   │ Nehe                       │ 讷河                       │    124.83333 │    48.48333 │
+│ 157872 │ China   │ Heilongjiang   │ Nehe                       │ 尼赫                       │   125.119851 │  48.4540245 │
+│  19956 │ China   │ Heilongjiang   │ Nenjiang                   │ 嫩江                       │    125.21774 │    49.17414 │
+│ 157946 │ China   │ Heilongjiang   │ Nenjiang                   │ 嫩江                       │   125.830457 │  49.4176627 │
+│  19958 │ China   │ Heilongjiang   │ Nianzishan                 │ 碾子山                     │    122.88333 │    47.51667 │
+│ 157862 │ China   │ Heilongjiang   │ Nianzishan                 │ 念子山                     │  122.8809284 │   47.514833 │
+│  20017 │ China   │ Heilongjiang   │ Qinggang                   │ 青港                       │    126.10595 │    46.68469 │
+│ 157950 │ China   │ Heilongjiang   │ Qinggang                   │ 青港                       │  125.9744506 │  46.8254338 │
+│  20070 │ China   │ Heilongjiang   │ Shangzhi                   │ 尚志                       │    127.97426 │    45.21406 │
+│ 157855 │ China   │ Heilongjiang   │ Shangzhi                   │ 尚志                       │  127.9634816 │  45.2133989 │
+│  20114 │ China   │ Heilongjiang   │ Shuangcheng                │ 双城                       │    126.28333 │       45.35 │
+│ 157847 │ China   │ Heilongjiang   │ Shuangcheng                │ 双城                       │  126.3046846 │  45.3662519 │
+│  20140 │ China   │ Heilongjiang   │ Suifenhe                   │ 绥芬河                     │    131.14775 │    44.39982 │
+│ 157936 │ China   │ Heilongjiang   │ Suifenhe                   │ 绥芬河                     │  131.1556208 │  44.3946516 │
+│  20142 │ China   │ Heilongjiang   │ Suileng                    │ 绥棱                       │    127.09535 │    47.24805 │
+│ 157953 │ China   │ Heilongjiang   │ Suileng                    │ 绥棱                       │  127.7141814 │   47.565378 │
+│  20154 │ China   │ Heilongjiang   │ Tahe                       │ 塔河                       │    124.73333 │    52.33333 │
+│ 157964 │ China   │ Heilongjiang   │ Tahe                       │ 塔赫                       │  124.6607199 │  52.7161539 │
+│  20158 │ China   │ Heilongjiang   │ Tailai                     │ 泰来                       │    123.41371 │    46.38909 │
+│ 157866 │ China   │ Heilongjiang   │ Tailai                     │ 泰莱                       │  123.5469477 │  46.5443277 │
+│  20182 │ China   │ Heilongjiang   │ Tieli                      │ 铁力                       │    128.04497 │    46.98043 │
+│ 157916 │ China   │ Heilongjiang   │ Tieli                      │ 铁利                       │   128.549903 │   46.856397 │
+│  20207 │ China   │ Heilongjiang   │ Wangkui                    │ 王奎                       │    126.47768 │    46.83283 │
+│ 157948 │ China   │ Heilongjiang   │ Wangkui                    │ 王奎                       │  126.6451331 │  46.8717014 │
+│  20228 │ China   │ Heilongjiang   │ Wuchang                    │ 武昌                       │    127.15001 │    44.91428 │
+│ 157856 │ China   │ Heilongjiang   │ Wuchang                    │ 武昌                       │   127.160945 │  44.9299296 │
+│  20372 │ China   │ Heilongjiang   │ Yilan                      │ 宜兰                       │    129.55455 │    46.31618 │
+│ 157848 │ China   │ Heilongjiang   │ Yilan                      │ 宜兰                       │  129.5650414 │  46.3208082 │
+│  20389 │ China   │ Heilongjiang   │ Youhao                     │ 又好                       │    128.83565 │    47.85306 │
+│ 157907 │ China   │ Heilongjiang   │ Youhao                     │ 又好                       │  128.8234339 │  47.8430859 │
+│  20431 │ China   │ Heilongjiang   │ Zhaodong                   │ 肇东                       │    125.98263 │    46.06771 │
+│ 157955 │ China   │ Heilongjiang   │ Zhaodong                   │ 肇东                       │   125.814502 │   46.026373 │
+│  20436 │ China   │ Heilongjiang   │ Zhaoyuan                   │ 招远                       │    125.13333 │        45.5 │
+│ 157904 │ China   │ Heilongjiang   │ Zhaoyuan                   │ 招远                       │    124.83788 │   45.611428 │
+│  20437 │ China   │ Heilongjiang   │ Zhaozhou                   │ 赵州                       │    125.31667 │    45.68333 │
+│ 157903 │ China   │ Heilongjiang   │ Zhaozhou                   │ 赵                         │  125.2870292 │  45.8509486 │
+│  19761 │ China   │ Henan          │ Jiyuan                     │ 济源                       │       112.58 │       35.09 │
+│ 158124 │ China   │ Henan          │ Jiyuan                     │ 济源                       │  112.5810521 │  35.0945453 │
+│  20048 │ China   │ Henan          │ Ruzhou                     │ 汝州                       │    112.82972 │    34.16167 │
+│ 158010 │ China   │ Henan          │ Ruzhou                     │ 汝                         │  112.8392579 │  34.1678145 │
+│  20373 │ China   │ Henan          │ Yima                       │ 义马                       │    111.88389 │    34.73806 │
+│ 158069 │ China   │ Henan          │ Yima                       │ 伊玛                       │  111.8661916 │  34.7454924 │
+│  19282 │ China   │ Hubei          │ Anlu                       │ 安陆                       │    113.67833 │     31.2575 │
+│ 158187 │ China   │ Hubei          │ Anlu                       │ 安鲁                       │  113.6480203 │  31.3066219 │
+│  19355 │ China   │ Hubei          │ Caidian                    │ 蔡甸                       │    114.03333 │    30.58333 │
+│ 158134 │ China   │ Hubei          │ Caidian                    │ 蔡甸                       │  114.0821056 │  30.5389289 │
+│  19425 │ China   │ Hubei          │ Danjiangkou                │ 丹江口                     │    111.50861 │    32.54278 │
+│ 158151 │ China   │ Hubei          │ Danjiangkou                │ 丹江口                     │  111.1846605 │  32.5453821 │
+│  19440 │ China   │ Hubei          │ Daye                       │ 大冶                       │       114.95 │    30.08333 │
+│ 158143 │ China   │ Hubei          │ Daye                       │ 戴伊                       │  114.9748074 │  30.0985567 │
+│  19560 │ China   │ Hubei          │ Guangshui                  │ 广水                       │     113.9978 │     31.6199 │
+│ 158215 │ China   │ Hubei          │ Guangshui                  │ 广水                       │  113.8407641 │  31.6838156 │
+│  19596 │ China   │ Hubei          │ Hanchuan                   │ 汉川                       │    113.76667 │       30.65 │
+│ 158188 │ China   │ Hubei          │ Hanchuan                   │ 汉川                       │  113.8329583 │  30.6562575 │
+│  19651 │ China   │ Hubei          │ Huangmei                   │ 黄梅                       │    116.02496 │    30.19235 │
+│ 158204 │ China   │ Hubei          │ Huangmei                   │ 黄梅                       │  115.9289051 │  30.0182561 │
+│  19654 │ China   │ Hubei          │ Huangpi                    │ 黄陂                       │    114.37789 │    30.88453 │
+│ 158136 │ China   │ Hubei          │ Huangpi                    │ 黄陂                       │  114.3820173 │  31.0567528 │
+│  19663 │ China   │ Hubei          │ Huangzhou                  │ 黄州                       │        114.8 │       30.45 │
+│ 158197 │ China   │ Hubei          │ Huangzhou                  │ 黄                         │  114.8750766 │  30.4369576 │
+│  19805 │ China   │ Hubei          │ Laohekou                   │ 老河口市                   │    111.66778 │    32.38583 │
+│ 158171 │ China   │ Hubei          │ Laohekou                   │ 老河口                     │  111.7575073 │  32.4370526 │
+│  19834 │ China   │ Hubei          │ Lichuan                    │ 利川                       │       108.85 │        30.3 │
+│ 158217 │ China   │ Hubei          │ Lichuan                    │ 利川                       │   108.815759 │   30.244508 │
+│  19900 │ China   │ Hubei          │ Macheng                    │ 麻城                       │    115.02213 │    31.18013 │
+│ 158205 │ China   │ Hubei          │ Macheng                    │ 麻城                       │  115.1108647 │  31.3198572 │
+│  20008 │ China   │ Hubei          │ Qianjiang                  │ 潜江                       │     112.8919 │      30.421 │
+│ 158226 │ China   │ Hubei          │ Qianjiang                  │ 潜江                       │  112.8940372 │  30.4049826 │
+│  20085 │ China   │ Hubei          │ Shashi                     │ 沙市                       │    112.24472 │    30.30722 │
+│ 158189 │ China   │ Hubei          │ Shashi                     │ 沙希                       │  112.2524983 │  30.3144274 │
+│  20240 │ China   │ Hubei          │ Wuxue                      │ 武穴                       │     115.5525 │    29.85058 │
+│ 158206 │ China   │ Hubei          │ Wuxue                      │ 武穴                       │  115.5562861 │   29.847035 │
+│  20266 │ China   │ Hubei          │ Xiantao                    │ 仙桃                       │    113.44294 │     30.3708 │
+│ 158225 │ China   │ Hubei          │ Xiantao                    │ 仙桃                       │  113.4486702 │   30.364029 │
+│  20317 │ China   │ Hubei          │ Xinzhou                    │ 新洲                       │        114.8 │    30.86667 │
+│ 158137 │ China   │ Hubei          │ Xinzhou                    │ 新洲                       │  114.7960013 │  30.8437702 │
+│  20367 │ China   │ Hubei          │ Yicheng                    │ 宜城                       │    112.25611 │    31.70472 │
+│ 158173 │ China   │ Hubei          │ Yicheng                    │ 宜城                       │  112.2527375 │  31.7210346 │
+│  20414 │ China   │ Hubei          │ Zaoyang                    │ 枣阳                       │    112.75417 │    32.12722 │
+│ 158172 │ China   │ Hubei          │ Zaoyang                    │ 枣阳                       │  112.7665716 │  32.1307686 │
+│  20446 │ China   │ Hubei          │ Zhijiang                   │ 之江                       │    111.75333 │    30.42139 │
+│ 158164 │ China   │ Hubei          │ Zhijiang                   │ 之江                       │  111.7546868 │  30.4283835 │
+│  20455 │ China   │ Hubei          │ Zhongxiang                 │ 忠祥                       │    112.58306 │    31.16611 │
+│ 158180 │ China   │ Hubei          │ Zhongxiang                 │ 忠祥                       │  112.5823331 │  31.1702322 │
+│  19289 │ China   │ Hunan          │ Anxiang                    │ 安祥                       │       112.15 │        29.4 │
+│ 158288 │ China   │ Hunan          │ Anxiang                    │ 安祥                       │  112.1652707 │  29.4135596 │
+│  19506 │ China   │ Hunan          │ Fenghuang                  │ 凤凰                       │    109.59961 │    27.93557 │
+│ 158347 │ China   │ Hunan          │ Fenghuang                  │ 凤凰                       │   109.532129 │   28.010585 │
+│  19626 │ China   │ Hunan          │ Hongjiang                  │ 洪江                       │    109.99556 │       27.11 │
+│ 158338 │ China   │ Hunan          │ Hongjiang                  │ 洪江                       │  110.0790255 │  27.2328573 │
+│  19668 │ China   │ Hunan          │ Huayuan                    │ 华苑                       │    110.53583 │    26.91361 │
+│ 158348 │ China   │ Hunan          │ Huayuan                    │ 华源                       │  109.4183343 │  28.4342803 │
+│  19748 │ China   │ Hunan          │ Jinshi                     │ 进士                       │    111.87012 │    29.60487 │
+│ 158294 │ China   │ Hunan          │ Jinshi                     │ 金石                       │    111.85987 │   29.494523 │
+│  19808 │ China   │ Hunan          │ Leiyang                    │ 耒阳                       │    112.85908 │    26.40238 │
+│ 158262 │ China   │ Hunan          │ Leiyang                    │ 耒阳                       │  112.8545783 │  26.4255243 │
+│  19809 │ China   │ Hunan          │ Lengshuijiang              │ 冷水江                     │    111.42944 │    27.68806 │
+│ 158342 │ China   │ Hunan          │ Lengshuijiang              │ 冷水江                     │  111.4534719 │  27.6581325 │
+│  19810 │ China   │ Hunan          │ Lengshuitan                │ 冷水滩                     │    111.59559 │     26.4111 │
+│ 158317 │ China   │ Hunan          │ Lengshuitan                │ 冷水滩                     │  111.6328512 │  26.5646555 │
+│  19824 │ China   │ Hunan          │ Lianyuan                   │ 涟源                       │    111.66417 │    27.68833 │
+│ 158343 │ China   │ Hunan          │ Lianyuan                   │ 涟源                       │  111.7776649 │   27.738153 │
+│  20235 │ China   │ Hunan          │ Wulingyuan                 │ 武陵源                     │    110.54407 │    29.34936 │
+│ 158296 │ China   │ Hunan          │ Wulingyuan                 │ 武陵源                     │  110.5283093 │  29.3387031 │
+│  20257 │ China   │ Hunan          │ Xiangxiang                 │ 香香                       │    112.53333 │    27.73333 │
+│ 158250 │ China   │ Hunan          │ Xiangxiang                 │ 香香                       │  112.5255933 │  27.7517719 │
+│  20449 │ China   │ Hunan          │ Zhongfang                  │ 中方                       │    109.93194 │    27.41139 │
+│ 158328 │ China   │ Hunan          │ Zhongfang                  │ 中方                       │   110.069016 │   27.486767 │
+│  19475 │ China   │ Inner Mongolia │ Dongsheng                  │ 东升                       │    109.97763 │    39.81609 │
+│ 159691 │ China   │ Inner Mongolia │ Dongsheng                  │ 东升                       │  109.7558684 │  39.8355649 │
+│  19494 │ China   │ Inner Mongolia │ Erenhot                    │ 二连浩特                   │    111.97667 │     43.6475 │
+│ 159741 │ China   │ Inner Mongolia │ Erenhot                    │ 二连浩特                   │   111.943519 │  43.6407813 │
+│  19553 │ China   │ Inner Mongolia │ Genhe                      │ 根河                       │    121.51667 │    50.78333 │
+│ 159713 │ China   │ Inner Mongolia │ Genhe                      │ 根河                       │  121.8112468 │  51.3346874 │
+│  19587 │ China   │ Inner Mongolia │ Hailar                     │ 海拉尔                     │        119.7 │        49.2 │
+│ 159700 │ China   │ Inner Mongolia │ Hailar                     │ 海拉尔                     │   119.817227 │  49.2321432 │
+│  19742 │ China   │ Inner Mongolia │ Jining                     │ 济宁                       │    113.10583 │     41.0275 │
+│ 159722 │ China   │ Inner Mongolia │ Jining                     │ 济宁                       │  113.1600076 │  40.9973725 │
+│  19903 │ China   │ Inner Mongolia │ Manzhouli                  │ 满洲里                     │    117.43333 │        49.6 │
+│ 159709 │ China   │ Inner Mongolia │ Manzhouli                  │ 满洲里                     │  117.4464324 │  49.5914042 │
+│  19967 │ China   │ Inner Mongolia │ Ordos                      │ 鄂尔多斯                   │  108.8134284 │  39.4602947 │
+│  19968 │ China   │ Inner Mongolia │ Ordos                      │ 鄂尔多斯市                 │    108.80946 │    39.46142 │
+│  20092 │ China   │ Inner Mongolia │ Shiguai                    │ 石怪                       │    110.28556 │    40.70583 │
+│ 159662 │ China   │ Inner Mongolia │ Shiguai                    │ 石怪                       │  110.2892742 │  40.7601279 │
+│  20203 │ China   │ Inner Mongolia │ Ulanhot                    │ 乌兰浩特                   │    122.08333 │    46.08333 │
+│ 159734 │ China   │ Inner Mongolia │ Ulanhot                    │ 乌兰浩特                   │  122.0873444 │  46.0698111 │
+│  20231 │ China   │ Inner Mongolia │ Wuda                       │ 乌达                       │    106.71167 │    39.49944 │
+│ 159670 │ China   │ Inner Mongolia │ Wuda                       │ 武大                       │  106.7225139 │  39.5021993 │
+│  20336 │ China   │ Inner Mongolia │ Yakeshi                    │ 牙克石                     │    120.73333 │    49.28333 │
+│ 159710 │ China   │ Inner Mongolia │ Yakeshi                    │ 牙克石                     │   121.278069 │   49.321229 │
+│  19592 │ China   │ Jiangsu        │ Haizhou                    │ 海州                       │ 119.16126173 │ 34.57300501 │
+│ 158403 │ China   │ Jiangsu        │ Haizhou                    │ 海                         │  119.1579052 │  34.5723543 │
+│  19734 │ China   │ Jiangsu        │ Jingjiang                  │ 靖江                       │ 120.27557629 │ 32.01827432 │
+│ 158440 │ China   │ Jiangsu        │ Jingjiang                  │ 靖江                       │  120.2725083 │  31.9861352 │
+│  19513 │ China   │ Jiangxi        │ Fenyi                      │ 分宜                       │    114.66805 │    27.81117 │
+│ 158480 │ China   │ Jiangxi        │ Fenyi                      │ 分宜                       │  114.6433977 │   27.841374 │
+│  19574 │ China   │ Jiangxi        │ Guixi                      │ 贵溪                       │    117.21329 │    28.28857 │
+│ 158484 │ China   │ Jiangxi        │ Guixi                      │ 贵溪                       │  117.2209467 │   28.175822 │
+│  19988 │ China   │ Jiangxi        │ Poyang                     │ 鄱阳湖                     │    116.66754 │    28.99242 │
+│ 158547 │ China   │ Jiangxi        │ Poyang                     │ 鄱阳                       │  116.8206876 │  29.2433823 │
+│  19369 │ China   │ Jilin          │ Changling                  │ 长岭                       │    124.00045 │    44.26532 │
+│ 158595 │ China   │ Jilin          │ Changling                  │ 长灵                       │  123.5873275 │  44.3437501 │
+│  19381 │ China   │ Jilin          │ Chaoyang                   │ 朝阳                       │     126.0263 │    42.66223 │
+│ 158553 │ China   │ Jilin          │ Chaoyang                   │ 朝阳                       │  125.3061704 │  43.6773148 │
+│  19447 │ China   │ Jilin          │ Dehui                      │ 德惠                       │        125.7 │    44.53333 │
+│ 158560 │ China   │ Jilin          │ Dehui                      │ 德惠                       │  125.6954363 │  44.5350141 │
+│  19466 │ China   │ Jilin          │ Dongfeng                   │ 东风                       │    125.51176 │    42.64031 │
+│ 158578 │ China   │ Jilin          │ Dongfeng                   │ 东风                       │  125.6241261 │   42.764474 │
+│  19485 │ China   │ Jilin          │ Dunhua                     │ 敦化                       │     128.2425 │     43.3725 │
+│ 158606 │ China   │ Jilin          │ Dunhua                     │ 敦化                       │  128.2267987 │  43.3686205 │
+│  19493 │ China   │ Jilin          │ Erdaojiang                 │ 二道江                     │    126.03194 │    41.77639 │
+│ 158581 │ China   │ Jilin          │ Erdaojiang                 │ 二道江                     │   126.036665 │  41.7714441 │
+│  19529 │ China   │ Jilin          │ Fuyu                       │ 扶余                       │    124.81667 │    45.18333 │
+│ 158597 │ China   │ Jilin          │ Fuyu                       │ 芙玉                       │   126.040412 │  44.9863602 │
+│  19557 │ China   │ Jilin          │ Gongzhuling                │ 公主岭                     │    124.81979 │    43.50075 │
+│ 158561 │ China   │ Jilin          │ Gongzhuling                │ 公主岭                     │  124.7656749 │  43.7703784 │
+│  19612 │ China   │ Jilin          │ Helong                     │ 贺龙                       │    128.99722 │    42.53974 │
+│ 158609 │ China   │ Jilin          │ Helong                     │ 鹤龙                       │  129.0043408 │  42.5437508 │
+│  19634 │ China   │ Jilin          │ Huadian                    │ 华电                       │    126.74778 │    42.96333 │
+│ 158568 │ China   │ Jilin          │ Huadian                    │ 华电                       │      126.975 │   43.106389 │
+│  19674 │ China   │ Jilin          │ Huinan                     │ 惠南                       │    126.26139 │     42.6225 │
+│ 158583 │ China   │ Jilin          │ Huinan                     │ 惠南                       │      126.345 │   42.529167 │
+│  19682 │ China   │ Jilin          │ Hunchun                    │ 珲春                       │    130.35806 │     42.8675 │
+│ 158607 │ China   │ Jilin          │ Hunchun                    │ 珲春                       │   130.355943 │   42.865321 │
+│  19759 │ China   │ Jilin          │ Jiutai                     │ 九台                       │    125.83278 │     44.1525 │
+│ 158557 │ China   │ Jilin          │ Jiutai                     │ 九台                       │  125.8387384 │  44.1523236 │
+│  19845 │ China   │ Jilin          │ Linjiang                   │ 临江                       │    126.90778 │    41.80694 │
+│ 158592 │ China   │ Jilin          │ Linjiang                   │ 临江                       │  126.9128334 │  41.8092486 │
+│  19857 │ China   │ Jilin          │ Lishu                      │ 隶书                       │    124.32778 │    43.30472 │
+│ 158573 │ China   │ Jilin          │ Lishu                      │ 隶书                       │  124.3328923 │  43.4872711 │
+│  19860 │ China   │ Jilin          │ Liuhe                      │ 六合                       │    125.71717 │    42.24007 │
+│ 158584 │ China   │ Jilin          │ Liuhe                      │ 刘和                       │   125.895556 │   42.187778 │
+│  19868 │ China   │ Jilin          │ Longjing                   │ 龙井                       │    129.42333 │    42.77139 │
+│ 158608 │ China   │ Jilin          │ Longjing                   │ 龙井                       │  129.4205702 │    42.76411 │
+│  19910 │ China   │ Jilin          │ Meihekou                   │ 梅河口                     │    125.67528 │    42.52722 │
+│ 158585 │ China   │ Jilin          │ Meihekou                   │ 梅河口                     │  125.7838796 │  42.5668595 │
+│  19974 │ China   │ Jilin          │ Panshi                     │ 盘石                       │    126.05611 │    42.94222 │
+│ 158570 │ China   │ Jilin          │ Panshi                     │ 盘石                       │   126.148056 │   43.070278 │
+│  20119 │ China   │ Jilin          │ Shuangyang                 │ 双阳                       │    125.67361 │    43.52417 │
+│ 158556 │ China   │ Jilin          │ Shuangyang                 │ 双阳                       │  125.6578299 │  43.5226173 │
+│  20125 │ China   │ Jilin          │ Shulan                     │ 舒兰                       │       126.95 │    44.41667 │
+│ 158569 │ China   │ Jilin          │ Shulan                     │ 舒兰                       │   127.171944 │   44.299444 │
+│  20190 │ China   │ Jilin          │ Tonghua                    │ 通化                       │   125.848333 │   42.123889 │
+│  20191 │ China   │ Jilin          │ Tonghua                    │ 通化市                     │    125.84833 │    42.12389 │
+│  20198 │ China   │ Jilin          │ Tumen                      │ 图们                       │     129.8425 │    42.96611 │
+│ 158605 │ China   │ Jilin          │ Tumen                      │ 图门                       │  129.8365626 │  42.9653277 │
+│  20208 │ China   │ Jilin          │ Wangqing                   │ 汪清                       │    129.76342 │    43.32179 │
+│ 158610 │ China   │ Jilin          │ Wangqing                   │ 汪清                       │  129.7608195 │  43.3129168 │
+│  20350 │ China   │ Jilin          │ Yanji                      │ 延吉                       │    129.50778 │     42.9075 │
+│ 158604 │ China   │ Jilin          │ Yanji                      │ 延吉                       │  129.3755747 │  43.0718986 │
+│  20406 │ China   │ Jilin          │ Yushu                      │ 玉树                       │    126.53333 │        44.8 │
+│ 158559 │ China   │ Jilin          │ Yushu                      │ 玉树                       │  126.5271463 │  44.8381222 │
+│  20442 │ China   │ Jilin          │ Zhenlai                    │ 镇来                       │     123.2973 │    45.84955 │
+│ 158599 │ China   │ Jilin          │ Zhenlai                    │ 镇来                       │  123.5476426 │   45.964565 │
+│  19333 │ China   │ Liaoning       │ Beipiao                    │ 北票                       │    120.77917 │    41.79194 │
+│ 158703 │ China   │ Liaoning       │ Beipiao                    │ 北票                       │  120.7655332 │  41.8000713 │
+│  19377 │ China   │ Liaoning       │ Changtu                    │ 昌图                       │    124.09545 │    42.77884 │
+│ 158695 │ China   │ Liaoning       │ Changtu                    │ 昌土                       │  123.9492812 │  42.9783501 │
+│  19433 │ China   │ Liaoning       │ Dashiqiao                  │ 大石桥                     │    122.50251 │    40.63732 │
+│ 158672 │ China   │ Liaoning       │ Dashiqiao                  │ 大石桥                     │  122.5042794 │  40.6348183 │
+│  19504 │ China   │ Liaoning       │ Fengcheng                  │ 凤城                       │    124.07167 │    40.45361 │
+│ 158659 │ China   │ Liaoning       │ Fengcheng                  │ 凤城                       │  124.0637454 │  40.4500763 │
+│  19533 │ China   │ Liaoning       │ Gaizhou                    │ 盖州                       │    122.36861 │    40.39417 │
+│ 158671 │ China   │ Liaoning       │ Gaizhou                    │ 盖                         │  122.4780049 │  40.2134907 │
+│  19556 │ China   │ Liaoning       │ Gongchangling              │ 弓长岭                     │       123.45 │    41.11667 │
+│ 158683 │ China   │ Liaoning       │ Gongchangling              │ 弓长岭                     │  123.4304534 │  41.1514514 │
+│  19583 │ China   │ Liaoning       │ Haicheng                   │ 海城                       │    122.74754 │    40.85158 │
+│ 158640 │ China   │ Liaoning       │ Haicheng                   │ 海城                       │  122.7477959 │  40.8522995 │
+│  19611 │ China   │ Liaoning       │ Heishan                    │ 黑山                       │    122.11278 │    41.68917 │
+│ 158663 │ China   │ Liaoning       │ Heishan                    │ 黑山                       │  122.1872868 │  41.7915734 │
+│  19664 │ China   │ Liaoning       │ Huanren                    │ 焕仁                       │    125.36667 │    41.26472 │
+│ 158653 │ China   │ Liaoning       │ Huanren                    │ 焕仁                       │  125.3487306 │  41.2681066 │
+│  19678 │ China   │ Liaoning       │ Huludao                    │ 葫芦岛                     │  120.8404789 │  40.7515443 │
+│  19679 │ China   │ Liaoning       │ Huludao                    │ 葫芦岛市                   │    120.21972 │    40.74528 │
+│  19771 │ China   │ Liaoning       │ Kaiyuan                    │ 开元                       │    124.04028 │    42.53306 │
+│ 158697 │ China   │ Liaoning       │ Kaiyuan                    │ 开元                       │   124.245093 │  42.4067626 │
+│  19781 │ China   │ Liaoning       │ Kuandian                   │ 宽甸                       │    124.78472 │    40.72861 │
+│ 158657 │ China   │ Liaoning       │ Kuandian                   │ 宽店                       │  124.9463526 │   40.684039 │
+│  19823 │ China   │ Liaoning       │ Lianshan                   │ 连山                       │    120.85327 │    40.76432 │
+│ 158705 │ China   │ Liaoning       │ Lianshan                   │ 连山                       │  120.6240121 │  40.8738239 │
+│  19831 │ China   │ Liaoning       │ Liaozhong                  │ 辽中                       │    122.72417 │    41.50611 │
+│ 158621 │ China   │ Liaoning       │ Liaozhong                  │ 辽中                       │   122.781741 │  41.5458872 │
+│  19842 │ China   │ Liaoning       │ Linghai                    │ 凌海                       │    121.36667 │    41.16528 │
+│ 158665 │ China   │ Liaoning       │ Linghai                    │ 凌海                       │   121.355281 │  41.1676142 │
+│  19843 │ China   │ Liaoning       │ Lingyuan                   │ 凌源                       │    119.40111 │       41.24 │
+│ 158704 │ China   │ Liaoning       │ Lingyuan                   │ 凌源                       │  119.2695639 │  40.9718381 │
+│  19946 │ China   │ Liaoning       │ Nanpiao                    │ 南票                       │    120.74792 │    41.09822 │
+│ 158707 │ China   │ Liaoning       │ Nanpiao                    │ 南票                       │  120.7689143 │    41.03626 │
+│  19973 │ China   │ Liaoning       │ Panshan                    │ 盘山                       │    122.04944 │    41.18806 │
+│ 158690 │ China   │ Liaoning       │ Panshan                    │ 盘山                       │  121.9942467 │  41.2416751 │
+│  19994 │ China   │ Liaoning       │ Pulandian                  │ 普兰店                     │    121.96694 │    39.39528 │
+│ 158631 │ China   │ Liaoning       │ Pulandian                  │ 普兰迪安                   │  121.9678453 │  39.4035058 │
+│  20146 │ China   │ Liaoning       │ Sujiatun                   │ 苏家屯                     │    123.33917 │    41.65917 │
+│ 158617 │ China   │ Liaoning       │ Sujiatun                   │ 苏家屯                     │  123.3379327 │  41.6626981 │
+│  20183 │ China   │ Liaoning       │ Tieling                    │ 铁岭                       │  124.2858328 │  42.6345121 │
+│  20184 │ China   │ Liaoning       │ Tieling                    │ 铁岭市                     │    124.32361 │    42.62583 │
+│  20206 │ China   │ Liaoning       │ Wafangdian                 │ 瓦房店                     │    122.00806 │    39.61833 │
+│ 158633 │ China   │ Liaoning       │ Wafangdian                 │ 瓦房店                     │   122.005039 │  39.6236752 │
+│  20281 │ China   │ Liaoning       │ Xifeng                     │ 西凤                       │    124.72222 │    42.73722 │
+│ 158694 │ China   │ Liaoning       │ Xifeng                     │ 西凤                       │  124.7026314 │  42.7482794 │
+│  20293 │ China   │ Liaoning       │ Xingcheng                  │ 兴城                       │    120.71667 │    40.61667 │
+│ 158710 │ China   │ Liaoning       │ Xingcheng                  │ 兴城                       │  120.4793038 │  40.5621218 │
+│  20302 │ China   │ Liaoning       │ Xinmin                     │ 新民                       │    122.82528 │    41.99083 │
+│ 158624 │ China   │ Liaoning       │ Xinmin                     │ 新民                       │  122.8233066 │  41.9939546 │
+│  20324 │ China   │ Liaoning       │ Xiuyan                     │ 岫岩                       │    123.27444 │    40.29278 │
+│ 158639 │ China   │ Liaoning       │ Xiuyan                     │ 岫岩                       │  123.2759154 │  40.2877445 │
+│  20464 │ China   │ Liaoning       │ Zhuanghe                   │ 庄河                       │    122.99111 │    39.70083 │
+│ 158634 │ China   │ Liaoning       │ Zhuanghe                   │ 庄河                       │  122.9708389 │  39.6972967 │
+│  19438 │ China   │ Ningxia        │ Dawukou                    │ 大武口                     │    106.39583 │    39.04194 │
+│ 159839 │ China   │ Ningxia        │ Dawukou                    │ 大吾口                     │  106.3630325 │  39.0186857 │
+│  19448 │ China   │ Qinghai        │ Delingha                   │ 德令哈                     │     97.37457 │      37.376 │
+│ 158757 │ China   │ Qinghai        │ Delingha                   │ 德林哈                     │     97.36011 │  37.3690819 │
+│  19595 │ China   │ Shaanxi        │ Hancheng                   │ 韩城                       │    110.42917 │    35.46028 │
+│ 158818 │ China   │ Shaanxi        │ Hancheng                   │ 韩城                       │   110.361389 │   35.575278 │
+│  19667 │ China   │ Shaanxi        │ Huayin                     │ 华阴                       │    110.06639 │    34.56528 │
+│ 158819 │ China   │ Shaanxi        │ Huayin                     │ 华音                       │  110.0920915 │  34.5675163 │
+│  19852 │ China   │ Shaanxi        │ Lintong                    │ 临潼                       │    109.20892 │    34.37803 │
+│ 158772 │ China   │ Shaanxi        │ Lintong                    │ 林桐                       │  109.2092937 │  34.3684448 │
+│  20352 │ China   │ Shaanxi        │ Yanliang                   │ 炎良                       │    109.22921 │    34.65918 │
+│ 158771 │ China   │ Shaanxi        │ Yanliang                   │ 炎良                       │  109.2245785 │  34.6696781 │
+│  19286 │ China   │ Shandong       │ Anqiu                      │ 安丘                       │     119.1925 │    36.43417 │
+│ 158937 │ China   │ Shandong       │ Anqiu                      │ 安丘                       │  119.2129818 │  36.4794705 │
+│  19348 │ China   │ Shandong       │ Boshan                     │ 博山                       │    117.83333 │    36.48333 │
+│ 158900 │ China   │ Shandong       │ Boshan                     │ 博山                       │  117.8567023 │   36.494716 │
+│  19372 │ China   │ Shandong       │ Changqing                  │ 长庆                       │    116.72722 │     36.5575 │
+│ 158881 │ China   │ Shandong       │ Changqing                  │ 长庆                       │  116.7464153 │  36.5539604 │
+│  19395 │ China   │ Shandong       │ Chengyang                  │ 程阳                       │    118.83278 │    35.57944 │
+│ 158893 │ China   │ Shandong       │ Chengyang                  │ 程阳                       │  120.3913784 │  36.3042163 │
+│  19458 │ China   │ Shandong       │ Dingtao                    │ 定陶                       │    115.56582 │    35.07436 │
+│ 159004 │ China   │ Shandong       │ Dingtao                    │ 定陶                       │   115.565062 │  35.0758996 │
+│  19501 │ China   │ Shandong       │ Feicheng                   │ 肥城                       │    116.76583 │    36.24861 │
+│ 158957 │ China   │ Shandong       │ Feicheng                   │ 肥城                       │  116.7653466 │  36.1841443 │
+│  19541 │ China   │ Shandong       │ Gaomi                      │ 高密                       │    119.75278 │    36.38333 │
+│ 158938 │ China   │ Shandong       │ Gaomi                      │ 高密                       │  119.8005385 │  36.3654065 │
+│  19599 │ China   │ Shandong       │ Hanting                    │ 汉庭                       │    119.21083 │    36.77083 │
+│ 158929 │ China   │ Shandong       │ Hanting                    │ 汉庭                       │  119.2054018 │  36.7553782 │
+│  19711 │ China   │ Shandong       │ Jiaozhou                   │ 胶州                       │    120.00333 │    36.28389 │
+│ 158895 │ China   │ Shandong       │ Jiaozhou                   │ 胶                         │  120.0284928 │  36.2640866 │
+│  19726 │ China   │ Shandong       │ Jimo                       │ 即墨                       │    120.46222 │    36.38972 │
+│ 158894 │ China   │ Shandong       │ Jimo                       │ 吉莫                       │  120.5348775 │  36.4083982 │
+│  19765 │ China   │ Shandong       │ Juye                       │ 巨野                       │    116.08833 │    35.39472 │
+│ 159008 │ China   │ Shandong       │ Juye                       │ 朱耶                       │   116.056912 │  35.3887802 │
+│  19791 │ China   │ Shandong       │ Laixi                      │ 莱西                       │    120.52694 │    36.85917 │
+│ 158897 │ China   │ Shandong       │ Laixi                      │ 莱西                       │  120.5158492 │  36.8618279 │
+│  19792 │ China   │ Shandong       │ Laiyang                    │ 莱阳                       │    120.71361 │    36.97583 │
+│ 158923 │ China   │ Shandong       │ Laiyang                    │ 莱阳                       │  120.7068644 │  36.9786591 │
+│  19793 │ China   │ Shandong       │ Laizhou                    │ 莱州                       │    119.94217 │    37.18073 │
+│ 158924 │ China   │ Shandong       │ Laizhou                    │ 莱                         │  119.9370943 │  37.1773133 │
+│  19850 │ China   │ Shandong       │ Linqu                      │ 临朐                       │    118.53972 │    36.51556 │
+│ 158932 │ China   │ Shandong       │ Linqu                      │ 临朐                       │  118.5384882 │  36.5156772 │
+│  19915 │ China   │ Shandong       │ Mengyin                    │ 蒙阴                       │    117.92639 │    35.70694 │
+│ 158975 │ China   │ Shandong       │ Mengyin                    │ 蒙阴                       │  117.9462238 │  35.7200664 │
+│  19963 │ China   │ Shandong       │ Ningyang                   │ 宁阳                       │    116.79139 │    35.76417 │
+│ 158954 │ China   │ Shandong       │ Ningyang                   │ 宁阳                       │   116.800091 │  35.7591944 │
+│  19978 │ China   │ Shandong       │ Pingdu                     │ 平度                       │    119.94639 │    36.78444 │
+│ 158896 │ China   │ Shandong       │ Pingdu                     │ 平度                       │  119.9648885 │  36.7534005 │
+│  19984 │ China   │ Shandong       │ Pingyi                     │ 平邑                       │    117.63083 │    35.50056 │
+│ 158973 │ China   │ Shandong       │ Pingyi                     │ 平宜                       │  117.6097303 │  35.5177818 │
+│  19985 │ China   │ Shandong       │ Pingyin                    │ 平阴                       │    116.44528 │    36.28306 │
+│ 158886 │ China   │ Shandong       │ Pingyin                    │ 平阴                       │  116.4503206 │  36.2894384 │
+│  20028 │ China   │ Shandong       │ Qingzhou                   │ 青州                       │    118.47972 │    36.69667 │
+│ 158934 │ China   │ Shandong       │ Qingzhou                   │ 青                         │  118.4738118 │  36.6843271 │
+│  20037 │ China   │ Shandong       │ Qufu                       │ 曲阜                       │    116.99111 │    35.59667 │
+│ 158949 │ China   │ Shandong       │ Qufu                       │ 曲阜                       │   116.987543 │  35.5956915 │
+│  20075 │ China   │ Shandong       │ Shanting                   │ 山亭                       │    117.45778 │    35.07528 │
+│ 158909 │ China   │ Shandong       │ Shanting                   │ 山丁                       │  117.4551974 │  35.1005834 │
+│  20112 │ China   │ Shandong       │ Shouguang                  │ 寿光                       │     118.7375 │       36.88 │
+│ 158936 │ China   │ Shandong       │ Shouguang                  │ 寿光                       │  118.7322549 │  36.8762356 │
+│  20131 │ China   │ Shandong       │ Sishui                     │ 泗水                       │    117.27583 │    35.64889 │
+│ 158947 │ China   │ Shandong       │ Sishui                     │ 泗水                       │  117.2457433 │  35.6648659 │
+│  20223 │ China   │ Shandong       │ Wenshang                   │ 汶上                       │    116.49611 │     35.7275 │
+│ 158946 │ China   │ Shandong       │ Wenshang                   │ 汶上                       │  116.4914646 │  35.7115565 │
+│  20306 │ China   │ Shandong       │ Xintai                     │ 新泰                       │    117.75194 │    35.90056 │
+│ 158956 │ China   │ Shandong       │ Xintai                     │ 新泰                       │  117.7620286 │  35.9094557 │
+│  20342 │ China   │ Shandong       │ Yanggu                     │ 阳谷                       │    115.77528 │    36.11056 │
+│ 158990 │ China   │ Shandong       │ Yanggu                     │ 阳谷                       │  115.7857865 │  36.1142991 │
+│  20359 │ China   │ Shandong       │ Yanzhou                    │ 兖州                       │    116.82861 │    35.55278 │
+│ 158941 │ China   │ Shandong       │ Yanzhou                    │ 兖                         │  116.7780517 │  35.5520437 │
+│  20382 │ China   │ Shandong       │ Yishui                     │ 沂水                       │    118.62806 │    35.78472 │
+│ 158970 │ China   │ Shandong       │ Yishui                     │ 沂水                       │  118.6227646 │  35.7911764 │
+│  20393 │ China   │ Shandong       │ Yucheng                    │ 禹城                       │    116.46528 │    34.92889 │
+│ 158987 │ China   │ Shandong       │ Yucheng                    │ 宇城                       │  116.6329789 │   36.933782 │
+│  20435 │ China   │ Shandong       │ Zhaoyuan                   │ 招远                       │    120.40997 │    37.36497 │
+│ 158925 │ China   │ Shandong       │ Zhaoyuan                   │ 招远                       │  120.4281727 │  37.3538319 │
+│  20459 │ China   │ Shandong       │ Zhoucun                    │ 周村                       │    117.81667 │    36.81667 │
+│ 158902 │ China   │ Shandong       │ Zhoucun                    │ 周村                       │  117.8639989 │  36.8029113 │
+│  20481 │ China   │ Shandong       │ Zoucheng                   │ 邹城                       │    116.96556 │    35.40056 │
+│ 158950 │ China   │ Shandong       │ Zoucheng                   │ 邹城                       │  117.0017252 │   35.403211 │
+│  19436 │ China   │ Shanxi         │ Datong                     │ 大同                       │  113.2951122 │  40.0919817 │
+│  19437 │ China   │ Shanxi         │ Datong                     │ 大同市                     │    113.63334 │    40.10484 │
+│  19722 │ China   │ Shanxi         │ Jiexiu                     │ 介休                       │     111.9125 │    37.02444 │
+│ 159070 │ China   │ Shanxi         │ Jiexiu                     │ 介休                       │   112.001713 │   37.031378 │
+│  20391 │ China   │ Shanxi         │ Yuanping                   │ 原平                       │     112.7575 │    38.71528 │
+│ 159097 │ China   │ Shanxi         │ Yuanping                   │ 原平                       │  112.6994958 │  38.7308094 │
+│  20394 │ China   │ Shanxi         │ Yuci                       │ 榆次                       │    112.73194 │    37.68028 │
+│ 159060 │ China   │ Shanxi         │ Yuci                       │ 榆次                       │   112.846727 │   37.617838 │
+│  19543 │ China   │ Sichuan        │ Gaoping                    │ 高平                       │    106.10294 │    30.77576 │
+│ 159209 │ China   │ Sichuan        │ Gaoping                    │ 高平                       │  106.2581565 │  30.7956272 │
+│  19704 │ China   │ Sichuan        │ Jiangyou                   │ 江油                       │    104.71667 │    31.76667 │
+│ 159180 │ China   │ Sichuan        │ Jiangyou                   │ 江油                       │  104.9347205 │  31.9525495 │
+│  19772 │ China   │ Sichuan        │ Kangding                   │ 康定                       │     101.9569 │    30.00222 │
+│ 159279 │ China   │ Sichuan        │ Kangding                   │ 康定                       │  101.9545581 │  30.0002558 │
+│  19798 │ China   │ Sichuan        │ Langzhong                  │ 阆中                       │    105.99381 │    31.55037 │
+│ 159216 │ China   │ Sichuan        │ Langzhong                  │ 浪中                       │  106.0812814 │  31.5899565 │
+│  20187 │ China   │ Sichuan        │ Tongchuan                  │ 铜川                       │    105.08731 │    31.09407 │
+│ 159240 │ China   │ Sichuan        │ Tongchuan                  │ 铜川                       │   107.446975 │  31.3606738 │
+│  20280 │ China   │ Sichuan        │ Xichang                    │ 西昌                       │    102.26341 │    27.89642 │
+│ 159297 │ China   │ Sichuan        │ Xichang                    │ 西昌                       │   102.124224 │  27.8458993 │
+│  20351 │ China   │ Sichuan        │ Yanjiang                   │ 沿江                       │    104.64811 │    30.12108 │
+│ 159262 │ China   │ Sichuan        │ Yanjiang                   │ 沿江                       │  104.7669969 │  30.0999907 │
+│  20392 │ China   │ Sichuan        │ Yucheng                    │ 禹城                       │      102.999 │    29.98521 │
+│ 159248 │ China   │ Sichuan        │ Yucheng                    │ 宇城                       │  102.9941955 │  29.9883761 │
+│  19354 │ China   │ Tibet          │ Burang                     │ 普兰                       │     81.17511 │    30.29559 │
+│ 159825 │ China   │ Tibet          │ Burang                     │ 布朗                       │   81.3456026 │   30.629075 │
+│  20003 │ China   │ Tibet          │ Qamdo                      │ 昌都                       │   97.1712342 │  31.1434873 │
+│  20004 │ China   │ Tibet          │ Qamdo                      │ 昌都市                     │     97.22304 │     31.5837 │
+│  20049 │ China   │ Tibet          │ Saga                       │ 佐贺                       │     85.22601 │    29.32367 │
+│ 159782 │ China   │ Tibet          │ Saga                       │ 传奇                       │   85.2311223 │  29.3329617 │
+│  19274 │ China   │ Xinjiang       │ Aksu                       │ 阿克苏                     │   80.2582136 │  41.1677575 │
+│  19275 │ China   │ Xinjiang       │ Aksu                       │ 阿克苏地区                 │     81.84629 │    40.55689 │
+│  19276 │ China   │ Xinjiang       │ Altay                      │ 阿勒泰                     │   88.4341751 │  47.1001782 │
+│  19277 │ China   │ Xinjiang       │ Altay                      │ 阿勒泰地区                 │     88.11667 │    47.86667 │
+│  19293 │ China   │ Xinjiang       │ Aral                       │ 阿拉尔                     │     81.26566 │    40.54184 │
+│ 159961 │ China   │ Xinjiang       │ Aral                       │ 阿拉尔                     │   81.2770789 │  40.5421865 │
+│  19300 │ China   │ Xinjiang       │ Baijiantan                 │ 白剑潭                     │     85.13942 │    45.69298 │
+│ 159866 │ China   │ Xinjiang       │ Baijiantan                 │ 白剑滩                     │    85.260773 │   45.634206 │
+│  19365 │ China   │ Xinjiang       │ Changji                    │ 昌吉                       │   86.6870066 │  44.3478012 │
+│  19366 │ China   │ Xinjiang       │ Changji                    │ 昌吉回族自治州             │     87.31667 │    44.01667 │
+│  19519 │ China   │ Xinjiang       │ Fukang                     │ 福康                       │     87.97418 │    44.15874 │
+│ 159875 │ China   │ Xinjiang       │ Fukang                     │ 福康                       │    88.275146 │   44.504341 │
+│  19683 │ China   │ Xinjiang       │ Huocheng                   │ 霍城                       │     80.87173 │    44.05305 │
+│ 159938 │ China   │ Xinjiang       │ Huocheng                   │ 霍城                       │   80.9801647 │  44.3037058 │
+│  19773 │ China   │ Xinjiang       │ Karamay                    │ 克拉玛依                   │   84.8867252 │  45.5778068 │
+│  19774 │ China   │ Xinjiang       │ Karamay                    │ 克拉玛依市                 │     84.91683 │    45.49989 │
+│  19779 │ China   │ Xinjiang       │ Korla                      │ 库尔勒                     │     86.15231 │    41.76055 │
+│ 159886 │ China   │ Xinjiang       │ Korla                      │ 科拉                       │    85.716234 │   41.673238 │
+│  19786 │ China   │ Xinjiang       │ Kuqa                       │ 库车                       │     82.93064 │    41.71707 │
+│ 159896 │ China   │ Xinjiang       │ Kuqa                       │ 库车                       │   83.4531594 │  41.8196873 │
+│  19788 │ China   │ Xinjiang       │ Kuytun                     │ 奎屯                       │     84.90069 │    44.42707 │
+│ 159934 │ China   │ Xinjiang       │ Kuytun                     │ 库伊顿                     │     85.01358 │   44.551335 │
+│  20005 │ China   │ Xinjiang       │ Qapqal                     │ 察布查尔                   │     81.08722 │    43.80194 │
+│ 159937 │ China   │ Xinjiang       │ Qapqal                     │ 卡普卡尔                   │   81.1974919 │  43.6205113 │
+│  20059 │ China   │ Xinjiang       │ Shache                     │ 莎车                       │     77.24056 │    38.41667 │
+│ 159915 │ China   │ Xinjiang       │ Shache                     │ 莎车                       │    77.033982 │  38.3446426 │
+│  20093 │ China   │ Xinjiang       │ Shihezi                    │ 石河子                     │     86.03694 │     44.3023 │
+│ 159960 │ China   │ Xinjiang       │ Shihezi                    │ 石河子                     │   86.0775574 │  44.3017013 │
+│  20152 │ China   │ Xinjiang       │ Tacheng                    │ 塔城                       │   83.2079658 │  46.7907169 │
+│  20153 │ China   │ Xinjiang       │ Tacheng                    │ 塔城市地区                 │        82.95 │       46.75 │
+│  20200 │ China   │ Xinjiang       │ Turpan                     │ 吐鲁番                     │   89.7283163 │  42.4561611 │
+│  20201 │ China   │ Xinjiang       │ Turpan                     │ 吐鲁番地区                 │     89.16667 │    42.93333 │
+│  20314 │ China   │ Xinjiang       │ Xinyuan                    │ 鑫源                       │     83.24959 │    43.42649 │
+│ 159940 │ China   │ Xinjiang       │ Xinyuan                    │ 新源                       │   83.6324476 │  43.3506314 │
+│  19419 │ China   │ Yunnan         │ Dali                       │ 大理                       │  100.2651597 │  25.6074778 │
+│  19420 │ China   │ Yunnan         │ Dali                       │ 大理白族自治州             │    100.13104 │    25.68548 │
+│  19552 │ China   │ Yunnan         │ Gejiu                      │ 个旧                       │    103.15372 │    23.36085 │
+│ 159398 │ China   │ Yunnan         │ Gejiu                      │ 个旧                       │  103.1577391 │  23.3618738 │
+│  19733 │ China   │ Yunnan         │ Jinghong                   │ 景洪                       │    100.73409 │    21.99102 │
+│ 159420 │ China   │ Yunnan         │ Jinghong                   │ 景洪                       │  100.7983916 │  22.0147814 │
+│  19770 │ China   │ Yunnan         │ Kaiyuan                    │ 开元                       │    103.30372 │    23.69767 │
+│ 159399 │ China   │ Yunnan         │ Kaiyuan                    │ 开元                       │   103.378104 │  23.7106875 │
+│  20100 │ China   │ Yunnan         │ Shilin                     │ 士林                       │    103.33237 │    24.81878 │
+│ 159325 │ China   │ Yunnan         │ Shilin                     │ 士林                       │  103.4269371 │  24.7611768 │
+│  19453 │ China   │ Zhejiang       │ Deqing                     │ 德清                       │     119.9599 │    30.54485 │
+│ 159491 │ China   │ Zhejiang       │ Deqing                     │ 德清                       │  120.0500594 │  30.5625691 │
+│  19481 │ China   │ Zhejiang       │ Dongyang                   │ 东阳                       │    120.22528 │    29.26778 │
+│ 159507 │ China   │ Zhejiang       │ Dongyang                   │ 东阳                       │  120.2372669 │  29.2924528 │
+│  19505 │ China   │ Zhejiang       │ Fenghua                    │ 奉化                       │     121.4064 │    29.65628 │
+│ 159465 │ China   │ Zhejiang       │ Fenghua                    │ 奉化                       │  121.4017136 │  29.6575869 │
+│  19526 │ China   │ Zhejiang       │ Fuyang                     │ 富阳                       │    119.95194 │    30.05333 │
+│ 159455 │ China   │ Zhejiang       │ Fuyang                     │ 富阳                       │  119.9559051 │  30.0504847 │
+│  19591 │ China   │ Zhejiang       │ Haining                    │ 海宁                       │    120.68638 │    30.53629 │
+│ 159486 │ China   │ Zhejiang       │ Haining                    │ 海宁                       │  120.6759733 │  30.5142256 │
+│  19662 │ China   │ Zhejiang       │ Huangyan                   │ 黄岩                       │    121.26591 │     28.6501 │
+│ 159520 │ China   │ Zhejiang       │ Huangyan                   │ 黄岩                       │  121.2576325 │    28.65319 │
+│  19710 │ China   │ Zhejiang       │ Jiaojiang                  │ 椒江                       │    121.47331 │    28.69844 │
+│ 159519 │ China   │ Zhejiang       │ Jiaojiang                  │ 椒江                       │  121.4385711 │  28.6758042 │
+│  19713 │ China   │ Zhejiang       │ Jiashan                    │ 嘉善                       │    120.92583 │    30.84918 │
+│ 159484 │ China   │ Zhejiang       │ Jiashan                    │ 嘉善                       │  120.9218024 │  30.8327446 │
+│  19714 │ China   │ Zhejiang       │ Jiaxing                    │ 嘉兴                       │  120.7510971 │  30.7474425 │
+│  19715 │ China   │ Zhejiang       │ Jiaxing                    │ 嘉兴市                     │    120.75238 │     30.7707 │
+│  19801 │ China   │ Zhejiang       │ Lanxi                      │ 兰溪                       │    119.47156 │    29.21588 │
+│ 159505 │ China   │ Zhejiang       │ Lanxi                      │ 兰溪                       │   119.455345 │  29.2117769 │
+│  19844 │ China   │ Zhejiang       │ Linhai                     │ 临海                       │     121.1447 │    28.85535 │
+│ 159526 │ China   │ Zhejiang       │ Linhai                     │ 临海                       │  121.1402223 │  28.8616886 │
+│  19848 │ China   │ Zhejiang       │ Linping                    │ 临平                       │    120.29722 │     30.4225 │
+│ 159453 │ China   │ Zhejiang       │ Linping                    │ 临平                       │  120.2946532 │  30.4217049 │
+│  19891 │ China   │ Zhejiang       │ Luqiao                     │ 路桥                       │    121.37491 │    28.58023 │
+│ 159521 │ China   │ Zhejiang       │ Luqiao                     │ 路桥                       │  121.3338807 │  28.5818718 │
+│  19961 │ China   │ Zhejiang       │ Ninghai                    │ 宁海                       │    121.42472 │    29.28917 │
+│ 159467 │ China   │ Zhejiang       │ Ninghai                    │ 宁海                       │  121.4252252 │  29.2907774 │
+│  20069 │ China   │ Zhejiang       │ Shangyu                    │ 上虞                       │    120.87111 │    30.01556 │
+│ 159496 │ China   │ Zhejiang       │ Shangyu                    │ 尚宇                       │  120.8640628 │     30.0357 │
+│  20219 │ China   │ Zhejiang       │ Wenling                    │ 温岭                       │    121.38416 │    28.37524 │
+│ 159525 │ China   │ Zhejiang       │ Wenling                    │ 温岭                       │  121.3808408 │  28.3761941 │
+│  20260 │ China   │ Zhejiang       │ Xianju                     │ 仙居                       │    120.73168 │     28.8547 │
+│ 159524 │ China   │ Zhejiang       │ Xianju                     │ 仙居                       │  120.7251018 │  28.8499577 │
+│  20274 │ China   │ Zhejiang       │ Xiaoshan                   │ 萧山                       │    120.25883 │    30.16746 │
+│ 159451 │ China   │ Zhejiang       │ Xiaoshan                   │ 萧山                       │  120.2597528 │  30.1861821 │
+│  20383 │ China   │ Zhejiang       │ Yiwu                       │ 义乌                       │    120.07676 │    29.31506 │
+│ 159506 │ China   │ Zhejiang       │ Yiwu                       │ 义乌                       │  120.0703805 │  29.3093002 │
+│  20411 │ China   │ Zhejiang       │ Yuyao                      │ 余姚                       │    121.14944 │       30.05 │
+│ 159468 │ China   │ Zhejiang       │ Yuyao                      │ 余瑶                       │  121.1500882 │  30.0403094 │
+│  20467 │ China   │ Zhejiang       │ Zhuji                      │ 诸暨                       │    120.24233 │    29.71877 │
+│ 159498 │ China   │ Zhejiang       │ Zhuji                      │ 诸暨                       │  120.2419855 │  29.7112121 │
+│  98679 │ Russia  │ Altai          │ Inya                       │ Иня                        │     86.62667 │    50.45611 │
+│  98680 │ Russia  │ Altai          │ Inya                       │ Иня                        │      82.6712 │     53.5044 │
+│  97634 │ Russia  │ Moscow         │ Annino                     │ Аннино                     │         37.6 │    55.58333 │
+│  97636 │ Russia  │ Moscow         │ Annino                     │ Аннино                     │     37.26019 │    55.58316 │
+│  97970 │ Russia  │ Moscow         │ Bogorodskoye               │ Богородское                │     37.88333 │       56.55 │
+│  97971 │ Russia  │ Moscow         │ Bogorodskoye               │ Богородское                │     37.71617 │    55.81353 │
+│ 101206 │ Russia  │ Moscow         │ Severnyy                   │ Северный                   │     37.54889 │    55.93583 │
+│ 101207 │ Russia  │ Moscow         │ Severnyy                   │ Северный                   │        37.65 │    56.73333 │
+│  33978 │ Spain   │ Cantabria      │ El Astillero               │ El Astillero               │     -3.82051 │    43.40094 │
+│ 152844 │ Spain   │ Cantabria      │ El Astillero               │ El Astillero               │    -3.822281 │  43.3983734 │
+│  34897 │ Spain   │ Las Palmas     │ La Oliva                   │ La Oliva                   │    -13.92912 │    28.61052 │
+│ 153197 │ Spain   │ Las Palmas     │ La Oliva                   │ La Oliva                   │  -13.9267252 │  28.6100767 │
+│  34988 │ Spain   │ Las Palmas     │ Las Palmas de Gran Canaria │ Las Palmas de Gran Canaria │    -15.41343 │    28.09973 │
+│ 153198 │ Spain   │ Las Palmas     │ Las Palmas de Gran Canaria │ Las Palmas de Gran Canaria │  -15.4362574 │  28.1235459 │
+│  34856 │ Spain   │ León           │ La Bañeza                  │ La Bañeza                  │     -5.89772 │    42.30026 │
+│ 152979 │ Spain   │ León           │ La Bañeza                  │ La Bañeza                  │   -5.9092754 │  42.2909973 │
+│  34908 │ Spain   │ León           │ La Pola de Gordón          │ La Pola de Gordón          │     -5.66768 │    42.85658 │
+│ 152991 │ Spain   │ León           │ La Pola de Gordón          │ La Pola de Gordón          │   -5.6714331 │  42.8543772 │
+│  34918 │ Spain   │ León           │ La Robla                   │ La Robla                   │     -5.62904 │    42.80302 │
+│ 152994 │ Spain   │ León           │ La Robla                   │ La ROBLA                   │   -5.6273951 │  42.8012489 │
+│  33997 │ Spain   │ Madrid         │ El Escorial                │ El Escorial                │     -4.12846 │    40.58254 │
+│ 152817 │ Spain   │ Madrid         │ El Escorial                │ El Escorial                │   -4.1280468 │  40.5842657 │
+│  34002 │ Spain   │ Madrid         │ El Molar                   │ El Molar                   │     -3.57969 │    40.73215 │
+│ 152824 │ Spain   │ Madrid         │ El Molar                   │ El Molar                   │   -3.5825347 │  40.7351603 │
+│  34024 │ Spain   │ Madrid         │ El Vellón                  │ El Vellón                  │     -3.57969 │    40.76495 │
+│ 152839 │ Spain   │ Madrid         │ El Vellón                  │ El Vellón                  │    -3.581902 │  40.7674389 │
+│  34029 │ Spain   │ Madrid         │ El Álamo                   │ El Álamo                   │     -3.99447 │    40.23066 │
+│ 152809 │ Spain   │ Madrid         │ El Álamo                   │ El Álamo                   │   -3.9942211 │  40.2312091 │
+│  34860 │ Spain   │ Madrid         │ La Cabrera                 │ La Cabrera                 │     -3.61265 │    40.86386 │
+│ 152814 │ Spain   │ Madrid         │ La Cabrera                 │ La Cabrera                 │   -3.6154482 │  40.8655887 │
+│  34991 │ Spain   │ Madrid         │ Las Rozas de Madrid        │ Las Rozas de Madrid        │     -3.87371 │    40.49292 │
+│ 152832 │ Spain   │ Madrid         │ Las Rozas de Madrid        │ Las Rozas de Madrid        │   -3.8784732 │  40.4953138 │
+│  34932 │ Spain   │ Murcia         │ La Unión                   │ La Unión                   │     -0.87799 │    37.61915 │
+│ 152974 │ Spain   │ Murcia         │ La Unión                   │ La Unión                   │   -0.8859898 │  37.6219141 │
+│  34993 │ Spain   │ Murcia         │ Las Torres de Cotillas     │ Las Torres de Cotillas     │     -1.24188 │    38.02822 │
+│ 152973 │ Spain   │ Murcia         │ Las Torres de Cotillas     │ Las Torres de Cotillas     │   -1.2433848 │  38.0274986 │
+│  32556 │ Spain   │ Valencia       │ Atzeneta d'Albaida         │ Atzeneta d'Abaida          │         -0.5 │    38.83333 │
+│ 152920 │ Spain   │ Valencia       │ Atzeneta d'Albaida         │ La iteteta dalbaida        │   -0.4986166 │  38.8312511 │
+│  33233 │ Spain   │ Valencia       │ Canet d'En Berenguer       │ Canet d'En Berenguer       │     -0.21667 │    39.68333 │
+│ 152931 │ Spain   │ Valencia       │ Canet d'En Berenguer       │ Canet d'En Berenguer       │   -0.2191903 │  39.6806346 │
+│  34871 │ Spain   │ Valencia       │ La Font de la Figuera      │ La fuente Figuera          │     -0.88333 │        38.8 │
+│ 152935 │ Spain   │ Valencia       │ La Font de la Figuera      │ La Fuente de la higuera    │   -0.8800271 │  38.8061311 │
+│  34904 │ Spain   │ Valencia       │ La Pobla Llarga            │ La Pobla Long              │     -0.46667 │    39.08333 │
+│ 152956 │ Spain   │ Valencia       │ La Pobla Llarga            │ Pobla Long the             │   -0.4755993 │   39.085084 │
+│  34906 │ Spain   │ Valencia       │ La Pobla de Farnals        │ La Pobla de Farnals        │     -0.28425 │    39.56571 │
+│ 152953 │ Spain   │ Valencia       │ La Pobla de Farnals        │ El Pobla de Farnals        │   -0.3207299 │  39.5764948 │
+│  34907 │ Spain   │ Valencia       │ La Pobla de Vallbona       │ La Pobla de Vallbona       │     -0.55468 │    39.59747 │
+│ 152955 │ Spain   │ Valencia       │ La Pobla de Vallbona       │ El Pobla de Vallbona       │   -0.5517843 │  39.5962965 │
+│  34935 │ Spain   │ Valencia       │ La Yesa                    │ La Yesa                    │        -0.95 │    39.88333 │
+│ 152967 │ Spain   │ Valencia       │ La Yesa                    │ La Yesa                    │   -0.9611608 │  39.8918673 │
+╰────────┴─────────┴────────────────┴────────────────────────────┴────────────────────────────┴──────────────┴─────────────╯

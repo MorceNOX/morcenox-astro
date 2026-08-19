@@ -1,0 +1,156 @@
+VERSION = 1.0.0
+
+# Variáveis de compilação (Precisão estrita e depuração ativadas)
+CC       = gcc
+CFLAGS   = -Wall -Wextra -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math -Iinclude
+LDFLAGS  = -Llib -Wl,-rpath,lib:/usr/local/lib:'$(LIBEXECDIR)'
+LIBS     = -lm -lswe -lncursesw -lsqlite3 -licui18n -licuuc -licudata -lpthread -ldl
+
+APP_NAME = MorceNOX-Astro
+
+# Nome do executável final e do script SQL
+TARGET   = astro
+DB_SQL   = astro.db.sql
+
+# ==============================================================================
+# CONFIGURAÇÕES DO GETTEXT
+# ==============================================================================
+DOMAIN     = astro
+PO_DIR     = po
+LOCALES    = pt es en
+POT_FILE   = $(PO_DIR)/$(DOMAIN).pot
+# ==============================================================================
+
+
+# Caminhos de Instalação do Sistema
+PREFIX   ?= /usr/local
+BINDIR   := $(PREFIX)/bin
+LIBEXECDIR ?= $(PREFIX)/libexec/$(APP_NAME)
+
+# Caminhos do Usuário (Configuração e Banco de Dados no XDG)
+XDG_CONFIG_HOME ?= $(HOME)/.config
+APP_CONFIG_DIR  := $(XDG_CONFIG_HOME)/$(APP_NAME)
+DB_FILE         := $(APP_CONFIG_DIR)/astro.db
+
+CFLAGS +=  -DVERSION=\"$(VERSION)\"
+CFLAGS +=  -DAPPLICATION_NAME=\"$(APP_NAME)\"
+
+# Encontra automaticamente todos os arquivos .c na pasta src/
+SRCS     = $(wildcard src/*.c)
+OBJS     = $(SRCS:.c=.o)
+
+.PHONY: all clean init-db reset-db install uninstall setup-dir translate
+
+# Regra principal (padrão - apenas compila o binário localmente)
+all: $(TARGET) translate
+
+# Regra para linkar o binário final
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LIBS)
+
+# Regra genérica para compilar arquivos .c em .o
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Regra para criar a estrutura de diretórios e injetar o banco no $HOME do usuário
+setup-dir:
+	@echo "Criando diretório de configuração em $(APP_CONFIG_DIR)..."
+	@mkdir -p $(APP_CONFIG_DIR)
+		@mkdir -p $(APP_CONFIG_DIR)/ephe
+	@if [ -z "$$(ls -A $(APP_CONFIG_DIR)/ephe 2>/dev/null)" ]; then \
+	    echo "Pasta ephe vazia. Copiando arquivos da Swiss Ephemeris..." ; \
+	    cp -rv ephe/* $(APP_CONFIG_DIR)/ephe/ ; \
+	else \
+	    echo "Arquivos da Swiss Ephemeris já existem em $(APP_CONFIG_DIR)/ephe/. Pulando cópia." ; \
+	fi
+	@if [ ! -f "$(APP_CONFIG_DIR)/help_en.txt" ]; then \
+	    cp help_en.txt $(APP_CONFIG_DIR)/; \
+		cp topics_en.txt $(APP_CONFIG_DIR)/; \
+		cp help_pt.txt $(APP_CONFIG_DIR)/; \
+		cp topics_pt.txt $(APP_CONFIG_DIR)/; \
+	fi
+	@if [ ! -f "$(APP_CONFIG_DIR)/.env" ]; then \
+	    cp .env $(APP_CONFIG_DIR)/; \
+	fi
+	@if [ ! -f "$(DB_FILE)" ]; then \
+		echo "Criando o banco de dados $(DB_FILE)..."; \
+		if [ -f "$(DB_SQL)" ]; then \
+			sqlite3 "$(DB_FILE)" < "$(DB_SQL)"; \
+		else \
+			sqlite3 "$(DB_FILE)" "VACUUM;"; \
+			echo "Aviso: $(DB_SQL) não encontrado. Banco criado vazio em $(DB_FILE)."; \
+		fi \
+	else \
+		echo "Banco de dados já existe em $(DB_FILE). Mantendo arquivo atual."; \
+	fi
+
+# ==============================================================================
+# SEÇÃO AUTOMATIZADA: TRADUÇÕES E INSTALAÇÃO (GETTEXT FIXO)
+# ==============================================================================
+
+# Compila os textos (.po) gerando os binários locais com o nome da língua (ex: pt.mo)
+translate: $(POT_FILE)
+	@mkdir -p locale/pt/LC_MESSAGES
+	@mkdir -p locale/en/LC_MESSAGES
+	@mkdir -p locale/es/LC_MESSAGES
+	@if [ -f $(PO_DIR)/pt.po ]; then msgfmt $(PO_DIR)/pt.po -o locale/pt/LC_MESSAGES/pt.mo; fi
+	@if [ -f $(PO_DIR)/en.po ]; then msgfmt $(PO_DIR)/en.po -o locale/en/LC_MESSAGES/en.mo; fi
+	@if [ -f $(PO_DIR)/es.po ]; then msgfmt $(PO_DIR)/es.po -o locale/es/LC_MESSAGES/es.mo; fi
+
+# Atualiza ou cria o modelo (.pot) escaneando os códigos dentro de src/
+$(POT_FILE): $(SRCS)
+	@mkdir -p $(PO_DIR)
+	@echo "Atualizando modelo de tradução (POT)..."
+	xgettext --keyword=_ --language=C --from-code=UTF-8 --output=$(POT_FILE) $(SRCS)
+	@echo "Mesclando novidades nos arquivos .po..."
+	@if [ -f $(PO_DIR)/pt.po ]; then msgmerge --update $(PO_DIR)/pt.po $(POT_FILE); else msginit --no-translator --input=$(POT_FILE) --locale=pt --output=$(PO_DIR)/pt.po; fi
+	@if [ -f $(PO_DIR)/en.po ]; then msgmerge --update $(PO_DIR)/en.po $(POT_FILE); else msginit --no-translator --input=$(POT_FILE) --locale=en --output=$(PO_DIR)/en.po; fi
+	@if [ -f $(PO_DIR)/es.po ]; then msgmerge --update $(PO_DIR)/es.po $(POT_FILE); else msginit --no-translator --input=$(PO_DIR)/es.po --locale=es --output=$(PO_DIR)/es.po; fi
+
+# Regra de instalação atualizada para copiar os arquivos pt.mo e en.mo fixos
+install: all setup-dir
+	@echo "Instalando o executável em $(DESTDIR)$(BINDIR)..."
+	@mkdir -p $(DESTDIR)$(BINDIR)
+	@cp $(TARGET) $(DESTDIR)$(BINDIR)/
+	@chmod 755 $(DESTDIR)$(BINDIR)/$(TARGET)
+	@install -d $(DESTDIR)$(LIBEXECDIR)
+	@cp -r lib/* $(DESTDIR)$(LIBEXECDIR)/
+	
+	@echo "Instalando arquivos de tradução fixa do Gettext..."
+	@if [ -f locale/pt/LC_MESSAGES/pt.mo ]; then \
+		install -d $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES; \
+		install -m 644 locale/pt/LC_MESSAGES/pt.mo $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES/pt.mo; \
+	fi
+	@if [ -f locale/en/LC_MESSAGES/en.mo ]; then \
+		install -d $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES; \
+		install -m 644 locale/en/LC_MESSAGES/en.mo $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES/en.mo; \
+	fi
+	@if [ -f locale/es/LC_MESSAGES/es.mo ]; then \
+		install -d $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES; \
+		install -m 644 locale/es/LC_MESSAGES/es.mo $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES/es.mo; \
+	fi
+
+	@echo ""
+	@echo "======================================================================="
+	@echo " Instalação do AstroMorce concluída com sucesso!"
+	@echo "======================================================================="
+
+# Regra de desinstalação limpa
+uninstall:
+	@echo "Removendo o executável de $(DESTDIR)$(BINDIR)..."
+	@rm -f $(DESTDIR)$(BINDIR)/$(TARGET)
+	@echo "Removendo arquivos de tradução..."
+	@rm -f $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES/pt.mo
+	@rm -f $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES/en.mo
+	@rm -f $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES/es.mo
+
+# Regra para limpar os arquivos temporários de compilação locais
+clean:
+	rm -f src/*.o $(TARGET)
+
+# Regra para resetar o banco de dados do usuário ativo
+reset-db: clean
+	@if [ -f "$(DB_FILE)" ]; then \
+		echo "Removendo o banco de dados do usuário em $(DB_FILE)..."; \
+		rm -f "$(DB_FILE)"; \
+	fi

@@ -1,0 +1,2169 @@
+Index 01: Symbols
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1
+
+• The Symbols Used in This Application:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1) The Zodiac Signs
+
+♈  Aries
+
+♉  Taurus
+
+♊  Gemini
+
+♋  Cancer
+
+♌  Leo
+
+♍  Virgo
+
+♎  Libra
+
+♏  Scorpio
+
+♐  Sagittarius
+
+♑  Capricors
+
+♒  Aquarius
+
+♓  Pisces
+
+
+
+
+2) Luminars, Planets & Mathematical Points
+
+☉  Sun
+
+☽  Moon
+
+☿  Mercury
+
+♀  Venus
+
+♂  Mars
+
+♃  Jupiter
+
+♄  Saturn
+
+♅  Uranus
+
+♆  Neptune
+
+⯓  Pluto
+
+☊  North Node
+
+☋  South Node
+
+🝴  Part of Fortune
+
+🌑 Syzygy Ante Nativitatem (SAN), for New Moon in pre-natal syzygy
+
+🌕 Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
+
+🜊  Vertex
+
+AC Ascendant (ASC)
+
+DC Descendant
+
+MC Midheaven
+
+IC Imum Coeli
+
+
+
+
+3) Aspects
+
+☌  Conjunction 
+
+⚹  Sextile
+
+□  Square
+
+△  Trine
+
+☍  Opposition
+
+a  Applicative Aspect 
+
+s  Separative Aspect 
+
+∥  Paralell
+
+∦  Contra-Paralell
+
+
+
+
+4) The Moon Phases
+
+🌑  New Moon
+
+🌘  Waxing Crescent
+
+🌗  First Quarter
+
+🌖  Waxing Gibbous
+
+🌕  Full Moon
+
+🌔  Waning Gibbous
+
+🌓  Last Quarter
+
+🌒  Waning Crescent
+
+
+
+
+5) Elements
+
+🜂  Fire
+
+🜄  Water
+
+🜁  Air
+
+🜃  Earth
+
+
+
+
+6) Other Symbols and Abbreviations
+
+℞ or Ret - Retrograde Movement
+
+Dir - Direct Movement
+
+BN -  Benefic Aspect 
+
+ML -  Malefic Aspect 
+
+VoC - Void of Course
+
+Joy - Planet in Joy (joy by house)
+
+JoyS - Joy by Sign
+
+FreeRays - Free from the Sun Rays
+
+SubRays - Under the Sun rays
+
+Assist - Under assistance
+
+Siege - Under Siege
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 02: Shortcuts in the Chart Wheel Screen
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2
+
+• Shortcuts in the Chart Wheel Screen:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        
+    • M  - Menu Actions
+    
+    • F1 - Data Info 
+       
+    • F2 - Planet Positions and Dignities 
+       
+        - F2 - Accidental Dignities Details
+        
+        - F3 - Strength
+        
+        - F4 - Planetary Energy Profile
+        
+    • F3 - Aspects
+    
+        - F3 - Parallel & Contra-parallel aspects
+        
+        - F4 - Aspects by Sign 
+        
+    * F4 - Planetary Hours
+    
+    • F5 - Rising, Setting & Culmination Times
+    
+    • F6 - Houses
+    
+    • F7 - Almuten
+    
+        i - Almuten Figuris Interpretation 
+    
+    • F8 - Native's Temperament
+    
+        i - Temperament Interpretation 
+    
+    • F9 - Annual Profections
+    
+    • F12 - Firdaria
+    
+    • F13 (shift+F1) or 1 - Vital Chronocrators (Hyleg & Alcochoden)
+    
+    • F14 (shift+F2) or 2 - Anareta (Destructor of Life)
+    
+    • F15 (shift+F3) or 3 - Primary Directions
+    
+    • F16 (shift+F4) or 4 - Primary Directions to Arabic Parts
+    
+    • F17 (shift+F5) or 5 - Arabic Parts
+    
+       e - Edit the Selected Part
+       
+       a / i - Add a New Arabic Part
+       
+       d - Delete the Selected Part
+       
+       x - Aspects of the Planets to the Arabic Parts
+    
+    • F18 (shift+F6) or 6 - Mind Analysis
+    
+    • F19 (shift+F7) or 7 - Solar Revolution Chart
+    
+        C - Radix Confrontation: Solar Return Integration
+        
+        T - Annual Transits
+        
+        P - Arabic Parts Solar Return Radix Confrontation
+        
+    • F20 (shift+F8) or 8 - Planetary Energy Profile
+    
+    • 0 - Primary Motivation
+       
+     
+     
+    • A - Toggle Animation
+    
+    • [ - Slow down the animation pace by 1 min or backwards, 
+          if negative
+    
+    • ] - Increase the animation pace by 1 min
+    
+    • + - Zoom In 
+    
+    • - - Zoom Out 
+    
+    • ←↓↑→ - Pan 
+    
+    • R - Reset Zoom and Pan
+    
+    • D - Display Decans
+    
+    • B - Display Terms (bounds)
+    
+    • H - Display House Boundaries
+    
+    • Q or ESC - Back to Main Menu 
+    
+    
+    F11 is reserved for the Operational System, so it is not 
+    a shortcut in this program. By default it is used to maximize 
+    the current window hiding its top bar (fullscreen), which is 
+    very usefull for this application, specially in the chart 
+    wheel, because it magnifies it. So, use it!
+        
+    Several terminal windows use the F10 key to access the
+    terminal menu. It generally depends on the user 
+    configurations. To avoid conflicts, we decide in letting 
+    the F10 key alone. So it is not used in this application.
+    
+    Another nice shortcut from your terminal is the key combination
+    to increase and to decrease the font size. Most terminal 
+    windows use the keys [CTRL]+[+] to zoom in and [CTRL]+[-] to 
+    zoom out. Check the configuration of your terminal and be 
+    welcome to use these key combinations here, for this program
+    is prepared to refresh and redraw its windows accordingly. 
+    
+    Every action is also available by pressing [M] and selecting 
+    the desired module in the Actions Menu.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 03: Overview
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3
+
+• Overview:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This application is designed to be your astrological companion.
+Here, you can calculate and visualize astrological charts, 
+view the current transit chart, and access tables and panels to 
+assist you in deep analysis and full horoscope interpretation.
+
+You can zoom in and out the charts, pan them across the screen,
+and use animation mode to visualize the past and future 
+movements of planets and other celestial objects. 
+You can even control the pace of the animation! 
+
+Navigation is handled entirely by arrow keys, function keys,
+menus and intuitive shortcuts — all within your terminal.
+
+The modules provide charts, tables and panels, accessible 
+via function and numerical keys, which contains all the data you 
+need to make good interpretations and also predictions.
+
+The texts are direct and objective, yet as complete as possible to 
+guide you throughout the charts and tables. Color coding is also 
+used everywhere to help you quickly interpret the significance of 
+the data.
+
+We also use colors within the chart to differentiate celestial 
+bodies according to their types and mathematical points.
+
+All calculations are performed in the light of Classical 
+Astrology, though we also display the outer planets and their 
+relationships with all other bodies in the chart and tables. 
+Using these modern additions is entirely up to your preference.
+
+Additionally, you can access settings to configure your charts 
+according to various Classical Astrology systems. You can also 
+set a default city to generate quick charts for your current 
+location and time.
+
+The app's core was designed to ensure accuracy in all 
+calculations and offer the widest possible scope, making it an 
+extremely useful astrological tool for any astrologer, from 
+students to the most experienced professionals.   
+ 
+The interface was designed to offer efficiency and beauty; 
+most actions require only one or two keystrokes, and the 
+color system displays relevant information across all modules.
+ 
+To save a custom chart, simply enter the data and select the 
+save option from the main menu.
+
+To view and interact with the action modules hit the function 
+or numeric keys of the keyboard while the chart wheel is being 
+displayed, or the key [M] to open the action menu and choosing
+the desired one. 
+
+Some tables and panels have more options accessible while 
+they are open.
+
+Whenever you wish you can open this help screen and see 
+immediately the keys and their respective table or 
+panel, or go directly to the desired topic.
+
+This application is developed in C, utilizing the ncurses 
+library for visual elements and the Swiss Ephemeris for 
+astronomical calculations. This ensures a fast, solid, and 
+accurate system that is precise and visually appealing, 
+even within a terminal environment.
+
+All data is stored in an SQLite database provided by this
+application.
+
+We utilize an up-to-date free database of cities provided by
+https://github.com/dr5hn/countries-states-cities-database, 
+which we have enhanced with structural improvements using the 
+pytz (timezonefinder) and srtm libraries to better serve the 
+application's needs (These libraries were only used to enhance 
+the application's database during the development phase. 
+They are not used by the program and you don't need to install 
+them).
+
+The cities' database contains approximately 153 thousand
+cities. It is good enough for a free and well-structured database,
+working on a free astrological software, but small villages may 
+not be listed. Therefore, for small villages, you should look for 
+the name of the town where it is located, or a city very close 
+to it. 
+
+For example, Princess Diana was born in Sandringham, a small 
+village located in King's Lynn borough, in the county of Norfolk.
+You will see that Sandringham is not listed. So, to get her chart, 
+you must select United Kingdom as the country, then look for 
+King's Lynn in Norfolk county or state. (County or State is the 
+2nd column in the cities table).
+
+The same happens to the Friedrich Nietzsche's chart. He was born
+in Röcken, a small village that was recently annexed to the town 
+of Lützen, in Germany. So you must select Lützen, in the 
+Saxony-Anhalt state, as the Nietzsche's hometown.
+
+This software links with the ICU library (libicu), which is 
+licensed under the ICU License and Unicode License. 
+You can find the full license text at github.io 
+(https://github.com/unicode-org/icu/blob/main/LICENSE)
+
+Astrological information has been compiled from various 
+authoritative sources related to Classical Astrology and
+some of them is included in the Technical Topics.
+
+The application works 100% offline; no data is sent to or 
+retrieved from the internet.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 04: The Main Menu
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4
+
+• The Main Menu:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available options in the Main Menu:
+
+
+• Quick Chart: View chart for current time and location
+───────────────────────────────────────────────────────────────────
+
+Displays the chart wheel for the current time (now) and the 
+pre-set default location. The chart is animated and 
+updates every second.
+
+When hitting this option the previous loaded chart is replaced
+by the quick new chart. If you didn't save it you've lost it.
+
+Note: The loaded chart info is displayed at the bottom status bar.
+
+
+• New Chart: Configure chart parameters
+───────────────────────────────────────────────────────────────────
+
+Define the parameters for chart generation. This allows you 
+to create Natal Charts or set data for specific historical 
+events or projects, or for any other purpose.
+
+The selection boxes appear in the following sequence:
+
+1. Date (set year, month, and day using the arrow keys).
+
+2. Time (set hour, minute, and second using arrow keys). This must
+   be the local time, the time in effect in the birthday place and
+   not the universal time.
+
+3. The gender of the native; or neuter for non personal
+   charts.
+
+4. Country (Select from the scrolling list).
+
+5. City (Select from the scrolling list; the State/County/Province
+   is displayed in the 2nd column to help you distinguish 
+   homonymous cities).
+
+6. Timezone (TZ) (Displays the timezone from the cities 
+   database; you may confirm or manually type a new one). Actually 
+   this is shown only for reference, because the program allways
+   calculates the correct timezone for the selected city.
+
+7. DST (Daylight Saving Time: choose between Yes, No, or Auto. 
+   If Auto, the application applies the correct DST 
+   interval for the specific date).
+
+8. Chart Name (Type a name for your new chart). The name of the 
+   current chart will appear by default. You can maintain this
+   name to overwrite the current chart with the new data or
+   select another name to get a new chart.
+
+The values are selected by using the arrow keys and <ENTER> to 
+confirm.
+
+You can hit the <ESC> key in any box to cancel the edition.
+
+After setting the data, remember to save the chart. If you 
+close the application without saving, or if you open the 
+Quick Chart, the data will be lost.
+
+The Quick Chart will overwrite the selected data by the 
+current time and default location.
+
+
+• Load Chart: Load a previously saved chart
+───────────────────────────────────────────────────────────────────
+
+Scroll through a list of your saved charts and select one to load.
+The chosen chart will become the "current chart".
+
+
+
+• Save Chart: Save the current chart
+───────────────────────────────────────────────────────────────────
+
+Save the current chart data to the database.
+
+A dialog will ask you about the chart name, which you can 
+preserve the current or set a new one.
+
+This option can also be used to save the current loaded chart 
+with a different name (so you can delete or not the previous one).
+
+If you set an existing chat's name the previous one will be 
+overwritten after the confirmation.
+
+
+
+• Delete Chart: Delete a previously saved chart
+───────────────────────────────────────────────────────────────────
+
+Select a chart from the list and hit <ENTER> to delete it. 
+Note: This action is permanent and removes the chart from the
+database.
+
+It is very usefull to clean up the things.
+
+
+
+• Display Chart: Show the full astrological chart
+───────────────────────────────────────────────────────────────────
+
+Display the loaded chart even if it has not been saved yet.
+
+The status bar in the main menu screen shows the data of the 
+current loaded chart to be displayed.
+
+
+
+• Settings: Modify default application settings
+───────────────────────────────────────────────────────────────────
+
+This option opens a dialog to modify display modes and 
+calculation parameters and other options.
+
+You can set:
+
+   • Display Mode (Dark/Light): Changes the color schemes 
+     for the chart wheel and tables.
+       
+   • House Systems: Choose from various systems to suit 
+     your needs:
+    
+    The available house systems and their classification:
+    
+        1) Natural or Simbolic Systems:
+        W-Whole Signs, E-Equal Houses
+        
+        2) Space-based Non-quadrant System:
+        M-Morinus
+        
+        3) Quadrant Systems:
+        
+            3.1) Ecliptic System:
+            O-Porphyry
+            
+            3.2) Space-based Systems:
+            C-Campanus, R-Regiomontanus
+            
+            3.3) Space and Time based System:
+            B-Alcabitius, P-Placidus, K-Koch, T-Topocentric
+        
+    P.S.1: The system will automatically switch to O-Porphyry 
+    if the selected latitude is above 66.5° or below -66.5° 
+    when using B-Alcabitius, P-Placidus, or K-Koch.
+    
+    P.S.2: House numbers in the minor circle of the 
+    chart wheel indicate houses boundaries.
+    
+
+   • Triplicity System: Choose between Morinus, Dorotheus, 
+     and Ptolemy to determine the rulership of the elements.
+    
+   • Planetary Orbis: Modify the orbis value for all planets,
+     luminaries and the lunar nodes used in aspect calculations.
+     Note: We do not use "orbis by aspect"; each planet has a 
+     fixed orbis applied to all its aspects.
+    
+   • Orbis for Parallel Aspects: Specific orbis values can 
+     be set for parallel and contra-parallel aspects.
+    
+   • Modern Planet Exaltation: Although based on Classical 
+     Astrology, you can choose whether to include the 
+     exaltation rulerships of the outer planets. 
+     (Note: We do not consider modern planets for domicile 
+     rulership).
+     
+   • Show Modern Planets: You can choose if the 3 modern planets
+     will be part or not of your charts. But remember that we 
+     do not include dignities by domicile for these planets.
+     
+   • The Default Gender: Male, Female or Neuter.
+
+
+All settings are persistent and saved in the application database.
+
+
+• Change Default Location: 
+───────────────────────────────────────────────────────────────────
+
+Set the default city for "Quick Charts".
+ 
+The chosen city will update immediately and will persist 
+upon restarting the application. 
+
+This option does not overwrite previously saved chart and does not
+change the city of the currently loaded chart, it only indicates 
+to the application what is the city for the new Quick Chart.
+
+
+
+
+Menu Navigation:
+───────────────────────────────────────────────────────────────────
+
+   • Arrow keys: Move between menu options
+   • Enter: Select current item
+   • ESC: Exit menu and quit the application
+   
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 05: The Chart Wheel
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5
+
+• The Chart Wheel:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When a chart is loaded, the wheel is calculated according 
+to the selected data.
+
+The status bar in the Main Menu shows the location and time 
+for the current chart.
+
+The chart screen also displays detailed information 
+while showing the wheel and your Horoscope in the center.
+
+The wheel is divided into 12 segments representing the signs. 
+The 12 zodiac signs are displayed prominently using ASCII art.
+
+Next to the outer circle, if you wish, you can see the rulers 
+of the decans by pressing [D], three by sign, according to the 
+Chaldean order, each one rulling ten degrees of the respective 
+sign. The ruler charactere is drawn at the center of its decan.
+
+You can also see the terms rulers by pressing [B]. Each term 
+ruler is drawn in the beggining of its term. There are five
+terms by sign and their degrees vary according to the chosen
+system.
+
+This way you can graphically see the rulers by term and decan of 
+a body in the chart wheel.
+
+Below the signs, planets and points rotate within their 
+respective signs, displaying their angle (degree and 
+minutes) and retrograde symbol (if applicable).
+
+The chart displays a number in the inner and in the outer 
+circles indicating the respective house cusp. So you can see the
+boundaries of the houses.
+
+In the center, in ASCII art, appear the symbols of the planets 
+rulling respectively the day and the hour in effect at the 
+date/time of the chart.
+
+You can zoom in/out and pan the chart.
+Use [+] or [-] to zoom and the arrow keys to pan.
+The [R] key resets the chart wheel to its original size and 
+position.
+
+Type [H] to show the houses boundaries in the chart.
+
+You can activate animation mode by pressing [A]. Use ] and [ 
+to adjust the animation pace in 60-second increments. 
+A positive pace shows future events; a negative pace simulates 
+traveling back in time.
+
+• The Colors:
+───────────────────────────────────────────────────────────────────
+
+To differentiate celestial bodies, the chart uses color coding:
+
+   • The 7 Main Planets (Sun, Moon, Mercury, Venus, Mars, 
+     Jupiter, and Saturn) are displayed in Blue.
+    
+   • The 3 Modern Planets (Uranus, Neptune, and Pluto) 
+     are displayed in Magenta.
+    
+   • Points and Angles (Asc, Desc, IC, MC, Vertex, Part of 
+     Fortune, Syzygy Ante Nativitatem, North/South Node) are 
+     in Black.
+    
+The signs are color-coded by element:
+
+   • Fire (Aries, Leo, Sagittarius): Red
+   • Water (Cancer, Scorpio, Pisces): Blue
+   • Air (Gemini, Libra, Aquarius): Yellow
+   • Earth (Taurus, Virgo, Capricorn): Green
+
+• The Animation:
+───────────────────────────────────────────────────────────────────
+
+By default, "Quick Chart" is animated at a 1-second interval, 
+allowing you to track celestial motion almost in real-time.
+
+The animation updates the chart every second in the pace displayed
+at the right bottom corner of the screen.
+
+To animate a loaded chart, press [A]. Use ] to increase 
+speed and [ to decrease speed by 1 minute per step. 
+The clock and Moon phase in the upper corners will update 
+accordingly to the animation pace, as well as the objects within
+the chart wheel and the planetary rulers.
+
+The wheel spins 1° clockwise every time the Ascendant adds 1°.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 06: The Available Modules, the Tables and Panels 
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6
+
+• The Available Modules, the Tables and Panels:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Function keys F1 to F9 and F12, F13 to F20 (or 1 to 8) load the 
+following modules that calculate and create tables, panels and 
+reports when the respective key is pressed in the Chart Wheel
+screen. 
+
+The keys are shortcuts, but you can also access the modules by 
+pressing [M] in the Chart Wheel screen and choose the desired 
+one with the arrow keys and [ENTER].
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 07: Chart Data Module 
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7
+
+• Chart Data (F1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Here you can see the basic information of your chart.
+
+• Chart's Name;
+
+• Chart's Type (Radix or Solar Revolution);
+
+• Chart location and time;
+
+• The sect and the gender of the chart;
+
+• Sunrise, sunset, and Local Apparent Solar Time;
+
+• Syzygy Ante Nativitatem, Moon phase and her temperament;
+
+• Season, according to the Sun's position.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 08: Positions, Dignities & Rulership Module 
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8
+
+• Positions, Dignities & Rulership Table (F2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Positions of planets and objects by sign and house;
+
+• Declination, speed, and movement direction;
+
+• Orientality related to the Sun's position;
+
+• Gender, sect and quadrant conformity;
+
+• Rulers by domicile, exaltation, triplicity, term and decan;
+
+• Mutual reception: This column shows the pair of planets which are 
+  receiving each other. In this table we don't take account whether
+  or not it's a valid aspect between the two planets envolved, 
+  but in the next table - pressing F2 again to get access - we can 
+  see this and other information about dignities in more details. 
+
+Pressing F2 again and you can see details of the accidental
+dignities and the state of the planets and bodies.
+
+F3 shows the strength of each planet in the chart based on 
+their dignities and their relevance.
+
+F4 shows the Planetary Energy Profile, a chart of bars displaying
+the strength and the relevance of each planet in a visual fashion
+way (also pressing [8] in the chart wheel screen).
+
+When choosing by the menu actions, these submodules are available
+as independent options.
+
+Color coding indicates the quality of data: Blue (favorable), 
+red (unfavorable), black (neutral), or magenta (specific factors).
+
+Use [↓↑] to scroll the table.
+
+
+• Essential Dignities Scoring:
+    
+                          Domicile → +5 points
+                        Exaltation → +4 points
+                             Exile → -5 points
+                              Fall → -4 points
+                        Triplicity → +3 points
+                   Terms or Bounds → +2 points
+                     Decan or Face → +1 point 
+                     
+            
+• Accidental Dignities Scoring:
+
+                           Pilgrim → -5 points
+
+                              Fast → +2 points
+                              Slow → -2 points
+                              
+                            Direct → +4 points
+                        Retrograde → -5 points
+                           
+                           House 1 → +5 points
+                           House 2 → +3 points
+                           House 3 → +2 points
+                           House 4 → +4 points
+                           House 5 → +3 points
+                           House 6 → -3 points
+                           House 7 → +4 points
+                           House 8 → -4 points
+                           House 9 → +3 points
+                          House 10 → +5 points
+                          House 11 → +4 points
+                          House 12 → -5 points
+                          
+                             Hayz* → +3 points
+                         Hayz(+)** → +2 points
+                             Haym* → +2 points
+                         Anti-Hayz → -2 points
+   (*)Hayz implies Haym and not to
+         accumulate Hayz and Haym.
+(**)Add 2 if Hayz + Quad. conform.
+          
+                       Orientality → +2 points
+                    No Orientality → -2 points 
+   
+Mutual Reception without Aspect*** → +1 point
+   Mutual Reception with Aspect*** → +4 points if by exaltation, or 
+                                     +5 points if by domicile
+(***)by Domicile/Exaltation/Mixed.
+ (***)Aspect by degree or by sign.
+      
+                      Joy by House → +2 points
+                      
+                       Joy by Sign → +3 points
+                       
+                Free from Rays**** → +5 points
+                    Under Rays**** → -4 points
+                       Combust**** → -6 points
+                        Cazimi**** → +5 points
+       (****)One exclude the other
+                            
+                  Under Assistance → +5 points
+                       Under Siege → -5 points
+                       
+                        Feral***** → -3 points
+               Void Of Course***** → -2 points
+      (*****)One exclude the other
+      
+         Conjunction with Benefics → +5 points
+         Conjunction with Malefics → -5 points
+               Trine with Benefics → +4 points
+          Opposition with Malefics → -4 points
+             Sextile with Benefics → +3 points
+              Square with Malefics → -3 points
+       Conjunction with North Node → +4 points
+       Conjunction with South Node → -4 points
+    
+
+
+
+• Accidental Dignities Details (F2 in the Dignities Table)
+───────────────────────────────────────────────────────────────────
+
+You can see the accidental conditions of all the planets in the 
+current chart.
+
+Use [↓↑] to scroll the table.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 09: Planetary Strength
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9
+
+• The Strength of The Planets (F3 in the Dignities Table)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Here we show the score of each planet in their essential and 
+accidental dignities, as well as the strength of each one 
+according to the score and the weigh attributed by the planet's 
+relevance.
+
+The calculation is performed in three steps:
+
+    1. Sum of the essential and accidental dignities, attributing
+       a weigh of 70% for the essential and 30% for the 
+       accidental dignities scores;
+        
+    2. Normalization of the weighted sum taking into account a
+       minimum and a maximum reference values;
+       
+    3. Appliying the planetary weigh according to their 
+       relevance and dividing by ten to get usefull and
+       tangible values as the final strength.
+       
+So, we get relevant values to measure and evaluate a planet's
+capacity.
+
+Of course this calculation is only valid to have a glimpsed of the 
+overall dignity or debility of a planet. It is an auxiliary tool. 
+The use of the dignities tables and considering each dignity or 
+debility is crucial to make a better and complete interpretation.
+
+Use [↓↑] to scroll the table.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 10: Planetary Energy Profile
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10
+
+• Planetary Energy Profile (F4 in the Dignities Table) 
+  or F20 (Shift+F8) or 8
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Here we show the strength of each planet according to the scores of
+essential and accidental dignities and the weigh attributed for the 
+planets by their relevance.
+
+You can see the bars indicating the strength of the planets and 
+visually identify their force and relevance in the chart.
+
+This visual information (the bar chart) is extremely useful for 
+assessing a planet's capacity and conditions to successfully carry 
+out — or not — the actions assigned to it.
+
+The calculated strength of the planets is also taken into account 
+in measuring the relevance of the planets of the Solar Revolution
+when confrontating with the Radix Chart.
+
+Use [↓↑] to scroll the table.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 11: Aspects
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11
+
+• Aspects (F3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Displays aspects between the objects. Only the 5 main aspects 
+are used: Conjunction (0°), Opposition (180°), Trine (120°), 
+Square (90°), and Sextile (60°).
+
+Except for Conjunctions and Exact Aspects, the program 
+does not validate out-of-sign aspects.
+
+We do not use "orbis by aspect." The orbis is always the 
+average of the orbis of the two involved bodies. An aspect 
+is valid if the distance between the 2 objects is within the 
+calculated orbis.
+
+The table shows the distance in degrees, allowing you to 
+measure the strength of each aspect.
+
+A letter 'a' or 's' is shown at the right side of the aspect 
+symbol indicating if the aspect is applicative or
+separative.
+
+Color coding indicates the quality of the aspect: Blue (favorable:
+trine and sextile), red (unfavorable: opposition and square), 
+or magenta (specific factors: conjunction).
+
+Note 1: You can control the planetary orbis in the "Settings" menu.
+Note 2: Although they are not physical objects, tradition lectures 
+recomend that the lunar nodes orbis be the same as the Moon orbis.
+
+You can press F3 again to see the Declination Aspects (parallel &
+contra-parallel).
+
+Use [↓↑] to scroll the table.
+
+
+
+
+• Parallel & Contra-Parallel - F3 in the Aspects Table
+───────────────────────────────────────────────────────────────────
+
+Shows Parallel and Contra-parallel aspects, which are vital 
+for estimating the strength of the relationship between bodies. 
+
+The relationship between bodies is strengthened (for good or 
+evil) by parallel or contra-parallel aspects. 
+
+The planetary orbis is not considered here; a default 
+orbis of 1.5° is set for both.
+
+Color coding indicates the quality of the aspect: Blue (favorable:
+parallel), or red (unfavorable: contra-parallel).
+
+Note: The application consider the SAN's (pre-natal syzygy) 
+declination as the Moon's declination as in the moment of the 
+previous conjunction/opposition to the Sun.
+
+This option is available as an independent option when
+selecting by the menu action.
+
+Use [↓↑] to scroll the table.
+
+
+
+
+• Aspects by Sign - F4 in the Aspects Table
+───────────────────────────────────────────────────────────────────
+
+Displays aspects between two objects according to their respective 
+signs distance.
+
+If there is no aspect by sign between two objects, so they are in 
+aversion, or their respective signs are inconjunct.
+
+This option is available as an independent option when
+selecting by the menu action.
+
+Use [↓↑] to scroll the table.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 12: Planetary Hours
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12
+
+• Planetary Hours (F4)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Displays the planetary hours for the entire astrological day, 
+the length of the hours, and their respective rulers.
+
+Every planetary hour is 1/12 of the period (day or night) length 
+which are calculated according to the times of sunrise and sunset,
+considering that the planetary day starts on the sunrise and ends
+on the next sunrise. The application takes this in account when
+working with the planetary hours.
+
+You will notice that after midnigth when the time in the chart 
+indicates, for example, Wednesday, which is the real official
+Wednesday, the ruler of the night will be the ruler of the 
+Tuesday nigth, because the entire planetary day ends only at the 
+next sunrise.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 13: Rising, Setting, and Culmination Times
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+13
+
+• Rising, Setting, and Culmination Times (F5)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Shows the times (in UTC) for planetary rising, crossing 
+the Ascendant, Culmination (crossing the MC), and 
+setting (crossing the Descendant).
+
+It is important to determine the orientality or occidentality of 
+the planets in relation to the Sun.
+
+You can also use this module to check the transit of the 
+planets in the sky and the times they can be or not visible by the 
+distance from the Sun.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 14: Houses
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14
+
+• Houses Table (F6)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• House cusps, their positions, rulers and the planets and 
+objects within the houses.
+
+The table also indicates the house system in use by the 
+chart, which can be chosen in the settings.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 15: Almuten
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+15
+
+• Hylegiacal and Figuris Almuten (F7)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Here we can see which planets are the lord of the chart and of the
+hylegiacal points, as the Ascendant, the Sun, the Moon, the Part of
+Fortune and the Syzygy Ante-Nativitatem (SAN).
+
+The almuten is the planet which has more dignities in determined
+longitude or point in the chart. 
+
+The planet with more dignities in the hylegiacal points is the 
+Almuten Figuris, or the Lord of the Chart.
+
+The Almuten for a point is the planet with more essential
+dignities in that location, also added points according to the 
+house of the planet.
+
+The Almuten Figuris is the planet with more dignities in all the 
+five hylegiacal points, considering also points per house, for the 
+regents of the day or night and the hour. 
+
+If two or more planets received the same score, the criteria to 
+elect the winner is:
+
+1) the one which has more dignities in hylegiacal points, 
+2) the one which rules more planets and points in the chart, and
+3) the one which has more apects in general.
+
+
+
+
+• Almuten Interpretation - Press [i] in the Almuten Panel
+───────────────────────────────────────────────────────────────────
+
+A report showing the meaning and interpretation of the Almuten
+Figuris.
+
+The interpretation of the Almuten Figuris depends on the type of 
+the chart: Radix or Solar Revolution.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 16: Temperament
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+16
+
+• Native's Temperament (F8)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Shows the temperament of the native calculated according to 
+the Ascendant, the Moon and the Sun positions and aspects, as well
+as the Lord of the Chart.
+
+The temperament is the sum of the primitive qualities of 
+these elements together and signifies the physical body and the
+temperament of the native.
+
+
+
+
+• Temperament Analysis - Press [i] in the Temperament Panel
+───────────────────────────────────────────────────────────────────
+
+Give the native's psychological characteristics according to the 
+combination of the primitive qualities in the chart figure.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 17: Annual Profections
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+17
+
+• Annual Profections (F9)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You can see what area of native's life and what forces are 
+activated in determined age, as well as which is the planet 
+rulling the specific year of the native's life.
+
+You select an age and the application shows the rulling
+planet of the year, the house, which is the area of life
+activated, and the planets in the activated house.
+
+An alert will appear when the age coincides with the 
+pulsation cycle of the Alcochoden.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 18: Firdaria
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+18
+
+• Firdaria (F12)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You select an age and the application shows a table containing 
+the lord of the period and the sublords, highlighting the 
+current sublord according to the entered age.
+
+An alert will appear when the age corresponds to the 
+anaretic return cycle.
+
+The anaretic subperiod will be indicated as a trigger zone.
+
+The Firdaria's calculated regent and sub-regent will be 
+confrontated with the Solar Return's data automatically in 
+the Solar Revolution module.
+
+Note: When opening the Firdaria's module you will be 
+      asked for the age and this age is a floating point number 
+      whose decimal part is important to find the correct 
+      Firdaria's sub-period regent, as the Firdaria sub-regents 
+      may be one or another depending on the selected 
+      fractionary age. 
+      The program will always present the calculated age for the 
+      current date and time, with its current fractioned part, 
+      bearing in mind the exact Firdaria's calculation.
+      You are free to change the age's value as you wish, wich
+      must be usefull for consulting previous or future
+      periiods of time. For current moment's analysis you 
+      should use the calculated age, as it is presented by 
+      default by this program as the first option.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 19: Vital Chronocrators: Hyleg & Alcochoden
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+19
+
+• Vital Chronocrators: Hyleg & Alcochoden (F13) (Shift+F1) or 1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Shows the Hyleg (the giver of life) and the Alcochoden 
+(the giver of years) as well as the native's probable years 
+of life.
+
+The Hyleg (Giver of Life) and Alcochoden (Giver of Years) form the 
+foundation of traditional longevity and constitutional vitality 
+analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
+
+    • Hyleg is the planet with more vital force in the chart 
+      elected according to criteria based primary on the chart's 
+      sect and the house placing. 
+
+        The elected point acts as the primary geometric focus for 
+        physical shields and the terminal target for time projection 
+        techniques (Primary Directions).
+        
+    • The planet that aspects the Hyleg and holds the highest 
+      essential dignities at that exact degree is elected the 
+      Alcochoden. 
+      
+        It grants a baseline number of years according to 
+        its quadrant strength (corporeal position in houses)
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 20: Vital Threats: The Anareta
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+20
+
+• Vital Threats: The Anareta (F14) (Shift+F2) or 2
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Shows a panel indicating which planets are the vital threats for 
+the native's life.
+
+While the Hileg represents vital force, the Anareta and the Lord 
+of the 8th House map the geometric and circumstantial nature of 
+physical risk.
+
+It is important to consider the role of the Anareta which 
+is the executor and the Dominus Mortiis, the 8th house ruler,
+which can be the cause of the threats, and specifically the 
+native's death.
+
+All prediction modules in this program use this information to 
+generate alerts.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 21: Primary Directions
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+21
+
+• Primary Directions (F15) (Shift+F3) or 3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The options include seeing the primary directions for the most 
+relevant points (the Sun, the Moon, the Part of Fortune,
+the Syzygy Ante Nativitatem, the Ascendant, the Midheaven, 
+the Hyleg, the Descendant and the IC) and the 7 traditional 
+planets.
+
+Use right and left arrows to change the significator and scroll 
+through the table to see all directions to that selected point.
+
+By default, the table displays both, Direct and Converse
+directions. You can filter the results by pressing [C] to see 
+only Converse diretions, [D] for Direct, and [A] to see all 
+directions in the table.
+
+All directions displayer are Zodiacal with real latitude, 
+calculated with Naibod time key and dynamic obliquity.
+
+The first columns shows the age and the date of the event.
+
+Color coding indicate potential destructive directions, good
+directions and a period of alert.
+
+    • When the promisor is the Anareta or Dominus Mortiis (red 
+      reverse for malefic aspects and red bold for other aspects). 
+    
+    • Bad aspects directed by malefics (red). 
+    
+    • Bad aspects directed by no malefics (yellow) indicate an 
+      alert. 
+    
+    • Good aspects directed by benefics (blue) are potencialy good 
+      directions. 
+      
+    • Conjunctions (magenta) demand some analysis.
+    
+    • Other aspects (black).
+    
+The same color coding is applied to both, Direct and Converse 
+directions.
+     
+
+Use [↓↑] to scroll the table.
+Use [←/→] to change the Significator.
+
+
+
+
+• Primary Directions of the Arabic Parts (F16) (Shift+F4) or 4
+───────────────────────────────────────────────────────────────────
+
+Identical to the previous module, but here we calculate and 
+display the directions only for the Arabic Parts of your
+collection, since they are active in the chart.
+
+In a masculine chart only masculine and neutral parts are 
+displayed; for nocturnal charts, the displayed parts are 
+calculated according to their nocturnal formulae.
+
+The same color coding of the general directions can be seen in 
+this module.
+
+
+Use [↓↑] to scroll the table.
+Use [←/→] to change the Significator.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 22: Arabic Parts
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+22
+
+• Arabic Parts (F17) (Shift+F5) or 5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Scrolls through your registered arabic parts, according to the 
+current chart's gender and sect.
+
+If your chart is for a Male person, the Female Parts will not 
+be displayed in the list and in the other modules concerning 
+to arabic parts.
+
+Some parts have 2 distinct formulae for diurnal and for nocturnal
+charts. So, when loading this module, the formulae will follow 
+the chart's sect.
+
+You can add a new arabic part by pressing [a] or [i], edit by
+pressing [e], and delete by pressing [d].
+
+The table shows the arabic parts, their positions, the ruler by
+domicile, the link of the part and a brief explanation.
+
+The link refers to the area of life (houses) or the forces 
+envolved (planets) with them. 
+
+Basically, when the link is a planet, it will be the one which 
+is the significator or the trigger for the arabic part and the 
+area of life is the house which refers to the main subject of the 
+part. You can select a planet or a house for the link which is
+to be analysed altogether with the part.
+
+When adding or editing, you have to select the Personal Point, 
+the Significator and the Trigger for the diurnal and nocturnal
+formulae, as well as the gender related to the part, if 
+applicable. You may also write its brief description.
+
+To edit the name or the description, press [ENTER] and type 
+the desired text. Press [ENTER] again to stop.
+
+The formulae use each one the 3 above mentioned fields which
+are edited by pressing [← / →]. The [TAB] key switches the 
+field horizontally and, [↓↑], vertically.
+
+After adding and/or editing your parts, you can see the main 
+aspects which the parts are envolved with the planets by
+pressing [x] or [F3] in the arabic parts table screen. 
+
+Use [↓↑] to scroll the table.
+
+
+
+
+• Aspects of the Arabic Parts - Press [x] in Arabic Parts Table
+───────────────────────────────────────────────────────────────────
+
+Shows a table grid with the aspects between the planets and the 
+Arabic Parts which are active in the Chart.
+
+The shortcuts open the aspect table on which you can navigate 
+by pressing [← / →] to see more aspects to another group of 
+parts, if the table width is not enough to list all 
+registered parts.
+
+The aspects table shows the 3 first letters of the Arabic Parts
+name. So, when adding new parts make sure to differentiate their
+initial letters in order to make them easy to recognize in the 
+title line.
+
+Use [←/→] to see aspects with more parts if existing.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 23: Natal Mind & Psychological Analysis
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+23
+
+• Natal Mind & Psychological Analysis (F18) (Shift+F6) or 6
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This panel shows the native's mind characteristics and the 
+mind's governor.
+
+This module evaluates the native's rational intellect, emotional 
+stability, and core psychological disposition based on Strict 
+Traditional Astrology (Hellenistic and Medieval methodology, 
+drawing from Ptolemy and Bonatti).
+
+Unlike modern approaches, the traditional system analyzes the 
+structure of the rational mind (the Intellect) and the irrational 
+mind (the Emotional Soul) by tracking their natural significators, 
+elemental dignity, and planetary governance.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 24: Solar Return
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Solar Return Module: 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+ 
+1. Core Architectural Engine
+
+    • Exact Astronomical Return: The module uses a native Swiss 
+      Ephemeris algorithm to locate the exact Julian Day in 
+      Universal Time (UTC) when the transiting Sun returns to the 
+      precise ecliptic longitude of the birth blueprint.
+      
+    • Relocation & Domification: The mathematical instant of the 
+      return is absolute and independent of the user's location. 
+      However, house cusps and spatial orientations are dynamic. 
+      The system tracks whether the anniversary occurs at the 
+      birth coordinates or a relocated city, computing the local 
+      Ascendant (ASC), Midheaven (MC), and 12 house cusps. 
+      
+      Note: Some astrologers use always the same birthday city for 
+      the Solar Return's chart, but some of them consider the 
+      relocated city. So the program will present the birthday
+      city as default and will give you the option to select 
+      another one. It is by your choice.
+      
+    • Temporal Synchronization: Time variables are strictly 
+      unified using double-precision floats (double) to prevent 
+      truncation bugs. Age-related chronocrators (Firdaria 
+      sub-periods and Profections) are aligned by feeding the 
+      decimal life-fraction into the engines, 
+      ensuring absolute continuity across windows.
+      
+      Note: When opening the Solar Return's chart you will be 
+      asked for the age and this age is a floating point number 
+      whose decimal values doesn't make difference for the 
+      new solar return's chart per se, but it is important to 
+      make a good confrontation with the Firdaria's sub-period 
+      regent, as the Firdaria regents may be one or another 
+      depending on the selected fractionary age. 
+      The program will always present the calculated age for the 
+      current date and time, with its current fractioned part, 
+      bearing in mind the exact Firdaria's confrontation.
+      You are free to change the age's value as you wish, which
+      must be usefull for consulting previous or future
+      periods of time. For current moment's confrontation you 
+      should use the calculated age, as it is presented by 
+      default by this program as the first option.
+      
+    • The Solar Return's Chart will be presented in a different
+      color than the Radical Chart to make it easier to identify.
+
+
+
+2. Traditional Preditctive Framework (Radix Confrontation)
+
+The module prevents isolated, generic annual predictions by 
+executing a traditional hierarchical cross-examination between 
+the Solar Return and the Birth Chart (Radix) through seven 
+distinct checkpoints:
+   
+   • [CHECK I] Annual Lord of the Year (Almuten Figuris): 
+     Identifies the planet commanding the annual chart based on 
+     essential and accidental dignities computed for the return 
+     moment. Its raw operational strength is filtered against 
+     its root Natal Dignity Score, showing whether its annual 
+     promises will manifest smoothly (strong radix) or through 
+     heavy evolutionary hurdles (weak radix).
+   
+   • [CHECK II] Radix House Transit: Projects the ecliptic 
+     coordinate of the annual Almuten back onto the native's birth 
+     horizon via swe_house_pos(armc_natal, lat_natal, ...). 
+     This maps exactly which natal life-sector (e.g., Career in 
+     House 10, Finances in House 2) is being physically triggered 
+     by the "Manager of the Year."
+   
+   • [CHECK III] Time-Lord Co-Alignment: Cross-checks the annual 
+     Almuten against the Hellenistic Profection Lord of the Year. 
+     A perfect match signals an extraordinary "Turning-Point Year," 
+     giving the planet double cosmic authorization to trigger 
+     inevitable, life-shaping events.
+   
+   • [CHECK IV] Firdaria Cronocrator Alignment: Embeds the annual 
+     chart into the medieval long-term time stream. It verifies 
+     if the Lord of the Year matches the current Firdaria Master 
+     Ruler (Macro-cycle) or Sub-Ruler (Active sub-period), 
+     validating if immediate daily events are backed by long-term 
+     destiny trends.    
+   
+   • [CHECK V] Annual Ascendant Projection: Computes where the 
+     annual local horizon cuts through the birth 
+     houses. This reveals the primary target of the native's vital 
+     energy and focus during these specific 12 months.
+     
+   • [CHECK VI] SOLAR RETURN ASCENDANT PROJECTION: Computes the 
+     inverse horizon intersection by projecting the native's 
+     radical Ascendant coordinate back onto the dynamic Solar 
+     Return wheel. While Check V maps the objective environment 
+     knocking at the native's door, this checkpoint uncovers the 
+     psychological attitude, internal vitality, and subjective 
+     coping mechanisms the native will adopt when facing the 
+     year's challenges.
+   
+   • [CHECK VII] NATAL ASCENDANT PROJECTION IN SOLAR RETURN: 
+     The Cross Projection: Executes a multi-layered combinatorial 
+     analysis that bridges Check V (circumstantial reality) 
+     and Check VI (psychological response). By contrasting the 
+     external demands against the internal disposition, it detects 
+     structural alignments or structural friction (such as a 
+     public House 10 career spotlight colliding with an internal 
+     House 12 urge for withdrawal), preventing flat, linear 
+     interpretations.
+     
+ 
+ 
+     
+3. Annual Transits & Radical Projections Module
+
+    1. Architectural Framework & Spatial Projections
+    
+        • Static Transit Layer: This module treats the exact 
+          mathematical sky of the Solar Return as a continuous, 
+          frozen layer of transits that dictates structural rules 
+          over the native's baseline life for 12 months.
+    
+        • Radix Ecliptic Correlation: The engine extracts the 
+          annual coordinates—specifically filtering the true 
+          ecliptic longitudes (preventing inadvertent 
+          latitude or speed swaps)—and cross-examines them 
+          against the original Birth Chart (Radix).
+      
+        • Astronomical Space Domification: By anchoring the 
+          calculation strictly to the native's Natal ARMC 
+          and Natal Latitude, the module projects 
+          exactly which birth life-sector (Natal House 1–12) is 
+          being activated by the current year's transiting forces.
+      
+    2. Analytical Checkpoints & Risk Mitigation
+
+    To preserve traditional rigor and eliminate generic, alarmist 
+    automated outputs, the engine applies precise parameters across 
+    two distinct analytical lenses:
+
+        • [CRITICAL MONITOR] Hyleg Vital Protection: The system 
+          isolates the native's true lifetime Natal Hyleg (whether
+          a planet or an abstract point like the Ascendant). 
+          It tests if any transiting planet from the anniversary 
+          cuts through this exact degree within a strict, 
+          traditional 5° orb. Conjunctions from Benefics 
+          (Jupiter/Venus) highlight years of physical recovery 
+          and systemic protection, while alignments from Malefics
+          (Mars/Saturn) trigger immediate, highlighted vital 
+          alerts for acute inflammation or chronic 
+          physical constriction.
+                
+        • Active Radical Conjunctions: The engine loops through 
+          the seven traditional planets, 
+          mapping Sun to Saturn) using absolute modular distance 
+          checks. If an annual planet lands within 5° of 
+          any natal body, it awakens that specific natal promise.
+                
+        • Functional Weighting: The narrative dynamically adjusts 
+          based on the transiting planet's nature. A transiting 
+          Saturn or Mars conjunct a natal point triggers 
+          structural friction or sudden expenditure of energy, 
+          while a transiting Jupiter injects cosmic protection 
+          and expansion into that sector—ensuring the user can 
+          easily distinguish between high-stress years and 
+          structural growth windows.
+          
+In the Solar Return Chart the prediction modules are not available,
+as well as the Temperament, Mind Analysis and Primary Motivation, 
+because these calculations are relevant only for Natal (Radix) 
+Charts.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 25: Arabic Parts Solar Return Radix Confrontation
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+25
+
+• Arabic Parts Solar Return Radix Confrontation: 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+This module lists the available Arabic Parts (according to the 
+gender & sect configurations) and crosses each one with the 
+Natal (Radix) Chart, showing the Radical Corresponding House for 
+the calculated positions.
+
+This can help you delineating corresponding topics using the 
+respective part or parts for the selected revolution year and
+the impact over the Radical Chart.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 26: Primary Motivation
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+26
+
+• Primary Motivation Module: 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+This module creates a report containing the Native's Primary 
+Motivation which is calculated based on the Ascendant and its
+ruler.
+
+The Ascendant's sign gives the core of the motivation, but it can
+be emphasized or mitigated according to the dispositor's sign.
+
+The House of the dispositor indicates the area of life which the 
+motivation is applied or pointed to.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 27: Licenses
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+27
+
+• Licenses:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Swiss Ephemeris
+
+  https://github.com/aloistr/swisseph
+  GNU Affero General Public License (AGPL) 
+  <https://www.gnu.org/licenses/agpl-3.0.ca.html>
+
+• countries-states-cities-database
+
+  https://github.com/dr5hn/countries-states-cities-database
+  ODbL-1.0 license 
+  <https://opendatacommons.org/licenses/odbl/1.0/>
+  
+• SQLite
+
+  https://sqlite.org/
+  Public Domain
+ 
+• ncurses
+
+  https://invisible-island.net/ncurses/ 
+  NCURSES License 
+  <https://invisible-island.net/ncurses/ncurses-license.html>
+  
+• ICU library (libicu)
+
+  https://icu.unicode.org/
+  (https://github.com/unicode-org/icu/blob/main/LICENSE)
+    
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MorceNOX™ ASTRO - Your astrological companion!
+  
+Copyright © 2026  Amilcar Antonio Mesquita Rizk
+
+This program is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License 
+as published by the Free Software Foundation, either version 3 
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this program. If not, see https://www.gnu.org/licenses/.

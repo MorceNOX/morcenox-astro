@@ -1,0 +1,1588 @@
+Index 01: Início
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+                Welcome to the MorceNOX™ ASTRO!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Este é o seu guia sobre assuntos técnicos.
+
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Este guia cobrirá os tópicos a seguir:
+
+• Sistemas de Casas
+
+• Sistemas Triplicidade e Regentes
+
+• Syzygy Ante Nativitatem (SAN)
+
+• Temperamento da Lua
+
+• Módulo de Temperamento Natal
+
+• Análise Psicológica e Mente Natal
+
+• Vértex
+
+• Parte da Fortuna
+
+• CRONOCRATAS VITAIS: HYLEG & ALCOCHODEN
+
+• AMEAÇAS VITAIS: ANARETA & DOMINUS MORTIS
+
+• Planeta Feral e Vazio de Curso
+
+• Módulo de Direções Primárias
+
+• Direitos Autorais
+
+Estes tópicos ajudarão em certas configurações e
+em sua interpretação.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 02: Sistemas de Casas
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Sistemas de Casas - breve explicação:
+───────────────────────────────────────────────────────────────────
+        
+        1) Sistemas Naturais ou Simbólicos:
+        
+        • W - Whole Signs (Signos Completos): Um
+          sistema simbólico onde cada casa corresponde
+          a um signo zodiacal inteiro. O signo
+          contendo o Ascendente é a 1ª casa, e
+          os cúspides das casas estão sempre em 0°
+          do signo subsequente.
+        
+        • E - Equal Houses (Casas Iguais): Um sistema
+          regular que usa o grau exato do Ascendente
+          como o cúspide da 1ª casa. Cada cúspide
+          de casa subsequente é projetado em um grau
+          exatamente igual em signos consecutivos
+          (intervalos de 30° ao longo da eclíptica).
+        
+        
+        2) Sistema Espacial Não-quadrangular:
+        
+        • M - Morinus: Um sistema universal e
+          tridimensional que divide o equador celeste
+          em 12 segmentos iguais de 30° a partir do
+          meridiano. Estas divisões são projetadas
+          na eclíptica via círculos passando pelos
+          polos eclípticos, ignorando o horizonte
+          local e latitude geográfica.
+        
+        
+        3) Sistemas Quadrangulares:
+        
+            3.1) Sistema Eclíptico:
+            
+            • O - Porphyry (Porfírio): Um sistema
+              quadrangular simples que calcula a
+              distância longitudinal exata entre o
+              Ascendente e o Meio do Céu (MC). Cada
+              quadrante é então dividido diretamente
+              ao longo da eclíptica em três casas
+              de comprimento zodiacal igual.
+            
+            
+            3.2) Sistemas Espaciais:
+            
+            • C - Campanus: Um sistema tridimensional
+              que divide a vertical prima local
+              (o grande círculo passando por Leste, Oeste
+              e Zênite) em 12 segmentos iguais, que são
+              projetados na eclíptica.
+            
+            • R - Regiomontanus: Um sistema tridimensional
+              que divide o equador celeste em 12
+              segmentos iguais (começando no meridiano)
+              e os projeta na eclíptica usando círculos
+              que se interceptam nos pontos Norte e Sul
+              do horizonte local.
+            
+            
+            3.3) Sistemas Espaciais e Temporais:
+            
+            • B - Alcabitius: Um sistema semi-arco que
+              calcula o tempo para o Ascendente
+              chegar ao Meio do Céu durante a rotação
+              diurna, dividindo esse arco temporal em
+              três partes iguais para determinar os
+              cúspides intermediárias.
+            
+            • P - Placidus: Um sistema dinâmico baseado
+              em semi-arcos diurnos e noturnos. Os
+              cúspides das casas são determinadas pelos
+              pontos onde as posições celestes
+              intersectam frações específicas (1/3 e
+              2/3) do movimento de um planeta ou estrela
+              definido pelo tempo através do céu.
+            
+            • K - Koch: Uma variação da divisão de
+              semi-arco onde o caminho do ascendente
+              é rastreado de volta ao grau que ele
+              tinha quando o Meio do Céu estava em sua
+              posição atual, dividindo o arco de
+              ascensão oblíqua correspondente em partes
+              iguais.
+            
+            • T - Topocentric: Um sistema de alta
+              precisão matematicamente similar ao
+              Placidus, mas formulado através de uma
+              estrutura puramente geométrica e
+              topocêntrica. Calcula os cúspides das
+              casas com base no eixo rotacional real
+              do observador em sua localização
+              geográfica específica na superfície da Terra,
+              e não no centro da Terra.
+              
+              
+              
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 03: Sistemas de Triplicidade & Regentes: 
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Sistemas de Triplicidade & Regentes: 
+───────────────────────────────────────────────────────────────────
+
+Aqui está a tabela comparativa, seguida pela
+lógica filosófica e técnica de cada sistema.
+
+━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━
+Elem/Signos   ┃ Dorothean      ┃ Ptolemaic      ┃ Morinus 
+━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━
+Fogo          │ Diurno: Sol    │ Diurno: Sol    │ Diurno: Sol 
+(Áries, Leão, │ Not.: Júpiter  │ Not.: Júpiter  │ Noturno: Marte 
+Sagitário)    │ Parte: Saturno │                │ Particip: Júpiter
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Terra         │ Diurno: Vênus  │ Diurno: Vênus  │ Diurno: Mercúrio 
+(Touro,       │ Noturno: Lua   │ Noturno: Lua   │ Noturno: Saturno 
+Virgem,       │ Particip: Marte│                │ Particip: Vênus
+Capricorn)    │                │                │
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Ar            │ Diurno: Saturno│ Diurno: Saturno│ Diurno: Saturno 
+(Gêmeos,      │ Not.: Mercúrio │ Not.: Mercúrio │ Diurno: Vênus 
+Libra,        │ Parte: Júpiter │                │ Particip: Mercúrio
+Aquário)      │                │                │
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Água          │ Diurno: Vênus  │ Diurno: Marte  │ Diurno: Júpiter 
+(Câncer,      │ Noturno: Marte │ Noturno: Marte │ Noturno: Lua 
+Escorpião,    │ Particip: Lua  │ Particip: Lua  │ Particip: Marte
+Peixes)       │                │           Vênus│
+              │                │                │
+──────────────┴────────────────┴────────────────┴──────────────────
+
+Lógicas Filosóficas e Técnicas
+
+    1) Sistema Dorothean (Helenístico / Lógica de Seita)
+
+    Doroteu de Sidon (Séc. I d.C.) baseou seu sistema no
+    conceito de Seita (Hairesis), equilibrando a qualidade
+    elemental ativa com a natureza diurna/noturna dos
+    planetas. Ele requer três regentes para mostrar o
+    início, meio e fim de uma área específica da vida.
+
+    • Fogo: Pertence à Seita Diurna. O Sol (luminar
+      diurno primário) rege durante o dia. Júpiter (benéfico
+      diurno) rege à noite. Saturno (maléfico diurno) age
+      como estabilizador/regente participante.
+
+    • Terra: Pertence à Seta Noturna. Vênus (benéfica
+      noturna) rege durante o dia. A Lua (luminar noturno
+      primário) rege à noite. Marte (maléfico noturno) age
+      como o regente participante.
+
+    • Ar: Pertence à Seita Diurna. Saturno é colocado
+      aqui para moderar sua natureza fria com o calor
+      dos signos de ar durante o dia. Mercúrio rege
+      à noite, e Júpiter estabiliza.
+
+    • Água: Pertence à Seita Noturna. Vênus rege
+      durante o dia (exaltada em Peixes). Marte rege à noite
+      (domicílio em Escorpião). A Lua participa (domicílio
+      em Câncer).
+
+
+    2) Sistema Ptolemaic (Lógica Aristotélica / Filos.
+       Natural)
+
+    Cláudio Ptolomeu (Séc. II d.C.) simplificou o sistema
+    helênistico. Ele rejeitou o terceiro regente
+    "participante" porque via as triplicidades sob uma
+    estrutura física binária Aristotélica (Quente/Frio,
+    Úmido/Seco) em vez de uma progressão simbólica de vida.
+
+    • Conexão Fogo/Ar: Ptolomeu agrupou Fogo e Ar sob
+      a Seita Diurna. Ele atribuiu o Sol e Júpiter ao
+      Fogo, e Saturno e Mercúrio ao Ar.
+
+    • Conexão Terra/Água: Ele agrupou Terra e Água sob
+      a Seita Noturna. Ele atribuiu Vênus e a Lua à Terra.
+
+    • Exceção Água: Para Água, Ptolomeu introduziu uma
+      anomalia. Em vez de dar a um planeta noturno,
+      ele atribuiu tudo a Marte (dia e noite) para
+      contrabalançar a umidade extrema da Água com
+      a secura intensa de Marte. Vênus (dia) e a Lua
+      (noite) foram rebaixados a co-regentes menores.
+
+
+    3) Sistema Morinus (Lógica Racionalista / Simetria
+       de Dignidade)
+
+    Jean-Baptiste Morin (Séc. XVII) rejeitou tanto a
+    física de seita helenística quanto a ptolomaica.
+    Ele buscou um sistema puramente dedutivo, simétrico
+    e racional, baseado estritamente em dignidades
+    essenciais (Domicílio e Exaltação) e na natureza
+    planetária.
+
+    • Regente Diurno (Princípio da Dupla Dignidade):
+      O regente primário de uma triplicidade deve ser um
+      planeta que detenha tanto domicílio quanto exaltação
+      dentro desse elemento específico.
+        
+          Sol rege Fogo (Leão/Áries). Mercúrio rege Terra
+          (Virgem/Virgem). Saturno rege Ar (Aquário/Libra).
+          Júpiter rege Água (Sagitário é quente/seco, mas
+          co-rege Peixes e é exaltado em Câncer).
+          
+    • Regente Noturno (Princípio de Orientação Cardinal):
+      O regente secundário é sempre o regente planetário
+      do Signo Cardinal desse elemento específico.
+        
+          Marte para Fogo (Áries). Saturno para Terra
+          (Capricórnio). Vênus para Ar (Libra). Lua para
+          Água (Câncer).
+          
+    • Regente Participante: O planeta principal restante
+      ligado à natureza desse elemento é atribuído ao
+      último espaço para completar a tríade matemática.
+      
+      
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 03: Syzygy Ante Nativitatem (SAN)
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Syzygy Ante Nativitatem (SAN)
+───────────────────────────────────────────────────────────────────
+    
+Syzygy Ante Nativitatem (SAN), ou Sizígia Pré-natal,
+é um ponto altamente reverenciado na astrologia
+tradicional e helenística. Refere-se ao grau exato
+da última Lua Nova ou Cheia que ocorreu antes de
+seu nascimento.
+
+O SAN atua como a semente cósmica ou o projeto
+fundamental do seu mapa – o portal atmosférico e
+espiritual através do qual sua alma entrou no mundo
+físico.
+
+1. Como Identificar o Tipo de SAN
+
+A natureza da sua Sizígia Pré-natal depende
+inteiramente da fase lunar na qual a pessoa nasceu:
+
+    • SAN Conjuncional (Lua Nova Pré-natal): Se nasceu
+      enquanto a Lua estava crescendo (de Nova a Cheia),
+      sua SAN é a Lua Nova precedente. Isso infunde a
+      vida com temas de iniciação, sementes frescas e
+      ímpeto para frente. A pessoa é naturalmente
+      projetada para lançar novos projetos e abrir novos
+      caminhos.
+    
+    • SAN Preventional (Lua Cheia Pré-natal): Se nasceu
+      enquanto a Lua estava minguando (de Cheia a Nova),
+      sua SAN é a Lua Cheia precedente. Isso infunde a
+      vida com temas de culminação, consciência
+      relacional e integração. A pessoa é naturalmente
+      estruturada para finalizar coisas e buscar profunda
+      consciência objetiva.
+
+2. Significados Tradicionais e Modernos
+
+Em análises de textos tradicionais, a SAN carrega
+um peso enorme em várias áreas centrais:
+
+    • Vitalidade e o Hyleg: Astrólogos antigos, como
+      Ptolomeu, usaram o grau exato do SAN para
+      calcular o Hyleg (o planeta ou ponto de
+      vida em um mapa) para determinar a constituição
+      física, a linha de base de saúde e a força
+      vital geral de uma pessoa.
+
+    • Impressão Kármica da Alma: A SAN marca o
+      momento em que a energia cósmica coletiva se
+      concentrou pouco antes do nascimento. A casa e o
+      signo zodiacal onde a SAN cai atuam como um
+      "ponto sensível permanente" no mapa. Sempre que um
+      planeta exterior importante transita neste grau
+      específico, a pessoa vivenciará mudanças de vida
+      massivas e fundamentais.
+
+    • O Caminho do Destino: Embora o Vértex leve
+      pessoas predestinadas à pessoa, a SAN representa
+      o propósito que ela deve cumprir. Ele fornece o
+      contexto de fundo para o porquê sua alma escolheu
+      seu mapa natal específico.
+      
+      
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 04: O Temperamento da Lua
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• O Temperamento da Lua
+───────────────────────────────────────────────────────────────────
+    
+Na Astrologia Clássica (especialmente nas tradições
+helenísticas e medievais), as fases da Lua são
+fundamentais para calcular o Temperamento nativo.
+
+Este sistema determina sua constituição física, sua
+linha de base mental e sua disposição psicológica ao
+equilibrar as quatro qualidades primárias (Quente,
+Úmido, Frio e Seco) que formam os quatro humores do
+corpo (Sanguíneo, Colérico, Melancólico e Fleumático).
+
+Como a Lua governa o corpo físico, a mente subconsciente
+e as flutuações corporais vitais, o quadrante
+específico que ela ocupa no momento do seu nascimento
+dita sua linha de base física e emocional intrínseca.
+
+Veja como a Astrologia Clássica atribui qualidades
+e temperamentos a cada quadrante lunar:
+
+1. Primeiro Quadrante: De Lua Nova a Quarto Crescente
+
+    • Qualidades Primitivas: Quente e Úmido
+    
+    • Temperamento Associado: Sanguíneo
+    
+    • Características: Esta fase corresponde à Primavera.
+      Representa a infância, o crescimento e o movimento
+      externo. Indivíduos nascidos neste quadrante tendem
+      a ser muito sociáveis, otimistas, adaptáveis e
+      expressivos. A abundância de umidade confere imensa
+      flexibilidade psicológica, embora possa levar à
+      inquietação ou falta de foco.
+      
+2. Segundo Quadrante: De Quarto Crescente a Lua Cheia
+
+    • Qualidades Primitivas: Quente e Seco
+    
+    • Temperamento Associado: Colérico
+    
+    • Características: Esta fase corresponde ao Verão.
+      Representa a juventude, vitalidade física máxima e
+      ação direta. O calor estimula o impulso externo,
+      enquanto a secura proporciona foco agudo e
+      rigidez. Nativos nascidos aqui são ambiciosos,
+      apaixonados, competitivos e altamente motivados por
+      desafios. Eles possuem uma poderosa força de vontade,
+      mas devem se proteger contra a impaciência ou a
+      irritabilidade.
+    
+3. Terceiro Quadrante: De Lua Cheia a Quarto Decrescente
+
+    • Qualidades Primitivas: Frio e Seco
+    
+    • Temperamento Associado: Melancólico
+    
+    • Características: Esta fase corresponde ao Outono.
+      Representa a maturidade, colheita e profunda
+      introspecção. O calor se retrai, levando a uma
+      postura altamente analítica, objetiva e reservada.
+      Pessoas nascidas neste quadrante são tipicamente
+      profundas, sérias, realistas e altamente estruturadas.
+      Há uma forte inclinação para o intelecto, a
+      organização e a necessidade de significado profundo,
+      com tendência a processar emoções internamente.
+    
+4. Quarto Quadrante: De Quarto Decrescente a Próxima
+    Lua Nova
+
+    • Qualidades Primitivas: Frio e Úmido
+    
+    • Temperamento Associado: Fleumático
+    
+    • Características: Esta fase corresponde ao Inverno.
+      Representa a velhice, contenção, dissolução e
+      preparação para renascimento (especialmente a fase
+      balsâmica). O frio retarda o movimento externo,
+      enquanto a umidade busca uma síntese pacífica.
+      Indivíduos nascidos aqui tendem a ser excepcionalmente
+      calmos, amantes da paz, altamente intuitivos e
+      receptivos. Eles possuem uma resiliência emocional
+      quieta, embora possam ocasionalmente lutar contra
+      a inércia ou apatia.
+    
+
+O Impacto na Pontuação Total do Temperamento
+
+Na prática tradicional, a fase lunar não age isolada.
+Para determinar seu temperamento final e geral, um
+astrólogo tradicional sintetiza uma pontuação baseada
+em várias variáveis específicas do mapa natal:
+
+    1) O Signo Ascendente e seu planeta regente.
+    
+    2) O Signo Solar (que dita a estação do ano).
+    
+    3) O Signo Lunar (seu elemento).
+    
+    4) A Fase Lunar (o quadrante detalhado acima).
+    
+    5) Quaisquer planetas que façam aspecto próximo ao
+       Ascendente ou à Lua.
+    
+
+A fase lunar age como o "combustível" subjacente para
+seu corpo físico e suas reações instintivas imediatas.
+
+Por exemplo, se você tiver um mapa natal dominado por
+signos de Terra (que são secos), mas nasceu sob uma Lua
+de Primeiro Quadrante (que é úmida), essa fase lunar
+introduz flexibilidade crucial e um desejo de conexão
+social que suaviza dinamicamente a rigidez natural do
+seu mapa.
+
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 05: Módulo de Temperamento Natal
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Módulo de Temperamento Natal (Método de Intensidade
+  Galênica)
+───────────────────────────────────────────────────────────────────
+    
+Este módulo calcula a constituição humoral do nativo
+usando a Escala de Intensidades de Cláudio Galeno
+(Séc. II d.C.), expandida posteriormente pelas
+tradições astrológicas Medievais (Ibn Ezra) e
+Renascentistas (William Lilly).
+
+Em vez de uma abordagem binária bruta (onde um planeta
+é meramente quente ou frio), este motor adota
+magnitudes aritméticas ponderadas e assinadas (-3 a
++3) para mapear dois eixos polares:
+    
+    • Eixo Térmico: Valores positivos indicam graus de
+      Calor; valores negativos indicam Frio.
+      
+    • Eixo da Umidade: Valores positivos indicam graus de
+      Umidade; valores negativos indicam Secura.
+
+Calibração da Escala:
+
+    1. Os planetas possuem pesos dinâmicos (Graus 1 a
+       3) por serem os agentes ativos da luz celeste.
+       
+    2. Os Elementos (Signos) atuam como um pano de
+       fundo ambiental moderador, calibrado estritamente
+       no 1º Grau Galênico (Magnitude ±1). Isso impede
+       que as qualidades de fundo do signo dominem ou
+       afoguem a natureza humoral essencial dos planetas
+       posicionados nele.
+       
+───────────────────────────────────────────────────────────────────
+• As Quatro Qualidades Primitivas (Os Blocos de
+  Construção)
+───────────────────────────────────────────────────────────────────
+    
+Em física Aristotélica, o universo é governado pela
+interação de duas qualidades ativas e duas passivas.
+No corpo humano, elas regulam o metabolismo, o gasto
+de energia e a estrutura dos tecidos:
+
+    1. CALOR (Quente / Ativo): O princípio da energia
+       vital, expansão e aceleração metabólica. Ele impulsiona
+       o corpo a dispersar energia, acelera a frequência
+       cardíaca e cria um comportamento extrovertido, ativo
+       e expressivo.
+       
+    2. FRIO (Frio / Passivo): O princípio da preservação,
+       contração e desaceleração metabólica. Age como um
+       mecanismo de resfriamento que conserva energia,
+       diminui os processos físicos e leva a uma natureza
+       introspectiva, cautelosa e receptiva.
+       
+    3. UMIDADE (Úmido / Passivo): O princípio da fluidez,
+       flexibilidade e conectividade. Fornece lubrificação
+       a articulações e tecidos, torna a mente adaptável
+       e permite que o indivíduo absorva influências
+       ambientais facilmente.
+       
+    4. SECURA (Seco / Ativo): O princípio da estrutura,
+       tensão e separação. Cria rigidez, definição e
+       limites estruturais no corpo. Mentalmente, se
+       manifesta como foco, persistência e resistência à
+       mudança.
+
+───────────────────────────────────────────────────────────────────
+• Os Quatro Temperamentos Tradicionais (Perfis
+  Humorais)
+───────────────────────────────────────────────────────────────────
+    
+Quando essas qualidades primitivas se combinam através
+dos pesos astrológicos do mapa, elas determinam
+um dos quatro temperamentos constitucionais e
+psicológicos centrais:
+
+    1. SANGUÍNEO (Quente & Úmido — Elemento Ar)
+    
+        • Versátil e adaptável. Vivo, espontâneo e
+          entusiástico. Comunicativo e sociável. Sensível,
+          alegre e afável.
+    
+        • Constituição Física: Boa circulação sanguínea,
+          sistema nervoso responsivo, pele quente e um
+          metabolismo naturalmente equilibrado e adaptável.
+            
+        • Perfil Psicológico: Extrovertido, otimista,
+          socialmente hábil e altamente expressivo.
+          Os sanguíneos aprendem rapidamente e se adaptam
+          a novas situações facilmente, mas podem lutar
+          com consistência, rotinas e atenção breve.
+                
+    2. COLÉRICO (Quente & Seco — Elemento Fogo)
+    
+        • Entusiasmo, energia e ação rápida. Rígido,
+          insensível, impaciente.
+    
+        • Constituição Física: Alta taxa metabólica,
+          propenso à inflamação aguda, digestão apurada
+          e alta resistência física impulsionada por
+          tensão.
+            
+        • Perfil Psicológico: Líderes natais, ambiciosos,
+          altamente focados e intensamente motivados. Os
+          coléricos agem rápido e são eficientes, mas quando
+          desequilibrados, facilmente deslizam para a
+          impaciência, irritabilidade e raiva.    
+        
+    3. FLEUMÁTICO (Frio & Úmido — Elemento Água)
+    
+        • Sensível, reservado, introvertido. Plasticidade
+          e adaptabilidade. Motivação emocional, subjetiva
+          e volátil. Sensível, empático, mas não muito
+          expressivo. Paciente.
+    
+        • Constituição Física: Metabolismo mais lento,
+          propenso à retenção de fluidos, armazenamento
+          eficiente de energia, pele fria e pulso calmo.
+            
+        • Perfil Psicológico: Pacífico, profundamente
+          receptivo, empático e paciente. Os fleumáticos
+          são excelentes ouvintes e mantêm estabilidade
+          emocional sob pressão, mas podem lutar contra
+          a procrastinação, letargia e falta de impulso.
+            
+        
+    4. MELANCÓLICO (Frio & Seco — Elemento Terra)
+    
+        • Reflexão, concentração. Reservado e moderado em
+          sua expressão externa. Não muito exuberante em
+          sua fala, mas decisivo em suas ações.
+          Susceptibilidade, tristeza, pessimismo, depressão.
+    
+        • Constituição Física: Estrutura tecidual rígida,
+          resistência física mais lenta, mas altamente
+          persistente, e tendência à secura ou rigidez
+          nas articulações.
+            
+        • Perfil Psicológico: Analítico, altamente
+          organizado, disciplinado e profundamente reflexivo.
+          Os melancólicos possuem foco incomparável e um
+          forte senso de dever, mas são propensos a
+          pensar demais, preocupação crônica e ceticismo.
+          
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 06: Mente Natal & Análise Psicológica
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Mente Natal & Análise Psicológica
+───────────────────────────────────────────────────────────────────
+    
+Este módulo avalia o intelecto racional do nativo, a
+estabilidade emocional e a disposição psicológica
+central com base na Astrologia Tradicional Estrita
+(Metodologia Helênistica e Medieval, inspirada em
+Ptolomeu e Bonatti).
+
+Diferente de abordagens modernas, o sistema tradicional
+analisa a estrutura da mente racional (o Intelecto)
+e a mente irracional (a Alma Emocional) rastreando
+seus significadores naturais, dignidade elementar e
+governança planetária.
+
+───────────────────────────────────────────────────────────────────
+1. SIGNIFICADORES DO CORE ENGINE (Motor Central)
+───────────────────────────────────────────────────────────────────
+    
+O algoritmo avalia a condição de dois corpos celestiais
+fundacionais:
+
+  • ☿ MERCÚRIO: Governa a mente racional, a lógica, a
+                fala e as habilidades analíticas.
+               
+  • ☽ A LUA: Governa a mente irracional, o subconsciente,
+                memórias e hábitos.
+
+───────────────────────────────────────────────────────────────────
+2. MECANISMOS DE PONTUAÇÃO E CONDIÇÃO
+───────────────────────────────────────────────────────────────────
+O estado final de ambos os significadores é derivado
+de suas Dignidades Essenciais (qualidade virtuosa
+inerente) e Dignidades Acidentais (força da
+expressão material), o que inclui o manuseio pelo
+nativo de condições críticas como o estado de
+combustão.
+
+  • FORÇA ESSENCIAL E ACIDENTAL ALTA:
+    O intelecto exibe padrões cognitivos agudos,
+    virtuosos e altamente racionais.
+    
+  • INTELECTO EQUILIBRADO:
+    Exibe lógica funcional, prática e altamente
+    equilibrada no cotidiano.
+    
+  • STATUS NEGATIVO / DEBILITADO:
+    Propenso a pensamentos erráticos, ansiedade,
+    subjetividade ou névoa mental.
+
+• REFINAMENTO INTROVERSÃO [℞]:
+  Se Mercúrio estiver retrógrado, o processador
+  cognitivo é naturalmente invertido. O nativo
+  processa os pensamentos profundamente para dentro,
+  entrando em um estado mental introspectivo,
+  altamente analítico, mas quieto.
+
+• FLUTUAÇÃO DA ALMA EMOCIONAL:
+  A estabilidade da Lua é ainda mais colorida pela
+  ID da Fase Lunar no nascimento:
+  
+  - Lua Nova: Interno, profundamente subjetivo e
+             instintivo.
+  - Lua Crescente: Ativo, em crescimento e
+                   emocionalmente expressivo.
+  - Lua Cheia: Altamente exposto, intenso e
+               reativo.
+  - Lua Minguante: Reflexivo, desapegado e
+                    profundamente introspectivo.
+
+───────────────────────────────────────────────────────────────────
+3. O SENHOR DO PENSAMENTO (GOVERNADOR PRIMÁRIO)
+───────────────────────────────────────────────────────────────────
+O regente definitivo da mentalidade psicológica do
+nativo é o "Almuten da Mente", computado como um
+Almuten combinado ao longo dos longitudes de
+Mercúrio e da Lua. 
+
+Se vários planetas empatarem nos pontos essenciais,
+o sistema aplica uma cascata estrita de desempate
+tradicional de três níveis:
+  1. Total de Dignidades Essenciais detidas sobre
+     os Pontos Hylegicais chave.
+  2. Quantidade total de pontos governados em todo
+     o mapa (Disposição).
+  3. Conectividade total via aspectos planetários
+     (Integração do Mapa).
+
+PERFIS DE GOVERNADOR PLANETÁRIO:
+
+  • ☉ O SOL: Mente nobre, clara, orientada a um
+               propósito. Busca honra e liderança.
+               
+  • ☽ A LUA: Altamente intuitivo, imaginativo,
+                adaptável e receptivo.
+                
+  • ☿ MERCÚRIO: Puramente analítico, ágil, versátil.
+                 Excepcional para a lógica.
+  
+  • ♀ VÊNUS: Artístico, refinado, socialmente
+             dotado. Busca a harmonia absoluta.
+  
+  • ♂ MARTE: Ágil, rápido, competitivo. Excepcional
+            para crise e debate.
+  
+  • ♃ JÚPITER: Magnânimo, sábio, filosófico.
+               Possui julgamento ético.
+  
+  • ♄ SATURNO: Profundo, silencioso, altamente
+               disciplinado. Talentoso para pesquisa
+               pesada.
+  
+
+• TRATAMENTO DE CASOS EXTREMOS (INFLUÊNCIA MISTA):
+
+  No evento raríssimo de um impasse de ponto absoluto
+  após todos os três desempates tradicionais, o
+  sistema sinaliza uma "Influência Mista", mesclando
+  dinamicamente as palavras-chave e perfis centrais
+  dos co-regentes sem erros visuais ou cortes
+  estruturais.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 07: Vértex
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 
+ 
+• Vértex (Vx ou 🜊)
+───────────────────────────────────────────────────────────────────
+    
+O Vértex representa um ponto matemático de destino
+kármico e eventos inesperados que alteram a vida.
+Representa portas externas e imprevistas se abrindo.
+
+   • O Vértex nos Signos (Como o Destino Se Manifesta)
+
+    O signo do Vertex mostra as qualidades que o mundo
+    externo exigirá que você desenvolva, geralmente
+    através de crises ou eventos súbitos.
+
+        • Áries: O destino força a coragem, a
+          iniciativa e a independência. Você será
+          colocado em situações onde precisará lutar
+          sozinho e superar o medo da rejeição.
+
+        • Touro: Exige que você desenvolva
+          autossuficiência, estabilidade financeira e
+          autoestima. Encontros kármicos abalarão
+          seus valores materiais e sua segurança.
+
+        • Gêmeos: O destino exige flexibilidade
+          mental, comunicação e aprendizado. Mudanças
+          de curso ocorrem através de novas ideias,
+          irmãos ou estudos inesperados.
+
+        • Câncer: Você é compelido a lidar com
+          emoções, família e cuidado com os outros. Você
+          atrai situações que rompem sua casca fria
+          para liberar a vulnerabilidade.
+
+        • Leão: O universo exige que você abrace seu
+          poder pessoal, criatividade e presença no
+          palco. Eventos o forçarão a sair dos bastidores
+          e brilhar, mesmo que sinta-se tímido.
+
+        • Virgem: Exige ordem, discernimento,
+          rotina e serviço prático. O destino traz
+          situações caóticas para que você aprenda a
+          curar, organizar e ser útil.
+
+        • Libra: O foco kármico está em parcerias,
+          justiça e equilíbrio. Você é forçado a
+          aprender a cooperar, mediar conflitos e
+          se ver através do espelho dos outros.
+
+        • Escorpião: Encontros intensos que exigem
+          regeneração, desapego e transformação
+          psicológica. O destino trará crises envolvendo
+          tabus, poder ou finanças compartilhadas.
+
+        • Sagitário: O universo o impulsiona em direção
+          à expansão, fé, filosofia e grandes viagens.
+          Situações inesperadas rompem dogmas antigos
+          para abrir sua mente.
+
+        • Capricórnio: Exige maturidade,
+          responsabilidade, disciplina e status social.
+          Você será obrigado a construir algo sólido e
+          assumir liderança cedo ou por força de
+          circunstância.
+
+        • Aquário: O destino exige que você colabore
+          com o coletivo, aceite sua excentricidade
+          e busque a liberdade. Você atrai grupos ou
+          causas que mudam sua visão de mundo.
+
+        • Peixes: Exige compaixão, rendição espiritual,
+          arte e sacrifício saudável. O universo trará
+          eventos que dissolvem seu controle rígido para
+          que você aprenda a fluir e ter fé. Isso
+          geralmente acontece por meio de crises ou
+          eventos súbitos.
+
+    
+   • O Vértex nas Casas (A "Área de Vida" onde
+     o destino atua)
+
+    Devido à mecânica astrológica, o Vertex
+    quase sempre cai nas casas do lado ocidental
+    do mapa: Casas 5, 6, 7, 8 ou 9 (raramente nas
+    casas 4 ou 10).
+
+        • Casa 4: Ter o Vertex na 4ª Casa significa
+          que seu destino, pontos de virada kármicos e
+          encontros predestinados estão profundamente
+          ligados às suas raízes, família e vida
+          doméstica. 
+
+        • Casa 5: O destino se manifesta por meio de
+          romances avassaladores, expressão criativa
+          profunda ou a chegada de filhos. São
+          paixões que mudam sua identidade.
+
+        • Casa 6: Mudanças drásticas na rotina de
+          trabalho, saúde ou prestação de serviços.
+          Um encontro profissional ou um susto de
+          saúde pode mudar o rumo de sua vida.
+
+        • Casa 7: A casa mais comum e poderosa para
+          o Vertex. Indica casamentos, divórcios ou
+          parcerias de negócios kármicas. Pessoas
+          entram em sua vida com o claro sentimento de
+          "tinha que ser".
+
+        • Casa 8: Eventos profundos relacionados a
+          heranças, crises psicológicas ou dinheiro
+          de outras pessoas. Atrai parceiros que
+          provocam uma morte e renascimento
+          metafóricos dentro de você.
+
+        • Casa 9: O destino é ativado em universidades,
+          viagens internacionais, contato com outras
+          culturas ou conversões religiosas. Um mentor ou
+          uma viagem inesperada altera seu destino.
+
+        • Casa 10 indica que grandes pontos de virada
+          no destino e encontros kármicos ocorrem
+          em sua carreira, reputação e status público.
+          
+          
+          
+          
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 08: Parte da Fortuna
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Parte da Fortuna
+───────────────────────────────────────────────────────────────────
+    
+A Parte da Fortuna (Pars Fortunæ) é uma das Partes
+Árabes (ou Lots) mais importantes na astrologia. É um
+ponto matemático no seu mapa natal calculado usando
+as posições do Sol, da Lua e do seu Ascendente.
+
+Enquanto seus planetas representam seus impulsos
+psicológicos, a Parte da Fortuna representa um espaço
+físico e tangível onde propósito espiritual,
+alinhamento emocional e realidade física se encontram.
+
+1. Significado Central e Importância
+
+Na Astrologia Clássica, a Parte da Fortuna é conhecida
+como o "Lote do Corpo" e o "Lote da Prosperidade".
+
+    • Portal da Sorte: Representa a área da vida onde
+      você experimenta a menor resistência, onde as
+      oportunidades fluem naturalmente e onde você pode
+      alcançar o bem-estar físico e o sucesso material.
+    
+    • Integração do Trio Principal: Como sua fórmula
+      sintetiza o Ascendente (Corpo/Identidade), o Sol
+      (Alma/Propósito) e a Lua (Mente/Emoções), a
+      Parte da Fortuna representa seu estado ótimo de
+      alinhamento. Quando você vive em harmonia com seu
+      Sol e Lua, a Parte da Fortuna "se desbloqueia".
+    
+    • Materialização do Destino: Diferente do Vertex
+      (que traz eventos predestinados), a Parte da
+      Fortuna mostra onde você pode cultivar ativamente
+      sua própria sorte, alegria, abundância e saúde.
+      
+2. O Cálculo é Importante (Nascimentos Diurnos vs.
+   Noturnos)
+
+Na astrologia tradicional, o cálculo muda dependendo
+se você nasceu durante o dia ou à noite. Isso é
+crucial porque usar a fórmula errada altera todo o
+significado do seu mapa:
+
+    • Nascimento Diurno (Sol acima do horizonte):
+      Ascendente + Lua - Sol
+    
+    • Nascimento Noturno (Sol abaixo do horizonte):
+      Ascendente + Sol - Lua
+    
+Nota: Muitos calculadores modernos online usam a
+fórmula de Dia para todos, o que pode errar
+completamente a Parte da Fortuna para nascidos à
+noite.
+
+3. Como Interpretar em Seu Mapa
+
+Para entender como sua Parte da Fortuna opera, você
+deve olhar tanto para seu Signo Zodiacal quanto para
+sua Casa Astrológica:
+
+    • O Signo Zodiacal (O Como): Isso mostra as
+      qualidades que você precisa cultivar para destravar
+      sua sorte. Por exemplo, se estiver em Áries, sua
+      fortuna vem através da independência, coragem e
+      iniciativas pioneiras. Se estiver em Libra, a
+      abundância vem pela diplomacia, parcerias e criar
+      equilíbrio.
+    
+    • A Casa Astrológica (O Onde): Isso mostra a arena
+      da vida onde a prosperidade se manifesta. Por
+      exemplo, na 2ª Casa, traz riqueza material e
+      estabilidade financeira. Na 11ª Casa, sua sorte
+      vem por meio de redes, amizades e projetos
+      comunitários.
+      
+4. O Regente da Fortuna
+
+    • Regente da Fortuna: O planeta que rege o signo
+      onde sua Parte da Fortuna cai é chamado o
+      Regente da Fortuna. A condição, a força e a
+      colocação em casa desse planeta específico dirão
+      exatamente o quão facilmente você pode acessar
+      sua abundância.
+      
+      
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 09: Vital Cronocratas: Hyleg & Alcochoden
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Vital Cronocratas: Hyleg & Alcochoden
+───────────────────────────────────────────────────────────────────
+   
+O Hyleg (Doador de Vida) e o Alcochoden (Doador de
+Anos) formam a base da análise tradicional de
+longevidade e vitalidade constitucional, como
+estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
+
+1. O HYLEG (SIGNIFICADOR DA VITALIDADE)
+   
+   O motor escaneia cinco locais hilegiacais
+   específicos (Casas 1, 10, 7, 11 e 9) em ordem
+   hierárquica estrita, determinada pela Seita do
+   mapa:
+   
+   - Mapa Diurno (Sol acima do horizonte): 
+     Sol → Lua → Almuten da SAN → Almuten Figuris → ASC.
+     
+   - Mapa Noturno (Sol abaixo do horizonte):
+     Lua → Sol → Parte da Fortuna → Almuten da SAN → 
+     → Almuten Figuris → ASC.
+     
+     Para Sol, Lua e Parte da Fortuna  é verificado, também, 
+     se há aspecto com algum de seus respectivos regentes, 
+     condição esta que, se não satisfeita, exclui o astro da 
+     possibilidade de ser o Hyleg.
+     
+     Para o Almuten da SAN verifica-se se há aspecto com o
+     luminar da seita (Sol para dia, Lua para noite),
+     condição esta também excludente.
+   
+   O ponto eleito atua como o foco geométrico
+   primário para escudos físicos e o alvo terminal
+   para técnicas de projeção de tempo (Direções
+   Primárias).
+
+2. O ALCOCHODEN (DISTRIBUIDOR DA VIDA)
+
+   O planeta que aspecta o Hyleg e possui as
+   mais altas dignidades essenciais naquele
+   grau exato é eleito como o Alcochoden. Ele concede
+   um número básico de anos de acordo com sua
+   força de quadrante (posição corpórea nas casas):
+   
+   - Casas Angulares (1, 4, 7, 10): Concede Grandes Anos.
+   
+   - Casas Sucessivas (2, 5, 8, 11): Concede Médios Anos.
+   
+   - Casas Cadentes (3, 6, 9, 12): Concede Menores Anos.
+   
+   * Regra do Proxy/Tutor: Se um ponto sensível
+     (ASC/Fortuna) for Hyleg e não tiver aspectos
+     planetários, o Almuten Figuris age como Tutor,
+     concedendo estritamente seus Menores Anos para
+     proteger os marcos da infância.
+   
+   * Ajuste Fino (Adições e Subtrações): Raios
+     planetários para o Alcochoden modificam
+     dinamicamente a linha do tempo. Benéficos
+     (Júpiter/Vênus) adicionam seus menores anos;
+     Maléficos (Saturno/Marte) subtraem seus
+     menores anos.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 10: Ameaças Vitais: O Anareta & Dominus Mortis
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Index 10: Ameaças Vitais: O Anareta & Dominus Mortis
+───────────────────────────────────────────────────────────────────
+    
+Enquanto o Hyleg representa a força vital, o
+Anareta e o Senhor da 8ª Casa mapeiam a natureza
+geométrica e circunstancial do risco físico.
+
+1. O ANARETA (O INTERFECTOR / DESTRUIDOR DA VIDA)
+   
+   O algoritmo isola os sete planetas tradicionais
+   e atribui um "Peso de Ameaça Anaretica" dinâmico
+   baseado em aflições estruturais e raios
+   hostis:
+   
+   - Presença Corpórea na Casa 8 (Porta da Morte):
+     +100 Pontos.
+   
+   - Presença Corpórea na Casa 4 (Fim das Coisas):
+     +80 Pontos.
+   
+   - Regência Planetária da Cúspide da Casa 8:
+     +60 Pontos.
+   
+   - Aspectos Hostis (Quadrado/Oposição) visando
+     o Hyleg: +50 Pontos.
+   
+   - Aflições Acidentais: Combustão (+30), Exílio/Queda
+     (+20), Retrógrado (+15).
+   
+   O planeta com a pontuação acumulada mais alta é
+   eleito a Anareta, resolvendo cenários de empate
+   extremo (ex: Marte Combustível na 8ª vs. Saturno
+   Retrógrado na 4ª).
+   
+
+2. O SENHOR DA 8ª CASA (DOMINUS MORTIS)
+   
+   O regente da cúspide da 8ª casa permanece um
+   fator pericial autônomo, mesmo que não seja
+   eleito como a Anareta. 
+   
+   - A Anareta representa a *natureza* da crise (ex:
+     inflamatória com Marte, crônica/fria com Saturno).
+   
+   - O Senhor da 8ª Casa representa o *canal
+     circunstancial* e o ambiente mundano onde a
+     ameaça se manifesta, avaliado por sua
+     colocação doméstica (ex: 6ª Casa para doença
+     metabólica oculta, 12ª Casa para confinamento/
+     diagnósticos difíceis).
+
+
+3. CONJUNÇÃO ALCOCHODEN-ANARETA (GUARDIÃO AMBÍGUO)
+   
+   Quando o mesmo planeta é eleito como Alcochoden e
+   Anareta, marca uma constituição endógena e crônica.
+   A fonte da vitalidade contém sua maior vulnerabilidade.
+   No entanto, a doutrina tradicional afirma que,
+   como o planeta tem o dever de Guardião (Alcochoden),
+   ele oferece severa resiliência metabólica, permitindo
+   que o nativo sobreviva a janelas de tempo críticas.
+   
+   
+   
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 11: Planeta Feral & Planeta Vazio de Curso
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Planeta Feral & Planeta Vazio de Curso
+───────────────────────────────────────────────────────────────────
+
+Planeta Feral vs. Planeta Vazio de Curso
+
+Em astrologia, planetas ferais e planetas vazios-de-curso
+descrevem corpos celestes que estão temporariamente
+isolados, operando sem formar ângulos de conexão
+(aspectos) com outros planetas. Embora compartilhem
+o traço de isolamento, funcionam de maneira
+diferente em mapas natais versus trânsitos diários.
+
+🦁 1. PLANETA FERAL 
+
+Um planeta é considerado feral (derivado de "selvagem"
+ou "fera") quando está posicionado em um Mapa Natal
+sem formar quaisquer aspectos maiores (como conjunções,
+quadrados, trígonos ou oposições) a outros planetas.
+
+    • Comportamento: Opera de maneira bruta, não filtrada
+      e indomada. Como nenhum outro planeta "dialoga"
+      com ele ou modera sua energia, ele expressa seus
+      traços de maneiras extremas ou imprevisíveis.
+      
+    • Exemplo: Um Marte feral pode se manifestar como
+      coragem imensa ou raiva súbita e explosiva, pois
+      nenhuma outra força planetária freia seus impulsos.
+ 
+      
+🌌 2. PLANETA VAZIO DE CURSO (VdC)
+
+Um planeta torna-se vazio de curso durante os trânsitos
+celestes diários. Isso ocorre quando fez seu último
+aspecto maior em seu signo zodiacal atual e viaja em
+direção ao próximo signo sem fazer contato com outro
+planeta. Isso acontece com maior frequência com a Lua
+(Lua Vazia-de-Curso), mas pode se aplicar a qualquer
+planeta.
+
+    • Comportamento: Representa uma perda temporária de
+      direção, foco ou previsibilidade. Em astrologia
+      horária ou eletiva, ações tomadas nesse tempo
+      frequentemente levam a resultados inesperados, ou
+      indicam que "nada sairá disso".
+    
+    • Exemplo: Lançar um projeto de negócios enquanto
+      Mercúrio ou a Lua está vazia-de-curso geralmente
+      resulta em atrasos, mudanças repentinas no plano
+      ou falta geral de resultados.
+      
+      
+• Definição Técnica: Aplicando Aspectos
+
+   Tecnicamente, um planeta é considerado Vazio de Curso
+   (VdC) quando não forma mais aspectos aplicativos
+   maiores antes de deixar seu signo zodiacal atual. 
+
+    • Aspectos Aplicativos representam eventos e dinâmicas
+      futuras que estão se movendo em direção à
+      perfeição matemática exata.
+      
+    • Aspectos Separativos representam energias ou eventos
+      que já atingiram o pico e estão desaparecendo.
+
+Portanto, um planeta se torna Vazio de Curso porque
+abandonou seu último aspecto separativo e não possui
+aspectos aplicativos à frente, o que significa que não
+há impulso cósmico imediato para impulsionar eventos.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 12: Módulo de Direções Primárias
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Módulo de Direções Primárias
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+ 
+1. Motor Matemático Central
+
+    • O Relógio da Alma (Rotação Diurna): 
+    
+      As Direções Primárias simulam o movimento aparente da esfera 
+      celeste nas horas imediatamente seguintes ao nascimento. 
+      O módulo opera na equação clássica do tempo, onde 4 minutos de 
+      rotação axial da Terra equivalem a 1 grau de arco equatorial, 
+      correspondendo a aproximadamente 1 ano de vida humana.
+    
+    • Projeção Equatorial 3D Real: 
+    
+      Os Promissores (corpos em movimento) são direcionados em 
+      direção às coordenadas exatas dos Significadores (alvos 
+      natais estáticos) projetados no Equador Celeste. Em vez de 
+      aproximações bidimensionais planas na eclíptica, as longitudes 
+      são convertidas em Ascensão Reta (AR) através de trigonometria 
+      esférica que preserva a verdadeira latitude natal dos corpos 
+      celestes, aderindo estritamente à metodologia clássica de 
+      Placidus/Maginus com latitude.
+      
+    • Estrutura Astronômica Dinâmica: 
+    
+      O motor computa a obliqüidade exata da eclíptica (ε) de forma 
+      dinâmica para o Dia Juliano (UT) específico do mapa, 
+      utilizando o modelo de alta precisão IAU 1980. Isso elimina 
+      desvios lineares e garante fidelidade astronômica absoluta ao 
+      calcular mapas históricos ao longo de vários séculos.     
+    
+    • Salva-Vidas Matemáticos (Proteção de Erros):
+    
+      Alvos geométricos abstratos que não possuem latitude física 
+      (como Partes Árabes, Sizígias ou Cúspides de Casas) são 
+      interceptados por uma camada nativa de validação 
+      (isnan / == 0.0). O algoritmo resolve dinamicamente suas 
+      coordenadas sobre o vetor puro da Eclíptica, prevenindo erros 
+      de divisão por zero durante a conversão para Ascensão Reta.
+      
+    • Alinhamento pela Chave de Tempo de Naibod:
+    
+      Os arcos de direção calculados seriam traduzidos em 
+      cronogramas de calendário precisos dividindo a distância 
+      equatorial pelo Fator de Tempo de Naibod definido no motor 
+      (NAIBOD_KEY = 1.014646). Isso mapeia efetivamente 1° de 
+      Rotação Equatorial diretamente para 1,014646 Anos de vida 
+      (o equivalente a um movimento solar médio de ≈ 0,985565° 
+      por ano), estabelecendo uma linha do tempo absoluta para 
+      eventos dos 0 aos 100 anos. As frações restantes são 
+      computadas através de uma matriz automatizada de calendário 
+      misto (Juliano/Gregoriano) para gerar datas civis exatas.
+    
+        
+2. Coloração Funcional e Dignidade Tradicional
+
+Para eliminar avisos modernos genéricos e preservar a
+rigidez preditiva tradicional, o campo visual ncurses
+pondera dinamicamente cada contato direcional com
+base em sua natureza tradicional e atuação do mapa
+funcional nativo:
+
+    • [ALERTA VERMELHO CRÍTICO] Contatos Anaréticos
+      e Mortis:
+      
+      Se o Promissor que chega for o Anareta do nativo
+      (o cortador da vida) ou o Dominus Mortis (Lorde da
+      8ª Casa), e atingir um ponto vital via um aspecto
+      severo—Conjunção (☌), Quadratura (□), ou Oposição
+      (☍)—o sistema aciona um alerta de alta prioridade,
+      totalmente vermelho. Isso sinaliza vulnerabilidade
+      sistêmica extrema ou crises físicas nesse exato
+      momento.
+
+    • Essências Maléficas (Marte & Saturno): 
+    
+      Aspectos geométricos severos vindo dos maléficos
+      naturais sempre aparecem em Vermelho Sólido,
+      representando anos de grandes obstáculos estruturais,
+      separações súbitas, encargos pesados ou fricção
+      operacional aguda.
+    
+    • Obstáculos Benéficos (Júpiter & Vênus): 
+    
+      Quadraturas ou oposições dos benéficos naturais ou
+      Mercúrio são tratados como fricção produtiva.
+      São coloridos em Amarelo, informando ao usuário que,
+      embora o ano exija grande esforço ou despesa
+      financeira, ele leva a uma expansão bem-sucedida
+      e não carrega perigo vital.
+    
+    • Os bons aspectos com benéficos (Júpiter e Vênus)
+      são pintados em azul, indicando uma direção favorável.
+    
+    • Outras conjunções são exibidas em magenta, cujo
+      significado depende de análise profunda.
+    
+    • Outros aspectos em preto, a cor padrão.
+    
+    • Imposição de Contexto Radical: 
+    
+      As Direções Primárias representam a matriz de toda a
+      vida. Para manter o alinhamento estrutural, este
+      módulo é rigorosamente travado aos parâmetros da Radix
+      Natal (Hyleg, Anareta e Lorde da 8ª Casa).
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 13: Direções Primárias: Mecânica Direta vs. Conversa
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Direções Primárias: Mecânica Direta vs. Conversa
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+1. Estrutura do Movimento Diurno
+   Ambos os modos de cálculo simulam o movimento primário da esfera 
+   celeste (a rotação da Terra sobre o próprio eixo), onde o céu 
+   aparente se move de Leste para Oeste. A distinção reside 
+   inteiramente no vetor de subtração da trigonometria esférica.
+
+2. Direções Primárias Diretas
+   • Motor Astronômico: Arco_AR = AR_Aspecto_Promissor - 
+     AR_Significador.
+   • Mecânica: O alvo natal estático do nativo (Significador) 
+     permanece fixo na coordenada de nascimento. Os corpos celestes 
+     ou os vetores de seus aspectos (Promissores) movem-se no sentido 
+     horário, seguindo a rotação diurna natural até atingirem a 
+     posição do Significador.
+   • Conceito Astrológico: Representa o destino externo, eventos 
+     objetivos e circunstâncias trazidas pelo mundo exterior sobre o 
+     indivíduo.
+
+3. Direções Primárias Conversas
+   • Motor Astronômico: Arco_AR = AR_Significador - 
+     AR_Aspecto_Promissor.
+   • Mecânica: O vetor matemático é invertido. A posição natal do 
+     agente de movimento (Promissor) é tratada como um alvo fixo. 
+   • A posição de nascimento do Significador é então projetada para 
+     trás (sentido anti-horário), contra a rotação diurna, até 
+     interceptar a coordenada original do Promissor.
+   • Conceito Astrológico: Representa o amadurecimento interno, 
+     evolução subjetiva, gatilhos psicológicos ou ações movidas pela 
+     própria força de vontade do nativo e promessas natais 
+     inerentes.
+
+4. O Filtro de Simetria de 180°
+   Direções primárias equatoriais puras descartam distâncias mínimas 
+   absolutas (rebatimento por fabs / 180°). Como o tempo corre 
+   apenas para a frente, um arco Direto de 15° implica um arco 
+   Converso de 345° para o mesmo par planetário. O módulo filtra os 
+   arcos complementares maiores que 150° para manter cronogramas 
+   físicos humanamente viáveis.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 14: Copyright
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q ou ESC para retornar ao menu principal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MorceNOX™ ASTRO - Your astrological companion!
+  
+Copyright © 2026  Amilcar Antonio Mesquita Rizk
+
+This program is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License 
+as published by the Free Software Foundation, either version 3 
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this program. If not, see https://www.gnu.org/licenses/.

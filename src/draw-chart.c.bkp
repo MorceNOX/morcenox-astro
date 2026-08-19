@@ -1,0 +1,2405 @@
+#define _XOPEN_SOURCE_EXTENDED 1
+#define NCURSES_WIDECHAR 1
+#include "swephexp.h"
+#include "sweph.h"
+
+#include <ncursesw/curses.h>
+#include <math.h>
+#include <locale.h>
+#include <wchar.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdbool.h>
+#include <sqlite3.h>
+#include <ctype.h>
+#include "number_helper.h"
+#include "db-utils.h"
+
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
+
+#define P_SOL 0
+#define P_LUNA 1
+#define P_MERCURY 2
+#define P_VENUS 3
+#define P_MARS 4
+#define P_JUPITER 5
+#define P_SATURN 6
+
+#define P_URANUS 7
+#define P_NEPTUNE 8
+#define P_PLUTO 9
+
+#define P_MEAN_NODE 10
+#define P_SOUTH_NODE 11
+#define P_FORTUNA 12
+#define P_SAN 13
+
+#define P_ASC 14
+#define P_MC 15
+
+#define PH_SOL 0
+#define PH_VENUS 1
+#define PH_MERCURY 2
+#define PH_LUNA 3
+#define PH_SATURN 4
+#define PH_JUPITER 5
+#define PH_MARS 6
+
+char *conjunction_str = "☌";
+char *sextile_str = "⚹";
+char *square_str = "□";
+char *trine_str = "△";
+char *opposition_str = "☍";
+
+int hour_regents[7][24] = {
+    {0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2},
+    {3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5},
+    {6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1},
+    {2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4},
+    {5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0},
+    {1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3},
+    {4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6}
+};
+
+const char *planet_regent_symbols[7] = {"☉", "♀", "☿", "☽", "♄", "♃", "♂"};
+
+typedef struct {
+    double longitude;
+    char *object;
+    char *object_name;
+    char *sign;
+    char *degree;
+    char *min;
+    char *retrograde;
+    char *house;
+    double speed;
+    double rising_time;
+} PlotObject;
+
+
+const char *sagittarius[] = {
+    "▗▚  ",
+    "▘▌▘ ",
+    "▄▙▖ ",
+    " ▌  ",
+    "    "
+};
+
+const char *taurus[] = {
+    "▝▖  ▞ ",
+    " ▞▀▀▖ ",
+    "▐   ▐ ",
+    " ▚▄▄▘ ",
+    "      "
+};
+
+
+const char *aries[] = {
+    "       ",
+    "▞▀▖▞▀▖ ",
+    "  ▐    ",
+    "  ▐    ",
+    "       "
+};
+
+const char *gemini[] = {
+    "▄▄▄▄▖ ",
+    " ▌ ▌  ",
+    " ▌ ▌  ",
+    "▄▙▄▙▖ ",
+    "      "
+};
+
+const char *leo[] = {
+    " ▞▀▀▖ ",
+    "▝▖  ▞ ",
+    "▞▚ ▐  ",
+    "▚▞  ▚ ",
+    "      "
+};
+
+
+const char *pisces[] = {
+    "      ",
+    " ▚ ▗▘ ",
+    "▗▟▄▟▄ ",
+    " ▞ ▝▖ ",
+    "▝   ▝ "
+};
+
+
+const char *aquarius[] = {
+    "      ",
+    "▞▚▞▚▞ ",
+    "      ",
+    "▞▚▞▚▞ ",
+    "      "
+};
+
+const char *cancer[] = {
+    "      ",
+    "▞▜▀▀  ",
+    "▚▞ ▞▚ ",
+    " ▄▄▙▞ ",
+    "      "
+};
+
+const char *libra[] = {
+    "     ",
+    " ▞▚  ",
+    "▀▀▀▀ ",
+    "▀▀▀▀ ",
+    "     "
+};
+
+const char *scorpio[] = {
+    "     ",
+    "▛▚▀▖ ",
+    "▌▐ ▌ ",
+    "▘▝ ▚ ",
+    "     "
+};
+
+const char *virgo[] = {
+    "      ",
+    "▛▚▀▞▚ ",
+    "▌▐ ▌▞ ",
+    "▘▝ ▜  ",
+    "      "
+};
+
+const char *capricorn[] = {
+    "     ",
+    "▚▜▞▚ ",
+    "▐ ▚▞ ",
+    "  ▞  ",
+    "     "
+};
+
+
+
+
+const char* get_moon_phase_name(double elongation) {
+    if (elongation < 12.0) return "🌑 New Moon"; // Nova
+    else if (elongation < 89.99) return "🌘 Waxing Crescent"; // Crescente
+    else if (elongation < 102.0) return "🌗 First Quarter"; // Quarto Crescente
+    else if (elongation < 179.99) return "🌖 Waxing Gibbous"; // Crescente Gibosa
+    else if (elongation < 192.0) return "🌕 Full Moon"; // Cheia
+    else if (elongation < 269.99) return "🌔 Waning Gibbous"; // Minguante Gibosa
+    else if (elongation < 282.0) return "🌓 Last Quarter"; // Quarto Minguante
+    else if (elongation < 359.99) return "🌒 Waning Crescent"; // Minguante
+    else return "🌑 New Moon"; // Nova
+}
+
+
+
+// Alternative: Calculate phase based on Moon's ecliptic longitude difference
+double get_moon_phase_by_longitude(double julian_day) {
+    double earth_pos[6], moon_pos[6];
+    
+    // Get positions
+    swe_calc(julian_day, SE_SUN, SEFLG_SPEED, earth_pos, 0);
+    swe_calc(julian_day, SE_MOON, SEFLG_SPEED, moon_pos, 0);
+    
+    // Get ecliptic longitudes (position[0])
+    double earth_lon = earth_pos[0];
+    double moon_lon = moon_pos[0];
+    
+    // Calculate the angular difference
+    double diff = moon_lon - earth_lon;
+    
+    // Normalize to 0-360 range
+    while (diff < 0) diff += 360.0;
+    while (diff >= 360.0) diff -= 360.0;
+    
+    return diff;
+}
+
+
+const char *str_dow(int dow) {
+    switch(dow) {
+        case 0: return "Sunday";
+        case 1: return "Monday";
+        case 2: return "Tuesday";
+        case 3: return "Wednesday";
+        case 4: return "Thursday";
+        case 5: return "Friday";
+        case 6: return "Saturday";
+    }
+}
+
+int get_hour_regent(int week_day, int planetary_hour) {
+    return hour_regents[week_day][planetary_hour];
+}
+
+
+
+// Helper to get the Sun's altitude at a specific Julian Day
+double get_sun_altitude(double tjd_ut, double lat, double lon) {
+    double xx[6];          // Armazena os resultados de swe_calc
+    double xequ[3];        // Armazena as coordenadas equatoriais (RA e DEC)
+    double xaz[3];         // Armazena os resultados horizontais
+    char serr[256];        // Buffer para mensagens de erro
+    
+    double geopos[3] = {lon, lat, 0.0};
+
+    // 1. Converter UT para Ephemeris Time (Tempo Dinâmico Terrestre)
+    double delta_t = swe_deltat(tjd_ut);
+    double tjd_et = tjd_ut + delta_t;
+
+    // Usaremos a flag básica para coordenadas equatoriais em relação ao ET
+    int flag = SEFLG_SWIEPH | SEFLG_EQUATORIAL;
+
+    // 2. Calcular a posição do Sol usando o tempo orbital exato (tjd_et)
+    if (swe_calc(tjd_et, SE_SUN, flag, xx, serr) < 0) {
+        printf("Erro no swe_calc: %s\n", serr);
+        return -1;
+    }
+
+    xequ[0] = xx[0]; // Ascensão Reta (RA)
+    xequ[1] = xx[1]; // Declinação (DEC)
+    xequ[2] = xx[2]; // Distância
+
+    // 3. Converter para o horizonte local
+    // Importante: swe_azalt exige explicitamente o tempo em UT (tjd_ut) na entrada
+    swe_azalt(tjd_ut, SE_EQU2HOR, geopos, 0, 0, xequ, xaz);
+    
+    // Retorna xaz[1] (altitude verdadeira). O seu algoritmo de bisseção se encarrega
+    // de cruzar o horizonte visual usando o alvo de -0.833333 graus.
+    return xaz[1];
+}
+
+
+
+
+
+double find_sun_event(double jd_start_midnight_ut, double lat, double lon, bool is_sunrise) {
+    double target_alt = -50.0 / 60.0; // -0.8333333... exato da efeméride
+    double step = 1.0 / 24.0;        // Passo de 1 hora
+    
+    // Varre as 24 horas do dia UT (de 0.0 a 1.0)
+    for (double t = jd_start_midnight_ut; t < jd_start_midnight_ut + 1.0; t += step) {
+        double alt_now = get_sun_altitude(t, lat, lon);
+        double alt_next = get_sun_altitude(t + step, lat, lon);
+
+        bool crossed = false;
+        if (is_sunrise) {
+            if (alt_now < target_alt && alt_next >= target_alt) crossed = true;
+        } else {
+            if (alt_now >= target_alt && alt_next < target_alt) crossed = true;
+        }
+
+        if (crossed) {
+            // Refinamento por Bisseção Numérica Estrita
+            double low = t;
+            double high = t + step;
+            
+            for (int i = 0; i < 25; i++) {
+                double mid = (low + high) / 2.0;
+                double mid_alt = get_sun_altitude(mid, lat, lon);
+                
+                // Se estamos no Sunrise, a altitude cresce com o tempo
+                if (is_sunrise) {
+                    if (mid_alt < target_alt) {
+                        low = mid;
+                    } else {
+                        high = mid;
+                    }
+                } 
+                // Se estamos no Sunset, a altitude decresce com o tempo
+                else {
+                    if (mid_alt > target_alt) {
+                        low = mid; // Ainda não caiu o suficiente
+                    } else {
+                        high = mid; // Caiu demais, o ponto está para trás
+                    }
+                }
+            }
+            return (low + high) / 2.0; // Retorna o centro do intervalo refinado
+        }
+    }
+    return -1.0; // Evento não ocorre (ex: regiões polares)
+}
+
+
+// Função auxiliar para normalizar valores entre 0 e 360 graus
+double normalize360(double val) {
+    val = fmod(val, 360.0);
+    if (val < 0) val += 360.0;
+    return val;
+}
+
+
+
+
+// Helper to normalize angles to [-180, 180]
+double normalize_angle(double angle) {
+    while (angle > 180.0) angle -= 360.0;
+    while (angle < -180.0) angle += 360.0;
+    return angle;
+}
+
+
+// Helper to get the difference between Sun and Moon longitudes
+double get_sun_moon_diff(double jd) {
+    double x2[6];
+    char err[256];
+    // We need the longitudes of both Sun and Moon
+    swe_calc_ut(jd, SE_SUN, SEFLG_SPEED, x2, err);
+    double sun_long = x2[0];
+    
+    swe_calc_ut(jd, SE_MOON, SEFLG_SPEED, x2, err);
+    double moon_long = x2[0];
+    
+    return normalize_angle(sun_long - moon_long);
+}
+
+
+/**
+* Finds the last occurrence of a specific event.
+* @param start_jd The Julian Day to start searching backward from.
+* @param is_opposition Set to true for 180 deg, false for 0 deg (conjunction).
+* @return The Julian Day of the last event, or -1 if not found within search limit.
+*/
+double find_last_astrological_event(double start_jd, bool is_opposition) {
+    double target = is_opposition ? 180.0 : 0.0;
+    double jd = start_jd;
+    double step = 1.0; // Search in 1-day increments
+    int max_search_days = 60; // Limit search to avoid infinite loops
+    
+    double current_diff = get_sun_moon_diff(jd);
+    double prev_diff = get_sun_moon_diff(jd - step);
+
+    // Check if the target was crossed between (jd - step) and (jd)
+    // We normalize the difference relative to the target
+    double val_now = normalize_angle(current_diff - target);
+    double val_prev = normalize_angle(prev_diff - target);
+
+    // If the sign changed, the event happened in this window
+    if (((val_now >= 0 && val_prev < 0) || (val_now < 0 && val_prev >= 0)) 
+        && fabs(val_now - val_prev) < 180.0) {
+        // Refinement: Bisection Method
+        double low = jd - step;
+        double high = jd;
+        
+        for (int i = 0; i < 25; i++) { // 25 iterations provides sub-second precision
+            double mid = (low + high) / 2.0;
+            double mid_diff = normalize_angle(get_sun_moon_diff(mid) - target);
+            
+            // Check if the sign change is between 'low' and 'mid'
+            double low_diff = normalize_angle(get_sun_moon_diff(low) - target);
+            
+            if ((mid_diff >= 0 && low_diff >= 0) || (mid_diff < 0 && low_diff < 0)) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+        return low;
+    }
+
+    // If not found in the first day, keep stepping back
+    for (int i = 1; i < max_search_days; i++) {
+        jd -= step;
+        double next_diff = get_sun_moon_diff(jd);
+        double next_prev = get_sun_moon_diff(jd - step);
+        
+        double v_now = normalize_angle(next_diff - target);
+        double v_prev = normalize_angle(next_prev - target);
+
+        if (((v_now >= 0 && v_prev < 0) || (v_now < 0 && v_prev >= 0))
+        && fabs(v_now - v_prev) < 180.0) {
+            // Found the window, now perform bisection (same logic as above)
+            double low = jd - step;
+            double high = jd;
+            for (int b_iter = 0; b_iter < 25; b_iter++) {
+                double mid = (low + high) / 2.0;
+                double m_diff = normalize_angle(get_sun_moon_diff(mid) - target);
+                double l_diff = normalize_angle(get_sun_moon_diff(low) - target);
+                if ((m_diff >= 0 && l_diff >= 0) || (m_diff < 0 && l_diff < 0)) low = mid;
+                else high = mid;
+            }
+            return low;
+        }
+    }
+
+    return -1.0; // Event not found in recent history
+}
+
+
+
+void draw_chart(float zoom_factor, float pan_x, float pan_y, 
+                int n, struct tm *local_time, double lat, double lon, 
+                PlotObject *plots, int sanYear, int sanMon, int sanDay, double sanHour, 
+                char *sunrise_str, char *sunset_str, char *city, char *country, 
+                double daytime_hour, double nighttime_hour, int week_day, int planetary_hour, 
+                const char* phase, bool dark_mode, int anim_interval,
+                int last_hr, int last_min, double last_sec, char *chart_name, char house_system) {
+
+    setlocale(LC_ALL, "");
+
+    if (dark_mode) {
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, COLOR_CYAN, COLOR_BLACK);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+    } 
+    else {
+        init_pair(1, COLOR_BLACK, COLOR_CYAN);
+        init_pair(2, COLOR_RED, COLOR_CYAN);
+        init_pair(3, COLOR_GREEN, COLOR_CYAN);
+        init_pair(4, COLOR_YELLOW, COLOR_CYAN);
+        init_pair(5, COLOR_BLUE, COLOR_CYAN);
+        init_pair(6, COLOR_BLACK, COLOR_CYAN);
+        init_pair(7, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(8, COLOR_BLUE, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_CYAN, COLOR_CYAN);
+    }
+    
+    bkgd(COLOR_PAIR(1));
+    clear();
+    
+    cbreak();
+    noecho();
+    curs_set(0); 
+    keypad(stdscr, TRUE);
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    int center_y = max_y / 2;
+    int center_x = max_x / 2;
+
+    float aspect_ratio = 2.0;
+
+    float max_r_y = (max_y / 2.0) - 0.0;
+    float max_r_x = (max_x / 2.0) / aspect_ratio;
+
+    float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
+    float scale = base_radius / 20.0;
+    
+           
+    // Apply zoom to the scale
+    float current_scale = scale * zoom_factor;
+    
+    // Apply panning to center coordinates
+    int display_center_y = center_y + (int)(pan_y * current_scale);
+    int display_center_x = center_x + (int)(pan_x * current_scale);
+        
+    
+    // Draw the outer circle using a full block character
+    float radius = 20.0 * current_scale;
+    for (int i = 0; i < 360; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+            // Using wide character string for the full block
+            //mvaddwstr(y, x, L"█");
+            mvaddwstr(y, x, L"●");
+        }
+    }
+    
+    radius = 6.0 * current_scale;
+    
+    // Draw the inner circle using a dark shade block
+    for (int i = 0; i < 360; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+            //mvaddwstr(y, x, L"▓");
+            mvaddwstr(y, x, L"○");
+        }
+    }
+    
+    radius = 5.0 * current_scale;
+    
+    int j = 9;
+
+    int imin;
+    int imax;
+    if ((int)plots[P_ASC].longitude % 30 < 15 ) {
+        imin = -75;
+        imax = 285;
+    }
+    else {
+        imin = -105;
+        imax = 255; 
+    }
+    
+    for (int i = imin; i < imax; i += 30, j--) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        // Ensure coordinates are within screen boundaries
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+            attron(COLOR_PAIR(6) | A_BOLD);
+            
+            j = mod_a(j ,12);
+            
+            char *h = intToRoman(j);
+            mvaddstr(y, x, h);
+            free(h);
+            
+            attroff(COLOR_PAIR(6) | A_BOLD);
+        }
+    }
+    
+    // Draw the outer boundary using a light shade block
+    for (float r = 6.0 * current_scale; r <= 20.0 * current_scale; r += current_scale) {
+        for (int i = -60; i < 300; i += 30) {
+            float angle = i * 3.14159 / 180.0;
+            
+            int y = (int)(display_center_y + r * sin(angle));
+            int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
+            
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+                attron(COLOR_PAIR(1) | A_DIM);
+                mvaddwstr(y, x, L"░");
+                attroff(COLOR_PAIR(1) | A_DIM);
+            }
+        }
+    }
+    
+    radius = 16.0 * current_scale;
+    
+    int offset = 0 + n;    
+    
+    for (int i = -15, k = 0; i < 345; i += 30, k++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 5; j++) {
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+                if ( (k + offset) % 12 == 0 ) {
+                    attron(COLOR_PAIR(4) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, libra[j]);
+                    attroff(COLOR_PAIR(4) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 1 ) {
+                    attron(COLOR_PAIR(3));
+                    mvaddstr(y - 2 + j, x - 2, virgo[j]);
+                    attroff(COLOR_PAIR(3));
+                }
+                else if ( (k + offset) % 12 == 2 ) {
+                    attron(COLOR_PAIR(2) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, leo[j]);
+                    attroff(COLOR_PAIR(2) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 3 ) {
+                    attron(COLOR_PAIR(5) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, cancer[j]);
+                    attroff(COLOR_PAIR(5) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 4 ) {
+                    attron(COLOR_PAIR(4) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, gemini[j]);
+                    attroff(COLOR_PAIR(4) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 5 ) {
+                    attron(COLOR_PAIR(3));
+                    mvaddstr(y - 2 + j, x - 2, taurus[j]);
+                    attroff(COLOR_PAIR(3));
+                }
+                else if ( (k + offset) % 12 == 6 ) {
+                    attron(COLOR_PAIR(2) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, aries[j]);
+                    attroff(COLOR_PAIR(2) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 7 ) {
+                    attron(COLOR_PAIR(5) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, pisces[j]);
+                    attroff(COLOR_PAIR(5) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 8 ) {
+                    attron(COLOR_PAIR(4) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, aquarius[j]);
+                    attroff(COLOR_PAIR(4) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 9 ) {
+                    attron(COLOR_PAIR(3));
+                    mvaddstr(y - 2 + j, x - 2, capricorn[j]);
+                    attroff(COLOR_PAIR(3));
+                }
+                else if ( (k + offset) % 12 == 10 ) {
+                    attron(COLOR_PAIR(2) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, sagittarius[j]);
+                    attroff(COLOR_PAIR(2) | A_BOLD);
+                }
+                else if ( (k + offset) % 12 == 11 ) {
+                    attron(COLOR_PAIR(5) | A_BOLD);
+                    mvaddstr(y - 2 + j, x - 2, scorpio[j]);
+                    attroff(COLOR_PAIR(5) | A_BOLD);
+                }
+            }
+        }
+    }
+    
+    radius = 13.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                    
+                mvaddstr(y, x, plots[j].object);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+    
+    radius = 11.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                
+                int tamanho_total = strlen(plots[j].degree) + strlen("°") + 1;
+                char *c = (char *)malloc(tamanho_total);
+                snprintf(c, tamanho_total, "%s%s", plots[j].degree, "°");
+                
+                mvaddstr(y, x, c);
+                free(c);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+    
+    radius = 10.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                
+                mvaddstr(y, x, plots[j].sign);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+
+    radius = 9.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                
+                mvaddstr(y, x, plots[j].min);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+    
+    radius = 8.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                
+                mvaddstr(y, x, plots[j].retrograde);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+
+
+    radius = 7.0 * current_scale;
+    
+    for (int i = -30; i < 330; i++) {
+        float angle = i * 3.14159 / 180.0;
+        
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < 16; j++) {
+            if (i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) || 
+                i == (180 - ((int)(plots[j].longitude) - 30 + ((n + 1) * 30)) % 360) + 360) {
+                
+                if (strcmp(plots[j].object_name, "Ascendant") == 0 ||
+                    strcmp(plots[j].object_name, "MC") == 0 ||
+                    strcmp(plots[j].object_name, "Fortuna") == 0 ||
+                    strcmp(plots[j].object_name, "SAN") == 0 ||
+                    strcmp(plots[j].object_name, "South Node") == 0 ||
+                    strcmp(plots[j].object_name, "North Node") == 0) {
+                    
+                    attron(COLOR_PAIR(6) | A_BOLD);
+                }
+                else if (strcmp(plots[j].object_name, "Neptune") == 0 ||
+                            strcmp(plots[j].object_name, "Uranus") == 0 ||
+                            strcmp(plots[j].object_name, "Pluto") == 0) {
+                    attron(COLOR_PAIR(8) | A_BOLD);
+                }
+                else {
+                    attron(COLOR_PAIR(7) | A_BOLD);
+                }
+                
+                mvaddstr(y, x, plots[j].house);
+                
+                attroff(COLOR_PAIR(6) | A_BOLD);
+                attroff(COLOR_PAIR(7) | A_BOLD);
+                attroff(COLOR_PAIR(8) | A_BOLD);
+            }
+        }
+    }
+
+
+    refresh();
+
+    //double tz_offset = (double)(((int)lon - ((int)lon % 15)) / 15);
+    double tz_offset = local_time->tm_gmtoff / 3600;
+    char *house_system_name;
+
+    get_house_system_name(house_system, &house_system_name);
+
+    mvprintw(0, 0, "%s", chart_name);
+    mvprintw(1, 0, "Time: %d/%d/%d %.4f (%02d:%02d:%02d) TZ, %s", local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (double)local_time->tm_hour + (double)local_time->tm_min / 60.0 + ((double)local_time->tm_sec / 60.0) / 60.0, (int)(local_time->tm_hour), local_time->tm_min, local_time->tm_sec, str_dow(local_time->tm_wday));
+    mvprintw(2, 0, "%s / %s (%.4f)", city, country, tz_offset);
+    mvprintw(3, 0, "Lat: %f / Lon: %f", lat, lon);
+    mvprintw(5, 0, "Sunrise: %s | Sunset: %s", sunrise_str, sunset_str);
+    mvprintw(7, 0, "Hour (Day): %.4f (%02d:%02d:%02d)", daytime_hour, (int)daytime_hour, (int)(daytime_hour * 60) % 60, (int)(daytime_hour * 3600) % 60);
+    mvprintw(8, 0, "Hour (Night): %.4f (%02d:%02d:%02d)", nighttime_hour, (int)nighttime_hour, (int)(nighttime_hour * 60) % 60, (int)(nighttime_hour * 3600) % 60);
+    mvprintw(10, 0, "Houses: %s", house_system_name);
+    mvprintw(0, max_x - 42, "Syzygy %s: %d/%d/%d %.4f (%02d:%02d) UTC", plots[P_SAN].object, sanYear, sanMon, sanDay, sanHour, (int)sanHour, (int)((sanHour - (int)sanHour) * 60));
+    mvprintw(1, max_x - 39, "Current Moon Phase: %s", phase);
+    mvprintw(3, max_x - 32, "Planetary Day(%d)/Hour(%d): %s/%s", week_day, planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, 0)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
+
+    // Add instructions at the bottom
+    mvprintw(LINES - 2, 0, "Divisions = Zodiac Signs");
+    mvprintw(LINES - 1, 0, "Zoom: + / - | Pan: Arrows | Reset: r | Toggle Anim: a | Speed: ] / [ | F2..F5 Tables| Quit: q ");
+    mvprintw(LINES - 1, max_x - 26, "Speed Animation: %d s", anim_interval);
+
+    refresh();
+    free(house_system_name);
+    
+}
+
+
+
+char *get_sign(int n) {
+    switch(n) {
+        case 0: return "♈";
+        case 1: return "♉";
+        case 2: return "♊";
+        case 3: return "♋";
+        case 4: return "♌";
+        case 5: return "♍";
+        case 6: return "♎";
+        case 7: return "♏";
+        case 8: return "♐";
+        case 9: return "♑";
+        case 10: return "♒";
+        case 11: return "♓";
+    }
+}
+
+char *get_sign_name(int n) {
+    switch(n) {
+        case 0: return "Aries";
+        case 1: return "Taurus";
+        case 2: return "Gemini";
+        case 3: return "Cancer";
+        case 4: return "Leo";
+        case 5: return "Virgo";
+        case 6: return "Libra";
+        case 7: return "Scorpio";
+        case 8: return "Sagittarius";
+        case 9: return "Capricorn";
+        case 10: return "Aquarius";
+        case 11: return "Pisces";
+    }
+}
+
+
+const char* get_house_roman(double longitude, double *cusps) {
+    // Array of Roman numerals mapped to house indices (0 to 11 maps to I to XII)
+    static const char* roman_houses[] = {
+        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
+    };
+
+    for (int i = 1; i <= 12; i++) {
+        double current_cusp = cusps[i];
+        // The next cusp wraps around from 12 back to 1
+        double next_cusp = (i == 12) ? cusps[1] : cusps[i + 1];
+
+        if (current_cusp < next_cusp) {
+            // Normal case: house stays within the 0-360 boundaries
+            if (longitude >= current_cusp && longitude < next_cusp) {
+                return roman_houses[i - 1];
+            }
+        } else {
+            // Wraparound case: house crosses over 360° / 0° Aries
+            if (longitude >= current_cusp || longitude < next_cusp) {
+                return roman_houses[i - 1];
+            }
+        }
+    }
+    return "I"; // Fallback safety default
+}
+
+bool mapa_diurno(char *hsol) {
+    int h = romanToInt(hsol);
+
+    if (h >= 1 && h <= 6) return false;
+
+    return true;
+}
+
+int diff_sign(int signA, int signB) {
+    int diff = abs(signB - signA);
+
+    if (diff > 6) {
+        diff = abs(signA + 12 - signB);
+    }
+
+    return diff;
+}
+
+
+
+
+void display_aspects(PlotObject *plots, bool dark_mode) {
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    int table_height = 30;
+    int table_width = max_x - 5;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 2;
+
+    WINDOW *aspects_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *aspects_shadow = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    if (dark_mode) {
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, COLOR_CYAN, COLOR_BLACK);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+        init_pair(11, COLOR_RED, COLOR_BLACK);
+        init_pair(12, COLOR_GREEN, COLOR_BLACK);
+    } 
+    else {
+        init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(2, COLOR_RED, COLOR_MAGENTA);
+        init_pair(3, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(4, COLOR_YELLOW, COLOR_MAGENTA);
+        init_pair(5, COLOR_BLUE, COLOR_MAGENTA);
+        init_pair(6, COLOR_BLACK, COLOR_CYAN);
+        init_pair(7, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(8, COLOR_BLUE, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_CYAN, COLOR_CYAN);
+        init_pair(11, COLOR_RED, COLOR_CYAN);
+        init_pair(12, COLOR_GREEN, COLOR_CYAN);
+    }
+    
+    werase(aspects_shadow);
+    wattron(aspects_shadow, COLOR_PAIR(9));
+    box(aspects_shadow, 0, 0);
+    wattroff(aspects_shadow, COLOR_PAIR(9));
+    wrefresh(aspects_shadow);
+
+    // Create a border around the table
+    box(aspects_win, 0, 0);
+    wbkgd(aspects_win, COLOR_PAIR(6));
+
+    mvwprintw(aspects_win, 0, (table_width - 12) / 2, "Aspects Table");
+    
+    // Create the aspect table structure
+    // First row: planet symbols
+    for (int i = 0; i < 18; i++) {
+        wattron(aspects_win, A_BOLD);
+        mvwprintw(aspects_win, 1, 6 + 4 * i, plots[i].object);
+        wattroff(aspects_win, A_BOLD);
+    }
+
+    // First column: planet symbols
+    for (int i = 0; i < 12; i++) {
+        wattron(aspects_win, A_BOLD);
+        mvwprintw(aspects_win, 3 + 2 * i, 2, plots[i].object);
+        wattroff(aspects_win, A_BOLD);
+    }
+
+    // Draw grid lines
+    for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 18; j++) {
+            mvwprintw(aspects_win, 2 + 2 * i, 4 + 4 * j, "_____");
+        }
+    }
+
+    // Draw vertical lines
+    for (int i = 0; i < 24; i++) {
+        for (int j = 0; j < 19; j++) {
+            mvwprintw(aspects_win, 3 + i, 4 + 4 * j, "|");
+        }
+    }
+
+    // Define aspect information (classic approach - aspects are fixed)
+    typedef struct {
+        double angle;
+        char *symbol;
+        char *name;
+    } AspectInfo;
+
+    AspectInfo aspects[] = {
+        {0.0, "☌", "Conjunction"},
+        {60.0, "⚹", "Sextile"},
+        {90.0, "□", "Square"},
+        {120.0, "△", "Trine"},
+        {180.0, "☍", "Opposition"}
+    };
+    
+    const int num_aspects = sizeof(aspects) / sizeof(aspects[0]);
+    
+    // Get planet data from database
+    int planet_ids[12];
+    double planet_orbis[12];
+    char planet_symbols[12][10];
+    
+    int planet_count = get_planet_orbis(planet_ids, planet_orbis, planet_symbols, 12);
+    
+    if (planet_count < 0) {
+        fprintf(stderr, "Failed to load planet orbis\n");
+        return; // or handle error appropriately
+    }
+
+    for (int i = 0; i < 12; i++) {
+        for (int j = 0; j < 18; j++) {
+            if (i >= j) {
+                wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
+                mvwprintw(aspects_win, 3 + 2 * i, 5 + 4 * j, "▓▓▓");
+                wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
+                continue;
+            }
+            // Calculate the angular difference
+            double angle = normalize_angle(plots[i].longitude - plots[j].longitude);
+            // Make sure angle is between 0 and 180 degrees
+            if (angle > 180.0) angle = 360.0 - angle;
+            
+            // DEBUG: Show raw angle
+            // char ag[8];
+            // snprintf(ag, 8, "%3.0f", angle);
+            // mvwprintw(aspects_win, 3 + 2 * i, 5 + 4 * j, ag);
+
+            // Find the closest aspect
+            double min_diff = 360.0;
+            int closest_aspect = -1;
+            
+            for (int a = 0; a < num_aspects; a++) {
+                double diff = fabs(angle - aspects[a].angle);
+                // Handle wraparound (e.g. 359° vs 1°)
+                if (diff > 180.0) diff = 360.0 - diff;
+                
+                if (diff < min_diff) {
+                    min_diff = diff;
+                    closest_aspect = a;
+                }
+            }
+
+            // Check if the aspect is within the planet-specific orbis
+            // We use the sum of orbis values of both planets involved
+            if (closest_aspect >= 0 && min_diff <= (planet_orbis[i] + planet_orbis[j]) / 2.0) {
+                
+                int sign_diff = diff_sign(plots[i].longitude / 30, plots[j].longitude / 30);
+                
+                // Exclude aspects out of sign distance 
+                // (except for conjunction and opposition and exact aspects)
+                if ( 
+                    (strcmp(aspects[closest_aspect].name, "Square") == 0 && sign_diff == 3) ||
+                    (strcmp(aspects[closest_aspect].name, "Trine") == 0 && sign_diff == 4) ||
+                    (strcmp(aspects[closest_aspect].name, "Sextile") == 0 && sign_diff == 2) ||
+                    (strcmp(aspects[closest_aspect].name, "Opposition") == 0) ||
+                    (strcmp(aspects[closest_aspect].name, "Conjunction") == 0) ||
+                    (min_diff <= 1)
+                ) {
+                                    
+                    // Display the aspect symbol
+                    if (strcmp(aspects[closest_aspect].name, "Square") == 0 || strcmp(aspects[closest_aspect].name, "Opposition") == 0) {
+                        wattron(aspects_win, COLOR_PAIR(11) | A_BOLD);
+                    }
+                    else if (strcmp(aspects[closest_aspect].name, "Trine") == 0 || strcmp(aspects[closest_aspect].name, "Sextile") == 0) {
+                        wattron(aspects_win, COLOR_PAIR(12));
+                    } else {
+                        wattron(aspects_win, COLOR_PAIR(7) | A_BOLD);
+                    }
+
+                    mvwprintw(aspects_win, 3 + 2 * i, 5 + 4 * j, aspects[closest_aspect].symbol);
+                    
+                    wattroff(aspects_win, COLOR_PAIR(11) | A_BOLD);
+                    wattroff(aspects_win, COLOR_PAIR(7) | A_BOLD);
+                    wattroff(aspects_win, COLOR_PAIR(12) | A_BOLD);
+                    
+                    wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
+                    char ag[8];
+                    snprintf(ag, 8, "%3.0f", fabs(angle));
+                    
+                    mvwprintw(aspects_win, 4 + 2 * i, 5 + 4 * j, ag);
+                    
+                    wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
+                }
+            }
+        }
+    }
+
+    mvwprintw(aspects_win, table_height - 1, 2, "Press ESC to return to chart");
+
+    // Refresh the window
+    wrefresh(aspects_win);
+    
+    // Wait for ESC key press
+    int ch;
+    do {
+        ch = wgetch(aspects_win);
+    } while (ch != 27); // 27 is ESC key
+    
+    // Clean up
+    delwin(aspects_shadow);
+    delwin(aspects_win);
+    clear();
+    refresh();
+}
+
+
+void display_table(struct tm *local_time, double lat, double lon, PlotObject *plots, double *cusps,
+    int sanYear, int sanMon, int sanDay, double sanHour, char *sunrise_time, char *sunset_time, 
+    char *city, char *country, double daytime_hour, double nighttime_hour, int week_day, 
+    int planetary_hour, const char* phase, 
+    bool dark_mode, int last_hr, int last_min, double last_sec) {
+    
+        // Create a new window for the table
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    // Calculate window size and position
+    int table_height = 30;
+    int table_width = max_x - 5;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 2;
+    
+    // Create window
+    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    if (dark_mode) {
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, COLOR_CYAN, COLOR_BLACK);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+        init_pair(11, COLOR_RED, COLOR_BLACK);
+        init_pair(12, COLOR_GREEN, COLOR_BLACK);
+    } 
+    else {
+        init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(2, COLOR_RED, COLOR_MAGENTA);
+        init_pair(3, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(4, COLOR_YELLOW, COLOR_MAGENTA);
+        init_pair(5, COLOR_BLUE, COLOR_MAGENTA);
+        init_pair(6, COLOR_BLACK, COLOR_CYAN);
+        init_pair(7, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(8, COLOR_BLUE, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_CYAN, COLOR_CYAN);
+        init_pair(11, COLOR_RED, COLOR_CYAN);
+        init_pair(12, COLOR_GREEN, COLOR_CYAN);
+    }
+    
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wrefresh(shadow_win);
+
+    // Create a border around the table
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(6));
+
+    
+    
+    // Add title
+    mvwprintw(table_win, 0, (table_width - 12) / 2, "Astrological Table");
+    
+    // Add column headers
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 1, 2, "Object");
+    mvwprintw(table_win, 1, 10, "Position");
+    mvwprintw(table_win, 1, 22, "Speed");
+    mvwprintw(table_win, 1, 31, "House");
+    mvwprintw(table_win, 1, 38, "Mov");
+    mvwprintw(table_win, 1, 43, "Dignity");
+    mvwprintw(table_win, 1, 58, "Gen/Sect");
+    mvwprintw(table_win, 1, 68, "Rulers(Dom/Exlt)");
+    wattroff(table_win, A_BOLD);
+    
+    // Add data rows
+    int row = 2;
+    for (int i = 0; i < 18; i++) {
+        
+        // Object
+        wattron(table_win, A_BOLD);
+        mvwprintw(table_win, row, 4, "%s", plots[i].object);
+        wattroff(table_win, A_BOLD);
+        
+        // Degree
+        mvwprintw(table_win, row, 10, "%s°", plots[i].degree);
+        
+        // Sign
+        mvwprintw(table_win, row, 14, "%s", plots[i].sign);
+               
+        // Minutes
+        mvwprintw(table_win, row, 17, "%s'", plots[i].min);
+
+        // Speed
+        char speed[10];
+
+        double speed_abs = fabs(plots[i].speed);
+        double mean_speed;
+        get_planet_speed(plots[i].object, &mean_speed);
+
+        if (i < 12) {
+            if (speed_abs > mean_speed) {
+                wattron(table_win, COLOR_PAIR(12));
+            }
+            else if (speed_abs < mean_speed) {
+                wattron(table_win, COLOR_PAIR(11));
+            }
+        }
+
+        snprintf(speed, 10, "%8.4f", plots[i].speed);
+        mvwprintw(table_win, row, 21, "%s", speed);
+
+        wattroff(table_win, COLOR_PAIR(12));
+        wattroff(table_win, COLOR_PAIR(11));
+        
+        // House
+        if (strcmp(plots[i].house, "VI") == 0 || strcmp(plots[i].house, "VIII") == 0 || strcmp(plots[i].house, "XII") == 0) {
+            wattron(table_win, COLOR_PAIR(11));
+        }
+        else if (strcmp(plots[i].house, "I") == 0 || strcmp(plots[i].house, "II") == 0 || strcmp(plots[i].house, "III") == 0 || strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "X") == 0|| strcmp(plots[i].house, "XI") == 0) {
+            wattron(table_win, COLOR_PAIR(12));
+        }
+        else if (strcmp(plots[i].house, "IV") == 0 || strcmp(plots[i].house, "VII") == 0) {
+            wattron(table_win, COLOR_PAIR(7));
+        }
+        mvwprintw(table_win, row, 31, "%s", plots[i].house);
+
+        wattroff(table_win, COLOR_PAIR(12));
+        wattroff(table_win, COLOR_PAIR(11));
+        wattroff(table_win, COLOR_PAIR(7));
+        
+        // Moviment
+        mvwprintw(table_win, row, 38, "%s", plots[i].retrograde);
+        
+        // Dignity
+        char dignity[30];
+
+        if (i < 12) {
+            int n_ruler, n_exalted, n_exile, n_detriment;
+            int r1, r2, r3;
+            
+            get_rulers(plots[i].sign, &n_ruler, &n_exalted, &n_exile, &n_detriment, &r1, &r2, &r3);
+                       
+            if ((n_ruler == i + 1 && n_exalted == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Dom/Exalt/Tri");
+            }
+            else if ((n_exile == i + 1 && n_detriment == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Exile/Detr/Tri");
+            }
+            else if ((n_ruler == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Domicile/Tri");
+            }
+            else if ((n_exile == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Exile/Tri");
+            }
+            else if ((n_exalted == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Exaltation/Tri");
+            }
+            else if ((n_detriment == i + 1) && (i + 1 == r1 || i + 1 == r2 || i + 1 == r3)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Detriment/Tri");
+            }
+            else if ((i + 1 == r1 || i + 1 == r2 || i + 1 == r3) && (n_detriment != i + 1) && (n_exile != i + 1)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Tri");
+            }
+            else if ((n_ruler == i + 1 && n_exalted == i + 1)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Dom/Exalt");
+            }
+            else if ((n_exile == i + 1 && n_detriment == i + 1)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Exile/Detr");
+            }
+            else if ((n_ruler == i + 1)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Domicile");
+            }
+            else if ((n_exile == i + 1)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Exile");
+            }
+            else if ((n_exalted == i + 1)) {
+                wattron(table_win, COLOR_PAIR(12));
+                snprintf(dignity, 30, "%s", "Exaltation");
+            }
+            else if ((n_detriment == i + 1)) {
+                wattron(table_win, COLOR_PAIR(11));
+                snprintf(dignity, 30, "%s", "Detriment");
+            }
+            else {
+                snprintf(dignity, 30, "%s", " ");    
+            }
+
+            mvwprintw(table_win, row, 43, "%s", dignity);
+            wattroff(table_win, COLOR_PAIR(12));
+            wattroff(table_win, COLOR_PAIR(11));
+
+        }
+
+
+        // Gender
+
+        int planet_gen = -1;
+        int sign_gen = -1;
+
+        get_planet_gender(plots[i].object, &planet_gen);
+        get_sign_gender(plots[i].sign, &sign_gen);
+
+        if (i == 2) { // Mercury
+            if (plots[i].rising_time <= plots[0].rising_time) {
+                planet_gen = 1;
+            }
+            else {
+                planet_gen = 2;
+            }
+        }
+
+        if (sign_gen == planet_gen) {
+            mvwprintw(table_win, row, 58, "✅");
+        }
+
+
+        // Sect
+
+        char *hsol = plots[0].house;
+        
+        int planet_sect = -1;
+        int house_s = romanToInt(plots[i].house);
+
+        get_planet_sect(plots[i].object, &planet_sect);
+
+        if (i == 2) { // Mercury
+            if (plots[i].rising_time < plots[0].rising_time) {
+                planet_sect = 1;
+            }
+            else {
+                planet_sect = 2;
+            }
+        }
+
+        if (mapa_diurno(hsol)) {
+            if ((planet_sect == 1 && house_s > 6) || (planet_sect == 2 && house_s < 7 && i != 1) || i == 0) {
+                mvwprintw(table_win, row, 62, "✅");
+            }
+        }
+        else {
+            if ((planet_sect == 1 && house_s < 7 && i != 0) || (planet_sect == 2 && house_s > 6) || i == 1) {
+                mvwprintw(table_win, row, 62, "✅");
+            }
+        }
+
+
+        // Ruler
+        char *ruler;
+        get_sign_ruler_by_domicile(plots[i].sign, &ruler);
+
+        char *ruler2;
+        get_sign_ruler_by_exaltation(plots[i].sign, &ruler2);
+
+        mvwprintw(table_win, row, 68, "%s %s", ruler, ruler2);
+
+        free(ruler);
+        free(ruler2);
+        
+        row++;
+    }
+   
+    // Add cusps information
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 1, 89, "House  Cusp         Rulers(D/E)");
+    wattroff(table_win, A_BOLD);
+    
+    for (int i = 1; i <= 12; i++) {
+        char house_num[4];
+        snprintf(house_num, sizeof(house_num), "%02d", i);
+
+        char sign_str[10];
+        double sign_remainder = fmod(cusps[i], 30.0);
+        int deg_cusp = (int)sign_remainder;        
+        double min_cusp = (int)((sign_remainder - deg_cusp) * 60.0);
+
+        snprintf(sign_str, sizeof(sign_str), "%s", get_sign((int)(cusps[i] / 30)));
+
+        char *ruler;
+        get_sign_ruler_by_domicile(sign_str, &ruler);        
+        
+        char *ruler2;
+        get_sign_ruler_by_exaltation(sign_str, &ruler2);
+        
+        if (i == 1 || i == 4 || i == 7 || i == 10) {
+            wattron(table_win, A_BOLD);
+        }
+                
+        mvwprintw(table_win, 2 + i, 90, "%s    %02d° %s %02.0f'   %s %s", house_num, deg_cusp, sign_str, min_cusp, ruler, ruler2);
+        wattroff(table_win, A_BOLD);
+
+        free(ruler);
+        free(ruler2);
+    }
+
+    char *temperament;
+    get_moon_temperament(phase, &temperament);
+
+    // Add additional info
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 21, 2, "Location:"); 
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 21, 12, "%s, %s", city, country);
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 22, 2, "Lat:");  
+    mvwprintw(table_win, 22, 15, ", Lon:     ");
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 22, 7, "%.4f", lat);
+    mvwprintw(table_win, 22, 22, "%.4f", lon);
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 23, 2, "Sunrise:");
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 23, 11, "%s", sunrise_time);
+    wattroff(table_win, A_BOLD);
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 24, 2, "Sunset:");
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 24, 11, "%s", sunset_time);
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 25, 2, "Local Apparent Solar Time:");
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 25, 29, "%02d:%02d:%.4f", last_hr, last_min, last_sec);
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 26, 2, "Moon Phase:");
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 26, 14, "%s (%s)", phase, temperament);
+
+    char *hsol = plots[0].house;
+    wattron(table_win, A_BOLD);
+    if (mapa_diurno(hsol)) {
+        mvwprintw(table_win, 27, 2, "%s chart", "Diurnal");    
+    }
+    else {
+        mvwprintw(table_win, 27, 2, "%s chart", "Nocturnal");    
+    }
+    wattroff(table_win, A_BOLD);
+    
+    // Add instructions
+    mvwprintw(table_win, table_height - 1, 2, "Press ESC to return to chart");
+    
+    // Refresh the window
+    wrefresh(table_win);
+    
+    // Wait for ESC key press
+    int ch;
+    do {
+        ch = wgetch(table_win);
+    } while (ch != 27); // 27 is ESC key
+    
+    // Clean up
+    free(temperament);
+    delwin(shadow_win);
+    delwin(table_win);
+    clear();
+    refresh();
+}
+
+
+void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, bool dark_mode) {
+    // Create a new window for the table
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    // Calculate window size and position
+    int table_height = 30;
+    int table_width = max_x - 5;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 2;
+    
+    // Create window
+    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    if (dark_mode) {
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, COLOR_CYAN, COLOR_BLACK);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+        init_pair(11, COLOR_RED, COLOR_BLACK);
+        init_pair(12, COLOR_GREEN, COLOR_BLACK);
+    } 
+    else {
+        init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(2, COLOR_RED, COLOR_MAGENTA);
+        init_pair(3, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(4, COLOR_YELLOW, COLOR_MAGENTA);
+        init_pair(5, COLOR_BLUE, COLOR_MAGENTA);
+        init_pair(6, COLOR_BLACK, COLOR_CYAN);
+        init_pair(7, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(8, COLOR_BLUE, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_CYAN, COLOR_CYAN);
+        init_pair(11, COLOR_RED, COLOR_CYAN);
+        init_pair(12, COLOR_GREEN, COLOR_CYAN);
+    }
+    
+    
+    
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wrefresh(shadow_win);
+
+    // Create a border around the table
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(6));
+
+    
+    
+    // Add title
+    mvwprintw(table_win, 0, (table_width - 12) / 2, "Planetary Hours");
+    
+    int row = 4;
+    
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 2, 4, "Day:");
+    mvwprintw(table_win, 2, 42, "Night:");
+    wattroff(table_win, A_BOLD);
+
+    void format_hour(char *buffer, size_t size, double total_hours) {
+        int h = (int)total_hours;
+        
+        // Extrai os minutos da parte fracionária das horas
+        double total_minutes = (total_hours - h) * 60.0;
+        int m = (int)total_minutes;
+        
+        // Extrai os segundos da parte fracionária dos minutos
+        // O +0.5 serve para arredondar corretamente em vez de truncar
+        int s = (int)((total_minutes - m) * 60.0 + 0.5 / 3600000.0);
+        
+        // Ajuste opcional para o caso do arredondamento dar 60 segundos
+        if (s >= 60) { s = 0; m++; }
+        if (m >= 60) { m = 0; h++; }
+    
+        snprintf(buffer, size, "%02d:%02d:%02d", h, m, s);
+    }
+
+    for (int i = 0; i < 6; i++) {
+        // Aumentado para 12 para caber "HH:MM:SS\0" com segurança
+        char p_hour[12];
+        char p_hour2[12];
+        char p_hour3[12];
+        char p_hour4[12];
+        
+        // Chamadas simples da função auxiliar
+        format_hour(p_hour, sizeof(p_hour), hours[i]);
+        format_hour(p_hour2, sizeof(p_hour2), hours[i+6]);
+        format_hour(p_hour3, sizeof(p_hour3), hours[i+12]);
+        format_hour(p_hour4, sizeof(p_hour4), hours[i+18]);
+    
+        mvwprintw(table_win, row, 4, "%2d) %s %s", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
+        mvwprintw(table_win, row, 23, "%2d) %s %s", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
+        mvwprintw(table_win, row, 42, "%2d) %s %s", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
+        mvwprintw(table_win, row, 61, "%2d) %s %s", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
+    
+        row += 2;
+    }
+
+    char hour_len1[12];
+    char hour_len2[12];
+
+    format_hour(hour_len1, sizeof(hour_len1), daytime_hour);
+    format_hour(hour_len2, sizeof(hour_len2), nighttime_hour);
+
+    mvwprintw(table_win, row + 2, 4, "  Hour length (Day): %.4f (%s)", daytime_hour, hour_len1);
+    mvwprintw(table_win, row + 3, 4, "Hour length (Night): %.4f (%s)", nighttime_hour, hour_len2);
+
+    mvwprintw(table_win, row + 7, 4, "Chart's Planetary Day(%d)/Hour(%d): %s/%s", week_day, planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, 0)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
+
+    
+    mvwprintw(table_win, table_height - 1, 2, "Press ESC to return to chart");
+    
+    // Refresh the window
+    wrefresh(table_win);
+    
+    // Wait for ESC key press
+    int ch;
+    do {
+        ch = wgetch(table_win);
+    } while (ch != 27); // 27 is ESC key
+    
+    // Clean up
+    delwin(shadow_win);
+    delwin(table_win);
+    clear();
+    refresh();
+}
+
+
+void display_rising_times(PlotObject *plots, bool dark_mode) {
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    // Calculate window size and position
+    int table_height = 30;
+    int table_width = max_x - 5;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 2;
+    
+    // Create window
+    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    if (dark_mode) {
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        init_pair(3, COLOR_GREEN, COLOR_BLACK);
+        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, COLOR_CYAN, COLOR_BLACK);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+        init_pair(11, COLOR_RED, COLOR_BLACK);
+        init_pair(12, COLOR_GREEN, COLOR_BLACK);
+    } 
+    else {
+        init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(2, COLOR_RED, COLOR_MAGENTA);
+        init_pair(3, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(4, COLOR_YELLOW, COLOR_MAGENTA);
+        init_pair(5, COLOR_BLUE, COLOR_MAGENTA);
+        init_pair(6, COLOR_BLACK, COLOR_CYAN);
+        init_pair(7, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(8, COLOR_BLUE, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_CYAN, COLOR_CYAN);
+        init_pair(11, COLOR_RED, COLOR_CYAN);
+        init_pair(12, COLOR_GREEN, COLOR_CYAN);
+    }
+    
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wrefresh(shadow_win);
+
+    // Create a border around the table
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(6));
+
+    
+    
+    // Add title
+    mvwprintw(table_win, 0, (table_width - 12) / 2, "Rising Times");
+
+    int row = 2;
+    for (int i = 0; i < 10; i++) {
+        
+        double rise_hours = plots[i].rising_time;
+        int rise_h = (int)rise_hours;
+        int rise_m = (int)((rise_hours - rise_h) * 60.0);
+        int rise_s = (int)((((rise_hours - rise_h) * 60.0) - rise_m) * 60.0);
+
+        mvwprintw(table_win, row, 4, "%s  %02d:%02d:%02d (UT)", plots[i].object, rise_h, rise_m, rise_s);
+        row += 2;
+    }
+
+    mvwprintw(table_win, table_height - 1, 2, "Press ESC to return to chart");
+
+    // Refresh the window
+    wrefresh(table_win);
+    
+    // Wait for ESC key press
+    int ch;
+    do {
+        ch = wgetch(table_win);
+    } while (ch != 27); // 27 is ESC key
+    
+    // Clean up
+    delwin(shadow_win);
+    delwin(table_win);
+    clear();
+    refresh();
+ 
+}
+
+
+int chart(struct tm *local_time, double lat, double lon, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int darkmode) {
+    int n = 1;
+    
+    bool dark_mode = (darkmode)?true:false;
+    
+    char err[256];
+    double x2[6];
+    double cusps[13];
+    double ascmc[10];
+    double julian_day;
+
+    
+    int planets[11] = {
+        SE_SUN, SE_MOON, SE_MERCURY, SE_VENUS, SE_MARS, 
+        SE_JUPITER, SE_SATURN, SE_URANUS, SE_NEPTUNE, SE_PLUTO, SE_MEAN_NODE
+    };
+    double planet_longitudes[11];
+    double speed[11];
+
+    double ascendant;
+    double mc;
+
+
+
+    // Initialize ncurses
+    initscr();    
+    start_color();
+
+    // Zoom factor - start with 1.0 (normal size)
+    float zoom_factor = 1.0;
+                
+    // Panning offsets - start at center
+    float pan_x = 0.0;
+    float pan_y = 0.0;
+
+    
+    // Main loop for handling input and redrawing
+    int ch;
+    bool running = true;
+    
+    // Set a timeout for getch() - this adds the pause functionality
+    // 1000ms = 1 second timeout
+    timeout(1000); // This will make getch() wait for 1 second max
+    
+    while (running) {
+        char *ephe_path = getenv("SE_EPHE_PATH");
+        
+        if (!ephe_path) {
+            swe_set_ephe_path(NULL);
+        }
+        else {
+            swe_set_ephe_path(ephe_path);
+        }
+
+        local_time->tm_hour -= tz_offset;
+        mktime(local_time);
+
+
+        julian_day = swe_julday(local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (double)local_time->tm_hour + (double)local_time->tm_min / 60.0 + ((double)local_time->tm_sec / 60.0) / 60.0, SE_GREG_CAL);
+    
+
+
+        
+        // 1. Loop to calculate the 10 planetary positions
+
+        for (int i = 0; i < 11; i++) {
+            if (swe_calc_ut(julian_day, planets[i], SEFLG_SPEED, x2, err) < 0) {
+                printf("Error calculating planet %d: %s\n", planets[i], err);
+                return 1;
+            }
+            planet_longitudes[i] = x2[0]; // Store longitude
+            speed[i] = x2[3];
+        }
+
+        
+        // 2. Calculate Ascendant, MC and houses
+        
+        if (swe_houses(julian_day, lat, lon, house_system, cusps, ascmc) < 0) {
+            printf("Error calculating houses\n");
+            return 1;
+        }
+        ascendant = ascmc[0]; // SE_ASC is always stored at index 0 of ascmc
+        mc = ascmc[1];
+      
+
+
+        // 3. Calculate Solar Time
+        
+        // ================= AJUSTE DE EPOCH (AQUI) =================
+        // Descobrir o Delta T da data para converter UT em ET
+        double delta_t = swe_deltat(julian_day);
+        double julian_day_et = julian_day + delta_t; // Data em Ephemeris Time
+        // ==========================================================
+
+        // 3.1. Calcular Coordenadas Equatoriais Diretas do Sol usando ET
+        double x[6];
+        char serr[256];
+        int flags = SEFLG_SWIEPH | SEFLG_EQUATORIAL; 
+        
+        // Passamos 'julian_day_et' em vez de julian_day puro
+        if (swe_calc(julian_day_et, SE_SUN, flags, x, serr) == ERR) {
+            printf("Erro ao calcular Sol: %s\n", serr);
+            return 1;
+        }
+        
+        double sun_ra_deg = x[0]; 
+        double sun_ra_hours = sun_ra_deg / 15.0;
+
+        // 3.2 e 3.3. Conseguir a Equação do Tempo (EoT) exata usando ET
+        double teq;
+        if (swe_time_equ(julian_day_et, &teq, serr) != 0) {
+            printf("Erro na EoT: %s\n", serr);
+            return 1;
+        }
+
+        // Importante: Na Swiss Ephemeris teq = (Aparente - Médio)
+        double eot_hours = teq * 24.0; 
+
+        // 3.4. Calcular o Local Apparent Solar Time (LAST)
+        double ut_hours = local_time->tm_hour + local_time->tm_min / 60.0 + local_time->tm_sec / 3600.0;
+        double lon_hours = lon / 15.0;
+        double lmt_hours = ut_hours + lon_hours;    // Tempo Médio Local
+        
+        // Aplica a EoT diretamente
+        double last_hours = lmt_hours + eot_hours;  
+
+        // Normalizar LAST para [0, 24)
+        last_hours = fmod(last_hours, 24.0);
+        if (last_hours < 0) last_hours += 24.0;
+
+        
+        // 3.5. Formatar saídas temporais (Mantenha igual)
+        int last_hr = (int)last_hours;
+        int last_min = (int)((last_hours - last_hr) * 60.0);
+        double last_sec = ((last_hours - last_hr) * 3600.0) - (last_min * 60.0);
+        
+
+
+        
+        // 4. Calculate the sunrise and sunset
+        double jd = swe_julday(local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, 0.0, SE_GREG_CAL);
+
+        double sunrise_jd = find_sun_event(jd, lat, lon, true);
+        double sunset_jd = find_sun_event(jd, lat, lon, false);
+        
+        char sunrise_time[16] = "--:--:--";
+        char sunset_time[16] = "--:--:--";
+        
+        void format_event_time(double jd, double offset, char *dest, size_t size_of_dest) {
+            if (jd < 0) {
+                snprintf(dest, size_of_dest, "--:--:--");
+                return;
+            }
+            
+            int y, m, d;
+            double h;
+            
+            // 1. Aplica o fuso horário diretamente no Dia Juliano antes da conversão
+            double local_jd = jd + (offset / 24.0);
+            
+            // 2. Converte para a data e hora local
+            swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
+            
+            // 3. Arredondamento matemático dos segundos (evita que 05:44:59.99 apareça como 05:44:59)
+            // Adicionamos meio milissegundo (0.5 / 3600000.0) para estabilizar a exibição
+            h += 0.5 / 3600000.0;
+            if (h >= 24.0) {
+                h -= 24.0;
+            }
+
+            // 4. Extração matemática de horas, minutos e segundos
+            int hours = (int)h;
+            int minutes = (int)((h - hours) * 60.0);
+            double sec_decimal = (((h - hours) * 60.0) - minutes) * 60.0;
+            int seconds = (int)sec_decimal;
+            
+            // 5. Formata a string de saída com segurança (Ex: "06:45:23")
+            snprintf(dest, size_of_dest, "%02d:%02d:%02d", hours, minutes, seconds);
+        }
+
+        
+        
+        format_event_time(sunrise_jd, tz_offset, sunrise_time, sizeof(sunrise_time));
+        format_event_time(sunset_jd, tz_offset, sunset_time, sizeof(sunset_time));
+       
+              
+        double conv_event_time(double jd, double offset) {
+            // Retorna um valor negativo sentinela caso o Dia Juliano seja inválido
+            if (jd < 0) {
+                return -1.0; 
+            }
+            
+            int y, m, d;
+            double h;
+            
+            // 1. Aplica o fuso horário diretamente no Dia Juliano antes da conversão
+            double local_jd = jd + (offset / 24.0);
+            
+            // 2. A biblioteca extrai a hora decimal local perfeita (já lida com as viradas de dia)
+            swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
+            
+            // 3. Garante que o valor retornado esteja estritamente no intervalo de [0.0, 24.0)
+            // Isso previne anomalias matemáticas flutuantes nas bordas da meia-noite
+            if (h >= 24.0) {
+                h -= 24.0;
+            }
+            if (h < 0.0) {
+                h += 24.0;
+            }
+            
+            return h;
+        }
+        
+        double riseHour = conv_event_time(sunrise_jd, tz_offset);
+        double setHour = conv_event_time(sunset_jd, tz_offset);
+
+        
+        
+        // 5. Planetary hour
+        
+        double day_interval = (setHour - riseHour);
+        double daytime_hour = day_interval / 12.0;
+        double nighttime_hour = (24.0 - day_interval) / 12.0;
+              
+        double hours[24];
+
+        for (int i = 0; i < 12; i++) {
+            hours[i] = riseHour + (double)i * daytime_hour;
+            if (hours[i] >= 24.0) hours[i] -= 24.0;
+            if (hours[i] < 0.0) hours[i] += 24.0;
+        }
+
+        for (int i = 0; i < 12; i++) {
+            hours[i + 12] = setHour + (double)i * nighttime_hour;
+            if (hours[i + 12] >= 24.0) hours[i + 12] -= 24.0;
+            if (hours[i + 12] < 0.0) hours[i + 12] += 24.0;
+        }
+
+        // Ajuste de fuso e normalização do horário atual (Mantenha)
+        local_time->tm_hour += tz_offset;
+        mktime(local_time);
+
+        double hour = (local_time->tm_hour * 60.0) + (local_time->tm_min) + (local_time->tm_sec / 60.0);
+        hour = hour / 60.0;
+        if (hour >= 24.0) hour -= 24.0;
+        if (hour < 0.0) hour += 24.0;
+
+        int week_day = local_time->tm_wday;
+        int planetary_hour = -1;
+
+        
+        // Se a hora atual é antes do amanhecer, pertence ao DIA ASTROLÓGICO ANTERIOR
+        if (hour < riseHour) {
+            hour += 24.0; // Transforma, por exemplo, 01:00h em 25:00h para o cálculo linear
+            week_day -= 1;
+            if (week_day < 0) week_day = 6; // Se era Domingo (0), vira Sábado (6)
+        }
+
+        // Se o pôr do sol ocorreu antes do nascer (em fusos limítrofes), ajustamos para a escala linear
+        double adjusted_set = setHour;
+        if (adjusted_set < riseHour) {
+            adjusted_set += 24.0;
+        }
+
+        // Agora determinamos a hora planetária de 0 a 23 com um único loop limpo
+        if (hour >= riseHour && hour < adjusted_set) {
+            // Período Diurno (Horas 0 a 11)
+            planetary_hour = (int)((hour - riseHour) / daytime_hour);
+            if (planetary_hour > 11) planetary_hour = 11; // Salvaguarda de arredondamento
+        } 
+        else {
+            // Período Noturno (Horas 12 a 23)
+            planetary_hour = 12 + (int)((hour - adjusted_set) / nighttime_hour);
+            if (planetary_hour > 23) planetary_hour = 23; // Salvaguarda de arredondamento
+        }
+        
+    
+
+    
+        // 6. Calculate SAN (Syzygy Ante Nativitatem)
+
+        double last_conj = find_last_astrological_event(julian_day, false);
+        double last_opp  = find_last_astrological_event(julian_day, true);
+
+
+        double SAN, jdSAN;
+
+        int sanYear, sanMon, sanDay;
+        double sanHour;
+        
+        char san[10];
+        
+        if (last_conj > last_opp) {
+            snprintf(san, sizeof(san), "%s", "🌑");
+            jdSAN = last_conj;
+        } 
+        else {
+            snprintf(san, sizeof(san), "%s", "🌕");
+            jdSAN = last_opp;
+        }
+        
+        
+        if (swe_calc_ut(jdSAN, SE_MOON, SEFLG_SPEED, x2, err) < 0) {
+            printf("Error calculating planet %d: %s\n", SE_MOON, err);
+            return 1;
+        }
+        SAN = x2[0]; // Store longitude
+        
+        swe_revjul(jdSAN, SE_GREG_CAL, &sanYear, &sanMon, &sanDay, &sanHour);
+        
+
+        
+        
+        // 7. Moon phase
+
+        double angle = get_moon_phase_by_longitude(julian_day);
+        const char* phase = get_moon_phase_name(angle);
+
+       
+        // 7. Lot of Fortune
+
+        char *hsol = (char *)get_house_roman(planet_longitudes[0], cusps);
+
+        double fortuna;
+        if (mapa_diurno(hsol)) {
+            fortuna = ascendant + planet_longitudes[1] - planet_longitudes[0];
+        } else {
+            fortuna = ascendant + planet_longitudes[0] - planet_longitudes[1];
+        }
+        
+        if (fortuna < 0) fortuna = fortuna + 360;
+        if (fortuna > 360) fortuna = fortuna - 360;
+
+
+        // 8. Rising Times
+
+        double rising_times[10];
+        
+        for (int i = 0; i < 10; i++) {
+            double geopos[3];
+            
+            geopos[0] = lon;
+            geopos[1] = lat;
+            geopos[2] = 0.0;
+    
+            int epheflag = SEFLG_SWIEPH;
+            int rsmi = SE_CALC_RISE;
+    
+            double tret;
+            char serr[256];
+    
+            int result = swe_rise_trans(jd, i, NULL, epheflag, rsmi, geopos, 0, 0, &tret, serr);
+    
+            if (result == ERR) {
+                fprintf(stderr, "Erro no calculo: %s\n", serr);
+                exit(1);
+            }
+                
+            // O resultado 'tret' vem em Dia Juliano. Podemos converter para horas
+            double jd_diff = tret - jd;
+            double rise_hours = jd_diff * 24.0;
+            
+            rising_times[i] = rise_hours;
+    
+        }
+        
+        swe_close();
+
+
+
+        
+        // 9. Building the PlotObject
+
+        double south_node = normalize360(planet_longitudes[10] - 180);
+        double descendant = normalize360(ascendant - 180);
+        double ic = normalize360(mc - 180);
+        
+        char d0[12];
+        snprintf(d0, sizeof(d0), "%d", (int)planet_longitudes[0] % 30);
+        char d1[12];
+        snprintf(d1, sizeof(d1), "%d", (int)planet_longitudes[1] % 30);
+        char d2[12];
+        snprintf(d2, sizeof(d2), "%d", (int)planet_longitudes[2] % 30);
+        char d3[12];
+        snprintf(d3, sizeof(d3), "%d", (int)planet_longitudes[3] % 30);
+        char d4[12];
+        snprintf(d4, sizeof(d4), "%d", (int)planet_longitudes[4] % 30);
+        char d5[12];
+        snprintf(d5, sizeof(d5), "%d", (int)planet_longitudes[5] % 30);
+        char d6[12];
+        snprintf(d6, sizeof(d6), "%d", (int)planet_longitudes[6] % 30);
+        char d7[12];
+        snprintf(d7, sizeof(d7), "%d", (int)planet_longitudes[7] % 30);
+        char d8[12];
+        snprintf(d8, sizeof(d8), "%d", (int)planet_longitudes[8] % 30);
+        char d9[12];
+        snprintf(d9, sizeof(d9), "%d", (int)planet_longitudes[9] % 30);
+        char d10[12];
+        snprintf(d10, sizeof(d10), "%d", (int)planet_longitudes[10] % 30);
+        
+        char df[12];
+        snprintf(df, sizeof(df), "%d", (int)fortuna % 30);
+        char da[12];
+        snprintf(da, sizeof(da), "%d", (int)ascendant % 30);
+        char dm[12];
+        snprintf(dm, sizeof(dm), "%d", (int)mc % 30);
+        char ds[12];
+        snprintf(ds, sizeof(ds), "%d", (int)SAN % 30);
+
+        char m0[12];
+        snprintf(m0, sizeof(m0), "%02d", (int)((planet_longitudes[0] - ((int)planet_longitudes[0])) * 60));
+        char m1[12];
+        snprintf(m1, sizeof(m1), "%02d", (int)((planet_longitudes[1] - ((int)planet_longitudes[1])) * 60));
+        char m2[12];
+        snprintf(m2, sizeof(m2), "%02d", (int)((planet_longitudes[2] - ((int)planet_longitudes[2])) * 60));
+        char m3[12];
+        snprintf(m3, sizeof(m3), "%02d", (int)((planet_longitudes[3] - ((int)planet_longitudes[3])) * 60));
+        char m4[12];
+        snprintf(m4, sizeof(m4), "%02d", (int)((planet_longitudes[4] - ((int)planet_longitudes[4])) * 60));
+        char m5[12];
+        snprintf(m5, sizeof(m5), "%02d", (int)((planet_longitudes[5] - ((int)planet_longitudes[5])) * 60));
+        char m6[12];
+        snprintf(m6, sizeof(m6), "%02d", (int)((planet_longitudes[6] - ((int)planet_longitudes[6])) * 60));
+        char m7[12];
+        snprintf(m7, sizeof(m7), "%02d", (int)((planet_longitudes[7] - ((int)planet_longitudes[7])) * 60));
+        char m8[12];
+        snprintf(m8, sizeof(m8), "%02d", (int)((planet_longitudes[8] - ((int)planet_longitudes[8])) * 60));
+        char m9[12];
+        snprintf(m9, sizeof(m9), "%02d", (int)((planet_longitudes[9] - ((int)planet_longitudes[9])) * 60));
+        char m10[12];
+        snprintf(m10, sizeof(m10), "%02d", (int)((planet_longitudes[10] - ((int)planet_longitudes[10])) * 60));
+
+        char mf[12];
+        snprintf(mf, sizeof(mf), "%02d", (int)((fortuna - ((int)fortuna)) * 60));
+        char ma[12];
+        snprintf(ma, sizeof(ma), "%02d", (int)((ascendant - ((int)ascendant)) * 60));
+        char mm[12];
+        snprintf(mm, sizeof(mm), "%02d", (int)((mc - ((int)mc)) * 60));
+        char ms[12];
+        snprintf(ms, sizeof(ms), "%02d", (int)((SAN - ((int)SAN)) * 60));
+
+
+        int sign[18] = {
+            (int)planet_longitudes[0] / 30,
+            (int)planet_longitudes[1] / 30,
+            (int)planet_longitudes[2] / 30,
+            (int)planet_longitudes[3] / 30,
+            (int)planet_longitudes[4] / 30,
+            (int)planet_longitudes[5] / 30,
+            (int)planet_longitudes[6] / 30,
+            (int)planet_longitudes[7] / 30,
+            (int)planet_longitudes[8] / 30,
+            (int)planet_longitudes[9] / 30,
+            (int)planet_longitudes[10] / 30,
+            (int)fortuna / 30,
+            (int)SAN / 30,
+            (int)ascendant / 30,
+            (int)mc / 30,
+            (int)south_node / 30,
+            (int)descendant / 30,
+            (int)ic / 30
+        };
+
+        
+
+        PlotObject plots[] = {
+            {planet_longitudes[0], "☉", "Sol", get_sign(sign[0]), d0, m0, (speed[0] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[0], cusps), speed[0], rising_times[0]},
+            {planet_longitudes[1], "☽", "Luna", get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1]},
+            {planet_longitudes[2], "☿", "Mercury", get_sign(sign[2]), d2, m2, (speed[2] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[2], cusps), speed[2], rising_times[2]},
+            {planet_longitudes[3], "♀", "Venus", get_sign(sign[3]), d3, m3, (speed[3] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[3], cusps), speed[3], rising_times[3]},
+            {planet_longitudes[4], "♂", "Mars", get_sign(sign[4]), d4, m4, (speed[4] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[4], cusps), speed[4], rising_times[4]},
+            {planet_longitudes[5], "♃", "Jupiter", get_sign(sign[5]), d5, m5, (speed[5] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[5], cusps), speed[5], rising_times[5]},
+            {planet_longitudes[6], "♄", "Saturn", get_sign(sign[6]), d6, m6, (speed[6] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[6], cusps), speed[6], rising_times[6]},
+            {planet_longitudes[7], "♅", "Uranus", get_sign(sign[7]), d7, m7, (speed[7] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[7], cusps), speed[7], rising_times[7]},
+            {planet_longitudes[8], "♆", "Neptune", get_sign(sign[8]), d8, m8, (speed[8] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[8], cusps), speed[8], rising_times[8]},
+            {planet_longitudes[9], "⯓", "Pluto", get_sign(sign[9]), d9, m9, (speed[9] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[9], cusps), speed[9], rising_times[9]},
+            {planet_longitudes[10], "☊", "North Node", get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], 0.0},
+            {south_node, "☋", "South Node", get_sign(sign[15]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], 0.0},
+            {fortuna, "🝴", "Fortuna", get_sign(sign[11]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0},
+            {SAN, san, "SAN", get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0},
+            {ascendant, "AC", "Ascendant", get_sign(sign[13]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0},
+            {mc, "MC", "MC", get_sign(sign[14]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0},
+            {descendant, "DC", "Descendant", get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0},
+            {ic, "IC", "IC", get_sign(sign[17]), dm, mm, "", (char *)get_house_roman(ic, cusps), 0.0, 0.0}
+        };
+
+        
+        // Aries offset to draw the chart
+        n = mod_a(13 - ((int)ascendant / 30), 12);
+        
+        
+        // Draw the chart
+        draw_chart(zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, plots, 
+                   sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 
+                   daytime_hour, nighttime_hour, week_day + 1, planetary_hour + 1, phase, 
+                   dark_mode, anim_interval, last_hr, last_min, last_sec, chart_name, house_system);
+        
+
+
+        // Handle input with timeout - this is the key part!
+        ch = getch();
+        
+        // Process keypresses
+        switch (ch) {
+            case '+':
+            case '=':
+                zoom_factor += 0.1;
+                if (zoom_factor > 3.0) zoom_factor = 3.0; // Cap at 3x zoom
+                break;
+            case '-':
+            case '_':
+                zoom_factor -= 0.1;
+                if (zoom_factor < 0.3) zoom_factor = 0.3; // Cap at 0.3x zoom
+                break;
+            case 'q':
+            case 'Q':
+                running = false;
+                break;
+            case 'r':
+            case 'R':
+                // Reset panning and zoom
+                pan_x = 0.0;
+                pan_y = 0.0;
+                zoom_factor = 1.0;
+                break;
+            case KEY_UP:
+                pan_y -= 2.0; // Move up
+                break;
+            case KEY_DOWN:
+                pan_y += 2.0; // Move down
+                break;
+            case KEY_LEFT:
+                pan_x -= 2.0; // Move left
+                break;
+            case KEY_RIGHT:
+                pan_x += 2.0; // Move right
+                break;
+            case '[':
+                anim_interval -= 60;
+                break;
+            case ']':
+                anim_interval += 60;
+                break;
+            case 'a':
+            case 'A':
+                animated = !animated;
+                break;
+            case 't':
+            case KEY_F(2):
+                display_table(
+                    local_time, lat, lon, plots, cusps,
+                    sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 
+                    daytime_hour, nighttime_hour, week_day + 1, planetary_hour + 1, phase, 
+                    dark_mode, last_hr, last_min, last_sec 
+                );
+                break;
+            case 'x':
+            case KEY_F(3):
+                display_aspects(plots, dark_mode);
+                break;
+            case KEY_F(4):
+                display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, dark_mode);
+                break;
+            case KEY_F(5):
+                display_rising_times(plots, dark_mode);
+                break;
+            case 27:
+                running = false;
+                break;
+            case ERR: // No key pressed within timeout (1 second)
+                // Do nothing - just continue the loop
+                break;
+        }
+
+        if (animated) {
+            local_time->tm_sec += anim_interval;
+            mktime(local_time);
+        }
+
+    }
+
+
+    // Cleanup ncurses
+    endwin();
+
+    return 0;
+}
