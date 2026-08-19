@@ -513,55 +513,6 @@ void get_terms_longitude_to_print(Termo tabela_termos[12][5], Termo termos_lon[1
 
 
 
-void draw_terms(int radius_multiplier, int object_count, 
-                Termo t[12][5], 
-                int display_center_y, int display_center_x, 
-                float current_scale, float aspect_ratio, int asc) {
-    
-    
-    float radius = radius_multiplier * current_scale;
-    int steps = 360;
-
-    int longitudes[object_count];
-    int counter = 0;
-
-    char text[object_count][10];
-
-    attron(COLOR_PAIR(7));
-
-    for (int k = 0; k < 12; k++) {
-        for (int l = 0; l < 5; l++) {
-            longitudes[counter] = t[k][l].grau_limite;
-            snprintf(text[counter], 10, "%s", planet_regent_symbols[t[k][l].regente]);
-            counter++;
-        }
-    }
-
-    for (int i = 0; i < steps; i++) {
-        float angle = i * PI / 180.0;
-        int y = (int)(display_center_y + radius * sin(angle));
-        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
-        
-        for (int j = 0; j < object_count; j++) {
-            if (i == (180 - (longitudes[j] - asc) % 360) || 
-                i == (180 - (longitudes[j] - asc) % 360) + 360|| 
-                i == (180 - (longitudes[j] - asc) % 360) - 360) {
-                
-                mvaddstr(y, x , text[j]);
-                                
-            }
-        }
-    }
-    attroff(COLOR_PAIR(7));
-
-}
-
-
-
-
-
-
-
 int obter_idade_padrao_mapa() {
     // 1. Captura o tempo atual do sistema
     time_t tempo_bruto = time(NULL);
@@ -1607,7 +1558,6 @@ void draw_decans(int display_center_y, int display_center_x,
     float radius = 18.0 * current_scale;
     (void)n;    
     
-    attron(COLOR_PAIR(7));
     for (int i = -175 + asc, k = 0; i < 185 + asc; i += 10, k++) {
         
         float angle = i * PI / 180.0;
@@ -1620,7 +1570,46 @@ void draw_decans(int display_center_y, int display_center_x,
         }
         
     }
-    attroff(COLOR_PAIR(7));
+}
+
+
+void draw_terms(int radius_multiplier, int object_count, 
+                Termo t[12][5], 
+                int display_center_y, int display_center_x, 
+                float current_scale, float aspect_ratio, int asc) {
+    
+    
+    float radius = radius_multiplier * current_scale;
+    int steps = 360;
+
+    int longitudes[object_count];
+    int counter = 0;
+
+    char text[object_count][10];
+
+    for (int k = 0; k < 12; k++) {
+        for (int l = 0; l < 5; l++) {
+            longitudes[counter] = t[k][l].grau_limite;
+            snprintf(text[counter], 10, "%s", planet_regent_symbols[t[k][l].regente]);
+            counter++;
+        }
+    }
+
+    for (int i = 0; i < steps; i++) {
+        float angle = i * PI / 180.0;
+        int y = (int)(display_center_y + radius * sin(angle));
+        int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+        
+        for (int j = 0; j < object_count; j++) {
+            if (i == (180 - (longitudes[j] - asc) % 360) || 
+                i == (180 - (longitudes[j] - asc) % 360) + 360|| 
+                i == (180 - (longitudes[j] - asc) % 360) - 360) {
+                
+                mvaddstr(y, x , text[j]);
+                                
+            }
+        }
+    }
 }
 
 
@@ -1643,15 +1632,15 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
     if (dark_mode) {
         init_pair(1, COLOR_WHITE, COLOR_BLACK);
-        init_pair(2, COLOR_RED, COLOR_BLACK);
-        init_pair(3, COLOR_GREEN, COLOR_BLACK);
-        init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(5, COLOR_BLUE, COLOR_BLACK);
+        init_pair(2, COLOR_RED, COLOR_WHITE);
+        init_pair(3, COLOR_GREEN, COLOR_WHITE);
+        init_pair(4, COLOR_YELLOW, COLOR_WHITE);
+        init_pair(5, COLOR_BLUE, COLOR_WHITE);
         init_pair(6, COLOR_WHITE, COLOR_BLACK);
         init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(8, COLOR_CYAN, COLOR_BLACK);
         init_pair(9, COLOR_WHITE, COLOR_WHITE);
-        init_pair(10, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(11, COLOR_RED, COLOR_BLACK);
         init_pair(12, COLOR_GREEN, COLOR_BLACK);
@@ -1659,10 +1648,10 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         init_pair(14, COLOR_BLACK, COLOR_CYAN);
         init_pair(15, COLOR_WHITE, COLOR_BLACK);
-        init_pair(16, COLOR_WHITE, COLOR_BLACK);
-        init_pair(17, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(18, COLOR_BLUE, COLOR_BLACK);
-        init_pair(19, COLOR_BLACK, COLOR_BLACK);
+        init_pair(16, COLOR_BLACK, COLOR_WHITE);
+        init_pair(17, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(18, COLOR_BLUE, COLOR_WHITE);
+        init_pair(19, COLOR_WHITE, COLOR_WHITE);
         init_pair(20, COLOR_CYAN, COLOR_BLACK);
 
         init_pair(21, COLOR_YELLOW, COLOR_BLUE);
@@ -1797,15 +1786,17 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
     
     if (show_dec) {
+        attron(COLOR_PAIR(17));
         draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
+        attroff(COLOR_PAIR(17));
     }
 
     if (show_terms) {
         Termo t[12][5];
         get_terms_longitude_to_print(terms, t);
-        draw_terms(18, 60, t, 
-            display_center_y, display_center_x, 
-            current_scale, aspect_ratio, asc);
+        attron(COLOR_PAIR(17));
+        draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+        attroff(COLOR_PAIR(17));
     }
 
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
@@ -4026,7 +4017,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             return 1;
         }
         SAN = x2[0]; // Store longitude
-        double SANspeed = x2[3];
+        //double SANspeed = x2[3];
         
         swe_revjul(jdSAN, SE_GREG_CAL, &sanYear, &sanMon, &sanDay, &sanHour);
         
@@ -4319,7 +4310,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             {10, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10]},
             {11, south_node, "☋", _("South Node"), get_sign(sign[15]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11],south_node_declination},
             {12, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[11]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, NAN},
-            {13, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), SANspeed, 0.0, 0.0, 0.0, SAN_declination},
+            {13, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, SAN_declination},
             {14, ascendant, "AC", _("Ascendant"), get_sign(sign[13]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, ascendant_declination},
             {15, mc, "MC", _("Midheaven"), get_sign(sign[14]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, mc_declination},
             {16, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, descendant_declination},
@@ -4338,7 +4329,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             {7, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10]},
             {8, south_node, "☋", _("South Node"), get_sign(sign[15]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11],south_node_declination},
             {9, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[11]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, NAN},
-            {10, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), SANspeed, 0.0, 0.0, 0.0, SAN_declination},
+            {10, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, SAN_declination},
             {11, ascendant, "AC", _("Ascendant"), get_sign(sign[13]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, ascendant_declination},
             {12, mc, "MC", _("Midheaven"), get_sign(sign[14]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, mc_declination},
             {13, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, descendant_declination},
