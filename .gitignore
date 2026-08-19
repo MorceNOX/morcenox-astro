@@ -2,5 +2,6 @@
 *.o
 *.out
 *.py
+*.tar.gz
 atlas/*
 astro
