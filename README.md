@@ -73,9 +73,16 @@ echo "export SE_EPHE_PATH="$HOME"/ephe >> .bashrc
 * `libncurses-dev`
 * `libicu-dev`
 
+```
+sudo apt-get install build-essentials gcc make libncurses-dev libicu-dev
+```
+
 #### For Fedora/Red-Hat/CentOS
 * `ncurses-devel`
 * `libicu-devel`
+```
+sudo dnf install gcc make ncurses-devel libicu-devel
+```
 
 Clone and Build the SQLite database with libicu
 ```
@@ -124,11 +131,11 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
 
 ### Main Menu
 
-#### In English
+#### In Brazilian Portuguese
 <hr>
 <img width="2560" height="1600" alt="01-main_menu" src="https://github.com/user-attachments/assets/5f0b01f9-e766-42c8-a758-53b6c88ec0c4" />
 
-#### In Brazilian Portuguese
+#### In English
 <hr>
 <img width="2560" height="1600" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/1d610c6e-5e09-49bd-bf51-bfce54658ede" />
 <hr>
