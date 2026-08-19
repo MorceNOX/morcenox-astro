@@ -900,11 +900,14 @@ Press Q or ESC to return to the main menu.
 
 • Rulers by domicile, exaltation, triplicity, term and decan;
 
-• Mutual reception: This column shows the pair of planets which are 
-  receiving each other. In this table we don't take account whether
-  or not it's a valid aspect between the two planets envolved, 
-  but in the next table - pressing F2 again to get access - we can 
-  see this and other information about dignities in more details. 
+• Mutual reception: This column shows the pair of
+  planets that are in mutual reception, either by domicile
+  or by exaltation. In this column, the program identifies the
+  planets regardless of whether there is a valid aspect
+  between them. In the next table—accessible by pressing
+  F2 again—we can see the (Asp) flag if an aspect exists,
+  as well as more detailed information regarding
+  accidental dignities.
 
 Pressing F2 again and you can see details of the accidental
 dignities and the state of the planets and bodies.
