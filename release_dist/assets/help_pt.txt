@@ -913,11 +913,13 @@ Pressione Q ou ESC para retornar ao menu principal.
   e decanato;
 
 • Recepção mútua: Esta coluna mostra o par de
-  planetas que estão recebendo um ao outro. Nesta tabela
-  não consideramos se há ou não um aspecto válido entre
-  os planetas envolvidos, mas na próxima tabela - pressionando
-  F2 novamente para ter acesso - podemos ver isso e outras
-  informações sobre as dignidades em mais detalhes.
+  planetas que estão recebendo um ao outro, ou por domicílio,
+  ou por exaltação. Nesta coluna  o programa identifica os 
+  planetas, independentemente de haver ou não aspecto válido
+  entre eles. Na próxima tabela - pressionando
+  F2 novamente para ter acesso - podemos ver a flag (Asp) se 
+  houver aspecto, além de outras informações mais detalhadas
+  sobre as dignidades acidentais.
 
 Ao pressionar F2 novamente, você pode ver detalhes sobre
 as dignidades acidentais e o estado dos planetas e corpos.
