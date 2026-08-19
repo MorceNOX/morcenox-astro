@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 23:17-0300\n"
+"POT-Creation-Date: 2026-08-19 03:47-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1029,19 +1029,19 @@ msgstr "Falha ao deletar parte árabe!"
 msgid "Arabic Part deleted successfully!"
 msgstr "Mapa excluído com sucesso."
 
-#: src/aspects.c:264
+#: src/aspects.c:282
 msgid "Parallel & Contra-Parallel"
 msgstr "Paralelo & Contra-Paralelo"
 
-#: src/aspects.c:340 src/aspects.c:741
+#: src/aspects.c:358 src/aspects.c:759
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
-#: src/aspects.c:410
+#: src/aspects.c:428
 msgid "Aspects Table"
 msgstr "Tabela de Aspectos"
 
-#: src/aspects.c:499
+#: src/aspects.c:517
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
 "Sign - [↓↑|JK] Scroll"
@@ -1049,7 +1049,7 @@ msgstr ""
 "Pressione Q/ESC retornar - F3 Paralelo & Contra-Paralelo - F4 Aspectos por "
 "Signo - [↓↑/JK] rolar"
 
-#: src/aspects.c:658
+#: src/aspects.c:676
 msgid "Aspects by Sign Table"
 msgstr "Tabela de Aspectos por Signo"
 

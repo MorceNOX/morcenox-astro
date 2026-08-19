@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 23:22-0300\n"
+"POT-Creation-Date: 2026-08-19 03:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -781,25 +781,25 @@ msgstr ""
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
-#: src/aspects.c:264
+#: src/aspects.c:282
 msgid "Parallel & Contra-Parallel"
 msgstr ""
 
-#: src/aspects.c:340 src/aspects.c:741
+#: src/aspects.c:358 src/aspects.c:759
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr ""
 
-#: src/aspects.c:410
+#: src/aspects.c:428
 msgid "Aspects Table"
 msgstr ""
 
-#: src/aspects.c:499
+#: src/aspects.c:517
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
 "Sign - [↓↑|JK] Scroll"
 msgstr ""
 
-#: src/aspects.c:658
+#: src/aspects.c:676
 msgid "Aspects by Sign Table"
 msgstr ""
 
