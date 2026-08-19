@@ -75,7 +75,7 @@ echo "export SE_EPHE_PATH="$HOME"/ephe >> .bashrc
 
 #### For Fedora/Red-Hat/CentOS
 * `ncurses-devel`
-* `libicu-dev`
+* `libicu-devel`
 
 Clone and Build the SQLite database with libicu
 ```
