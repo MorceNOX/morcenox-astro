@@ -44,6 +44,8 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 ## 🚀 Installation & Requirements
 
 *Note: As this is a C-based application, you will need a C compiler and the necessary development libraries installed on your system.*
+`gcc`
+`make`
 
 ### Prerequisites
 Ensure you have the following libraries installed:
@@ -65,7 +67,7 @@ make $(nproc)
 make setup-dir
 
 # Install
-make install
+sudo make install
 ```
 
 ## ⌨️ Usage & Navigation
