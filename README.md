@@ -1,5 +1,5 @@
 # MorceNOX™ ASTRO
-
+<img width="1344" height="768" alt="MorceNOX-ASTRO-logo" src="https://github.com/user-attachments/assets/5ccde602-e15f-4001-8956-b322583fd432" />
 
 **Your advanced, terminal-based astrological companion.**
 
@@ -84,46 +84,52 @@ MorceNOX™ is designed for speed. Most actions require only one or two keystrok
 * **Sub-Modules:** Accessed via Function keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria).
 
 ## Screenshots
-***
+
 ### Main Menu
-***
 
-***
+#### In English
+<hr>
+<img width="2560" height="1600" alt="01-main_menu" src="https://github.com/user-attachments/assets/5f0b01f9-e766-42c8-a758-53b6c88ec0c4" />
+
+#### In Brazilian Portuguese
+<hr>
+<img width="2560" height="1600" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/1d610c6e-5e09-49bd-bf51-bfce54658ede" />
+<hr>
 
 ### The Chart Wheel
-***
+<hr>
+<img width="2560" height="1600" alt="02-chart_wheel_example_02" src="https://github.com/user-attachments/assets/ab0f7407-1705-4182-97a1-9f9a18659ba6" />
+<hr>
 
-***
-
-### The Chart Wheel
-***
-
-***
+### The Chart Wheel Zoomed
+<hr>
+<img width="2560" height="1600" alt="02-chart_wheel_zoomed_02" src="https://github.com/user-attachments/assets/d56feca5-1321-4ca9-a36a-560ba532a332" />
+<hr>
 
 ### Dignities and Rulership Table 1
-***
-
-***
+<hr>
+<img width="2560" height="1600" alt="03-dignities_rulership_table" src="https://github.com/user-attachments/assets/d475b506-b772-4fa2-a553-03fb5e3018d2" />
+<hr>
 
 ### Aspects Table
-***
-
-***
+---
+<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/a4bfc3a6-cba2-4e68-ad21-367437019345" />
+<hr>
 
 ### Primary Directions
-***
-
-***
+<hr>
+<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/88620cca-fb86-4e6f-8a83-60a2ee5c0e82" />
+<hr>
 
 ### Firdaria
-***
-
-***
+<hr>
+<img width="2560" height="1600" alt="05-firdaria_table" src="https://github.com/user-attachments/assets/90fb87e2-a310-412e-87b5-bcf531d7192b" />
+<hr>
 
 ### Energy Profile Chart
-***
-
-***
+<hr>
+<img width="2560" height="1600" alt="07-energy_profile_chart" src="https://github.com/user-attachments/assets/4e7de0d3-2d46-44db-bad0-c456793ed5c9" />
+<hr>
 
 ## 📜 License
 
@@ -138,3 +144,4 @@ This program is free software. You can redistribute and/or modify it under the t
 *Disclaimer: This software is provided "as is", without warranty of any kind. Use for astrological research and professional practice at your own discretion.*
 
 ***
+
