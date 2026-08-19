@@ -1,6 +1,6 @@
 # MorceNOX™ ASTRO
 
-![Logo](https://github.com/MorceNOX/morcenox-astro/tree/main/MorceNOX-ASTRO-logo.png)
+<img src="https://github.com/MorceNOX/morcenox-astro/tree/main/MorceNOX-ASTRO-logo.png" alt="Screenshot do Chart Wheel" width="600">
 
 **Your advanced, terminal-based astrological companion.**
 
