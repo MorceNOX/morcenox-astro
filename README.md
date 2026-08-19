@@ -1,6 +1,6 @@
 # MorceNOX™ ASTRO
 
-[!Logo](https://github.com/MorceNOX/morcenox-astro/tree/main/MorceNOX-ASTRO-logo.png)
+![Logo](https://github.com/MorceNOX/morcenox-astro/tree/main/MorceNOX-ASTRO-logo.png)
 
 **Your advanced, terminal-based astrological companion.**
 
