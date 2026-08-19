@@ -9,13 +9,13 @@
 
 MorceNOX™ ASTRO is a high-performance,-precision astrological engine designed for the terminal environment. Built with C and the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical astrological charts, from Natal and Solar Revolution to advanced time-lord techniques like Firdaria and Primary Directions.
 
-Features a stunning ASCII-art interface, real-motion animation, and deep mathematical confrontation modules.
+Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
 
 ## 🌌 Key Features
 
 ### 🛠 Advanced Charting & Calculations
 * **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time Transit charts.
-* **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verify the transits of the planets against the natal (radical) positions, including the arabic parts.
+* **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verifies the transits of the planets against the natal (radical) positions, including the arabic parts.
 * **Time-Lord Techniques:** Built-in modules for **Firdaria**, **Annual Profections**, and **Vital Chronocrators** (Hyleg & Alcochoden).
 * **Primary Directions:** Precise calculation of Direct and Converse directions for planets and Arabic Parts using Naibod time key and dynamic obliquity.
 * **Arabic Parts:** Create, edit, and manage a custom collection of Arabic Parts, with automated aspect calculation.
@@ -95,55 +95,52 @@ make -j$(nproc)
 sudo make install
 ```
 
-## Installation
+## 🚀 Getting Started
 
-You have 2 (two) options to run this application:
+There are two ways to use MorceNOX™ ASTRO.
 
-### 1. Building from Source
-```bash
+### 🌟 Option 1: Portable Release (Recommended)
+**No installation, no compiler, and no dependencies required.** Use this if you just want to run the app immediately.
+
+1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
+2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.tar.gz`.
+3. Extract it to your preferred folder:
+   ```bash
+   tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz
+   ```
+4. Run the launcher:
+   ```
+   cd MorceNOX-Astro-vX.Y.Z-linux
+   ./astro.sh
+   ```
+The first time you run it, the application will automatically set up your configuration and database in $HOME/.config/MorceNOX-Astro.
+
+### 🛠 Option 2: Building from Source
+
+Use this if you want to customize the code or are working on a custom Linux distribution.
+
+#### Prerequisites (Ubuntu/Debian):
+```
+sudo apt-get install build-essential libncurses-dev libicu-dev
+```
+
+#### Build Steps:
+```
 # Clone the repository
 git clone https://github.com/MorceNOX/morcenox-astro.git
 cd morcenox-astro
 
-# Compile
+# Compile the engine
 make -j$(nproc)
 
-# Create User Environment
+# Initialize your local user environment
 make setup-dir
 
-# Install
+# Install to the system
 sudo make install
 ```
 
-And run the application:
-```
-astro
-```
-
-### 2. Get the release (tar-ball) file
-
-Go to [releases](https://github.com/MorceNOX/morcenox-astro/releases), choose your version and download the tar-ball MorceNOX-Astro-vX.Y.Z-linux.tar.gz (where vX.Y.Z are the number of the version).
-Extract the tar-ball, enter the new created directory and run `./astro.sh`.
-
-This way:
-
-#### 2.1. Download the tar-ball of the new release version;
-
-[New release](https://github.com/MorceNOX/morcenox-astro/releases/tag/v1.1.0)
-
-#### 2.2. Extract the tar-ball in a folder of your preference
-
-Extract the tar-ball in your $HOME folder:
-```
-mkdir -p "$HOME"/MorceNOX-Astro
-tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz -C "$HOME"/MorceNOX-Astro
-```
-
-Enter the folder and run the launcher `astro.sh`. No installation is needed.
-```
-cd "$HOME"/MorceNOX-Astro/MorceNOX-Astro-vX.Y.Z-linux
-./astro.sh
-```
+Then run the application simply by typing: `astro`
 
 ## ⌨️ Usage & Navigation
 
@@ -162,7 +159,7 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
 
 ## Screenshots
 
-Here are some screenshots of the application. You can have an idea of what you expect from this application. And there are many more mudules to explore!
+Here are some screenshots of the application. You can have an idea of what you expect from this application. And there are many more modules to explore!
 
 ### Main Menu
 
