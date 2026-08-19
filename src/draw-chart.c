@@ -1661,7 +1661,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(13, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(14, COLOR_BLACK, COLOR_CYAN);
-        init_pair(15, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(15, COLOR_WHITE, COLOR_BLACK);
         init_pair(16, COLOR_WHITE, COLOR_BLACK);
         init_pair(17, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(18, COLOR_BLUE, COLOR_BLACK);
@@ -1765,7 +1765,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
     //attron(COLOR_PAIR(9) | A_DIM);
     attron(COLOR_PAIR(1));
-    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");
+    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");
     
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
     //attroff(COLOR_PAIR(9) | A_DIM);

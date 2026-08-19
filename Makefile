@@ -1,4 +1,4 @@
-VERSION = 1.1.2
+VERSION = 1.1.3
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
