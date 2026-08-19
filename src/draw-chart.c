@@ -1084,6 +1084,70 @@ double find_last_astrological_event(double start_jd, bool is_opposition) {
     return -1.0; // Event not found in recent history
 }
 
+//#include <math.h>
+//#raylib.h // or whatever headers you use for LINES/COLS/mvaddwstr
+
+// Helper to calculate x_offset_max to ensure both functions use IDENTICAL math
+float get_x_width(float r, float y_offset, float aspect_ratio) {
+    float inner_val = (r * r) - (y_offset * y_offset);
+    float x_width = sqrt(fmax(0, inner_val));
+    return x_width * aspect_ratio;
+}
+
+void draw_circle_filled(int center_y, int center_x, float radius, 
+                       float aspect_ratio, float current_scale, 
+                        const wchar_t* character) {
+    float r = radius * current_scale;
+    
+    for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
+        int y = center_y + y_offset;
+        if (y >= 0 && y < LINES) {
+            float x_offset_max = get_x_width(r, (float)y_offset, aspect_ratio);
+            int x_offset_limit = (int)x_offset_max;
+            
+            for (int x_offset = -x_offset_limit; x_offset <= x_offset_limit; x_offset++) {
+                int x = center_x + x_offset;
+                if (x >= 0 && x < COLS) {
+                    mvaddwstr(y, x, character);
+                }
+            }
+        }
+    }
+}
+
+void draw_circle_outline(int center_y, int center_x, float radius, 
+                         float aspect_ratio, float current_scale, 
+                         const wchar_t* character) {
+    float r = radius * current_scale;
+    
+    for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
+        int y = center_y + y_offset;
+        if (y >= 0 && y < LINES) {
+            float x_offset_max = get_x_width(r, (float)y_offset, aspect_ratio);
+            int x_offset_limit = (int)x_offset_max;
+            
+            int x_left = center_x - x_offset_limit;
+            int x_right = center_x + x_offset_limit;
+            
+            // To prevent gaps, we draw the edge pixel AND the pixel immediately next to it.
+            // This ensures that if the x-coordinate jumps by 2, the "thickness" covers the jump.
+            for (int thickness = 0; thickness <= 1; thickness++) {
+                // Check left edge
+                int lx = x_left + thickness;
+                if (lx >= 0 && lx < COLS) {
+                    mvaddwstr(y, lx, character);
+                }
+                
+                // Check right edge
+                int rx = x_right - thickness;
+                if (rx >= 0 && rx < COLS) {
+                    mvaddwstr(y, rx, character);
+                }
+            }
+        }
+    }
+}
+
 
 // Helper function to draw circle points
 void draw_circle_points(int center_y, int center_x, float radius, 
@@ -1102,37 +1166,37 @@ void draw_circle_points(int center_y, int center_x, float radius,
         }
     }
 }
-void draw_circle_filled(int center_y, int center_x, float radius, 
-                       float aspect_ratio, float current_scale, 
-                       const wchar_t* character) {
-    // 1. Calcula o raio final ajustado pela escala
-    float r = radius * current_scale;
+// void draw_circle_filled(int center_y, int center_x, float radius, 
+//                        float aspect_ratio, float current_scale, 
+//                        const wchar_t* character) {
+//     // 1. Calcula o raio final ajustado pela escala
+//     float r = radius * current_scale;
     
-    // 2. Percorre o círculo linha por linha (eixo Y)
-    for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
-        int y = center_y + y_offset;
+//     // 2. Percorre o círculo linha por linha (eixo Y)
+//     for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
+//         int y = center_y + y_offset;
         
-        // Verifica se a linha atual está dentro dos limites da tela
-        if (y >= 0 && y < LINES) {
+//         // Verifica se a linha atual está dentro dos limites da tela
+//         if (y >= 0 && y < LINES) {
             
-            // Teorema de Pitágoras para achar a largura horizontal daquele ponto: x = sqrt(r^2 - y^2)
-            float x_width = sqrt((r * r) - (y_offset * y_offset));
+//             // Teorema de Pitágoras para achar a largura horizontal daquele ponto: x = sqrt(r^2 - y^2)
+//             float x_width = sqrt((r * r) - (y_offset * y_offset));
             
-            // Aplica a proporção de aspecto na largura horizontal
-            int x_offset_max = (int)(x_width * aspect_ratio);
+//             // Aplica a proporção de aspecto na largura horizontal
+//             int x_offset_max = (int)(x_width * aspect_ratio);
             
-            // 3. Preenche desenhando horizontalmente da esquerda para a direita
-            for (int x_offset = -x_offset_max; x_offset <= x_offset_max; x_offset++) {
-                int x = center_x + x_offset;
+//             // 3. Preenche desenhando horizontalmente da esquerda para a direita
+//             for (int x_offset = -x_offset_max; x_offset <= x_offset_max; x_offset++) {
+//                 int x = center_x + x_offset;
                 
-                // Verifica se o ponto X está dentro dos limites da tela
-                if (x >= 0 && x < COLS) {
-                    mvaddwstr(y, x, character);
-                }
-            }
-        }
-    }
-}
+//                 // Verifica se o ponto X está dentro dos limites da tela
+//                 if (x >= 0 && x < COLS) {
+//                     mvaddwstr(y, x, character);
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
 
@@ -1701,17 +1765,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
     //attron(COLOR_PAIR(9) | A_DIM);
     attron(COLOR_PAIR(1));
-    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");
-
+    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");
     
-    
-    // Draw the inner circle using a dark shade block
-    draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▓");
+    draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
     //attroff(COLOR_PAIR(9) | A_DIM);
 
     //Draw the outer boundary using a light shade block
     int asc = (int)cusps[1];
-    for (float r = 7.0 * current_scale; r <= 20.0 * current_scale; r += current_scale) {
+    for (float r = 8.0 * current_scale; r <= 19.0 * current_scale; r += current_scale) {
         for (int i = -60 - ((n + 1) * 30 - asc); i < 300 - ((n + 1) * 30 - asc); i += 30) {
             float angle = i * PI / 180.0;
             int y = (int)(display_center_y + r * sin(angle));
