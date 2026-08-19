@@ -211,6 +211,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 <hr>
 <img width="2526" height="1469" alt="09-temperament_chart" src="https://github.com/user-attachments/assets/1f5622e5-b11f-4a1d-b8c0-eda6ac8a36bf" />
 <hr>
+
 ## 📜 License
 
 This program is free software. You can redistribute and/or modify it under the terms of the **GNU General Public License (GPL)** as published by the Free Software Foundation.
