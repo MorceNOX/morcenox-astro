@@ -95,7 +95,7 @@ make -j$(nproc)
 sudo make install
 ```
 
-## Instalation
+## Installation
 
 You have 2 (two) options to run this application:
 
