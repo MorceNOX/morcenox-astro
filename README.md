@@ -33,7 +33,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
 
 ### 🌎 Multilingual Support
-* Currently only **English** and **Brazilian Portuguese** are available. You select the language by the Settings menu.
+* Currently MorceNOX™ ASTRO is available in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
 
 ## 🛠 Technical Stack
 
@@ -47,15 +47,15 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 ## 🚀 Installation & Requirements
 
 *Note: As this is a C-based application, you will need a C compiler and the necessary development libraries installed on your system.*
-`gcc`
-`make`
+`gcc` (for building from source)
+`make` (for all running options)
 
 ### Prerequisites
 Ensure you have the following libraries installed:
 
 #### Swiss Ephemeris
 
-Clone and build the Swiss Ephemeris repository:
+Clone and build the Swiss Ephemeris repository (optional, but desirable):
 ```
 git clone https://github.com/aloistr/swisseph.git
 
