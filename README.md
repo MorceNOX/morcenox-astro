@@ -95,8 +95,11 @@ make -j$(nproc)
 sudo make install
 ```
 
+## Instalation
 
-### Building from Source
+You have 2 (two) options to run this application:
+
+### 1. Building from Source
 ```bash
 # Clone the repository
 git clone https://github.com/MorceNOX/morcenox-astro.git
@@ -110,6 +113,34 @@ make setup-dir
 
 # Install
 sudo make install
+```
+
+And run the application:
+```
+astro
+```
+
+### 2. Get the release (tar-ball) file
+
+Go to releases -> new release and download the tar-ball MorceNOX-Astro-vX.Y.Z-linux.tar.gz (where vX.Y.Z are the number of the last available version).
+Extract the tar-ball, enter the new created directory and run `./astro.sh`.
+
+This way:
+
+#### 2.1. Download the tar-ball of the new release version;
+
+#### 2.2. Extract the tar-ball in a folder of your preference
+
+Create the folder and extract the tar-ball:
+```
+mkdir -p "$HOME"/MorceNOX-Astro
+tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz -C "$HOME"/MorceNOX-Astro
+```
+
+Enter the folder and run the launcher `astro.sh`. No installation is needed.
+```
+cd "$HOME"/MorceNOX-Astro
+./astro.sh
 ```
 
 ## ⌨️ Usage & Navigation

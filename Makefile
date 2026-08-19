@@ -1,4 +1,4 @@
-VERSION = 1.0.1
+VERSION = 1.1.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -154,3 +154,51 @@ reset-db: clean
 		echo "Removendo o banco de dados do usuário em $(DB_FILE)..."; \
 		rm -f "$(DB_FILE)"; \
 	fi
+
+# ... (keep your existing variables)
+
+PACKAGE_NAME = $(APP_NAME)-v$(VERSION)-linux.tar.gz
+PKG_DIR      = release_dist
+
+.PHONY: package
+
+# ... (rest of your Makefile)
+
+package: all translate
+	@echo "Packaging version $(VERSION) into $(PACKAGE_DIR)..."
+	@rm -rf $(PKG_DIR)
+	@mkdir -p $(PKG_DIR)/bin
+	@mkdir -p $(PKG_DIR)/lib
+	@mkdir -p $(PKG_DIR)/locale
+	@mkdir -p $(PKG_DIR)/assets
+	
+	# 1. Copy the executable
+	@cp $(TARGET) $(PKG_DIR)/bin/
+	
+	# 2. Copy the shared libraries
+	@if [ -d "lib" ]; then cp -r lib/* $(PKG_DIR)/lib/ ; fi
+	
+	# 3. Copy the translations
+	@cp -r locale/* $(PKG_DIR)/locale/ 2>/dev/null || true
+
+	# 4. Copy the "Assets" (Files that launcher.sh will move to $HOME)
+	@if [ -f ".env" ]; then cp .env $(PKG_DIR)/assets/ ; fi
+	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
+	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
+	# Standardize ephe copying:
+	@if [ -d "ephe" ]; then cp -r ephe $(PKG_DIR)/assets/ ; fi
+
+	# 5. Copy the Launcher script
+	@if [ -f "astro.sh" ]; then \
+		cp astro.sh $(PKG_DIR)/; \
+		chmod +x $(PKG_DIR)/astro.sh; \
+	else \
+		echo "ERROR: astro.sh not found! Package creation failed."; exit 1; \
+	fi
+
+	# 6. Create the compressed tarball
+	tar -czf $(PACKAGE_NAME) -C $(PKG_DIR) .
+	
+	@echo "======================================================================="
+	@echo " Package created: $(PACKAGE_NAME)"
+	@echo "======================================================================="
