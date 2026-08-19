@@ -129,6 +129,8 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
 
 ## Screenshots
 
+Here are some screenshots of the application. You can have an idea of what you expect from this application. And there are many more mudules to explore!
+
 ### Main Menu
 
 #### In Brazilian Portuguese
