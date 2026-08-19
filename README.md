@@ -122,16 +122,18 @@ astro
 
 ### 2. Get the release (tar-ball) file
 
-Go to releases -> new release and download the tar-ball MorceNOX-Astro-vX.Y.Z-linux.tar.gz (where vX.Y.Z are the number of the last available version).
+Go to [releases](https://github.com/MorceNOX/morcenox-astro/releases), choose your version and download the tar-ball MorceNOX-Astro-vX.Y.Z-linux.tar.gz (where vX.Y.Z are the number of the version).
 Extract the tar-ball, enter the new created directory and run `./astro.sh`.
 
 This way:
 
 #### 2.1. Download the tar-ball of the new release version;
 
+[New release](https://github.com/MorceNOX/morcenox-astro/releases/tag/v1.1.0)
+
 #### 2.2. Extract the tar-ball in a folder of your preference
 
-Create the folder and extract the tar-ball:
+Extract the tar-ball in your $HOME folder:
 ```
 mkdir -p "$HOME"/MorceNOX-Astro
 tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz -C "$HOME"/MorceNOX-Astro
@@ -139,7 +141,7 @@ tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz -C "$HOME"/MorceNOX-Astro
 
 Enter the folder and run the launcher `astro.sh`. No installation is needed.
 ```
-cd "$HOME"/MorceNOX-Astro
+cd "$HOME"/MorceNOX-Astro/MorceNOX-Astro-vX.Y.Z-linux
 ./astro.sh
 ```
 

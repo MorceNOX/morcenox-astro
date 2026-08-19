@@ -1,0 +1,1468 @@
+Index 01: Start
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+                Welcome to the MorceNOX™ ASTRO!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This is your guide through some technical information.
+
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This guide will cover the following topics:
+
+• House Systems
+
+• Triplicity Systems & Rulers
+
+• Syzygy Ante Nativitatem (SAN)
+
+• The Moon's Temperament
+
+• Natal Temperament Module
+
+• Natal Mind & Psychological Analysis
+
+• Vertex
+
+• Part of Fortune
+
+• VITAL CHRONOCRATORS: HYLEG & ALCOCHODEN
+
+• VITAL THREATS: THE ANARETA & DOMINUS MORTIS
+
+• Feral & Void of Course Planet
+
+• Primary Directions Module
+
+• 
+
+• Copyright
+
+
+These will help you in some settings and in your interpretation.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 02: House Systems
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• House Systems - a brief explanation:
+───────────────────────────────────────────────────────────────────
+        
+        1) Natural or Simbolic Systems:
+        
+        • W - Whole Signs: A symbolic system where each house 
+          corresponds to an entire zodiacal sign. The sign 
+          containing the Ascendant becomes the 1st house, and the 
+          house cusps are always at 0° of each subsequent sign.
+        
+        • E - Equal Houses: A regular system that uses the exact 
+          degree of the Ascendant as the cusp of the 1st house. 
+          Each subsequent house cusp is projected at exactly the 
+          same degree in consecutive signs (30° intervals along 
+          the ecliptic).
+        
+        
+        2) Space-based Non-quadrant System:
+        
+        • M - Morinus: A universal, three-dimensional system 
+          that divides the celestial equator into 12 equal 30° 
+          segments starting from the meridian. These divisions 
+          are projected onto the ecliptic via circles passing 
+          through the ecliptic poles, ignoring the local 
+          horizon and geographical latitude.
+        
+        
+        3) Quadrant Systems:
+        
+            3.1) Ecliptic System:
+            
+            • O - Porphyry: A straightforward quadrant system 
+              that calculates the exact longitude distance 
+              between the Ascendant and the Midheaven (MC). 
+              Each of the four quadrants is then divided 
+              directly along the ecliptic into three houses 
+              of equal zodiacal length.
+            
+            
+            3.2) Space-based Systems:
+            
+            • C - Campanus: A three-dimensional system that 
+              divides the local prime vertical (the great circle 
+              passing through the East, West, and Zenith points) 
+              into 12 equal segments, which are then projected 
+              onto the ecliptic.
+            
+            • R - Regiomontanus: A three-dimensional system that 
+              divides the celestial equator into 12 equal 
+              segments (starting from the meridian) and projects 
+              them onto the ecliptic using circles that intersect 
+              at the North and South points of the local horizon.
+            
+            
+            3.3) Space and Time-based Systems:
+            
+            • B - Alcabitius: A semi-arc system that calculates 
+              the time it takes for the Ascendant to travel to 
+              the Midheaven during diurnal rotation, dividing 
+              that temporal arc into three equal parts to 
+              determine the intermediate cusps.
+            
+            • P - Placidus: A dynamic system based on diurnal 
+              and nocturnal semi-arcs. House cusps are determined 
+              by the points where the celestial positions 
+              intersect specific fractions (1/3 and 2/3) of a 
+              planet's or star's time-defined movement across 
+              the sky.
+            
+            • K - Koch: A variation of semi-arc division where 
+              the ascendant's path is tracked back to the degree 
+              it held when the Midheaven was at its current 
+              position, dividing the corresponding oblique 
+              ascension arc into equal parts.
+            
+            • T - Topocentric: A high-precision system mathe-
+              matically similar to Placidus, but formulated 
+              through a purely geometric and topocentric 
+              framework. It calculates house cusps based on 
+              the real rotational axis of the observer's 
+              specific geographic location on the Earth's 
+              surface rather than the Earth's center.
+              
+              
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 03: Triplicity Systems & Rulers
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Triplicity Systems & Rulers: 
+───────────────────────────────────────────────────────────────────
+
+Here is the comparative table, followed by the specific 
+philosophical and technical logic behind each system.
+
+━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━
+Element/Signs ┃ Dorothean      ┃ Ptolemaic      ┃ Morinus 
+━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━
+Fire          │ Day: Sun       │ Day: Sun       │ Day: Sun 
+(Aries, Leo,  │ Night: Jupiter │ Night: Jupiter │ Night: Mars 
+Sagittarius)  │ Part: Saturn   │                │ Particip: Jupiter
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Earth         │ Day: Venus     │ Day: Venus     │ Day: Mercury 
+(Taurus,      │ Night: Moon    │ Night: Moon    │ Night: Saturn 
+Virgo,        │ Particip: Mars │                │ Particip: Venus
+Capricorn)    │                │                │
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Air           │ Day: Saturn    │ Day: Saturn    │ Day: Saturn 
+(Gemini,      │ Night: Mercury │ Night: Mercury │ Night: Venus 
+Libra,        │ Part: Jupiter  │                │ Part: Mercury
+Aquarius)     │                │                │
+              │                │                │
+──────────────┼────────────────┼────────────────┼──────────────────
+Water         │ Day: Venus     │ Day: Mars      │ Day: Jupiter 
+(Cancer,      │ Night: Mars    │ Night: Mars    │ Night: Moon 
+Scorpio,      │ Particip: Moon │ Particip: Moon │ Particip: Mars
+Pisces)       │                │           Venus│
+              │                │                │
+──────────────┴────────────────┴────────────────┴──────────────────
+
+Philosophical and Technical Logics
+
+    1) The Dorothean System (Hellenistic / Sect Logic)
+
+    Dorotheus of Sidon (1st Century CE) based his system on the 
+    concept of Sect (Hairesis), balancing the active elemental 
+    quality with the diurnal/nocturnal nature of the planets. It 
+    requires three rulers to show the beginning, middle, and end 
+    of a specific area of life.
+
+    • Fire: Belongs to the Diurnal sect. The Sun (prime diurnal 
+      luminary) rules by day. Jupiter (diurnal benefic) rules by 
+      night. Saturn (diurnal malefic) acts as the 
+      stabilizer/participating ruler.
+
+    • Earth: Belongs to the Nocturnal sect. Venus (nocturnal 
+      benefic) rules by day. The Moon (prime nocturnal luminary) 
+      rules by night. Mars (nocturnal malefic) acts as the 
+      participating ruler.
+
+    • Air: Belongs to the Diurnal sect. Saturn is placed here to 
+      moderate its cold nature with the heat of the air signs by 
+      day. Mercury rules by night, and Jupiter stabilizes.
+
+    • Water: Belongs to the Nocturnal sect. Venus rules by day 
+      (exalted in Pisces). Mars rules by night (domicile in 
+      Scorpio). The Moon participates (domicile in Cancer).
+
+
+    2) The Ptolemaic System (Aristotelian / Natural Philosophy 
+       Logic)
+
+    Claudius Ptolemy (2nd Century CE) simplified the Hellenistic 
+    system. He rejected the third "participating" ruler because he 
+    viewed triplicities through a binary Aristotelian physics 
+    framework (Hot/Cold, Wet/Dry) rather than a symbolic lifetime 
+    progression.
+
+    • The Fire/Air Connection: Ptolemy grouped Fire and Air 
+      together under the Diurnal sect. He assigned the Sun and 
+      Jupiter to Fire, and Saturn and Mercury to Air.
+
+    • The Earth/Water Connection: He grouped Earth and Water under 
+      the Nocturnal sect. He assigned Venus and the Moon to Earth.
+
+    • The Water Exception: For Water, Ptolemy introduced an 
+      anomaly. Instead of giving it to a nocturnal planet, he 
+      assigned it entirely to Mars (both day and night) to 
+      counter-balance the extreme moisture of Water with Mars' 
+      intense dryness. Venus (day) and the Moon (night) were 
+      demoted to minor co-rulers.
+
+
+    3) The Morinus System (Rationalist / Dignity Symmetry Logic)
+
+    Jean-Baptiste Morin (17th Century) rejected both Hellenistic 
+    sect and Ptolemaic physics. He sought a purely deductive, 
+    symmetrical, and rational system based strictly on essential 
+    dignities (Domicile and Exaltation) and the planetary nature.
+
+    • Day Ruler (The Double Dignity Principle): The primary ruler 
+      of a triplicity must be a planet that holds both a domicile 
+      and an exaltation within that specific element.
+      
+          Sun rules Fire (Leo/Aries). Mercury rules Earth 
+          (Virgo/Virgo). Saturn rules Air (Aquarius/Libra). 
+          Jupiter rules Water (Sagittarius is hot/dry, but it 
+          co-rules Pisces and is exalted in Cancer).
+          
+    • Night Ruler (The Cardinal Orientation Principle): The 
+      secondary ruler is always the planetary ruler of the Cardinal 
+      Sign of that specific element.
+      
+          Mars for Fire (Aries). Saturn for Earth (Capricorn). 
+          Venus for Air (Libra). Moon for Water (Cancer).
+          
+    • Participating Ruler: The remaining major planet tied to that 
+      element's nature is assigned to the final slot to complete the 
+      mathematical triad.
+      
+      
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 03: Syzygy Ante Nativitatem (SAN)
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Syzygy Ante Nativitatem (SAN)
+───────────────────────────────────────────────────────────────────
+
+The Syzygy Ante Nativitatem (abbreviated as SAN, and often called 
+the Prenatal Syzygy) is a highly revered point in traditional and 
+Hellenistic astrology. It refers to the exact degree of the last 
+New Moon or Full Moon that occurred before your birth.
+
+The SAN acts as your chart's cosmic seed or foundational 
+blueprint—the literal atmospheric and spiritual gateway through 
+which your soul entered the physical world.
+
+1. How to Identify The SAN Type
+
+The nature of your Prenatal Syzygy depends entirely on the lunar 
+phase the person was born under:
+
+    • Conjunctional SAN (Prenatal New Moon): If one was born 
+      while the Moon was waxing (growing from New to Full), 
+      his/her SAN is the preceding New Moon. This infuses the
+      life with themes of initiation, fresh seeds, and forward 
+      momentum. The person is naturally designed to launch new 
+      projects and break new ground.
+    
+    • Preventional SAN (Prenatal Full Moon): If one was born 
+      while the Moon was waning (shrinking from Full to New), 
+      his/her SAN is the preceding Full Moon. This infuses 
+      the life with themes of culmination, relational awareness, 
+      and integration. The person is naturally wired to bring 
+      things to completion and seek deep objective awareness.
+
+2. Traditional and Modern Meanings
+
+In traditional text analyses, the SAN carries massive weight 
+across several core areas:
+
+    • Vitality and the Hyleg: Ancient astrologers like Ptolemy 
+      used the exact degree of the SAN to calculate the Hyleg 
+      (the life-giving planet or point in a chart) to determine 
+      a person's physical constitution, health baseline, and 
+      overall life force.
+
+    • The Soul's Karmic Imprint: The SAN marks the moment the 
+      collective cosmic energy concentrated itself right before 
+      the birth. The house and zodiac sign where the SAN lands 
+      act as a "permanent sensitive point" in the chart. 
+      Whenever a major outer planet transits this specific degree, 
+      the person will experience massive, foundational life shifts.
+
+    • The Path of Destiny: While the Vertex brings fated people 
+      to the person, the SAN represents the purpose he/she is meant 
+      to fulfill. It provides the background context for why  
+      his/her soul chose your specific natal chart.
+      
+      
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 04: The Moon's Temperament
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• The Moon's Temperament
+───────────────────────────────────────────────────────────────────
+
+In Classical Astrology (particularly within the Hellenistic and 
+Medieval traditions), the Moon’s phases are foundational for 
+calculating the native’s Temperament. 
+
+This system determines your physical constitution, mental baseline, 
+and psychological disposition by balancing the four primitive 
+qualities (Hot, Wet, Cold, and Dry) which form the four bodily 
+humors (Sanguine, Choleric, Melancholic, and Phlegmatic).
+
+Because the Moon rules the physical body, the subconscious mind, 
+and vital bodily fluctuations, the specific quadrant she occupies 
+at the moment of your birth dictates your intrinsic physical and 
+emotional baseline.
+
+Here is how Classical Astrology attributes qualities and 
+temperaments to each lunar quadrant:
+
+1. First Quadrant: From New Moon to First Quarter
+
+    • Primitive Qualities: Hot and Wet (Moist)
+    
+    • Associated Temperament: Sanguine
+    
+    • Characteristics: This phase corresponds to Spring. 
+      It represents infancy, growth, and outward movement. 
+      Individuals born during this quarter tend to be highly 
+      social, optimistic, adaptable, and expressive. The 
+      abundance of moisture grants immense psychological 
+      flexibility, though it can sometimes lead to 
+      restlessness or a lack of focus.
+      
+2. Second Quadrant: From First Quarter to Full Moon
+
+    • Primitive Qualities: Hot and Dry
+    
+    • Associated Temperament: Choleric
+    
+    • Characteristics: This phase corresponds to Summer. 
+      It represents youth, peak physical vitality, and direct 
+      action. The heat stimulates outward drive, while the dryness 
+      provides sharp focus and rigidity. Nativos born here are 
+      often ambitious, passionate, competitive, and highly 
+      motivated by challenges. They possess a powerful willpower 
+      but must guard against impatience or irritability.
+    
+3. Third Quadrant: From Full Moon to Last Quarter
+
+    • Primitive Qualities: Cold and Dry
+    
+    • Associated Temperament: Melancholic
+    
+    • Characteristics: This phase corresponds to Autumn. 
+      It represents maturity, harvest, and deep introspection. 
+      The heat recedes, leading to a highly analytical, objective, 
+      and reserved posture. People born in this phase are 
+      typically profound, serious, realistic, and highly 
+      structured. There is a strong inclination toward the 
+      intellect, organization, and a need for deep meaning, with 
+      a tendency to process emotions internally.
+    
+4. Fourth Quadrant: From Last Quarter to the Next New Moon
+
+    • Primitive Qualities: Cold and Wet (Moist)
+    
+    • Associated Temperament: Phlegmatic
+    
+    • Characteristics: This phase corresponds to Winter. It 
+      represents elderhood, containment, dissolution, and 
+      preparation for rebirth (especially the balsamic phase). 
+      The cold slows down outer movement, while the moisture 
+      seeks peaceful synthesis. Individuals born here tend to 
+      be exceptionally calm, peace-loving, highly intuitive, 
+      and receptive. They possess a quiet emotional resilience, 
+      though they may occasionally struggle with inertia or 
+      apathy.
+    
+
+The Impact on the Total Temperament Score
+
+In traditional practice, the lunar phase does not act in 
+isolation. To determine your final, overall temperament, a 
+traditional astrologer synthesizes a points-based score using 
+several specific chart variables:
+
+    1) The Ascendant Sign and its ruling planet.
+    
+    2) The Sun Sign (which dictates the season of the year).
+    
+    3) The Moon's Zodiac Sign (its element).
+    
+    4) The Moon's Phase (the quadrant detailed above).
+    
+    5) Any planets closely aspecting the Ascendant or the Moon.
+    
+
+The Moon’s phase acts as the underlying "fuel" for your physical 
+body and your immediate, instinctive reactions. 
+
+For example, if you have a natal chart dominated by Earth signs 
+(which are dry), but you were born under a First Quadrant 
+Moon (which is wet), this lunar phase introduces crucial 
+flexibility and a desire for social connection that dynamically 
+softens your chart's natural rigidity.
+
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 05: Natal Temperament Module
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+•  Natal Temperament Module (Galenic Intensity Method)
+───────────────────────────────────────────────────────────────────
+
+This module calculates the native's humoral constitution using 
+Claudius Galen's Scale of Intensities (2nd Century AD), later 
+expanded by Medieval (Ibn Ezra) and Renaissance (William Lilly) 
+astrological traditions.
+
+Instead of a crude binary approach (where a planet is merely hot 
+or cold), this engine adopts signed, weighted arithmetic 
+magnitudes (-3 to +3) to map two polar axes:
+    
+    • Thermal Axis: Positive values indicate degrees of Heat; 
+      negative values indicate Cold.
+      
+    • Moisture Axis: Positive values indicate degrees of Humidity; 
+      negative values indicate Dryness.
+
+Scale Calibration:
+
+    1. Planets hold dynamic weights (Grades 1 to 3) as they are 
+       the active agents of celestial light.
+       
+    2. Elements (Signs) act as a moderate environmental backdrop, 
+       strictly calibrated at the 1st Galenic Grade (Magnitude ±1). 
+       This prevents the sign's background qualities from 
+       overwhelming or drowning out the essential humoral nature 
+       of the planets positioned within them.
+       
+───────────────────────────────────────────────────────────────────
+
+•  The Four Primitive Qualities (The Building Blocks)
+───────────────────────────────────────────────────────────────────
+
+In Aristotelian physics, the universe is governed by the 
+interplay of two active and two passive qualities. In the human 
+body, they regulate metabolism, energy expenditure, 
+and tissue structure:
+
+    1. HEAT (Hot / Active): The principle of vital energy, 
+       expansion, and metabolic acceleration. It drives the body 
+       to disperse energy, speeds up the heart rate, and creates 
+       an outgoing, active, and expressive demeanor.
+       
+    2. COLD (Cold / Passive): The principle of preservation, 
+       contraction, and metabolic deceleration. It acts as a 
+       cooling mechanism that conserves energy, slows down 
+       physical processes, and leads to an introspective, 
+       cautious, and receptive nature.
+       
+    3. MOISTURE (Moist / Passive): The principle of fluidity, 
+       flexibility, and connectivity. It provides lubrication to 
+       joints and tissues, makes the mind adaptable, and allows 
+       the individual to absorb environmental influences easily.
+       
+    4. DRYNESS (Dry / Active): The principle of structure, 
+       tension, and separation. It creates rigidity, definition, 
+       and structural boundaries in the body. Mentally, 
+       it manifests as focus, persistence, and resistance to 
+       change.
+
+───────────────────────────────────────────────────────────────────
+
+•  The Four Traditional Temperaments (Humoral Profiles)
+───────────────────────────────────────────────────────────────────
+
+When these primitive qualities combine through the astrological 
+weights of the chart, they determine one of the four core 
+constitutional and psychological temperaments:
+
+    1. SANGUINE (Hot & Moist — Air Element)
+    
+        •   Versatile and adaptable. Lively, spontaneous, and 
+            enthusiastic. Communicative and sociable. Sensitive, 
+            cheerful, and affable.
+    
+        •   Physical Constitution: Good blood circulation, 
+            responsive nervous system, warm skin, and a naturally 
+            balanced, adaptable metabolism.
+            
+        •   Psychological Profile: Outgoing, optimistic, socially 
+            skilled, and highly expressive. Sanguine individuals 
+            learn quickly and adapt to new situations easily, but 
+            they may struggle with consistency, routines, and a 
+            short attention span.
+                
+    2. CHOLERIC (Hot & Dry — Fire Element)
+    
+        •   Enthusiasm, energy, and quick action. Rigid, 
+            insensitive, impatient.
+    
+        •   Physical Constitution: High metabolic rate, prone to 
+            acute inflammation, sharp digestion, and high physical 
+            stamina driven by tension.
+            
+        •   Psychological Profile: Born leaders, ambitious, highly 
+            focused, and intensely driven. Cholerics are quick to 
+            act and highly efficient, but when out of balance, 
+            they easily slip into impatience, irritability, 
+            and anger.    
+        
+    3. PHLEGMATIC (Cold & Moist — Water Element)
+    
+        •   Sensitive, reserved, introverted. Plasticity and 
+            adaptability. Emotional motivation, subjective and 
+            volatile. Sensitive, empathetic, but not very 
+            expressive. Patience.
+    
+        •   Physical Constitution: Slower metabolism, prone to 
+            fluid retention, efficient energy storage, cool skin, 
+            and a calm, resting pulse.
+            
+        •   Psychological Profile: Peaceful, deeply receptive, 
+            empathetic, and patient. Phlegmatics are excellent 
+            listeners and maintain emotional stability under 
+            pressure, but they can struggle with procrastination, 
+            lethargy, and a lack of drive.
+            
+        
+    4. MELANCHOLIC (Cold & Dry — Earth Element)
+    
+        •   Reflection, concentration. Reserved and moderate in 
+            their outward expression. Not very exuberant in their 
+            speech, but decisive in their actions. 
+            Susceptibility, sadness, pessimism, depression.
+    
+        •   Physical Constitution: Rigid tissue structure, 
+            slower but highly persistent physical stamina, and 
+            a tendency towards dryness or stiffness in the 
+            joints.
+            
+        •   Psychological Profile: Analytical, highly organized, 
+            disciplined, and deeply reflective. Melancholics 
+            possess unparalleled focus and a strong sense of duty, 
+            but they are prone to overthinking, chronic worry, 
+            and skepticism.
+            
+        
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 06: Natal Mind & Psychological Analysis
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Natal Mind & Psychological Analysis
+───────────────────────────────────────────────────────────────────
+
+This module evaluates the native's rational intellect, emotional 
+stability, and core psychological disposition based on Strict 
+Traditional Astrology (Hellenistic and Medieval methodology, 
+drawing from Ptolemy and Bonatti).
+
+Unlike modern approaches, the traditional system analyzes the 
+structure of the rational mind (the Intellect) and the irrational 
+mind (the Emotional Soul) by tracking their natural significators, 
+elemental dignity, and planetary governance.
+
+───────────────────────────────────────────────────────────────────
+1. CORE ENGINE SIGNIFICATORS
+───────────────────────────────────────────────────────────────────
+
+The algorithm evaluates the condition of two foundational celestial
+bodies:
+
+  • ☿ MERCURY: Governs the rational mind, logic, speech, and 
+               analytical skills.
+               
+  • ☽ THE MOON: Governs the irrational mind, subconscious, 
+                memories, and habits.
+
+───────────────────────────────────────────────────────────────────
+2. SCORING & CONDITION MECHANICS
+───────────────────────────────────────────────────────────────────
+The final state of both significators is derived from their 
+combined Essential Dignities (inherent virtuous quality) and 
+Accidental Dignities (strength of material expression), which 
+includes native handling of critical conditions like combust 
+status.
+
+  • HIGH ESSENTIAL & ACCIDENTAL STRENGTH:
+    Intellect displays sharp, virtuous, and highly rational 
+    cognitive patterns.
+    
+  • BALANCED INTELLECT:
+    Displays functional, practical, and highly balanced everyday 
+    logic.
+    
+  • NEGATIVE / DEBILITATED STATUS:
+    Prone to erratic thoughts, anxiety, subjectivity, or mental 
+    fog.
+
+• INTROVERSION REFINEMENT [℞]:
+  If Mercury is retrograde, the cognitive processor is naturally 
+  inverted. 
+  The native processes thoughts deeply inward, shifting into an 
+  introspective, highly analytical but quiet mental state.
+
+• EMOTIONAL SOUL FLUCTUATION:
+  The stability of the Moon is further colored by the Lunar 
+  Phase ID at birth:
+  
+  - New Moon: Internalized, deeply subjective, and instinctual.
+  - Crescent Moon: Active, growing, and emotionally expressive.
+  - Full Moon: Highly exposed, intense, and reactive.
+  - Waning Moon: Reflective, detached, and deeply introspective.
+
+───────────────────────────────────────────────────────────────────
+3. THE LORD OF THOUGHT (PRIMARY GOVERNOR)
+───────────────────────────────────────────────────────────────────
+The ultimate ruler of the native's psychological mindset is the 
+"Almuten of the Mind", computed as a combined Almuten across the 
+longitudes of both Mercury and the Moon. 
+
+If multiple planets tie in essential points, the system applies a 
+strict three-tier traditional tie-breaker cascade:
+  1. Total Essential Dignities held over the key Hylegiacal Points.
+  2. Total quantity of points governed throughout the chart 
+     (Disposition).
+  3. Total connectivity via planetary aspects (Chart integration).
+
+PLANETARY GOVERNOR PROFILES:
+
+  • ☉ THE SUN: Noble, clear, purpose-driven mind. Seeks honor and 
+               leadership.
+               
+  • ☽ THE MOON: Highly intuitive, imaginative, adaptable, and 
+                receptive.
+                
+  • ☿ MERCURY: Purely analytical, agile, versatile. Outstanding 
+               for logic.
+  
+  • ♀ VENUS: Artistic, refined, socially gifted. Seeks absolute 
+             harmony.
+  
+  • ♂ MARS: Sharp, fast, competitive. Outstanding for crisis and 
+            debate.
+  
+  • ♃ JUPITER: Magnanimous, wise, philosophical. Possesses 
+               ethical judgment.
+  
+  • ♄ SATURN: Deep, silent, highly disciplined. Gifted for heavy 
+              research.
+  
+
+• EDGE-CASE HANDLING (MIXED INFLUENCE):
+
+  In the highly rare event of an absolute point deadlock after all 
+  three traditional tie-breakers, the system flags a "Mixed 
+  Influence", dynamically blending the core keywords and profiles 
+  of the co-regents without visual formatting errors or structural 
+  clipping.
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 07: Vertex
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 
+• Vertex (Vx or 🜊)
+───────────────────────────────────────────────────────────────────
+
+The Vertex represents a mathematical point of karmic destiny and 
+unexpected, life-altering events. It represents unexpected external 
+doors opening up.
+
+   • The Vertex in the Signs (How Destiny Manifests)
+
+    The Vertex sign shows the qualities that the outside world 
+    will require you to develop, usually through crises or sudden 
+    events.
+
+        • Aries: Destiny forces you to have courage, initiative, 
+          and independence. You will be placed in situations 
+          where you will need to fight alone and overcome the fear 
+          of rejection.
+
+        • Taurus: Requires you to develop self-sufficiency, 
+          financial stability, and self-esteem. Karmic encounters 
+          will shake up your material values ​​and security.
+
+        • Gemini: Destiny demands mental flexibility, 
+          communication, and learning. Changes of course happen 
+          through new ideas, siblings, or unexpected studies.
+
+        • Cancer: You are compelled to deal with emotions, family, 
+          and caring for others. You attract situations that break 
+          your cold shell to release vulnerability.
+
+        • Leo: The universe demands that you embrace your personal 
+          power, creativity, and stage presence. Events will force
+          you to step out from behind the scenes and shine, even 
+          if you feel shy.
+
+        • Virgo: It demands order, discernment, routine, and 
+          practical service. Destiny brings chaotic situations so 
+          that you learn to heal, organize, and be useful.
+
+        • Libra: The karmic focus is on partnerships, justice, and 
+          balance. You are forced to learn to cooperate, mediate 
+          conflicts, and see yourself through the mirror of others.
+
+        • Scorpio: Intense encounters that require regeneration, 
+          detachment, and psychological transformation. Destiny 
+          will bring crises involving taboos, power, or shared 
+          finances.
+
+        • Sagittarius: The universe pushes you towards expansion, 
+          faith, philosophy, and great journeys. Unexpected 
+          situations break old dogmas to open your mind.
+
+        • Capricorn: It demands maturity, responsibility, 
+          discipline, and social status. You will be required to 
+          build something solid and assume leadership early or by 
+          force of circumstance.
+
+        • Aquarius: Destiny demands that you collaborate with the 
+          collective, accept your eccentricity, and seek freedom. 
+          You attract groups or causes that change your worldview.
+
+        • Pisces: It demands compassion, spiritual surrender, art, 
+          and healthy sacrifice. The universe will bring events 
+          that dissolve your rigid control so that you learn to 
+          flow and have faith. This usually happens through crises
+          or sudden events.
+
+    
+   • The Vertex in the Houses (The "Area of ​​Life" where destiny 
+     acts)
+
+    Due to astronomical mechanics, the Vertex almost always falls 
+    in the houses on the western side of the chart: Houses 5, 6, 
+    7, 8, or 9 (rarely in houses 4 or 10).
+
+        • House 4: Having the Vertex in the 4th House in astrology 
+          means your destiny, karmic turning points, and fated 
+          encounters are deeply tied to your roots, family, and 
+          domestic life. 
+
+        • House 5: Destiny manifests through overwhelming romances, 
+          profound creative expression, or the arrival of children. 
+          These are passions that change your identity.
+
+        • House 6: Drastic changes in work routine, health, or 
+          service provision. A professional encounter or a health 
+          scare can change the course of your life.
+
+        • House 7: The most common and powerful house for the 
+          Vertex. Indicates marriages, divorces, or karmic 
+          business partnerships. People enter your life with the 
+          clear feeling of "it had to be."
+
+        • House 8: Profound events related to inheritances, 
+          psychological crises, or other people's money. Attracts 
+          partners who provoke a metaphorical death and rebirth 
+          within you.
+
+        • House 9: Destiny is activated in universities, 
+          international travel, contact with other cultures, 
+          or religious conversions. A mentor or an unexpected trip 
+          alters your destiny.
+
+        • House 10 signifies that major turning points in destiny 
+          and karmic encounters occur in your career, reputation, 
+          and public status.
+          
+          
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 08: Part of Fortune
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Part of Fortune
+───────────────────────────────────────────────────────────────────
+
+The Part of Fortune (or Pars Fortunae) is one of the most 
+important Arabic Parts (or Lots) in astrology. It is a mathematical 
+point in your birth chart calculated using the positions of the 
+Sun, the Moon, and your Ascendant.
+
+While your planets represent your psychological drives, the 
+Part of Fortune represents a physical, tangible space where 
+spiritual purpose, emotional alignment, and physical reality 
+intersect.
+
+1. The Core Meaning and Importance
+
+In Classical Astrology, the Part of Fortune is known as the 
+"Lot of the Body" and the "Lot of Prosperity."
+
+    • The Gateway of Luck: It represents the area of life where 
+      you experience the least resistance, where opportunities 
+      flow naturally, and where you can achieve physical 
+      well-being and material success.
+    
+    • The Integration of the Big Three: Because its formula 
+      synthesizes the Ascendant (Body/Identity), the Sun 
+      (Soul/Purpose), and the Moon (Mind/Emotions), the Part of 
+      Fortune represents your optimal state of alignment. 
+      When you live in harmony with your Sun and Moon, the Part 
+      of Fortune "unlocks."
+    
+    • Materialization of Destiny: Unlike the Vertex 
+      (which brings fated events), the Part of Fortune shows where 
+      you can actively cultivate your own luck, joy, abundance, and 
+      physical health.
+      
+2. The Calculation Matters (Day vs. Night Births)
+
+In traditional astrology, the calculation changes based on whether 
+you were born during the day or at night. This is crucial because 
+using the wrong formula changes the entire meaning of your chart:
+
+    • Day Birth (Sun above the horizon): Ascendant + Moon - Sun
+    
+    • Night Birth (Sun below the horizon): Ascendant + Sun - Moon
+    
+Note: Many modern online chart calculators default to the Day 
+formula for everyone, which can completely misplace the Part of 
+Fortune for night-born individuals.
+
+3. How to Interpret It in Your Chart
+
+To understand how your Part of Fortune operates, you must look at 
+both its Zodiac Sign and its Astrological House:
+
+    • The Zodiac Sign (The How): This shows the qualities you need 
+      to cultivate to unlock your luck. For example, if it is in 
+      Aries, your fortune comes through independence, courage, and 
+      pioneering initiatives. If it is in Libra, abundance comes 
+      through diplomacy, partnerships, and creating balance.
+    
+    • The Astrological House (The Where): This shows the arena of 
+      life where prosperity manifests. For example, in the 2nd 
+      House, it brings material wealth and financial stability. 
+      In the 11th House, your luck comes through networks, 
+      friendships, and community projects.
+      
+4. The Lord of Fortune
+
+    • The Lord of Fortune: The planet that rules the sign where 
+      your Part of Fortune lands is called the Lord of Fortune. 
+      The condition, strength, and house placement of that 
+      specific planet will tell you exactly how easily you can 
+      access your abundance.
+      
+      
+      
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 09: Vital Chronocrators: Hyleg & Alcochoden
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Vital Chronocrators: Hyleg & Alcochoden
+───────────────────────────────────────────────────────────────────
+
+The Hyleg (Giver of Life) and Alcochoden (Giver of Years) form the 
+foundation of traditional longevity and constitutional vitality 
+analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
+
+1. THE HYLEG (SIGNIFICATOR OF VITALITY)
+   
+   The engine scans five specific hylegiacal places (Houses 1, 10, 
+   7, 11, and 9) in a strict hierarchical order determined by the 
+   chart's Sect:
+   
+   - Diurnal Chart (Sun above horizon): 
+     Sun → Moon → SAN's Almuten → Almuten Figuris → ASC.
+   
+   - Nocturnal Chart (Sun below horizon): 
+     Moon → Sun → Part of Fortune → → SAN's Almuten → 
+     → Almuten Figuris → ASC.
+   
+     For the Sun, Moon, and Part of Fortune, it is also checked
+     whether there is an aspect to any of their respective rulers—
+     a condition which, if not met, disqualifies the body
+     from being the Hyleg.
+
+     For the Almuten of the SAN, it is checked whether there is
+     an aspect to the sect luminar (Sun for day, Moon for night),
+     a condition that is likewise disqualifying.
+   
+   The elected point acts as the primary geometric focus for 
+   physical shields and the terminal target for time projection 
+   techniques (Primary Directions).
+
+2. THE ALCOCHODEN (DISTRIBUTOR OF LIFESPAN)
+
+   The planet that aspects the Hileg and holds the highest 
+   essential dignities at that exact degree is elected the 
+   Alcochoden. It grants a baseline number of years according to 
+   its quadrant strength (corporeal position in houses):
+   
+   - Angular Houses (1, 4, 7, 10): Grants Great Years.
+   
+   - Succedent Houses (2, 5, 8, 11): Grants Medium Years.
+   
+   - Cadent Houses (3, 6, 9, 12): Grants Lesser Years.
+   
+   * The Proxy/Tutor Rule: If a sensitive point (ASC/Fortuna) is 
+     Hyleg and lacks planetary aspects, the Almuten Figuris acts 
+     as a Tutor, granting strictly its raw Lesser Years to 
+     safeguard infancy milestones.
+   
+   * Fine-Tuning (Additions & Subtractions): Planetary rays to 
+     the Alcochoden dynamically modify the timeline. 
+     Benefics (Jupiter/Venus) add their lesser years; 
+     Malefics (Saturn/Mars) subtract their lesser years.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 10: Vital Threats: The Anareta & Dominus Mortis
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Vital Threats: The Anareta & Dominus Mortis
+───────────────────────────────────────────────────────────────────
+
+While the Hileg represents vital force, the Anareta and the Lord 
+of the 8th House map the geometric and circumstantial nature of 
+physical risk.
+
+
+1. THE ANARETA (THE INTERFECTOR / DESTROYER OF LIFE)
+   
+   The algorithm isolates the seven traditional planets and 
+   assigns a dynamic "Anaretic Threat Weight" based on structural 
+   afflictions and hostile rays:
+   
+   - Corporeal Presence in House 8 (The Gate of Death): +100 
+     Points.
+   
+   - Corporeal Presence in House 4 (The End of Things): +80 
+     Points.
+   
+   - Planetary Lordship of the 8th House Cusp: +60 Points.
+   
+   - Hostile Aspects (Square/Opposition) targeting the Hileg: +50 
+     Points.
+   
+   - Accidental Afflictions: Combustion (+30), Exile/Fall (+20), 
+     Retrogradation (+15).
+   
+   The planet with the highest accumulated score is elected the 
+   Anareta, solving extreme tie-break scenarios (e.g., Combust 
+   Mars in 8th vs. Retrograde Saturn in 4th).
+   
+
+2. THE LORD OF THE 8TH HOUSE (DOMINUS MORTIS)
+   
+   The ruler of the 8th house cusp remains an autonomous 
+   forensical factor even if it is not elected as the Anareta. 
+   
+   - The Anareta represents the *nature* of the crisis (e.g., 
+     inflammatory with Mars, chronic/cold with Saturn).
+   
+   - The Lord of the 8th House represents the *circumstantial 
+     channel* and mundane environment where the threat manifests, 
+     evaluated by its physical house placement 
+     (e.g., 6th House for hidden metabolic illness, 
+     12th House for confinement/difficult diagnostics).
+
+
+3. THE ALCOCHODEN-ANARETA CONJUNCTION (THE AMBIGUOUS GUARDIAN)
+   
+   When the same planet is elected as both Alcochoden and Anareta, 
+   it marks an endogenous, chronic constitution. The source of 
+   vitality contains its own greatest vulnerability. However, 
+   traditional doctrine asserts that because the planet holds the 
+   duty of the Guardian (Alcochoden), it provides severe metabolic 
+   resilience, allowing the native to survive critical time 
+   windows.
+   
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 11: Feral & Void of Course Planets
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Feral & Void of Course Planets
+───────────────────────────────────────────────────────────────────
+
+Feral Planet vs. Void of Course Planet 
+
+In astrology, feral planets and void-of-course planets describe 
+celestial bodies that are temporarily isolated, operating without
+making connection angles (aspects) to other planets. While they 
+share the trait of isolation, they function differently in natal 
+charts versus daily transits.
+
+🦁 1. Feral Planet 
+
+A planet is considered feral (derived from the word "wild" or 
+"beast") when it is positioned in a Natal Chart without forming 
+any major aspects (such as conjunctions, squares, trines, or 
+oppositions) to other planets.
+
+    • Behavior: It operates in a raw, unfiltered, and untamed 
+      manner. Because no other planets "talk" to it or moderate 
+      its energy, it expresses its traits in extreme or 
+      unpredictable ways.
+      
+    • Example: A feral Mars can manifest as immense courage or 
+      sudden, explosive anger, as no other planetary force is 
+      there to put a brake on its impulses.
+      
+
+🌌 2. Void of Course Planet (VoC)
+
+A planet becomes void of course (or out of course) during daily 
+celestial transits. This occurs when it has made its final major 
+aspect in its current zodiac sign and travels toward the next 
+sign without making contact with any other planet. 
+This happens most frequently to the Moon (Void-of-Course Moon), 
+but can apply to any planet.
+
+    • Behavior: It represents a temporary loss of direction, 
+      focus, or predictability. In horary or elective astrology, 
+      actions taken during this time often lead to unexpected 
+      outcomes, or indicate that "nothing will come of the 
+      matter."
+    
+    • Example: Launching a business project while Mercury or the 
+      Moon is void of course often results in delays, sudden 
+      changes of plan, or a general lack of results.
+      
+      
+•  Technical Definition: Applying Aspects
+
+   A planet is technically considered Void of Course (VoC) when it 
+   forms no further APPLYING major aspects before leaving its 
+   current zodiac sign. 
+
+    • Applying Aspects represent future events and dynamics that 
+      are moving toward exact mathematical perfection.
+      
+    • Separating Aspects represent energies or events that have 
+      already peaked and are fading away.
+
+Therefore, a planet goes Void of Course because it has left its 
+last separating aspect behind and has zero applying aspects ahead, 
+meaning there is no immediate cosmic momentum to drive events 
+forward.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 12: Primary Directions Module
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Primary Directions Module
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+ 
+1. Core Mathematical Engine
+
+    • The Clock of the Soul (Diurnal Rotation):
+    
+      Primary Directions simulate the apparent motion of the 
+      celestial sphere in the hours immediately following birth. 
+      The module operates on the classic equation of time where 
+      4 minutes of axial rotation equals 1 degree of equatorial 
+      arc, corresponding to approximately 1 year of human life. 
+    
+    • True Equatorial Projection: 
+    
+      Promissors (moving bodies) are directed toward the exact 
+      coordinates of Significators (natal static targets) 
+      projected onto the Celestial Equator. Instead of flat 2D 
+      ecliptic approximations, longitudes are converted into 
+      Right Ascension (RA) using spherical trigonometry that 
+      preserves the true natal latitude of the celestial bodies, 
+      adhering to the classical Placidus/Maginus with latitude 
+      methodology.
+    
+    • Dynamic Astronomical Framework:
+    
+      The engine computes the exact obliquity of the ecliptic 
+      (ε) dynamically for the specific Julian Day (UT) of the chart 
+      using the IAU 1980 high-precision model. This eliminates 
+      linear drift and ensures astronomical fidelity across 
+      multi-century historical charts.
+    
+    • Mathematical Fail-Safes: 
+    
+      Abstract geometric targets lacking physical latitude 
+      (such as Arabic Parts, Syzygies, or House Cusps) are 
+      intercepted by a native validation layer (isnan / == 0.0). 
+      The algorithm dynamically resolves their coordinates on 
+      the pure Ecliptic vector, preventing division-by-zero 
+      errors during RA conversion.
+    
+    • Naibod Time Key Alignment:
+    
+      Calculated arcs of direction (arco_graus) are translated 
+      into precise calendar timelines by dividing the equatorial 
+      distance by the Naibod Time Factor defined in the engine 
+      (NAIBOD_KEY = 1.014646). This effectively maps 1° of 
+      Equatorial Rotation directly to 1.014646 Years of life 
+      (equivalent to a mean solar motion of ≈ 0.985565° per year). 
+      Fractional remainders are computed via an automated 
+      mixed-calendar matrix to yield exact historical event dates.
+    
+    
+    
+2. Traditional Dignity & Functional Color-Coding
+
+To eliminate modern generic warnings and preserve traditional 
+predictive rigor, the ncurses visual field dynamically weights 
+every directional contact based on its traditional nature and 
+natal functional chart agency:
+
+    • [CRITICAL RED ALARM] Anaretic & Mortis Contacts: 
+    
+      If the arriving Promissor is the native's Anareta 
+      (the lifecutter) or the Dominus Mortis (Lord of the 8th 
+      House), and it hits a vital point via a harsh 
+      aspect—Conjunction (☌), Square (□), or Opposition (☍) —
+      the system triggers a high-priority, full red alert. 
+      This signals extreme systemic vulnerability or physical 
+      crises at that exact age.
+
+    • Malefic Essences (Mars & Saturn): 
+    
+      Harsh geometric aspects coming from the natural malefics 
+      always render in Solid Red, representing years of major 
+      structural obstacles, sudden severances, heavy burdens, 
+      or acute operational friction.
+    
+    • Benefic Hurdles (Jupiter & Venus): 
+    
+      Squares or oppositions from the natural benefics or 
+      Mercury are treated as productive friction. They are 
+      colored in Yellow, telling the user that while the year 
+      demands immense effort or financial expenditure, it 
+      ultimately leads to successful expansion and carries 
+      no vital danger.
+    
+    • The good aspects with benefics (Jupiter and Venus) are 
+      painted in blue, indicating a favorable direction.
+    
+    • Other conjuctions are displayed in magenta whose meaning 
+      depends on deep analysis.
+    
+    • Other aspects in black, the default color.
+    
+    • Radical Context Enforcement: 
+    
+      Primary Directions represent the lifelong matrix of destiny. 
+      To maintain structural alignment, this module is strictly 
+      locked to the Natal Radix parameters (Hyleg, Anareta, and 
+      8th House Lord).
+
+
+   
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 13: Primary Directions: Direct vs. Converse Mechanics
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Primary Directions: Direct vs. Converse Mechanics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+1. Diurnal Motion Framework
+   Both calculation modes simulate the primary movement of the 
+   celestial sphere (Earth's axial rotation), where the apparent 
+   sky moves from East to West. The distinction lies entirely in 
+   the vector of the spherical trigonometric subtraction.
+
+2. Direct Primary Directions
+   • Astronomical Engine: RA_Arc = RA_Promissor_Aspect - 
+     RA_Significator.
+   • Mechanics: The native static natal target (Significator) 
+     remains fixed at the birth coordinate. Celestial bodies or 
+     their aspect vectors (Promissors) move clockwise following the 
+     natural diurnal rotation until they reach the Significator's 
+     position.
+   • Astrological Concept: Represents external fate, objective 
+     events, and circumstances brought by the world onto the 
+     individual.
+
+3. Converse Primary Directions
+   • Astronomical Engine: RA_Arc = RA_Significator - 
+     RA_Promissor_Aspect.
+   • Mechanics: The mathematical vector is inverted. The natal 
+     position of the moving agent (Promissor) is treated as a fixed 
+     target. 
+   • The birth position of the Significator is projected backward 
+     (counter-clockwise) against the diurnal rotation until it 
+     intercepts the Promissor's original coordinate.
+   • Astrological Concept: Represents internal maturation, 
+     subjective evolution, psychological shifts, or actions driven by 
+     the native's own willpower and inherent natal promises.
+
+4. The 180° Symmetry Filter
+   True equatorial primary directions discard absolute minimum 
+   distances (fabs / 180° rebatement). Since time only flows forward, 
+   a Direct arc of 15° implies a Converse arc of 345° for the same 
+   planetary pair. 
+   The module filters out complementary arcs greater than 150° 
+   to maintain humanly viable physical timelines.
+
+
+
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 14: Copyright
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MorceNOX™ ASTRO - Your astrological companion!
+  
+Copyright © 2026  Amilcar Antonio Mesquita Rizk
+
+This program is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License 
+as published by the Free Software Foundation, either version 3 
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this program. If not, see https://www.gnu.org/licenses/.
