@@ -5467,8 +5467,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                    house_div, last_hr, last_min, last_sec, show_dec, 
                    (terms_system == 1) ? tabela_termos_egipcios : tabela_termos_ptolomeu, show_terms);
         
-        // Handle input with timeout
+        bool saiu_retorno = false;
 
+        // Handle input with timeout
+        
         int max_y, max_x;
         getmaxyx(stdscr, max_y, max_x);
 
@@ -5779,6 +5781,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(19):
                 if (!mapa_retorno) {
                     disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets);
+                    saiu_retorno = true;
                 }                                
                 break; 
             case '8':
@@ -5797,6 +5800,26 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 // Do nothing - just continue the loop
                 break;
         }
+        
+        if (saiu_retorno) {
+            int aa, mm, dd;
+            double hh;
+            swe_revjul(julian_day, SE_GREG_CAL, &aa, &mm, &dd, &hh);
+
+            local_time->tm_year = aa - 1900;
+            local_time->tm_mon = mm - 1;
+            local_time->tm_mday = dd;
+            
+            Hora hora = get_fmt_hour(hh);
+            
+            local_time->tm_hour = hora.hora;
+            local_time->tm_min = hora.min;
+            local_time->tm_sec = hora.sec;
+
+            local_time->tm_hour += tz_offset;
+            timegm(local_time);
+        }
+
         if (animated) {
             local_time->tm_sec += anim_interval;
             timegm(local_time);
@@ -5915,7 +5938,9 @@ void open_menu_tables(ContextoMenu *ctx) {
     box(shadow, 0, 0);
     wattroff(shadow, COLOR_PAIR(24));
     wrefresh(shadow);
-            
+      
+    bool saiu_retorno = false;
+
     while (!menu_selected) {
         
         // Clear and redraw main menu
@@ -6113,6 +6138,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         case 19:
             if (!ctx->mapa_retorno) {    
                 disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets);
+                saiu_retorno = true;
             }
             break;
         case 20:
@@ -6132,7 +6158,25 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
     }
 
-    // Liberação limpa das janelas do pop-up
+    if (saiu_retorno) {
+        int aa, mm, dd;
+        double hh;
+        swe_revjul(ctx->julian_day, SE_GREG_CAL, &aa, &mm, &dd, &hh);
+
+        ctx->local_time->tm_year = aa - 1900;
+        ctx->local_time->tm_mon = mm - 1;
+        ctx->local_time->tm_mday = dd;
+        
+        Hora hora = get_fmt_hour(hh);
+        
+        ctx->local_time->tm_hour = hora.hora;
+        ctx->local_time->tm_min = hora.min;
+        ctx->local_time->tm_sec = hora.sec;
+
+        ctx->local_time->tm_hour += ctx->tz_offset;
+        timegm(ctx->local_time);
+    }
+
     delwin(win);
     delwin(shadow);
 }

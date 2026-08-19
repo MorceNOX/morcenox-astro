@@ -1402,6 +1402,8 @@ void call_chart_now() {
     MIN = local_time->tm_min;
     SEC = local_time->tm_sec;
 
+    mktime(local_time);
+
     sqlite3 *db;
     sqlite3_stmt *stmt;
     int rc;
@@ -1450,10 +1452,10 @@ void call_chart_now() {
     double dst_offset = 0.0;
     dst_offset = (double)obter_segundos_dst_na_data(tz_iana, YY, MM, DD, HH, MIN) / 3600;        
     
-    tz_offset = tz_offset + dst_offset;
-
     TZ_OFFSET = tz_offset;
     DST_OFFSET = dst_offset;
+
+    tz_offset = tz_offset + dst_offset;
 
     GENDER = get_default_gender();
 
