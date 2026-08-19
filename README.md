@@ -15,7 +15,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 
 ### 🛠 Advanced Charting & Calculations
 * **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time Transit charts.
-* **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.).
+* **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verify the transits of the planets against the natal (radical) positions, including the arabic parts.
 * **Time-Lord Techniques:** Built-in modules for **Firdaria**, **Annual Profections**, and **Vital Chronocrators** (Hyleg & Alcochoden).
 * **Primary Directions:** Precise calculation of Direct and Converse directions for planets and Arabic Parts using Naibod time key and dynamic obliquity.
 * **Arabic Parts:** Create, edit, and manage a custom collection of Arabic Parts, with automated aspect calculation.
@@ -33,14 +33,14 @@ Features a stunning ASCII-art interface, real-motion animation, and deep mathema
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
 
 ### 🌎 Multilingual Support
-* Currently only **English** and **Brazilian Portuguese** are available.
+* Currently only **English** and **Brazilian Portuguese** are available. You select the language by the Settings menu.
 
 ## 🛠 Technical Stack
 
 * **Core:** C
 * **Ephemeris:** [Swiss Ephemeris](https://github.com/aloistr/swisseph) (for astronomical precision).
 * **UI/UX:** `ncurses` (for the terminal-based interface).
-* **Database:** `SQLite` (for storing charts, settings, and a massive city database).
+* **Database:** [SQLite](https://github.com/sqlite/sqlite) (for storing charts, settings, and a massive city database).
 * **Data Source:** Enhanced `countries-states-cities-database` (approx. 153k cities).
 * **Internationalization:** `libicu` (Unicode/ICU support).
 
