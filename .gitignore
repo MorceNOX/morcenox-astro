@@ -1,5 +1,6 @@
 # Ignorar executáveis e arquivos de objeto compilados
 *.o
 *.out
+*.py
 atlas/*
 astro
