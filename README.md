@@ -1,6 +1,6 @@
 # MorceNOX™ ASTRO
 
-[!Logo](MorceNOX-ASTRO-logo.png)
+[Logo](https://github.com/MorceNOX/morcenox-astro/tree/main/MorceNOX-ASTRO-logo.png)
 
 **Your advanced, terminal-based astrological companion.**
 
@@ -88,42 +88,42 @@ MorceNOX™ is designed for speed. Most actions require only one or two keystrok
 ***
 ### Main Menu
 ***
-[!Main Menu Portuguese](screenshots/01-main_menu.png)
+[Main Menu Portuguese](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/01-main_menu.png)
 ***
 
 ### The Chart Wheel
 ***
-[!Main Menu English](screenshots/01-chart_wheel_example_02.png)
+[Main Menu English](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/01-chart_wheel_example_02.png)
 ***
 
 ### The Chart Wheel
 ***
-[!Chart Wheel](screenshots/02-main_menu.png)
+[Chart Wheel](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/02-main_menu.png)
 ***
 
 ### Dignities and Rulership Table 1
 ***
-[!Dignities](screenshots/03-dignities_rulership_table.png)
+[Dignities](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/03-dignities_rulership_table.png)
 ***
 
 ### Aspects Table
 ***
-[!Aspects](screenshots/03a-aspects_table.png)
+[Aspects](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/03a-aspects_table.png)
 ***
 
 ### Primary Directions
 ***
-[!Directions](screenshots/04-primary_directions_table.png)
+[Directions](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/04-primary_directions_table.png)
 ***
 
 ### Firdaria
 ***
-[!Firdaria](screenshots/04-firdaria_table.png)
+[Firdaria](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/04-firdaria_table.png)
 ***
 
 ### Energy Profile Chart
 ***
-[!Energy](screenshots/07-energy_profile_chart.png)
+[Energy](https://github.com/MorceNOX/morcenox-astro/tree/main/screenshots/07-energy_profile_chart.png)
 ***
 
 ## 📜 License
