@@ -1385,7 +1385,6 @@ void draw_cusps_div(int object_count,
             imax = 255; 
         }
 
-        attron(COLOR_PAIR(10) | A_DIM);
         for (int i = imin; i < imax; i++) {
             float angle = i * PI / 180.0;
             int y = (int)(display_center_y + radius * sin(angle));
@@ -1403,9 +1402,7 @@ void draw_cusps_div(int object_count,
                 }
             }
         }
-        attroff(COLOR_PAIR(10) | A_DIM);
-    }
-    
+    }    
 }
 
 
@@ -1619,7 +1616,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
                 PlotObject *plots, double *cusps, int sanYear, int sanMon, int sanDay, double sanHour, 
                 char *sunrise_time, char *sunset_time, char *city, char *country, 
                 double daytime_hour, double nighttime_hour, int week_day, int planetary_hour, 
-                const char* phase, bool dark_mode, int anim_interval, bool mapa_retorno,
+                const char* phase, bool dark_mode, bool animated, int anim_interval, bool mapa_retorno,
                 char *chart_name, char house_system, int gender_id, bool house_div, int last_hr, int last_min, double last_sec, bool show_dec, Termo terms[12][5], bool show_terms) {
     
     int object_diff = 0;
@@ -1632,10 +1629,10 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
     if (dark_mode) {
         init_pair(1, COLOR_WHITE, COLOR_BLACK);
-        init_pair(2, COLOR_RED, COLOR_WHITE);
-        init_pair(3, COLOR_GREEN, COLOR_WHITE);
-        init_pair(4, COLOR_YELLOW, COLOR_WHITE);
-        init_pair(5, COLOR_BLUE, COLOR_WHITE);
+        init_pair(2, COLOR_WHITE, COLOR_RED);
+        init_pair(3, COLOR_WHITE, COLOR_GREEN);
+        init_pair(4, COLOR_WHITE, COLOR_YELLOW);
+        init_pair(5, COLOR_WHITE, COLOR_BLUE);
         init_pair(6, COLOR_WHITE, COLOR_BLACK);
         init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(8, COLOR_CYAN, COLOR_BLACK);
@@ -1647,10 +1644,10 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(13, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(14, COLOR_BLACK, COLOR_CYAN);
-        init_pair(15, COLOR_WHITE, COLOR_BLACK);
-        init_pair(16, COLOR_BLACK, COLOR_WHITE);
-        init_pair(17, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(18, COLOR_BLUE, COLOR_WHITE);
+        init_pair(15, COLOR_BLUE, COLOR_WHITE);
+        init_pair(16, COLOR_WHITE, COLOR_BLACK);
+        init_pair(17, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(18, COLOR_WHITE, COLOR_BLUE);
         init_pair(19, COLOR_WHITE, COLOR_WHITE);
         init_pair(20, COLOR_CYAN, COLOR_BLACK);
 
@@ -1666,6 +1663,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
         
         init_pair(31, COLOR_GREEN, COLOR_RED);
+        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -1703,13 +1701,24 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
 
         init_pair(31, COLOR_GREEN, COLOR_RED);
+        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
     }
     
+    int flags = 0;
+    if (dark_mode) {
+        flags |= A_DIM | A_REVERSE;
+    }
+
     if (mapa_retorno) {
-        bkgd(COLOR_PAIR(12));
+        if (!dark_mode) {
+            bkgd(COLOR_PAIR(12) | flags);
+        }
+        else {
+            bkgd(COLOR_PAIR(32) | flags); 
+        }
     }
     else {
-        bkgd(COLOR_PAIR(15));
+        bkgd(COLOR_PAIR(15) | flags);
     }
     
     clear();
@@ -1745,14 +1754,13 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     int display_center_x = center_x + (int)(pan_x * current_scale);
     
     // Draw the outer circle filled
-    attron(COLOR_PAIR(19));
+    attron(COLOR_PAIR(19) | flags);
     draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
-    attroff(COLOR_PAIR(19));
+    attroff(COLOR_PAIR(19) | flags);
     
     //attron(COLOR_PAIR(9) | A_DIM);
-    attron(COLOR_PAIR(1));
-    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");
-    
+    attron(COLOR_PAIR(1) | flags);
+    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
     //attroff(COLOR_PAIR(9) | A_DIM);
 
@@ -1765,9 +1773,9 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
             
             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
-                attron(COLOR_PAIR(19) | A_DIM);
+                attron(COLOR_PAIR(19) | A_DIM | flags);
                 mvaddwstr(y, x, L"░");
-                attroff(COLOR_PAIR(19) | A_DIM);
+                attroff(COLOR_PAIR(19) | A_DIM | flags);
             }
         }
     }
@@ -1778,7 +1786,19 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
       
     if (house_div) {
+        if (!dark_mode) {
+            attron(COLOR_PAIR(10) | A_DIM);
+        }
+        else {
+            attron(COLOR_PAIR(19) | A_DIM);
+        }
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+        if (!dark_mode) {
+            attroff(COLOR_PAIR(10) | A_DIM);
+        }
+        else {
+            attroff(COLOR_PAIR(19) | A_DIM);
+        }
     }
     
 
@@ -1786,17 +1806,17 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
     
     if (show_dec) {
-        attron(COLOR_PAIR(17));
+        attron(COLOR_PAIR(17) | flags | A_BOLD);
         draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
-        attroff(COLOR_PAIR(17));
+        attroff(COLOR_PAIR(17) | flags | A_BOLD);
     }
 
     if (show_terms) {
         Termo t[12][5];
         get_terms_longitude_to_print(terms, t);
-        attron(COLOR_PAIR(17));
+        attron(COLOR_PAIR(17) | flags | A_BOLD);
         draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-        attroff(COLOR_PAIR(17));
+        attroff(COLOR_PAIR(17) | flags | A_BOLD);
     }
 
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
@@ -1869,6 +1889,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
 
+        if (animated) {
+            attron(A_BLINK);
+        }
+        mvprintw(LINES - 1, max_x - 37, "%s", (animated) ? _("▶️ Running") : _("⏸️ Stopped"));
+
+        if (animated) {
+            attroff(A_BLINK);
+        }
     }
     mvprintw(LINES - 1, max_x - 25, "%s: %5d s", _("Speed Animation"), anim_interval);
 
@@ -5435,7 +5463,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         draw_chart(zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
                    sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 
                    daytime_hour, nighttime_hour, week_day + 1, planetary_hour + 1, phase, 
-                   dark_mode, anim_interval, mapa_retorno, chart_name, house_system, gender_id, house_div, last_hr, last_min, last_sec, show_dec, (terms_system == 1) ? tabela_termos_egipcios : tabela_termos_ptolomeu, show_terms);
+                   dark_mode, animated, anim_interval, mapa_retorno, chart_name, house_system, gender_id, 
+                   house_div, last_hr, last_min, last_sec, show_dec, 
+                   (terms_system == 1) ? tabela_termos_egipcios : tabela_termos_ptolomeu, show_terms);
         
         // Handle input with timeout
 

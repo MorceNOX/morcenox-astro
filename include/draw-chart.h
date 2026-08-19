@@ -213,7 +213,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     PlotObject *plots, double *cusps, int sanYear, int sanMon, int sanDay, double sanHour, 
     char *sunrise_time, char *sunset_time, char *city, char *country, 
     double daytime_hour, double nighttime_hour, int week_day, int planetary_hour, 
-    const char* phase, bool dark_mode, int anim_interval, bool mapa_retorno,
+    const char* phase, bool dark_mode, bool animated, int anim_interval, bool mapa_retorno,
     char *chart_name, char house_system, int gender_id, bool house_div, int last_hr, int last_min, double last_sec, bool show_dec, Termo terms[12][5], bool show_terms);
 
 char *get_sign(int n);
