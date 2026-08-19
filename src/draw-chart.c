@@ -1084,10 +1084,7 @@ double find_last_astrological_event(double start_jd, bool is_opposition) {
     return -1.0; // Event not found in recent history
 }
 
-//#include <math.h>
-//#raylib.h // or whatever headers you use for LINES/COLS/mvaddwstr
 
-// Helper to calculate x_offset_max to ensure both functions use IDENTICAL math
 float get_x_width(float r, float y_offset, float aspect_ratio) {
     float inner_val = (r * r) - (y_offset * y_offset);
     float x_width = sqrt(fmax(0, inner_val));

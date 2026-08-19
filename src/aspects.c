@@ -142,46 +142,46 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
                     
                     int aplicativo = 0;
-                    //if (fabs(plots[i].speed) > fabs(plots[j].speed)) {
-                    if ((sinal && aspects_defs[closest].angle > angle) || (!sinal && aspects_defs[closest].angle < angle)) {
-                        if (retro[i]) {
-                            aplicativo = 0;
+                    if (fabs(plots[i].speed) > fabs(plots[j].speed)) {
+                        if ((sinal && aspects_defs[closest].angle > angle) || (!sinal && aspects_defs[closest].angle < angle)) {
+                            if (retro[i]) {
+                                aplicativo = 0;
+                            }
+                            else {
+                                aplicativo = 1;
+                                vazio_de_curso[i] = 0;
+                            }                                
                         }
-                        else {
-                            aplicativo = 1;
-                            vazio_de_curso[i] = 0;
-                        }                                
-                    }
-                    else if ((sinal && aspects_defs[closest].angle < angle) || (!sinal && aspects_defs[closest].angle > angle)) {
-                        if (retro[i]) {
-                            aplicativo = 1;
-                            vazio_de_curso[i] = 0;
+                        else if ((sinal && aspects_defs[closest].angle < angle) || (!sinal && aspects_defs[closest].angle > angle)) {
+                            if (retro[i]) {
+                                aplicativo = 1;
+                                vazio_de_curso[i] = 0;
+                            }
+                            else {
+                                aplicativo = 0;
+                            }                                
                         }
-                        else {
-                            aplicativo = 0;
-                        }                                
                     }
-                    //}
-                    // else {
-                    //     if ((sinal && aspects_defs[closest].angle < angle) || (!sinal && aspects_defs[closest].angle > angle)) {
-                    //         if (retro[j]) {
-                    //             aplicativo = 0;
-                    //         }
-                    //         else {
-                    //             aplicativo = 1;
-                    //             vazio_de_curso[j] = 0;
-                    //         }                                
-                    //     }
-                    //     else if ((sinal && aspects_defs[closest].angle > angle) || (!sinal && aspects_defs[closest].angle < angle)) {
-                    //         if (retro[j]) {
-                    //             aplicativo = 1;
-                    //             vazio_de_curso[j] = 0;
-                    //         }
-                    //         else {
-                    //             aplicativo = 0;
-                    //         }                                
-                    //     }
-                    // }
+                    else {
+                        if ((sinal && aspects_defs[closest].angle < angle) || (!sinal && aspects_defs[closest].angle > angle)) {
+                            if (retro[j]) {
+                                aplicativo = 0;
+                            }
+                            else {
+                                aplicativo = 1;
+                                vazio_de_curso[j] = 0;
+                            }                                
+                        }
+                        else if ((sinal && aspects_defs[closest].angle > angle) || (!sinal && aspects_defs[closest].angle < angle)) {
+                            if (retro[j]) {
+                                aplicativo = 1;
+                                vazio_de_curso[j] = 0;
+                            }
+                            else {
+                                aplicativo = 0;
+                            }                                
+                        }
+                    }
                     
                     if (aplicativo) {
                         strncat(matrix.grid[i][j].symbol, " a", 3);
