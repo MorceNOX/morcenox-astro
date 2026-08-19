@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 18:00-0300\n"
+"POT-Creation-Date: 2026-08-19 18:51-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -669,8 +669,7 @@ msgid ""
 "\n"
 msgstr ""
 "    Alto risco de esgotamento do sistema nervoso, ansiedade mental aguda, \n"
-"dispersão da atenção e o perigo de racionalizar excessivamente "
-"decisões \n"
+"dispersão da atenção e o perigo de racionalizar excessivamente decisões \n"
 "críticas que exigem profundidade emocional.\n"
 "\n"
 "\n"
@@ -697,8 +696,8 @@ msgid ""
 "\n"
 msgstr ""
 "    Períodos favoráveis ​​para empreendimentos artísticos, aumento de renda, \n"
-"formação de alianças estratégicas e vivência de um crescimento profundo "
-"em sua \n"
+"formação de alianças estratégicas e vivência de um crescimento profundo em "
+"sua \n"
 "vida amorosa ativa.\n"
 "\n"
 
@@ -2127,119 +2126,119 @@ msgstr "Auto"
 msgid "┃ Gen: "
 msgstr "┃ Gên: "
 
-#: src/menu-box.c:1468
+#: src/menu-box.c:1470
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:1860
+#: src/menu-box.c:1862
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:1864 src/menu-box.c:1961
+#: src/menu-box.c:1866 src/menu-box.c:1963
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:1865
+#: src/menu-box.c:1867
 msgid "Help file loaded successfully!"
 msgstr "Arquivo de ajuda carregado com sucesso."
 
-#: src/menu-box.c:1879
+#: src/menu-box.c:1881
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:1883 src/menu-box.c:1962
+#: src/menu-box.c:1885 src/menu-box.c:1964
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:1884
+#: src/menu-box.c:1886
 msgid "Topics file loaded successfully!"
 msgstr "Arquivo de tópicos carregado com sucesso."
 
-#: src/menu-box.c:1894
+#: src/menu-box.c:1896
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:1916
+#: src/menu-box.c:1918
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:1953
+#: src/menu-box.c:1955
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:1953
+#: src/menu-box.c:1955
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localização padrão."
 
-#: src/menu-box.c:1954
+#: src/menu-box.c:1956
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:1954
+#: src/menu-box.c:1956
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:1955
+#: src/menu-box.c:1957
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:1955
+#: src/menu-box.c:1957
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:1956
+#: src/menu-box.c:1958
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:1956
+#: src/menu-box.c:1958
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1959
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1959
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:1958
+#: src/menu-box.c:1960
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:1958
+#: src/menu-box.c:1960
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:1959
+#: src/menu-box.c:1961
 msgid "Change the Default Location"
 msgstr "Mudar a Localização Padrão"
 
-#: src/menu-box.c:1959
+#: src/menu-box.c:1961
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:1960
+#: src/menu-box.c:1962
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:1960
+#: src/menu-box.c:1962
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:1961
+#: src/menu-box.c:1963
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:1962
+#: src/menu-box.c:1964
 msgid "Technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:1963
+#: src/menu-box.c:1965
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:1963
+#: src/menu-box.c:1965
 msgid "Exit the program."
 msgstr "Sair do programa."
 

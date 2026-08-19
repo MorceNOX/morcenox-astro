@@ -1925,18 +1925,18 @@ char *get_sign(int n) {
 
 char *get_sign_name(int n) {
     switch(n) {
-        case 0: return "Aries";
-        case 1: return "Taurus";
-        case 2: return "Gemini";
-        case 3: return "Cancer";
-        case 4: return "Leo";
-        case 5: return "Virgo";
-        case 6: return "Libra";
-        case 7: return "Scorpio";
-        case 8: return "Sagittarius";
-        case 9: return "Capricorn";
-        case 10: return "Aquarius";
-        case 11: return "Pisces";
+        case 0: return _("Aries");
+        case 1: return _("Taurus");
+        case 2: return _("Gemini");
+        case 3: return _("Cancer");
+        case 4: return _("Leo");
+        case 5: return _("Virgo");
+        case 6: return _("Libra");
+        case 7: return _("Scorpio");
+        case 8: return _("Sagittarius");
+        case 9: return _("Capricorn");
+        case 10: return _("Aquarius");
+        case 11: return _("Pisces");
     }
     return "";
 }
