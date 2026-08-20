@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 20:59-0300\n"
+"POT-Creation-Date: 2026-08-19 21:22-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -664,7 +664,7 @@ msgstr ""
 msgid "House"
 msgstr "House System"
 
-#: src/arabic_parts.c:191 src/arabic_parts.c:477 src/firdaria.c:324
+#: src/arabic_parts.c:191 src/arabic_parts.c:477 src/firdaria.c:323
 msgid "Lord"
 msgstr ""
 
@@ -686,7 +686,7 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:534
 #: src/directions.c:943 src/draw-chart.c:2809 src/draw-chart.c:3137
-#: src/draw-chart.c:3282 src/draw-chart.c:3362 src/firdaria.c:448
+#: src/draw-chart.c:3282 src/draw-chart.c:3362 src/firdaria.c:446
 #: src/hyleg.c:589 src/hyleg.c:881 src/mind.c:312 src/motivation.c:234
 #: src/profections.c:188
 #, fuzzy
@@ -1570,83 +1570,83 @@ msgstr "Moon orb"
 msgid "None"
 msgstr ""
 
-#: src/firdaria.c:245
+#: src/firdaria.c:244
 msgid " Planetary Firdaria Chronocrators "
 msgstr ""
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "Sect"
 msgstr ""
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "DIURNAL (Sun)"
 msgstr ""
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "NOCTURNAL (Moon)"
 msgstr ""
 
-#: src/firdaria.c:293
+#: src/firdaria.c:292
 msgid "CURRENT MAJOR LORD: "
 msgstr ""
 
-#: src/firdaria.c:301
+#: src/firdaria.c:300
 msgid "Period [From:"
 msgstr ""
 
-#: src/firdaria.c:301
+#: src/firdaria.c:300
 #, fuzzy
 msgid "to"
 msgstr "Auto"
 
-#: src/firdaria.c:309
+#: src/firdaria.c:308
 msgid "  [CRITICAL ANARETIC CYCLE]"
 msgstr ""
 
-#: src/firdaria.c:324
+#: src/firdaria.c:323
 msgid "Subperiod"
 msgstr ""
 
-#: src/firdaria.c:325
+#: src/firdaria.c:324
 #, fuzzy
 msgid "Start Date"
 msgstr "Chart saved!"
 
-#: src/firdaria.c:325
+#: src/firdaria.c:324
 #, fuzzy
 msgid "End Date"
 msgstr " Date "
 
-#: src/firdaria.c:326
+#: src/firdaria.c:325
 msgid "Status"
 msgstr ""
 
-#: src/firdaria.c:338
+#: src/firdaria.c:337
 msgid "  -  [Node periods are focused and do not have sub-governors]"
 msgstr ""
 
-#: src/firdaria.c:419
+#: src/firdaria.c:417
 msgid "[ANARETIC RISK]"
 msgstr ""
 
-#: src/firdaria.c:421
+#: src/firdaria.c:419
 msgid " Trigger Zone "
 msgstr ""
 
-#: src/firdaria.c:434
+#: src/firdaria.c:432
 msgid "  Passed  "
 msgstr ""
 
-#: src/firdaria.c:445
+#: src/firdaria.c:443
 msgid "Interpretation Guide:"
 msgstr ""
 
-#: src/firdaria.c:446
+#: src/firdaria.c:444
 msgid ""
 "The highlighted subperiod marks the active executor of your current timeline."
 msgstr ""
 
-#: src/firdaria.c:447
+#: src/firdaria.c:445
 msgid ""
 "Watch transits and solar return positions of the Active Lord for concrete "
 "events."

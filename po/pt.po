@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 20:59-0300\n"
+"POT-Creation-Date: 2026-08-19 21:22-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -902,7 +902,7 @@ msgstr "Posição"
 msgid "House"
 msgstr "Casa"
 
-#: src/arabic_parts.c:191 src/arabic_parts.c:477 src/firdaria.c:324
+#: src/arabic_parts.c:191 src/arabic_parts.c:477 src/firdaria.c:323
 msgid "Lord"
 msgstr "Regente"
 
@@ -925,7 +925,7 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:534
 #: src/directions.c:943 src/draw-chart.c:2809 src/draw-chart.c:3137
-#: src/draw-chart.c:3282 src/draw-chart.c:3362 src/firdaria.c:448
+#: src/draw-chart.c:3282 src/draw-chart.c:3362 src/firdaria.c:446
 #: src/hyleg.c:589 src/hyleg.c:881 src/mind.c:312 src/motivation.c:234
 #: src/profections.c:188
 msgid "Press ESC to return to chart"
@@ -1784,80 +1784,80 @@ msgstr "Lua"
 msgid "None"
 msgstr "Nenhum"
 
-#: src/firdaria.c:245
+#: src/firdaria.c:244
 msgid " Planetary Firdaria Chronocrators "
 msgstr " Cronocratas Planetários da Firdária "
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "Sect"
 msgstr "Seita"
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "DIURNAL (Sun)"
 msgstr "DIURNA (Sol)"
 
-#: src/firdaria.c:290
+#: src/firdaria.c:289
 msgid "NOCTURNAL (Moon)"
 msgstr "NOTURNA (Lua)"
 
-#: src/firdaria.c:293
+#: src/firdaria.c:292
 msgid "CURRENT MAJOR LORD: "
 msgstr "REGENTE PRINCIPAL ATUAL: "
 
-#: src/firdaria.c:301
+#: src/firdaria.c:300
 msgid "Period [From:"
 msgstr "Período [De:"
 
-#: src/firdaria.c:301
+#: src/firdaria.c:300
 msgid "to"
 msgstr "para"
 
-#: src/firdaria.c:309
+#: src/firdaria.c:308
 msgid "  [CRITICAL ANARETIC CYCLE]"
 msgstr "  [CICLO ANARÉTICO CRÍTICO]"
 
-#: src/firdaria.c:324
+#: src/firdaria.c:323
 msgid "Subperiod"
 msgstr "Subperíodo"
 
-#: src/firdaria.c:325
+#: src/firdaria.c:324
 msgid "Start Date"
 msgstr "Data Inicial"
 
-#: src/firdaria.c:325
+#: src/firdaria.c:324
 msgid "End Date"
 msgstr "Data Final"
 
-#: src/firdaria.c:326
+#: src/firdaria.c:325
 msgid "Status"
 msgstr "Status"
 
-#: src/firdaria.c:338
+#: src/firdaria.c:337
 msgid "  -  [Node periods are focused and do not have sub-governors]"
 msgstr " - [Os períodos de Nodo estão focados e não possuem sub-regentes]"
 
-#: src/firdaria.c:419
+#: src/firdaria.c:417
 msgid "[ANARETIC RISK]"
 msgstr "[RISCO ANARÉTICO]"
 
-#: src/firdaria.c:421
+#: src/firdaria.c:419
 msgid " Trigger Zone "
 msgstr "Zona de Gatilho"
 
-#: src/firdaria.c:434
+#: src/firdaria.c:432
 msgid "  Passed  "
 msgstr "  Passado  "
 
-#: src/firdaria.c:445
+#: src/firdaria.c:443
 msgid "Interpretation Guide:"
 msgstr "Guia de Interpretação:"
 
-#: src/firdaria.c:446
+#: src/firdaria.c:444
 msgid ""
 "The highlighted subperiod marks the active executor of your current timeline."
 msgstr "O período em destaque marca o executor ativo da linha do tempo atual."
 
-#: src/firdaria.c:447
+#: src/firdaria.c:445
 msgid ""
 "Watch transits and solar return positions of the Active Lord for concrete "
 "events."
@@ -2820,7 +2820,7 @@ msgstr " Configurações "
 
 #: src/selections.c:555
 msgid "Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."
-msgstr "Use [←↓↑→] para ajustar. [Enter] confirma. [ESC] Cancela."
+msgstr "Use [←↓↑→] ajustar. [Enter] confirma. [ESC] Cancela."
 
 #: src/selections.c:567 src/selections.c:679 src/selections.c:686
 msgid "yes"
@@ -2949,7 +2949,7 @@ msgstr " Data "
 
 #: src/selections.c:1366 src/selections.c:1473
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
-msgstr "Use [↑/↓] para ajaustar. [Enter] para confirmar."
+msgstr "[↑/↓] ajustar. [Enter] confirma."
 
 #: src/selections.c:1367 src/selections.c:1474
 msgid "[ESC] Cancel."
