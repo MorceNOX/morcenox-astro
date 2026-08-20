@@ -139,9 +139,6 @@ int comparar_plots_por_longitude(const void *a, const void *b) {
 
 
 
-// Supõe-se que CONFIG_PATH já está definido globalmente como string no seu código
-// Exemplo: char CONFIG_PATH[512] = "/home/usuario/.config/seu_programa";
-
 /**
  * Função auxiliar para testar se o caminho de efemérides atual contém arquivos válidos.
  * Tenta calcular o Sol usando alta precisão. Se falhar, o caminho é inválido.

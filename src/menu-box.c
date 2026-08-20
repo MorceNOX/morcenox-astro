@@ -1099,7 +1099,7 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
         //     attron(COLOR_PAIR(31));
         // }
         // draw_circle_filled(center_y, center_x, 13, 2.0, 1.0, L"█▓▒░");
-        // //draw_circle_points(center_y, center_x, 20, 1.75, 1.0, L"█▓▒░");
+        //draw_circle_points(center_y, center_x, 20, 1.75, 1.0, L"█▓▒░");
         
         // if (DARK_MODE) {
         //     attroff(COLOR_PAIR(7) | A_DIM);
@@ -1153,7 +1153,7 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
         else {
             attron(COLOR_PAIR(31));
         }    
-        //draw_circle_points(center_y, center_x, 22, 2.0, 1.0, L"█▓▒░");
+        //draw_circle_points(center_y, center_x, 28, 2.0, 1.0, L"░▒▓█▓▒░");
         draw_circle_points(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░");
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7));
@@ -1250,14 +1250,9 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
         //box(bar_win, 0, 0);
         wbkgd(bar_win, COLOR_PAIR(11));
         wattroff(bar_win, COLOR_PAIR(11));
-        //wrefresh(bar_win);
         
         char str_bar[term_w];
         snprintf(str_bar, sizeof(str_bar), "%s", CITY);
-        
-        // Debug: print the raw string to see what it contains
-        // printf("DEBUG: DEFAULT_CITY = '%s'\n", DEFAULT_CITY);
-        // printf("DEBUG: str_bar = '%s'\n", str_bar);
         
         // Use wcwidth to properly calculate width for wide characters
         int city_width = get_visual_width(str_bar);

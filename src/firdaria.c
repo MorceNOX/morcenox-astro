@@ -112,8 +112,8 @@ RelatorioFirdaria processar_dados_firdaria(double idade_fracao, bool mapa_diurno
     RelatorioFirdaria rel;
     memset(&rel, 0, sizeof(RelatorioFirdaria));
     
-    DataFirdaria nasc = {DD, MM, YY}; // Seus dados globais de nascimento
-    double idade_double = idade_fracao; // Agora recebe a fração exata com meses/dias
+    DataFirdaria nasc = {DD, MM, YY};
+    double idade_double = idade_fracao;
 
     int seq_major[9];
     if (mapa_diurno) {
@@ -178,8 +178,7 @@ RelatorioFirdaria processar_dados_firdaria(double idade_fracao, bool mapa_diurno
 
         double fatia = duracao_major / 7.0;
         
-        /* REPRODUÇÃO EXATA DA SUA LÓGICA GRÁFICA:
-           Mapeia a idade contra a janela matemática real em anos a partir do nascimento */
+        // Mapeia a idade contra a janela matemática real em anos a partir do nascimento */
         for (int s = 0; s < 7; s++) {
             // Distância em anos acumulados dentro do bloco maior
             double anos_inicio_sub = acumulado + (s * fatia);
@@ -365,7 +364,6 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
             char n_line[20] = "";
             preencher_dados_texto_planeta(id_sub_linha, n_line, g_line);
 
-            // CORREÇÃO DEFINTIVA DO HIGHLIGHT: 
             // Se o usuário está olhando para a idade atual de hoje, usamos a 'hoje_fracao' (ex: 49.52)
             // se ele mudou as setas para o futuro/passado, usamos o valor plano inteiro selecionado.
             
@@ -390,7 +388,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
             }
 
             // 3. Aplica o Realce visual apenas se for a linha ativa
-            // --- DENTRO DO LOOP FOR DOS 7 SUBPERÍODOS DA SUA DISPLAY_FIRDARIA ---
+            // --- DENTRO DO LOOP FOR DOS 7 SUBPERÍODOS DA DISPLAY_FIRDARIA ---
           
             // Verifica se o planeta desta linha específica é o Anareta destruidor
             bool linha_anaretica = (anar.id_anareta > 0 && id_sub_linha == anar.id_anareta);

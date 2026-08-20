@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 18:51-0300\n"
+"POT-Creation-Date: 2026-08-19 20:04-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1089,6 +1089,54 @@ msgstr ""
 
 #: src/draw-chart.c:1901
 msgid "Speed Animation"
+msgstr ""
+
+#: src/draw-chart.c:1928
+msgid "Aries"
+msgstr ""
+
+#: src/draw-chart.c:1929
+msgid "Taurus"
+msgstr ""
+
+#: src/draw-chart.c:1930
+msgid "Gemini"
+msgstr ""
+
+#: src/draw-chart.c:1931
+msgid "Cancer"
+msgstr ""
+
+#: src/draw-chart.c:1932
+msgid "Leo"
+msgstr ""
+
+#: src/draw-chart.c:1933
+msgid "Virgo"
+msgstr ""
+
+#: src/draw-chart.c:1934
+msgid "Libra"
+msgstr ""
+
+#: src/draw-chart.c:1935
+msgid "Scorpio"
+msgstr ""
+
+#: src/draw-chart.c:1936
+msgid "Sagittarius"
+msgstr ""
+
+#: src/draw-chart.c:1937
+msgid "Capricorn"
+msgstr ""
+
+#: src/draw-chart.c:1938
+msgid "Aquarius"
+msgstr ""
+
+#: src/draw-chart.c:1939
+msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:1966 src/draw-chart.c:1970 src/draw-chart.c:1974

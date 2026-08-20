@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 20:04-0300\n"
+"POT-Creation-Date: 2026-08-19 20:59-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2146,147 +2146,147 @@ msgstr "Selecionar Mapa para Carregar"
 msgid "Chart not found!"
 msgstr "Mapa não encontrado!"
 
-#: src/menu-box.c:1269
+#: src/menu-box.c:1264
 msgid "Location: "
 msgstr "  Cidade: "
 
-#: src/menu-box.c:1277
+#: src/menu-box.c:1272
 msgid "┃ Date/Time: "
 msgstr "┃ Data/Hora: "
 
-#: src/menu-box.c:1285
+#: src/menu-box.c:1280
 msgid "┃ Dst: "
 msgstr "┃ HdV: "
 
-#: src/menu-box.c:1289 src/selections.c:1727 src/selections.c:1839
+#: src/menu-box.c:1284 src/selections.c:1727 src/selections.c:1839
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:1289 src/selections.c:1726 src/selections.c:1842
+#: src/menu-box.c:1284 src/selections.c:1726 src/selections.c:1842
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:1289 src/selections.c:1725
+#: src/menu-box.c:1284 src/selections.c:1725
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:1293
+#: src/menu-box.c:1288
 msgid "┃ Gen: "
 msgstr "┃ Gên: "
 
-#: src/menu-box.c:1470
+#: src/menu-box.c:1465
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:1862
+#: src/menu-box.c:1857
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:1866 src/menu-box.c:1963
+#: src/menu-box.c:1861 src/menu-box.c:1958
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:1867
+#: src/menu-box.c:1862
 msgid "Help file loaded successfully!"
 msgstr "Arquivo de ajuda carregado com sucesso."
 
-#: src/menu-box.c:1881
+#: src/menu-box.c:1876
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:1885 src/menu-box.c:1964
+#: src/menu-box.c:1880 src/menu-box.c:1959
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:1886
+#: src/menu-box.c:1881
 msgid "Topics file loaded successfully!"
 msgstr "Arquivo de tópicos carregado com sucesso."
 
-#: src/menu-box.c:1896
+#: src/menu-box.c:1891
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:1918
+#: src/menu-box.c:1913
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:1955
+#: src/menu-box.c:1950
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:1955
+#: src/menu-box.c:1950
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localização padrão."
 
-#: src/menu-box.c:1956
+#: src/menu-box.c:1951
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:1956
+#: src/menu-box.c:1951
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1952
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1952
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:1958
+#: src/menu-box.c:1953
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:1958
+#: src/menu-box.c:1953
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:1959
+#: src/menu-box.c:1954
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:1959
+#: src/menu-box.c:1954
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:1960
+#: src/menu-box.c:1955
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:1960
+#: src/menu-box.c:1955
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:1961
+#: src/menu-box.c:1956
 msgid "Change the Default Location"
 msgstr "Mudar a Localização Padrão"
 
-#: src/menu-box.c:1961
+#: src/menu-box.c:1956
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:1962
+#: src/menu-box.c:1957
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:1962
+#: src/menu-box.c:1957
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:1963
+#: src/menu-box.c:1958
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:1964
+#: src/menu-box.c:1959
 msgid "Technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:1965
+#: src/menu-box.c:1960
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:1965
+#: src/menu-box.c:1960
 msgid "Exit the program."
 msgstr "Sair do programa."
 
