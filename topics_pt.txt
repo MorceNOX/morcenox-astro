@@ -1133,20 +1133,24 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
    mapa:
    
    - Mapa Diurno (Sol acima do horizonte): 
-     Sol → Lua → Almuten da SAN → Almuten Figuris → ASC.
+     Sol → Lua → Almuten (Sol, SAN, Asc) → Almuten Figuris → 
+     → ASC ou Parte da Fortuna.
      
    - Mapa Noturno (Sol abaixo do horizonte):
-     Lua → Sol → Parte da Fortuna → Almuten da SAN → 
-     → Almuten Figuris → ASC.
+     Lua → Sol → Parte da Fortuna → Almuten (Lua, SAN, POF) → 
+     → Almuten Figuris → ASC ou Parte da Fortuna.
      
      Para Sol, Lua e Parte da Fortuna  é verificado, também, 
      se há aspecto com algum de seus respectivos regentes, 
      condição esta que, se não satisfeita, exclui o astro da 
      possibilidade de ser o Hyleg.
      
-     Para o Almuten da SAN verifica-se se há aspecto com o
+     Para o Almuten dos pontos verifica-se se há aspecto com o
      luminar da seita (Sol para dia, Lua para noite),
      condição esta também excludente.
+     
+     Ao final, elege-se o Ascendente caso a SAN seja conjuncional,
+     se não, a Parte da Fortuna.
    
    O ponto eleito atua como o foco geométrico
    primário para escudos físicos e o alvo terminal
@@ -1161,24 +1165,24 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
    um número básico de anos de acordo com sua
    força de quadrante (posição corpórea nas casas):
    
-   - Casas Angulares (1, 4, 7, 10): Concede Grandes Anos.
+   - Casas Angulares (1, 4, 7, 10): Concede Anos Maiores.
    
-   - Casas Sucessivas (2, 5, 8, 11): Concede Médios Anos.
+   - Casas Sucessivas (2, 5, 8, 11): Concede Anos Médios.
    
-   - Casas Cadentes (3, 6, 9, 12): Concede Menores Anos.
+   - Casas Cadentes (3, 6, 9, 12): Concede Anos Menores.
    
    * Regra do Proxy/Tutor: Se um ponto sensível
      (ASC/Fortuna) for Hyleg e não tiver aspectos
      planetários, o Almuten Figuris age como Tutor,
-     concedendo estritamente seus Menores Anos para
+     concedendo estritamente seus Anos Menores para
      proteger os marcos da infância.
    
    * Ajuste Fino (Adições e Subtrações): Raios
      planetários para o Alcochoden modificam
      dinamicamente a linha do tempo. Benéficos
-     (Júpiter/Vênus) adicionam seus menores anos;
-     Maléficos (Saturno/Marte) subtraem seus
-     menores anos.
+     (Júpiter/Vênus) adicionam seus anos menores;
+     Maléficos (Saturno/Marte) subtraem seus anos
+     menores.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 10: Ameaças Vitais: O Anareta & Dominus Mortis

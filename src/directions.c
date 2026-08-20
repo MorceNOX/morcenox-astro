@@ -240,7 +240,7 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
 
 
 
-void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, double *latitudes) {
+void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, double *latitudes, int tipo_san) {
        
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -263,7 +263,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     int tipo_h = -1; 
     
     if (!mapa_retorno) {
-        tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora);
+        tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
     }
     else {
         tipo_h = tipo_h_natal;
@@ -302,6 +302,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         if (tipo_h == H_SOL) idx_hileg = 0;
         else if (tipo_h == H_LUNA) idx_hileg = 1;
         else if (tipo_h == H_ALMUTEN) idx_hileg = id_almuten_ref - 1;
+        else if (tipo_h == H_ALMUTEN_SAN) idx_hileg = id_almuten_ref - 1;
         else {
             for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
                 if (tipo_h == H_ASC && plots[i].id == P_ASC - object_diff) { idx_hileg = i; break; }

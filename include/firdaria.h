@@ -43,6 +43,6 @@ typedef struct {
 
 int checar_alerta_anaretico(int id_anareta, int id_major_firdaria, int id_sub_firdaria);
 RelatorioFirdaria processar_dados_firdaria(double idade_fracao, bool mapa_diurno);
-void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int regente_dia, int regente_hora);
+void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int regente_dia, int regente_hora, int tipo_san);
 
 #endif

@@ -64,7 +64,7 @@ bool is_lugar_hylegiaco(int casa) {
 
 
 
-int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora) {
+int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san) {
     int casa_sol = 0, casa_lua = 0, casa_fortuna = 0;
     int object_diff = show_modern_planets ? 0 : 3;
 
@@ -81,9 +81,10 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         }
     }
 
+    double points[3];
 
     // ────────────────────────────────────────────────────────────────────────
-    // ABORDAGEM DIURNA (Prioridade: Sol -> Lua -> Almuten -> Asc)
+    // ABORDAGEM DIURNA (Prioridade: Sol -> Lua -> Almuten (Sol, SAN, Asc) -> Almuten Figuris -> Asc ou Fortuna)
     // ────────────────────────────────────────────────────────────────────────
     if (MAPA_DIURNO) {
         // Criterio 1: O Sol em lugar hylegíaco
@@ -100,21 +101,25 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             }  
         }
         // Criterio 2: A Lua em lugar hylegíaco
-        if (is_lugar_hylegiaco(casa_lua)) {
+        else if (is_lugar_hylegiaco(casa_lua)) {
             int rulers[7];
             get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
             for (int i = 0; i < 7; i++) {
                 // se há aspecto com pelo menos um de seus regentes
                 int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-                if (has_aspect(P_SOL, id_ruler, aspecto_matriz)) {
+                if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
                     return H_LUNA;
                 }
             }
         }
+
+        points[0] = plots[P_SOL].longitude;
+        points[1] = plots[P_SAN - object_diff].longitude;
+        points[2] = plots[P_ASC - object_diff].longitude;
     } 
     // ────────────────────────────────────────────────────────────────────────
-    // ABORDAGEM NOTURNA (Prioridade: Lua -> Sol -> Fortuna -> Almuten -> Asc)
+    // ABORDAGEM NOTURNA (Prioridade: Lua -> Sol -> Fortuna -> Almuten (Lua, SAN, Fortuna) -> Almuten Figuris -> Asc ou Fortuna)
     // ────────────────────────────────────────────────────────────────────────
     else {
         // Criterio 1: A Lua em lugar hylegíaco
@@ -125,13 +130,13 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             for (int i = 0; i < 7; i++) {
                 // se há aspecto com pelo menos um de seus regentes
                 int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-                if (has_aspect(P_SOL, id_ruler, aspecto_matriz)) {
+                if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
                     return H_LUNA;
                 }
             }
         }
         // Criterio 2: O Sol em lugar hylegíaco
-        if (is_lugar_hylegiaco(casa_sol)) {
+        else if (is_lugar_hylegiaco(casa_sol)) {
             int rulers[7];
             get_rulers_by_lon(plots[P_SOL].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
@@ -144,26 +149,32 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             }
         }
         // Criterio 3: A Parte da Fortuna em lugar hylegíaco
-        if (is_lugar_hylegiaco(casa_fortuna)) {
-            int rulers[7];
-            get_rulers_by_lon(plots[P_FORTUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
+        // else if (is_lugar_hylegiaco(casa_fortuna)) {
+        //     int rulers[7];
+        //     get_rulers_by_lon(plots[P_FORTUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
-            for (int i = 0; i < 7; i++) {
-                // se há aspecto com pelo menos um de seus regentes
-                int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-                if (has_aspect(P_SOL, id_ruler, aspecto_matriz)) {
-                    return H_FORTUNA;
-                }
-            }  
-        }
+        //     for (int i = 0; i < 7; i++) {
+        //         // se há aspecto com pelo menos um de seus regentes
+        //         int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
+        //         if (has_aspect(P_FORTUNA - object_diff, id_ruler, aspecto_matriz)) {
+        //             return H_FORTUNA;
+        //         }
+        //     }  
+        // }
+        (void)casa_fortuna;
+        
+        points[0] = plots[P_LUNA].longitude;
+        points[1] = plots[P_SAN - object_diff].longitude;
+        points[2] = plots[P_FORTUNA - object_diff].longitude;
     }
 
 
-    // testa o almuten da SAN
+    // testa o almuten dos Pontos
 
     int res_san[12] = {0};
-    int qtd_san = get_almuten(plots[P_SAN - object_diff].longitude, res_san, aspecto_matriz, pontos, plots);
+    //int qtd_san = get_almuten(plots[P_SAN - object_diff].longitude, res_san, aspecto_matriz, pontos, plots);
     
+    int qtd_san = get_almuten_multiplo(points, 3, res_san, aspecto_matriz, pontos, plots);
 
     if (qtd_san > 0) { 
         int luminar = (MAPA_DIURNO)?0:1;
@@ -187,14 +198,12 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                 // se tem aspecto com o luminar da seita assume o Hyleg
                 if (has_aspect(luminar, id_candidato_san - 1, aspecto_matriz)) {
                     tem_aspecto = 1;
-                    break;
                 }
                 
                 if (tem_aspecto) {
                     *id_planeta_almuten = id_candidato_san; // Retorna por referência o ID do planeta (1 a 12)
                     return H_ALMUTEN_SAN;
-                }
-                
+                }                
             }
         }
     }
@@ -202,7 +211,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
 
     // ────────────────────────────────────────────────────────────────────────
     // CRITÉRIO DE RECURSO MEDIEVAL: Almuten dos Pontos Hylegíacos
-    // Se Luminares/Fortuna/Almuten da SAN falharem, calcula-se o Almuten do Mapa que esteja em casa hylegíaca
+    // Se Luminares/Fortuna/Almuten dos pontos falharem, calcula-se o Almuten do Mapa que esteja em casa hylegíaca
     // ────────────────────────────────────────────────────────────────────────
     int res_figuris[12] = {0};
     int qtd = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris);
@@ -232,9 +241,15 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
 
     // ────────────────────────────────────────────────────────────────────────
     // ÚLTIMO RECURSO ABSOLUTO: O próprio grau do Ascendente (Sempre na Casa 1)
-    // Se tudo falhar, o Ascendente é eleito o Hyleg por ser o doador do corpo físico
+    // Se tudo falhar, o Ascendente é eleito o Hyleg por ser o doador do corpo físico,
+    // caso a sizígia seja conjuncional. Se não, a Parte da Fortuna.
     // ────────────────────────────────────────────────────────────────────────
-    return H_ASC;
+
+    if (tipo_san == SAN_CONJUNCIONAL) {
+        return H_ASC;
+    }
+    
+    return H_FORTUNA;    
 }
 
 
@@ -248,7 +263,7 @@ const char* obter_descricao_hileg(int tipo_hileg) {
         case H_FORTUNA: return _("Part of Fortune (Mathematical Point)");
         case H_ASC:     return _("Ascendant Degree (Bodily Shield / Default)");
         case H_ALMUTEN: return _("Almuten Figuris (Chart Ruler)");
-        case H_ALMUTEN_SAN: return _("Almuten of SAN (SAN's Ruler)");
+        case H_ALMUTEN_SAN: return _("Almuten of Hylegiacal Points");
         default:        return _("Unknown Criterion");
     }
 }
@@ -391,7 +406,7 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
 
 
 
-void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour) {
+void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour, int tipo_san) {
     // 1. DIMENSIONAMENTO DA JANELA POP-UP
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -429,7 +444,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
@@ -717,7 +732,7 @@ ResultadoAnareta calcular_anareta(int idx_hileg_grid, AspectMatrix *matrix, Plot
 }
 
 
-void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int week_day, int planetary_hour) {
+void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int week_day, int planetary_hour, int tipo_san) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -754,7 +769,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;

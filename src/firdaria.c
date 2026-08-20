@@ -202,7 +202,7 @@ RelatorioFirdaria processar_dados_firdaria(double idade_fracao, bool mapa_diurno
 // 3. INTERFACE VISUAL INTERATIVA (NCURSES)
 // ────────────────────────────────────────────────────────────────────────
 
-void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int regente_dia, int regente_hora) {
+void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int regente_dia, int regente_hora, int tipo_san) {
 
     // Calcula idade exata de aniversário hoje via time.h
     time_t t_bruto = time(NULL);
@@ -259,12 +259,13 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
     else if (tipo_h == H_LUNA) idx_hileg_grid = 1;
     else if (tipo_h == H_ALMUTEN) idx_hileg_grid = id_almuten_ref - 1;
+    else if (tipo_h == H_ALMUTEN_SAN) idx_hileg_grid = id_almuten_ref - 1;
     else {
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             if (tipo_h == H_ASC && plots[i].id == P_ASC - object_diff) { idx_hileg_grid = i; break; }

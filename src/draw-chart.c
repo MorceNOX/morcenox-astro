@@ -4027,16 +4027,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         int sanYear, sanMon, sanDay;
         double sanHour;
+
+        int tipo_san = 0;
         
         char san[10];
         
         if (last_conj > last_opp) {
             snprintf(san, sizeof(san), "%s", "🌑");
             jdSAN = last_conj;
+            tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
             snprintf(san, sizeof(san), "%s", "🌕");
             jdSAN = last_opp;
+            tipo_san = SAN_PREVENCIONAL;
         }
         
         
@@ -5298,7 +5302,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int idx_objeto_h = -1;
 
         if (!mapa_retorno) {
-            tipo_h = get_hyleg(pontos_calculados, plots, &matrix, &id_almuten_ref, regente_dia, regente_hora);
+            tipo_h = get_hyleg(pontos_calculados, plots, &matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
                     
             if (tipo_h == H_SOL) idx_objeto_h = 0;
             else if (tipo_h == H_LUNA) idx_objeto_h = 1;
@@ -5674,6 +5678,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.asc_natal = asc_natal;
 
                 ctx.cusps_natal = cusps_natal;
+
+                ctx.tipo_san = tipo_san;
             
                 open_menu_tables(&ctx);
 
@@ -5732,25 +5738,25 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case KEY_F(12):
                 if (!mapa_retorno) {
-                    display_firdaria(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, regente_dia, regente_hora);
+                    display_firdaria(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, regente_dia, regente_hora, tipo_san);
                 }                
                 break;
             case '1':
             case KEY_F(13):
                 if (!mapa_retorno) {
-                    display_life_givers(pontos_calculados, dig, plots, &matrix, week_day + 1, planetary_hour + 1);
+                    display_life_givers(pontos_calculados, dig, plots, &matrix, week_day + 1, planetary_hour + 1, tipo_san);
                 }
                 break;            
             case '2':
             case KEY_F(14):
                 if (!mapa_retorno) {
-                    display_anareta(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, week_day + 1, planetary_hour + 1);
+                    display_anareta(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, week_day + 1, planetary_hour + 1, tipo_san);
                 }
                 break;
             case '3':
             case KEY_F(15):
                 if (!mapa_retorno) {
-                    display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, planet_latitudes);
+                    display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, planet_latitudes, tipo_san);
                 }
                 break;
             case '4':
@@ -5802,19 +5808,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
         if (saiu_retorno) {
-            int aa, mm, dd;
-            double hh;
-            swe_revjul(julian_day, SE_GREG_CAL, &aa, &mm, &dd, &hh);
-
-            local_time->tm_year = aa - 1900;
-            local_time->tm_mon = mm - 1;
-            local_time->tm_mday = dd;
-            
-            Hora hora = get_fmt_hour(hh);
-            
-            local_time->tm_hour = hora.hora;
-            local_time->tm_min = hora.min;
-            local_time->tm_sec = hora.sec;
+            *local_time = julian_day_para_struct_tm(julian_day);
 
             local_time->tm_hour += tz_offset;
             timegm(local_time);
@@ -6091,7 +6085,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 12:
             if (!ctx->mapa_retorno) {
-                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora);
+                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
             }
             else {
                 display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
@@ -6099,7 +6093,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 13:
             if (!ctx->mapa_retorno) {
-                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1);
+                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             }
             else {
                 display_planetary_energy_profile(ctx->plots, ctx->strength_planets);
@@ -6107,7 +6101,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;            
         case 14:
             if (!ctx->mapa_retorno) {
-                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1);
+                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             }
             else {
                 display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal);
@@ -6115,7 +6109,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 15:
             if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->planet_latitudes);
+                display_primary_directions(ctx->plots, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->planet_latitudes, ctx->tipo_san);
             }
             else {
                 AspectMatrix matrix_sign = {0};
@@ -6159,19 +6153,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     }
 
     if (saiu_retorno) {
-        int aa, mm, dd;
-        double hh;
-        swe_revjul(ctx->julian_day, SE_GREG_CAL, &aa, &mm, &dd, &hh);
-
-        ctx->local_time->tm_year = aa - 1900;
-        ctx->local_time->tm_mon = mm - 1;
-        ctx->local_time->tm_mday = dd;
-        
-        Hora hora = get_fmt_hour(hh);
-        
-        ctx->local_time->tm_hour = hora.hora;
-        ctx->local_time->tm_min = hora.min;
-        ctx->local_time->tm_sec = hora.sec;
+        *ctx->local_time = julian_day_para_struct_tm(ctx->julian_day);
 
         ctx->local_time->tm_hour += ctx->tz_offset;
         timegm(ctx->local_time);

@@ -49,6 +49,9 @@
 #define P_IC 17
 #define P_VERTEX 18
 
+#define SAN_CONJUNCIONAL 1
+#define SAN_PREVENCIONAL 2
+
 // Estrutura para mapear cada fatia do termo
 typedef struct {
     int grau_limite; // O grau onde o termo TERMINA dentro do signo
@@ -161,6 +164,8 @@ typedef struct {
     double asc_natal;
 
     double *cusps_natal;
+
+    int tipo_san;
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);

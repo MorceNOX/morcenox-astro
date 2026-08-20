@@ -48,12 +48,12 @@ typedef struct {
 
 int obter_regente_tradicional(int id_signo);
 bool is_lugar_hylegiaco(int casa);
-int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora);
+int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san);
 const char* obter_descricao_hileg(int tipo_hileg);
 int obter_anos_menores_por_nome(const char *object_name);
 ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, AspectMatrix *matrix, PlotObject *plots, PlanetDignities *dig, int regente_dia, int regente_hora, PontosHylegiacos pontos);
-void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour);
+void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour, int tipo_san);
 ResultadoAnareta calcular_anareta(int idx_hileg_grid, AspectMatrix *matrix, PlotObject *plots, PlanetDignities *dig, int signo_casa8);
-void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int week_day, int planetary_hour);
+void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *dig, PontosHylegiacos pontos, int signo_casa8, int week_day, int planetary_hour, int tipo_san);
 
 #endif
