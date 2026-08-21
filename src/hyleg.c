@@ -162,7 +162,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         //     }  
         // }
         (void)casa_fortuna;
-        
+
         points[0] = plots[P_LUNA].longitude;
         points[1] = plots[P_SAN - object_diff].longitude;
         points[2] = plots[P_FORTUNA - object_diff].longitude;
@@ -260,17 +260,18 @@ const char* obter_descricao_hileg(int tipo_hileg) {
     switch (tipo_hileg) {
         case H_SOL:     return _("Sun (Essential Luminary)");
         case H_LUNA:    return _("Luna (Essential Luminary)");
-        case H_FORTUNA: return _("Part of Fortune (Mathematical Point)");
-        case H_ASC:     return _("Ascendant Degree (Bodily Shield / Default)");
+        case H_FORTUNA: return _("Part of Fortune (Sensible Hylegiacal Point)");
+        case H_ASC:     return _("Ascendant Degree (Bodily Shield)");
         case H_ALMUTEN: return _("Almuten Figuris (Chart Ruler)");
         case H_ALMUTEN_SAN: return _("Almuten of Hylegiacal Points");
+        case H_SAN: return _("SAN (Sensible Hylegiacal Point)");
         default:        return _("Unknown Criterion");
     }
 }
 
 int obter_anos_menores_por_nome(const char *object_name) {
-    if (strcmp(object_name, "Sol") == 0 || strcmp(object_name, _("Sun")) == 0) return 19;
-    if (strcmp(object_name, "Luna") == 0 || strcmp(object_name, _("Moon")) == 0) return 25;
+    if (strcmp(object_name, _("Sol")) == 0 || strcmp(object_name, _("Sun")) == 0) return 19;
+    if (strcmp(object_name, _("Luna")) == 0 || strcmp(object_name, _("Moon")) == 0) return 25;
     if (strcmp(object_name, _("Mercury")) == 0) return 20;
     if (strcmp(object_name, _("Venus")) == 0)   return 8;
     if (strcmp(object_name, _("Mars")) == 0)    return 15;
@@ -449,6 +450,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
     else if (tipo_h == H_LUNA) idx_hileg_grid = 1;
+    else if (tipo_h == H_SAN) idx_hileg_grid = P_SAN - object_diff;
     else if (tipo_h == H_ALMUTEN) idx_hileg_grid = id_almuten_ref - 1;
     else if (tipo_h == H_ALMUTEN_SAN) idx_hileg_grid = id_almuten_ref - 1;
     else {
@@ -774,6 +776,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
     else if (tipo_h == H_LUNA) idx_hileg_grid = 1;
+    else if (tipo_h == H_SAN) idx_hileg_grid = P_SAN - object_diff;
     else if (tipo_h == H_ALMUTEN) idx_hileg_grid = id_almuten_ref - 1;
     else if (tipo_h == H_ALMUTEN_SAN) idx_hileg_grid = id_almuten_ref - 1;
     else {

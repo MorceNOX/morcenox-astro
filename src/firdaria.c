@@ -264,6 +264,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
     else if (tipo_h == H_LUNA) idx_hileg_grid = 1;
+    else if (tipo_h == H_SAN) idx_hileg_grid = P_SAN - object_diff;
     else if (tipo_h == H_ALMUTEN) idx_hileg_grid = id_almuten_ref - 1;
     else if (tipo_h == H_ALMUTEN_SAN) idx_hileg_grid = id_almuten_ref - 1;
     else {

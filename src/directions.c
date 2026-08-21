@@ -301,6 +301,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     if (!mapa_retorno) {
         if (tipo_h == H_SOL) idx_hileg = 0;
         else if (tipo_h == H_LUNA) idx_hileg = 1;
+        else if (tipo_h == H_SAN) idx_hileg = P_SAN - object_diff;
         else if (tipo_h == H_ALMUTEN) idx_hileg = id_almuten_ref - 1;
         else if (tipo_h == H_ALMUTEN_SAN) idx_hileg = id_almuten_ref - 1;
         else {

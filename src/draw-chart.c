@@ -5306,6 +5306,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     
             if (tipo_h == H_SOL) idx_objeto_h = 0;
             else if (tipo_h == H_LUNA) idx_objeto_h = 1;
+            else if (tipo_h == H_SAN) idx_objeto_h = P_SAN - object_diff;
             else if (tipo_h == H_ALMUTEN) idx_objeto_h = id_almuten_ref - 1;
             else if (tipo_h == H_ALMUTEN_SAN) idx_objeto_h = id_almuten_ref - 1;
             else {

@@ -27,6 +27,7 @@
 #define H_ASC     4
 #define H_ALMUTEN 5 // Se o Hyleg for o Almuten Conjunto, o ID do planeta vencedor será armazenado
 #define H_ALMUTEN_SAN 6
+#define H_SAN     7
 
 
 typedef struct {

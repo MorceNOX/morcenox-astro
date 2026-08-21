@@ -1033,20 +1033,24 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
    chart's Sect:
    
    - Diurnal Chart (Sun above horizon): 
-     Sun → Moon → SAN's Almuten → Almuten Figuris → ASC.
+     Sun → Moon → Almuten of (Sun, SAN, Asc) → Almuten Figuris 
+     → ASC or Part of Fortune.
    
    - Nocturnal Chart (Sun below horizon): 
-     Moon → Sun → Part of Fortune → → SAN's Almuten → 
-     → Almuten Figuris → ASC.
+     Moon → Sun → Part of Fortune → Almuten of (Moon, SAN, POF) → 
+     → Almuten Figuris → ASC or Part of Fortune.
    
      For the Sun, Moon, and Part of Fortune, it is also checked
      whether there is an aspect to any of their respective rulers—
      a condition which, if not met, disqualifies the body
      from being the Hyleg.
 
-     For the Almuten of the SAN, it is checked whether there is
+     For the Almuten of the points, it is checked whether there is
      an aspect to the sect luminar (Sun for day, Moon for night),
      a condition that is likewise disqualifying.
+     
+     At the end, the Ascendant is elected if the SAN is 
+     conjunctional, otherwise, the Part of Fortune.
    
    The elected point acts as the primary geometric focus for 
    physical shields and the terminal target for time projection 
