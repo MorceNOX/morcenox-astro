@@ -58,7 +58,7 @@ msgstr "Empate"
 
 #: src/almuten.c:575 src/draw-chart.c:2011
 msgid "Planetary"
-msgstr "Planet."
+msgstr "Regente"
 
 #: src/almuten.c:575 src/directions.c:405 src/directions.c:810
 #: src/draw-chart.c:2011 src/draw-chart.c:3393 src/selections.c:1385
@@ -1222,7 +1222,7 @@ msgstr "🌑 Lua Nova"
 
 #: src/draw-chart.c:761 src/draw-chart.c:774
 msgid "🌘 Waxing Crescent"
-msgstr "🌘 Lua Crescente"
+msgstr "🌘 Crescente Côncava"
 
 #: src/draw-chart.c:762 src/draw-chart.c:775
 msgid "🌗 First Quarter"
@@ -1230,7 +1230,7 @@ msgstr "🌗 Quarto Crescente"
 
 #: src/draw-chart.c:763 src/draw-chart.c:776
 msgid "🌖 Waxing Gibbous"
-msgstr "🌖 Crescente Gibosa"
+msgstr "🌖 Crescente Convexa"
 
 #: src/draw-chart.c:764 src/draw-chart.c:777
 msgid "🌕 Full Moon"
@@ -1238,7 +1238,7 @@ msgstr "🌕 Lua Cheia"
 
 #: src/draw-chart.c:765 src/draw-chart.c:778
 msgid "🌔 Waning Gibbous"
-msgstr "🌔 Minguante Gibosa"
+msgstr "🌔 Minguante Convexa"
 
 #: src/draw-chart.c:766 src/draw-chart.c:779
 msgid "🌓 Last Quarter"
@@ -1246,7 +1246,7 @@ msgstr "🌓 Quarto Minguante"
 
 #: src/draw-chart.c:767 src/draw-chart.c:780
 msgid "🌒 Waning Crescent"
-msgstr "🌒 Lua Minguante"
+msgstr "🌒 Minguante Côncava"
 
 #: src/draw-chart.c:1268 src/draw-chart.c:4484 src/draw-chart.c:4503
 msgid "Midheaven"
@@ -1684,7 +1684,7 @@ msgstr "Hora Noturna"
 
 #: src/draw-chart.c:3393
 msgid "Chart's Planetary"
-msgstr "Planet."
+msgstr "Regente Planetário"
 
 #: src/draw-chart.c:3415
 msgid " Day"
