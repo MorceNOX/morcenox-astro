@@ -303,7 +303,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         else if (tipo_h == H_LUNA) idx_hileg = 1;
         else if (tipo_h == H_SAN) idx_hileg = P_SAN - object_diff;
         else if (tipo_h == H_ALMUTEN) idx_hileg = id_almuten_ref - 1;
-        else if (tipo_h == H_ALMUTEN_SAN) idx_hileg = id_almuten_ref - 1;
+        else if (tipo_h == H_ALMUTEN_HYL) idx_hileg = id_almuten_ref - 1;
         else {
             for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
                 if (tipo_h == H_ASC && plots[i].id == P_ASC - object_diff) { idx_hileg = i; break; }
