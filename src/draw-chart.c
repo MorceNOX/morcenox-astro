@@ -1400,9 +1400,9 @@ void draw_cusps_div(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j != 1 && j != 4 && j != 7 && j != 10) {
-                        if (angle >= 4.9) {
+                        if (angle >= 4.98) {
                             mvaddstr(y, x, "/");  // casa 9
-                        } else if (angle <= -1.4 || angle >= 4.4) {
+                        } else if (angle <= -1.5 || angle >= 4.4) {
                             mvaddstr(y, x, "▎"); // casa 10
                         } else if (angle <= -0.97) {
                             mvaddstr(y, x, "/");  // casa 9
@@ -1416,9 +1416,9 @@ void draw_cusps_div(int object_count,
                             mvaddstr(y, x, "\\"); // casa 5
                         } else if (angle < 1.81) {
                             mvaddstr(y, x, "▕");  // casa 4
-                        } else if (angle < 2.1) {
+                        } else if (angle < 2.2) {
                             mvaddstr(y, x, "/");  // casa 3
-                        } else if (angle < 2.95) {
+                        } else if (angle < 2.99) {
                             mvaddstr(y, x, "█");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
@@ -1470,9 +1470,9 @@ void draw_cusps_div_axis(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j == 1 || j == 4 || j == 7 || j == 10) {            
-                        if (angle >= 4.9) {
+                        if (angle >= 4.98) {
                             mvaddstr(y, x, "/");  // casa 9
-                        } else if (angle <= -1.4 || angle >= 4.4) {
+                        } else if (angle <= -1.5 || angle >= 4.4) {
                             mvaddstr(y, x, "▎"); // casa 10
                         } else if (angle <= -0.97) {
                             mvaddstr(y, x, "/");  // casa 9
@@ -1486,9 +1486,9 @@ void draw_cusps_div_axis(int object_count,
                             mvaddstr(y, x, "\\"); // casa 5
                         } else if (angle < 1.81) {
                             mvaddstr(y, x, "▕");  // casa 4
-                        } else if (angle < 2.1) {
+                        } else if (angle < 2.2) {
                             mvaddstr(y, x, "/");  // casa 3
-                        } else if (angle < 2.95) {
+                        } else if (angle < 2.99) {
                             mvaddstr(y, x, "█");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1

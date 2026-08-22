@@ -1049,6 +1049,9 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
      an aspect to the sect luminar (Sun for day, Moon for night),
      a condition that is likewise disqualifying.
      
+     Next, the Almuten Figuris is determined; it is selected 
+     provided it is located in one of the hylegiacal houses.
+     
      Otherwise, the Ascendant is elected if the SAN is 
      conjunctional, otherwise, the Part of Fortune if it is 
      located in a Hylegiacal Point.
@@ -1063,7 +1066,7 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
 
 2. THE ALCOCHODEN (DISTRIBUTOR OF LIFESPAN)
 
-   The planet that aspects the Hileg and holds the highest 
+   The planet that aspects the Hyleg and holds the highest 
    essential dignities at that exact degree is elected the 
    Alcochoden. It grants a baseline number of years according to 
    its quadrant strength (corporeal position in houses):

@@ -112,6 +112,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                 get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
     
                 for (int i = 0; i < 7; i++) {
+                    
                     // se há aspecto com pelo menos um de seus regentes
                     int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
                     if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
@@ -137,9 +138,10 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                 int rulers[7];
                 get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
     
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 7; i++) {                    
                     // se há aspecto com pelo menos um de seus regentes
                     int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
+
                     if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
                         return H_LUNA;
                     }

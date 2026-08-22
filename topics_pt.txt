@@ -1127,7 +1127,7 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
 
 1. O HYLEG (SIGNIFICADOR DA VITALIDADE)
    
-   O motor escaneia cinco locais hilegiacais
+   O motor escaneia cinco locais hylegíacos
    específicos (Casas 1, 10, 7, 11 e 9) em ordem
    hierárquica estrita, determinada pela Seita do
    mapa:
@@ -1148,6 +1148,9 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
      Para o Almuten dos pontos verifica-se se há aspecto com o
      luminar da seita (Sol para dia, Lua para noite),
      condição esta também excludente.
+     
+     Verifica-se, então, o Almuten Figuris, que será escolhido 
+     caso esteja em uma das casas hylegíacas. 
      
      Caso contrário, o Ascendente é escolhido se a SAN for 
      conjuncional; do contrário, escolhe-se a Parte da Fortuna 

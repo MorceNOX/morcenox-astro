@@ -1551,9 +1551,6 @@ void call_chart() {
 
     tz_offset = tz_offset + dst_offset;
 
-    //PlanetDignities *dig_natal;
-    //double cusps[13] = {0};
-
     chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL);
 }
 
