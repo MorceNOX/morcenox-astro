@@ -259,7 +259,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;

@@ -5439,7 +5439,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int idx_objeto_h = -1;
 
         if (!mapa_retorno) {
-            tipo_h = get_hyleg(pontos_calculados, plots, &matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
+            tipo_h = get_hyleg(pontos_calculados, plots, &matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
                     
             if (tipo_h == H_SOL) idx_objeto_h = 0;
             else if (tipo_h == H_LUNA) idx_objeto_h = 1;
@@ -5894,7 +5894,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '3':
             case KEY_F(15):
                 if (!mapa_retorno) {
-                    display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, planet_latitudes, tipo_san);
+                    display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, planet_latitudes, tipo_san, dig);
                 }
                 break;
             case '4':
@@ -6247,7 +6247,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 15:
             if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->planet_latitudes, ctx->tipo_san);
+                display_primary_directions(ctx->plots, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->planet_latitudes, ctx->tipo_san, ctx->dig);
             }
             else {
                 AspectMatrix matrix_sign = {0};

@@ -49,7 +49,7 @@ typedef struct {
 
 int obter_regente_tradicional(int id_signo);
 bool is_lugar_hylegiaco(int casa);
-int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san);
+int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san, PlanetDignities *dig);
 const char* obter_descricao_hileg(int tipo_hileg);
 int obter_anos_menores_por_nome(const char *object_name);
 ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, AspectMatrix *matrix, PlotObject *plots, PlanetDignities *dig, int regente_dia, int regente_hora, PontosHylegiacos pontos);

@@ -64,7 +64,7 @@ bool is_lugar_hylegiaco(int casa) {
 
 
 
-int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san) {
+int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san, PlanetDignities *dig) {
     int casa_sol = 0, casa_lua = 0, casa_fortuna = 0;
     int object_diff = show_modern_planets ? 0 : 3;
 
@@ -102,16 +102,19 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         }
         // Criterio 2: A Lua em lugar hylegíaco
         else if (is_lugar_hylegiaco(casa_lua)) {
-            int rulers[7];
-            get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
-
-            for (int i = 0; i < 7; i++) {
-                // se há aspecto com pelo menos um de seus regentes
-                int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-                if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
-                    return H_LUNA;
+            // Lua não pode estar combusta nem sob raios para ser hyleg
+            if (!dig[P_LUNA].row.under_rays && !dig[P_LUNA].row.combust) {
+                int rulers[7];
+                get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
+    
+                for (int i = 0; i < 7; i++) {
+                    // se há aspecto com pelo menos um de seus regentes
+                    int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
+                    if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
+                        return H_LUNA;
+                    }
                 }
-            }
+            }            
         }
 
         points[0] = plots[P_SOL].longitude;
@@ -124,14 +127,17 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     else {
         // Criterio 1: A Lua em lugar hylegíaco
         if (is_lugar_hylegiaco(casa_lua)) {
-            int rulers[7];
-            get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
-
-            for (int i = 0; i < 7; i++) {
-                // se há aspecto com pelo menos um de seus regentes
-                int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-                if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
-                    return H_LUNA;
+            // Lua não pode estar combusta nem sob raios para ser hyleg
+            if (!dig[P_LUNA].row.under_rays && !dig[P_LUNA].row.combust) {
+                int rulers[7];
+                get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
+    
+                for (int i = 0; i < 7; i++) {
+                    // se há aspecto com pelo menos um de seus regentes
+                    int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
+                    if (has_aspect(P_LUNA, id_ruler, aspecto_matriz)) {
+                        return H_LUNA;
+                    }
                 }
             }
         }
@@ -286,6 +292,9 @@ int obter_anos_menores_por_nome(const char *object_name) {
 
 ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, AspectMatrix *matrix, PlotObject *plots, PlanetDignities *dig, int regente_dia, int regente_hora, PontosHylegiacos pontos) {
     ResultadoAlcochoden resultado = {"None", "", 0, "None", 0}; // Inicializa casa como 0
+    snprintf(resultado.object_name, 30, "%s", _("None"));
+    snprintf(resultado.tipo_anos, 40, "%s", _("None"));
+
     int object_diff = show_modern_planets ? 0 : 3;
 
     int candidatos[12] = {0};
@@ -296,6 +305,7 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         if (tipo_hileg == H_SOL && plots[i].id == P_SOL) { idx_hileg_grid = i; break; }
         if (tipo_hileg == H_LUNA && plots[i].id == P_LUNA) { idx_hileg_grid = i; break; }
+        if (tipo_hileg == H_SAN && plots[i].id == P_SAN - object_diff) { idx_hileg_grid = i; break; }
         if (tipo_hileg == H_ASC && plots[i].id == P_ASC - object_diff) { idx_hileg_grid = i; break; }
         if (tipo_hileg == H_FORTUNA && plots[i].id == P_FORTUNA - object_diff) { idx_hileg_grid = i; break; }
         if (tipo_hileg == H_ALMUTEN && (plots[i].id + 1) == idx_hileg_objeto) { idx_hileg_grid = i; break; }
@@ -324,27 +334,33 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
         if (tipo_hileg == H_SOL || tipo_hileg == H_LUNA) {
             idx_vencedor_grid = idx_hileg_grid;
         } else {
-            int res_figuris = 0; 
-            calcular_almuten_figuris(pontos, plots, matrix, regente_dia, regente_hora, &res_figuris);
-            
-            for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-                if ((plots[i].id + 1) == res_figuris) {
-                    idx_vencedor_grid = i;
-                    break;
+            int res_figuris[12] = {0}; 
+            int qtd_alm = calcular_almuten_figuris(pontos, plots, matrix, regente_dia, regente_hora, res_figuris);
+            for (int j = 0; j < qtd_alm; j++) {
+                for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+                    if ((plots[i].id + 1) == res_figuris[j]) {
+                        idx_vencedor_grid = i;
+                        break;
+                    }
                 }
             }
             regra_tutor_medieval = true;
         }
     } 
     else {
-        int max_essencial = -999;
+        int max_dig = -999;
         for (int k = 0; k < qtd_candidatos; k++) {
             int idx_cand = candidatos[k];
             int id_planeta = plots[idx_cand].id + 1; 
             int idx_matriz = obter_indice_matriz_dig(id_planeta);
             
-            if (idx_matriz != -1 && dig[idx_matriz].essential > max_essencial) {
-                max_essencial = dig[idx_matriz].essential;
+            // Alcochoden não pode ser combusto
+            if (dig[idx_matriz].row.combust) {
+                continue;
+            }
+
+            if (idx_matriz != -1 && (dig[idx_matriz].essential + dig[idx_matriz].accidental) > max_dig) {
+                max_dig = dig[idx_matriz].essential + dig[idx_matriz].accidental;
                 idx_vencedor_grid = idx_cand;
             }
         }
@@ -445,7 +461,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
@@ -494,8 +510,12 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
         wprintw(table_win, " %s ", obter_glifo_planeta_por_id(2));
     } else if (tipo_h == H_ALMUTEN) {
         wprintw(table_win, " %s ", obter_glifo_planeta_por_id(id_almuten_ref));
+    } else if (tipo_h == H_ALMUTEN_SAN) {
+        wprintw(table_win, " %s ", obter_glifo_planeta_por_id(id_almuten_ref));
     } else if (tipo_h == H_FORTUNA) {
         wprintw(table_win, " 🝴 ");
+    } else if (tipo_h == H_SAN) {
+        wprintw(table_win, " SAN ");
     } else {
         wprintw(table_win, " ASC ");
     }
@@ -514,7 +534,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     mvwprintw(table_win, 8, 4, _("ALCOCHODEN (Giver of Years): "));
     wattroff(table_win, A_BOLD);
     
-    if (strcmp(alco.object_name, "None") != 0) {
+    if (strcmp(alco.object_name, _("None")) != 0) {
         wattron(table_win, COLOR_PAIR(17) | A_BOLD);
         
         // IMPRESSÃO DIRETA: Imprime o glifo Unicode estocado de forma 100% segura
@@ -549,15 +569,19 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
             snprintf(planet_hyleg, 30, "%s", obter_glifo_planeta_por_id(2));
         } else if (tipo_h == H_ALMUTEN) {
             snprintf(planet_hyleg, 30, "%s", obter_glifo_planeta_por_id(id_almuten_ref));
+        } else if (tipo_h == H_ALMUTEN_SAN) {
+            snprintf(planet_hyleg, 30, "%s", obter_glifo_planeta_por_id(id_almuten_ref));
         } else if (tipo_h == H_FORTUNA) {
             snprintf(planet_hyleg, 30, "%s", "🝴");
+        } else if (tipo_h == H_SAN) {
+            snprintf(planet_hyleg, 30, "%s", "SAN");
         } else {
             snprintf(planet_hyleg, 30, "ASC");
         }
 
         wattron(table_win, A_BOLD);
         mvwprintw(table_win, 1, 105, "%s", "Hyleg:");
-        if (strcmp(planet_hyleg, "ASC") != 0) {
+        if (strcmp(planet_hyleg, "ASC") != 0 && strcmp(planet_hyleg, "SAN") != 0) {
             const char **ascii_art = get_planet_ascii_by_gliph(planet_hyleg);
             
             wattron(table_win, COLOR_PAIR(8));
@@ -568,9 +592,13 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
             mvwprintw(table_win, 6, 105, "%s", ascii_art[4]);
             mvwprintw(table_win, 7, 105, "%s", ascii_art[5]);
         }
-        else {
+        else if (strcmp(planet_hyleg, "ASC") == 0) {
             wattron(table_win, COLOR_PAIR(8));
             mvwprintw(table_win, 4, 105, "%s", "ASC");
+        }
+        else {
+            wattron(table_win, COLOR_PAIR(8));
+            mvwprintw(table_win, 4, 105, "%s", "SAN");
         }
         wattroff(table_win, COLOR_PAIR(8));
 
@@ -624,6 +652,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
 
 ResultadoAnareta calcular_anareta(int idx_hileg_grid, AspectMatrix *matrix, PlotObject *plots, PlanetDignities *dig, int signo_casa8) {
     ResultadoAnareta resultado = {"None", "-", 0, 0, "No imminent vital threats found"};
+    snprintf(resultado.name, 20, "%s", _("None"));
     snprintf(resultado.regra_eleicao, 80, "%s", _("No imminent vital threats found"));
 
     // Array para armazenar o score de ameaça calculado para cada um dos 7 planetas tradicionais
@@ -771,7 +800,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     int object_diff = show_modern_planets ? 0 : 3;
     
     // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
-    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san);
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
     int idx_hileg_grid = -1;
     
     if (tipo_h == H_SOL) idx_hileg_grid = 0;
@@ -876,7 +905,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
         wattroff(table_win, COLOR_PAIR(11) | A_BOLD); 
     } else {
         wattron(table_win, COLOR_PAIR(12) | A_BOLD | A_REVERSE); // Verde para indicar mapa seguro
-        wprintw(table_win, "None Active");
+        wprintw(table_win, _("None Active"));
         wattroff(table_win, COLOR_PAIR(12) | A_BOLD | A_REVERSE);
         wattron(table_win, A_BOLD);
         mvwprintw(table_win, 9, 6, _("Calculated Threat Score: "));
