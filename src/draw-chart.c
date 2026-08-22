@@ -3465,7 +3465,6 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
 
 
 
-
 void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str) {
     int p_max_y, p_max_x;
     getmaxyx(stdscr, p_max_y, p_max_x); 
@@ -3639,6 +3638,103 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     }
     
     wprintw(pad, "\n\n");
+
+
+    // SYNTHESIS
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wattron(pad, A_BOLD | COLOR_PAIR(32));
+    wprintw(pad, _("  3. PLANETARY ALIGNMENT SYNTHESIS:  \n"));
+    wattroff(pad, A_BOLD | COLOR_PAIR(32));
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+
+    // To keep it readable, we check the Day first, then the Hour.
+    wattron(pad, A_DIM);       
+               
+    switch(regente_dia) {
+        case 1: // Sun
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("A moment of peak vitality and visible leadership.")); break;
+                case 2: wprintw(pad, _("Emotional sensitivity meets outward energy.")); break;
+                case 3: wprintw(pad, _("Communicative leadership; a time to speak with authority.")); break;
+                case 4: wprintw(pad, _("A beautiful moment for public displays of affection or art.")); break;
+                case 5: wprintw(pad, _("Aggressive leadership; use your power with caution.")); break;
+                case 6: wprintw(pad, _("Expanding your influence through visible action.")); break;
+                case 7: wprintw(pad, _("Structured success; leading with discipline.")); break;
+            }
+            break;
+        case 2: // Moon
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("Action driven by intuition.")); break;
+                case 2: wprintw(pad, _("A quiet, reflective moment of domestic peace.")); break;
+                case 3: wprintw(pad, _("Quick changes in moods; perfect for writing or chatting.")); break;
+                case 4: wprintw(pad, _("A day of aesthetic beauty and emotional comfort.")); break;
+                case 5: wprintw(pad, _("A turbulent day; emotions may fuel physical conflicts.")); break;
+                case 6: wprintw(pad, _("An expansive time for emotional growth and travel.")); break;
+                case 7: wprintw(pad, _("A day of emotional boundaries and serious reflection.")); break;
+            }
+            break;
+        case 3: // Mercury
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("A sharp, communicative start to a powerful day.")); break;
+                case 2: wprintw(pad, _("Fluid communication influenced by deep emotions.")); break;
+                case 3: wprintw(pad, _("The peak of intellectual and commercial activity.")); break;
+                case 4: wprintw(pad, _("Artistic expression through words and design.")); break;
+                case 5: wprintw(pad, _("A sharp, potentially argumentative energy.")); break;
+                case 6: wprintw(pad, _("A great time for business expansion and ideas.")); break;
+                case 7: wprintw(pad, _("Logical, structured, and disciplined communication.")); break;
+            }
+            break;
+        case 4: // Venus
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("Radiant beauty meets solar visibility.")); break;
+                case 2: wprintw(pad, _("A soft, romantic, and emotionally harmonious moment.")); break;
+                case 3: wprintw(pad, _("Charming words and attractive social connections.")); break;
+                case 4: wprintw(pad, _("Maximum pleasure, harmony, and aesthetic joy.")); break;
+                case 5: wprintw(pad, _("Passionate energy meeting artistic grace.")); break;
+                case 6: wprintw(pad, _("Luxurious and abundant social encounters.")); break;
+                case 7: wprintw(pad, _("Classic, disciplined elegance and refined taste.")); break;
+            }
+            break;
+        case 5: // Mars
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("Heroic action and bold, visible leadership.")); break;
+                case 2: wprintw(pad, _("Sudden, impulsive movements driven by passion.")); break;
+                case 3: wprintw(pad, _("Decisive, sharp, and energetic communication.")); break;
+                case 4: wprintw(pad, _("Intense passion and physical attraction.")); break;
+                case 5: wprintw(pad, _("Unbridled energy and pure, competitive drive.")); break;
+                case 6: wprintw(pad, _("Bold, expansive, and courageous new undertakings.")); break;
+                case 7: wprintw(pad, _("Hard-fought victories through endurance and strength.")); break;
+            }
+    
+            break;
+        case 6: // Jupiter
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("Great prosperity and public recognition.")); break;
+                case 2: wprintw(pad, _("Expansive moods and fortunate travels.")); break;
+                case 3: wprintw(pad, _("Profitable deals and wise negotiations.")); break;
+                case 4: wprintw(pad, _("Joyful abundance in your social life.")); break;
+                case 5: wprintw(pad, _("Large-scale, energetic, and prosperous projects.")); break;
+                case 6: wprintw(pad, _("Maximum expansion and unparalleled luck.")); break;
+                case 7: wprintw(pad, _("Wise, structured growth and long-term gains.")); break;
+            }
+            break;
+        case 7: // Saturn
+            switch(regente_hora) {
+                case 1: wprintw(pad, _("Serious leadership and heavy responsibility.")); break;
+                case 2: wprintw(pad, _("Somber reflection and emotional restraint.")); break;
+                case 3: wprintw(pad, _("Careful, methodical, and slow communication.")); break;
+                case 4: wprintw(pad, _("Tasteful restraint and classic, structured beauty.")); break;
+                case 5: wprintw(pad, _("Intense discipline and defensive strength.")); break;
+                case 6: wprintw(pad, _("Expanding through careful, structured planning.")); break;
+                case 7: wprintw(pad, _("The peak of discipline, duty, and endurance.")); break;
+            }
+            break;
+    }
+    
+    wattroff(pad, A_DIM);
+
+    wprintw(pad, "\n\n");
+
 
     wattron(pad, A_DIM);
     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
