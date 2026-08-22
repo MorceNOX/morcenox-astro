@@ -223,6 +223,8 @@ Pressione Q ou ESC para retornar ao menu principal.
     
 * F4 - Horas Planetárias
 
+    i - Análise da Hora Planetária 
+
 • F5 - Horários de Ascensão, Ocaso e Culminação
 
 • F6 - Casas
@@ -349,11 +351,11 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 Este aplicativo foi projetado para ser seu companheiro
 astrológico. Aqui, você pode calcular e visualizar
-gráficos astrológicos, ver o gráfico de trânsito atual e
+mapas astrológicos, ver o mapa de trânsito atual e
 acessar tabelas e painéis para auxiliar na análise
 aprofundada e na interpretação completa do horóscopo.
 
-Você pode ampliar e reduzir os gráficos, movê-los pela
+Você pode ampliar e reduzir os mapas, movê-los pela
 tela e usar o modo de animação para visualizar os movimentos
 passados e futuros de planetas e outros objetos celestes.
 Você pode até controlar o ritmo da animação!
@@ -362,29 +364,29 @@ A navegação é feita inteiramente por teclas de seta,
 teclas de função, menus e atalhos intuitivos — tudo dentro
 do seu terminal.
 
-Os módulos fornecem gráficos, tabelas e painéis, acessíveis
+Os módulos fornecem mapas, tabelas e painéis, acessíveis
 via teclas de função e numéricas, que contêm todos os dados que
 você precisa para fazer boas interpretações e também
 previsões.
 
 Os textos são diretos e objetivos, mas completos para
-orientá-lo através dos gráficos e tabelas. A codificação de
+orientá-lo através dos mapas e tabelas. A codificação de
 cores é também usada em todos os lugares para ajudá-lo a
 interpretar rapidamente o significado dos dados.
 
-Também usamos cores dentro do gráfico para diferenciar os
+Também usamos cores dentro do mapa para diferenciar os
 corpos celestes de acordo com seus tipos e pontos matemáticos.
 
 Todos os cálculos são realizados à luz da Astrologia
 Clássica, embora também exibamos os planetas externos e seus
-relacionamentos com todos os outros corpos no gráfico e nas
+relacionamentos com todos os outros corpos no mapa e nas
 tabelas. O uso dessas adições modernas é inteiramente
 sua preferência.
 
 Além disso, você pode acessar configurações para configurar
-seus gráficos de acordo com vários sistemas da Astrologia
+seus mapas de acordo com vários sistemas da Astrologia
 Clássica. Você também pode definir uma cidade padrão para
-gerar gráficos rápidos para sua localização e hora atuais.
+gerar mapas rápidos para sua localização e hora atuais.
 
 O núcleo do aplicativo foi projetado para garantir precisão em
 todos os cálculos e oferecer o mais vasto escopo possível,
@@ -396,11 +398,11 @@ a maioria das ações requer apenas um ou dois toques de tecla, e
 o sistema de cores exibe informações relevantes em todos os
 módulos.
 
-Para salvar um gráfico personalizado, basta inserir os dados e
+Para salvar um mapa personalizado, basta inserir os dados e
 selecionar a opção de salvar no menu principal.
 
 Para visualizar e interagir com os módulos de ação, use as
-teclas de função ou numéricas ao pressionar a roda do gráfico,
+teclas de função ou numéricas ao pressionar a roda do mapa,
 ou a tecla [M] para abrir o menu de ações e escolher o
 desejado.
 
@@ -439,11 +441,11 @@ ou uma cidade muito próxima a ele.
 Por exemplo, Princess Diana nasceu em Sandringham, uma pequena
 vila localizada no distrito de King's Lynn, no condado de
 Norfolk. Você verá que Sandringham não está listada. Assim,
-para obter o gráfico dela, você deve selecionar Reino Unido como
+para obter o mapa dela, você deve selecionar Reino Unido como
 país, depois procurar por King's Lynn em Norfolk ou estado.
 (Condado ou Estado é a 2ª coluna na tabela de cidades).
 
-O mesmo acontece com o gráfico de Friedrich Nietzsche. Ele
+O mesmo acontece com o mapa de Friedrich Nietzsche. Ele
 nasceu em Röcken, uma pequena vila que foi recentemente anexada
 à cidade de Lützen, na Alemanha. Portanto, você deve selecionar
 Lützen, no estado Saxônia-Anhalt, como a cidade natal de
@@ -487,22 +489,22 @@ Pressione Q ou ESC para retornar ao menu principal.
 Opções disponíveis no Menu Principal:
 
 
-• Mapa Rápido: Visualizar gráfico para o horário e local atual
+• Mapa Rápido: Visualizar mapa para o horário e local atual
 ───────────────────────────────────────────────────────────────────
 
-Exibe a roda do gráfico para o horário atual (agora) e o local
-padrão pré-selecionado. O gráfico é animado e atualiza a
+Exibe a roda do mapa para o horário atual (agora) e o local
+padrão pré-selecionado. O mapa é animado e atualiza a
 cada segundo.
 
-Ao selecionar esta opção, o gráfico carregado anteriormente é
-substituído pelo novo gráfico rápido. Se você não o salvou,
+Ao selecionar esta opção, o mapa carregado anteriormente é
+substituído pelo novo mapa rápido. Se você não o salvou,
 perdeu-o.
 
-Nota: As informações do gráfico carregado são exibidas na
-barra de status inferior.
+Nota: As informações do mapa carregado são exibidas na
+barra de status inferior na tela do menu principal.
 
 
-• Novo Mapa: Configurar parâmetros do gráfico
+• Novo Mapa: Configurar parâmetros do mapa
 ───────────────────────────────────────────────────────────────────
 
 Defina os parâmetros para a geração do mapa. Isso permite
@@ -630,7 +632,7 @@ se a latitude selecionada for superior a 66,5° ou inferior a
 -66,5° ao usar B-Alcabitius, P-Placidus, ou K-Koch.
 
 P.S.2: Os números das casas no círculo menor da roda do 
-gráfico indicam os limites das casas.
+mapa indicam os limites das casas.
 
 
 • Sistema de Triplicidade: Escolha entre Morinus, Dorotheus e
@@ -940,7 +942,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 Ao pressionar F2 novamente, você pode ver detalhes sobre
 as dignidades acidentais e o estado dos planetas e corpos.
 
-F3 mostra a força de cada planeta no gráfico, baseada
+F3 mostra a força de cada planeta no mapa, baseada
 em suas dignidades e relevância.
 
 F4 mostra o Perfil de Energia Planetária, um gráfico de barras que
@@ -1044,7 +1046,7 @@ Use [↓↑] para deslizar a tabela.
 ───────────────────────────────────────────────────────────────────
 
 Você pode ver as condições acidentais de todos
-os planetas no gráfico atual.
+os planetas no mapa atual.
 
 Use [↓↑] para deslizar a tabela.
 
@@ -1293,10 +1295,13 @@ do sol. A aplicação considera isso ao trabalhar com as
 horas planetárias.
 
 Você notará que após a meia-noite, quando o horário
-no gráfico indica, por exemplo, quarta-feira, que é a
+no mapa indica, por exemplo, quarta-feira, que é a
 quarta-feira oficial real, o regente da noite será o
 regente da noite de terça-feira, porque o dia planetário
 inteiro só termina ao próximo nascer do sol.
+
+Pressione [i] nesta tela para abrir a janela de análise da 
+hora planetária.
 
 
 
@@ -1983,7 +1988,7 @@ entre o Retorno Solar e o Mapa de Nascimento (Radix)
 por meio de sete pontos de controle distintos:
 
 • [CHECK I] Senhor Anual do Ano (Almuten Figuris):
-  Identifica o planeta que comanda o gráfico anual
+  Identifica o planeta que comanda o mapa anual
   com base nas dignidades essenciais e acidentais
   computadas para o momento do retorno. Sua força
   operacional bruta é filtrada contra sua Pontuação de
@@ -2006,8 +2011,8 @@ por meio de sete pontos de controle distintos:
   planeta dupla autorização cósmica para acionar eventos
   inevitáveis e moldadores da vida.
 
-• [CHECK IV] Alinhamento do Cronocrata Firdária:
-  Embuti o gráfico anual no fluxo de tempo medieval
+• [CHECK IV] Alinhamento do Cronocrata da Firdária:
+  Embute o mapa anual no fluxo de tempo medieval
   de longo prazo. Ele verifica se o Senhor do Ano
   corresponde ao Mestre Regente Firdária atual
   (Macro-ciclo) ou Sub-Regente (subperíodo ativo),

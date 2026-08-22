@@ -3429,7 +3429,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
          wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
      }
     
-    mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
+    mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart | [i] for interpretation."));
     
     // Refresh the window
     wrefresh(table_win);
@@ -3441,7 +3441,20 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     int ch;
     do {
         ch = wgetch(table_win);
-    } while (ch != 27 && ch != 'q');
+        
+        /* GATILHO: Se pressionar 'i', abre o relatório corrido */
+        if (ch == 'i' || ch == 'I') {
+            abrir_janela_interpretacao_horas(converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), 
+                                             converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), 
+                                             regent_day_str, 
+                                             regent_hour_str);
+            
+            /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
+            touchwin(table_win);
+            wrefresh(table_win);
+        }
+
+    } while (ch != 27 && ch != 'q' && ch != 'Q');
     
     // Clean up
     delwin(shadow_win);
@@ -3453,95 +3466,213 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
 
 
 
-// void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora) {
-//     int p_max_y, p_max_x;
-//     getmaxyx(stdscr, p_max_y, p_max_x); 
+void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str) {
+    int p_max_y, p_max_x;
+    getmaxyx(stdscr, p_max_y, p_max_x); 
 
-//     // 1. DIMENSIONAMENTO RESPONSIVO DA JANELA
-//     int i_height = p_max_y - 6;
-//     if (i_height > 24) i_height = 24; 
-//     int i_width = p_max_x - 12;
-//     if (i_width > 102) i_width = 102;   
+    // 1. DIMENSIONAMENTO RESPONSIVO DA JANELA
+    int i_height = p_max_y - 6;
+    if (i_height > 24) i_height = 24; 
+    int i_width = p_max_x - 12;
+    if (i_width > 102) i_width = 102;   
 
-//     int i_start_y = (p_max_y - i_height) / 2;
-//     int i_start_x = (p_max_x - i_width) / 2;
+    int i_start_y = (p_max_y - i_height) / 2;
+    int i_start_x = (p_max_x - i_width) / 2;
 
-//     // 2. CRIAÇÃO E RENDERIZAÇÃO DA JANELA DE SOMBRA (FUNDO)
-//     WINDOW *shadow_win = newwin(i_height, i_width, i_start_y + 1, i_start_x + 1);
-//     werase(shadow_win);
-//     wattron(shadow_win, COLOR_PAIR(9)); // Par de cor preta/escura para a sombra
-//     box(shadow_win, 0, 0);
-//     wattroff(shadow_win, COLOR_PAIR(9));
-//     wrefresh(shadow_win);
+    // 2. CRIAÇÃO E RENDERIZAÇÃO DA JANELA DE SOMBRA (FUNDO)
+    WINDOW *shadow_win = newwin(i_height, i_width, i_start_y + 1, i_start_x + 1);
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9)); // Par de cor preta/escura para a sombra
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wrefresh(shadow_win);
 
-//     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
-//     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-//     wbkgd(border_win, COLOR_PAIR(13));
-//     box(border_win, 0, 0);
+    // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
+    WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
+    wbkgd(border_win, COLOR_PAIR(13));
+    box(border_win, 0, 0);
     
-//     wattron(border_win, A_BOLD);
-//     const char *title = _(" Planetary Hours Analysis ");
-//     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
-//     wattroff(border_win, A_BOLD);
+    wattron(border_win, A_BOLD);
+    const char *title = _(" Planetary Hours Analysis ");
+    mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
+    wattroff(border_win, A_BOLD);
     
-//     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
-//     wrefresh(border_win);
+    mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
+    wrefresh(border_win);
 
-//     // 4. CRIAÇÃO DA PAD INTERNA COM MAIS ESPAÇO HORIZONTAL
-//     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
-//     int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
-//     WINDOW *pad = newpad(pad_lines, pad_cols);
-//     wbkgd(pad, COLOR_PAIR(13));
-//     keypad(pad, TRUE);
-//     idlok(pad, TRUE);
-//     scrollok(pad, TRUE);
+    // 4. CRIAÇÃO DA PAD INTERNA COM MAIS ESPAÇO HORIZONTAL
+    int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
+    int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
+    WINDOW *pad = newpad(pad_lines, pad_cols);
+    wbkgd(pad, COLOR_PAIR(13));
+    keypad(pad, TRUE);
+    idlok(pad, TRUE);
+    scrollok(pad, TRUE);
 
-//     // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
-//     wprintw(pad, "\n"); 
+    // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
+    wprintw(pad, "\n"); 
 
-//     wattron(pad, A_BOLD | COLOR_PAIR(15));
-//     wprintw(pad, _("  1. REGENT OF THE %s\n"), (MAPA_DIURNO) ? _("DAY") : _("NIGHT"));
-//     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wattron(pad, A_BOLD | COLOR_PAIR(15));
+    wprintw(pad, _("  1. REGENT OF THE %s: %s  \n"), (MAPA_DIURNO) ? _("DAY") : _("NIGHT"), regent_day_str);
+    wattroff(pad, A_BOLD | COLOR_PAIR(15));
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
-//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    switch(regente_dia) {
+        case 1: // Sol
+            wprintw(pad, _("Leadership and visibility."));
+            break;
+        case 2: // Lua
+            wprintw(pad, _("A day marked by a certain restlessness and heightened sensitivity."));
+            break;
+        case 3: // Mercúrio
+            wprintw(pad, _("A day for communications, studies, business, and partnerships."));
+            break;
+        case 4: // Vênus
+            wprintw(pad, _("A day associated with pleasure and comfort."));
+            break;
+        case 5: // Marte
+            wprintw(pad, _("Beginnings, action, competition, achievements, and discipline."));
+            break;
+        case 6: // Júpiter
+            wprintw(pad, _("A favorable day for any undertaking."));
+            break;
+        case 7: // Saturno
+            wprintw(pad, _("Discipline, patience, and deep reflection."));
+            break;
+    }
+    wprintw(pad, "\n\n"); 
+
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wattron(pad, A_BOLD | COLOR_PAIR(12));
+    wprintw(pad, _("  2. REGENT OF THE HOUR: %s  \n"), regent_hour_str);
+    wattroff(pad, A_BOLD | COLOR_PAIR(12));
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
+    switch(regente_hora) {
+        case 1: // Sol
+            wprintw(pad, _("This is a favorable time for energetic activities or those involving leadership.\n"
+                           "It is a suitable time for public actions and activities requiring visibility; therefore, \n"
+                           "it is a good moment to speak with influential people.\n"
+                           "It is a neutral time for business dealings, weddings, and construction projects.\n\n"));
+            wprintw(pad, _("Time to shine. It favors activities requiring energy or matters related to strength, power, \n"
+                           "and leadership. This is a moment when your energy will be in full swing. It is a good time \n"
+                           "to deal with matters concerning money, prosperity, and business, as well as to look for a job, \n"
+                           "make plans for the future, and buy new things.\n"));
+            break;
+        case 2: // Lua
+            wprintw(pad, _("A favorable time for all domestic activities (especially buying food) and for anything requiring \n"
+                           "imagination (ranging from useful inventions to activities that are not recommended, such as \n"
+                           "fraud and acts of betrayal).\n"
+                           "A beneficial time for tasks requiring rapid execution.\n"
+                           "Unfavorable for tasks requiring stability.\n\n"));
+            wprintw(pad, _("Ideal for routine tasks. It is a good time to review and re-evaluate your feelings and emotions. \n"
+                           "Your sensitivity will be heightened, making you more emotionally volatile than usual. \n"
+                           "It is a favorable time for making quick decisions, cleaning and organizing your home or business, \n"
+                           "and traveling to visit relatives. However, it is not a good time to move house.\n"));
+            break;
+        case 3: // Mercúrio
+            wprintw(pad, _("Mercury is suitable for communication, as well as for sending, signing, and renewing documents.\n"
+                           "It is favorable for study, writing, teaching, and general learning activities, as well as for \n"
+                           "business, commerce, and all forms of communication and partnerships.\n"
+                           "It favors requests of all kinds (including prayers and marriage proposals).\n"
+                           "It is a good time for medical treatments and travel, especially for business purposes.\n\n"));
+            wprintw(pad, _("Time for communication. It is an excellent time for sending documents and signing contracts, \n"
+                           "closing profitable deals, sending letters, and consulting with lawyers. \n"
+                           "You will find success in signing paperwork during this period. \n"
+                           "It is also a good time to obtain or renew official documents, engage in study-related \n"
+                           "activities or teaching in general, and memorize texts.\n"));
+            break;
+        case 4: // Vênus
+            wprintw(pad, _("A suitable time for harmony and beauty, and ideal for pleasure, social contacts, and \n"
+                           "relationships.\n"
+                           "A good moment to purchase ornaments and items related to beauty, as well as things associated \n"
+                           "with pleasure and entertainment.\n"
+                           "An excellent time for weddings and partnerships, as well as for speaking with superiors, \n"
+                           "authorities, and women in general.\n"
+                           "Given the playful and carefree nature of Venus, activities requiring great seriousness, \n"
+                           "concentration, or effort are not recommended.\n\n"));
+            wprintw(pad, _("A time for harmony and matters related to beauty. It is ideal for activities centered on pleasure, \n"
+                           "as well as for intimate encounters, social interactions, and relationships. \n"
+                           "It is an excellent time to boost your social life. \n"
+                           "Do you want to buy something beautiful that will last a lifetime? This is the perfect moment to \n"
+                           "purchase items for your home, refresh your wardrobe, or set a date for your engagement or a \n"
+                           "happy wedding.\n"));
+            break;
+        case 5: // Marte
+            wprintw(pad, _("A time for action, achievements, and new beginnings. Ideal for starting treatments and \n"
+                           "medication. It favors any work involving fire.\n"
+                           "A suitable time for assertive, competitive, and bold endeavors, though caution regarding \n"
+                           "conflicts and disagreements is necessary.\n"
+                           "Not a recommended time for negotiations, travel, construction activities, dealing with \n"
+                           "superiors and authorities, or forming partnerships.\n\n"));
+            wprintw(pad, _("A time for action, achievements, and picking up where you left off. \n"
+                           "It is ideal for tasks requiring discipline, assertiveness, and a competitive spirit. \n"
+                           "Caution is advised regarding arguments, accidents, and fires, given the powerful energy of \n"
+                           "this hour.\n"));
+            break;
+        case 6: // Júpiter
+            wprintw(pad, _("An auspicious time to launch any type of venture or project. An ideal moment for broadening \n"
+                           "horizons and finding inspiration.\n"
+                           "It is a balanced, tranquil period, favorable for changes and financial matters, as well as for \n"
+                           "business, travel, medical treatments, and construction.\n"
+                           "A good time to address matters of peace and harmony, friendship, and governance.\n\n"));
+            wprintw(pad, _("It is time to expand toward new horizons and find happiness. It brings inspiration. \n"
+                           "This is the ideal moment for shopping, making visits, and handling matters related to money, \n"
+                           "abundance, and prosperity, as well as for expediting legal issues.\n"));
+            break;
+        case 7: // Saturno
+            wprintw(pad, _("A suitable time for deep reflection, organizing ideas, and carrying out tasks that \n"
+                           "require patience and discipline.\n"
+                           "It may bring moments of mild depression due to the planet's melancholic nature; therefore, \n"
+                           "one should be wary of thoughts centered on sadness.\n"
+                           "A good time to devise strategies against adversaries.\n"
+                           "Not a recommended time for medical treatments, taking medication, or speaking with authorities\n"
+                           "and superiors. It is also ill-advised for construction activities or forming partnerships \n"
+                           "(such as business ventures or marriages).\n\n"));
+            wprintw(pad, _("It is time to resolve matters. This period calls for deep reflection, a restructuring of ideas, \n"
+                           "and the execution of tasks requiring patience and discipline. It is a more tense time that \n"
+                           "demands attention and care, as conditions tend to be unfavorable for almost everything. \n"
+                           "It is a good time to attend to your health and pay close attention to any proposals made to you. \n"
+                           "It is excellent for wrapping up affairs but terrible for starting new things.\n"));
+            break;
+    }
     
-//     wprintw(pad, "\n\n");
+    wprintw(pad, "\n\n");
 
-//     wattron(pad, A_DIM);
-//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
-//     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"));
-//     wattroff(pad, A_DIM);
+    wattron(pad, A_DIM);
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"));
+    wattroff(pad, A_DIM);
 
-//     // 6. LOOP DE INTERAÇÃO E REDESENHO CONSTANTE DA PAD
-//     int pad_line_pos = 0;
-//     int max_scroll_y = 65; 
-//     int ch;
+    // 6. LOOP DE INTERAÇÃO E REDESENHO CONSTANTE DA PAD
+    int pad_line_pos = 0;
+    int max_scroll_y = 65; 
+    int ch;
 
-//     prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
 
-//     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
-//         switch (ch) {
-//             case KEY_UP:
-//             case 'k':
-//             case 'K':
-//                 if (pad_line_pos > 0) pad_line_pos--;
-//                 break;
-//             case KEY_DOWN:
-//             case 'j':
-//             case 'J':
-//                 if (pad_line_pos < max_scroll_y) pad_line_pos++;
-//                 break;
-//         }
-//         prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
-//     }
+    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+        switch (ch) {
+            case KEY_UP:
+            case 'k':
+            case 'K':
+                if (pad_line_pos > 0) pad_line_pos--;
+                break;
+            case KEY_DOWN:
+            case 'j':
+            case 'J':
+                if (pad_line_pos < max_scroll_y) pad_line_pos++;
+                break;
+        }
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    }
 
-//     // 7. DESTRUIÇÃO E LIMPEZA
-//     delwin(pad);
-//     delwin(border_win);
-//     delwin(shadow_win);
-// }
+    // 7. DESTRUIÇÃO E LIMPEZA
+    delwin(pad);
+    delwin(border_win);
+    delwin(shadow_win);
+}
 
 
 

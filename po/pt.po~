@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 14:10-0300\n"
+"POT-Creation-Date: 2026-08-22 17:00-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -34,17 +34,17 @@ msgid "Sol "
 msgstr "Sol "
 
 #: src/almuten.c:534 src/draw-chart.c:410 src/draw-chart.c:617
-#: src/draw-chart.c:4483 src/draw-chart.c:4505 src/hyleg.c:337
+#: src/draw-chart.c:4708 src/draw-chart.c:4730 src/hyleg.c:337
 msgid "Luna"
 msgstr "Lua"
 
-#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:4496
-#: src/draw-chart.c:4515
+#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:4721
+#: src/draw-chart.c:4740
 msgid "Ascendant"
 msgstr "Ascendente"
 
 #: src/almuten.c:534 src/directions.c:291 src/draw-chart.c:443
-#: src/draw-chart.c:1271 src/draw-chart.c:4494 src/draw-chart.c:4513
+#: src/draw-chart.c:1271 src/draw-chart.c:4719 src/draw-chart.c:4738
 msgid "Part of Fortune"
 msgstr "Parte da Fortuna"
 
@@ -925,9 +925,8 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:536
 #: src/directions.c:945 src/draw-chart.c:2943 src/draw-chart.c:3271
-#: src/draw-chart.c:3432 src/draw-chart.c:3512 src/firdaria.c:448
-#: src/hyleg.c:693 src/hyleg.c:987 src/mind.c:312 src/motivation.c:234
-#: src/profections.c:188
+#: src/draw-chart.c:3737 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
+#: src/mind.c:312 src/motivation.c:234 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
 
@@ -1105,28 +1104,28 @@ msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
 #: src/directions.c:438 src/directions.c:844 src/draw-chart.c:419
-#: src/draw-chart.c:620 src/draw-chart.c:4486 src/draw-chart.c:4508
+#: src/draw-chart.c:620 src/draw-chart.c:4711 src/draw-chart.c:4733
 #: src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468 src/profections.c:48
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Mars"
 msgstr "Marte"
 
 #: src/directions.c:439 src/directions.c:845 src/draw-chart.c:425
-#: src/draw-chart.c:622 src/draw-chart.c:4488 src/draw-chart.c:4510
+#: src/draw-chart.c:622 src/draw-chart.c:4713 src/draw-chart.c:4735
 #: src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468 src/profections.c:54
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Saturn"
 msgstr "Saturno"
 
 #: src/directions.c:448 src/directions.c:854 src/draw-chart.c:422
-#: src/draw-chart.c:621 src/draw-chart.c:4487 src/draw-chart.c:4509
+#: src/draw-chart.c:621 src/draw-chart.c:4712 src/draw-chart.c:4734
 #: src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465 src/profections.c:53
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Jupiter"
 msgstr "Júpiter"
 
 #: src/directions.c:449 src/directions.c:855 src/draw-chart.c:416
-#: src/draw-chart.c:619 src/draw-chart.c:4485 src/draw-chart.c:4507
+#: src/draw-chart.c:619 src/draw-chart.c:4710 src/draw-chart.c:4732
 #: src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465 src/profections.c:49
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Venus"
@@ -1184,8 +1183,8 @@ msgstr " Direções Primárias Zodiacais com Latitude Real para as Partes Árabe
 msgid "Sun"
 msgstr "Sol"
 
-#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4482
-#: src/draw-chart.c:4504 src/hyleg.c:336
+#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4707
+#: src/draw-chart.c:4729 src/hyleg.c:336
 msgid "Sol"
 msgstr "Sol"
 
@@ -1194,29 +1193,29 @@ msgstr "Sol"
 msgid "Moon"
 msgstr "Lua"
 
-#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4484
-#: src/draw-chart.c:4506 src/firdaria.c:99 src/hyleg.c:338 src/profections.c:50
+#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4709
+#: src/draw-chart.c:4731 src/firdaria.c:99 src/hyleg.c:338 src/profections.c:50
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Mercury"
 msgstr "Mercúrio"
 
 #: src/draw-chart.c:428 src/draw-chart.c:623 src/draw-chart.c:1279
-#: src/draw-chart.c:4489
+#: src/draw-chart.c:4714
 msgid "Uranus"
 msgstr "Urano"
 
 #: src/draw-chart.c:431 src/draw-chart.c:624 src/draw-chart.c:1278
-#: src/draw-chart.c:4490
+#: src/draw-chart.c:4715
 msgid "Neptune"
 msgstr "Netuno"
 
 #: src/draw-chart.c:434 src/draw-chart.c:625 src/draw-chart.c:1280
-#: src/draw-chart.c:4491
+#: src/draw-chart.c:4716
 msgid "Pluto"
 msgstr "Plutão"
 
 #: src/draw-chart.c:437 src/draw-chart.c:626 src/draw-chart.c:1275
-#: src/draw-chart.c:4492 src/draw-chart.c:4511 src/firdaria.c:104
+#: src/draw-chart.c:4717 src/draw-chart.c:4736 src/firdaria.c:104
 msgid "North Node"
 msgstr "Nodo Norte"
 
@@ -1225,7 +1224,7 @@ msgid "Caput Draconis"
 msgstr "Cabeça do Dragão"
 
 #: src/draw-chart.c:440 src/draw-chart.c:627 src/draw-chart.c:1273
-#: src/draw-chart.c:4493 src/draw-chart.c:4512 src/firdaria.c:105
+#: src/draw-chart.c:4718 src/draw-chart.c:4737 src/firdaria.c:105
 msgid "South Node"
 msgstr "Nodo Sul"
 
@@ -1269,23 +1268,23 @@ msgstr "🌓 Quarto Minguante"
 msgid "🌒 Waning Crescent"
 msgstr "🌒 Minguante Côncava"
 
-#: src/draw-chart.c:1268 src/draw-chart.c:4497 src/draw-chart.c:4516
+#: src/draw-chart.c:1268 src/draw-chart.c:4722 src/draw-chart.c:4741
 msgid "Midheaven"
 msgstr "Meio-do-Céu"
 
-#: src/draw-chart.c:1269 src/draw-chart.c:4499 src/draw-chart.c:4518
+#: src/draw-chart.c:1269 src/draw-chart.c:4724 src/draw-chart.c:4743
 msgid "Nadir"
 msgstr "Fundo-do-Céu"
 
-#: src/draw-chart.c:1270 src/draw-chart.c:4498 src/draw-chart.c:4517
+#: src/draw-chart.c:1270 src/draw-chart.c:4723 src/draw-chart.c:4742
 msgid "Descendant"
 msgstr "Descendente"
 
-#: src/draw-chart.c:1272 src/draw-chart.c:4495 src/draw-chart.c:4514
+#: src/draw-chart.c:1272 src/draw-chart.c:4720 src/draw-chart.c:4739
 msgid "SAN"
 msgstr "SAN"
 
-#: src/draw-chart.c:1274 src/draw-chart.c:4500 src/draw-chart.c:4519
+#: src/draw-chart.c:1274 src/draw-chart.c:4725 src/draw-chart.c:4744
 msgid "Vertex"
 msgstr "Vértex"
 
@@ -1639,7 +1638,7 @@ msgstr "Dignidade"
 msgid "Gen/Sect/Quad"
 msgstr "Gên/Seita/Quad"
 
-#: src/draw-chart.c:3003 src/draw-chart.c:5273
+#: src/draw-chart.c:3003 src/draw-chart.c:5498
 msgid "Orient"
 msgstr "Orient"
 
@@ -1715,79 +1714,443 @@ msgstr " Dia"
 msgid "  Hour"
 msgstr "  Hora"
 
-#: src/draw-chart.c:3484
+#: src/draw-chart.c:3432
+msgid "Press ESC to return to chart | [i] for interpretation."
+msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
+
+#: src/draw-chart.c:3496
+msgid " Planetary Hours Analysis "
+msgstr "Análise da Hora Planetária"
+
+#: src/draw-chart.c:3500 src/temperament.c:698
+msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
+msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
+
+#: src/draw-chart.c:3517
+#, c-format
+msgid "  1. REGENT OF THE %s: %s  \n"
+msgstr "  1. REGENTE D%s: %s  \n"
+
+#: src/draw-chart.c:3517
+msgid "DAY"
+msgstr "O DIA"
+
+#: src/draw-chart.c:3517
+msgid "NIGHT"
+msgstr "A NOITE"
+
+#: src/draw-chart.c:3523
+msgid "Leadership and visibility."
+msgstr "Liderança e visibilidade."
+
+#: src/draw-chart.c:3526
+msgid "A day marked by a certain restlessness and heightened sensitivity."
+msgstr "Dia em que impera certa agitação e sensibilidade à flor-da-pele."
+
+#: src/draw-chart.c:3529
+msgid "A day for communications, studies, business, and partnerships."
+msgstr "Dia para as comunicações, estudos, negócios e associações."
+
+#: src/draw-chart.c:3532
+msgid "A day associated with pleasure and comfort."
+msgstr "Dia associado ao prazer e ao conforto."
+
+#: src/draw-chart.c:3535
+msgid "Beginnings, action, competition, achievements, and discipline."
+msgstr "Inícios, ação, competição, conquistas e disciplina."
+
+#: src/draw-chart.c:3538
+msgid "A favorable day for any undertaking."
+msgstr "Dia favorável a qualquer empreendimento."
+
+#: src/draw-chart.c:3541
+msgid "Discipline, patience, and deep reflection."
+msgstr "Disciplina, paciência e reflexão profunda."
+
+#: src/draw-chart.c:3547
+#, c-format
+msgid "  2. REGENT OF THE HOUR: %s  \n"
+msgstr "  2. REGENTE DA HORA: %s  \n"
+
+#: src/draw-chart.c:3553
+msgid ""
+"This is a favorable time for energetic activities or those involving "
+"leadership.\n"
+"It is a suitable time for public actions and activities requiring "
+"visibility; therefore, \n"
+"it is a good moment to speak with influential people.\n"
+"It is a neutral time for business dealings, weddings, and construction "
+"projects.\n"
+"\n"
+msgstr ""
+"Este é um momento favorável para atividades enérgicas ou que envolvam \n"
+"liderança.\n"
+"É um momento propício para ações públicas e atividades que exijam \n"
+"visibilidade; portanto, \n"
+"é uma boa ocasião para conversar com pessoas influentes.\n"
+"É um momento neutro para negociações comerciais, casamentos e projetos \n"
+"de construção.\n"
+"\n"
+
+#: src/draw-chart.c:3557
+msgid ""
+"Time to shine. It favors activities requiring energy or matters related to "
+"strength, power, \n"
+"and leadership. This is a moment when your energy will be in full swing. It "
+"is a good time \n"
+"to deal with matters concerning money, prosperity, and business, as well as "
+"to look for a job, \n"
+"make plans for the future, and buy new things.\n"
+msgstr ""
+"Hora de brilhar. O momento favorece atividades que exigem energia ou "
+"questões \n"
+"relacionadas a força, poder e liderança. \n"
+"É um período em que sua energia estará em alta. É um bom momento \n"
+"para lidar com assuntos financeiros, de prosperidade e negócios, bem como \n"
+"para procurar emprego, \n"
+"fazer planos para o futuro e comprar coisas novas.\n"
+
+#: src/draw-chart.c:3563
+msgid ""
+"A favorable time for all domestic activities (especially buying food) and "
+"for anything requiring \n"
+"imagination (ranging from useful inventions to activities that are not "
+"recommended, such as \n"
+"fraud and acts of betrayal).\n"
+"A beneficial time for tasks requiring rapid execution.\n"
+"Unfavorable for tasks requiring stability.\n"
+"\n"
+msgstr ""
+"Um momento favorável para todas as atividades domésticas (especialmente a \n"
+"compra de alimentos) e para qualquer coisa que exija \n"
+"imaginação (desde invenções úteis até atividades que não são recomendadas, \n"
+"como fraude e atos de traição).\n"
+"Um momento benéfico para tarefas que exigem execução rápida.\n"
+"Desfavorável para tarefas que exigem estabilidade.\n"
+"\n"
+
+#: src/draw-chart.c:3568
+msgid ""
+"Ideal for routine tasks. It is a good time to review and re-evaluate your "
+"feelings and emotions. \n"
+"Your sensitivity will be heightened, making you more emotionally volatile "
+"than usual. \n"
+"It is a favorable time for making quick decisions, cleaning and organizing "
+"your home or business, \n"
+"and traveling to visit relatives. However, it is not a good time to move "
+"house.\n"
+msgstr ""
+"Ideal para tarefas rotineiras. É um bom momento para rever e reavaliar "
+"seus \n"
+"sentimentos e emoções. \n"
+"Sua sensibilidade estará aguçada, tornando-o mais emocionalmente instável \n"
+"do que o habitual. \n"
+"É um momento favorável para tomar decisões rápidas, limpar e organizar \n"
+"sua casa ou seu negócio, e viajar para visitar parentes. No entanto, não é \n"
+"um bom momento para mudar de casa.\n"
+
+#: src/draw-chart.c:3574
+msgid ""
+"Mercury is suitable for communication, as well as for sending, signing, and "
+"renewing documents.\n"
+"It is favorable for study, writing, teaching, and general learning "
+"activities, as well as for \n"
+"business, commerce, and all forms of communication and partnerships.\n"
+"It favors requests of all kinds (including prayers and marriage proposals).\n"
+"It is a good time for medical treatments and travel, especially for business "
+"purposes.\n"
+"\n"
+msgstr ""
+"Mercúrio é propício para a comunicação, bem como para enviar, assinar e \n"
+"renovar documentos.\n"
+"Favorece o estudo, a escrita, o ensino e atividades de aprendizado em "
+"geral, \n"
+"assim como negócios, comércio e todas as formas de comunicação e parcerias.\n"
+"Favorece solicitações de todos os tipos (incluindo orações e pedidos de "
+"casamento).\n"
+"É um bom momento para tratamentos médicos e viagens, especialmente para "
+"fins \n"
+"profissionais.\n"
+"\n"
+
+#: src/draw-chart.c:3579
+msgid ""
+"Time for communication. It is an excellent time for sending documents and "
+"signing contracts, \n"
+"closing profitable deals, sending letters, and consulting with lawyers. \n"
+"You will find success in signing paperwork during this period. \n"
+"It is also a good time to obtain or renew official documents, engage in "
+"study-related \n"
+"activities or teaching in general, and memorize texts.\n"
+msgstr ""
+"É um momento propício para a comunicação. \n"
+"É uma excelente ocasião para enviar documentos e assinar contratos, \n"
+"fechar negócios lucrativos, enviar cartas e consultar advogados. \n"
+"Você terá sucesso ao assinar documentos durante este período. \n"
+"Também é um bom momento para obter ou renovar documentos oficiais, dedicar-"
+"se a \n"
+"atividades relacionadas a estudos \n"
+"ou ao ensino em geral, e memorizar textos.\n"
+
+#: src/draw-chart.c:3586
+msgid ""
+"A suitable time for harmony and beauty, and ideal for pleasure, social "
+"contacts, and \n"
+"relationships.\n"
+"A good moment to purchase ornaments and items related to beauty, as well as "
+"things associated \n"
+"with pleasure and entertainment.\n"
+"An excellent time for weddings and partnerships, as well as for speaking "
+"with superiors, \n"
+"authorities, and women in general.\n"
+"Given the playful and carefree nature of Venus, activities requiring great "
+"seriousness, \n"
+"concentration, or effort are not recommended.\n"
+"\n"
+msgstr ""
+"Um momento propício para a harmonia e a beleza, e ideal para o prazer, \n"
+"contatos sociais e relacionamentos.\n"
+"Um bom momento para comprar adornos e itens relacionados à beleza, bem "
+"como \n"
+"coisas associadas ao prazer e ao entretenimento.\n"
+"Um excelente momento para casamentos e parcerias, assim como para "
+"conversar \n"
+"com superiores, autoridades e mulheres em geral.\n"
+"Dada a natureza lúdica e despreocupada de Vênus, não são recomendadas "
+"atividades \n"
+"que exijam grande seriedade, \n"
+"concentração ou esforço.\n"
+"\n"
+
+#: src/draw-chart.c:3594
+msgid ""
+"A time for harmony and matters related to beauty. It is ideal for activities "
+"centered on pleasure, \n"
+"as well as for intimate encounters, social interactions, and "
+"relationships. \n"
+"It is an excellent time to boost your social life. \n"
+"Do you want to buy something beautiful that will last a lifetime? This is "
+"the perfect moment to \n"
+"purchase items for your home, refresh your wardrobe, or set a date for your "
+"engagement or a \n"
+"happy wedding.\n"
+msgstr ""
+"Um momento propício para a harmonia e para questões ligadas à beleza. \n"
+"É ideal para atividades voltadas ao prazer, bem como para encontros "
+"íntimos, \n"
+"interações sociais e relacionamentos. \n"
+"É um excelente momento para movimentar sua vida social. \n"
+"Quer comprar algo bonito que dure a vida toda? Este é o momento perfeito "
+"para \n"
+"adquirir itens para a casa, renovar o guarda-roupa ou marcar a data do "
+"noivado \n"
+"ou de um casamento feliz.\n"
+
+#: src/draw-chart.c:3602
+msgid ""
+"A time for action, achievements, and new beginnings. Ideal for starting "
+"treatments and \n"
+"medication. It favors any work involving fire.\n"
+"A suitable time for assertive, competitive, and bold endeavors, though "
+"caution regarding \n"
+"conflicts and disagreements is necessary.\n"
+"Not a recommended time for negotiations, travel, construction activities, "
+"dealing with \n"
+"superiors and authorities, or forming partnerships.\n"
+"\n"
+msgstr ""
+"Um momento para ação, conquistas e novos começos. Ideal para iniciar \n"
+"tratamentos e medicações. \n"
+"Favorece qualquer atividade que envolva fogo.\n"
+"Um período propício para iniciativas assertivas, competitivas e ousadas, "
+"embora \n"
+"seja necessária cautela em relação a conflitos e divergências.\n"
+"Não é um momento recomendado para negociações, viagens, obras, lidar com \n"
+"superiores e autoridades ou firmar parcerias.\n"
+"\n"
+
+#: src/draw-chart.c:3608
+msgid ""
+"A time for action, achievements, and picking up where you left off. \n"
+"It is ideal for tasks requiring discipline, assertiveness, and a competitive "
+"spirit. \n"
+"Caution is advised regarding arguments, accidents, and fires, given the "
+"powerful energy of \n"
+"this hour.\n"
+msgstr ""
+"Um momento para ação, conquistas e para retomar o que foi deixado de lado. \n"
+"É ideal para tarefas que exigem disciplina, assertividade e espírito \n"
+"competitivo. \n"
+"Recomenda-se cautela com discussões, acidentes e incêndios, dada a \n"
+"energia poderosa deste horário.\n"
+
+#: src/draw-chart.c:3614
+msgid ""
+"An auspicious time to launch any type of venture or project. An ideal moment "
+"for broadening \n"
+"horizons and finding inspiration.\n"
+"It is a balanced, tranquil period, favorable for changes and financial "
+"matters, as well as for \n"
+"business, travel, medical treatments, and construction.\n"
+"A good time to address matters of peace and harmony, friendship, and "
+"governance.\n"
+"\n"
+msgstr ""
+"Um momento propício para iniciar qualquer tipo de empreendimento ou "
+"projeto. \n"
+"Um momento ideal para ampliar horizontes e encontrar inspiração.\n"
+"É um período equilibrado e tranquilo, favorável a mudanças e questões \n"
+"financeiras, bem como a negócios, viagens, tratamentos médicos e "
+"construções.\n"
+"Um bom momento para tratar de questões de paz e harmonia, amizade e \n"
+"governança.\n"
+"\n"
+
+#: src/draw-chart.c:3619
+msgid ""
+"It is time to expand toward new horizons and find happiness. It brings "
+"inspiration. \n"
+"This is the ideal moment for shopping, making visits, and handling matters "
+"related to money, \n"
+"abundance, and prosperity, as well as for expediting legal issues.\n"
+msgstr ""
+"É hora de expandir rumo a novos horizontes e encontrar a felicidade. \n"
+"Isso traz inspiração. \n"
+"Este é o momento ideal para fazer compras, realizar visitas e tratar de \n"
+"assuntos relacionados a dinheiro, abundância e prosperidade, bem como \n"
+"para agilizar questões jurídicas.\n"
+
+#: src/draw-chart.c:3624
+msgid ""
+"A suitable time for deep reflection, organizing ideas, and carrying out "
+"tasks that \n"
+"require patience and discipline.\n"
+"It may bring moments of mild depression due to the planet's melancholic "
+"nature; therefore, \n"
+"one should be wary of thoughts centered on sadness.\n"
+"A good time to devise strategies against adversaries.\n"
+"Not a recommended time for medical treatments, taking medication, or "
+"speaking with authorities\n"
+"and superiors. It is also ill-advised for construction activities or forming "
+"partnerships \n"
+"(such as business ventures or marriages).\n"
+"\n"
+msgstr ""
+"Um momento propício para uma reflexão profunda, organização de ideias e a \n"
+"realização de tarefas que exigem paciência e disciplina.\n"
+"Pode trazer momentos de leve depressão devido à natureza melancólica \n"
+"do planeta; portanto, é preciso estar atento a pensamentos centrados na "
+"tristeza.\n"
+"Um bom momento para elaborar estratégias contra adversários.\n"
+"Não é um momento recomendado para tratamentos médicos, uso de medicamentos "
+"ou \n"
+"conversas com autoridades e superiores. \n"
+"Também não é aconselhável para atividades de construção ou para firmar "
+"parcerias \n"
+"(como empreendimentos comerciais ou casamentos).\n"
+"\n"
+
+#: src/draw-chart.c:3632
+msgid ""
+"It is time to resolve matters. This period calls for deep reflection, a "
+"restructuring of ideas, \n"
+"and the execution of tasks requiring patience and discipline. It is a more "
+"tense time that \n"
+"demands attention and care, as conditions tend to be unfavorable for almost "
+"everything. \n"
+"It is a good time to attend to your health and pay close attention to any "
+"proposals made to you. \n"
+"It is excellent for wrapping up affairs but terrible for starting new "
+"things.\n"
+msgstr ""
+"É hora de resolver pendências. Este período pede uma reflexão profunda, "
+"uma \n"
+"reestruturação de ideias e a execução de tarefas que exigem paciência e \n"
+"disciplina. \n"
+"É um momento mais tenso, que requer atenção e cuidado, pois as condições \n"
+"tendem a ser desfavoráveis ​​para quase tudo. \n"
+"É um bom momento para cuidar da saúde e prestar muita atenção a quaisquer \n"
+"propostas que lhe sejam feitas. \n"
+"É excelente para finalizar assuntos, mas péssimo para iniciar coisas novas.\n"
+
+#: src/draw-chart.c:3644
+msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"
+msgstr ""
+"  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar à tabela.\n"
+
+#: src/draw-chart.c:3709
 msgid "Rising Times | Setting Times | Upper Culmination Times"
 msgstr "Horários de Ascenção, Ocaso & Culminação Superior"
 
-#: src/draw-chart.c:3487
+#: src/draw-chart.c:3712
 msgid "   Rising          Setting         Culmination"
 msgstr " Ascenção          Ocaso           Culminação "
 
-#: src/draw-chart.c:4944
+#: src/draw-chart.c:5169
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:4960
+#: src/draw-chart.c:5185
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:4976
+#: src/draw-chart.c:5201
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:4990
+#: src/draw-chart.c:5215
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:5004
+#: src/draw-chart.c:5229
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:5020
+#: src/draw-chart.c:5245
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:5032
+#: src/draw-chart.c:5257
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:5052
+#: src/draw-chart.c:5277
 msgid "pilgrim "
 msgstr "peregrino "
 
-#: src/draw-chart.c:5277
+#: src/draw-chart.c:5502
 msgid "Occid"
 msgstr "Ocid"
 
-#: src/draw-chart.c:5331
+#: src/draw-chart.c:5556
 msgid "Spring"
 msgstr "Primavera"
 
-#: src/draw-chart.c:5331 src/draw-chart.c:5352
+#: src/draw-chart.c:5556 src/draw-chart.c:5577
 msgid "Sanguine"
 msgstr "Sanguíneo"
 
-#: src/draw-chart.c:5334
+#: src/draw-chart.c:5559
 msgid "Summer"
 msgstr "Verão"
 
-#: src/draw-chart.c:5334 src/draw-chart.c:5356
+#: src/draw-chart.c:5559 src/draw-chart.c:5581
 msgid "Choleric"
 msgstr "Colérico"
 
-#: src/draw-chart.c:5337
+#: src/draw-chart.c:5562
 msgid "Autumn"
 msgstr "Outono"
 
-#: src/draw-chart.c:5337 src/draw-chart.c:5360
+#: src/draw-chart.c:5562 src/draw-chart.c:5585
 msgid "Melancholic"
 msgstr "Melancólico"
 
-#: src/draw-chart.c:5340
+#: src/draw-chart.c:5565
 msgid "Winter"
 msgstr "Inverno"
 
-#: src/draw-chart.c:5340 src/draw-chart.c:5364
+#: src/draw-chart.c:5565 src/draw-chart.c:5589
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
@@ -4421,10 +4784,6 @@ msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 #: src/temperament.c:694
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
-
-#: src/temperament.c:698
-msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
-msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
 
 #: src/temperament.c:714
 msgid "  1. RAW SCORE SUMMARY\n"

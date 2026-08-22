@@ -246,6 +246,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, char *house_system);
 
 void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour);
+void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str);
 
 void display_rising_times(PlotObject *plots);
 

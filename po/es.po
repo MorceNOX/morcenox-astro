@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 15:01-0300\n"
+"POT-Creation-Date: 2026-08-22 17:02-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,17 +32,17 @@ msgid "Sol "
 msgstr ""
 
 #: src/almuten.c:534 src/draw-chart.c:410 src/draw-chart.c:617
-#: src/draw-chart.c:4578 src/draw-chart.c:4600 src/hyleg.c:337
+#: src/draw-chart.c:4709 src/draw-chart.c:4731 src/hyleg.c:337
 msgid "Luna"
 msgstr ""
 
-#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:4591
-#: src/draw-chart.c:4610
+#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:4722
+#: src/draw-chart.c:4741
 msgid "Ascendant"
 msgstr ""
 
 #: src/almuten.c:534 src/directions.c:291 src/draw-chart.c:443
-#: src/draw-chart.c:1271 src/draw-chart.c:4589 src/draw-chart.c:4608
+#: src/draw-chart.c:1271 src/draw-chart.c:4720 src/draw-chart.c:4739
 msgid "Part of Fortune"
 msgstr ""
 
@@ -681,9 +681,8 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:536
 #: src/directions.c:945 src/draw-chart.c:2943 src/draw-chart.c:3271
-#: src/draw-chart.c:3432 src/draw-chart.c:3607 src/firdaria.c:448
-#: src/hyleg.c:693 src/hyleg.c:987 src/mind.c:312 src/motivation.c:234
-#: src/profections.c:188
+#: src/draw-chart.c:3738 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
+#: src/mind.c:312 src/motivation.c:234 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr ""
 
@@ -857,28 +856,28 @@ msgid "No directional contacts available for this specific point."
 msgstr ""
 
 #: src/directions.c:438 src/directions.c:844 src/draw-chart.c:419
-#: src/draw-chart.c:620 src/draw-chart.c:4581 src/draw-chart.c:4603
+#: src/draw-chart.c:620 src/draw-chart.c:4712 src/draw-chart.c:4734
 #: src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468 src/profections.c:48
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Mars"
 msgstr ""
 
 #: src/directions.c:439 src/directions.c:845 src/draw-chart.c:425
-#: src/draw-chart.c:622 src/draw-chart.c:4583 src/draw-chart.c:4605
+#: src/draw-chart.c:622 src/draw-chart.c:4714 src/draw-chart.c:4736
 #: src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468 src/profections.c:54
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Saturn"
 msgstr ""
 
 #: src/directions.c:448 src/directions.c:854 src/draw-chart.c:422
-#: src/draw-chart.c:621 src/draw-chart.c:4582 src/draw-chart.c:4604
+#: src/draw-chart.c:621 src/draw-chart.c:4713 src/draw-chart.c:4735
 #: src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465 src/profections.c:53
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Jupiter"
 msgstr ""
 
 #: src/directions.c:449 src/directions.c:855 src/draw-chart.c:416
-#: src/draw-chart.c:619 src/draw-chart.c:4580 src/draw-chart.c:4602
+#: src/draw-chart.c:619 src/draw-chart.c:4711 src/draw-chart.c:4733
 #: src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465 src/profections.c:49
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Venus"
@@ -932,8 +931,8 @@ msgstr ""
 msgid "Sun"
 msgstr ""
 
-#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4577
-#: src/draw-chart.c:4599 src/hyleg.c:336
+#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4708
+#: src/draw-chart.c:4730 src/hyleg.c:336
 msgid "Sol"
 msgstr ""
 
@@ -942,29 +941,29 @@ msgstr ""
 msgid "Moon"
 msgstr ""
 
-#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4579
-#: src/draw-chart.c:4601 src/firdaria.c:99 src/hyleg.c:338 src/profections.c:50
+#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4710
+#: src/draw-chart.c:4732 src/firdaria.c:99 src/hyleg.c:338 src/profections.c:50
 #: src/solar_return.c:865 src/solar_return.c:984
 msgid "Mercury"
 msgstr ""
 
 #: src/draw-chart.c:428 src/draw-chart.c:623 src/draw-chart.c:1279
-#: src/draw-chart.c:4584
+#: src/draw-chart.c:4715
 msgid "Uranus"
 msgstr ""
 
 #: src/draw-chart.c:431 src/draw-chart.c:624 src/draw-chart.c:1278
-#: src/draw-chart.c:4585
+#: src/draw-chart.c:4716
 msgid "Neptune"
 msgstr ""
 
 #: src/draw-chart.c:434 src/draw-chart.c:625 src/draw-chart.c:1280
-#: src/draw-chart.c:4586
+#: src/draw-chart.c:4717
 msgid "Pluto"
 msgstr ""
 
 #: src/draw-chart.c:437 src/draw-chart.c:626 src/draw-chart.c:1275
-#: src/draw-chart.c:4587 src/draw-chart.c:4606 src/firdaria.c:104
+#: src/draw-chart.c:4718 src/draw-chart.c:4737 src/firdaria.c:104
 msgid "North Node"
 msgstr ""
 
@@ -973,7 +972,7 @@ msgid "Caput Draconis"
 msgstr ""
 
 #: src/draw-chart.c:440 src/draw-chart.c:627 src/draw-chart.c:1273
-#: src/draw-chart.c:4588 src/draw-chart.c:4607 src/firdaria.c:105
+#: src/draw-chart.c:4719 src/draw-chart.c:4738 src/firdaria.c:105
 msgid "South Node"
 msgstr ""
 
@@ -1017,23 +1016,23 @@ msgstr ""
 msgid "🌒 Waning Crescent"
 msgstr ""
 
-#: src/draw-chart.c:1268 src/draw-chart.c:4592 src/draw-chart.c:4611
+#: src/draw-chart.c:1268 src/draw-chart.c:4723 src/draw-chart.c:4742
 msgid "Midheaven"
 msgstr ""
 
-#: src/draw-chart.c:1269 src/draw-chart.c:4594 src/draw-chart.c:4613
+#: src/draw-chart.c:1269 src/draw-chart.c:4725 src/draw-chart.c:4744
 msgid "Nadir"
 msgstr ""
 
-#: src/draw-chart.c:1270 src/draw-chart.c:4593 src/draw-chart.c:4612
+#: src/draw-chart.c:1270 src/draw-chart.c:4724 src/draw-chart.c:4743
 msgid "Descendant"
 msgstr ""
 
-#: src/draw-chart.c:1272 src/draw-chart.c:4590 src/draw-chart.c:4609
+#: src/draw-chart.c:1272 src/draw-chart.c:4721 src/draw-chart.c:4740
 msgid "SAN"
 msgstr ""
 
-#: src/draw-chart.c:1274 src/draw-chart.c:4595 src/draw-chart.c:4614
+#: src/draw-chart.c:1274 src/draw-chart.c:4726 src/draw-chart.c:4745
 msgid "Vertex"
 msgstr ""
 
@@ -1384,7 +1383,7 @@ msgstr ""
 msgid "Gen/Sect/Quad"
 msgstr ""
 
-#: src/draw-chart.c:3003 src/draw-chart.c:5368
+#: src/draw-chart.c:3003 src/draw-chart.c:5499
 msgid "Orient"
 msgstr ""
 
@@ -1456,79 +1455,320 @@ msgstr ""
 msgid "  Hour"
 msgstr ""
 
-#: src/draw-chart.c:3579
+#: src/draw-chart.c:3432
+msgid "Press ESC to return to chart | [i] for interpretation."
+msgstr ""
+
+#: src/draw-chart.c:3496
+msgid " Planetary Hours Analysis "
+msgstr ""
+
+#: src/draw-chart.c:3500 src/temperament.c:698
+msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
+msgstr ""
+
+#: src/draw-chart.c:3517
+#, c-format
+msgid "  1. REGENT OF THE %s: %s  \n"
+msgstr ""
+
+#: src/draw-chart.c:3517
+msgid "DAY"
+msgstr ""
+
+#: src/draw-chart.c:3517
+msgid "NIGHT"
+msgstr ""
+
+#: src/draw-chart.c:3523
+msgid "Leadership and visibility."
+msgstr ""
+
+#: src/draw-chart.c:3526
+msgid "A day marked by a certain restlessness and heightened sensitivity."
+msgstr ""
+
+#: src/draw-chart.c:3529
+msgid "A day for communications, studies, business, and partnerships."
+msgstr ""
+
+#: src/draw-chart.c:3532
+msgid "A day associated with pleasure and comfort."
+msgstr ""
+
+#: src/draw-chart.c:3535
+msgid "Beginnings, action, competition, achievements, and discipline."
+msgstr ""
+
+#: src/draw-chart.c:3538
+msgid "A favorable day for any undertaking."
+msgstr ""
+
+#: src/draw-chart.c:3541
+msgid "Discipline, patience, and deep reflection."
+msgstr ""
+
+#: src/draw-chart.c:3548
+#, c-format
+msgid "  2. REGENT OF THE HOUR: %s  \n"
+msgstr ""
+
+#: src/draw-chart.c:3554
+msgid ""
+"This is a favorable time for energetic activities or those involving "
+"leadership.\n"
+"It is a suitable time for public actions and activities requiring "
+"visibility; therefore, \n"
+"it is a good moment to speak with influential people.\n"
+"It is a neutral time for business dealings, weddings, and construction "
+"projects.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3558
+msgid ""
+"Time to shine. It favors activities requiring energy or matters related to "
+"strength, power, \n"
+"and leadership. This is a moment when your energy will be in full swing. It "
+"is a good time \n"
+"to deal with matters concerning money, prosperity, and business, as well as "
+"to look for a job, \n"
+"make plans for the future, and buy new things.\n"
+msgstr ""
+
+#: src/draw-chart.c:3564
+msgid ""
+"A favorable time for all domestic activities (especially buying food) and "
+"for anything requiring \n"
+"imagination (ranging from useful inventions to activities that are not "
+"recommended, such as \n"
+"fraud and acts of betrayal).\n"
+"A beneficial time for tasks requiring rapid execution.\n"
+"Unfavorable for tasks requiring stability.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3569
+msgid ""
+"Ideal for routine tasks. It is a good time to review and re-evaluate your "
+"feelings and emotions. \n"
+"Your sensitivity will be heightened, making you more emotionally volatile "
+"than usual. \n"
+"It is a favorable time for making quick decisions, cleaning and organizing "
+"your home or business, \n"
+"and traveling to visit relatives. However, it is not a good time to move "
+"house.\n"
+msgstr ""
+
+#: src/draw-chart.c:3575
+msgid ""
+"Mercury is suitable for communication, as well as for sending, signing, and "
+"renewing documents.\n"
+"It is favorable for study, writing, teaching, and general learning "
+"activities, as well as for \n"
+"business, commerce, and all forms of communication and partnerships.\n"
+"It favors requests of all kinds (including prayers and marriage proposals).\n"
+"It is a good time for medical treatments and travel, especially for business "
+"purposes.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3580
+msgid ""
+"Time for communication. It is an excellent time for sending documents and "
+"signing contracts, \n"
+"closing profitable deals, sending letters, and consulting with lawyers. \n"
+"You will find success in signing paperwork during this period. \n"
+"It is also a good time to obtain or renew official documents, engage in "
+"study-related \n"
+"activities or teaching in general, and memorize texts.\n"
+msgstr ""
+
+#: src/draw-chart.c:3587
+msgid ""
+"A suitable time for harmony and beauty, and ideal for pleasure, social "
+"contacts, and \n"
+"relationships.\n"
+"A good moment to purchase ornaments and items related to beauty, as well as "
+"things associated \n"
+"with pleasure and entertainment.\n"
+"An excellent time for weddings and partnerships, as well as for speaking "
+"with superiors, \n"
+"authorities, and women in general.\n"
+"Given the playful and carefree nature of Venus, activities requiring great "
+"seriousness, \n"
+"concentration, or effort are not recommended.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3595
+msgid ""
+"A time for harmony and matters related to beauty. It is ideal for activities "
+"centered on pleasure, \n"
+"as well as for intimate encounters, social interactions, and "
+"relationships. \n"
+"It is an excellent time to boost your social life. \n"
+"Do you want to buy something beautiful that will last a lifetime? This is "
+"the perfect moment to \n"
+"purchase items for your home, refresh your wardrobe, or set a date for your "
+"engagement or a \n"
+"happy wedding.\n"
+msgstr ""
+
+#: src/draw-chart.c:3603
+msgid ""
+"A time for action, achievements, and new beginnings. Ideal for starting "
+"treatments and \n"
+"medication. It favors any work involving fire.\n"
+"A suitable time for assertive, competitive, and bold endeavors, though "
+"caution regarding \n"
+"conflicts and disagreements is necessary.\n"
+"Not a recommended time for negotiations, travel, construction activities, "
+"dealing with \n"
+"superiors and authorities, or forming partnerships.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3609
+msgid ""
+"A time for action, achievements, and picking up where you left off. \n"
+"It is ideal for tasks requiring discipline, assertiveness, and a competitive "
+"spirit. \n"
+"Caution is advised regarding arguments, accidents, and fires, given the "
+"powerful energy of \n"
+"this hour.\n"
+msgstr ""
+
+#: src/draw-chart.c:3615
+msgid ""
+"An auspicious time to launch any type of venture or project. An ideal moment "
+"for broadening \n"
+"horizons and finding inspiration.\n"
+"It is a balanced, tranquil period, favorable for changes and financial "
+"matters, as well as for \n"
+"business, travel, medical treatments, and construction.\n"
+"A good time to address matters of peace and harmony, friendship, and "
+"governance.\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3620
+msgid ""
+"It is time to expand toward new horizons and find happiness. It brings "
+"inspiration. \n"
+"This is the ideal moment for shopping, making visits, and handling matters "
+"related to money, \n"
+"abundance, and prosperity, as well as for expediting legal issues.\n"
+msgstr ""
+
+#: src/draw-chart.c:3625
+msgid ""
+"A suitable time for deep reflection, organizing ideas, and carrying out "
+"tasks that \n"
+"require patience and discipline.\n"
+"It may bring moments of mild depression due to the planet's melancholic "
+"nature; therefore, \n"
+"one should be wary of thoughts centered on sadness.\n"
+"A good time to devise strategies against adversaries.\n"
+"Not a recommended time for medical treatments, taking medication, or "
+"speaking with authorities\n"
+"and superiors. It is also ill-advised for construction activities or forming "
+"partnerships \n"
+"(such as business ventures or marriages).\n"
+"\n"
+msgstr ""
+
+#: src/draw-chart.c:3633
+msgid ""
+"It is time to resolve matters. This period calls for deep reflection, a "
+"restructuring of ideas, \n"
+"and the execution of tasks requiring patience and discipline. It is a more "
+"tense time that \n"
+"demands attention and care, as conditions tend to be unfavorable for almost "
+"everything. \n"
+"It is a good time to attend to your health and pay close attention to any "
+"proposals made to you. \n"
+"It is excellent for wrapping up affairs but terrible for starting new "
+"things.\n"
+msgstr ""
+
+#: src/draw-chart.c:3645
+msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"
+msgstr ""
+
+#: src/draw-chart.c:3710
 msgid "Rising Times | Setting Times | Upper Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:3582
+#: src/draw-chart.c:3713
 msgid "   Rising          Setting         Culmination"
 msgstr ""
 
-#: src/draw-chart.c:5039
+#: src/draw-chart.c:5170
 msgid "Dom "
 msgstr ""
 
-#: src/draw-chart.c:5055
+#: src/draw-chart.c:5186
 msgid "Exalt "
 msgstr ""
 
-#: src/draw-chart.c:5071
+#: src/draw-chart.c:5202
 msgid "Tri "
 msgstr ""
 
-#: src/draw-chart.c:5085
+#: src/draw-chart.c:5216
 msgid "Dec "
 msgstr ""
 
-#: src/draw-chart.c:5099
+#: src/draw-chart.c:5230
 msgid "Term "
 msgstr ""
 
-#: src/draw-chart.c:5115
+#: src/draw-chart.c:5246
 msgid "Exile "
 msgstr ""
 
-#: src/draw-chart.c:5127
+#: src/draw-chart.c:5258
 msgid "Fall "
 msgstr ""
 
-#: src/draw-chart.c:5147
+#: src/draw-chart.c:5278
 msgid "pilgrim "
 msgstr ""
 
-#: src/draw-chart.c:5372
+#: src/draw-chart.c:5503
 msgid "Occid"
 msgstr ""
 
-#: src/draw-chart.c:5426
+#: src/draw-chart.c:5557
 msgid "Spring"
 msgstr ""
 
-#: src/draw-chart.c:5426 src/draw-chart.c:5447
+#: src/draw-chart.c:5557 src/draw-chart.c:5578
 msgid "Sanguine"
 msgstr ""
 
-#: src/draw-chart.c:5429
+#: src/draw-chart.c:5560
 msgid "Summer"
 msgstr ""
 
-#: src/draw-chart.c:5429 src/draw-chart.c:5451
+#: src/draw-chart.c:5560 src/draw-chart.c:5582
 msgid "Choleric"
 msgstr ""
 
-#: src/draw-chart.c:5432
+#: src/draw-chart.c:5563
 msgid "Autumn"
 msgstr ""
 
-#: src/draw-chart.c:5432 src/draw-chart.c:5455
+#: src/draw-chart.c:5563 src/draw-chart.c:5586
 msgid "Melancholic"
 msgstr ""
 
-#: src/draw-chart.c:5435
+#: src/draw-chart.c:5566
 msgid "Winter"
 msgstr ""
 
-#: src/draw-chart.c:5435 src/draw-chart.c:5459
+#: src/draw-chart.c:5566 src/draw-chart.c:5590
 msgid "Phlegmatic"
 msgstr ""
 
@@ -3727,10 +3967,6 @@ msgstr ""
 
 #: src/temperament.c:694
 msgid " Temperament Detailed Analysis "
-msgstr ""
-
-#: src/temperament.c:698
-msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr ""
 
 #: src/temperament.c:714

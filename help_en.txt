@@ -222,6 +222,8 @@ Press Q or ESC to return to the main menu.
         
     * F4 - Planetary Hours
     
+        i - Planetary Hour Analysis
+    
     • F5 - Rising, Setting & Culmination Times
     
     • F6 - Houses
@@ -1271,6 +1273,9 @@ indicates, for example, Wednesday, which is the real official
 Wednesday, the ruler of the night will be the ruler of the 
 Tuesday nigth, because the entire planetary day ends only at the 
 next sunrise.
+
+Press [i] in this screen to open the Planetary Hour Analysis
+window.
 
 
 
