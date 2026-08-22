@@ -85,6 +85,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     }
 
     double points[3];
+    int qtd_points = 0;
 
     // ────────────────────────────────────────────────────────────────────────
     // ABORDAGEM DIURNA (Prioridade: Sol -> Lua -> Almuten (Sol, SAN, Asc) -> Almuten Figuris -> Asc ou Fortuna)
@@ -123,6 +124,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         points[0] = plots[P_SOL].longitude;
         points[1] = plots[P_SAN - object_diff].longitude;
         points[2] = plots[P_ASC - object_diff].longitude;
+        qtd_points = 3;
     } 
     // ────────────────────────────────────────────────────────────────────────
     // ABORDAGEM NOTURNA (Prioridade: Lua -> Sol -> Fortuna -> Almuten (Lua, SAN, Fortuna) -> Almuten Figuris -> Asc ou Fortuna)
@@ -173,8 +175,16 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         //(void)casa_fortuna;
 
         points[0] = plots[P_LUNA].longitude;
-        points[1] = plots[P_SAN - object_diff].longitude;
-        points[2] = plots[P_FORTUNA - object_diff].longitude;
+        if (tipo_san == SAN_PREVENCIONAL) {
+            points[1] = plots[P_SAN - object_diff].longitude;
+            points[2] = plots[P_FORTUNA - object_diff].longitude;
+            qtd_points = 3;
+        }
+        else {
+            points[1] = plots[P_FORTUNA - object_diff].longitude;
+            qtd_points = 2;
+        }
+        
     }
 
 
@@ -183,7 +193,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     int res_san[12] = {0};
     //int qtd_san = get_almuten(plots[P_SAN - object_diff].longitude, res_san, aspecto_matriz, pontos, plots);
     
-    int qtd_san = get_almuten_multiplo(points, 3, res_san, aspecto_matriz, pontos, plots);
+    int qtd_san = get_almuten_multiplo(points, qtd_points, res_san, aspecto_matriz, pontos, plots);
 
     if (qtd_san > 0) { 
         int luminar = (MAPA_DIURNO)?0:1;
@@ -201,7 +211,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                     break;
                 }
             }
-            // Se o Almuten da SAN estiver em uma casa vital, ele pode assumir o Hyleg
+            // Se o Almuten dos Pontos estiver em uma casa vital, ele pode assumir o Hyleg
             if (is_lugar_hylegiaco(casa_almuten_san)) {
                 
                 // se tem aspecto com o luminar da seita assume o Hyleg
@@ -877,8 +887,8 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
         // Alerta visual vermelho para o planeta hostil eleito
         wattron(table_win, COLOR_PAIR(11) | A_BOLD); 
         wprintw(table_win, " %s ", anar.glifo);
-        wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
         wprintw(table_win, "%s", anar.name);
+        wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
 
         wattron(table_win, A_BOLD);
         mvwprintw(table_win, 9, 6, _("Calculated Threat Score: "));

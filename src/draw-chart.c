@@ -404,43 +404,43 @@ const char **get_planet_ascii(int planet_id) {
 
 const char **get_planet_ascii_by_name(char *planet_name) {
     
-    if (strcmp(planet_name, "Sun") == 0 || strcmp(planet_name, "Sol") == 0) {
+    if (strcmp(planet_name, _("Sun")) == 0 || strcmp(planet_name, _("Sol")) == 0) {
         return (const char **)planet_ascii[0];
     }
-    else if (strcmp(planet_name, "Luna") == 0 || strcmp(planet_name, "Moon") == 0) {
+    else if (strcmp(planet_name, _("Luna")) == 0 || strcmp(planet_name, _("Moon")) == 0) {
         return (const char **)planet_ascii[1];
     }
-    else if (strcmp(planet_name, "Mercury") == 0) {
+    else if (strcmp(planet_name, _("Mercury")) == 0) {
         return (const char **)planet_ascii[2];
     }
-    else if (strcmp(planet_name, "Venus") == 0) {
+    else if (strcmp(planet_name, _("Venus")) == 0) {
         return (const char **)planet_ascii[3];
     }
-    else if (strcmp(planet_name, "Mars") == 0) {
+    else if (strcmp(planet_name, _("Mars")) == 0) {
         return (const char **)planet_ascii[4];
     }
-    else if (strcmp(planet_name, "Jupiter") == 0) {
+    else if (strcmp(planet_name, _("Jupiter")) == 0) {
         return (const char **)planet_ascii[5];
     }
-    else if (strcmp(planet_name, "Saturn") == 0) {
+    else if (strcmp(planet_name, _("Saturn")) == 0) {
         return (const char **)planet_ascii[6];
     }
-    else if (strcmp(planet_name, "Uranus") == 0) {
+    else if (strcmp(planet_name, _("Uranus")) == 0) {
         return (const char **)planet_ascii[7];
     }
-    else if (strcmp(planet_name, "Neptune") == 0) {
+    else if (strcmp(planet_name, _("Neptune")) == 0) {
         return (const char **)planet_ascii[8];
     }
-    else if (strcmp(planet_name, "Pluto") == 0) {
+    else if (strcmp(planet_name, _("Pluto")) == 0) {
         return (const char **)planet_ascii[9];
     }
-    else if (strcmp(planet_name, "North Node") == 0 || strcmp(planet_name, "Caput Draconis") == 0) {
+    else if (strcmp(planet_name, _("North Node")) == 0 || strcmp(planet_name, _("Caput Draconis")) == 0) {
         return (const char **)planet_ascii[10];
     }
-    else if (strcmp(planet_name, "South Nodde") == 0 || strcmp(planet_name, "Cauda Draconis") == 0) {
+    else if (strcmp(planet_name, _("South Node")) == 0 || strcmp(planet_name, _("Cauda Draconis")) == 0) {
         return (const char **)planet_ascii[11];
     }
-    else if (strcmp(planet_name, "Part of Fortune") == 0 || strcmp(planet_name, "Cauda Draconis") == 0) {
+    else if (strcmp(planet_name, _("Part of Fortune")) == 0) {
         return (const char **)planet_ascii[12];
     }
 
@@ -1402,8 +1402,7 @@ void draw_cusps_div(int object_count,
                     if (j != 1 && j != 4 && j != 7 && j != 10) {
                         if (angle >= 4.9) {
                             mvaddstr(y, x, "/");  // casa 9
-                        }
-                        else if (angle <= -1.4 || angle >= 4.5) {
+                        } else if (angle <= -1.4 || angle >= 4.4) {
                             mvaddstr(y, x, "▎"); // casa 10
                         } else if (angle <= -0.97) {
                             mvaddstr(y, x, "/");  // casa 9
@@ -1473,8 +1472,7 @@ void draw_cusps_div_axis(int object_count,
                     if (j == 1 || j == 4 || j == 7 || j == 10) {            
                         if (angle >= 4.9) {
                             mvaddstr(y, x, "/");  // casa 9
-                        }
-                        else if (angle <= -1.4 || angle >= 4.5) {
+                        } else if (angle <= -1.4 || angle >= 4.4) {
                             mvaddstr(y, x, "▎"); // casa 10
                         } else if (angle <= -0.97) {
                             mvaddstr(y, x, "/");  // casa 9
