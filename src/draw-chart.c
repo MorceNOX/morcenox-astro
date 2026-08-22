@@ -1259,9 +1259,9 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
         for (int j = 0; j < object_count; j++) {
-            if (i == (180 - (longitude[j] - 30 -asc + 30) % 360) || 
-                i == (180 - (longitude[j] - 30 - asc + 30) % 360) + 360|| 
-                i == (180 - (longitude[j] - 30 - asc + 30) % 360) - 360) {
+            if (i == (180 - (longitude[j] - asc) % 360) || 
+                i == (180 - (longitude[j] - asc) % 360) + 360|| 
+                i == (180 - (longitude[j] - asc) % 360) - 360) {
                 
                 // Set color based on object type
                 if (strcmp(plots[j].object_name, _("Ascendant")) == 0 ||
@@ -1344,9 +1344,9 @@ void draw_cusps(int radius_multiplier, int object_count,
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
         for (int j = 1; j <= object_count; j++) {
-            if (i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) || 
-                i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) + 360 ||
-                i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) - 360) {
+            if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
                                                
                 // Draw the appropriate text
                 char text_to_draw[12];
@@ -1365,6 +1365,80 @@ void draw_cusps(int radius_multiplier, int object_count,
 
 
 void draw_cusps_div(int object_count, 
+                double *cusps, int n, 
+                int display_center_y, int display_center_x, 
+                float current_scale, float aspect_ratio) {
+    
+    int asc = (int)cusps[1];
+    (void)n;
+    
+    attron(A_BOLD);
+
+    for (int r = 8; r < 20; r++) {    
+        float radius = r * current_scale;
+        
+        int imin;
+        int imax;
+        if (fmod(cusps[1], 30) < 15 ) {
+            imin = -75;
+            imax = 285;
+        }
+        else {
+            imin = -105;
+            imax = 255; 
+        }
+        
+        for (int i = imin; i < imax; i++) {
+            float angle = i * PI / 180.0;
+            int y = (int)(display_center_y + radius * sin(angle));
+            int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+            
+            for (int j = 1; j <= object_count; j++) {
+                if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                
+                    // Draw the appropriate text
+                    if (j != 1 && j != 4 && j != 7 && j != 10) {
+                        if (angle >= 4.9) {
+                            mvaddstr(y, x, "/");  // casa 9
+                        }
+                        else if (angle <= -1.4 || angle >= 4.5) {
+                            mvaddstr(y, x, "▎"); // casa 10
+                        } else if (angle <= -0.97) {
+                            mvaddstr(y, x, "/");  // casa 9
+                        } else if (angle <= -0.2) {
+                            mvaddstr(y, x, "█");  // casa 8
+                        } else if (angle <= 0.2) {
+                            mvaddstr(y, x, "▔");  // casa 7
+                        } else if (angle <= 0.95) {
+                            mvaddstr(y, x, "█");  // casa 6
+                        } else if (angle < 1.28) {
+                            mvaddstr(y, x, "\\"); // casa 5
+                        } else if (angle < 1.81) {
+                            mvaddstr(y, x, "▕");  // casa 4
+                        } else if (angle < 2.1) {
+                            mvaddstr(y, x, "/");  // casa 3
+                        } else if (angle < 2.95) {
+                            mvaddstr(y, x, "█");  // casa 2
+                        } else if (angle <= 3.25) {
+                            mvaddstr(y, x, "▁");  // casa 1
+                        } else if (angle <= 4.1) {
+                            mvaddstr(y, x, "█");  // casa 12
+                        } else {
+                            mvaddstr(y, x, "\\"); // casa 11
+                        }
+                                           
+                    }
+                    //mvprintw(y, x, "%.2f ", angle);
+                }
+            }
+        }
+    }
+    attroff(A_BOLD);   
+}
+
+void draw_cusps_div_axis(int object_count, 
                 double *cusps, int n, 
                 int display_center_y, int display_center_x, 
                 float current_scale, float aspect_ratio) {
@@ -1390,16 +1464,43 @@ void draw_cusps_div(int object_count,
             int y = (int)(display_center_y + radius * sin(angle));
             int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
             
-            for (int j = 1; j <= object_count; j++) {
-                if (i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) || 
-                    i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) + 360 ||
-                    i == (180 - ((int)(cusps[j]) - 30 - asc + 30) % 360) - 360) {
+            for (int j = 1; j <= object_count; j += 3) {
+                if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
                                                 
                     // Draw the appropriate text
-                                
-                    mvaddstr(y, x, "█");
-                    
-                }
+                    if (j == 1 || j == 4 || j == 7 || j == 10) {            
+                        if (angle >= 4.9) {
+                            mvaddstr(y, x, "/");  // casa 9
+                        }
+                        else if (angle <= -1.4 || angle >= 4.5) {
+                            mvaddstr(y, x, "▎"); // casa 10
+                        } else if (angle <= -0.97) {
+                            mvaddstr(y, x, "/");  // casa 9
+                        } else if (angle <= -0.2) {
+                            mvaddstr(y, x, "█");  // casa 8
+                        } else if (angle <= 0.2) {
+                            mvaddstr(y, x, "▔");  // casa 7
+                        } else if (angle <= 0.95) {
+                            mvaddstr(y, x, "█");  // casa 6
+                        } else if (angle < 1.28) {
+                            mvaddstr(y, x, "\\"); // casa 5
+                        } else if (angle < 1.81) {
+                            mvaddstr(y, x, "▕");  // casa 4
+                        } else if (angle < 2.1) {
+                            mvaddstr(y, x, "/");  // casa 3
+                        } else if (angle < 2.95) {
+                            mvaddstr(y, x, "█");  // casa 2
+                        } else if (angle <= 3.25) {
+                            mvaddstr(y, x, "▁");  // casa 1
+                        } else if (angle <= 4.1) {
+                            mvaddstr(y, x, "█");  // casa 12
+                        } else {
+                            mvaddstr(y, x, "\\"); // casa 11
+                        }
+                    }
+                }                
             }
         }
     }    
@@ -1767,7 +1868,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     //Draw the outer boundary using a light shade block
     int asc = (int)cusps[1];
     for (float r = 8.0 * current_scale; r <= 19.0 * current_scale; r += current_scale) {
-        for (int i = -60 - ((n + 1) * 30 - asc); i < 300 - ((n + 1) * 30 - asc); i += 30) {
+        for (int i = -60 + asc; i < 300 + asc; i += 30) {
             float angle = i * PI / 180.0;
             int y = (int)(display_center_y + r * sin(angle));
             int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
@@ -1785,6 +1886,11 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
 
       
+    attron(COLOR_PAIR(1));    
+    draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    attroff(COLOR_PAIR(1));
+    
+
     if (house_div) {
         if (!dark_mode) {
             attron(COLOR_PAIR(10) | A_DIM);
@@ -1798,9 +1904,20 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         }
         else {
             attroff(COLOR_PAIR(19) | A_DIM);
+        }       
+    }
+
+    if (zoom_factor <= 1.3) {
+        for (int j = 1; j <= 12; j++) {
+            int sign = (int)(cusps[j] / 30);
+            int degree = (int)cusps[j] % 30 ;
+            int min = (int)((cusps[j] - (int)cusps[j]) * 60);
+
+            const char *sign_str = get_sign(sign);
+
+            mvprintw(13 + j, 2, "%s %2d: %2d°%s%02d'", _("House"), j, degree, sign_str, min);
         }
     }
-    
 
     // Draw zodiac signs
     draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
@@ -1817,6 +1934,26 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         attron(COLOR_PAIR(17) | flags | A_BOLD);
         draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
         attroff(COLOR_PAIR(17) | flags | A_BOLD);
+    }
+
+    if (zoom_factor <= 1.3) {
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+            int sign = (int)(plots[i].longitude / 30);
+            int degree = (int)plots[i].longitude % 30 ;
+            int min = (int)((plots[i].longitude - (int)plots[i].longitude) * 60);
+
+            const char *sign_str = get_sign(sign);
+            
+            if (get_visual_width(plots[i].object) == 1) {
+                mvprintw(12 + i, COLS - 19, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+            }
+            else if (get_visual_width(plots[i].object) == 2) {
+                mvprintw(12 + i, COLS - 20, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+            }
+            else {
+                mvprintw(12 + i, COLS - 19, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+            }
+        }
     }
 
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);

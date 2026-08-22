@@ -712,13 +712,18 @@ Quando um mapa é carregado, a roda é calculada de acordo com os
 dados selecionados.
 
 A barra de status no Menu Principal exibe o local e o horário
-do mapa atual.
+do mapa atual. Aqui estes dados são exibidos no canto superior 
+esquerdo da tela.
 
 A tela do mapa também exibe informações detalhadas enquanto
 mostra a roda e o seu Horóscopo no centro.
 
 A roda é dividida em 12 segmentos representando os signos.
 Os 12 signos do zodíaco são exibidos proeminentemente em arte ASCII.
+
+Os dois eixos principais, Ascendente/Descendente e 
+Meio-do-Céu/Fundo-do-Céu são, também, exibidos em destaque na 
+roda do mapa.
 
 Ao lado do círculo externo, se desejar, você pode visualizar os 
 regentes dos decanatos pressionando [D] — três por signo, segundo 
@@ -744,6 +749,17 @@ ver os limites das casas.
 No centro, em arte ASCII, aparecem os símbolos dos planetas
 que regem, respectivamente, o dia e a hora em vigor na
 data/hora do mapa.
+
+No lado direito, você pode ver uma tabela que indica a posição
+dos planetas e de outros corpos celestes.
+
+Você também pode ver a tabela de posições das cúspides de cada 
+casa no lado esquerdo da tela.
+
+Ao aplicar zoom no mapa, todas as informações ao lado da roda são
+ocultadas se o segundo nível de zoom estiver ativo, exceto as 
+tabelas de planetas e casas, que desaparecem no terceiro nível de 
+zoom.
 
 Você pode ampliar/reduzir e mover a roda do mapa.
 Use [+] ou [-] para ampliar e as teclas de seta para mover.

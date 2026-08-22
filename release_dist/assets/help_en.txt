@@ -705,13 +705,18 @@ When a chart is loaded, the wheel is calculated according
 to the selected data.
 
 The status bar in the Main Menu shows the location and time 
-for the current chart.
+for the current chart. Here this information is displayed at the 
+top left corner of the screen.
 
 The chart screen also displays detailed information 
 while showing the wheel and your Horoscope in the center.
 
 The wheel is divided into 12 segments representing the signs. 
 The 12 zodiac signs are displayed prominently using ASCII art.
+
+The two main axes — Ascendant/Descendant and 
+Midheaven/Imum Coeli — are also prominently displayed on the 
+chart wheel.
 
 Next to the outer circle, if you wish, you can see the rulers 
 of the decans by pressing [D], three by sign, according to the 
@@ -737,6 +742,16 @@ boundaries of the houses.
 In the center, in ASCII art, appear the symbols of the planets 
 rulling respectively the day and the hour in effect at the 
 date/time of the chart.
+
+On the right side, you can see a table indicating the positions
+of the planets and other celestial bodies.
+
+You can also see the table of house cusp positions on the left 
+side of the screen.
+
+When zooming in on the chart, all information next to the wheel
+is hidden if the second zoom level is active, except for the 
+planet and house tables, which disappear at the third zoom level.
 
 You can zoom in/out and pan the chart.
 Use [+] or [-] to zoom and the arrow keys to pan.
