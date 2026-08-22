@@ -65,7 +65,7 @@ bool is_lugar_hylegiaco(int casa) {
 
 
 int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san, PlanetDignities *dig) {
-    int casa_sol = 0, casa_lua = 0, casa_fortuna = 0;
+    int casa_sol = 0, casa_lua = 0, casa_fortuna = 0, casa_san = 0;
     int object_diff = show_modern_planets ? 0 : 3;
 
     // 1. Extrai o número da casa física atual do Sol, Lua e Parte da Fortuna do array 'plots'
@@ -78,6 +78,9 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         }
         if (plots[i].id == P_FORTUNA - object_diff) {
             casa_fortuna = romanToInt(plots[i].house);
+        }
+        if (plots[i].id == P_SAN - object_diff) {
+            casa_san = romanToInt(plots[i].house);
         }
     }
 
@@ -167,7 +170,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         //         }
         //     }  
         // }
-        (void)casa_fortuna;
+        //(void)casa_fortuna;
 
         points[0] = plots[P_LUNA].longitude;
         points[1] = plots[P_SAN - object_diff].longitude;
@@ -222,27 +225,24 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     int res_figuris[12] = {0};
     int qtd = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris);
     
+    int id_candidato = -1;
+    int casa_almuten = 0;   
 
-    if (qtd > 0) { 
-        int id_candidato = -1;
-        int casa_almuten = 0;   
-
-        for (int q = 0; q < qtd; q++) {
-            id_candidato = res_figuris[q]; // Pega o primeiro Almuten vencedor
-            // Descobre em qual casa o planeta Almuten está posicionado fisicamente
-            casa_almuten = 0;
-            for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-                if (i + 1 == id_candidato) {
-                    casa_almuten = romanToInt(plots[i].house);
-                    break;
-                }
-            }
-            // Se o Almuten do mapa estiver em uma casa vital, ele assume o Hyleg
-            if (is_lugar_hylegiaco(casa_almuten)) {                
-                *id_planeta_almuten = id_candidato; // Retorna por referência o ID do planeta (1 a 12)
-                return H_ALMUTEN;                
+    for (int q = 0; q < qtd; q++) {
+        id_candidato = res_figuris[q]; // Pega o primeiro Almuten vencedor
+        // Descobre em qual casa o planeta Almuten está posicionado fisicamente
+        casa_almuten = 0;
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+            if (i + 1 == id_candidato) {
+                casa_almuten = romanToInt(plots[i].house);
+                break;
             }
         }
+        // Se o Almuten do mapa estiver em uma casa vital, ele assume o Hyleg
+        if (is_lugar_hylegiaco(casa_almuten)) {                
+            *id_planeta_almuten = id_candidato; // Retorna por referência o ID do planeta (1 a 12)
+            return H_ALMUTEN;                
+        }        
     }
 
     // ────────────────────────────────────────────────────────────────────────
@@ -255,7 +255,16 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
         return H_ASC;
     }
     
-    return H_FORTUNA;    
+    if (is_lugar_hylegiaco(casa_fortuna)) {
+        return H_FORTUNA;
+    }    
+    else if (is_lugar_hylegiaco(casa_san)) {
+        return H_SAN;
+    } 
+    
+    *id_planeta_almuten = id_candidato; // Retorna por referência o ID do planeta (1 a 12)
+    return H_ALMUTEN;
+      
 }
 
 

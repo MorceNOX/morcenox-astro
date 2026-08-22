@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 01:56-0300\n"
+"POT-Creation-Date: 2026-08-22 02:18-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -32,7 +32,7 @@ msgid "Sol "
 msgstr ""
 
 #: src/almuten.c:534 src/draw-chart.c:617 src/draw-chart.c:4470
-#: src/draw-chart.c:4492 src/hyleg.c:280
+#: src/draw-chart.c:4492 src/hyleg.c:289
 msgid "Luna"
 msgstr ""
 
@@ -687,7 +687,7 @@ msgstr ""
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:536
 #: src/directions.c:945 src/draw-chart.c:2946 src/draw-chart.c:3274
 #: src/draw-chart.c:3419 src/draw-chart.c:3499 src/firdaria.c:448
-#: src/hyleg.c:634 src/hyleg.c:928 src/mind.c:312 src/motivation.c:234
+#: src/hyleg.c:643 src/hyleg.c:937 src/mind.c:312 src/motivation.c:234
 #: src/profections.c:188
 #, fuzzy
 msgid "Press ESC to return to chart"
@@ -875,7 +875,7 @@ msgstr ""
 
 #: src/directions.c:438 src/directions.c:844 src/draw-chart.c:620
 #: src/draw-chart.c:4473 src/draw-chart.c:4495 src/firdaria.c:101
-#: src/hyleg.c:283 src/hyleg.c:409 src/profections.c:48 src/solar_return.c:865
+#: src/hyleg.c:292 src/hyleg.c:418 src/profections.c:48 src/solar_return.c:865
 #: src/solar_return.c:984
 #, fuzzy
 msgid "Mars"
@@ -883,7 +883,7 @@ msgstr "Mars orb"
 
 #: src/directions.c:439 src/directions.c:845 src/draw-chart.c:622
 #: src/draw-chart.c:4475 src/draw-chart.c:4497 src/firdaria.c:103
-#: src/hyleg.c:285 src/hyleg.c:409 src/profections.c:54 src/solar_return.c:865
+#: src/hyleg.c:294 src/hyleg.c:418 src/profections.c:54 src/solar_return.c:865
 #: src/solar_return.c:984
 #, fuzzy
 msgid "Saturn"
@@ -891,7 +891,7 @@ msgstr "Saturn orb"
 
 #: src/directions.c:448 src/directions.c:854 src/draw-chart.c:621
 #: src/draw-chart.c:4474 src/draw-chart.c:4496 src/firdaria.c:102
-#: src/hyleg.c:284 src/hyleg.c:406 src/profections.c:53 src/solar_return.c:865
+#: src/hyleg.c:293 src/hyleg.c:415 src/profections.c:53 src/solar_return.c:865
 #: src/solar_return.c:984
 #, fuzzy
 msgid "Jupiter"
@@ -899,7 +899,7 @@ msgstr "Jupiter orb"
 
 #: src/directions.c:449 src/directions.c:855 src/draw-chart.c:619
 #: src/draw-chart.c:4472 src/draw-chart.c:4494 src/firdaria.c:100
-#: src/hyleg.c:282 src/hyleg.c:406 src/profections.c:49 src/solar_return.c:865
+#: src/hyleg.c:291 src/hyleg.c:415 src/profections.c:49 src/solar_return.c:865
 #: src/solar_return.c:984
 #, fuzzy
 msgid "Venus"
@@ -949,12 +949,12 @@ msgid " Primary Directions (Zodiacal with Latitude) to Arabic Parts "
 msgstr ""
 
 #: src/draw-chart.c:616 src/draw-chart.c:4469 src/draw-chart.c:4491
-#: src/hyleg.c:279
+#: src/hyleg.c:288
 msgid "Sol"
 msgstr ""
 
 #: src/draw-chart.c:618 src/draw-chart.c:4471 src/draw-chart.c:4493
-#: src/firdaria.c:99 src/hyleg.c:281 src/profections.c:50
+#: src/firdaria.c:99 src/hyleg.c:290 src/profections.c:50
 #: src/solar_return.c:865 src/solar_return.c:984
 #, fuzzy
 msgid "Mercury"
@@ -1555,20 +1555,20 @@ msgstr ""
 msgid "Phlegmatic"
 msgstr ""
 
-#: src/firdaria.c:97 src/hyleg.c:279 src/profections.c:52
+#: src/firdaria.c:97 src/hyleg.c:288 src/profections.c:52
 #: src/solar_return.c:865 src/solar_return.c:984
 #, fuzzy
 msgid "Sun"
 msgstr "Saturn orb"
 
-#: src/firdaria.c:98 src/hyleg.c:280 src/profections.c:51
+#: src/firdaria.c:98 src/hyleg.c:289 src/profections.c:51
 #: src/solar_return.c:865 src/solar_return.c:984
 #, fuzzy
 msgid "Moon"
 msgstr "Moon orb"
 
-#: src/firdaria.c:106 src/hyleg.c:295 src/hyleg.c:296 src/hyleg.c:537
-#: src/hyleg.c:655
+#: src/firdaria.c:106 src/hyleg.c:304 src/hyleg.c:305 src/hyleg.c:546
+#: src/hyleg.c:664
 msgid "None"
 msgstr ""
 
@@ -1683,207 +1683,207 @@ msgstr ""
 msgid "Saturday"
 msgstr "Saturn orb"
 
-#: src/hyleg.c:267
+#: src/hyleg.c:276
 msgid "Sun (Essential Luminary)"
 msgstr ""
 
-#: src/hyleg.c:268
+#: src/hyleg.c:277
 msgid "Luna (Essential Luminary)"
 msgstr ""
 
-#: src/hyleg.c:269
+#: src/hyleg.c:278
 msgid "Part of Fortune (Sensible Hylegiacal Point)"
 msgstr ""
 
-#: src/hyleg.c:270
+#: src/hyleg.c:279
 msgid "Ascendant Degree (Bodily Shield)"
 msgstr ""
 
-#: src/hyleg.c:271
+#: src/hyleg.c:280
 msgid "Almuten Figuris (Chart Ruler)"
 msgstr ""
 
-#: src/hyleg.c:272
+#: src/hyleg.c:281
 msgid "Almuten of Hylegiacal Points"
 msgstr ""
 
-#: src/hyleg.c:273
+#: src/hyleg.c:282
 msgid "SAN (Sensible Hylegiacal Point)"
 msgstr ""
 
-#: src/hyleg.c:274
+#: src/hyleg.c:283
 msgid "Unknown Criterion"
 msgstr ""
 
-#: src/hyleg.c:382 src/hyleg.c:553
+#: src/hyleg.c:391 src/hyleg.c:562
 msgid "Lesser (Proxy Rule)"
 msgstr ""
 
-#: src/hyleg.c:386
+#: src/hyleg.c:395
 msgid "Great"
 msgstr ""
 
-#: src/hyleg.c:389
+#: src/hyleg.c:398
 msgid "Medium"
 msgstr ""
 
-#: src/hyleg.c:392
+#: src/hyleg.c:401
 msgid "Lesser"
 msgstr ""
 
-#: src/hyleg.c:450
+#: src/hyleg.c:459
 msgid "Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/hyleg.c:485
+#: src/hyleg.c:494
 #, fuzzy
 msgid "Sect of the Chart: "
 msgstr "Save the Chart"
 
-#: src/hyleg.c:489
+#: src/hyleg.c:498
 msgid "DIURNAL"
 msgstr ""
 
-#: src/hyleg.c:493
+#: src/hyleg.c:502
 msgid "NOCTURNAL"
 msgstr ""
 
-#: src/hyleg.c:504
+#: src/hyleg.c:513
 msgid "HYLEG (Giver of Life): "
 msgstr ""
 
-#: src/hyleg.c:525
+#: src/hyleg.c:534
 #, fuzzy
 msgid "Selected via"
 msgstr "Select City in"
 
-#: src/hyleg.c:534
+#: src/hyleg.c:543
 msgid "ALCOCHODEN (Giver of Years): "
 msgstr ""
 
-#: src/hyleg.c:547
+#: src/hyleg.c:556
 msgid "Calculated Lifespan Measure: "
 msgstr ""
 
-#: src/hyleg.c:549
+#: src/hyleg.c:558
 #, fuzzy
 msgid "Years"
 msgstr "Year"
 
-#: src/hyleg.c:555
+#: src/hyleg.c:564
 msgid " [FERAL/UNASPECTED PLANET]"
 msgstr ""
 
-#: src/hyleg.c:561
+#: src/hyleg.c:570
 msgid "Years distributed via physical Position in House"
 msgstr ""
 
-#: src/hyleg.c:627
+#: src/hyleg.c:636
 msgid ""
 "Note 1: Cadent houses (3, 6, 9, 12) restrict the Alcochoden to its Lesser "
 "Years."
 msgstr ""
 
-#: src/hyleg.c:628
+#: src/hyleg.c:637
 msgid "Benefic or malefic aspects dynamically modify this base vitality score."
 msgstr ""
 
-#: src/hyleg.c:629
+#: src/hyleg.c:638
 msgid ""
 "Note 2: An unaspected Alcochoden provides only its raw lesser years as a "
 "base."
 msgstr ""
 
-#: src/hyleg.c:630
+#: src/hyleg.c:639
 msgid ""
 "Traditional doctrine shifts these into major 10-year cycles if the native "
 "survives infancy."
 msgstr ""
 
-#: src/hyleg.c:656
+#: src/hyleg.c:665
 msgid "No imminent vital threats found"
 msgstr ""
 
-#: src/hyleg.c:753
+#: src/hyleg.c:762
 msgid "Elected via: Corporeal Presence in the 8th House (Precedence)"
 msgstr ""
 
-#: src/hyleg.c:755
+#: src/hyleg.c:764
 msgid "Elected via: Corporeal Presence in the 4th House (End of Life)"
 msgstr ""
 
-#: src/hyleg.c:757
+#: src/hyleg.c:766
 msgid "Elected via: Lord of the 8th House Cusp"
 msgstr ""
 
-#: src/hyleg.c:759
+#: src/hyleg.c:768
 msgid "Elected via: Hostile Aspect (Square/Opposition) to Hyleg"
 msgstr ""
 
-#: src/hyleg.c:788
+#: src/hyleg.c:797
 msgid " Vital Threats: The Anareta "
 msgstr ""
 
-#: src/hyleg.c:823
+#: src/hyleg.c:832
 msgid "Target Hyleg:      "
 msgstr ""
 
-#: src/hyleg.c:826
+#: src/hyleg.c:835
 msgid "☉ Sun"
 msgstr ""
 
-#: src/hyleg.c:827
+#: src/hyleg.c:836
 #, fuzzy
 msgid "☽ Moon"
 msgstr "Moon orb"
 
-#: src/hyleg.c:828
+#: src/hyleg.c:837
 msgid "ASC (Ascendant Degree)"
 msgstr ""
 
-#: src/hyleg.c:829
+#: src/hyleg.c:838
 msgid "🝴 Part of Fortune"
 msgstr ""
 
-#: src/hyleg.c:846 src/hyleg.c:848
+#: src/hyleg.c:855 src/hyleg.c:857
 msgid "Almuten Figuris Protector"
 msgstr ""
 
-#: src/hyleg.c:854
+#: src/hyleg.c:863
 msgid "8th House Sign & Ruler:   "
 msgstr ""
 
-#: src/hyleg.c:865
+#: src/hyleg.c:874
 msgid "THE CHOSEN ANARETA (Interfector): "
 msgstr ""
 
-#: src/hyleg.c:875 src/hyleg.c:911
+#: src/hyleg.c:884 src/hyleg.c:920
 msgid "Calculated Threat Score: "
 msgstr ""
 
-#: src/hyleg.c:877
+#: src/hyleg.c:886
 msgid "Points"
 msgstr ""
 
-#: src/hyleg.c:908
+#: src/hyleg.c:917
 msgid "None Active"
 msgstr ""
 
-#: src/hyleg.c:913
+#: src/hyleg.c:922
 msgid "0 Points"
 msgstr ""
 
-#: src/hyleg.c:914
+#: src/hyleg.c:923
 msgid "No severe planetary afflictions targeting the vital points."
 msgstr ""
 
-#: src/hyleg.c:923
+#: src/hyleg.c:932
 msgid ""
 "Note: The Anareta represents the geometric source of physical or metabolic "
 "risk."
 msgstr ""
 
-#: src/hyleg.c:924
+#: src/hyleg.c:933
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""

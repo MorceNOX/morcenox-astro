@@ -1149,8 +1149,14 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
      luminar da seita (Sol para dia, Lua para noite),
      condição esta também excludente.
      
-     Ao final, elege-se o Ascendente caso a SAN seja conjuncional,
-     se não, a Parte da Fortuna.
+     Caso contrário, o Ascendente é escolhido se a SAN for 
+     conjuncional; do contrário, escolhe-se a Parte da Fortuna 
+     se estiver situada em um Ponto Hilegíaco.
+     
+     Por fim, verifica-se a SAN (Sizígia pré-natal). Ela é o 
+     Hyleg se estiver situada em um Ponto Hilegíaco; caso 
+     contrário, elege-se o Almuten Figuris, independentemente 
+     de sua localização.
    
    O ponto eleito atua como o foco geométrico
    primário para escudos físicos e o alvo terminal

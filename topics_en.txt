@@ -1049,8 +1049,13 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
      an aspect to the sect luminar (Sun for day, Moon for night),
      a condition that is likewise disqualifying.
      
-     At the end, the Ascendant is elected if the SAN is 
-     conjunctional, otherwise, the Part of Fortune.
+     Otherwise, the Ascendant is elected if the SAN is 
+     conjunctional, otherwise, the Part of Fortune if it is 
+     located in a Hylegiacal Point.
+     
+     At the end, verifies the SAN (pre-natal Syzygy). It is the 
+     Hyleg if located in a Hylegiacal Point, otherwise the 
+     Almuten Figuris is elected, independent of its location.
    
    The elected point acts as the primary geometric focus for 
    physical shields and the terminal target for time projection 
