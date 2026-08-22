@@ -1134,11 +1134,12 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
    
    - Mapa Diurno (Sol acima do horizonte): 
      Sol → Lua → Almuten (Sol, SAN, Asc) → Almuten Figuris → 
-     → ASC ou Parte da Fortuna.
+     → ASC ou Parte da Fortuna → SAN  → Almuten Figuris.
      
    - Mapa Noturno (Sol abaixo do horizonte):
      Lua → Sol → Parte da Fortuna → Almuten (Lua, SAN, POF) → 
-     → Almuten Figuris → ASC ou Parte da Fortuna.
+     → Almuten Figuris → ASC ou Parte da Fortuna  → SAN  → 
+     → Almuten Figuris.
      
      Para Sol, Lua e Parte da Fortuna  é verificado, também, 
      se há aspecto com algum de seus respectivos regentes, 

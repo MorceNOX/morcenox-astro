@@ -165,7 +165,7 @@ int inicializar_swiss_ephemeris() {
         swe_set_ephe_path(env_path);
         
         if (testar_caminho_efemerides()) {
-            fprintf(stdout, "Swiss Ephemeris inicializada via SE_EPHE_PATH: %s\n", env_path);
+            fprintf(stderr, "Swiss Ephemeris inicializada via SE_EPHE_PATH: %s\n", env_path);
             return 1; 
         }
         fprintf(stderr, "Aviso: SE_EPHE_PATH definida, mas os arquivos de efemérides são inválidos.\n");
@@ -177,7 +177,7 @@ int inicializar_swiss_ephemeris() {
     
     swe_set_ephe_path(caminho_completo);
     if (testar_caminho_efemerides()) {
-        fprintf(stdout, "Swiss Ephemeris inicializada via CONFIG_PATH: %s\n", caminho_completo);
+        fprintf(stderr, "Swiss Ephemeris inicializada via CONFIG_PATH: %s\n", caminho_completo);
         return 1;
     }
 

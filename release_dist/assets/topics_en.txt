@@ -1034,11 +1034,12 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
    
    - Diurnal Chart (Sun above horizon): 
      Sun → Moon → Almuten of (Sun, SAN, Asc) → Almuten Figuris 
-     → ASC or Part of Fortune.
+     → ASC or Part of Fortune → SAN → Almuten Figuris.
    
    - Nocturnal Chart (Sun below horizon): 
      Moon → Sun → Part of Fortune → Almuten of (Moon, SAN, POF) → 
-     → Almuten Figuris → ASC or Part of Fortune.
+     → Almuten Figuris → ASC or Part of Fortune → SAN →
+     → Almuten Figuris.
    
      For the Sun, Moon, and Part of Fortune, it is also checked
      whether there is an aspect to any of their respective rulers—

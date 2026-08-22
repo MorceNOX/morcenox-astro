@@ -1407,11 +1407,11 @@ void draw_cusps_div(int object_count,
                         } else if (angle <= -0.9) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "█");  // casa 8
+                            mvaddstr(y, x, "▆");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "█");  // casa 6
+                            mvaddstr(y, x, "▆");  // casa 6
                         } else if (angle < 1.34) {
                             mvaddstr(y, x, "⧹"); // casa 5
                         } else if (angle < 1.799) {
@@ -1419,14 +1419,14 @@ void draw_cusps_div(int object_count,
                         } else if (angle < 2.25) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "█");  // casa 2
+                            mvaddstr(y, x, "▆");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "█");  // casa 12
+                            mvaddstr(y, x, "▆");  // casa 12
                         } else {
                             mvaddstr(y, x, "⧹"); // casa 11
-                        }                                           
+                        }
                     }
                 //mvprintw(y, x, "%.2f ", angle);
                 }
@@ -1476,11 +1476,11 @@ void draw_cusps_div_axis(int object_count,
                         } else if (angle <= -0.9) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "█");  // casa 8
+                            mvaddstr(y, x, "▆");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "█");  // casa 6
+                            mvaddstr(y, x, "▆");  // casa 6
                         } else if (angle < 1.34) {
                             mvaddstr(y, x, "⧹"); // casa 5
                         } else if (angle < 1.799) {
@@ -1488,11 +1488,11 @@ void draw_cusps_div_axis(int object_count,
                         } else if (angle < 2.25) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "█");  // casa 2
+                            mvaddstr(y, x, "▆");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "█");  // casa 12
+                            mvaddstr(y, x, "▆");  // casa 12
                         } else {
                             mvaddstr(y, x, "⧹"); // casa 11
                         }
@@ -1742,7 +1742,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(13, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(14, COLOR_BLACK, COLOR_CYAN);
-        init_pair(15, COLOR_BLUE, COLOR_WHITE);
+        init_pair(15, COLOR_BLUE, COLOR_YELLOW);
         init_pair(16, COLOR_WHITE, COLOR_BLACK);
         init_pair(17, COLOR_WHITE, COLOR_MAGENTA);
         init_pair(18, COLOR_WHITE, COLOR_BLUE);
@@ -3359,11 +3359,15 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         format_hour(p_hour3, sizeof(p_hour3), hours[i+12]);
         format_hour(p_hour4, sizeof(p_hour4), hours[i+18]);
     
-        mvwprintw(table_win, row, 4, "%2d) %s  %s", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
-        mvwprintw(table_win, row, 24, "%2d) %s  %s", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
-        mvwprintw(table_win, row, 44, "%2d) %s  %s", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
-        mvwprintw(table_win, row, 64, "%2d) %s  %s", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
-    
+        wattron(table_win, COLOR_PAIR(15));
+        mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
+        mvwprintw(table_win, row, 24, "%2d) %s  %s  ", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
+        wattroff(table_win, COLOR_PAIR(15));
+
+        wattron(table_win, COLOR_PAIR(12));
+        mvwprintw(table_win, row, 44, "%2d) %s  %s  ", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
+        mvwprintw(table_win, row, 64, "%2d) %s  %s  ", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
+        wattroff(table_win, COLOR_PAIR(12));
         row += 2;
     }
 
@@ -3372,8 +3376,9 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     
     char p_next_rise[12];
     format_hour(p_next_rise, sizeof(p_next_rise), hours[24]); // 25º elemento do array é o next sunrise    
-    mvwprintw(table_win, row + 1, 64, "%2d) %s  %s", 1, p_next_rise, planet_regent_symbols[get_hour_regent((week_day % 7), 0)]);
-
+    wattron(table_win, COLOR_PAIR(15));
+    mvwprintw(table_win, row + 1, 64, "%2d) %s  %s  ", 1, p_next_rise, planet_regent_symbols[get_hour_regent((week_day % 7), 0)]);
+    wattroff(table_win, COLOR_PAIR(15));
 
     char hour_len1[12];
     char hour_len2[12];
@@ -3392,7 +3397,13 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     
     const char **ascii_art = get_planet_ascii_by_gliph((char *)regent_day_str);
             
-    wattron(table_win, COLOR_PAIR(8));
+    if (MAPA_DIURNO ) {
+       wattron(table_win, COLOR_PAIR(8));
+    }
+    else {
+        wattron(table_win, COLOR_PAIR(7));
+    } 
+
     mvwprintw(table_win, row + 4, 64, "%s", ascii_art[0]);
     mvwprintw(table_win, row + 5, 64, "%s", ascii_art[1]);
     mvwprintw(table_win, row + 6, 64, "%s", ascii_art[2]);
@@ -3411,7 +3422,12 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
 
     mvwprintw(table_win, row + 10, 63, "%s   %s", (MAPA_DIURNO)?_(" Day"):_("Night"), (MAPA_DIURNO)?_("  Hour"):_("Hour"));
        
-    wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+    if (MAPA_DIURNO ) {
+        wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+     }
+     else {
+         wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
+     }
     
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     
@@ -3433,6 +3449,101 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     touchwin(stdscr); 
     refresh();
 }
+
+
+
+
+// void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora) {
+//     int p_max_y, p_max_x;
+//     getmaxyx(stdscr, p_max_y, p_max_x); 
+
+//     // 1. DIMENSIONAMENTO RESPONSIVO DA JANELA
+//     int i_height = p_max_y - 6;
+//     if (i_height > 24) i_height = 24; 
+//     int i_width = p_max_x - 12;
+//     if (i_width > 102) i_width = 102;   
+
+//     int i_start_y = (p_max_y - i_height) / 2;
+//     int i_start_x = (p_max_x - i_width) / 2;
+
+//     // 2. CRIAÇÃO E RENDERIZAÇÃO DA JANELA DE SOMBRA (FUNDO)
+//     WINDOW *shadow_win = newwin(i_height, i_width, i_start_y + 1, i_start_x + 1);
+//     werase(shadow_win);
+//     wattron(shadow_win, COLOR_PAIR(9)); // Par de cor preta/escura para a sombra
+//     box(shadow_win, 0, 0);
+//     wattroff(shadow_win, COLOR_PAIR(9));
+//     wrefresh(shadow_win);
+
+//     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
+//     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
+//     wbkgd(border_win, COLOR_PAIR(13));
+//     box(border_win, 0, 0);
+    
+//     wattron(border_win, A_BOLD);
+//     const char *title = _(" Planetary Hours Analysis ");
+//     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
+//     wattroff(border_win, A_BOLD);
+    
+//     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
+//     wrefresh(border_win);
+
+//     // 4. CRIAÇÃO DA PAD INTERNA COM MAIS ESPAÇO HORIZONTAL
+//     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
+//     int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
+//     WINDOW *pad = newpad(pad_lines, pad_cols);
+//     wbkgd(pad, COLOR_PAIR(13));
+//     keypad(pad, TRUE);
+//     idlok(pad, TRUE);
+//     scrollok(pad, TRUE);
+
+//     // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
+//     wprintw(pad, "\n"); 
+
+//     wattron(pad, A_BOLD | COLOR_PAIR(15));
+//     wprintw(pad, _("  1. REGENT OF THE %s\n"), (MAPA_DIURNO) ? _("DAY") : _("NIGHT"));
+//     wattroff(pad, A_BOLD | COLOR_PAIR(15));
+//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    
+//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    
+    
+//     wprintw(pad, "\n\n");
+
+//     wattron(pad, A_DIM);
+//     wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+//     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"));
+//     wattroff(pad, A_DIM);
+
+//     // 6. LOOP DE INTERAÇÃO E REDESENHO CONSTANTE DA PAD
+//     int pad_line_pos = 0;
+//     int max_scroll_y = 65; 
+//     int ch;
+
+//     prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+
+//     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+//         switch (ch) {
+//             case KEY_UP:
+//             case 'k':
+//             case 'K':
+//                 if (pad_line_pos > 0) pad_line_pos--;
+//                 break;
+//             case KEY_DOWN:
+//             case 'j':
+//             case 'J':
+//                 if (pad_line_pos < max_scroll_y) pad_line_pos++;
+//                 break;
+//         }
+//         prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+//     }
+
+//     // 7. DESTRUIÇÃO E LIMPEZA
+//     delwin(pad);
+//     delwin(border_win);
+//     delwin(shadow_win);
+// }
+
+
 
 
 void display_rising_times(PlotObject *plots) {

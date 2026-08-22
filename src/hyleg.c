@@ -125,7 +125,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             int rulers[7];
             get_rulers_by_lon(plots[P_SOL].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 6; i++) {
                 // se há aspecto com pelo menos um de seus regentes
                 int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
                 if (has_aspect(P_SOL, id_ruler, aspecto_matriz)) {
@@ -146,7 +146,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                 int rulers[7];
                 get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
     
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 6; i++) {
                     
                     // se há aspecto com pelo menos um de seus regentes
                     int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
@@ -179,7 +179,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
                 int rulers[7];
                 get_rulers_by_lon(plots[P_LUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
     
-                for (int i = 0; i < 7; i++) {                    
+                for (int i = 0; i < 6; i++) {                    
                     // se há aspecto com pelo menos um de seus regentes
                     int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
 
@@ -200,7 +200,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             int rulers[7];
             get_rulers_by_lon(plots[P_SOL].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 6; i++) {
                 // se há aspecto com pelo menos um de seus regentes
                 int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
                 if (has_aspect(P_SOL, id_ruler, aspecto_matriz)) {
@@ -215,18 +215,18 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
             }
         }
         // Criterio 3: A Parte da Fortuna em lugar hylegíaco
-        // else if (is_lugar_hylegiaco(casa_fortuna)) {
-        //     int rulers[7];
-        //     get_rulers_by_lon(plots[P_FORTUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
+        else if (is_lugar_hylegiaco(casa_fortuna)) {
+            int rulers[7];
+            get_rulers_by_lon(plots[P_FORTUNA].longitude, consider_modern_planets_rulling, &rulers[0], &rulers[1], &rulers[2], &rulers[3], &rulers[4], &rulers[5], &rulers[6]);
 
-        //     for (int i = 0; i < 7; i++) {
-        //         // se há aspecto com pelo menos um de seus regentes
-        //         int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
-        //         if (has_aspect(P_FORTUNA - object_diff, id_ruler, aspecto_matriz)) {
-        //             return H_FORTUNA;
-        //         }
-        //     }  
-        // }
+            for (int i = 0; i < 6; i++) {
+                // se há aspecto com pelo menos um de seus regentes
+                int id_ruler = (rulers[i] <= 10) ? rulers[i] - 1 : rulers[i] - 1 - object_diff;
+                if (has_aspect(P_FORTUNA - object_diff, id_ruler, aspecto_matriz)) {
+                    return H_FORTUNA;
+                }
+            }  
+        }
         //(void)casa_fortuna;
 
         points[0] = plots[P_LUNA].longitude;
