@@ -3565,32 +3565,32 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     switch(regente_hora) {
         case 1: // Sol
             wprintw(pad, _("This is a favorable time for energetic activities or those involving leadership.\n"
-                           "It is a suitable time for public actions and activities requiring visibility; therefore, \n"
+                           "It is a suitable time for public actions and activities requiring visibility; therefore,\n"
                            "it is a good moment to speak with influential people.\n"
                            "It is a neutral time for business dealings, weddings, and construction projects.\n\n"));
-            wprintw(pad, _("Time to shine. It favors activities requiring energy or matters related to strength, power, \n"
-                           "and leadership. This is a moment when your energy will be in full swing. It is a good time \n"
-                           "to deal with matters concerning money, prosperity, and business, as well as to look for a job, \n"
-                           "make plans for the future, and buy new things.\n"));
+            wprintw(pad, _("Time to shine. It favors activities requiring energy or matters related to strength, power,\n"
+                           "and leadership. This is a moment when your energy will be in full swing. It is a good time\n"
+                           "to deal with matters concerning money, prosperity, and business, as well as to look for a\n"
+                           "job, make plans for the future, and buy new things.\n"));
             break;
         case 2: // Lua
-            wprintw(pad, _("A favorable time for all domestic activities (especially buying food) and for anything requiring \n"
-                           "imagination (ranging from useful inventions to activities that are not recommended, such as \n"
-                           "fraud and acts of betrayal).\n"
+            wprintw(pad, _("A favorable time for all domestic activities (especially buying food) and for anything\n"
+                           "requiring imagination (ranging from useful inventions to activities that are not recommended,\n"
+                           "such as fraud and acts of betrayal).\n"
                            "A beneficial time for tasks requiring rapid execution.\n"
                            "Unfavorable for tasks requiring stability.\n\n"));
-            wprintw(pad, _("Ideal for routine tasks. It is a good time to review and re-evaluate your feelings and emotions. \n"
+            wprintw(pad, _("Ideal for routine tasks. It is a good time to review and re-evaluate your feelings and emotions.\n"
                            "Your sensitivity will be heightened, making you more emotionally volatile than usual. \n"
-                           "It is a favorable time for making quick decisions, cleaning and organizing your home or business, \n"
+                           "It is a favorable time for making quick decisions, cleaning and organizing your home or business,\n"
                            "and traveling to visit relatives. However, it is not a good time to move house.\n"));
             break;
         case 3: // Mercúrio
             wprintw(pad, _("Mercury is suitable for communication, as well as for sending, signing, and renewing documents.\n"
-                           "It is favorable for study, writing, teaching, and general learning activities, as well as for \n"
+                           "It is favorable for study, writing, teaching, and general learning activities, as well as for\n"
                            "business, commerce, and all forms of communication and partnerships.\n"
                            "It favors requests of all kinds (including prayers and marriage proposals).\n"
                            "It is a good time for medical treatments and travel, especially for business purposes.\n\n"));
-            wprintw(pad, _("Time for communication. It is an excellent time for sending documents and signing contracts, \n"
+            wprintw(pad, _("Time for communication. It is an excellent time for sending documents and signing contracts,\n"
                            "closing profitable deals, sending letters, and consulting with lawyers. \n"
                            "You will find success in signing paperwork during this period. \n"
                            "It is also a good time to obtain or renew official documents, engage in study-related \n"
@@ -3599,16 +3599,16 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         case 4: // Vênus
             wprintw(pad, _("A suitable time for harmony and beauty, and ideal for pleasure, social contacts, and \n"
                            "relationships.\n"
-                           "A good moment to purchase ornaments and items related to beauty, as well as things associated \n"
+                           "A good moment to purchase ornaments and items related to beauty, as well as things associated\n"
                            "with pleasure and entertainment.\n"
                            "An excellent time for weddings and partnerships, as well as for speaking with superiors, \n"
                            "authorities, and women in general.\n"
                            "Given the playful and carefree nature of Venus, activities requiring great seriousness, \n"
                            "concentration, or effort are not recommended.\n\n"));
-            wprintw(pad, _("A time for harmony and matters related to beauty. It is ideal for activities centered on pleasure, \n"
-                           "as well as for intimate encounters, social interactions, and relationships. \n"
+            wprintw(pad, _("A time for harmony and matters related to beauty. It is ideal for activities centered on \n"
+                           "pleasure, as well as for intimate encounters, social interactions, and relationships. \n"
                            "It is an excellent time to boost your social life. \n"
-                           "Do you want to buy something beautiful that will last a lifetime? This is the perfect moment to \n"
+                           "Do you want to buy something beautiful that will last a lifetime? This is the perfect moment to\n"
                            "purchase items for your home, refresh your wardrobe, or set a date for your engagement or a \n"
                            "happy wedding.\n"));
             break;
@@ -3627,7 +3627,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         case 6: // Júpiter
             wprintw(pad, _("An auspicious time to launch any type of venture or project. An ideal moment for broadening \n"
                            "horizons and finding inspiration.\n"
-                           "It is a balanced, tranquil period, favorable for changes and financial matters, as well as for \n"
+                           "It is a balanced, tranquil period, favorable for changes and financial matters, as well as for\n"
                            "business, travel, medical treatments, and construction.\n"
                            "A good time to address matters of peace and harmony, friendship, and governance.\n\n"));
             wprintw(pad, _("It is time to expand toward new horizons and find happiness. It brings inspiration. \n"
@@ -3643,10 +3643,10 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
                            "Not a recommended time for medical treatments, taking medication, or speaking with authorities\n"
                            "and superiors. It is also ill-advised for construction activities or forming partnerships \n"
                            "(such as business ventures or marriages).\n\n"));
-            wprintw(pad, _("It is time to resolve matters. This period calls for deep reflection, a restructuring of ideas, \n"
+            wprintw(pad, _("It is time to resolve matters. This period calls for deep reflection, a restructuring of ideas,\n"
                            "and the execution of tasks requiring patience and discipline. It is a more tense time that \n"
                            "demands attention and care, as conditions tend to be unfavorable for almost everything. \n"
-                           "It is a good time to attend to your health and pay close attention to any proposals made to you. \n"
+                           "It is a good time to attend to your health and pay close attention to any proposals made to you.\n"
                            "It is excellent for wrapping up affairs but terrible for starting new things.\n"));
             break;
     }

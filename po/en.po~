@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 21:48-0300\n"
+"POT-Creation-Date: 2026-08-22 21:51-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1946,7 +1946,7 @@ msgstr ""
 #: src/draw-chart.c:3767
 #, c-format
 msgid ""
-"• REGENT OF %s:\n"
+"• REGENT OF %s: ( %s )\n"
 "\n"
 msgstr ""
 
@@ -2040,8 +2040,9 @@ msgid ""
 msgstr ""
 
 #: src/draw-chart.c:3811
+#, c-format
 msgid ""
-"• REGENT OF THE HOUR:\n"
+"• REGENT OF THE HOUR: ( %s )\n"
 "\n"
 msgstr ""
 
