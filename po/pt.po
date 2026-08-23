@@ -2324,7 +2324,7 @@ msgstr ""
 msgid ""
 "    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n"
 "\n"
-msgstr "    • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n"
+msgstr "    • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n\n"
 
 #: src/draw-chart.c:3781
 #, c-format
@@ -2351,7 +2351,7 @@ msgstr ""
 msgid ""
 "    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n"
 "\n"
-msgstr "    • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n"
+msgstr "    • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n\n"
 
 #: src/draw-chart.c:3790 src/draw-chart.c:3834 src/solar_return.c:525
 #, c-format
@@ -2383,7 +2383,7 @@ msgid ""
 "    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n"
 "\n"
 msgstr ""
-"    • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n"
+"    • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n\n"
 
 #: src/draw-chart.c:3799
 #, c-format
