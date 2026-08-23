@@ -245,8 +245,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
 void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, char *house_system);
 
-void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour);
-void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str);
+void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, int *strength_planets, PlanetDignities *dig);
+void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str, int strength_reg_day, int strength_reg_hour, int dig_reg_day, int dig_reg_hour);
 
 void display_rising_times(PlotObject *plots);
 

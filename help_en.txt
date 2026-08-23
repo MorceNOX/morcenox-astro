@@ -1280,6 +1280,22 @@ window.
 
 
 
+• Planetary Hour Interpretation – Press [i] in the Planetary
+  Hours Table
+───────────────────────────────────────────────────────────────────
+
+A report showing the meaning and interpretation of the
+rulers of the day (or night) and the planetary hour at the
+current time of the chart being analyzed.
+
+In addition to the interpretation, the module analyzes the
+strength and operational capacity of the ruling planets
+based on their respective dignities in the chart, indicating
+whether or not their tasks can be successfully carried out.
+
+
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 13: Rising, Setting, and Culmination Times
                     ▖  ▖        ▖ ▖▄▖▖▖TM           

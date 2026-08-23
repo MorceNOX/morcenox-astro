@@ -3290,7 +3290,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
 }
 
 
-void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour) {
+void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, int *strength_planets, PlanetDignities *dig) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -3444,10 +3444,24 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         
         /* GATILHO: Se pressionar 'i', abre o relatório corrido */
         if (ch == 'i' || ch == 'I') {
-            abrir_janela_interpretacao_horas(converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), 
-                                             converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), 
+            int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+            int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
+
+            int strength_reg_day = strength_planets[regente_dia - 1];
+            int strength_reg_hour = strength_planets[regente_hora - 1];
+
+            int dig_reg_day = dig[regente_dia - 1].essential + dig[regente_dia - 1].accidental;
+            int dig_reg_hour = dig[regente_hora - 1].essential + dig[regente_hora - 1].accidental;
+
+
+            abrir_janela_interpretacao_horas(regente_dia, 
+                                             regente_hora, 
                                              regent_day_str, 
-                                             regent_hour_str);
+                                             regent_hour_str,
+                                             strength_reg_day,
+                                             strength_reg_hour,
+                                             dig_reg_day,
+                                             dig_reg_hour);
             
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
             touchwin(table_win);
@@ -3465,7 +3479,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
 
 
 
-void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str) {
+void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str, int strength_reg_day, int strength_reg_hour, int dig_reg_day, int dig_reg_hour) {
     int p_max_y, p_max_x;
     getmaxyx(stdscr, p_max_y, p_max_x); 
 
@@ -3731,7 +3745,109 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
             break;
     }
     
+    wprintw(pad, "\n\n");
+
+
+    // SYNTHESIS
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wattron(pad, A_BOLD | COLOR_PAIR(27));
+    wprintw(pad, _("  4. REGENTS' STRENGTH:  \n"));
+    wattroff(pad, A_BOLD | COLOR_PAIR(27));
+    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+    
     wattroff(pad, A_DIM);
+
+
+    /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
+    double weights[50];
+    get_weights(weights, show_modern_planets);
+    int pontos_finais_exibicao_day = (int)ceil(((double)strength_reg_day * weights[regente_dia]) / 10.0);
+
+    wattron(pad, A_BOLD); 
+    wprintw(pad, _("• REGENT OF %s: ( %s )\n\n"), (MAPA_DIURNO)?_("THE DAY"):_("THE NIGHT"), regent_day_str);
+    wattroff(pad, A_BOLD); 
+
+    wprintw(pad, _("    The base dignity score of the Regent of %s is: %d.\n"
+                    "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+            (MAPA_DIURNO)?_("the Day"):_("the Night"), dig_reg_day, strength_reg_day, pontos_finais_exibicao_day);
+    
+    wprintw(pad, _("    Structural Efficiency Verdict:\n"));
+
+    // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
+    if (strength_reg_day >= 65) {
+        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
+        wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
+        wprintw(pad, _("       This planet commands %s with magnificent backing.\n"
+                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
+                        "and powerful executive. The promises of this planet will manifest with clarity,\n"
+                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO)?_("the Day"):_("the Night"), strength_reg_day);
+    } 
+    else if (strength_reg_day >= 35) {
+        wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
+        wprintw(pad, _("    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(8));
+        wprintw(pad, _("       This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                        "       It possesses the standard authority to execute its functions, but will demand steady\n"
+                        "discipline and continuous focus from you. Events will unfold normally, tracking your\n"
+                        "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), strength_reg_day);
+    } 
+    else {
+        wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
+        wprintw(pad, _("    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(11));
+        wprintw(pad, _("       WARNING: The Lord of %s operates under extreme systemic debility (%d%%).\n"
+                        "       Even though it governs this time stream, it lacks the raw vital\n"
+                        "resources to fulfill its promises easily. The sectors it triggers this day will demand\n"
+                        "intense adjustments, manifesting through chronic delays, heavy exhaustion,\n"
+                        "administrative blocks, or the feeling of working against a locked door.\n\n\n"), (MAPA_DIURNO)?_("the Day"):_("the Night"), strength_reg_day);
+    }
+
+    wprintw(pad, "\n\n");
+
+    int pontos_finais_exibicao_hour = (int)ceil(((double)strength_reg_hour * weights[regente_hora]) / 10.0);
+
+    wattron(pad, A_BOLD); 
+    wprintw(pad, _("• REGENT OF THE HOUR: ( %s )\n\n"), regent_hour_str);
+    wattroff(pad, A_BOLD); 
+
+    wprintw(pad, _("    The base dignity score of the Regent of the hour is: %d.\n"
+                    "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+            dig_reg_hour, strength_reg_hour, pontos_finais_exibicao_hour);
+    
+    wprintw(pad, _("    Structural Efficiency Verdict:\n"));
+
+    // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
+    if (strength_reg_hour >= 65) {
+        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
+        wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
+        wprintw(pad, _("       This planet commands the hour with magnificent backing.\n"
+                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
+                        "and powerful executive. The promises of this planet will manifest with clarity,\n"
+                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), strength_reg_hour);
+    } 
+    else if (strength_reg_hour >= 35) {
+        wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
+        wprintw(pad, _("    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(8));
+        wprintw(pad, _("       This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                        "       It possesses the standard authority to execute its functions, but will demand steady\n"
+                        "discipline and continuous focus from you. Events will unfold normally, tracking your\n"
+                        "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), strength_reg_hour);
+    } 
+    else {
+        wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
+        wprintw(pad, _("    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(11));
+        wprintw(pad, _("       WARNING: The Lord of the hour operates under extreme systemic debility (%d%%).\n"
+                        "       Even though it governs this time stream, it lacks the raw vital\n"
+                        "resources to fulfill its promises easily. The sectors it triggers this day will demand\n"
+                        "intense adjustments, manifesting through chronic delays, heavy exhaustion,\n"
+                        "administrative blocks, or the feeling of working against a locked door.\n\n\n"), strength_reg_hour);
+    }
+
+
 
     wprintw(pad, "\n\n");
 
@@ -6188,7 +6304,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 display_aspects(plots, &matrix, &matrix_decl);
                 break;
             case KEY_F(4):
-                display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour);
+                display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, strength_planets, dig);
                 break;
             case KEY_F(5):
                 display_rising_times(plots);
@@ -6511,7 +6627,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_declination_aspects(ctx->plots, &ctx->matrix_decl);
             break;
         case 6:
-            display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour);
+            display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
             break;
         case 7:
             display_rising_times(ctx->plots);

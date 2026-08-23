@@ -617,7 +617,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     
         // CORREÇÃO: Consome a casa real do Alcochoden direto da struct de retorno
         wattron(table_win, A_DIM);
-        wprintw(table_win, " %s. %s %d", alco.tipo_anos, _("Years distributed via physical Position in House"), alco.casa_alcochoden);
+        wprintw(table_win, " %s. %s %d.", alco.tipo_anos, _("Years distributed via physical Position in House"), alco.casa_alcochoden);
         wattroff(table_win, A_DIM);
 
         char planet_hyleg[30];
@@ -661,16 +661,16 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
         }
         wattroff(table_win, COLOR_PAIR(8));
 
-        mvwprintw(table_win, 9, 105, "%s", "Alcochoden:");
+        mvwprintw(table_win, 1, 115, "%s", "Alcochoden:");
         const char **ascii_art1 = get_planet_ascii_by_gliph(alco.glifo);
 
         wattron(table_win, COLOR_PAIR(8));
-        mvwprintw(table_win, 10, 105, "%s", ascii_art1[0]);
-        mvwprintw(table_win, 11, 105, "%s", ascii_art1[1]);
-        mvwprintw(table_win, 12, 105, "%s", ascii_art1[2]);
-        mvwprintw(table_win, 13, 105, "%s", ascii_art1[3]);
-        mvwprintw(table_win, 14, 105, "%s", ascii_art1[4]);
-        mvwprintw(table_win, 15, 105, "%s", ascii_art1[5]);
+        mvwprintw(table_win, 2, 115, "%s", ascii_art1[0]);
+        mvwprintw(table_win, 3, 115, "%s", ascii_art1[1]);
+        mvwprintw(table_win, 4, 115, "%s", ascii_art1[2]);
+        mvwprintw(table_win, 5, 115, "%s", ascii_art1[3]);
+        mvwprintw(table_win, 6, 115, "%s", ascii_art1[4]);
+        mvwprintw(table_win, 7, 115, "%s", ascii_art1[5]);
 
         wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
 

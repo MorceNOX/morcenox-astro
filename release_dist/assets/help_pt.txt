@@ -1306,6 +1306,22 @@ hora planetária.
 
 
 
+• Interpretação da Hora Planetária - Pressione [i] na Tabela
+  de Horas PLanetárias
+───────────────────────────────────────────────────────────────────
+
+Um relatório mostrando o significado e a interpretação dos
+regentes do dia (ou noite) e da hora planetária no horário 
+corrente do mapa analisado.
+
+Além da interpretação, o módulo analisa a força e a capacidade 
+operacional dos planetas regentes, conforme suas respectivas
+dignidades no mapa, informando se suas tarefas poderão ou não
+ser levadas a cabo com sucesso. 
+
+
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 13: Horários de Ascensão, Ocaso e Culminação
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
