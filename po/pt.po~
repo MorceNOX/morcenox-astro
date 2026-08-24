@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 21:51-0300\n"
+"POT-Creation-Date: 2026-08-24 07:46-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -34,17 +34,17 @@ msgid "Sol "
 msgstr "Sol "
 
 #: src/almuten.c:534 src/draw-chart.c:410 src/draw-chart.c:617
-#: src/draw-chart.c:4921 src/draw-chart.c:4943 src/hyleg.c:337
+#: src/draw-chart.c:4987 src/draw-chart.c:5009 src/hyleg.c:337
 msgid "Luna"
 msgstr "Lua"
 
-#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:4934
-#: src/draw-chart.c:4953
+#: src/almuten.c:534 src/draw-chart.c:1267 src/draw-chart.c:5000
+#: src/draw-chart.c:5019
 msgid "Ascendant"
 msgstr "Ascendente"
 
-#: src/almuten.c:534 src/directions.c:291 src/draw-chart.c:443
-#: src/draw-chart.c:1271 src/draw-chart.c:4932 src/draw-chart.c:4951
+#: src/almuten.c:534 src/directions.c:453 src/draw-chart.c:443
+#: src/draw-chart.c:1271 src/draw-chart.c:4998 src/draw-chart.c:5017
 msgid "Part of Fortune"
 msgstr "Parte da Fortuna"
 
@@ -60,7 +60,7 @@ msgstr "Empate"
 msgid "Planetary"
 msgstr "Regente"
 
-#: src/almuten.c:575 src/directions.c:405 src/directions.c:810
+#: src/almuten.c:575 src/directions.c:590 src/directions.c:1028
 #: src/draw-chart.c:2008 src/draw-chart.c:3395 src/selections.c:1385
 msgid "Day"
 msgstr "Dia"
@@ -923,8 +923,8 @@ msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects.
 msgstr ""
 "Use [↑/↓] Seleciona | [e] Editar | [i] Incluir | [d] Excluir | [x] Aspectos."
 
-#: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:536
-#: src/directions.c:945 src/draw-chart.c:2943 src/draw-chart.c:3271
+#: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
+#: src/directions.c:1165 src/draw-chart.c:2943 src/draw-chart.c:3271
 #: src/draw-chart.c:3950 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
 #: src/mind.c:312 src/motivation.c:234 src/profections.c:188
 msgid "Press ESC to return to chart"
@@ -1026,19 +1026,19 @@ msgstr "Falha ao deletar parte árabe!"
 msgid "Arabic Part deleted successfully!"
 msgstr "Parte Árabe excluída com sucesso."
 
-#: src/aspects.c:282
+#: src/aspects.c:397
 msgid "Parallel & Contra-Parallel"
 msgstr "Paralelo & Contra-Paralelo"
 
-#: src/aspects.c:358 src/aspects.c:759
+#: src/aspects.c:473 src/aspects.c:874
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
-#: src/aspects.c:428
+#: src/aspects.c:543
 msgid "Aspects Table"
 msgstr "Tabela de Aspectos"
 
-#: src/aspects.c:517
+#: src/aspects.c:632
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
 "Sign - [↓↑|JK] Scroll"
@@ -1046,176 +1046,191 @@ msgstr ""
 "Pressione Q/ESC retornar - F3 Paralelo & Contra-Paralelo - F4 Aspectos por "
 "Signo - [↓↑/JK] rolar"
 
-#: src/aspects.c:676
+#: src/aspects.c:791
 msgid "Aspects by Sign Table"
 msgstr "Tabela de Aspectos por Signo"
 
-#: src/directions.c:363
-msgid " Primary Directions (Zodiacal with Latitude) "
-msgstr " Direções Primárias Zodiacais com Latitude Real "
+#: src/directions.c:521
+msgid " Primary Directions "
+msgstr " Direções Primárias "
 
-#: src/directions.c:380 src/directions.c:781
+#: src/directions.c:566 src/directions.c:999
 msgid "Active Significator Target: "
 msgstr "Significador Ativo Alvo: "
 
-#: src/directions.c:384
+#: src/directions.c:570
 msgid " [EMPHASIZED HYLEG]"
 msgstr " [HYLEG EMFATIZADO]"
 
-#: src/directions.c:386 src/directions.c:791
+#: src/directions.c:572 src/directions.c:1009
 msgid "Point not calculated in this chart"
 msgstr "Ponto não calculado neste mapa"
 
-#: src/directions.c:391 src/directions.c:796
+#: src/directions.c:577 src/directions.c:1014
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr "Use [←/→] Signif. [↑/↓] Rolagem"
 
-#: src/directions.c:402 src/directions.c:807 src/selections.c:1134
+#: src/directions.c:587 src/directions.c:1025 src/selections.c:1134
 #: src/selections.c:1217
 msgid "Age"
 msgstr "Idade"
 
-#: src/directions.c:403 src/directions.c:808 src/selections.c:1383
+#: src/directions.c:588 src/directions.c:1026 src/selections.c:1383
 msgid "Year"
 msgstr "Ano"
 
-#: src/directions.c:404 src/directions.c:809
+#: src/directions.c:589 src/directions.c:1027
 msgid " Mo"
 msgstr "Mês"
 
-#: src/directions.c:406 src/directions.c:811
+#: src/directions.c:591 src/directions.c:1029
 msgid "Directional Event"
 msgstr "Evento Direcional"
 
-#: src/directions.c:407 src/directions.c:812
+#: src/directions.c:592 src/directions.c:1030
 msgid "Arc (Equat.)"
 msgstr "Arco (Equat.)"
 
-#: src/directions.c:408 src/directions.c:813
+#: src/directions.c:593 src/directions.c:1031
 msgid "Method"
 msgstr "Método"
 
-#: src/directions.c:409 src/directions.c:814
+#: src/directions.c:594 src/directions.c:1032
 msgid "Direction"
 msgstr "Sentido"
 
-#: src/directions.c:422 src/directions.c:827
+#: src/directions.c:606 src/directions.c:1045
 msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
-#: src/directions.c:438 src/directions.c:844 src/draw-chart.c:419
-#: src/draw-chart.c:620 src/draw-chart.c:4924 src/draw-chart.c:4946
-#: src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468 src/profections.c:48
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/directions.c:621 src/directions.c:1064 src/draw-chart.c:419
+#: src/draw-chart.c:620 src/draw-chart.c:4198 src/draw-chart.c:4990
+#: src/draw-chart.c:5012 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
+#: src/profections.c:48 src/solar_return.c:865 src/solar_return.c:984
 msgid "Mars"
 msgstr "Marte"
 
-#: src/directions.c:439 src/directions.c:845 src/draw-chart.c:425
-#: src/draw-chart.c:622 src/draw-chart.c:4926 src/draw-chart.c:4948
-#: src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468 src/profections.c:54
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/directions.c:622 src/directions.c:1065 src/draw-chart.c:425
+#: src/draw-chart.c:622 src/draw-chart.c:4196 src/draw-chart.c:4992
+#: src/draw-chart.c:5014 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
+#: src/profections.c:54 src/solar_return.c:865 src/solar_return.c:984
 msgid "Saturn"
 msgstr "Saturno"
 
-#: src/directions.c:448 src/directions.c:854 src/draw-chart.c:422
-#: src/draw-chart.c:621 src/draw-chart.c:4925 src/draw-chart.c:4947
-#: src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465 src/profections.c:53
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/directions.c:629 src/directions.c:1074 src/draw-chart.c:422
+#: src/draw-chart.c:621 src/draw-chart.c:4197 src/draw-chart.c:4991
+#: src/draw-chart.c:5013 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
+#: src/profections.c:53 src/solar_return.c:865 src/solar_return.c:984
 msgid "Jupiter"
 msgstr "Júpiter"
 
-#: src/directions.c:449 src/directions.c:855 src/draw-chart.c:416
-#: src/draw-chart.c:619 src/draw-chart.c:4923 src/draw-chart.c:4945
-#: src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465 src/profections.c:49
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/directions.c:630 src/directions.c:1075 src/draw-chart.c:416
+#: src/draw-chart.c:619 src/draw-chart.c:4193 src/draw-chart.c:4989
+#: src/draw-chart.c:5011 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
+#: src/profections.c:49 src/solar_return.c:865 src/solar_return.c:984
 msgid "Venus"
 msgstr "Vênus"
 
-#: src/directions.c:500 src/directions.c:907
+#: src/directions.c:671 src/directions.c:1122
 msgid "Direct"
 msgstr "Direta"
 
-#: src/directions.c:500 src/directions.c:907
+#: src/directions.c:671 src/directions.c:1122
 msgid "Converse"
 msgstr "Conversa"
 
-#: src/directions.c:518 src/directions.c:927
+#: src/directions.c:688 src/directions.c:1140
 msgid ""
 "Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."
 msgstr ""
 "Chave de Tempo: Taxa de Naibod (1° de Rotação Equatorial = 1,0146 Anos). ε: "
 "Dinâmica."
 
-#: src/directions.c:519 src/directions.c:928
+#: src/directions.c:691 src/directions.c:1143
 msgid "Aspects: Zodiacal with Real Latitude (Method Placidus)."
 msgstr "Aspectos: Zodiacais com Latitude Real (Método Placidus)."
 
-#: src/directions.c:524 src/directions.c:933
-msgid "Use [↑/↓] to Scroll (Showing"
-msgstr "Use [↑/↓] para Rolar (Exibindo"
+#: src/directions.c:693 src/directions.c:1145
+msgid "Aspects: Mundane proportional to Semi-Arcs (Method Placidus in mundo)."
+msgstr ""
+"Aspectos: Mundanos proporcionais aos Semi-Arcos (Método Placidus in mundo)."
 
-#: src/directions.c:527 src/directions.c:936
+#: src/directions.c:695 src/directions.c:1147
+msgid ""
+"Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-"
+"Arcs)."
+msgstr ""
+"Aspectos: Zodiacais c/ Latitude + Mundanos proporcionais aos Semi-Arcos "
+"(Método Placidus in mundo)."
+
+#: src/directions.c:701 src/directions.c:1153
+msgid "Use [↑/↓] to Scroll (Showing"
+msgstr "Use [↑/↓] Rolar (Exibindo"
+
+#: src/directions.c:704 src/directions.c:1156
 msgid "of"
 msgstr "de"
 
-#: src/directions.c:529 src/directions.c:938
+#: src/directions.c:706 src/directions.c:1158
 msgid "events) | [←/→] Change Target"
-msgstr "eventos) | [←/→] Trocar o Alvo"
+msgstr "eventos) | [←/→] Trocar Alvo"
 
-#: src/directions.c:530 src/directions.c:939
-msgid " | [C] Converse [D] Direct [A] All"
-msgstr " | [C] Conversas [D] Diretas [A] Todas"
+#: src/directions.c:707 src/directions.c:1159
+msgid " | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"
+msgstr " | [C] Conv [D] Dir [A] Todas | [Z] Zod [M] Mund [B] Ambas"
 
-#: src/directions.c:532 src/directions.c:941
+#: src/directions.c:709 src/directions.c:1161
 msgid ""
-"Use [←/→] to flip through Significators timelines. | [C] Converse [D] Direct "
-"[A] All"
+"Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] "
+"Both"
 msgstr ""
-"Use [←/→] para folhear as linhas do tempo dos Significadores. | [C] "
-"Conversas [D] Diretas [A] All"
+"Use [←/→] Trocar Alvo | [C] Conv [D] Dir [A] Todas | [Z] Zod [M] Mund [B] "
+"Ambas"
 
-#: src/directions.c:763
-msgid " Primary Directions (Zodiacal with Latitude) to Arabic Parts "
-msgstr " Direções Primárias Zodiacais com Latitude Real para as Partes Árabes "
+#: src/directions.c:957
+#, fuzzy
+msgid " Primary Directions to Arabic Parts "
+msgstr " Direções Primárias para as Partes Árabes "
 
-#: src/draw-chart.c:407 src/firdaria.c:97 src/hyleg.c:336 src/profections.c:52
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/draw-chart.c:407 src/draw-chart.c:4192 src/firdaria.c:97 src/hyleg.c:336
+#: src/profections.c:52 src/solar_return.c:865 src/solar_return.c:984
 msgid "Sun"
 msgstr "Sol"
 
-#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4920
-#: src/draw-chart.c:4942 src/hyleg.c:336
+#: src/draw-chart.c:407 src/draw-chart.c:616 src/draw-chart.c:4986
+#: src/draw-chart.c:5008 src/hyleg.c:336
 msgid "Sol"
 msgstr "Sol"
 
-#: src/draw-chart.c:410 src/firdaria.c:98 src/hyleg.c:337 src/profections.c:51
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/draw-chart.c:410 src/draw-chart.c:4195 src/firdaria.c:98 src/hyleg.c:337
+#: src/profections.c:51 src/solar_return.c:865 src/solar_return.c:984
 msgid "Moon"
 msgstr "Lua"
 
-#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4922
-#: src/draw-chart.c:4944 src/firdaria.c:99 src/hyleg.c:338 src/profections.c:50
-#: src/solar_return.c:865 src/solar_return.c:984
+#: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4194
+#: src/draw-chart.c:4988 src/draw-chart.c:5010 src/firdaria.c:99
+#: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:865
+#: src/solar_return.c:984
 msgid "Mercury"
 msgstr "Mercúrio"
 
 #: src/draw-chart.c:428 src/draw-chart.c:623 src/draw-chart.c:1279
-#: src/draw-chart.c:4927
+#: src/draw-chart.c:4993
 msgid "Uranus"
 msgstr "Urano"
 
 #: src/draw-chart.c:431 src/draw-chart.c:624 src/draw-chart.c:1278
-#: src/draw-chart.c:4928
+#: src/draw-chart.c:4994
 msgid "Neptune"
 msgstr "Netuno"
 
 #: src/draw-chart.c:434 src/draw-chart.c:625 src/draw-chart.c:1280
-#: src/draw-chart.c:4929
+#: src/draw-chart.c:4995
 msgid "Pluto"
 msgstr "Plutão"
 
 #: src/draw-chart.c:437 src/draw-chart.c:626 src/draw-chart.c:1275
-#: src/draw-chart.c:4930 src/draw-chart.c:4949 src/firdaria.c:104
+#: src/draw-chart.c:4996 src/draw-chart.c:5015 src/firdaria.c:104
 msgid "North Node"
 msgstr "Nodo Norte"
 
@@ -1224,7 +1239,7 @@ msgid "Caput Draconis"
 msgstr "Cabeça do Dragão"
 
 #: src/draw-chart.c:440 src/draw-chart.c:627 src/draw-chart.c:1273
-#: src/draw-chart.c:4931 src/draw-chart.c:4950 src/firdaria.c:105
+#: src/draw-chart.c:4997 src/draw-chart.c:5016 src/firdaria.c:105
 msgid "South Node"
 msgstr "Nodo Sul"
 
@@ -1268,23 +1283,23 @@ msgstr "🌓 Quarto Minguante"
 msgid "🌒 Waning Crescent"
 msgstr "🌒 Minguante Côncava"
 
-#: src/draw-chart.c:1268 src/draw-chart.c:4935 src/draw-chart.c:4954
+#: src/draw-chart.c:1268 src/draw-chart.c:5001 src/draw-chart.c:5020
 msgid "Midheaven"
 msgstr "Meio-do-Céu"
 
-#: src/draw-chart.c:1269 src/draw-chart.c:4937 src/draw-chart.c:4956
+#: src/draw-chart.c:1269 src/draw-chart.c:5003 src/draw-chart.c:5022
 msgid "Nadir"
 msgstr "Fundo-do-Céu"
 
-#: src/draw-chart.c:1270 src/draw-chart.c:4936 src/draw-chart.c:4955
+#: src/draw-chart.c:1270 src/draw-chart.c:5002 src/draw-chart.c:5021
 msgid "Descendant"
 msgstr "Descendente"
 
-#: src/draw-chart.c:1272 src/draw-chart.c:4933 src/draw-chart.c:4952
+#: src/draw-chart.c:1272 src/draw-chart.c:4999 src/draw-chart.c:5018
 msgid "SAN"
 msgstr "SAN"
 
-#: src/draw-chart.c:1274 src/draw-chart.c:4938 src/draw-chart.c:4957
+#: src/draw-chart.c:1274 src/draw-chart.c:5004 src/draw-chart.c:5023
 msgid "Vertex"
 msgstr "Vértex"
 
@@ -1638,7 +1653,7 @@ msgstr "Dignidade"
 msgid "Gen/Sect/Quad"
 msgstr "Gên/Seita/Quad"
 
-#: src/draw-chart.c:3003 src/draw-chart.c:5711
+#: src/draw-chart.c:3003 src/draw-chart.c:5771
 msgid "Orient"
 msgstr "Orient"
 
@@ -1777,7 +1792,7 @@ msgid ""
 "This is a favorable time for energetic activities or those involving "
 "leadership.\n"
 "It is a suitable time for public actions and activities requiring "
-"visibility; therefore, \n"
+"visibility; therefore,\n"
 "it is a good moment to speak with influential people.\n"
 "It is a neutral time for business dealings, weddings, and construction "
 "projects.\n"
@@ -1795,12 +1810,12 @@ msgstr ""
 #: src/draw-chart.c:3571
 msgid ""
 "Time to shine. It favors activities requiring energy or matters related to "
-"strength, power, \n"
+"strength, power,\n"
 "and leadership. This is a moment when your energy will be in full swing. It "
-"is a good time \n"
+"is a good time\n"
 "to deal with matters concerning money, prosperity, and business, as well as "
-"to look for a job, \n"
-"make plans for the future, and buy new things.\n"
+"to look for a\n"
+"job, make plans for the future, and buy new things.\n"
 msgstr ""
 "Hora de brilhar. O momento favorece atividades que exigem energia ou "
 "questões \n"
@@ -1813,10 +1828,10 @@ msgstr ""
 #: src/draw-chart.c:3577
 msgid ""
 "A favorable time for all domestic activities (especially buying food) and "
-"for anything requiring \n"
-"imagination (ranging from useful inventions to activities that are not "
-"recommended, such as \n"
-"fraud and acts of betrayal).\n"
+"for anything\n"
+"requiring imagination (ranging from useful inventions to activities that are "
+"not recommended,\n"
+"such as fraud and acts of betrayal).\n"
 "A beneficial time for tasks requiring rapid execution.\n"
 "Unfavorable for tasks requiring stability.\n"
 "\n"
@@ -1832,11 +1847,11 @@ msgstr ""
 #: src/draw-chart.c:3582
 msgid ""
 "Ideal for routine tasks. It is a good time to review and re-evaluate your "
-"feelings and emotions. \n"
+"feelings and emotions.\n"
 "Your sensitivity will be heightened, making you more emotionally volatile "
 "than usual. \n"
 "It is a favorable time for making quick decisions, cleaning and organizing "
-"your home or business, \n"
+"your home or business,\n"
 "and traveling to visit relatives. However, it is not a good time to move "
 "house.\n"
 msgstr ""
@@ -1854,7 +1869,7 @@ msgid ""
 "Mercury is suitable for communication, as well as for sending, signing, and "
 "renewing documents.\n"
 "It is favorable for study, writing, teaching, and general learning "
-"activities, as well as for \n"
+"activities, as well as for\n"
 "business, commerce, and all forms of communication and partnerships.\n"
 "It favors requests of all kinds (including prayers and marriage proposals).\n"
 "It is a good time for medical treatments and travel, especially for business "
@@ -1876,7 +1891,7 @@ msgstr ""
 #: src/draw-chart.c:3593
 msgid ""
 "Time for communication. It is an excellent time for sending documents and "
-"signing contracts, \n"
+"signing contracts,\n"
 "closing profitable deals, sending letters, and consulting with lawyers. \n"
 "You will find success in signing paperwork during this period. \n"
 "It is also a good time to obtain or renew official documents, engage in "
@@ -1898,7 +1913,7 @@ msgid ""
 "contacts, and \n"
 "relationships.\n"
 "A good moment to purchase ornaments and items related to beauty, as well as "
-"things associated \n"
+"things associated\n"
 "with pleasure and entertainment.\n"
 "An excellent time for weddings and partnerships, as well as for speaking "
 "with superiors, \n"
@@ -1924,12 +1939,12 @@ msgstr ""
 #: src/draw-chart.c:3608
 msgid ""
 "A time for harmony and matters related to beauty. It is ideal for activities "
-"centered on pleasure, \n"
-"as well as for intimate encounters, social interactions, and "
+"centered on \n"
+"pleasure, as well as for intimate encounters, social interactions, and "
 "relationships. \n"
 "It is an excellent time to boost your social life. \n"
 "Do you want to buy something beautiful that will last a lifetime? This is "
-"the perfect moment to \n"
+"the perfect moment to\n"
 "purchase items for your home, refresh your wardrobe, or set a date for your "
 "engagement or a \n"
 "happy wedding.\n"
@@ -1989,7 +2004,7 @@ msgid ""
 "for broadening \n"
 "horizons and finding inspiration.\n"
 "It is a balanced, tranquil period, favorable for changes and financial "
-"matters, as well as for \n"
+"matters, as well as for\n"
 "business, travel, medical treatments, and construction.\n"
 "A good time to address matters of peace and harmony, friendship, and "
 "governance.\n"
@@ -2052,13 +2067,13 @@ msgstr ""
 #: src/draw-chart.c:3646
 msgid ""
 "It is time to resolve matters. This period calls for deep reflection, a "
-"restructuring of ideas, \n"
+"restructuring of ideas,\n"
 "and the execution of tasks requiring patience and discipline. It is a more "
 "tense time that \n"
 "demands attention and care, as conditions tend to be unfavorable for almost "
 "everything. \n"
 "It is a good time to attend to your health and pay close attention to any "
-"proposals made to you. \n"
+"proposals made to you.\n"
 "It is excellent for wrapping up affairs but terrible for starting new "
 "things.\n"
 msgstr ""
@@ -2324,7 +2339,9 @@ msgstr ""
 msgid ""
 "    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n"
 "\n"
-msgstr "    • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n\n"
+msgstr ""
+"    • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n"
+"\n"
 
 #: src/draw-chart.c:3781
 #, c-format
@@ -2351,7 +2368,9 @@ msgstr ""
 msgid ""
 "    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n"
 "\n"
-msgstr "    • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n\n"
+msgstr ""
+"    • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n"
+"\n"
 
 #: src/draw-chart.c:3790 src/draw-chart.c:3834 src/solar_return.c:525
 #, c-format
@@ -2383,7 +2402,8 @@ msgid ""
 "    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n"
 "\n"
 msgstr ""
-"    • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n\n"
+"    • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n"
+"\n"
 
 #: src/draw-chart.c:3799
 #, c-format
@@ -2483,71 +2503,71 @@ msgstr "Horários de Ascenção, Ocaso & Culminação Superior"
 msgid "   Rising          Setting         Culmination"
 msgstr " Ascenção          Ocaso           Culminação "
 
-#: src/draw-chart.c:5382
+#: src/draw-chart.c:5442
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:5398
+#: src/draw-chart.c:5458
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:5414
+#: src/draw-chart.c:5474
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:5428
+#: src/draw-chart.c:5488
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:5442
+#: src/draw-chart.c:5502
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:5458
+#: src/draw-chart.c:5518
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:5470
+#: src/draw-chart.c:5530
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:5490
+#: src/draw-chart.c:5550
 msgid "pilgrim "
 msgstr "peregrino "
 
-#: src/draw-chart.c:5715
+#: src/draw-chart.c:5775
 msgid "Occid"
 msgstr "Ocid"
 
-#: src/draw-chart.c:5769
+#: src/draw-chart.c:5829
 msgid "Spring"
 msgstr "Primavera"
 
-#: src/draw-chart.c:5769 src/draw-chart.c:5790
+#: src/draw-chart.c:5829 src/draw-chart.c:5850
 msgid "Sanguine"
 msgstr "Sanguíneo"
 
-#: src/draw-chart.c:5772
+#: src/draw-chart.c:5832
 msgid "Summer"
 msgstr "Verão"
 
-#: src/draw-chart.c:5772 src/draw-chart.c:5794
+#: src/draw-chart.c:5832 src/draw-chart.c:5854
 msgid "Choleric"
 msgstr "Colérico"
 
-#: src/draw-chart.c:5775
+#: src/draw-chart.c:5835
 msgid "Autumn"
 msgstr "Outono"
 
-#: src/draw-chart.c:5775 src/draw-chart.c:5798
+#: src/draw-chart.c:5835 src/draw-chart.c:5858
 msgid "Melancholic"
 msgstr "Melancólico"
 
-#: src/draw-chart.c:5778
+#: src/draw-chart.c:5838
 msgid "Winter"
 msgstr "Inverno"
 
-#: src/draw-chart.c:5778 src/draw-chart.c:5802
+#: src/draw-chart.c:5838 src/draw-chart.c:5862
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
@@ -5438,6 +5458,29 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid " | [C] Converse [D] Direct [A] All"
+#~ msgstr " | [C] Conversas [D] Diretas [A] Todas"
+
+#~ msgid ""
+#~ "Use [←/→] to flip through Significators timelines. | [C] Converse [D] "
+#~ "Direct [A] All"
+#~ msgstr ""
+#~ "Use [←/→] para folhear as linhas do tempo dos Significadores. | [C] "
+#~ "Conversas [D] Diretas [A] All"
+
+#~ msgid "Term of "
+#~ msgstr "Termo de "
+
+#~ msgid ""
+#~ "Use [←/→] to flip through Significators timelines. | [C] Conv [D] Dir [A] "
+#~ "All | [Z] Zod [M] Mund [B] Both"
+#~ msgstr ""
+#~ "Use [←/→] folhear nas linhas do tempo dos Significadores. | [C] Conv [D] "
+#~ "Dir [A] Todas | [Z] Zod [M] Mund [B] Ambas"
+
+#~ msgid " Primary Directions (Zodiacal with Latitude) "
+#~ msgstr " Direções Primárias Zodiacais com Latitude Real "
 
 #, fuzzy
 #~ msgid "South Nodde"

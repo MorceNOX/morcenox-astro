@@ -45,6 +45,99 @@ bool has_aspect(int id1, int id2, AspectMatrix *matrix) {
 }
 
 
+bool has_aspect_aplicative(int id1, int id2, AspectMatrix *matrix) {
+    if (id1 < 0 || id2 < 0 || id1 == id2) {
+        return false;
+    }
+    
+    AspectCell c1 = matrix->grid[id1][id2];
+    AspectCell c2 = matrix->grid[id2][id1];
+
+    if (c1.has_aspect || c2.has_aspect) {
+        if (c1.is_aplicative || c2.is_aplicative) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool has_aspect_partil(int id1, int id2, AspectMatrix *matrix) {
+    if (id1 < 0 || id2 < 0 || id1 == id2) {
+        return false;
+    }
+    
+    AspectCell c1 = matrix->grid[id1][id2];
+    AspectCell c2 = matrix->grid[id2][id1];
+
+    if (c1.has_aspect || c2.has_aspect) {
+        if (c1.is_partil || c2.is_partil) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool has_aspect_aplicative_or_partil(int id1, int id2, AspectMatrix *matrix) {
+    if (id1 < 0 || id2 < 0 || id1 == id2) {
+        return false;
+    }
+    
+    AspectCell c1 = matrix->grid[id1][id2];
+    AspectCell c2 = matrix->grid[id2][id1];
+
+    if (c1.has_aspect || c2.has_aspect) {
+        if (c1.is_aplicative || c2.is_aplicative || c1.is_partil || c2.is_partil) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool has_aspect_separative(int id1, int id2, AspectMatrix *matrix) {
+    if (id1 < 0 || id2 < 0 || id1 == id2) {
+        return false;
+    }
+    
+    AspectCell c1 = matrix->grid[id1][id2];
+    AspectCell c2 = matrix->grid[id2][id1];
+
+    if (c1.has_aspect || c2.has_aspect) {
+        if (!has_aspect_aplicative_or_partil(id1, id2, matrix)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool is_under_siege(int planet_id, AspectMatrix *matrix) {
+    if ((has_aspect_aplicative(planet_id, P_MARS, matrix) && has_aspect_separative(planet_id, P_SATURN, matrix)) ||
+        (has_aspect_aplicative(planet_id, P_SATURN, matrix) && has_aspect_separative(planet_id, P_MARS, matrix))) {
+        
+        return true;
+    }
+
+    return false;
+}
+
+
+bool is_under_assistance(int planet_id, AspectMatrix *matrix) {
+    if ((has_aspect_aplicative(planet_id, P_VENUS, matrix) && has_aspect_separative(planet_id, P_JUPITER, matrix)) ||
+        (has_aspect_aplicative(planet_id, P_JUPITER, matrix) && has_aspect_separative(planet_id, P_VENUS, matrix))) {
+        
+        return true;
+    }
+
+    return false;
+}
+
+
 
 AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDignities *dig, int *feral, int *vazio_de_curso, int *retro) {
    
@@ -119,16 +212,18 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
             } 
 
 
-
             // Validação de Orbe e Signo
             if (closest >= 0 && min_diff <= (planet_orbis[i] + planet_orbis[j]) / 2.0) {
                 int sign_diff = diff_sign((int)floor(plots[i].longitude / 30), (int)floor(plots[j].longitude / 30));
                 
+                int aspect_diff = fabs(aspects_defs[closest].angle - angle);
+
                 if ((strcmp(aspects_defs[closest].name, "Square") == 0 && sign_diff == 3) ||
                     (strcmp(aspects_defs[closest].name, "Trine") == 0 && sign_diff == 4) ||
                     (strcmp(aspects_defs[closest].name, "Sextile") == 0 && sign_diff == 2) ||
                     (strcmp(aspects_defs[closest].name, "Opposition") == 0 && sign_diff == 6) ||
-                    (strcmp(aspects_defs[closest].name, "Conjunction") == 0)) 
+                    (strcmp(aspects_defs[closest].name, "Conjunction") == 0) ||
+                     aspect_diff <= 1) 
                 {
                     
                     // se tem aspecto não é feral
@@ -140,9 +235,14 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     matrix.grid[i][j].has_aspect = true;
                     matrix.grid[i][j].angle = angle;
                     strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
+
+                    bool partil = false;
+                    if (aspect_diff < 1.0) {
+                        partil = true;
+                    }
                     
                     int aplicativo = 0;
-                    if (fabs(plots[i].speed) > fabs(plots[j].speed)) {
+                    if (!partil && fabs(plots[i].speed) > fabs(plots[j].speed)) {
                         if ((sinal && aspects_defs[closest].angle > angle) || (!sinal && aspects_defs[closest].angle < angle)) {
                             if (retro[i]) {
                                 aplicativo = 0;
@@ -162,7 +262,7 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                             }                                
                         }
                     }
-                    else {
+                    else if (!partil) {
                         if ((sinal && aspects_defs[closest].angle < angle) || (!sinal && aspects_defs[closest].angle > angle)) {
                             if (retro[j]) {
                                 aplicativo = 0;
@@ -182,13 +282,28 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                             }                                
                         }
                     }
+
+                    if (i < 12 - object_diff) {
+                        if (aplicativo || partil) {
+                            vazio_de_curso[i] = 0;
+                            vazio_de_curso[j] = 0;
+                        }                            
+                    }
+
+                    if (partil) {
+                        matrix.grid[i][j].is_partil = true;
+                    }
+                    else {
+                        matrix.grid[i][j].is_partil = false;
+                    }
                     
-                    if (aplicativo) {
+                    if (aplicativo && !partil) {
                         strncat(matrix.grid[i][j].symbol, " a", 3);
                         matrix.grid[i][j].is_aplicative = true;
                     }
-                    else {
+                    else if (!partil) {
                         strncat(matrix.grid[i][j].symbol, " s", 3);
+                        matrix.grid[i][j].is_aplicative = false;
                     }
                     
                     // Injeta a lógica de cores e estilos diretamente no dado

@@ -35,7 +35,8 @@ typedef struct {
     int color_pair;          // Par de cor Ncurses pré-calculado para o aspecto
     double angle;            // O ângulo real ou a distância (orbe) para exibição
     bool is_bold;            // Flag para destacar aspectos maiores (quadratura/oposição)
-    bool is_aplicative;            
+    bool is_aplicative;
+    bool is_partil;            
 } AspectCell;
 
 // A matriz completa que será enviada para a função de desenho
@@ -55,6 +56,14 @@ typedef struct {
 } DeclMatrix;
 
 bool has_aspect(int id1, int id2, AspectMatrix *matrix);
+bool has_aspect_aplicative(int id1, int id2, AspectMatrix *matrix);
+bool has_aspect_partil(int id1, int id2, AspectMatrix *matrix);
+bool has_aspect_aplicative_or_partil(int id1, int id2, AspectMatrix *matrix);
+bool has_aspect_separative(int id1, int id2, AspectMatrix *matrix);
+
+bool is_under_siege(int planet_id, AspectMatrix *matrix);
+bool is_under_assistance(int planet_id, AspectMatrix *matrix);
+
 AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDignities *dig, int *feral, int *vazio_de_curso, int *retro);
 DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis);
 void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl);

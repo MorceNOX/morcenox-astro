@@ -52,6 +52,8 @@
 #define SAN_CONJUNCIONAL 1
 #define SAN_PREVENCIONAL 2
 
+#include "directions.h"
+
 // Estrutura para mapear cada fatia do termo
 typedef struct {
     int grau_limite; // O grau onde o termo TERMINA dentro do signo
@@ -166,6 +168,9 @@ typedef struct {
     double *cusps_natal;
 
     int tipo_san;
+
+    Promittor *prom;
+
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);
@@ -249,5 +254,11 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
 void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str, int strength_reg_day, int strength_reg_hour, int dig_reg_day, int dig_reg_hour);
 
 void display_rising_times(PlotObject *plots);
+
+double get_hours_from_jd(double jd, double offset);
+void format_event_time(double jd, double offset, char *dest, size_t size_of_dest);
+double calc_solar_time(double julian_day, double ut_hours, double lon);
+struct tm julian_day_para_struct_tm(double jd_retorno);
+double calc_declination_mathematical_point(double jd, double longitude);
 
 #endif

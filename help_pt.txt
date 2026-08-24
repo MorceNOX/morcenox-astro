@@ -1189,7 +1189,8 @@ você meça a força de cada aspecto.
 
 Uma letra 'a' ou 's' é mostrada no lado direito do
 símbolo do aspecto, indicando se o aspecto é aplicativo
-ou separativo.
+ou separativo. Se o aspecto é exato (partil) nenhuma
+letra é exibida após o símbolo do aspecto.
 
 A codificação por cores indica a qualidade do aspecto:
 Azul (favorável: trígono e sextil), vermelho (desfavorável:
@@ -1724,7 +1725,15 @@ as direções na tabela.
 
 Todas as direções exibidas são zodiacais, com latitude real, 
 calculadas utilizando a chave temporal de Naibod e a obliquidade 
-dinâmica.
+dinâmica e mundanas proporcionais aos Semi-Arcos 
+(Método Placidus in mundo).
+
+A tabela também exibe, por padrão, direções zodiacais e mundanas 
+em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] 
+e pelas mundanas pressionando [M].
+
+Os promissores são os aspectos dos 7 planetas e os termos dos
+signos.
 
 As primeiras colunas mostram a idade e a data provável do
 evento.
@@ -1732,17 +1741,19 @@ evento.
 A codificação por cores indica direções destruidoras
 potenciais, direções boas e um período de alerta.
 
-• Quando o promissor é o Anareta ou Dominus Mortiis
+• Quando o promissor é o Anareta ou Dominus Mortiis, ou 
+  os termos regidos por esses planetas
   (branco sobre vermelho para aspectos maléficos e vermelho
   negrito para outros aspectos).
 
-• Aspectos ruins direcionados por maléficos (vermelho).
+• Aspectos ruins direcionados por maléficos (vermelho) ou 
+  os seus termos.
 
-• Aspectos ruins direcionados por não-maléfico
-  (amarelo) indicam um alerta.
+• Aspectos ruins direcionados por não-maléfico e os seus 
+  termos (amarelo) indicam um alerta.
 
-• Aspectos bons direcionados por benéficos (azul)
-  são direções potencialmente boas.
+• Aspectos bons direcionados por benéficos (azul) e os 
+  termos desses planetas são direções potencialmente boas.
 
 • Conjunções (magenta) exigem alguma análise.
 

@@ -1174,7 +1174,8 @@ measure the strength of each aspect.
 
 A letter 'a' or 's' is shown at the right side of the aspect 
 symbol indicating if the aspect is applicative or
-separative.
+separative. If the aspect is exact (partile), no letter is 
+displayed after the aspect symbol.
 
 Color coding indicates the quality of the aspect: Blue (favorable:
 trine and sextile), red (unfavorable: opposition and square), 
@@ -1689,24 +1690,33 @@ directions. You can filter the results by pressing [C] to see
 only Converse diretions, [D] for Direct, and [A] to see all 
 directions in the table.
 
-All directions displayer are Zodiacal with real latitude, 
-calculated with Naibod time key and dynamic obliquity.
+All directions displayed are Zodiacal with real latitude, 
+calculated with Naibod time key and dynamic obliquity and
+Mundane proportional to Semi-Arcs (Method Placidus in mundo).
+
+The table also displays, by default, Zodiacal and Mundane
+directions altogether. You can filter by Zodiacal by 
+pressing [Z] and Mundane only by pressing [M].
+
+Promittors are the aspects of the 7 planets and the 
+terms (bounds) of the signs.
 
 The first columns shows the age and the date of the event.
 
 Color coding indicate potential destructive directions, good
 directions and a period of alert.
 
-    • When the promisor is the Anareta or Dominus Mortiis (red 
-      reverse for malefic aspects and red bold for other aspects). 
+    • When the promittor is the Anareta or Dominus Mortiis and 
+      their terms (red reverse for malefic aspects and red bold 
+      for other aspects). 
     
-    • Bad aspects directed by malefics (red). 
+    • Bad aspects directed by malefics or their terms (red). 
     
-    • Bad aspects directed by no malefics (yellow) indicate an 
-      alert. 
+    • Bad aspects directed by no malefics and their terms 
+      (yellow) indicate an alert. 
     
-    • Good aspects directed by benefics (blue) are potencialy good 
-      directions. 
+    • Good aspects directed by benefics and the terms of these 
+      planets (blue) are potencialy good directions. 
       
     • Conjunctions (magenta) demand some analysis.
     

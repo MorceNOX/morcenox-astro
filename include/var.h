@@ -67,6 +67,7 @@ extern bool consider_modern_planets_rulling;
 extern int terms_system;
 
 extern const char *planet_regent_symbols[7];
+extern const char *planet_regent_names[7];
 
 void update_interface_language();
 
