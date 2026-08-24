@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 17:36-0300\n"
+"POT-Creation-Date: 2026-08-24 18:18-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1054,7 +1054,7 @@ msgstr "Tabela de Aspectos por Signo"
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos Antissia & Contrantissia "
 
-#: src/directions.c:390 src/directions.c:1351
+#: src/directions.c:390 src/directions.c:1361
 msgid "Mundane"
 msgstr "Mundana"
 
@@ -1171,7 +1171,7 @@ msgstr ""
 "Aspectos: Zodiacais c/ Latitude + Mundanos proporcionais aos Semi-Arcos "
 "(Método Placidus in mundo)."
 
-#: src/directions.c:702
+#: src/directions.c:702 src/directions.c:1164
 msgid "[↑/↓] [PgUp/PgDn] Scroll (Showing"
 msgstr "[↑/↓] [PgUp/PgDn] Rolar (Exibindo"
 
@@ -1179,7 +1179,7 @@ msgstr "[↑/↓] [PgUp/PgDn] Rolar (Exibindo"
 msgid "of"
 msgstr "de"
 
-#: src/directions.c:707
+#: src/directions.c:707 src/directions.c:1169
 msgid ") | [←/→] Change Target"
 msgstr ") | [←/→] Trocar Alvo"
 
@@ -1198,14 +1198,6 @@ msgstr ""
 #: src/directions.c:968
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
-
-#: src/directions.c:1164
-msgid "Use [↑/↓] to Scroll (Showing"
-msgstr "Use [↑/↓] Rolar (Exibindo"
-
-#: src/directions.c:1169
-msgid "events) | [←/→] Change Target"
-msgstr "eventos) | [←/→] Trocar Alvo"
 
 #: src/draw-chart.c:407 src/draw-chart.c:4235 src/firdaria.c:97 src/hyleg.c:336
 #: src/profections.c:52 src/solar_return.c:865 src/solar_return.c:984
@@ -2336,11 +2328,11 @@ msgstr ""
 "Força Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Day"
 msgstr "o Dia"
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Night"
 msgstr "a Noite"
 
@@ -2359,7 +2351,6 @@ msgstr ""
 "\n"
 
 #: src/draw-chart.c:3824
-#, c-format
 msgid ""
 "       This planet commands %s with magnificent backing.\n"
 "       Because its cosmic efficiency is highly abundant (%d%%), it acts as "
@@ -2370,14 +2361,22 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"       Este planeta rege o %d com um apoio magnífico do seu mapa natal.\n"
+"       Este planeta rege %d com um apoio magnífico do seu mapa natal.\n"
 "       Graças à sua eficiência cósmica altamente elevada (%d%%), ele atua "
-"como \n"
-"um executivo respeitado e poderoso. As promessas desta data se \n"
-"manifestarão com clareza, proporcionando progresso estrutural, expansão \n"
+"como\n"
+"um executivo respeitado e poderoso. As promessas desta data se manifestarão\n"
+"com clareza, proporcionando progresso estrutural, expansão \n"
 "repentina e atrito mínimo.\n"
 "\n"
 "\n"
+
+#: src/draw-chart.c:3827 
+msgid "the day"
+msgstr "o dia"
+
+#: src/draw-chart.c:3827 
+msgid "the night"
+msgstr "a noite"
 
 #: src/draw-chart.c:3831 src/draw-chart.c:3875 src/solar_return.c:523
 msgid ""
@@ -5481,6 +5480,12 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Use [↑/↓] to Scroll (Showing"
+#~ msgstr "Use [↑/↓] Rolar (Exibindo"
+
+#~ msgid "events) | [←/→] Change Target"
+#~ msgstr "eventos) | [←/→] Trocar Alvo"
 
 #~ msgid " | [C] Converse [D] Direct [A] All"
 #~ msgstr " | [C] Conversas [D] Diretas [A] Todas"

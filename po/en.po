@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 17:44-0300\n"
+"POT-Creation-Date: 2026-08-24 18:28-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1989,11 +1989,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Day"
 msgstr ""
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Night"
 msgstr ""
 
@@ -2010,7 +2010,7 @@ msgstr ""
 #: src/draw-chart.c:3824
 #, c-format
 msgid ""
-"       This planet commands %s with magnificent backing.\n"
+"       This planet commands its period with magnificent backing.\n"
 "       Because its cosmic efficiency is highly abundant (%d%%), it acts as "
 "an honored\n"
 "and powerful executive. The promises of this planet will manifest with "

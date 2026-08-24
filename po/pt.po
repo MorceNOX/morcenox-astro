@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 17:44-0300\n"
+"POT-Creation-Date: 2026-08-24 18:28-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2328,11 +2328,11 @@ msgstr ""
 "Força Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Day"
 msgstr "o Dia"
 
-#: src/draw-chart.c:3815 src/draw-chart.c:3827 src/draw-chart.c:3846
+#: src/draw-chart.c:3815 src/draw-chart.c:3846
 msgid "the Night"
 msgstr "a Noite"
 
@@ -2353,7 +2353,7 @@ msgstr ""
 #: src/draw-chart.c:3824
 #, c-format
 msgid ""
-"       This planet commands %s with magnificent backing.\n"
+"       This planet commands its period with magnificent backing.\n"
 "       Because its cosmic efficiency is highly abundant (%d%%), it acts as "
 "an honored\n"
 "and powerful executive. The promises of this planet will manifest with "
@@ -2362,11 +2362,11 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"       Este planeta rege o %d com um apoio magnífico do seu mapa natal.\n"
+"       Este planeta rege o seu período com um apoio magnífico do seu mapa natal.\n"
 "       Graças à sua eficiência cósmica altamente elevada (%d%%), ele atua "
-"como \n"
-"um executivo respeitado e poderoso. As promessas desta data se \n"
-"manifestarão com clareza, proporcionando progresso estrutural, expansão \n"
+"como\n"
+"um executivo respeitado e poderoso. As promessas desta data se manifestarão\n"
+"com clareza, proporcionando progresso estrutural, expansão \n"
 "repentina e atrito mínimo.\n"
 "\n"
 "\n"
@@ -5473,6 +5473,12 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "the day"
+#~ msgstr "o dia"
+
+#~ msgid "the night"
+#~ msgstr "a noite"
 
 #~ msgid "Use [↑/↓] to Scroll (Showing"
 #~ msgstr "Use [↑/↓] Rolar (Exibindo"

@@ -3821,10 +3821,10 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
         wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        wprintw(pad, _("       This planet commands %s with magnificent backing.\n"
+        wprintw(pad, _("       This planet commands its period with magnificent backing.\n"
                         "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
                         "and powerful executive. The promises of this planet will manifest with clarity,\n"
-                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO)?_("the Day"):_("the Night"), strength_reg_day);
+                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), strength_reg_day);
     } 
     else if (strength_reg_day >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
