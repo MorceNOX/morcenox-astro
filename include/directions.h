@@ -25,6 +25,8 @@
 #define PROM_PLANET 1
 #define PROM_TERM 2
 #define PROM_POINT 3
+#define PROM_ANTISCIUM 4
+#define PROM_CONTRANTISCIUM 5
 
 typedef struct {
     int id;

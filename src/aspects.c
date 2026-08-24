@@ -511,7 +511,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
 
 
 
-void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl) {
+void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl, AntObject *ants, int num_ants) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
@@ -629,7 +629,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
     }
 
-    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - [↓↑|JK] Scroll"));
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissium - [↓↑|JK] Scroll"));
     wrefresh(aspects_win);
 
     int offset_y = 0;
@@ -660,6 +660,18 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             matrix_sign = calculate_aspects_by_sign(plots);
 
             display_aspects_by_sign(plots, &matrix_sign);
+            
+            touchwin(aspects_shadow);
+            wrefresh(aspects_shadow);
+            touchwin(aspects_win);
+            wrefresh(aspects_win);
+            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+        }
+        else if (ch == KEY_F(5)) {
+            AspectMatrix matrix_ants = {0}; 
+            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants);
+
+            display_aspects_antissium(plots, ants, num_ants, &matrix_ants);
             
             touchwin(aspects_shadow);
             wrefresh(aspects_shadow);
@@ -866,6 +878,225 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, "░░░"); 
+                wattroff(pad, COLOR_PAIR(10) | A_DIM);
+            }
+        }
+    }
+
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
+    wrefresh(aspects_win);
+
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    // Vincula o teclado à PAD virtual
+    keypad(pad, TRUE);
+    nodelay(pad, FALSE);
+
+    // Renderiza a primeira foto da PAD na tela
+    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+
+    int ch;
+    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+                
+        switch (ch) {
+            case KEY_UP: 
+            case 'k': 
+            case 'K':
+                if (offset_y > 0) offset_y -= 2;
+                break;
+                
+            case KEY_DOWN: 
+            case 'j': 
+            case 'J':
+                if (offset_y < max_scroll_y) offset_y += 2;
+                break;
+        }
+        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+        
+    }
+    
+    delwin(pad);
+    delwin(aspects_shadow);
+    delwin(aspects_win);
+    touchwin(stdscr); 
+    refresh();
+}
+
+
+
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects) {
+   
+    AspectMatrix matrix = {0};
+
+    AspectDefs aspects_defs[] = {
+        {0.0, "☌", "Conjunction"}, 
+        {60.0, "⚹", "Sextile"}, 
+        {90.0, "□", "Square"}, 
+        {120.0, "△", "Trine"}, 
+        {180.0, "☍", "Opposition"}
+    };
+    
+    // Varredura para calcular os aspectos
+    for (int i = 0; i < 7; i++) {
+        
+        for (int j = 0; j < num_objects; j++) {
+            if (i >= j) continue;
+
+            // returns the angle between -180 and 180 degrees
+            double angle = normalize_angle(plots[i].longitude - ants[j].longitude);
+
+            angle = fabs(angle);
+
+            // Acha o aspecto mais próximo
+            double min_diff = 360.0;
+            int closest = -1;
+            for (int a = 0; a < 5; a++) {
+                double diff = fabs(angle - aspects_defs[a].angle);
+                if (diff > 180.0) diff = 360.0 - diff;
+                if (diff < min_diff) { min_diff = diff; closest = a; }
+            }
+
+            // Validação de Orbe e Signo
+            if (closest >= 0 && min_diff <= ANTISCIUM_ORB) {
+               
+                double aspect_diff = fabs(aspects_defs[closest].angle - angle);
+
+                 
+                // Alimenta a célula correspondente da matriz
+                matrix.grid[i][j].has_aspect = true;
+                matrix.grid[i][j].angle = aspect_diff;
+                strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
+
+                // Injeta a lógica de cores e estilos diretamente no dado
+                if (strcmp(aspects_defs[closest].name, "Square") == 0 || strcmp(aspects_defs[closest].name, "Opposition") == 0) {
+                    matrix.grid[i][j].color_pair = 11;
+                    matrix.grid[i][j].is_bold = true;
+                } else if (strcmp(aspects_defs[closest].name, "Trine") == 0 || strcmp(aspects_defs[closest].name, "Sextile") == 0) {
+                    matrix.grid[i][j].color_pair = 8;
+                    matrix.grid[i][j].is_bold = false;
+                } else {
+                    matrix.grid[i][j].color_pair = 7;
+                    matrix.grid[i][j].is_bold = true;
+                }
+                
+            }
+        }
+
+    }
+
+    return matrix;
+}
+
+
+
+
+void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix) {
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    int table_height = 24;
+    int table_width = max_x - 5;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 2;
+
+    WINDOW *aspects_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *aspects_shadow = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    werase(aspects_shadow);
+    wattron(aspects_shadow, COLOR_PAIR(9));
+    box(aspects_shadow, 0, 0);
+    wattroff(aspects_shadow, COLOR_PAIR(9));
+    wrefresh(aspects_shadow);
+
+    box(aspects_win, 0, 0);
+    wbkgd(aspects_win, COLOR_PAIR(6));
+    wattron(aspects_win, A_BOLD);
+    const char *title = _(" Antissia & Contrantissia Aspect Matrix Grid ");
+    mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+
+
+    int max_linhas_dados = table_height - 6;
+    WINDOW *pad = newpad(40, table_width - 4);
+    wbkgd(pad, COLOR_PAIR(13));
+
+    int row_pad = 0;
+    
+    // 1. Cabeçalhos Superiores (Símbolos dos Planetas)
+    for (int i = 0; i < num_ants; i++) {
+        wattron(aspects_win, A_BOLD);
+        mvwprintw(aspects_win, 1, 6 + 6 * i, ants[i].object);
+        wattroff(aspects_win, A_BOLD);
+    }
+
+    // 2. Cabeçalhos Laterais (Símbolos dos Planetas)
+    for (int i = 0; i < 7; i++) {
+        wattron(pad, A_BOLD);
+        mvwprintw(pad, 1 + 2 * i, 0, plots[i].object);
+        wattroff(pad, A_BOLD);
+    }
+
+    // 3. Desenho das Linhas do Grid
+    for (int i = 0; i < 7 + 1; i++) {
+        for (int j = 0; j < num_ants; j++) {
+            if (i == 0) {
+                mvwprintw(aspects_win, 2, 4 + 6 * j, "______");
+            }
+            else {
+                mvwprintw(pad, 0 + 2 * i, 2 + 6 * j, "______");
+            }
+            
+        }
+    }
+
+    // 4. Desenho das Linhas Verticais
+    for (int i = 0; i < (7 * 2); i++) {
+        for (int j = 0; j < num_ants + 1; j++) {
+            mvwprintw(pad, 1 + i, 2 + 6 * j, "|");
+        }
+    }
+
+    // 5. Renderização dos Dados Pré-Calculados da Matriz
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < num_ants; j++) {
+            
+            // Se i >= j, renderiza o bloco nulo/vazio (Triângulo inferior da matriz)
+            if (i >= j) {
+                wattron(pad, COLOR_PAIR(10) | A_DIM);
+                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
+                wattroff(pad, COLOR_PAIR(10) | A_DIM);
+                continue;
+            }
+
+            // Pega a célula correspondente
+            AspectCell cell = matrix->grid[i][j];
+
+            if (cell.has_aspect) {
+                // Ativa os atributos dinâmicos injetados pela função chamadora
+                wattron(pad, COLOR_PAIR(cell.color_pair));
+                
+                if (cell.is_bold) wattron(pad, A_BOLD);
+
+                // Desenha o Símbolo Astrológico do Aspecto
+                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, cell.symbol);
+                
+                // Desativa os atributos do símbolo
+                if (cell.is_bold) wattroff(pad, A_BOLD);
+                wattroff(pad, COLOR_PAIR(cell.color_pair));
+
+                wattron(pad, COLOR_PAIR(10) | A_DIM);
+                char ag[8] = "";
+                snprintf(ag, 8, "%4.2f", cell.angle);
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, ag);
+                wattroff(pad, COLOR_PAIR(10) | A_DIM);
+                                
+                row_pad = 2 + 2 * i + 1;
+            }
+            else {
+                wattron(pad, COLOR_PAIR(10) | A_DIM);
+                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, "░░░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
         }

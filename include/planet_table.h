@@ -24,6 +24,17 @@
 
 typedef struct {
     int id;
+    char object[10];
+    char object_name[30];
+    double longitude;
+    double latitude;
+    double declination;
+    int house;
+} AntObject;
+
+
+typedef struct {
+    int id;
     double longitude;
     char *object;
     char *object_name;

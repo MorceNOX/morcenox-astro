@@ -221,6 +221,8 @@ Pressione Q ou ESC para retornar ao menu principal.
     
     - F4 - Aspectos por Signo 
     
+    - F5 - Matriz de Aspectos Antissia & Contrantissia
+    
 * F4 - Horas Planetárias
 
     i - Análise da Hora Planetária 
@@ -1105,6 +1107,8 @@ para fazer uma interpretação melhor e mais completa.
 Use [↓↑] para deslizar a tabela.
 
 
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 10: Perfil de Energia Planetária
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
@@ -1235,7 +1239,7 @@ Nota: A aplicação considera a declinação da SAN
 (sizígia pré-natal) como a declinação da Lua no momento
 da conjunção/oposição anterior com o Sol.
 
-Esta opção está disponível como uma opção independente
+Esta funcionalidade está disponível como uma opção independente
 ao selecionar pelo Menu de Ações.
 
 Use [↓↑] para deslizar a tabela.
@@ -1252,11 +1256,23 @@ distância de seus respectivos signos.
 Se não houver aspecto por signo entre dois objetos,
 eles estão em aversão, ou seus signos são inconjuntos.
 
-Esta opção está disponível como uma opção independente
+Esta funcionalidade está disponível como uma opção independente
 ao selecionar pelo menu.
 
 Use [↓↑] para deslizar a tabela.
 
+
+
+
+• Matriz de Aspectos Antissium & Contrantissium
+  F5 na Tabela de Aspectos
+───────────────────────────────────────────────────────────────────
+
+Exibe aspectos entre os 7 principais planetas e os seus Antissia e
+Contrantissia.
+
+Esta funcionalidade está disponível como uma opção independente
+ao selecionar pelo menu.
 
 
 
@@ -1732,8 +1748,8 @@ A tabela também exibe, por padrão, direções zodiacais e mundanas
 em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] 
 e pelas mundanas pressionando [M].
 
-Os promissores são os aspectos dos 7 planetas e os termos dos
-signos.
+Os promissores são os aspectos dos 7 planetas, seus Antissia e 
+Contrantissia, e os termos dos signos.
 
 As primeiras colunas mostram a idade e a data provável do
 evento.

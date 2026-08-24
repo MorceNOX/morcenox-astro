@@ -2039,6 +2039,49 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 }
 
 
+int get_opposite_sign(int sign) {
+    switch(sign) {
+        case 0: return 6;
+        case 1: return 7;
+        case 2: return 8;
+        case 3: return 9;
+        case 4: return 10;
+        case 5: return 11;
+        case 6: return 0;
+        case 7: return 1;
+        case 8: return 2;
+        case 9: return 3;
+        case 10: return 4;
+        case 11: return 5;
+    }
+    return -1;  
+}
+
+
+int get_sign_antiscium(int sign) {
+    switch(sign) {
+        case 0: return 5;
+        case 1: return 4;
+        case 2: return 3;
+        case 3: return 2;
+        case 4: return 1;
+        case 5: return 0;
+        case 6: return 11;
+        case 7: return 10;
+        case 8: return 9;
+        case 9: return 8;
+        case 10: return 7;
+        case 11: return 6;
+    }
+    return -1;  
+}
+
+
+double get_antiscium_degree(double degree) {
+    return 30.0 - degree;
+}
+
+
 char *get_sign(int n) {
     switch(n) {
         case 0: return "♈";
@@ -6108,7 +6151,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // criar Promittor objects array com as coordenadas dos 7 planetas e do termos
 
-        Promittor prom[67] = {0};
+        Promittor prom[100] = {0};
 
         for (int i = 0; i < 7; i++) {
             snprintf(prom[i].object, 10, "%s", plots[i].object);
@@ -6132,12 +6175,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             for (int j = 0; j < 5; j++, index++) {
                 if (terms_system == 1) {
                     longitudes_termos[index] = get_longitude_term(i, j, tabela_termos_egipcios);
-                    snprintf(termos_regentes[index], 10, "%s%s", planet_regent_symbols[tabela_termos_egipcios[i][j].regente], get_sign(i));
+                    snprintf(termos_regentes[index], 10, "%s%s", get_sign(i), planet_regent_symbols[tabela_termos_egipcios[i][j].regente]);
                     snprintf(prom[index+7].object_name, 30, "%s", planet_regent_names[tabela_termos_egipcios[i][j].regente]);
                 } 
                 else {
                     longitudes_termos[index] = get_longitude_term(i, j, tabela_termos_ptolomeu);
-                    snprintf(termos_regentes[index], 10, "%s%s", planet_regent_symbols[tabela_termos_ptolomeu[i][j].regente], get_sign(i));
+                    snprintf(termos_regentes[index], 10, "%s%s", get_sign(i), planet_regent_symbols[tabela_termos_ptolomeu[i][j].regente]);
                     snprintf(prom[index+7].object_name, 30, "%s", planet_regent_names[tabela_termos_ptolomeu[i][j].regente]);          
                 }
                 snprintf(prom[index+7].object, 10, "%s", termos_regentes[index]);                
@@ -6148,11 +6191,72 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             obter_coordenadas_termo(longitudes_termos[i], julian_day, &ra_termos[i], &decl_termos[i]);
             prom[i+7].id = i + 7;
             prom[i+7].longitude = longitudes_termos[i];
-            prom[i].latitude = 0.0;
+            prom[i+7].latitude = 0.0;
             prom[i+7].declination = decl_termos[i];
             prom[i+7].house = romanToInt((char *)get_house_roman(longitudes_termos[i], cusps));
             prom[i+7].type = PROM_TERM;
         }
+
+        
+        AntObject ants[14] = {0};
+        
+        
+        double longitudes_ant[7] = {0};
+        int sign_ant[7] = {0};
+
+        for (int i = 0; i < 7; i++) {
+            snprintf(prom[i+67].object, 10, "A%s", plots[i].object);
+            snprintf(prom[i+67].object_name, 30, "%s", plots[i].object_name);
+            prom[i+67].id = plots[i].id + 67;
+
+            longitudes_ant[i] = get_antiscium_degree(fmod(plots[i].longitude, 30));
+            sign_ant[i] = get_sign_antiscium((int)(plots[i].longitude / 30));
+
+            prom[i+67].longitude = sign_ant[i] * 30.0 + longitudes_ant[i];
+            
+            prom[i+67].latitude = planet_latitudes[i];
+            prom[i+67].declination = plots[i].declination;
+            prom[i+67].house = romanToInt((char *)get_house_roman(prom[i+67].longitude, cusps));
+            prom[i+67].type = PROM_ANTISCIUM;
+
+            ants[i].id = i;
+            ants[i].longitude = prom[i+67].longitude;
+            ants[i].latitude = prom[i+67].latitude;
+            ants[i].declination = prom[i+67].declination;
+            ants[i].house = prom[i+67].house;
+            snprintf(ants[i].object, 10, "A%s", plots[i].object);
+            snprintf(ants[i].object_name, 30, "Antiscium %s", plots[i].object_name);
+        }
+
+
+        double longitudes_cant[7] = {0};
+        int sign_cant[7] = {0};
+
+        for (int i = 0; i < 7; i++) {
+            snprintf(prom[i+74].object, 10, "CA%s", plots[i].object);
+            snprintf(prom[i+74].object_name, 30, "%s", plots[i].object_name);
+            prom[i+74].id = plots[i].id + 74;
+
+            longitudes_cant[i] = longitudes_ant[i];
+            sign_cant[i] = get_opposite_sign(sign_ant[i]);
+
+            prom[i+74].longitude = sign_cant[i] * 30.0 + longitudes_cant[i];
+            
+            prom[i+74].latitude = -planet_latitudes[i];
+            prom[i+74].declination = -plots[i].declination;
+            prom[i+74].house = romanToInt((char *)get_house_roman(prom[i+74].longitude, cusps));
+            prom[i+74].type = PROM_CONTRANTISCIUM;
+
+            ants[i+7].id = i;
+            ants[i+7].longitude = prom[i+74].longitude;
+            ants[i+7].latitude = prom[i+74].latitude;
+            ants[i+7].declination = prom[i+74].declination;
+            ants[i+7].house = prom[i+74].house;
+            snprintf(ants[i+7].object, 10, "CA%s", plots[i].object);
+            snprintf(ants[i+7].object_name, 30, "Contrantiscium %s", plots[i].object_name);
+        }
+
+
 
         
         // Aries offset to draw the chart
@@ -6378,6 +6482,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.tipo_san = tipo_san;
 
                 ctx.prom = prom;
+
+                ctx.ants = ants;
             
                 open_menu_tables(&ctx);
 
@@ -6410,7 +6516,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;    
             case 'x':
             case KEY_F(3):
-                display_aspects(plots, &matrix, &matrix_decl);
+                display_aspects(plots, &matrix, &matrix_decl, ants, 14);
                 break;
             case KEY_F(4):
                 display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, strength_planets, dig);
@@ -6562,7 +6668,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         "20. Solar Revolution",
         "21. Planetary Energy Profile",
         "22. Primary Motivation",
-        "23. Aspects by Sign"
+        "23. Aspects by Sign",
+        "24. Aspects to Antissia & Contrantissia"
         
     };
     // Calcula automaticamente o total de opções adicionadas ao array
@@ -6584,7 +6691,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         "13. Arabic Parts",
         "14. Planetary Energy Profile",
         "15. Arabic Parts Solar Return Radix Confrontation",
-        "16. Aspects by Sign"
+        "16. Aspects by Sign",
+        "17. Aspects to Antissia & Contrantissia"
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -6730,7 +6838,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_force(ctx->plots, ctx->dig, ctx->strength_planets);
             break;
         case 4:
-            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl);
+            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, 14);
             break;
         case 5:
             display_declination_aspects(ctx->plots, &ctx->matrix_decl);
@@ -6819,7 +6927,12 @@ void open_menu_tables(ContextoMenu *ctx) {
         case 16:
             if (!ctx->mapa_retorno) {
                 display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->planet_latitudes, ctx->armc, ctx->lat);
-            }            
+            }
+            else {
+                AspectMatrix matrix_ants = {0}; 
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14);
+                display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);  
+            }           
             break;
         case 17:
             display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
@@ -6845,6 +6958,11 @@ void open_menu_tables(ContextoMenu *ctx) {
             AspectMatrix matrix_sign = {0};
             matrix_sign = calculate_aspects_by_sign(ctx->plots);
             display_aspects_by_sign(ctx->plots, &matrix_sign);
+            break;
+        case 23:
+            AspectMatrix matrix_ants = {0}; 
+            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14);
+            display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);
             break;
         default:
             break;

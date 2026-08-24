@@ -21,6 +21,8 @@
 
 #include "planet_table.h"
 
+#define ANTISCIUM_ORB 2.0
+
 typedef struct { 
     double angle; 
     char *symbol; 
@@ -66,8 +68,10 @@ bool is_under_assistance(int planet_id, AspectMatrix *matrix);
 
 AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDignities *dig, int *feral, int *vazio_de_curso, int *retro);
 DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis);
-void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl);
+void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl, AntObject *ants, int num_ants);
 void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix);
 AspectMatrix calculate_aspects_by_sign(PlotObject *plots);
 void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix);
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects);
+void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix);
 #endif

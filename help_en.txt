@@ -218,7 +218,9 @@ Press Q or ESC to return to the main menu.
     
         - F3 - Parallel & Contra-parallel aspects
         
-        - F4 - Aspects by Sign 
+        - F4 - Aspects by Sign
+        
+        - F5 - Antisia & Contrantissia Aspects Matrix Grid 
         
     * F4 - Planetary Hours
     
@@ -1212,7 +1214,7 @@ Note: The application consider the SAN's (pre-natal syzygy)
 declination as the Moon's declination as in the moment of the 
 previous conjunction/opposition to the Sun.
 
-This option is available as an independent option when
+This feature is available as an independent option when
 selecting by the menu action.
 
 Use [↓↑] to scroll the table.
@@ -1233,6 +1235,19 @@ This option is available as an independent option when
 selecting by the menu action.
 
 Use [↓↑] to scroll the table.
+
+
+
+
+• Antissium & Contrantissium Aspects Matrix Grid
+  F5 na Tabela de Aspectos
+───────────────────────────────────────────────────────────────────
+
+Displays the aspects between the 7 main planets and their Antissia 
+and Contrantissia.
+
+This feature is available as an independent option when
+selecting by the menu action.
 
 
 
@@ -1698,8 +1713,8 @@ The table also displays, by default, Zodiacal and Mundane
 directions altogether. You can filter by Zodiacal by 
 pressing [Z] and Mundane only by pressing [M].
 
-Promittors are the aspects of the 7 planets and the 
-terms (bounds) of the signs.
+Promittors are the aspects of the 7 planets, their Antissia
+and Contrantissia, and the terms (bounds) of the signs.
 
 The first columns shows the age and the date of the event.
 
