@@ -17,7 +17,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time Transit charts.
 * **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verifies the transits of the planets against the natal (radical) positions, including the Arabic Parts.
 * **Time-Lord Techniques:** Built-in modules for **Firdaria**, **Annual Profections**, and **Vital Chronocrators** (Hyleg & Alcochoden).
-* **Primary Directions:** Precise calculation of Direct and Converse directions for planets and Arabic Parts using Naibod time key and dynamic obliquity.
+* **Primary Directions:** Precise calculation of Direct and Converse directions for planets, angles and Arabic Parts using Naibod time key and dynamic obliquity for *zodiacal* and mundane proportional to semi-arc for directions *in-mundo*.
 * **Arabic Parts:** Create, edit, and manage a custom collection of Arabic Parts, with automated aspect calculation.
 * **Anareta & Vital Threats:** Identify potential physical risks and vital threats based on the 8th house ruler and the Anareting planet.
 
@@ -174,7 +174,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1600" alt="02-chart_wheel_example_02" src="https://github.com/user-attachments/assets/ab0f7407-1705-4182-97a1-9f9a18659ba6" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/d9bd58ad-3722-4440-88e7-9d0290c553da" />
 <hr>
 
 ### The Chart Wheel Zoomed
@@ -189,17 +189,17 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Aspects Table
 ---
-<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/a4bfc3a6-cba2-4e68-ad21-367437019345" />
+<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/43e8d389-5322-40f3-b649-9b117d835dd0" />
 <hr>
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/88620cca-fb86-4e6f-8a83-60a2ee5c0e82" />
+<img width="2560" height="1600" alt="04a-primary_directions_table" src="https://github.com/user-attachments/assets/895c0f0f-f49b-4451-bebd-77265e24a0a5" />
 <hr>
 
 ### Firdaria
 <hr>
-<img width="2560" height="1600" alt="05-firdaria_table" src="https://github.com/user-attachments/assets/90fb87e2-a310-412e-87b5-bcf531d7192b" />
+<img width="2560" height="1600" alt="05a-firdaria_table" src="https://github.com/user-attachments/assets/9a85240a-d752-4ebf-b0c3-4487a4cc50f0" />
 <hr>
 
 ### Energy Profile Chart
@@ -210,6 +210,16 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### Temperament Chart
 <hr>
 <img width="2526" height="1469" alt="09-temperament_chart" src="https://github.com/user-attachments/assets/1f5622e5-b11f-4a1d-b8c0-eda6ac8a36bf" />
+<hr>
+
+### Solar Return Radix Confrontation
+<hr>
+<img width="2560" height="1600" alt="06b-solar_return_radix_confrontation" src="https://github.com/user-attachments/assets/51f4db71-0669-48f1-b84f-d349fc69eef7" />
+<hr>
+
+### Solar Return Transit Projection
+<hr>
+<img width="2560" height="1600" alt="06a-solar_return_transit_projection" src="https://github.com/user-attachments/assets/77be865d-f23f-4c12-baf1-92900785b7d8" />
 <hr>
 
 ## 📜 License
