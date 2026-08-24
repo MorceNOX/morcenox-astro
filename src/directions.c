@@ -698,13 +698,13 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
-            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d %s%s",
-                _("Use [↑/↓] to Scroll (Showing"),
+            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
+                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
                 scroll_offset / 2 + 1, 
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
                 qtd_direcoes,
-                _("events) | [←/→] Change Target"),
+                _(") | [←/→] Change Target"),
                 _(" | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
         } else {
             mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
@@ -766,6 +766,16 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
             case KEY_UP:
                 if (scroll_offset > 0) {
                     scroll_offset -= 2;
+                }
+                break;
+            case KEY_NPAGE:
+                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
+                    scroll_offset += max_linhas_exibicao;
+                }
+                break;
+            case KEY_PPAGE:
+                if (scroll_offset >= 0) {
+                    scroll_offset -= max_linhas_exibicao;
                 }
                 break;
             case 27:
@@ -1150,13 +1160,13 @@ void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char 
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
-            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d %s%s",
-                _("Use [↑/↓] to Scroll (Showing"),
+            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
+                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
                 scroll_offset / 2 + 1, 
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
                 qtd_direcoes,
-                _("events) | [←/→] Change Target"),
+                _(") | [←/→] Change Target"),
                 _(" | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
         } else {
             mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
@@ -1164,12 +1174,12 @@ void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char 
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
+
         
         wrefresh(table_win);
 
         int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
         if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
-            // Se o espaço visível for maior que os dados existentes, encurta a projeção
             fim_y_recorte = start_y + 7 + (linhas_reais_pad - scroll_offset) - 1;
         }
 
@@ -1218,6 +1228,16 @@ void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char 
             case KEY_UP:
                 if (scroll_offset > 0) {
                     scroll_offset -= 2;
+                }
+                break;
+            case KEY_NPAGE:
+                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
+                    scroll_offset += max_linhas_exibicao;
+                }
+                break;
+            case KEY_PPAGE:
+                if (scroll_offset >= 0) {
+                    scroll_offset -= max_linhas_exibicao;
                 }
                 break;
             case 27:

@@ -1026,15 +1026,22 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     
     // 1. Cabeçalhos Superiores (Símbolos dos Planetas)
     for (int i = 0; i < num_ants; i++) {
+
+        int degree = (int)fmod(ants[i].longitude, 30);
+        const char *sign_str = get_sign((int)(ants[i].longitude / 30));
+        char text[10];
+        snprintf(text, 10, "%d%s", degree, sign_str); 
+
         wattron(aspects_win, A_BOLD);
         mvwprintw(aspects_win, 1, 6 + 6 * i, ants[i].object);
         wattroff(aspects_win, A_BOLD);
+        mvwprintw(aspects_win, 2, 6 + 6 * i, text);
     }
 
     // 2. Cabeçalhos Laterais (Símbolos dos Planetas)
     for (int i = 0; i < 7; i++) {
         wattron(pad, A_BOLD);
-        mvwprintw(pad, 1 + 2 * i, 0, plots[i].object);
+        mvwprintw(pad, 2 + 2 * i, 0, plots[i].object);
         wattroff(pad, A_BOLD);
     }
 
@@ -1042,10 +1049,10 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     for (int i = 0; i < 7 + 1; i++) {
         for (int j = 0; j < num_ants; j++) {
             if (i == 0) {
-                mvwprintw(aspects_win, 2, 4 + 6 * j, "______");
+                mvwprintw(aspects_win, 3, 4 + 6 * j, "______");
             }
             else {
-                mvwprintw(pad, 0 + 2 * i, 2 + 6 * j, "______");
+                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "______");
             }
             
         }
@@ -1054,7 +1061,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     // 4. Desenho das Linhas Verticais
     for (int i = 0; i < (7 * 2); i++) {
         for (int j = 0; j < num_ants + 1; j++) {
-            mvwprintw(pad, 1 + i, 2 + 6 * j, "|");
+            mvwprintw(pad, 2 + i, 2 + 6 * j, "|");
         }
     }
 
@@ -1065,7 +1072,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
             // Se i >= j, renderiza o bloco nulo/vazio (Triângulo inferior da matriz)
             if (i >= j) {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
                 continue;
             }
@@ -1080,7 +1087,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 if (cell.is_bold) wattron(pad, A_BOLD);
 
                 // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, cell.symbol);
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, cell.symbol);
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD);
@@ -1089,14 +1096,14 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8] = "";
                 snprintf(ag, 8, "%4.2f", cell.angle);
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, ag);
+                mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
                                 
                 row_pad = 2 + 2 * i + 1;
             }
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(pad, 1 + 2 * i, 3 + 6 * j, "░░░░░"); 
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "░░░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
         }
@@ -1114,7 +1121,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+    prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
@@ -1132,7 +1139,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+        prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
         
     }
     

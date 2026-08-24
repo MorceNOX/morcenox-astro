@@ -1349,7 +1349,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
-    int table_height = 24;
+    int table_height = 28;
     int table_width = max_x - 4;
     int start_y = (max_y - table_height) / 2;
     int start_x = 2;
@@ -1372,7 +1372,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     
     int row_offset = 0; // Deslocamento vertical inicial
     // Cada planeta ocupa 2 linhas físicas na tabela. Descontamos 5 linhas de cabeçalho/rodapé.
-    int max_linhas_tela = (table_height - 5) / 2; 
+    int max_linhas_tela = (table_height - 6) / 2; 
     
     bool deve_fazer_wipe = true; 
 
@@ -1417,7 +1417,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         for (int r = 0; r < linhas_nesta_tela; r++) {
             int p_idx = mapeamento_planetas[row_offset + r];
             wattron(aspects_win, A_BOLD);
-            mvwprintw(aspects_win, 4 + 2 * r, 8, "%-10s", obj[p_idx].object);
+            mvwprintw(aspects_win, 5 + 2 * r, 8, "%-10s", obj[p_idx].object);
             wattroff(aspects_win, A_BOLD);
         }
 
@@ -1431,14 +1431,21 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
             mvwprintw(aspects_win, 2, 14 + 6 * j, "%s", abreviacao); // Movido para X=14 para alinhar com o grid
             wattroff(aspects_win, A_BOLD | COLOR_PAIR(13));
 
+            int degree = (int)fmod(lista[pagina_offset + j].longitude, 30);
+            const char *sign_str = get_sign((int)(lista[pagina_offset + j].longitude / 30));
+            char text[10];
+            snprintf(text, 10, "%d%s", degree, sign_str); 
+
+            mvwprintw(aspects_win, 3, 14 + 6 * j, text);
+
             // B) Desenha o Grid Estrutural desta coluna (Linhas horizontais e verticais)
             for (int i = 0; i < linhas_nesta_tela + 1; i++) {
-                mvwprintw(aspects_win, 3 + 2 * i, 12 + 6 * j, "______");
+                mvwprintw(aspects_win, 4 + 2 * i, 12 + 6 * j, "______");
             }
             for (int i = 0; i < (linhas_nesta_tela * 2); i++) {
-                mvwprintw(aspects_win, 4 + i, 12 + 6 * j, "|");
+                mvwprintw(aspects_win, 5 + i, 12 + 6 * j, "|");
                 if (j == partes_nesta_pagina - 1) {
-                    mvwprintw(aspects_win, 4 + i, 12 + 6 * (j + 1), "|");
+                    mvwprintw(aspects_win, 5 + i, 12 + 6 * (j + 1), "|");
                 }
             }
 
@@ -1449,8 +1456,8 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
                 PartAspectCell cell = m_part.grid[idx_p_matriz][j];
                 int x_pos = 14 + 6 * j;
-                int y_pos_simbolo = 4 + 2 * r;
-                int y_pos_angulo  = 5 + 2 * r;
+                int y_pos_simbolo = 5 + 2 * r;
+                int y_pos_angulo  = 6 + 2 * r;
 
                 if (cell.has_aspect) {
                     wattron(aspects_win, COLOR_PAIR(cell.color_pair));

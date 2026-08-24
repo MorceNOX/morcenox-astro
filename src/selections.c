@@ -1124,8 +1124,8 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
 
-        mvwprintw(win, 4, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
-        mvwprintw(win, 5, 3, _("[ESC] to cancel."));
+        mvwprintw(win, 4, 3, _("Use [↑/↓] [PgUp/PgDn] to adjust."));
+        mvwprintw(win, 5, 3, _("[Enter] confirm | [ESC] cancel."));
         wattroff(win, COLOR_PAIR(13));
 
         /* Renderiza o campo de idade destacado com uma casa decimal (%.1f) */
@@ -1150,6 +1150,21 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                 /* Decrementa em frações de 0.1 */
                 if (idade > 0.0) {
                     idade -= 0.1;
+                }
+                else {
+                    idade = 0.0;
+                }
+                break;
+            case KEY_PPAGE:
+                /* Incrementa em 1 */
+                if (idade < 120.0) {
+                    idade += 1.0;
+                }
+                break;
+            case KEY_NPAGE:
+                /* Decrementa em 1 */
+                if (idade > 0.0) {
+                    idade -= 1.0;
                 }
                 else {
                     idade = 0.0;
