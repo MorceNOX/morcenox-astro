@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 13:07-0300\n"
+"POT-Creation-Date: 2026-08-24 15:04-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1051,8 +1051,8 @@ msgid "Aspects by Sign Table"
 msgstr "Tabela de Aspectos por Signo"
 
 #: src/aspects.c:1016
-msgid " Antissium & Contrantissium Aspect Matrix Grid "
-msgstr " Matriz de Aspectos Antissium & Contrantissium "
+msgid " Antissia & Contrantissia Aspect Matrix Grid "
+msgstr " Matriz de Aspectos Antissia & Contrantissia "
 
 #: src/directions.c:521
 msgid " Primary Directions "

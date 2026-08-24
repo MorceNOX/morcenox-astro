@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 15:04-0300\n"
+"POT-Creation-Date: 2026-08-24 15:26-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1041,10 +1041,10 @@ msgstr "Tabela de Aspectos"
 #: src/aspects.c:632
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
-"Sign - F5 Antissium - [↓↑|JK] Scroll"
+"Sign - F5 Antissia - [↓↑|JK] Scroll"
 msgstr ""
-"Pressione Q/ESC retornar - F3 Paralelo & Contra-Paralelo - F4 Aspectos por "
-"Signo - F5 Antissium - [↓↑/JK] rolar"
+"Pressione Q/ESC Retornar - F3 Paralelo & Contra-Paralelo - F4 Aspectos por "
+"Signo - F5 Antissia - [↓↑/JK] Rolar"
 
 #: src/aspects.c:803
 msgid "Aspects by Sign Table"
@@ -1053,6 +1053,10 @@ msgstr "Tabela de Aspectos por Signo"
 #: src/aspects.c:1016
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos Antissia & Contrantissia "
+
+#: src/directions.c:390 src/directions.c:1341
+msgid "Mundane"
+msgstr "Mundana"
 
 #: src/directions.c:521
 msgid " Primary Directions "
@@ -1192,9 +1196,8 @@ msgstr ""
 "Ambas"
 
 #: src/directions.c:958
-#, fuzzy
 msgid " Primary Directions to Arabic Parts "
-msgstr " Direções Primárias para as Partes Árabes "
+msgstr " Direções Primárias às Partes Árabes "
 
 #: src/draw-chart.c:407 src/draw-chart.c:4235 src/firdaria.c:97 src/hyleg.c:336
 #: src/profections.c:52 src/solar_return.c:865 src/solar_return.c:984

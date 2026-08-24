@@ -629,7 +629,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
     }
 
-    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissium - [↓↑|JK] Scroll"));
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑|JK] Scroll"));
     wrefresh(aspects_win);
 
     int offset_y = 0;

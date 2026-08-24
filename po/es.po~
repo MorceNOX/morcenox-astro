@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 13:07-0300\n"
+"POT-Creation-Date: 2026-08-24 15:04-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -803,7 +803,7 @@ msgid "Aspects by Sign Table"
 msgstr ""
 
 #: src/aspects.c:1016
-msgid " Antissium & Contrantissium Aspect Matrix Grid "
+msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr ""
 
 #: src/directions.c:521

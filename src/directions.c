@@ -387,7 +387,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                     d->mes_calendario = mes_c;
                     d->dia_calendario = dia_c;
                                     
-                    strcpy(d->tipo_direcao, "Mundana"); // CORREÇÃO: Identifica corretamente como Mundana
+                    strcpy(d->tipo_direcao, _("Mundane")); // CORREÇÃO: Identifica corretamente como Mundana
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo; // Sai de forma limpa se estourar o limite
@@ -1338,7 +1338,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     d->mes_calendario = mes_c;
                     d->dia_calendario = dia_c;
                                     
-                    strcpy(d->tipo_direcao, "Mundana"); // CORREÇÃO: Identifica corretamente como Mundana
+                    strcpy(d->tipo_direcao, _("Mundane")); // CORREÇÃO: Identifica corretamente como Mundana
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo; // Sai de forma limpa se estourar o limite

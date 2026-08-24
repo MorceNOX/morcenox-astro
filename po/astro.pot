@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 15:04-0300\n"
+"POT-Creation-Date: 2026-08-24 15:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -795,7 +795,7 @@ msgstr ""
 #: src/aspects.c:632
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
-"Sign - F5 Antissium - [↓↑|JK] Scroll"
+"Sign - F5 Antissia - [↓↑|JK] Scroll"
 msgstr ""
 
 #: src/aspects.c:803
@@ -804,6 +804,10 @@ msgstr ""
 
 #: src/aspects.c:1016
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
+msgstr ""
+
+#: src/directions.c:390 src/directions.c:1341
+msgid "Mundane"
 msgstr ""
 
 #: src/directions.c:521
