@@ -439,7 +439,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
         if (get_sign_properties(sign_ruler_alm, &prop)) {
             if (prop_alm.moisture != prop.moisture || prop_alm.temperature != prop.temperature) {
-                
+
                 if (prop.temperature > 0) score.total_quente += prop.temperature; 
                 else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
                 
