@@ -4328,6 +4328,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     if (!inicializar_swiss_ephemeris()) {
         fprintf(stderr, "Erro Fatal: Ephemerides não inicializada!\n");
         fprintf(stderr, "Abandono da execucao.\n");
+        terminate_database();
         exit(1); 
     }
 

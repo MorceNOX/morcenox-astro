@@ -131,10 +131,20 @@ void display_motivation(PlotObject *plots) {
     mvwprintw(table_win, 10, 4, "───────────────────────────────────────────────────────────────────────────────────");
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
-    const char *planet_modifier = get_planet_motivation_modifier(plots[ruler - 1].id);
+    const char *planet_modifier = get_planet_motivation_modifier(ruler - 1);
 
     wattron(table_win, A_ITALIC);
-    mvwprintw(table_win, 12, 6, "%s", planet_modifier);
+
+    
+    mvwprintw(table_win, 12, 6, "%.80s", planet_modifier);    
+    size_t n = 0;
+    while (planet_modifier[80 + n] != 32 && strlen(planet_modifier) > 80 + n) {
+        mvwprintw(table_win, 12, 80 + n, "%.1s", planet_modifier + 80 + n);
+        n++;
+    }
+    mvwprintw(table_win, 13, 6, "%s", planet_modifier + 81 + n);
+    
+    
     wattroff(table_win, A_ITALIC);
 
     wattron(table_win, COLOR_PAIR(21) | A_BOLD);
