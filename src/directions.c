@@ -313,6 +313,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
 
     for (int p = 0; p < 81; p++) {
         //if (p == idx_alvo) continue;
+        if (prom[p].type == PROM_TERM) continue;
 
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = calcular_ra(prom[p].longitude, prom[p].declination, jd);
@@ -329,8 +330,6 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
             if (s == 1 && sentido == 0) continue; // Usuário quer apenas diretas (0), pula a conversa (1)
 
             for (int a = 0; a < 5; a++) {
-
-                if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double md_destino = 0.0;
                 double arco = 0.0;
@@ -1279,6 +1278,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
 
     for (int p = 0; p < 81; p++) {
         //if (p == idx_alvo) continue;
+        if (prom[p].type == PROM_TERM) continue;
 
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = calcular_ra(prom[p].longitude, prom[p].declination, jd);
@@ -1295,8 +1295,6 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
             if (s == 1 && sentido == 0) continue; // Usuário quer apenas diretas (0), pula a conversa (1)
 
             for (int a = 0; a < 5; a++) {
-
-                if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double md_destino = 0.0;
                 double arco = 0.0;

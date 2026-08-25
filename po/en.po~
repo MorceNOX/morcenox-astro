@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 23:27-0300\n"
+"POT-Creation-Date: 2026-08-24 23:29-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -687,7 +687,7 @@ msgstr ""
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:714
 #: src/directions.c:1176 src/draw-chart.c:2986 src/draw-chart.c:3314
 #: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
-#: src/mind.c:312 src/motivation.c:245 src/profections.c:188
+#: src/mind.c:312 src/motivation.c:248 src/profections.c:188
 #, fuzzy
 msgid "Press ESC to return to chart"
 msgstr "Press [ESC] to cancel"
@@ -1214,28 +1214,28 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:163 src/temperament.c:71 src/temperament.c:557
+#: src/motivation.c:166 src/temperament.c:71 src/temperament.c:557
 #: src/temperament.c:563 src/temperament.c:576 src/temperament.c:594
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:167 src/temperament.c:74 src/temperament.c:558
+#: src/motivation.c:170 src/temperament.c:74 src/temperament.c:558
 #: src/temperament.c:566 src/temperament.c:582 src/temperament.c:602
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:172 src/temperament.c:73 src/temperament.c:551
+#: src/motivation.c:175 src/temperament.c:73 src/temperament.c:551
 #: src/temperament.c:565 src/temperament.c:575 src/temperament.c:590
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:176 src/temperament.c:72 src/temperament.c:552
+#: src/motivation.c:179 src/temperament.c:72 src/temperament.c:552
 #: src/temperament.c:564 src/temperament.c:581 src/temperament.c:598
 #, c-format
 msgid "Water"
@@ -2994,103 +2994,103 @@ msgstr ""
 msgid "Ruler of The Ascendant"
 msgstr ""
 
-#: src/motivation.c:152
+#: src/motivation.c:155
 msgid "Sign of the Ruler"
 msgstr ""
 
-#: src/motivation.c:164
+#: src/motivation.c:167
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 
-#: src/motivation.c:165
+#: src/motivation.c:168
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr ""
 
-#: src/motivation.c:168
+#: src/motivation.c:171
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 
-#: src/motivation.c:169
+#: src/motivation.c:172
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 
-#: src/motivation.c:173
+#: src/motivation.c:176
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 
-#: src/motivation.c:174
+#: src/motivation.c:177
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
 msgstr ""
 
-#: src/motivation.c:177
+#: src/motivation.c:180
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
 msgstr ""
 
-#: src/motivation.c:178
+#: src/motivation.c:181
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 
-#: src/motivation.c:184
+#: src/motivation.c:187
 msgid "House of the Ruler"
 msgstr ""
 
-#: src/motivation.c:192
+#: src/motivation.c:195
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 
-#: src/motivation.c:204
+#: src/motivation.c:207
 msgid "The native’s physical body, temperament, personal identity"
 msgstr ""
 
-#: src/motivation.c:207
+#: src/motivation.c:210
 msgid "Wealth, personal finances, moveable possessions"
 msgstr ""
 
-#: src/motivation.c:210
+#: src/motivation.c:213
 msgid "Immediate environment, short travels, siblings, early education"
 msgstr ""
 
-#: src/motivation.c:213
+#: src/motivation.c:216
 msgid "Ancestry, the father, real estate, the end of life"
 msgstr ""
 
-#: src/motivation.c:216
+#: src/motivation.c:219
 msgid "Creativity, children, pleasure, speculative ventures"
 msgstr ""
 
-#: src/motivation.c:219
+#: src/motivation.c:222
 msgid "Illness, servitude, small domestic animals"
 msgstr ""
 
-#: src/motivation.c:222
+#: src/motivation.c:225
 msgid "Partnerships, marriage, open enemies, contracts"
 msgstr ""
 
-#: src/motivation.c:225
+#: src/motivation.c:228
 msgid "Death, inheritances, transformations, other people's money"
 msgstr ""
 
-#: src/motivation.c:228
+#: src/motivation.c:231
 msgid "Higher education, philosophy, religion, long-distance travel"
 msgstr ""
 
-#: src/motivation.c:231
+#: src/motivation.c:234
 msgid "Career, social status, public reputation, the mother"
 msgstr ""
 
-#: src/motivation.c:234
+#: src/motivation.c:237
 msgid "Friendships, alliances, group affiliations, hopes"
 msgstr ""
 
-#: src/motivation.c:237
+#: src/motivation.c:240
 msgid "Hidden enemies, self-undoing, sorrow, imprisonment, confinements"
 msgstr ""
 
