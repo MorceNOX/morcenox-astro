@@ -191,8 +191,11 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     int n_exalted, n_exile, n_fall, n_tri1, n_tri2, n_tri3;
     get_rulers_by_sign_id(signo_asc, &id_regente_asc, &n_exalted, &n_exile, &n_fall, &n_tri1, &n_tri2, &n_tri3);
 
-    // Ponto 2: Planeta Regente do Ascendente
-    if (get_planet_properties(id_regente_asc, &prop)) {
+    int lon_ruler_asc = plots[id_regente_asc - 1].longitude;
+    int sign_ruler_asc = (int)floor(lon_ruler_asc / 30) + 1;
+
+    // Ponto 2: Signo do Planeta Regente do Ascendente
+    if (get_sign_properties(sign_ruler_asc, &prop)) {
         if (prop.temperature > 0) score.total_quente += prop.temperature; 
         else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
         
@@ -277,11 +280,13 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
             if (celula_lua_1.has_aspect || celula_lua_2.has_aspect) {
                 bool aspecto_valido = false;
+                bool is_conjunction = false;
 
                 // NOVA REGRA: Se for Nodo (11 ou 12), aceita estritamente apenas CONJUNÇÃO (☌)
                 if (id_planeta_aspectante >= 11) {
                     if (strstr(celula_lua_1.symbol, "☌") != NULL || strstr(celula_lua_2.symbol, "☌") != NULL) {
                         aspecto_valido = true;
+                        is_conjunction = true;
                     }
                 } 
                 // Se for planeta normal (1 a 10), aceita todos os aspectos maiores
@@ -293,17 +298,34 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
                         strstr(celula_lua_1.symbol, "⚹") != NULL || strstr(celula_lua_2.symbol, "⚹") != NULL) 
                     {
                         aspecto_valido = true;
+                        if (strstr(celula_lua_1.symbol, "☌") != NULL || strstr(celula_lua_2.symbol, "☌") != NULL) {
+                            is_conjunction = true;
+                        }
                     }
                 }
 
                 if (aspecto_valido) {
                     PrimitiveProperties prop_asp;
-                    if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
-                        if (prop_asp.temperature > 0)      score.total_quente += 1;
-                        else if (prop_asp.temperature < 0) score.total_frio += 1;
+                    if (!is_conjunction) {
+                        if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
+                            if (prop_asp.temperature > 0)      score.total_quente += 1;
+                            else if (prop_asp.temperature < 0) score.total_frio += 1;
 
-                        if (prop_asp.moisture > 0)         score.total_umido += 1;
-                        else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                            if (prop_asp.moisture > 0)         score.total_umido += 1;
+                            else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                        }
+                    }
+                    else {
+                        int lon_ruler_aspectante = plots[id_planeta_aspectante - 1].longitude;
+                        int sign_ruler_aspectante = (int)floor(lon_ruler_aspectante / 30) + 1;
+                        if (get_sign_properties(sign_ruler_aspectante, &prop_asp)) {
+                            if (prop_asp.temperature > 0)      score.total_quente += 1;
+                            else if (prop_asp.temperature < 0) score.total_frio += 1;
+
+                            if (prop_asp.moisture > 0)         score.total_umido += 1;
+                            else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                        }
+
                     }
                 }
             }
@@ -312,7 +334,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         // --- ASPECTOS NO ASCENDENTE ---
         if (idx_asc != -1 && j != idx_asc) {
 
-            if (id_planeta_aspectante >= 1 && id_planeta_aspectante <= 12 && planeta_na_casa1[id_planeta_aspectante] == 1) {
+            if (id_planeta_aspectante >= 1 && id_planeta_aspectante <= 12) {
                 continue; // Pula para o próximo planeta do laço 'j'
             }
 
@@ -321,6 +343,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
             if (celula_asc_1.has_aspect || celula_asc_2.has_aspect) {
                 bool aspecto_valido = false;
+                bool is_conjunction = false;
 
                 // NOVA REGRA: Mesma restrição de conjunção estrita para os Nodos no Ascendente
                 if (id_planeta_aspectante >= 11) {
@@ -341,12 +364,34 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
                 if (aspecto_valido) {
                     PrimitiveProperties prop_asp;
-                    if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
-                        if (prop_asp.temperature > 0)      score.total_quente += 1;
-                        else if (prop_asp.temperature < 0) score.total_frio += 1;
 
-                        if (prop_asp.moisture > 0)         score.total_umido += 1;
-                        else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                    if (id_planeta_aspectante == 1) {
+                        if (estacao == 1) { score.total_quente += 1; score.total_umido += 1; } // Primavera
+                        else if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
+                        else if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono
+                        else if (estacao == 4) { score.total_frio += 1;   score.total_umido += 1; } // Inverno
+                    }
+                    else if (!is_conjunction) {
+                        if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
+                            if (prop_asp.temperature > 0)      score.total_quente += 1;
+                            else if (prop_asp.temperature < 0) score.total_frio += 1;
+
+                            if (prop_asp.moisture > 0)         score.total_umido += 1;
+                            else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                        }
+                    }
+                    else if (!planeta_na_casa1[id_planeta_aspectante]) {
+
+                        int lon_ruler_aspectante = plots[id_planeta_aspectante - 1].longitude;
+                        int sign_ruler_aspectante = (int)floor(lon_ruler_aspectante / 30) + 1;
+                        if (get_sign_properties(sign_ruler_aspectante, &prop_asp)) {
+                            if (prop_asp.temperature > 0)      score.total_quente += 1;
+                            else if (prop_asp.temperature < 0) score.total_frio += 1;
+
+                            if (prop_asp.moisture > 0)         score.total_umido += 1;
+                            else if (prop_asp.moisture < 0)    score.total_seco += 1;
+                        }
+
                     }
                 }
             }
@@ -364,9 +409,12 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
     }
 
-    // Ponto 5: Almuten da Lua
+    // Ponto 5: Signo do Almuten da Lua
     for (int i = 0; i < qtd_alm_lua; i++) {
-        if (get_planet_properties(res_almuten_lua[i], &prop)) {
+        int lon_ruler_lua = plots[res_almuten_lua[i] - 1].longitude;
+        int sign_ruler_lua = (int)floor(lon_ruler_lua / 30) + 1;
+
+        if (get_sign_properties(sign_ruler_lua, &prop)) {
             if (prop.temperature > 0) score.total_quente += prop.temperature; 
             else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
             
@@ -375,28 +423,43 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         }
     }
 
-    // Ponto 6: Almuten Figuris
+    // Ponto 6: Almuten Figuris e seu signo se as propriedades não forem iguais
     for (int i = 0; i < qtd_alm_fig; i++) {
-        if (get_planet_properties(res_figuris[i], &prop)) {
-            if (prop.temperature > 0) score.total_quente += prop.temperature; 
-            else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
+        PrimitiveProperties prop_alm;
+        if (get_planet_properties(res_figuris[i], &prop_alm)) {
+            if (prop_alm.temperature > 0) score.total_quente += prop_alm.temperature; 
+            else if (prop_alm.temperature < 0) score.total_frio += abs(prop_alm.temperature);
             
-            if (prop.moisture > 0) score.total_umido += prop.moisture; 
-            else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+            if (prop_alm.moisture > 0) score.total_umido += prop_alm.moisture; 
+            else if (prop_alm.moisture < 0) score.total_seco += abs(prop_alm.moisture);
+        }
+
+        int lon_ruler_alm = plots[res_figuris[i] - 1].longitude;
+        int sign_ruler_alm = (int)floor(lon_ruler_alm / 30) + 1;
+
+        if (get_sign_properties(sign_ruler_alm, &prop)) {
+            if (prop_alm.moisture != prop.moisture || prop_alm.temperature != prop.temperature) {
+                
+                if (prop.temperature > 0) score.total_quente += prop.temperature; 
+                else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
+                
+                if (prop.moisture > 0) score.total_umido += prop.moisture; 
+                else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
+            }
         }
     }
 
     // Ponto 7: Fase Lunar (Mantém peso +1 para manter o equilíbrio com os planetas)
     if (fase_lunar == 1) { score.total_quente += 1; score.total_umido += 1; } // Nova
-    if (fase_lunar == 2) { score.total_quente += 1; score.total_seco += 1;  } // Crescente
-    if (fase_lunar == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Cheia
-    if (fase_lunar == 4) { score.total_frio += 1;   score.total_umido += 1; } // Minguante
+    else if (fase_lunar == 2) { score.total_quente += 1; score.total_seco += 1;  } // Crescente
+    else if (fase_lunar == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Cheia
+    else if (fase_lunar == 4) { score.total_frio += 1;   score.total_umido += 1; } // Minguante
 
     // Ponto 8: Estação do Ano (Mantém peso +1)
     if (estacao == 1) { score.total_quente += 1; score.total_umido += 1; } // Primavera
-    if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
-    if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono
-    if (estacao == 4) { score.total_frio += 1;   score.total_umido += 1; } // Inverno
+    else if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
+    else if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono
+    else if (estacao == 4) { score.total_frio += 1;   score.total_umido += 1; } // Inverno
 
     // Totais para cálculo proporcional das barras (A matemática continua perfeitamente igual aqui)
     int total_eixo_temp = score.total_quente + score.total_frio;
