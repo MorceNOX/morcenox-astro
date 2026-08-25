@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 22:31-0300\n"
+"POT-Creation-Date: 2026-08-24 23:29-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -926,7 +926,7 @@ msgstr ""
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:714
 #: src/directions.c:1176 src/draw-chart.c:2986 src/draw-chart.c:3314
 #: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
-#: src/mind.c:312 src/motivation.c:244 src/profections.c:188
+#: src/mind.c:312 src/motivation.c:248 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
 
@@ -1435,28 +1435,28 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:557
+#: src/motivation.c:166 src/temperament.c:71 src/temperament.c:557
 #: src/temperament.c:563 src/temperament.c:576 src/temperament.c:594
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:558
+#: src/motivation.c:170 src/temperament.c:74 src/temperament.c:558
 #: src/temperament.c:566 src/temperament.c:582 src/temperament.c:602
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:551
+#: src/motivation.c:175 src/temperament.c:73 src/temperament.c:551
 #: src/temperament.c:565 src/temperament.c:575 src/temperament.c:590
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:552
+#: src/motivation.c:179 src/temperament.c:72 src/temperament.c:552
 #: src/temperament.c:564 src/temperament.c:581 src/temperament.c:598
 #, c-format
 msgid "Water"
@@ -3432,40 +3432,40 @@ msgstr "A Motivação Principal:"
 msgid "Ruler of The Ascendant"
 msgstr "Regente do Ascendente"
 
-#: src/motivation.c:151
+#: src/motivation.c:155
 msgid "Sign of the Ruler"
 msgstr "Signo do Regente"
 
-#: src/motivation.c:163
+#: src/motivation.c:167
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 "Essa motivação é impulsionada por energia assertiva, dinamismo e liderança,"
 
-#: src/motivation.c:164
+#: src/motivation.c:168
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr "infundindo na motivação central paixão e uma busca vital por expansão."
 
-#: src/motivation.c:167
+#: src/motivation.c:171
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 "Essa motivação se baseia no pragmatismo, no foco constante e na deliberação,"
 
-#: src/motivation.c:168
+#: src/motivation.c:172
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 "direcionando a motivação central para resultados tangíveis e estabilidade "
 "material."
 
-#: src/motivation.c:172
+#: src/motivation.c:176
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 "Essa motivação é canalizada para a versatilidade intelectual e a síntese "
 "lógica,"
 
-#: src/motivation.c:173
+#: src/motivation.c:177
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
@@ -3473,7 +3473,7 @@ msgstr ""
 "e a troca social, ocasionalmente distribuindo a motivação central por "
 "interesses variados."
 
-#: src/motivation.c:176
+#: src/motivation.c:180
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
@@ -3481,67 +3481,67 @@ msgstr ""
 "Essa motivação é moldada pela fluidez emocional, intuição e profundidade "
 "psicológica,"
 
-#: src/motivation.c:177
+#: src/motivation.c:181
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 "tornando a motivação central altamente adaptável a correntes internas e "
 "externas."
 
-#: src/motivation.c:183
+#: src/motivation.c:187
 msgid "House of the Ruler"
 msgstr "Casa do Regente"
 
-#: src/motivation.c:191
+#: src/motivation.c:195
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 "Áreas da vida nas quais a Motivação Principal é aplicada ou direcionada:"
 
-#: src/motivation.c:203
+#: src/motivation.c:207
 msgid "The native’s physical body, temperament, personal identity"
 msgstr "O corpo físico, o temperamento e a identidade pessoal do nativo"
 
-#: src/motivation.c:206
+#: src/motivation.c:210
 msgid "Wealth, personal finances, moveable possessions"
 msgstr "Riqueza, finanças pessoais, bens móveis"
 
-#: src/motivation.c:209
+#: src/motivation.c:213
 msgid "Immediate environment, short travels, siblings, early education"
 msgstr "Ambiente imediato, deslocamentos curtos, irmãos, educação inicial"
 
-#: src/motivation.c:212
+#: src/motivation.c:216
 msgid "Ancestry, the father, real estate, the end of life"
 msgstr "Ancestralidade, o pai, mercado imobiliário, o fim da vida"
 
-#: src/motivation.c:215
+#: src/motivation.c:219
 msgid "Creativity, children, pleasure, speculative ventures"
 msgstr "Criatividade, crianças, prazer, empreendimentos especulativos"
 
-#: src/motivation.c:218
+#: src/motivation.c:222
 msgid "Illness, servitude, small domestic animals"
 msgstr "Doença, servidão, pequenos animais domésticos"
 
-#: src/motivation.c:221
+#: src/motivation.c:225
 msgid "Partnerships, marriage, open enemies, contracts"
 msgstr "Parcerias, casamento, inimigos declarados, contratos"
 
-#: src/motivation.c:224
+#: src/motivation.c:228
 msgid "Death, inheritances, transformations, other people's money"
 msgstr "Morte, heranças, transformações, dinheiro de terceiros"
 
-#: src/motivation.c:227
+#: src/motivation.c:231
 msgid "Higher education, philosophy, religion, long-distance travel"
 msgstr "Ensino superior, filosofia, religião, viagens de longa distância"
 
-#: src/motivation.c:230
+#: src/motivation.c:234
 msgid "Career, social status, public reputation, the mother"
 msgstr "Carreira, status social, reputação pública, a mãe"
 
-#: src/motivation.c:233
+#: src/motivation.c:237
 msgid "Friendships, alliances, group affiliations, hopes"
 msgstr "Amizades, alianças, afiliações a grupos, esperanças"
 
-#: src/motivation.c:236
+#: src/motivation.c:240
 msgid "Hidden enemies, self-undoing, sorrow, imprisonment, confinements"
 msgstr ""
 "Inimigos ocultos, autodestruição, sofrimento, aprisionamento, confinamentos"

@@ -135,15 +135,19 @@ void display_motivation(PlotObject *plots) {
 
     wattron(table_win, A_ITALIC);
 
-    
-    mvwprintw(table_win, 12, 6, "%.80s", planet_modifier);    
-    size_t n = 0;
-    while (planet_modifier[80 + n] != 32 && strlen(planet_modifier) > 80 + n) {
-        mvwprintw(table_win, 12, 80 + n, "%.1s", planet_modifier + 80 + n);
-        n++;
+    if (get_visual_width(planet_modifier) > table_width) {
+        mvwprintw(table_win, 12, 6, "%.80s", planet_modifier);    
+        size_t n = 0;
+        while (planet_modifier[80 + n] != 32) {
+
+            mvwprintw(table_win, 12, 80 + n, "%.1s", &planet_modifier[80 + n]);
+            n++;
+        }
+        mvwprintw(table_win, 13, 6, "%s", planet_modifier + 81 + n);
     }
-    mvwprintw(table_win, 13, 6, "%s", planet_modifier + 81 + n);
-    
+    else {
+        mvwprintw(table_win, 12, 6, "%s", planet_modifier);
+    }
     
     wattroff(table_win, A_ITALIC);
 
