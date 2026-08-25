@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 12:16-0300\n"
+"POT-Creation-Date: 2026-08-25 20:35-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -682,7 +682,7 @@ msgstr ""
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:2986 src/draw-chart.c:3314
 #: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
-#: src/mind.c:312 src/motivation.c:248 src/profections.c:188
+#: src/mind.c:312 src/motivation.c:251 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr ""
 
@@ -1180,29 +1180,29 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:166 src/temperament.c:71 src/temperament.c:605
-#: src/temperament.c:611 src/temperament.c:624 src/temperament.c:642
+#: src/motivation.c:169 src/temperament.c:71 src/temperament.c:620
+#: src/temperament.c:626 src/temperament.c:639 src/temperament.c:657
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:170 src/temperament.c:74 src/temperament.c:606
-#: src/temperament.c:614 src/temperament.c:630 src/temperament.c:650
+#: src/motivation.c:173 src/temperament.c:74 src/temperament.c:621
+#: src/temperament.c:629 src/temperament.c:645 src/temperament.c:665
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:175 src/temperament.c:73 src/temperament.c:599
-#: src/temperament.c:613 src/temperament.c:623 src/temperament.c:638
+#: src/motivation.c:178 src/temperament.c:73 src/temperament.c:614
+#: src/temperament.c:628 src/temperament.c:638 src/temperament.c:653
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:179 src/temperament.c:72 src/temperament.c:600
-#: src/temperament.c:612 src/temperament.c:629 src/temperament.c:646
+#: src/motivation.c:182 src/temperament.c:72 src/temperament.c:615
+#: src/temperament.c:627 src/temperament.c:644 src/temperament.c:661
 #, c-format
 msgid "Water"
 msgstr ""
@@ -1482,7 +1482,7 @@ msgstr ""
 msgid " Planetary Hours Analysis "
 msgstr ""
 
-#: src/draw-chart.c:3556 src/temperament.c:746
+#: src/draw-chart.c:3556 src/temperament.c:761
 msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr ""
 
@@ -2140,6 +2140,102 @@ msgstr ""
 
 #: src/draw-chart.c:5882 src/draw-chart.c:5906
 msgid "Phlegmatic"
+msgstr ""
+
+#: src/draw-chart.c:6650
+msgid "01. Chart Data Panel"
+msgstr ""
+
+#: src/draw-chart.c:6651
+msgid "02. Positions, Dignities & Rulerships"
+msgstr ""
+
+#: src/draw-chart.c:6652
+msgid "03. Accidental Dignities"
+msgstr ""
+
+#: src/draw-chart.c:6653
+msgid "04. Strength of the Planets"
+msgstr ""
+
+#: src/draw-chart.c:6654
+msgid "05. Aspects"
+msgstr ""
+
+#: src/draw-chart.c:6655
+msgid "06. Declination Aspects"
+msgstr ""
+
+#: src/draw-chart.c:6656
+msgid "07. Planetary Hours"
+msgstr ""
+
+#: src/draw-chart.c:6657
+msgid "08. Rising, Setting & Culmination Times"
+msgstr ""
+
+#: src/draw-chart.c:6658
+msgid "09. Houses"
+msgstr ""
+
+#: src/draw-chart.c:6659
+msgid "10. Hylegiacal & Figuris Almuten"
+msgstr ""
+
+#: src/draw-chart.c:6660
+msgid "11. Temperament Analysis"
+msgstr ""
+
+#: src/draw-chart.c:6661
+msgid "12. Annual Profections"
+msgstr ""
+
+#: src/draw-chart.c:6662
+msgid "13. Firdaria"
+msgstr ""
+
+#: src/draw-chart.c:6663
+msgid "14. Vital Chronocrators: Life Givers"
+msgstr ""
+
+#: src/draw-chart.c:6664
+msgid "15. Vital Threats: The Anareta"
+msgstr ""
+
+#: src/draw-chart.c:6665
+msgid "16. Primary Directions"
+msgstr ""
+
+#: src/draw-chart.c:6666
+msgid "17. Prymary Directions to Arabic Parts"
+msgstr ""
+
+#: src/draw-chart.c:6667
+msgid "18. Arabic Parts"
+msgstr ""
+
+#: src/draw-chart.c:6668
+msgid "19. Mind Analysis"
+msgstr ""
+
+#: src/draw-chart.c:6669
+msgid "20. Solar Revolution"
+msgstr ""
+
+#: src/draw-chart.c:6670
+msgid "21. Planetary Energy Profile"
+msgstr ""
+
+#: src/draw-chart.c:6671
+msgid "22. Primary Motivation"
+msgstr ""
+
+#: src/draw-chart.c:6672
+msgid "23. Aspects by Sign"
+msgstr ""
+
+#: src/draw-chart.c:6673
+msgid "24. Aspects to Antissia & Contrantissia"
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:352 src/hyleg.c:353 src/hyleg.c:596
@@ -2944,103 +3040,103 @@ msgstr ""
 msgid "Ruler of The Ascendant"
 msgstr ""
 
-#: src/motivation.c:155
+#: src/motivation.c:158
 msgid "Sign of the Ruler"
 msgstr ""
 
-#: src/motivation.c:167
+#: src/motivation.c:170
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 
-#: src/motivation.c:168
+#: src/motivation.c:171
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr ""
 
-#: src/motivation.c:171
+#: src/motivation.c:174
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 
-#: src/motivation.c:172
+#: src/motivation.c:175
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 
-#: src/motivation.c:176
+#: src/motivation.c:179
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 
-#: src/motivation.c:177
+#: src/motivation.c:180
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
 msgstr ""
 
-#: src/motivation.c:180
+#: src/motivation.c:183
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
 msgstr ""
 
-#: src/motivation.c:181
+#: src/motivation.c:184
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 
-#: src/motivation.c:187
+#: src/motivation.c:190
 msgid "House of the Ruler"
 msgstr ""
 
-#: src/motivation.c:195
+#: src/motivation.c:198
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 
-#: src/motivation.c:207
+#: src/motivation.c:210
 msgid "The native’s physical body, temperament, personal identity"
 msgstr ""
 
-#: src/motivation.c:210
+#: src/motivation.c:213
 msgid "Wealth, personal finances, moveable possessions"
 msgstr ""
 
-#: src/motivation.c:213
+#: src/motivation.c:216
 msgid "Immediate environment, short travels, siblings, early education"
 msgstr ""
 
-#: src/motivation.c:216
+#: src/motivation.c:219
 msgid "Ancestry, the father, real estate, the end of life"
 msgstr ""
 
-#: src/motivation.c:219
+#: src/motivation.c:222
 msgid "Creativity, children, pleasure, speculative ventures"
 msgstr ""
 
-#: src/motivation.c:222
+#: src/motivation.c:225
 msgid "Illness, servitude, small domestic animals"
 msgstr ""
 
-#: src/motivation.c:225
+#: src/motivation.c:228
 msgid "Partnerships, marriage, open enemies, contracts"
 msgstr ""
 
-#: src/motivation.c:228
+#: src/motivation.c:231
 msgid "Death, inheritances, transformations, other people's money"
 msgstr ""
 
-#: src/motivation.c:231
+#: src/motivation.c:234
 msgid "Higher education, philosophy, religion, long-distance travel"
 msgstr ""
 
-#: src/motivation.c:234
+#: src/motivation.c:237
 msgid "Career, social status, public reputation, the mother"
 msgstr ""
 
-#: src/motivation.c:237
+#: src/motivation.c:240
 msgid "Friendships, alliances, group affiliations, hopes"
 msgstr ""
 
-#: src/motivation.c:240
+#: src/motivation.c:243
 msgid "Hidden enemies, self-undoing, sorrow, imprisonment, confinements"
 msgstr ""
 
@@ -4218,137 +4314,137 @@ msgid ""
 "interface.\n"
 msgstr ""
 
-#: src/temperament.c:474
+#: src/temperament.c:489
 msgid "Natal Temperament Analysis"
 msgstr ""
 
-#: src/temperament.c:480
+#: src/temperament.c:495
 msgid "Hot:"
 msgstr ""
 
-#: src/temperament.c:483
+#: src/temperament.c:498
 msgid "Cold:  "
 msgstr ""
 
-#: src/temperament.c:490
+#: src/temperament.c:505
 msgid "Moist: "
 msgstr ""
 
-#: src/temperament.c:493
+#: src/temperament.c:508
 msgid "Dry:  "
 msgstr ""
 
-#: src/temperament.c:525
+#: src/temperament.c:540
 msgid "     Sanguine (🜁 Air):"
 msgstr ""
 
-#: src/temperament.c:526
+#: src/temperament.c:541
 msgid "    Choleric (🜂 Fire):"
 msgstr ""
 
-#: src/temperament.c:527
+#: src/temperament.c:542
 msgid " Phlegmatic (🜄 Water):"
 msgstr ""
 
-#: src/temperament.c:528
+#: src/temperament.c:543
 msgid "Melancholic (🜃 Earth):"
 msgstr ""
 
-#: src/temperament.c:549
+#: src/temperament.c:564
 msgid "Temperament Distribution (Ranked):"
 msgstr ""
 
-#: src/temperament.c:570
+#: src/temperament.c:585
 msgid "🏆 Winner"
 msgstr ""
 
-#: src/temperament.c:585
+#: src/temperament.c:600
 msgid "Dominant Temperament: "
 msgstr ""
 
-#: src/temperament.c:597
+#: src/temperament.c:612
 msgid "SANGUINE-PHLEGMATIC MIX (Balanced Temp)"
 msgstr ""
 
-#: src/temperament.c:603
+#: src/temperament.c:618
 msgid "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)"
 msgstr ""
 
-#: src/temperament.c:609
+#: src/temperament.c:624
 msgid "ABSOLUTE BALANCE (Quadrapartite)"
 msgstr ""
 
-#: src/temperament.c:621
+#: src/temperament.c:636
 msgid "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"
 msgstr ""
 
-#: src/temperament.c:627
+#: src/temperament.c:642
 msgid "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)"
 msgstr ""
 
-#: src/temperament.c:637
+#: src/temperament.c:652
 msgid "SANGUINE (Hot & Wet - 🜁 Air Element)"
 msgstr ""
 
-#: src/temperament.c:641
+#: src/temperament.c:656
 msgid "CHOLERIC (Hot & Dry - 🜂 Fire Element)"
 msgstr ""
 
-#: src/temperament.c:645
+#: src/temperament.c:660
 msgid "PHLEGMATIC (Cold & Wet - 🜄 Water Element)"
 msgstr ""
 
-#: src/temperament.c:649
+#: src/temperament.c:664
 msgid "MELANCHOLIC (Cold & Dry - 🜃 Earth Element)"
 msgstr ""
 
-#: src/temperament.c:686
+#: src/temperament.c:701
 msgid "Press [i] for Full Text Interpretation | ESC/q to Return"
 msgstr ""
 
-#: src/temperament.c:742
+#: src/temperament.c:757
 msgid " Temperament Detailed Analysis "
 msgstr ""
 
-#: src/temperament.c:762
+#: src/temperament.c:777
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr ""
 
-#: src/temperament.c:766
+#: src/temperament.c:781
 msgid "Hot"
 msgstr ""
 
-#: src/temperament.c:767
+#: src/temperament.c:782
 msgid "Cold"
 msgstr ""
 
-#: src/temperament.c:768
+#: src/temperament.c:783
 msgid "Moist"
 msgstr ""
 
-#: src/temperament.c:769
+#: src/temperament.c:784
 msgid "Dry"
 msgstr ""
 
-#: src/temperament.c:770
+#: src/temperament.c:785
 msgid "Heat Axis"
 msgstr ""
 
-#: src/temperament.c:770
+#: src/temperament.c:785
 msgid "Moisture Axis"
 msgstr ""
 
-#: src/temperament.c:772
+#: src/temperament.c:787
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr ""
 
-#: src/temperament.c:780
+#: src/temperament.c:795
 msgid ""
 "    SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:782
+#: src/temperament.c:797
 msgid ""
 "    Your vital energy functions in perfect thermal equilibrium, blending \n"
 "Air and Water.\n"
@@ -4360,13 +4456,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:790
+#: src/temperament.c:805
 msgid ""
 "    CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:792
+#: src/temperament.c:807
 msgid ""
 "    Your active forces exist in a state of controlled thermal poise, \n"
 "blending Fire and Earth.\n"
@@ -4378,13 +4474,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:800
+#: src/temperament.c:815
 msgid ""
 "    ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:802
+#: src/temperament.c:817
 msgid ""
 "    Your chart reflects the rare, ideal geometric balance of all four \n"
 "humors.\n"
@@ -4397,13 +4493,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:814
+#: src/temperament.c:829
 msgid ""
 "    SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:816
+#: src/temperament.c:831
 msgid ""
 "    An expressive, warm, and highly action-oriented signature blending \n"
 "Air and Fire.\n"
@@ -4416,13 +4512,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:825
+#: src/temperament.c:840
 msgid ""
 "    PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:827
+#: src/temperament.c:842
 msgid ""
 "    A calm, deeply introspective, and self-protective constitution \n"
 "blending Water and Earth.\n"
@@ -4435,13 +4531,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:840
+#: src/temperament.c:855
 msgid ""
 "    SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:842
+#: src/temperament.c:857
 msgid ""
 "    Your psychological engine revolves around communication, expansion, \n"
 "and mental fluidity.\n"
@@ -4452,13 +4548,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:849
+#: src/temperament.c:864
 msgid ""
 "    CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:851
+#: src/temperament.c:866
 msgid ""
 "    Your core essence is driven by swift, active, and result-oriented \n"
 "single-minded impulses.\n"
@@ -4469,13 +4565,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:858
+#: src/temperament.c:873
 msgid ""
 "    PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:860
+#: src/temperament.c:875
 msgid ""
 "    You embody a stable, welcoming, and peacekeeping emotional \n"
 "constitution.\n"
@@ -4486,13 +4582,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:867
+#: src/temperament.c:882
 msgid ""
 "    MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:869
+#: src/temperament.c:884
 msgid ""
 "    Your nature is built on structural caution, real-world pragmatism, \n"
 "and profound reflection.\n"
@@ -4503,14 +4599,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:879
+#: src/temperament.c:894
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr ""
 
-#: src/temperament.c:883
+#: src/temperament.c:898
 msgid "Rank"
 msgstr ""
 
-#: src/temperament.c:889
+#: src/temperament.c:904
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
