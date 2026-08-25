@@ -307,7 +307,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
     double md_sig = calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
     double cota_mundana_sig = md_sig / sa_sig;
 
-    // Multiplicadores para os aspectos mundanos (In Mundo)
+    // Multiplicadores para os aspectos mundanos
     double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
@@ -1272,7 +1272,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     double md_sig = calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
     double cota_mundana_sig = md_sig / sa_sig;
 
-    // Multiplicadores para os aspectos mundanos (In Mundo)
+    // Multiplicadores para os aspectos mundanos
     double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 

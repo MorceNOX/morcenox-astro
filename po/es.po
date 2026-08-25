@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 00:37-0300\n"
+"POT-Creation-Date: 2026-08-25 04:05-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1960,7 +1960,7 @@ msgstr ""
 #: src/draw-chart.c:3824
 #, c-format
 msgid ""
-"       This planet commands its period with magnificent backing.\n"
+"       This planet commands %s with magnificent backing.\n"
 "       Because its cosmic efficiency is highly abundant (%d%%), it acts as "
 "an honored\n"
 "and powerful executive. The promises of this planet will manifest with "
@@ -1968,6 +1968,14 @@ msgid ""
 "bringing structural progress, sudden expansion, and minimal friction.\n"
 "\n"
 "\n"
+msgstr ""
+
+#: src/draw-chart.c:3827
+msgid "the day"
+msgstr ""
+
+#: src/draw-chart.c:3827
+msgid "the night"
 msgstr ""
 
 #: src/draw-chart.c:3831 src/draw-chart.c:3875 src/solar_return.c:523

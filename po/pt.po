@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 00:37-0300\n"
+"POT-Creation-Date: 2026-08-25 04:05-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2353,7 +2353,7 @@ msgstr ""
 #: src/draw-chart.c:3824
 #, c-format
 msgid ""
-"       This planet commands its period with magnificent backing.\n"
+"       This planet commands %s with magnificent backing.\n"
 "       Because its cosmic efficiency is highly abundant (%d%%), it acts as "
 "an honored\n"
 "and powerful executive. The promises of this planet will manifest with "
@@ -2362,7 +2362,7 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"       Este planeta rege o seu período com um apoio magnífico do seu mapa "
+"       Este planeta rege %s com um apoio magnífico do seu mapa "
 "natal.\n"
 "       Graças à sua eficiência cósmica altamente elevada (%d%%), ele atua "
 "como\n"
@@ -2371,6 +2371,14 @@ msgstr ""
 "repentina e atrito mínimo.\n"
 "\n"
 "\n"
+
+#: src/draw-chart.c:3827
+msgid "the day"
+msgstr "o dia"
+
+#: src/draw-chart.c:3827
+msgid "the night"
+msgstr "a noite"
 
 #: src/draw-chart.c:3831 src/draw-chart.c:3875 src/solar_return.c:523
 msgid ""
@@ -5474,12 +5482,6 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
-
-#~ msgid "the day"
-#~ msgstr "o dia"
-
-#~ msgid "the night"
-#~ msgstr "a noite"
 
 #~ msgid "Use [↑/↓] to Scroll (Showing"
 #~ msgstr "Use [↑/↓] Rolar (Exibindo"

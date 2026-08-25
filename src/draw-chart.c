@@ -2324,7 +2324,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         if (aproveitamento_puro >= 65)      wattroff(pad, A_REVERSE);
 
         // 2. O tamanho da barra continua respeitando o peso arquetípico do planeta!
-        double weights[50];
+        double weights[100];
         get_weights(weights, show_modern_planets);
         
         // Multiplica a nota pelo peso e divide por 10.0 para achar a força ponderada
@@ -2418,7 +2418,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
-    double weights[50];
+    double weights[100];
     get_weights(weights, show_modern_planets);
 
     int max_linhas_dados = table_height - 8;
@@ -3802,7 +3802,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
 
     /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
-    double weights[50];
+    double weights[100];
     get_weights(weights, show_modern_planets);
     int pontos_finais_exibicao_day = (int)ceil(((double)strength_reg_day * weights[regente_dia]) / 10.0);
 
@@ -3821,10 +3821,10 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
         wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        wprintw(pad, _("       This planet commands its period with magnificent backing.\n"
+        wprintw(pad, _("       This planet commands %s with magnificent backing.\n"
                         "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
                         "and powerful executive. The promises of this planet will manifest with clarity,\n"
-                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), strength_reg_day);
+                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO)?_("the day"):_("the night"), strength_reg_day);
     } 
     else if (strength_reg_day >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
@@ -6150,7 +6150,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
 
-        // criar Promissor objects array com as coordenadas dos 7 planetas e do termos
+        // criar Promissor objects array com as coordenadas dos 7 planetas, antissia, contrantissia e termos
 
         Promissor prom[100] = {0};
 
