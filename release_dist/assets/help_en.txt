@@ -1713,7 +1713,7 @@ The table also displays, by default, Zodiacal and Mundane
 directions altogether. You can filter by Zodiacal by 
 pressing [Z] and Mundane only by pressing [M].
 
-Promittors are the aspects of the 7 planets, their Antissia
+Promissors are the aspects of the 7 planets, their Antissia
 and Contrantissia, and the terms (bounds) of the signs.
 
 The first columns shows the age and the date of the event.
@@ -1721,7 +1721,7 @@ The first columns shows the age and the date of the event.
 Color coding indicate potential destructive directions, good
 directions and a period of alert.
 
-    • When the promittor is the Anareta or Dominus Mortiis and 
+    • When the promissor is the Anareta or Dominus Mortiis and 
       their terms (red reverse for malefic aspects and red bold 
       for other aspects). 
     

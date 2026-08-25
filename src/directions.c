@@ -172,7 +172,7 @@ double calcular_ra(double longitude, double declinacao, double jd) {
 
 
 // Calcula o cronograma de direções zodiacais para QUALQUER ponto escolhido
-int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double *latitudes, int sentido, Promittor *prom) {
+int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double *latitudes, int sentido, Promissor *prom) {
     (void)latitudes;
 
     int qtd_direcoes = 0;
@@ -247,7 +247,7 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
                     strcpy(d->significador_name, plots[idx_alvo].object_name);
                     strcpy(d->significador_glifo, plots[idx_alvo].object);
                     
-                    d->promittor_type = prom[p].type;
+                    d->promissor_type = prom[p].type;
 
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
@@ -290,7 +290,7 @@ fim_calculo:
 }
 
 
-int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promittor *prom) {
+int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
     int qtd_direcoes = 0;
     double lat_geo_rad = para_radianos(lat_geografica);
 
@@ -364,7 +364,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                     strcpy(d->significador_name, plots[idx_alvo].object_name);
                     strcpy(d->significador_glifo, plots[idx_alvo].object);
 
-                    d->promittor_type = prom[p].type;
+                    d->promissor_type = prom[p].type;
                     
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
@@ -401,7 +401,7 @@ fim_calculo:
 }
 
 
-void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, double *latitudes, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promittor *prom) {
+void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, double *latitudes, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom) {
        
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -611,7 +611,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
                 d->promissor_glifo, // d->promissor_name,
-                (d->promittor_type == PROM_TERM)?"":d->aspecto_symbol,
+                (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                 d->significador_glifo, 
                 d->significador_name);
 
@@ -793,7 +793,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
 
 
-int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_partes, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double *latitudes, int sentido, Promittor *prom) {
+int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_partes, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double *latitudes, int sentido, Promissor *prom) {
     (void) latitudes;
     int qtd_direcoes = 0;
 
@@ -863,7 +863,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     
                     strcpy(d->significador_glifo, abreviacao);
 
-                    d->promittor_type = prom[p].type;
+                    d->promissor_type = prom[p].type;
                     
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
@@ -908,7 +908,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
 
 
-void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char *nome_senhor_da_casa8, ChartObject *obj, int num_objects, double *cusps, double jd, double *latitudes, double ramc, double lat) {
+void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char *nome_senhor_da_casa8, ChartObject *obj, int num_objects, double *cusps, double jd, double *latitudes, double ramc, double lat) {
     (void) latitudes;
 
     int max_y, max_x;
@@ -1061,7 +1061,7 @@ void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char 
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
                 d->promissor_glifo, // d->promissor_name,
-                (d->promittor_type == PROM_TERM)?"":d->aspecto_symbol,
+                (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                 d->significador_glifo, 
                 d->significador_name);
 
@@ -1255,7 +1255,7 @@ void display_primary_directions_parts(Promittor *prom, char *nome_anareta, char 
 
 
 
-int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promittor *prom) {
+int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
     int qtd_direcoes = 0;
     double lat_geo_rad = para_radianos(lat_geografica);
 
@@ -1334,7 +1334,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     
                     strcpy(d->significador_glifo, abreviacao);
 
-                    d->promittor_type = prom[p].type;
+                    d->promissor_type = prom[p].type;
                     
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;

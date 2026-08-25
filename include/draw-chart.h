@@ -169,7 +169,7 @@ typedef struct {
 
     int tipo_san;
 
-    Promittor *prom;
+    Promissor *prom;
 
     AntObject *ants;
 

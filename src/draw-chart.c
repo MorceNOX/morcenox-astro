@@ -6150,9 +6150,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
 
-        // criar Promittor objects array com as coordenadas dos 7 planetas e do termos
+        // criar Promissor objects array com as coordenadas dos 7 planetas e do termos
 
-        Promittor prom[100] = {0};
+        Promissor prom[100] = {0};
 
         for (int i = 0; i < 7; i++) {
             snprintf(prom[i].object, 10, "%s", plots[i].object);
