@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 22:27-0300\n"
+"POT-Creation-Date: 2026-08-26 03:12-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -681,8 +681,8 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:2986 src/draw-chart.c:3314
-#: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
-#: src/mind.c:312 src/motivation.c:251 src/profections.c:188
+#: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:988
+#: src/mind.c:312 src/motivation.c:244 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr ""
 
@@ -780,29 +780,29 @@ msgstr ""
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
-#: src/aspects.c:397
+#: src/aspects.c:398
 msgid "Parallel & Contra-Parallel"
 msgstr ""
 
-#: src/aspects.c:473 src/aspects.c:886 src/aspects.c:1112
+#: src/aspects.c:474 src/aspects.c:887 src/aspects.c:1113
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr ""
 
-#: src/aspects.c:543
+#: src/aspects.c:544
 msgid "Aspects Table"
 msgstr ""
 
-#: src/aspects.c:632
+#: src/aspects.c:633
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
 "Sign - F5 Antissia - [↓↑|JK] Scroll"
 msgstr ""
 
-#: src/aspects.c:803
+#: src/aspects.c:804
 msgid "Aspects by Sign Table"
 msgstr ""
 
-#: src/aspects.c:1016
+#: src/aspects.c:1017
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr ""
 
@@ -1180,28 +1180,28 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:169 src/temperament.c:71 src/temperament.c:639
+#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:639
 #: src/temperament.c:645 src/temperament.c:658 src/temperament.c:676
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:173 src/temperament.c:74 src/temperament.c:640
+#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:640
 #: src/temperament.c:648 src/temperament.c:664 src/temperament.c:684
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:178 src/temperament.c:73 src/temperament.c:633
+#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:633
 #: src/temperament.c:647 src/temperament.c:657 src/temperament.c:672
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:182 src/temperament.c:72 src/temperament.c:634
+#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:634
 #: src/temperament.c:646 src/temperament.c:663 src/temperament.c:680
 #, c-format
 msgid "Water"
@@ -2267,7 +2267,7 @@ msgid "17. Aspects to Antissia & Contrantissia"
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:352 src/hyleg.c:353 src/hyleg.c:596
-#: src/hyleg.c:714
+#: src/hyleg.c:715
 msgid "None"
 msgstr ""
 
@@ -2466,115 +2466,115 @@ msgstr ""
 msgid " [FERAL/UNASPECTED PLANET]"
 msgstr ""
 
-#: src/hyleg.c:620
+#: src/hyleg.c:621
 msgid "Years distributed via physical Position in House"
 msgstr ""
 
-#: src/hyleg.c:686
+#: src/hyleg.c:687
 msgid ""
 "Note 1: Cadent houses (3, 6, 9, 12) restrict the Alcochoden to its Lesser "
 "Years."
 msgstr ""
 
-#: src/hyleg.c:687
+#: src/hyleg.c:688
 msgid "Benefic or malefic aspects dynamically modify this base vitality score."
 msgstr ""
 
-#: src/hyleg.c:688
+#: src/hyleg.c:689
 msgid ""
 "Note 2: An unaspected Alcochoden provides only its raw lesser years as a "
 "base."
 msgstr ""
 
-#: src/hyleg.c:689
+#: src/hyleg.c:690
 msgid ""
 "Traditional doctrine shifts these into major 10-year cycles if the native "
 "survives infancy."
 msgstr ""
 
-#: src/hyleg.c:715
+#: src/hyleg.c:716
 msgid "No imminent vital threats found"
 msgstr ""
 
-#: src/hyleg.c:812
+#: src/hyleg.c:813
 msgid "Elected via: Corporeal Presence in the 8th House (Precedence)"
 msgstr ""
 
-#: src/hyleg.c:814
+#: src/hyleg.c:815
 msgid "Elected via: Corporeal Presence in the 4th House (End of Life)"
 msgstr ""
 
-#: src/hyleg.c:816
+#: src/hyleg.c:817
 msgid "Elected via: Lord of the 8th House Cusp"
 msgstr ""
 
-#: src/hyleg.c:818
+#: src/hyleg.c:819
 msgid "Elected via: Hostile Aspect (Square/Opposition) to Hyleg"
 msgstr ""
 
-#: src/hyleg.c:847
+#: src/hyleg.c:848
 msgid " Vital Threats: The Anareta "
 msgstr ""
 
-#: src/hyleg.c:882
+#: src/hyleg.c:883
 msgid "Target Hyleg:      "
 msgstr ""
 
-#: src/hyleg.c:885
+#: src/hyleg.c:886
 msgid "☉ Sun"
 msgstr ""
 
-#: src/hyleg.c:886
+#: src/hyleg.c:887
 msgid "☽ Moon"
 msgstr ""
 
-#: src/hyleg.c:887
+#: src/hyleg.c:888
 msgid "ASC (Ascendant Degree)"
 msgstr ""
 
-#: src/hyleg.c:888
+#: src/hyleg.c:889
 msgid "🝴 Part of Fortune"
 msgstr ""
 
-#: src/hyleg.c:905 src/hyleg.c:907
+#: src/hyleg.c:906 src/hyleg.c:908
 msgid "Almuten Figuris Protector"
 msgstr ""
 
-#: src/hyleg.c:913
+#: src/hyleg.c:914
 msgid "8th House Sign & Ruler:   "
 msgstr ""
 
-#: src/hyleg.c:924
+#: src/hyleg.c:925
 msgid "THE CHOSEN ANARETA (Interfector): "
 msgstr ""
 
-#: src/hyleg.c:934 src/hyleg.c:970
+#: src/hyleg.c:935 src/hyleg.c:971
 msgid "Calculated Threat Score: "
 msgstr ""
 
-#: src/hyleg.c:936
+#: src/hyleg.c:937
 msgid "Points"
 msgstr ""
 
-#: src/hyleg.c:967
+#: src/hyleg.c:968
 msgid "None Active"
 msgstr ""
 
-#: src/hyleg.c:972
+#: src/hyleg.c:973
 msgid "0 Points"
 msgstr ""
 
-#: src/hyleg.c:973
+#: src/hyleg.c:974
 msgid "No severe planetary afflictions targeting the vital points."
 msgstr ""
 
-#: src/hyleg.c:982
+#: src/hyleg.c:983
 msgid ""
 "Note: The Anareta represents the geometric source of physical or metabolic "
 "risk."
 msgstr ""
 
-#: src/hyleg.c:983
+#: src/hyleg.c:984
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
@@ -2661,115 +2661,115 @@ msgstr ""
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:1854
+#: src/menu-box.c:1837
 msgid "Help file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:1858 src/menu-box.c:1955
+#: src/menu-box.c:1841 src/menu-box.c:1938
 msgid "Help"
 msgstr ""
 
-#: src/menu-box.c:1859
+#: src/menu-box.c:1842
 msgid "Help file loaded successfully!"
 msgstr ""
 
-#: src/menu-box.c:1873
+#: src/menu-box.c:1856
 msgid "Topics file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:1877 src/menu-box.c:1956
+#: src/menu-box.c:1860 src/menu-box.c:1939
 msgid "Technical Topics"
 msgstr ""
 
-#: src/menu-box.c:1878
+#: src/menu-box.c:1861
 msgid "Topics file loaded successfully!"
 msgstr ""
 
-#: src/menu-box.c:1888
+#: src/menu-box.c:1871
 msgid "Settings unchanged!"
 msgstr ""
 
-#: src/menu-box.c:1910
+#: src/menu-box.c:1893
 msgid "Settings updated!"
 msgstr ""
 
-#: src/menu-box.c:1947
+#: src/menu-box.c:1930
 msgid "Quick Chart"
 msgstr ""
 
-#: src/menu-box.c:1947
+#: src/menu-box.c:1930
 msgid "View the chart for the current moment in the default city."
 msgstr ""
 
-#: src/menu-box.c:1948
+#: src/menu-box.c:1931
 msgid "New Chart"
 msgstr ""
 
-#: src/menu-box.c:1948
+#: src/menu-box.c:1931
 msgid "Set the data to load a new chart."
 msgstr ""
 
-#: src/menu-box.c:1949
+#: src/menu-box.c:1932
 msgid "Load Chart"
 msgstr ""
 
-#: src/menu-box.c:1949
+#: src/menu-box.c:1932
 msgid "Load a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:1950
+#: src/menu-box.c:1933
 msgid "Save the Chart"
 msgstr ""
 
-#: src/menu-box.c:1950
+#: src/menu-box.c:1933
 msgid "Save the current chart."
 msgstr ""
 
-#: src/menu-box.c:1951
+#: src/menu-box.c:1934
 msgid "Delete Chart"
 msgstr ""
 
-#: src/menu-box.c:1951
+#: src/menu-box.c:1934
 msgid "Delete a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:1952
+#: src/menu-box.c:1935
 msgid "Display Chart"
 msgstr ""
 
-#: src/menu-box.c:1952
+#: src/menu-box.c:1935
 msgid "Display the current chart."
 msgstr ""
 
-#: src/menu-box.c:1953
+#: src/menu-box.c:1936
 msgid "Change the Default Location"
 msgstr ""
 
-#: src/menu-box.c:1953
+#: src/menu-box.c:1936
 msgid "Select a new city as default for the Quick Chart."
 msgstr ""
 
-#: src/menu-box.c:1954
+#: src/menu-box.c:1937
 msgid "Settings"
 msgstr ""
 
-#: src/menu-box.c:1954
+#: src/menu-box.c:1937
 msgid "Modify the default settings."
 msgstr ""
 
-#: src/menu-box.c:1955
+#: src/menu-box.c:1938
 msgid "See the help window for this application."
 msgstr ""
 
-#: src/menu-box.c:1956
+#: src/menu-box.c:1939
 msgid "Technical topics used in this program."
 msgstr ""
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1940
 msgid "Exit"
 msgstr ""
 
-#: src/menu-box.c:1957
+#: src/menu-box.c:1940
 msgid "Exit the program."
 msgstr ""
 
@@ -2962,209 +2962,209 @@ msgstr ""
 msgid "Psychological Profile & Disposition:"
 msgstr ""
 
-#: src/motivation.c:35
+#: src/motivation.c:36
 msgid "Immediate action, pioneering, and personal conquest."
 msgstr ""
 
-#: src/motivation.c:36
+#: src/motivation.c:37
 msgid "Material security, comfort, and sensory stability."
 msgstr ""
 
-#: src/motivation.c:37
+#: src/motivation.c:38
 msgid "Curiosity, communication, and mental stimulation."
 msgstr ""
 
-#: src/motivation.c:38
+#: src/motivation.c:39
 msgid "Belonging, emotional protection, and deep roots."
 msgstr ""
 
-#: src/motivation.c:39
+#: src/motivation.c:40
 msgid "Recognition, creative expression, and validation."
 msgstr ""
 
-#: src/motivation.c:40
+#: src/motivation.c:41
 msgid "Utility, order, and continuous improvement."
 msgstr ""
 
-#: src/motivation.c:41
+#: src/motivation.c:42
 msgid "Harmony, relational balance, and social justice."
 msgstr ""
 
-#: src/motivation.c:42
+#: src/motivation.c:43
 msgid "Depth, psychological transformation, and hidden truths."
 msgstr ""
 
-#: src/motivation.c:43
+#: src/motivation.c:44
 msgid "Expansion, freedom, and seeking ultimate meaning."
 msgstr ""
 
-#: src/motivation.c:44
+#: src/motivation.c:45
 msgid "Tangible achievement, status, and building legacy."
 msgstr ""
 
-#: src/motivation.c:45
+#: src/motivation.c:46
 msgid "Innovation, collective freedom, and social progress."
 msgstr ""
 
-#: src/motivation.c:46
+#: src/motivation.c:47
 msgid "Mystical union, compassion, and spiritual transcendence."
 msgstr ""
 
-#: src/motivation.c:55
+#: src/motivation.c:56
 msgid ""
 "The Sun centralizes the motivation in the self, in the quest for personal "
 "brilliance, leadership, pride and visibility."
 msgstr ""
 
-#: src/motivation.c:56
+#: src/motivation.c:57
 msgid ""
 "The Moon turns the motivation highly fluctuating, guided by humors, instinct "
 "of protection, memory and emotional attachment."
 msgstr ""
 
-#: src/motivation.c:57
+#: src/motivation.c:58
 msgid ""
 "Mercury filters the motivation by logic, intelectualization, necessity of "
 "communication, analysis and data processing."
 msgstr ""
 
-#: src/motivation.c:58
+#: src/motivation.c:59
 msgid ""
 "Venus shifts the quest towards the pleasure, aesthetics, partnership, "
 "financial gain or social validation."
 msgstr ""
 
-#: src/motivation.c:59
+#: src/motivation.c:60
 msgid ""
 "Mars adds urgency, competitiveness, a need to win, haste, and a focus on "
 "direct action."
 msgstr ""
 
-#: src/motivation.c:60
+#: src/motivation.c:61
 msgid ""
 "Jupiter amplifies the motivation with idealism, excesses, quest for wisdom, "
 "luck or dogmatism."
 msgstr ""
 
-#: src/motivation.c:61
+#: src/motivation.c:62
 msgid ""
 "Saturn imposes limits, slowness, a sense of duty, a need for structure, fear "
 "of failure, and maturity."
 msgstr ""
 
-#: src/motivation.c:94
+#: src/motivation.c:95
 msgid " Primary Motivation "
 msgstr ""
 
-#: src/motivation.c:102
+#: src/motivation.c:103
 msgid "Sign of Ascendant:"
 msgstr ""
 
-#: src/motivation.c:116
+#: src/motivation.c:117
 msgid "The Core Motivation:"
 msgstr ""
 
-#: src/motivation.c:127
+#: src/motivation.c:128
 msgid "Ruler of The Ascendant"
 msgstr ""
 
-#: src/motivation.c:158
+#: src/motivation.c:151
 msgid "Sign of the Ruler"
 msgstr ""
 
-#: src/motivation.c:170
+#: src/motivation.c:163
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 
-#: src/motivation.c:171
+#: src/motivation.c:164
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr ""
 
-#: src/motivation.c:174
+#: src/motivation.c:167
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 
-#: src/motivation.c:175
+#: src/motivation.c:168
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 
-#: src/motivation.c:179
+#: src/motivation.c:172
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 
-#: src/motivation.c:180
+#: src/motivation.c:173
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
 msgstr ""
 
-#: src/motivation.c:183
+#: src/motivation.c:176
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
 msgstr ""
 
-#: src/motivation.c:184
+#: src/motivation.c:177
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 
-#: src/motivation.c:190
+#: src/motivation.c:183
 msgid "House of the Ruler"
 msgstr ""
 
-#: src/motivation.c:198
+#: src/motivation.c:191
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 
-#: src/motivation.c:210
+#: src/motivation.c:203
 msgid "The native’s physical body, temperament, personal identity"
 msgstr ""
 
-#: src/motivation.c:213
+#: src/motivation.c:206
 msgid "Wealth, personal finances, moveable possessions"
 msgstr ""
 
-#: src/motivation.c:216
+#: src/motivation.c:209
 msgid "Immediate environment, short travels, siblings, early education"
 msgstr ""
 
-#: src/motivation.c:219
+#: src/motivation.c:212
 msgid "Ancestry, the father, real estate, the end of life"
 msgstr ""
 
-#: src/motivation.c:222
+#: src/motivation.c:215
 msgid "Creativity, children, pleasure, speculative ventures"
 msgstr ""
 
-#: src/motivation.c:225
+#: src/motivation.c:218
 msgid "Illness, servitude, small domestic animals"
 msgstr ""
 
-#: src/motivation.c:228
+#: src/motivation.c:221
 msgid "Partnerships, marriage, open enemies, contracts"
 msgstr ""
 
-#: src/motivation.c:231
+#: src/motivation.c:224
 msgid "Death, inheritances, transformations, other people's money"
 msgstr ""
 
-#: src/motivation.c:234
+#: src/motivation.c:227
 msgid "Higher education, philosophy, religion, long-distance travel"
 msgstr ""
 
-#: src/motivation.c:237
+#: src/motivation.c:230
 msgid "Career, social status, public reputation, the mother"
 msgstr ""
 
-#: src/motivation.c:240
+#: src/motivation.c:233
 msgid "Friendships, alliances, group affiliations, hopes"
 msgstr ""
 
-#: src/motivation.c:243
+#: src/motivation.c:236
 msgid "Hidden enemies, self-undoing, sorrow, imprisonment, confinements"
 msgstr ""
 
@@ -4627,14 +4627,75 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:913
+#: src/temperament.c:933
+msgid ""
+"    SECONDARY INFLUENCES & NUANCES\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:935
+msgid ""
+"    Although your core template is defined above, your psychiatric map\n"
+"    shows other active forces adding layers to your behavior:\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:944
+msgid "    ✦ Sanguine Influence: "
+msgstr ""
+
+#: src/temperament.c:946
+msgid ""
+"Adds an overlay of communicative ease, adaptability,\n"
+"      and cognitive curiosity. This softens any rigid boundaries or\n"
+"      stagnation imposed by your dominant humor.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:953
+msgid "    ✦ Choleric Influence: "
+msgstr ""
+
+#: src/temperament.c:955
+msgid ""
+"Injects raw drive, sharp focus on execution, and a\n"
+"      natural urgency to fix problems. It sharpens a passive baseline\n"
+"      into a highly proactive mindset.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:962
+msgid "    ✦ Phlegmatic Influence: "
+msgstr ""
+
+#: src/temperament.c:964
+msgid ""
+"Acts as a natural thermal and emotional ballast, introducing\n"
+"      diplomatic mediation, structural patience, and a steady pace that\n"
+"      protects you from chronic stress.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:971
+msgid "    ✦ Melancholic Influence: "
+msgstr ""
+
+#: src/temperament.c:973
+msgid ""
+"Confers analytical depth, long-term organization skills,\n"
+"      and a realistic sense of caution. It ensures your impulses are\n"
+"      grounded in real-world feasibility.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:985
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr ""
 
-#: src/temperament.c:917
+#: src/temperament.c:989
 msgid "Rank"
 msgstr ""
 
-#: src/temperament.c:923
+#: src/temperament.c:995
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""

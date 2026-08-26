@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 20:38-0300\n"
+"POT-Creation-Date: 2026-08-26 02:36-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -926,7 +926,7 @@ msgstr ""
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:2986 src/draw-chart.c:3314
 #: src/draw-chart.c:3993 src/firdaria.c:448 src/hyleg.c:693 src/hyleg.c:987
-#: src/mind.c:312 src/motivation.c:251 src/profections.c:188
+#: src/mind.c:312 src/motivation.c:244 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
 
@@ -1026,19 +1026,19 @@ msgstr "Falha ao deletar parte árabe!"
 msgid "Arabic Part deleted successfully!"
 msgstr "Parte Árabe excluída com sucesso."
 
-#: src/aspects.c:397
+#: src/aspects.c:398
 msgid "Parallel & Contra-Parallel"
 msgstr "Paralelo & Contra-Paralelo"
 
-#: src/aspects.c:473 src/aspects.c:886 src/aspects.c:1112
+#: src/aspects.c:474 src/aspects.c:887 src/aspects.c:1113
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
-#: src/aspects.c:543
+#: src/aspects.c:544
 msgid "Aspects Table"
 msgstr "Tabela de Aspectos"
 
-#: src/aspects.c:632
+#: src/aspects.c:633
 msgid ""
 "Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by "
 "Sign - F5 Antissia - [↓↑|JK] Scroll"
@@ -1046,11 +1046,11 @@ msgstr ""
 "Pressione Q/ESC Retornar - F3 Paralelo & Contra-Paralelo - F4 Aspectos por "
 "Signo - F5 Antissia - [↓↑/JK] Rolar"
 
-#: src/aspects.c:803
+#: src/aspects.c:804
 msgid "Aspects by Sign Table"
 msgstr "Tabela de Aspectos por Signo"
 
-#: src/aspects.c:1016
+#: src/aspects.c:1017
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos Antissia & Contrantissia "
 
@@ -1435,29 +1435,29 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:169 src/temperament.c:71 src/temperament.c:620
-#: src/temperament.c:626 src/temperament.c:639 src/temperament.c:657
+#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:639
+#: src/temperament.c:645 src/temperament.c:658 src/temperament.c:676
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:173 src/temperament.c:74 src/temperament.c:621
-#: src/temperament.c:629 src/temperament.c:645 src/temperament.c:665
+#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:640
+#: src/temperament.c:648 src/temperament.c:664 src/temperament.c:684
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:178 src/temperament.c:73 src/temperament.c:614
-#: src/temperament.c:628 src/temperament.c:638 src/temperament.c:653
+#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:633
+#: src/temperament.c:647 src/temperament.c:657 src/temperament.c:672
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:182 src/temperament.c:72 src/temperament.c:615
-#: src/temperament.c:627 src/temperament.c:644 src/temperament.c:661
+#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:634
+#: src/temperament.c:646 src/temperament.c:663 src/temperament.c:680
 #, c-format
 msgid "Water"
 msgstr "Água"
@@ -1744,7 +1744,7 @@ msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
 msgid " Planetary Hours Analysis "
 msgstr "Análise da Hora Planetária"
 
-#: src/draw-chart.c:3556 src/temperament.c:761
+#: src/draw-chart.c:3556 src/temperament.c:780
 msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
 
@@ -3443,55 +3443,55 @@ msgstr "Regente do Pensamento: "
 msgid "Psychological Profile & Disposition:"
 msgstr "Perfil Psicológico & Disposição:"
 
-#: src/motivation.c:35
+#: src/motivation.c:36
 msgid "Immediate action, pioneering, and personal conquest."
 msgstr "Ação imediata, pioneirismo e conquista pessoal."
 
-#: src/motivation.c:36
+#: src/motivation.c:37
 msgid "Material security, comfort, and sensory stability."
 msgstr "Segurança material, conforto e estabilidade sensorial."
 
-#: src/motivation.c:37
+#: src/motivation.c:38
 msgid "Curiosity, communication, and mental stimulation."
 msgstr "Curiosidade, comunicação e estímulo mental."
 
-#: src/motivation.c:38
+#: src/motivation.c:39
 msgid "Belonging, emotional protection, and deep roots."
 msgstr "Pertencimento, proteção emocional e raízes profundas."
 
-#: src/motivation.c:39
+#: src/motivation.c:40
 msgid "Recognition, creative expression, and validation."
 msgstr "Reconhecimento, expressão criativa e validação."
 
-#: src/motivation.c:40
+#: src/motivation.c:41
 msgid "Utility, order, and continuous improvement."
 msgstr "Utilidade, ordem e melhoria contínua."
 
-#: src/motivation.c:41
+#: src/motivation.c:42
 msgid "Harmony, relational balance, and social justice."
 msgstr "Harmonia, equilíbrio relacional e justiça social."
 
-#: src/motivation.c:42
+#: src/motivation.c:43
 msgid "Depth, psychological transformation, and hidden truths."
 msgstr "Profundidade, transformação psicológica e verdades ocultas."
 
-#: src/motivation.c:43
+#: src/motivation.c:44
 msgid "Expansion, freedom, and seeking ultimate meaning."
 msgstr "Expansão, liberdade e a busca pelo sentido último."
 
-#: src/motivation.c:44
+#: src/motivation.c:45
 msgid "Tangible achievement, status, and building legacy."
 msgstr "Conquista tangível, status e construção de um legado."
 
-#: src/motivation.c:45
+#: src/motivation.c:46
 msgid "Innovation, collective freedom, and social progress."
 msgstr "Inovação, liberdade coletiva e progresso social."
 
-#: src/motivation.c:46
+#: src/motivation.c:47
 msgid "Mystical union, compassion, and spiritual transcendence."
 msgstr "União mística, compaixão e transcendência espiritual."
 
-#: src/motivation.c:55
+#: src/motivation.c:56
 msgid ""
 "The Sun centralizes the motivation in the self, in the quest for personal "
 "brilliance, leadership, pride and visibility."
@@ -3499,7 +3499,7 @@ msgstr ""
 "O Sol centraliza a motivação no eu, na busca pelo brilho pessoal, pela "
 "liderança, pelo orgulho e pela visibilidade."
 
-#: src/motivation.c:56
+#: src/motivation.c:57
 msgid ""
 "The Moon turns the motivation highly fluctuating, guided by humors, instinct "
 "of protection, memory and emotional attachment."
@@ -3507,7 +3507,7 @@ msgstr ""
 "A Lua torna a motivação altamente oscilante, guiada por humores, pelo "
 "instinto de proteção, pela memória e pelo apego emocional."
 
-#: src/motivation.c:57
+#: src/motivation.c:58
 msgid ""
 "Mercury filters the motivation by logic, intelectualization, necessity of "
 "communication, analysis and data processing."
@@ -3515,7 +3515,7 @@ msgstr ""
 "Mercúrio filtra a motivação por meio da lógica, da intelectualização, da "
 "necessidade de comunicação, da análise e do processamento de dados."
 
-#: src/motivation.c:58
+#: src/motivation.c:59
 msgid ""
 "Venus shifts the quest towards the pleasure, aesthetics, partnership, "
 "financial gain or social validation."
@@ -3523,7 +3523,7 @@ msgstr ""
 "Vênus direciona a busca para o prazer, a estética, a parceria, o ganho "
 "financeiro ou a validação social."
 
-#: src/motivation.c:59
+#: src/motivation.c:60
 msgid ""
 "Mars adds urgency, competitiveness, a need to win, haste, and a focus on "
 "direct action."
@@ -3531,7 +3531,7 @@ msgstr ""
 "Marte acrescenta urgência, competitividade, necessidade de vencer, pressa e "
 "foco na ação direta."
 
-#: src/motivation.c:60
+#: src/motivation.c:61
 msgid ""
 "Jupiter amplifies the motivation with idealism, excesses, quest for wisdom, "
 "luck or dogmatism."
@@ -3539,7 +3539,7 @@ msgstr ""
 "Júpiter amplifica a motivação com idealismo, excessos, busca por sabedoria, "
 "sorte ou dogmatismo."
 
-#: src/motivation.c:61
+#: src/motivation.c:62
 msgid ""
 "Saturn imposes limits, slowness, a sense of duty, a need for structure, fear "
 "of failure, and maturity."
@@ -3547,56 +3547,56 @@ msgstr ""
 "Saturno impõe limites, lentidão, senso de dever, necessidade de estrutura, "
 "medo do fracasso e maturidade."
 
-#: src/motivation.c:94
+#: src/motivation.c:95
 msgid " Primary Motivation "
 msgstr " Motivação Primária "
 
-#: src/motivation.c:102
+#: src/motivation.c:103
 msgid "Sign of Ascendant:"
 msgstr "Signo do Ascendente:"
 
-#: src/motivation.c:116
+#: src/motivation.c:117
 msgid "The Core Motivation:"
 msgstr "A Motivação Principal:"
 
-#: src/motivation.c:127
+#: src/motivation.c:128
 msgid "Ruler of The Ascendant"
 msgstr "Regente do Ascendente"
 
-#: src/motivation.c:158
+#: src/motivation.c:151
 msgid "Sign of the Ruler"
 msgstr "Signo do Regente"
 
-#: src/motivation.c:170
+#: src/motivation.c:163
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 "Essa motivação é impulsionada por energia assertiva, dinamismo e liderança,"
 
-#: src/motivation.c:171
+#: src/motivation.c:164
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr "infundindo na motivação central paixão e uma busca vital por expansão."
 
-#: src/motivation.c:174
+#: src/motivation.c:167
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 "Essa motivação se baseia no pragmatismo, no foco constante e na deliberação,"
 
-#: src/motivation.c:175
+#: src/motivation.c:168
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 "direcionando a motivação central para resultados tangíveis e estabilidade "
 "material."
 
-#: src/motivation.c:179
+#: src/motivation.c:172
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 "Essa motivação é canalizada para a versatilidade intelectual e a síntese "
 "lógica,"
 
-#: src/motivation.c:180
+#: src/motivation.c:173
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
@@ -3604,7 +3604,7 @@ msgstr ""
 "e a troca social, ocasionalmente distribuindo a motivação central por "
 "interesses variados."
 
-#: src/motivation.c:183
+#: src/motivation.c:176
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
@@ -3612,67 +3612,67 @@ msgstr ""
 "Essa motivação é moldada pela fluidez emocional, intuição e profundidade "
 "psicológica,"
 
-#: src/motivation.c:184
+#: src/motivation.c:177
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 "tornando a motivação central altamente adaptável a correntes internas e "
 "externas."
 
-#: src/motivation.c:190
+#: src/motivation.c:183
 msgid "House of the Ruler"
 msgstr "Casa do Regente"
 
-#: src/motivation.c:198
+#: src/motivation.c:191
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 "Áreas da vida nas quais a Motivação Principal é aplicada ou direcionada:"
 
-#: src/motivation.c:210
+#: src/motivation.c:203
 msgid "The native’s physical body, temperament, personal identity"
 msgstr "O corpo físico, o temperamento e a identidade pessoal do nativo"
 
-#: src/motivation.c:213
+#: src/motivation.c:206
 msgid "Wealth, personal finances, moveable possessions"
 msgstr "Riqueza, finanças pessoais, bens móveis"
 
-#: src/motivation.c:216
+#: src/motivation.c:209
 msgid "Immediate environment, short travels, siblings, early education"
 msgstr "Ambiente imediato, deslocamentos curtos, irmãos, educação inicial"
 
-#: src/motivation.c:219
+#: src/motivation.c:212
 msgid "Ancestry, the father, real estate, the end of life"
 msgstr "Ancestralidade, o pai, mercado imobiliário, o fim da vida"
 
-#: src/motivation.c:222
+#: src/motivation.c:215
 msgid "Creativity, children, pleasure, speculative ventures"
 msgstr "Criatividade, crianças, prazer, empreendimentos especulativos"
 
-#: src/motivation.c:225
+#: src/motivation.c:218
 msgid "Illness, servitude, small domestic animals"
 msgstr "Doença, servidão, pequenos animais domésticos"
 
-#: src/motivation.c:228
+#: src/motivation.c:221
 msgid "Partnerships, marriage, open enemies, contracts"
 msgstr "Parcerias, casamento, inimigos declarados, contratos"
 
-#: src/motivation.c:231
+#: src/motivation.c:224
 msgid "Death, inheritances, transformations, other people's money"
 msgstr "Morte, heranças, transformações, dinheiro de terceiros"
 
-#: src/motivation.c:234
+#: src/motivation.c:227
 msgid "Higher education, philosophy, religion, long-distance travel"
 msgstr "Ensino superior, filosofia, religião, viagens de longa distância"
 
-#: src/motivation.c:237
+#: src/motivation.c:230
 msgid "Career, social status, public reputation, the mother"
 msgstr "Carreira, status social, reputação pública, a mãe"
 
-#: src/motivation.c:240
+#: src/motivation.c:233
 msgid "Friendships, alliances, group affiliations, hopes"
 msgstr "Amizades, alianças, afiliações a grupos, esperanças"
 
-#: src/motivation.c:243
+#: src/motivation.c:236
 msgid "Hidden enemies, self-undoing, sorrow, imprisonment, confinements"
 msgstr ""
 "Inimigos ocultos, autodestruição, sofrimento, aprisionamento, confinamentos"
@@ -5207,139 +5207,139 @@ msgstr ""
 "  [FIM DOS TRÂNSITOS] - Pressione 'Q' ou ESC para retornar ao Mapa da "
 "Revolução Solar.\n"
 
-#: src/temperament.c:489
+#: src/temperament.c:508
 msgid "Natal Temperament Analysis"
 msgstr "Análise do Temperamento Natal"
 
-#: src/temperament.c:495
+#: src/temperament.c:514
 msgid "Hot:"
 msgstr "Quente:"
 
-#: src/temperament.c:498
+#: src/temperament.c:517
 msgid "Cold:  "
 msgstr "Frio:"
 
-#: src/temperament.c:505
+#: src/temperament.c:524
 msgid "Moist: "
 msgstr "Úmido:"
 
-#: src/temperament.c:508
+#: src/temperament.c:527
 msgid "Dry:  "
 msgstr "Seco:"
 
-#: src/temperament.c:540
+#: src/temperament.c:559
 msgid "     Sanguine (🜁 Air):"
 msgstr "     Sanguíneo (🜁 Ar):"
 
-#: src/temperament.c:541
+#: src/temperament.c:560
 msgid "    Choleric (🜂 Fire):"
 msgstr "    Colérico (🜂 Fogo):"
 
-#: src/temperament.c:542
+#: src/temperament.c:561
 msgid " Phlegmatic (🜄 Water):"
 msgstr "  Fleumático (🜄 Água):"
 
-#: src/temperament.c:543
+#: src/temperament.c:562
 msgid "Melancholic (🜃 Earth):"
 msgstr "Melancólico (🜃 Terra):"
 
-#: src/temperament.c:564
+#: src/temperament.c:583
 msgid "Temperament Distribution (Ranked):"
 msgstr "Distribuição de Temperamento (Classificada):"
 
-#: src/temperament.c:585
+#: src/temperament.c:604
 msgid "🏆 Winner"
 msgstr "🏆 Vencedor"
 
-#: src/temperament.c:600
+#: src/temperament.c:619
 msgid "Dominant Temperament: "
 msgstr "Temperamento Dominante: "
 
-#: src/temperament.c:612
+#: src/temperament.c:631
 msgid "SANGUINE-PHLEGMATIC MIX (Balanced Temp)"
 msgstr "SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)"
 
-#: src/temperament.c:618
+#: src/temperament.c:637
 msgid "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)"
 msgstr "COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)"
 
-#: src/temperament.c:624
+#: src/temperament.c:643
 msgid "ABSOLUTE BALANCE (Quadrapartite)"
 msgstr "EQUILÍBRIO ABSOLUTO (Quadrapartite)"
 
-#: src/temperament.c:636
+#: src/temperament.c:655
 msgid "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"
 msgstr "SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)"
 
-#: src/temperament.c:642
+#: src/temperament.c:661
 msgid "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)"
 msgstr "FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)"
 
-#: src/temperament.c:652
+#: src/temperament.c:671
 msgid "SANGUINE (Hot & Wet - 🜁 Air Element)"
 msgstr "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)"
 
-#: src/temperament.c:656
+#: src/temperament.c:675
 msgid "CHOLERIC (Hot & Dry - 🜂 Fire Element)"
 msgstr "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)"
 
-#: src/temperament.c:660
+#: src/temperament.c:679
 msgid "PHLEGMATIC (Cold & Wet - 🜄 Water Element)"
 msgstr "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)"
 
-#: src/temperament.c:664
+#: src/temperament.c:683
 msgid "MELANCHOLIC (Cold & Dry - 🜃 Earth Element)"
 msgstr "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)"
 
-#: src/temperament.c:701
+#: src/temperament.c:720
 msgid "Press [i] for Full Text Interpretation | ESC/q to Return"
 msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 
-#: src/temperament.c:757
+#: src/temperament.c:776
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
 
-#: src/temperament.c:777
+#: src/temperament.c:796
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr "  1. SUMÁRIO DA PONTUAÇÃO BRUTA\n"
 
-#: src/temperament.c:781
+#: src/temperament.c:800
 msgid "Hot"
 msgstr "Quente"
 
-#: src/temperament.c:782
+#: src/temperament.c:801
 msgid "Cold"
 msgstr "Frio"
 
-#: src/temperament.c:783
+#: src/temperament.c:802
 msgid "Moist"
 msgstr "Úmido"
 
-#: src/temperament.c:784
+#: src/temperament.c:803
 msgid "Dry"
 msgstr "Seco"
 
-#: src/temperament.c:785
+#: src/temperament.c:804
 msgid "Heat Axis"
 msgstr "Eixo Calor"
 
-#: src/temperament.c:785
+#: src/temperament.c:804
 msgid "Moisture Axis"
 msgstr "Eixo Umidade"
 
-#: src/temperament.c:787
+#: src/temperament.c:806
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
-#: src/temperament.c:795
+#: src/temperament.c:814
 msgid ""
 "    SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
-"SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
+"    SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
 "\n"
 
-#: src/temperament.c:797
+#: src/temperament.c:816
 msgid ""
 "    Your vital energy functions in perfect thermal equilibrium, blending \n"
 "Air and Water.\n"
@@ -5355,20 +5355,20 @@ msgstr ""
 "    Isso confere uma personalidade profundamente flexível, empática e \n"
 "altamente sociável.\n"
 "    A mente comunicativa flui com natural sensibilidade emocional, \n"
-"proporcionando extrema adaptabilidade social, mas com o risco de uma leve \n"
-"dispersão emocional.\n"
+"proporcionando extrema adaptabilidade social, mas com o risco de uma \n"
+"leve dispersão emocional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:805
+#: src/temperament.c:824
 msgid ""
 "    CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
-"COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
+"    COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
 "\n"
 
-#: src/temperament.c:807
+#: src/temperament.c:826
 msgid ""
 "    Your active forces exist in a state of controlled thermal poise, \n"
 "blending Fire and Earth.\n"
@@ -5386,19 +5386,20 @@ msgstr ""
 "profunda eficiência estrutural e disciplina.\n"
 "    Você possui imensa força de vontade, embora precise se precaver contra "
 "o \n"
-"estresse interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
+"estresse interno crônico, o perfeccionismo rígido e a obstinação "
+"profunda.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:815
+#: src/temperament.c:834
 msgid ""
 "    ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
 msgstr ""
-"EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
+"    EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
 "\n"
 
-#: src/temperament.c:817
+#: src/temperament.c:836
 msgid ""
 "    Your chart reflects the rare, ideal geometric balance of all four \n"
 "humors.\n"
@@ -5414,21 +5415,21 @@ msgstr ""
 "quatro \n"
 "humores.\n"
 "    Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. \n"
-"Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, \n"
+"    Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, \n"
 "a empatia do Fleumático e o realismo objetivo do Melancólico, \n"
 "ativados exatamente quando necessário.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:829
+#: src/temperament.c:848
 msgid ""
 "    SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
 msgstr ""
-"SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
+"    SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:831
+#: src/temperament.c:850
 msgid ""
 "    An expressive, warm, and highly action-oriented signature blending \n"
 "Air and Fire.\n"
@@ -5446,22 +5447,22 @@ msgstr ""
 "    Sua energia dinâmica atua como um poderoso catalisador nas esferas "
 "social \n"
 "ou profissional.\n"
-"    A curiosidade intelectual do Ar funde-se com a ambição intensa \n"
-"do Fogo, impulsionando fortes qualidades de liderança, embora com o risco "
-"de \n"
+"    A curiosidade intelectual do Ar funde-se com a ambição intensa do "
+"Fogo, \n"
+"impulsionando fortes qualidades de liderança, embora com o risco de \n"
 "impaciência ocasional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:840
+#: src/temperament.c:859
 msgid ""
 "    PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
 msgstr ""
-"FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
+"    FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:842
+#: src/temperament.c:861
 msgid ""
 "    A calm, deeply introspective, and self-protective constitution \n"
 "blending Water and Earth.\n"
@@ -5476,8 +5477,7 @@ msgstr ""
 "    Uma natureza calma, profundamente introspectiva e que busca se "
 "proteger, \n"
 "combinando Água e Terra.\n"
-"    Seu modo de agir é ponderado, altamente estruturado e \n"
-"cauteloso.\n"
+"    Seu modo de agir é ponderado, altamente estruturado e cauteloso.\n"
 "    A profundidade emocional da Água ancora-se na estabilidade realista \n"
 "da Terra, resultando em um indivíduo excepcionalmente confiável e "
 "analítico, \n"
@@ -5485,15 +5485,15 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:855
+#: src/temperament.c:874
 msgid ""
 "    SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
 msgstr ""
-"SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
+"    SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:857
+#: src/temperament.c:876
 msgid ""
 "    Your psychological engine revolves around communication, expansion, \n"
 "and mental fluidity.\n"
@@ -5508,19 +5508,19 @@ msgstr ""
 "    Você absorve impressões externas instantaneamente e possui uma mente \n"
 "adaptável e expressiva, que prospera com a curiosidade e a interação "
 "social. \n"
-"Evite dispersar o foco. \n"
+"    Evite dispersar o foco. \n"
 "\n"
 "\n"
 
-#: src/temperament.c:864
+#: src/temperament.c:883
 msgid ""
 "    CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
 msgstr ""
-"COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
+"    COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:866
+#: src/temperament.c:885
 msgid ""
 "    Your core essence is driven by swift, active, and result-oriented \n"
 "single-minded impulses.\n"
@@ -5538,15 +5538,15 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:873
+#: src/temperament.c:892
 msgid ""
 "    PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
 msgstr ""
-"FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
+"    FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:875
+#: src/temperament.c:894
 msgid ""
 "    You embody a stable, welcoming, and peacekeeping emotional \n"
 "constitution.\n"
@@ -5564,15 +5564,15 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:882
+#: src/temperament.c:901
 msgid ""
 "    MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
 msgstr ""
-"MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
+"    MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:884
+#: src/temperament.c:903
 msgid ""
 "    Your nature is built on structural caution, real-world pragmatism, \n"
 "and profound reflection.\n"
@@ -5593,15 +5593,102 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:894
+#: src/temperament.c:933
+msgid ""
+"    SECONDARY INFLUENCES & NUANCES\n"
+"\n"
+msgstr ""
+"    INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
+"\n"
+
+#: src/temperament.c:935
+msgid ""
+"    Although your core template is defined above, your psychiatric map\n"
+"    shows other active forces adding layers to your behavior:\n"
+"\n"
+msgstr ""
+"    Embora seu modelo central esteja definido acima, seu mapa \n"
+"    psiquiátrico mostra outras forças ativas que acrescentam \n"
+"    camadas ao seu comportamento:\n"
+"\n"
+
+#: src/temperament.c:944
+msgid "    ✦ Sanguine Influence: "
+msgstr "    ✦ Influência Sanguínea: "
+
+#: src/temperament.c:946
+msgid ""
+"Adds an overlay of communicative ease, adaptability,\n"
+"      and cognitive curiosity. This softens any rigid boundaries or\n"
+"      stagnation imposed by your dominant humor.\n"
+"\n"
+msgstr ""
+"Acrescenta uma camada de facilidade de comunicação, \n"
+"      adaptabilidade e curiosidade cognitiva. \n"
+"      Isso suaviza quaisquer limites rígidos ou estagnação impostos \n"
+"      pelo seu temperamento dominante.\n"
+"\n"
+
+#: src/temperament.c:953
+msgid "    ✦ Choleric Influence: "
+msgstr "    ✦ Influência Colérica: "
+
+#: src/temperament.c:955
+msgid ""
+"Injects raw drive, sharp focus on execution, and a\n"
+"      natural urgency to fix problems. It sharpens a passive baseline\n"
+"      into a highly proactive mindset.\n"
+"\n"
+msgstr ""
+"Injeta uma determinação genuína, um foco aguçado na \n"
+"      execução e uma urgência natural para resolver problemas. \n"
+"      Transforma uma postura inicial passiva em uma mentalidade altamente \n"
+"      proativa.\n"
+"\n"
+
+#: src/temperament.c:962
+msgid "    ✦ Phlegmatic Influence: "
+msgstr ""
+
+#: src/temperament.c:964
+msgid ""
+"Acts as a natural thermal and emotional ballast, introducing\n"
+"      diplomatic mediation, structural patience, and a steady pace that\n"
+"      protects you from chronic stress.\n"
+"\n"
+msgstr ""
+"Injeta uma determinação genuína, um foco aguçado na \n"
+"      execução e uma urgência natural para resolver problemas. \n"
+"      Transforma uma postura inicial passiva em uma mentalidade altamente \n"
+"      proativa.\n"
+"\n"
+
+#: src/temperament.c:971
+msgid "    ✦ Melancholic Influence: "
+msgstr "    ✦ Influência Melancólica: "
+
+#: src/temperament.c:973
+msgid ""
+"Confers analytical depth, long-term organization skills,\n"
+"      and a realistic sense of caution. It ensures your impulses are\n"
+"      grounded in real-world feasibility.\n"
+"\n"
+msgstr ""
+"Confere profundidade analítica, habilidades de organização a \n"
+"      longo prazo e um senso realista de cautela. \n"
+"      Garante que seus impulsos estejam alicerçados na viabilidade \n"
+"      no mundo real.\n"
+"\n"
+
+#: src/temperament.c:985
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:898
+#: src/temperament.c:989
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:904
+#: src/temperament.c:995
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"

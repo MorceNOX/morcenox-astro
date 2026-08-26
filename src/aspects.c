@@ -21,6 +21,7 @@
 #include <string.h>
 #include <math.h>
 #include <ncursesw/curses.h>
+#include <float.h>
 #include "var.h"
 #include "helper.h"
 #include "draw-chart.h"
@@ -237,7 +238,7 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
 
                     bool partil = false;
-                    if (aspect_diff < 1.000000000000001) {
+                    if (aspect_diff < 1.0 + DBL_EPSILON) {
                         partil = true;
                     }
                     

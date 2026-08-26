@@ -722,7 +722,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  THE LORD OF THE CHART (ALMUTEN FIGURIS)\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("    The Almuten Figuris acts as the supreme ruler of your natal chart,\n"
                  "    representing the evolutionary helmsman of your soul. While the Ascendant\n"
                  "    governs the physical vessel, the Almuten dictates the highest spiritual\n"
@@ -743,7 +743,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         int id_planeta = res_almuten[p];
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
-        wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
         wattron(pad, A_BOLD | COLOR_PAIR(7));
         wprintw(pad, "    %s  %s ", glifo, _("ARCHETYPAL RULER"));
         
@@ -756,7 +756,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃)\n"));
         else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄)\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(7));
-        wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
         // IMPRESSÃO DOS TEXTOS DE ACORDO COM O ID DO PLANETA
         if (id_planeta == 1) { // SOL
@@ -851,7 +851,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     }
     
     wattron(pad, A_DIM);
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the Almuten panel.\n"));
     wattroff(pad, A_DIM);
     
@@ -941,7 +941,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN)\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("    Unlike your Natal Almuten, which rules over your entire lifetime and soul blueprint,\n"
                  "    the Almuten of the Solar Return operates as the temporal manager of your current year.\n"
                  "    It indicates where the cosmic focus will manifest most intensely, driving events,\n"
@@ -961,7 +961,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         int id_planeta = res_almuten[p];
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
-        wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
         wattron(pad, A_BOLD | COLOR_PAIR(7));
         wprintw(pad, "    %s  %s ", glifo, _("ANNUAL OPERATIONAL RULER"));
         
@@ -973,7 +973,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃)\n"));
         else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄)\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(7));
-        wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
         if (id_planeta == 1) { // SOL
             wattron(pad, A_BOLD); 
@@ -1073,7 +1073,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     }
 
     wattron(pad, A_DIM);
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"));
     wattroff(pad, A_DIM);
 

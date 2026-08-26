@@ -24,6 +24,8 @@
 #define MELANCOLICO 2
 #define FLEUMATICO  3
 
+#define TEMPERAMENT_RANK_PROPORTION 0.70f
+
 /* Estrutura para armazenar as pontuações brutas acumuladas dos planetas e pontos */
 typedef struct {
     int total_quente;
@@ -36,6 +38,7 @@ typedef struct {
 
 /* Estrutura utilizada para o ranking e ordenação (Bubble Sort) dos humores */
 typedef struct {
+    int id;
     char label[30];    /* Armazena o nome e o símbolo do elemento (ex: "Choleric (🜂 Fire):") */
     float porcentagem; /* Valor percentual calculado (0.0f a 100.0f) */
     int cor_par;       /* O ID do par de cores do ncurses associado ao temperamento */

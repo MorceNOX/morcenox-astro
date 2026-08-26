@@ -545,3 +545,109 @@ char** split_lines_wrap(char* content, int* line_count, int max_width) {
     *line_count = contador;
     return lines;
 }
+
+
+
+
+
+/**
+ * Imprime uma string no ncurses quebrando-a em quantas linhas forem necessárias.
+ * A quebra respeita caracteres UTF-8 e procura sempre o último espaço disponível dentro do limite.
+ *
+ * @param win               A janela (WINDOW*) do ncurses.
+ * @param linha_inicial     A linha (Y) onde o texto começará a ser impresso.
+ * @param coluna_inicial    A coluna (X) onde todas as linhas geradas se alinharão.
+ * @param max_colunas_linha O limite visual de colunas para cada linha.
+ * @param texto             A string original em formato UTF-8 (char*).
+ * @return int              O número total de linhas que foram utilizadas para imprimir o texto.
+ */
+int print_text_multiline(WINDOW *win, int linha_inicial, int coluna_inicial, int max_colunas_linha, const char *texto) {
+    if (texto == NULL || win == NULL) return 0;
+
+    // Se o texto inteiro couber em uma única linha, imprime direto e retorna 1 linha
+    if (get_visual_width(texto) <= max_colunas_linha) {
+        mvwprintw(win, linha_inicial, coluna_inicial, "%s", texto);
+        return 1;
+    }
+
+    // Converte a string UTF-8 para caracteres largos (wchar_t)
+    size_t len_chars = mbstowcs(NULL, texto, 0);
+    if (len_chars == (size_t)-1) {
+        // Fallback de segurança se o locale falhar: imprime tudo na linha inicial
+        mvwprintw(win, linha_inicial, coluna_inicial, "%s", texto);
+        return 1;
+    }
+
+    wchar_t *w_texto = malloc((len_chars + 1) * sizeof(wchar_t));
+    mbstowcs(w_texto, texto, len_chars + 1);
+
+    size_t indice_atual = 0;
+    int linhas_impressas = 0;
+
+    // Laço principal que consome a string até o fim
+    while (indice_atual < len_chars) {
+        // Ignora espaços em branco no início de uma nova linha (evita desalinhamentos)
+        while (indice_atual < len_chars && w_texto[indice_atual] == L' ') {
+            indice_atual++;
+        }
+
+        // Se a string acabou após remover os espaços, encerra o laço
+        if (indice_atual >= len_chars) {
+            break;
+        }
+
+        int colunas_acumuladas = 0;
+        size_t ultimo_espaco = 0;
+        size_t i = indice_atual;
+
+        // Mede o tamanho dos próximos caracteres para descobrir onde quebrar a linha atual
+        while (i < len_chars && colunas_acumuladas < max_colunas_linha) {
+            int largura_char = wcwidth(w_texto[i]);
+            if (largura_char < 0) largura_char = 0; // Ignora caracteres de controle
+
+            // Se o caractere estourar o limite de colunas da linha atual, interrompe a busca
+            if (colunas_acumuladas + largura_char > max_colunas_linha) {
+                break;
+            }
+
+            colunas_acumuladas += largura_char;
+
+            // Registra a posição do último espaço encontrado nesta linha
+            if (w_texto[i] == L' ') {
+                ultimo_espaco = i;
+            }
+            i++;
+        }
+
+        size_t indice_quebra = i;
+
+        // Se não chegamos ao fim da string inteira, precisamos aplicar a lógica do espaço
+        if (i < len_chars) {
+            // Se encontramos um espaço dentro do limite da linha, quebramos nele
+            if (ultimo_espaco > indice_atual) {
+                indice_quebra = ultimo_espaco;
+            } 
+            // Caso crítico: uma palavra gigante sem nenhum espaço que supera 'max_colunas_linha'.
+            // Forçamos a quebra no limite exato de colunas para não entrar em loop infinito.
+            else if (indice_quebra == indice_atual) {
+                indice_quebra = indice_atual + 1;
+            }
+        }
+
+        // Isola temporariamente a fatia de texto correspondente à linha atual
+        wchar_t caractere_salvo = w_texto[indice_quebra];
+        w_texto[indice_quebra] = L'\0';
+
+        // Move o cursor e imprime a linha atualizada na tela
+        wmove(win, linha_inicial + linhas_impressas, coluna_inicial);
+        waddwstr(win, &w_texto[indice_atual]);
+        linhas_impressas++;
+
+        // Restaura o caractere e avança o ponteiro de leitura para a próxima linha
+        w_texto[indice_quebra] = caractere_salvo;
+        indice_atual = indice_quebra;
+    }
+
+    free(w_texto);
+    return linhas_impressas;
+}

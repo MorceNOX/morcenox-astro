@@ -22,6 +22,7 @@
 #include <string.h>
 #include <math.h>
 #include <ncursesw/curses.h>
+#include <wchar.h>
 #include "var.h"
 #include "helper.h"
 #include "draw-chart.h"
@@ -135,23 +136,15 @@ void display_motivation(PlotObject *plots) {
 
     wattron(table_win, A_ITALIC);
 
-    if (get_visual_width(planet_modifier) > table_width) {
-
-        int modificador = strlen(planet_modifier) - get_visual_width(planet_modifier);
-
-        mvwprintw(table_win, 12, 6, "%.80s", planet_modifier);    
-        size_t n = 0;
-        while (planet_modifier[80 + n] != 32) {
-
-            mvwprintw(table_win, 12, 86 - modificador + 3 + n, "%.1s", &planet_modifier[80 + n]);
-            n++;
-        }
-        mvwprintw(table_win, 13, 6, "%s", planet_modifier + 81 + n);
-    }
-    else {
-        mvwprintw(table_win, 12, 6, "%s", planet_modifier);
-    }
     
+
+
+    print_text_multiline(table_win, 12, 6, 80, planet_modifier);
+
+
+    
+
+        
     wattroff(table_win, A_ITALIC);
 
     wattron(table_win, COLOR_PAIR(21) | A_BOLD);

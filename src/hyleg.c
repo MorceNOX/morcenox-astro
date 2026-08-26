@@ -487,7 +487,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 22; // Altura compacta perfeita para o bloco cronocrático
+    int table_height = 24; // Altura compacta perfeita para o bloco cronocrático
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
@@ -617,7 +617,8 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     
         // CORREÇÃO: Consome a casa real do Alcochoden direto da struct de retorno
         wattron(table_win, A_DIM);
-        wprintw(table_win, " %s. %s %d.", alco.tipo_anos, _("Years distributed via physical Position in House"), alco.casa_alcochoden);
+        wprintw(table_win, " %s.\n", alco.tipo_anos);
+        mvwprintw(table_win, 12, 4, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
         wattroff(table_win, A_DIM);
 
         char planet_hyleg[30];
@@ -678,15 +679,15 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 12, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    mvwprintw(table_win, table_height - 8, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     // Rodapé de Notas Astrológicas Tradicionais
     wattron(table_win, A_DIM);
-    mvwprintw(table_win, 14, 4, _("Note 1: Cadent houses (3, 6, 9, 12) restrict the Alcochoden to its Lesser Years."));
-    mvwprintw(table_win, 15, 4, _("Benefic or malefic aspects dynamically modify this base vitality score."));
-    mvwprintw(table_win, 17, 4, _("Note 2: An unaspected Alcochoden provides only its raw lesser years as a base."));
-    mvwprintw(table_win, 18, 4, _("Traditional doctrine shifts these into major 10-year cycles if the native survives infancy."));
+    mvwprintw(table_win, table_height - 7, 4, _("Note 1: Cadent houses (3, 6, 9, 12) restrict the Alcochoden to its Lesser Years."));
+    mvwprintw(table_win, table_height - 6, 4, _("Benefic or malefic aspects dynamically modify this base vitality score."));
+    mvwprintw(table_win, table_height - 4, 4, _("Note 2: An unaspected Alcochoden provides only its raw lesser years as a base."));
+    mvwprintw(table_win, table_height - 3, 4, _("Traditional doctrine shifts these into major 10-year cycles if the native survives infancy."));
     wattroff(table_win, A_DIM);
 
     // Instruções de Encerramento Padrão

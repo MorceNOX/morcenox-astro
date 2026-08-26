@@ -550,10 +550,10 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     
     // Preenche o array com os dados e formatações exatas que você definiu
     ItemTemperamento lista[4] = {
-        {"     Sanguine (🜁 Air):", pct_sanguineo, 12},
-        {"    Choleric (🜂 Fire):", pct_colerico, 11},
-        {" Phlegmatic (🜄 Water):", pct_fleumatico, 8},
-        {"Melancholic (🜃 Earth):", pct_melancolico, 7}
+        {SANGUINEO,   "     Sanguine (🜁 Air):", pct_sanguineo, 12},
+        {COLERICO,    "    Choleric (🜂 Fire):", pct_colerico, 11},
+        {FLEUMATICO,  " Phlegmatic (🜄 Water):", pct_fleumatico, 8},
+        {MELANCOLICO, "Melancholic (🜃 Earth):", pct_melancolico, 7}
     };
 
     snprintf(lista[0].label, 30, "%s", _("     Sanguine (🜁 Air):"));
@@ -795,7 +795,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  1. RAW SCORE SUMMARY\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, "    %s: %d  |  %s: %d  |  %s: %d  |  %s: %d\n\n", 
             _("Hot"), score.total_quente, 
             _("Cold"), score.total_frio, 
@@ -805,7 +805,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     
     // 1. CASO DE EMPATE NO CALOR (Eixo Calor == 0)
     if (eixo_calor == 0) {
@@ -908,18 +908,90 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         }
     }
 
+
+    /* =========================================================================
+       NOVO: IDENTIFICAÇÃO DINÂMICA DE INFLUENCIAS SECUNDÁRIAS (70% do Líder)
+       ========================================================================= */
+    
+    float proporcao_minima = TEMPERAMENT_RANK_PROPORTION;
+    // O corte é calculado com base no primeiro colocado da lista (o de maior porcentagem)
+    float corte_significativo = lista[0].porcentagem * proporcao_minima;
+    
+    int exibiu_conector = 0;
+
+    // Varre a lista a partir do segundo colocado (índice 1) até o quarto (índice 3)
+    for (int i = 1; i < 4; i++) {
+        
+        // Regra de Ouro: O elemento precisa estar acima do corte de 70%,
+        // mas DEVE ter uma porcentagem menor que o líder. Se for estritamente igual,
+        // significa que os eixos já trataram isso nativamente como um Empate lá em cima.
+        if (lista[i].porcentagem >= corte_significativo && lista[i].porcentagem < lista[0].porcentagem) {
+        
+            // Se for o primeiro coadjuvante significativo encontrado, imprime a transição
+            if (!exibiu_conector) {
+                wattron(pad, A_BOLD);
+                wprintw(pad, _("    SECONDARY INFLUENCES & NUANCES\n\n"));
+                wattroff(pad, A_BOLD);
+                wprintw(pad, _("    Although your core template is defined above, your psychiatric map\n"
+                             "    shows other active forces adding layers to your behavior:\n\n"));
+                exibiu_conector = 1;
+            }
+
+            // Renderiza o modificador específico baseado no ID de cor do temperamento
+            switch (lista[i].id) {
+                case SANGUINEO: // Sanguine
+                    wattron(pad, COLOR_PAIR(12) | A_REVERSE);
+                    wprintw(pad, _("    ✦ Sanguine Influence: "));
+                    wattroff(pad, COLOR_PAIR(12) | A_REVERSE);
+                    wprintw(pad, _("Adds an overlay of communicative ease, adaptability,\n"
+                                 "      and cognitive curiosity. This softens any rigid boundaries or\n"
+                                 "      stagnation imposed by your dominant humor.\n\n"));
+                    break;
+
+                case COLERICO: // Choleric
+                    wattron(pad, COLOR_PAIR(11));
+                    wprintw(pad, _("    ✦ Choleric Influence: "));
+                    wattroff(pad, COLOR_PAIR(11));
+                    wprintw(pad, _("Injects raw drive, sharp focus on execution, and a\n"
+                                 "      natural urgency to fix problems. It sharpens a passive baseline\n"
+                                 "      into a highly proactive mindset.\n\n"));
+                    break;
+
+                case FLEUMATICO: // Phlegmatic
+                    wattron(pad, COLOR_PAIR(8));
+                    wprintw(pad, _("    ✦ Phlegmatic Influence: "));
+                    wattroff(pad, COLOR_PAIR(8));
+                    wprintw(pad, _("Acts as a natural thermal and emotional ballast, introducing\n"
+                                 "      diplomatic mediation, structural patience, and a steady pace that\n"
+                                 "      protects you from chronic stress.\n\n"));
+                    break;
+
+                case MELANCOLICO: // Melancholic
+                    wattron(pad, COLOR_PAIR(7));
+                    wprintw(pad, _("    ✦ Melancholic Influence: "));
+                    wattroff(pad, COLOR_PAIR(7));
+                    wprintw(pad, _("Confers analytical depth, long-term organization skills,\n"
+                                 "      and a realistic sense of caution. It ensures your impulses are\n"
+                                 "      grounded in real-world feasibility.\n\n"));
+                    break;
+            }
+        }
+    }
+
+    wprintw(pad, "\n\n");
+    
     /* --- CAMADA 3: PORCENTAGENS DO RANKING (AUXILIAR) --- */
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  3. RANKED DISTRIBUTION DATA\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     for (int i = 0; i < 4; i++) {
         wprintw(pad, "    %s %d: %s %5.1f%%\n", _("Rank"), i + 1, lista[i].label, lista[i].porcentagem);
     }
     wprintw(pad, "\n\n");
 
     wattron(pad, A_DIM);
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"));
     wattroff(pad, A_DIM);
 
