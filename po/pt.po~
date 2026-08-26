@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 08:08-0300\n"
+"POT-Creation-Date: 2026-08-26 09:54-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2336,7 +2336,7 @@ msgstr "o Dia"
 msgid "the Night"
 msgstr "a Noite"
 
-#: src/draw-chart.c:3817 src/draw-chart.c:3861 src/solar_return.c:512
+#: src/draw-chart.c:3817 src/draw-chart.c:3861
 msgid "    Structural Efficiency Verdict:\n"
 msgstr ""
 "    Veredito sobre a Eficiência Estrutural:\n"
@@ -3036,8 +3036,8 @@ msgstr ""
 "Sua ativação requer conjunções explícitas ou direções primárias hostis."
 
 #: src/menu-box.c:377
-msgid "Chart data have been changed."
-msgstr "Os dados do mapa foram alterados"
+msgid "Chart data have been set."
+msgstr "Os dados do mapa foram definidos."
 
 #: src/menu-box.c:380
 msgid "Data have not been changed."
@@ -4056,8 +4056,12 @@ msgid "SATURN ♄"
 msgstr "SATURNO ♄"
 
 #: src/solar_return.c:500
-msgid "  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
-msgstr "  [CHECK I] DIGNIDADE NO RADIX & FILTRO DA EFICIÊNCIA ESTRUTURAL\n"
+msgid ""
+"  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
+"\n"
+msgstr ""
+"  [CHECK I] DIGNIDADE NO RADIX & FILTRO DA EFICIÊNCIA ESTRUTURAL\n"
+"\n"
 
 #: src/solar_return.c:508
 #, c-format
@@ -4072,6 +4076,14 @@ msgstr ""
 "base é: %d.\n"
 "    Sua eficiência cósmica relativa é: %d%% (Resultando em %d Pontos de "
 "Força Líquida).\n"
+"\n"
+
+#: src/solar_return.c:512
+msgid ""
+"    Structural Efficiency Verdict:\n"
+"\n"
+msgstr ""
+"    Veredito sobre a Eficiência Estrutural:\n"
 "\n"
 
 #: src/solar_return.c:519
@@ -4089,9 +4101,8 @@ msgid ""
 msgstr ""
 "       Este planeta rege o ano com um apoio magnífico do seu mapa natal. \n"
 "       Graças à sua eficiência cósmica altamente elevada (%d%%), ele atua "
-"como "
-"um executivo respeitado e poderoso. As promessas desta Revolução Solar se "
-"manifestarão com clareza, proporcionando progresso estrutural, expansão "
+"como um executivo respeitado e poderoso. As promessas desta Revolução Solar "
+"se manifestarão com clareza, proporcionando progresso estrutural, expansão "
 "repentina e atrito mínimo.\n"
 "\n"
 "\n"
@@ -4110,10 +4121,8 @@ msgid ""
 msgstr ""
 "       Este planeta ocupa uma posição média e estável em seu mapa básico "
 "(%d%%).\n"
-"       Ele detém a autoridade padrão para exercer suas funções, mas "
-"exigirá "
-"disciplina constante e foco contínuo de sua parte. Os eventos "
-"transcorrerão "
+"       Ele detém a autoridade padrão para exercer suas funções, mas exigirá "
+"disciplina constante e foco contínuo de sua parte. Os eventos transcorrerão "
 "normalmente, acompanhando seu esforço diário no mundo real, sem ganhos "
 "inesperados extraordinários ou colapsos estruturais repentinos.\n"
 "\n"
@@ -4134,17 +4143,20 @@ msgid ""
 msgstr ""
 "       AVISO: O Senhor do Ano opera sob extrema debilidade sistêmica "
 "(%d%%).\n"
-"       Embora regule o fluxo temporal deste aniversário, carece dos "
-"recursos vitais brutos necessários para cumprir suas promessas com "
-"facilidade. Os setores que ele ativa este ano exigirão ajustes intensos, "
-"manifestando-se por meio de atrasos crônicos, exaustão profunda, "
-"bloqueios administrativos ou a sensação de tentar abrir uma porta "
-"trancada.\n"
+"       Embora regule o fluxo temporal deste aniversário, carece dos recursos "
+"vitais brutos necessários para cumprir suas promessas com facilidade. Os "
+"setores que ele ativa este ano exigirão ajustes intensos, manifestando-se "
+"por meio de atrasos crônicos, exaustão profunda, bloqueios administrativos "
+"ou a sensação de tentar abrir uma porta trancada.\n"
 "\n"
 
 #: src/solar_return.c:554
-msgid "  [CHECK II] RADIX HOUSE TRANSIT\n"
-msgstr "  [CHECK II] TRÂNSITO EM CASA RADICAL\n"
+msgid ""
+"  [CHECK II] RADIX HOUSE TRANSIT\n"
+"\n"
+msgstr ""
+"  [CHECK II] TRÂNSITO EM CASA RADICAL\n"
+"\n"
 
 #: src/solar_return.c:556
 #, c-format
@@ -4157,10 +4169,14 @@ msgstr ""
 "sua CASA NATAL %d.\n"
 "\n"
 
-#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:642
-#: src/solar_return.c:686 src/solar_return.c:721
-msgid "    Interpretation:\n"
-msgstr "    Interpretação:\n"
+#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:686
+#: src/solar_return.c:721
+msgid ""
+"    Interpretation:\n"
+"\n"
+msgstr ""
+"    Interpretação:\n"
+"\n"
 
 #: src/solar_return.c:562
 #, c-format
@@ -4240,8 +4256,12 @@ msgstr ""
 "\n"
 
 #: src/solar_return.c:594
-msgid "  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
-msgstr "  [CHECK III] CO-ALINHAMENTO DO SENHOR DO TEMPO\n"
+msgid ""
+"  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
+"\n"
+msgstr ""
+"  [CHECK III] CO-ALINHAMENTO DO SENHOR DO TEMPO\n"
+"\n"
 
 #: src/solar_return.c:596
 #, c-format
@@ -4304,21 +4324,29 @@ msgstr ""
 "\n"
 
 #: src/solar_return.c:632
-msgid "  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
-msgstr "  [CHECK IV] ALINHAMENTO COM OS CRONOCRATAS DA FIRDÁRIA\n"
+msgid ""
+"  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
+"\n"
+msgstr ""
+"  [CHECK IV] ALINHAMENTO COM OS CRONOCRATAS DA FIRDÁRIA\n"
+"\n"
 
 #: src/solar_return.c:634
 #, c-format
 msgid ""
 "    Current Firdaria Master Ruler: %s\n"
-"    Current Firdaria Sub-Ruler:   %s\n"
+"    Current Firdaria Sub-Ruler: %s\n"
 "    Solar Return Almuten (Lord of Year): %s\n"
 "\n"
 msgstr ""
 "    Regente Principal da Firdária atual: %s\n"
-"    Sub-regente da Firdária atual:      %s\n"
+"    Sub-regente da Firdária atual: %s\n"
 "    Almuten da Revolução Solar (Senhor do Ano): %s\n"
 "\n"
+
+#: src/solar_return.c:642
+msgid "    Interpretation:\n"
+msgstr "    Interpretação:\n"
 
 #: src/solar_return.c:646
 #, c-format
@@ -4396,8 +4424,12 @@ msgstr ""
 "\n"
 
 #: src/solar_return.c:680
-msgid "  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
-msgstr "  [CHECK V] PROJEÇÃO DO ASCENDENTE DO RETORNO SOLAR\n"
+msgid ""
+"  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
+"\n"
+msgstr ""
+"  [CHECK V] PROJEÇÃO DO ASCENDENTE DO RETORNO SOLAR\n"
+"\n"
 
 #: src/solar_return.c:684
 #, c-format
@@ -4476,15 +4508,19 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"    A ativação desta casa indica que seus assuntos cotidianos imediatos, seus "
-"círculos sociais ou a gestão de recursos absorverão seu foco energético "
+"    A ativação desta casa indica que seus assuntos cotidianos imediatos, "
+"seus círculos sociais ou a gestão de recursos absorverão seu foco energético "
 "principal neste ano.\n"
 "\n"
 "\n"
 
 #: src/solar_return.c:715
-msgid "  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
-msgstr "  [CHECK VI] PROJEÇÃO DO ASCENDENTE NATAL NO RETORNO SOLAR\n"
+msgid ""
+"  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
+"\n"
+msgstr ""
+"  [CHECK VI] PROJEÇÃO DO ASCENDENTE NATAL NO RETORNO SOLAR\n"
+"\n"
 
 #: src/solar_return.c:719
 #, c-format
@@ -4520,8 +4556,7 @@ msgid ""
 msgstr ""
 "    Sua energia vital está fortemente voltada para a segurança financeira e "
 "para valores. Você sentirá uma necessidade profunda e pessoal de consolidar "
-"recursos "
-"e o próprio valor.\n"
+"recursos e o próprio valor.\n"
 "\n"
 "\n"
 
@@ -4876,12 +4911,20 @@ msgstr ""
 "bastidores."
 
 #: src/solar_return.c:806
-msgid "  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
-msgstr "  [CHECK VII] SÍNTESE: A PROJEÇÃO CRUZADA\n"
+msgid ""
+"  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
+"\n"
+msgstr ""
+"  [CHECK VII] SÍNTESE: A PROJEÇÃO CRUZADA\n"
+"\n"
 
 #: src/solar_return.c:816
-msgid "    Astrological Synthesis for your Year:\n"
-msgstr "    Síntese Astrológica para seu Ano:\n"
+msgid ""
+"    Astrological Synthesis for your Year:\n"
+"\n"
+msgstr ""
+"    Síntese Astrológica para seu Ano:\n"
+"\n"
 
 #: src/solar_return.c:829
 #, c-format

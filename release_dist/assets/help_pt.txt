@@ -1523,7 +1523,7 @@ temperamento do nativo.
      4. Signo dos planetas que aspectam o Ascendente
      5. Fase da Lua
      6. Signo da Lua
-     7. Signo do Almuten da Lua
+     7. Signo do planeta regente da Lua
      8. Planetas em conjunção com a Lua
      9. Signo dos planetas que aspectam a Lua
     10. Estação do ano de acordo com a posição do Sol
@@ -1547,6 +1547,13 @@ Temperamento
 Oferece as características psicológicas do nativo de
 acordo com a combinação das qualidades primitivas na
 figura do mapa.
+
+As nuances dos outros temperamentos no temperamento 
+do nativo são, também, consideradas na análise, de 
+acordo com suas porcentagens.
+
+
+
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 17: Profecções Anuais

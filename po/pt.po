@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 08:18-0300\n"
+"POT-Creation-Date: 2026-08-26 10:11-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1435,29 +1435,29 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:639
-#: src/temperament.c:645 src/temperament.c:658 src/temperament.c:676
+#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:645
+#: src/temperament.c:651 src/temperament.c:664 src/temperament.c:682
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:640
-#: src/temperament.c:648 src/temperament.c:664 src/temperament.c:684
+#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:646
+#: src/temperament.c:654 src/temperament.c:670 src/temperament.c:690
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:633
-#: src/temperament.c:647 src/temperament.c:657 src/temperament.c:672
+#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:639
+#: src/temperament.c:653 src/temperament.c:663 src/temperament.c:678
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:634
-#: src/temperament.c:646 src/temperament.c:663 src/temperament.c:680
+#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:640
+#: src/temperament.c:652 src/temperament.c:669 src/temperament.c:686
 #, c-format
 msgid "Water"
 msgstr "Água"
@@ -1744,7 +1744,7 @@ msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
 msgid " Planetary Hours Analysis "
 msgstr "Análise da Hora Planetária"
 
-#: src/draw-chart.c:3556 src/temperament.c:780
+#: src/draw-chart.c:3556 src/temperament.c:786
 msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
 
@@ -2624,7 +2624,7 @@ msgstr "09. Casas"
 
 #: src/draw-chart.c:6659 src/draw-chart.c:6689
 msgid "10. Hylegiacal & Figuris Almuten"
-msgstr "10. Almuten Figuris & Hylegíacos"
+msgstr "10. Almuten Figuris & dos Pontos Hylegíacos"
 
 #: src/draw-chart.c:6660
 msgid "11. Temperament Analysis"
@@ -3036,8 +3036,8 @@ msgstr ""
 "Sua ativação requer conjunções explícitas ou direções primárias hostis."
 
 #: src/menu-box.c:377
-msgid "Chart data have been changed."
-msgstr "Os dados do mapa foram alterados"
+msgid "Chart data have been set."
+msgstr "Os dados do mapa foram definidos."
 
 #: src/menu-box.c:380
 msgid "Data have not been changed."
@@ -4059,7 +4059,9 @@ msgstr "SATURNO ♄"
 msgid ""
 "  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
 "\n"
-msgstr "  [CHECK I] DIGNIDADE NO RADIX & FILTRO DA EFICIÊNCIA ESTRUTURAL\n\n"
+msgstr ""
+"  [CHECK I] DIGNIDADE NO RADIX & FILTRO DA EFICIÊNCIA ESTRUTURAL\n"
+"\n"
 
 #: src/solar_return.c:508
 #, c-format
@@ -4152,7 +4154,9 @@ msgstr ""
 msgid ""
 "  [CHECK II] RADIX HOUSE TRANSIT\n"
 "\n"
-msgstr "  [CHECK II] TRÂNSITO EM CASA RADICAL\n\n"
+msgstr ""
+"  [CHECK II] TRÂNSITO EM CASA RADICAL\n"
+"\n"
 
 #: src/solar_return.c:556
 #, c-format
@@ -4170,7 +4174,9 @@ msgstr ""
 msgid ""
 "    Interpretation:\n"
 "\n"
-msgstr "    Interpretação:\n\n"
+msgstr ""
+"    Interpretação:\n"
+"\n"
 
 #: src/solar_return.c:562
 #, c-format
@@ -4253,7 +4259,9 @@ msgstr ""
 msgid ""
 "  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
 "\n"
-msgstr "  [CHECK III] CO-ALINHAMENTO DO SENHOR DO TEMPO\n\n"
+msgstr ""
+"  [CHECK III] CO-ALINHAMENTO DO SENHOR DO TEMPO\n"
+"\n"
 
 #: src/solar_return.c:596
 #, c-format
@@ -4319,7 +4327,9 @@ msgstr ""
 msgid ""
 "  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
 "\n"
-msgstr "  [CHECK IV] ALINHAMENTO COM OS CRONOCRATAS DA FIRDÁRIA\n\n"
+msgstr ""
+"  [CHECK IV] ALINHAMENTO COM OS CRONOCRATAS DA FIRDÁRIA\n"
+"\n"
 
 #: src/solar_return.c:634
 #, c-format
@@ -4417,7 +4427,9 @@ msgstr ""
 msgid ""
 "  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
 "\n"
-msgstr "  [CHECK V] PROJEÇÃO DO ASCENDENTE DO RETORNO SOLAR\n\n"
+msgstr ""
+"  [CHECK V] PROJEÇÃO DO ASCENDENTE DO RETORNO SOLAR\n"
+"\n"
 
 #: src/solar_return.c:684
 #, c-format
@@ -4506,7 +4518,9 @@ msgstr ""
 msgid ""
 "  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
 "\n"
-msgstr "  [CHECK VI] PROJEÇÃO DO ASCENDENTE NATAL NO RETORNO SOLAR\n\n"
+msgstr ""
+"  [CHECK VI] PROJEÇÃO DO ASCENDENTE NATAL NO RETORNO SOLAR\n"
+"\n"
 
 #: src/solar_return.c:719
 #, c-format
@@ -4900,13 +4914,17 @@ msgstr ""
 msgid ""
 "  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
 "\n"
-msgstr "  [CHECK VII] SÍNTESE: A PROJEÇÃO CRUZADA\n\n"
+msgstr ""
+"  [CHECK VII] SÍNTESE: A PROJEÇÃO CRUZADA\n"
+"\n"
 
 #: src/solar_return.c:816
 msgid ""
 "    Astrological Synthesis for your Year:\n"
 "\n"
-msgstr "    Síntese Astrológica para seu Ano:\n\n"
+msgstr ""
+"    Síntese Astrológica para seu Ano:\n"
+"\n"
 
 #: src/solar_return.c:829
 #, c-format
@@ -5202,131 +5220,131 @@ msgstr ""
 "  [FIM DOS TRÂNSITOS] - Pressione 'Q' ou ESC para retornar ao Mapa da "
 "Revolução Solar.\n"
 
-#: src/temperament.c:508
+#: src/temperament.c:514
 msgid "Natal Temperament Analysis"
 msgstr "Análise do Temperamento Natal"
 
-#: src/temperament.c:514
+#: src/temperament.c:520
 msgid "Hot:"
 msgstr "Quente:"
 
-#: src/temperament.c:517
+#: src/temperament.c:523
 msgid "Cold:  "
 msgstr "Frio:"
 
-#: src/temperament.c:524
+#: src/temperament.c:530
 msgid "Moist: "
 msgstr "Úmido:"
 
-#: src/temperament.c:527
+#: src/temperament.c:533
 msgid "Dry:  "
 msgstr "Seco:"
 
-#: src/temperament.c:559
+#: src/temperament.c:565
 msgid "     Sanguine (🜁 Air):"
 msgstr "     Sanguíneo (🜁 Ar):"
 
-#: src/temperament.c:560
+#: src/temperament.c:566
 msgid "    Choleric (🜂 Fire):"
 msgstr "    Colérico (🜂 Fogo):"
 
-#: src/temperament.c:561
+#: src/temperament.c:567
 msgid " Phlegmatic (🜄 Water):"
 msgstr "  Fleumático (🜄 Água):"
 
-#: src/temperament.c:562
+#: src/temperament.c:568
 msgid "Melancholic (🜃 Earth):"
 msgstr "Melancólico (🜃 Terra):"
 
-#: src/temperament.c:583
+#: src/temperament.c:589
 msgid "Temperament Distribution (Ranked):"
 msgstr "Distribuição de Temperamento (Classificada):"
 
-#: src/temperament.c:604
+#: src/temperament.c:610
 msgid "🏆 Winner"
 msgstr "🏆 Vencedor"
 
-#: src/temperament.c:619
+#: src/temperament.c:625
 msgid "Dominant Temperament: "
 msgstr "Temperamento Dominante: "
 
-#: src/temperament.c:631
+#: src/temperament.c:637
 msgid "SANGUINE-PHLEGMATIC MIX (Balanced Temp)"
 msgstr "SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)"
 
-#: src/temperament.c:637
+#: src/temperament.c:643
 msgid "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)"
 msgstr "COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)"
 
-#: src/temperament.c:643
+#: src/temperament.c:649
 msgid "ABSOLUTE BALANCE (Quadrapartite)"
 msgstr "EQUILÍBRIO ABSOLUTO (Quadrapartite)"
 
-#: src/temperament.c:655
+#: src/temperament.c:661
 msgid "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"
 msgstr "SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)"
 
-#: src/temperament.c:661
+#: src/temperament.c:667
 msgid "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)"
 msgstr "FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)"
 
-#: src/temperament.c:671
+#: src/temperament.c:677
 msgid "SANGUINE (Hot & Wet - 🜁 Air Element)"
 msgstr "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)"
 
-#: src/temperament.c:675
+#: src/temperament.c:681
 msgid "CHOLERIC (Hot & Dry - 🜂 Fire Element)"
 msgstr "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)"
 
-#: src/temperament.c:679
+#: src/temperament.c:685
 msgid "PHLEGMATIC (Cold & Wet - 🜄 Water Element)"
 msgstr "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)"
 
-#: src/temperament.c:683
+#: src/temperament.c:689
 msgid "MELANCHOLIC (Cold & Dry - 🜃 Earth Element)"
 msgstr "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)"
 
-#: src/temperament.c:720
+#: src/temperament.c:726
 msgid "Press [i] for Full Text Interpretation | ESC/q to Return"
 msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 
-#: src/temperament.c:776
+#: src/temperament.c:782
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
 
-#: src/temperament.c:796
+#: src/temperament.c:802
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr "  1. SUMÁRIO DA PONTUAÇÃO BRUTA\n"
 
-#: src/temperament.c:800
+#: src/temperament.c:806
 msgid "Hot"
 msgstr "Quente"
 
-#: src/temperament.c:801
+#: src/temperament.c:807
 msgid "Cold"
 msgstr "Frio"
 
-#: src/temperament.c:802
+#: src/temperament.c:808
 msgid "Moist"
 msgstr "Úmido"
 
-#: src/temperament.c:803
+#: src/temperament.c:809
 msgid "Dry"
 msgstr "Seco"
 
-#: src/temperament.c:804
+#: src/temperament.c:810
 msgid "Heat Axis"
 msgstr "Eixo Calor"
 
-#: src/temperament.c:804
+#: src/temperament.c:810
 msgid "Moisture Axis"
 msgstr "Eixo Umidade"
 
-#: src/temperament.c:806
+#: src/temperament.c:812
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
-#: src/temperament.c:814
+#: src/temperament.c:820
 msgid ""
 "    SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
@@ -5334,7 +5352,7 @@ msgstr ""
 "    SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
 "\n"
 
-#: src/temperament.c:816
+#: src/temperament.c:822
 msgid ""
 "    Your vital energy functions in perfect thermal equilibrium, blending \n"
 "Air and Water.\n"
@@ -5355,7 +5373,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:824
+#: src/temperament.c:830
 msgid ""
 "    CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
@@ -5363,7 +5381,7 @@ msgstr ""
 "    COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
 "\n"
 
-#: src/temperament.c:826
+#: src/temperament.c:832
 msgid ""
 "    Your active forces exist in a state of controlled thermal poise, \n"
 "blending Fire and Earth.\n"
@@ -5385,7 +5403,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:834
+#: src/temperament.c:840
 msgid ""
 "    ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
@@ -5393,7 +5411,7 @@ msgstr ""
 "    EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
 "\n"
 
-#: src/temperament.c:836
+#: src/temperament.c:842
 msgid ""
 "    Your chart reflects the rare, ideal geometric balance of all four \n"
 "humors.\n"
@@ -5415,7 +5433,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:848
+#: src/temperament.c:854
 msgid ""
 "    SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
@@ -5423,7 +5441,7 @@ msgstr ""
 "    SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:850
+#: src/temperament.c:856
 msgid ""
 "    An expressive, warm, and highly action-oriented signature blending \n"
 "Air and Fire.\n"
@@ -5448,7 +5466,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:859
+#: src/temperament.c:865
 msgid ""
 "    PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
@@ -5456,7 +5474,7 @@ msgstr ""
 "    FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:861
+#: src/temperament.c:867
 msgid ""
 "    A calm, deeply introspective, and self-protective constitution \n"
 "blending Water and Earth.\n"
@@ -5479,7 +5497,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:874
+#: src/temperament.c:880
 msgid ""
 "    SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
@@ -5487,7 +5505,7 @@ msgstr ""
 "    SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:876
+#: src/temperament.c:882
 msgid ""
 "    Your psychological engine revolves around communication, expansion, \n"
 "and mental fluidity.\n"
@@ -5506,7 +5524,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:883
+#: src/temperament.c:889
 msgid ""
 "    CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
@@ -5514,7 +5532,7 @@ msgstr ""
 "    COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:885
+#: src/temperament.c:891
 msgid ""
 "    Your core essence is driven by swift, active, and result-oriented \n"
 "single-minded impulses.\n"
@@ -5532,7 +5550,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:892
+#: src/temperament.c:898
 msgid ""
 "    PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
@@ -5540,7 +5558,7 @@ msgstr ""
 "    FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:894
+#: src/temperament.c:900
 msgid ""
 "    You embody a stable, welcoming, and peacekeeping emotional \n"
 "constitution.\n"
@@ -5558,7 +5576,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:901
+#: src/temperament.c:907
 msgid ""
 "    MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
@@ -5566,7 +5584,7 @@ msgstr ""
 "    MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:903
+#: src/temperament.c:909
 msgid ""
 "    Your nature is built on structural caution, real-world pragmatism, \n"
 "and profound reflection.\n"
@@ -5587,7 +5605,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:933
+#: src/temperament.c:939
 msgid ""
 "    SECONDARY INFLUENCES & NUANCES\n"
 "\n"
@@ -5595,7 +5613,7 @@ msgstr ""
 "    INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
 "\n"
 
-#: src/temperament.c:935
+#: src/temperament.c:941
 msgid ""
 "    Although your core template is defined above, your psychiatric map\n"
 "    shows other active forces adding layers to your behavior:\n"
@@ -5606,11 +5624,11 @@ msgstr ""
 "    camadas ao seu comportamento:\n"
 "\n"
 
-#: src/temperament.c:944
+#: src/temperament.c:950
 msgid "    ✦ Sanguine Influence: "
 msgstr "    ✦ Influência Sanguínea: "
 
-#: src/temperament.c:946
+#: src/temperament.c:952
 msgid ""
 "Adds an overlay of communicative ease, adaptability,\n"
 "      and cognitive curiosity. This softens any rigid boundaries or\n"
@@ -5623,11 +5641,11 @@ msgstr ""
 "      pelo seu temperamento dominante.\n"
 "\n"
 
-#: src/temperament.c:953
+#: src/temperament.c:959
 msgid "    ✦ Choleric Influence: "
 msgstr "    ✦ Influência Colérica: "
 
-#: src/temperament.c:955
+#: src/temperament.c:961
 msgid ""
 "Injects raw drive, sharp focus on execution, and a\n"
 "      natural urgency to fix problems. It sharpens a passive baseline\n"
@@ -5640,11 +5658,11 @@ msgstr ""
 "      proativa.\n"
 "\n"
 
-#: src/temperament.c:962
+#: src/temperament.c:968
 msgid "    ✦ Phlegmatic Influence: "
 msgstr ""
 
-#: src/temperament.c:964
+#: src/temperament.c:970
 msgid ""
 "Acts as a natural thermal and emotional ballast, introducing\n"
 "      diplomatic mediation, structural patience, and a steady pace that\n"
@@ -5657,11 +5675,11 @@ msgstr ""
 "      proativa.\n"
 "\n"
 
-#: src/temperament.c:971
+#: src/temperament.c:977
 msgid "    ✦ Melancholic Influence: "
 msgstr "    ✦ Influência Melancólica: "
 
-#: src/temperament.c:973
+#: src/temperament.c:979
 msgid ""
 "Confers analytical depth, long-term organization skills,\n"
 "      and a realistic sense of caution. It ensures your impulses are\n"
@@ -5674,15 +5692,15 @@ msgstr ""
 "      no mundo real.\n"
 "\n"
 
-#: src/temperament.c:985
+#: src/temperament.c:991
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:989
+#: src/temperament.c:995
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:995
+#: src/temperament.c:1001
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"

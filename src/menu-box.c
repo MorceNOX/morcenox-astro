@@ -374,7 +374,7 @@ void set_data() {
     
         call_chart();
         
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been changed."));
+        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been set."));
     }
     else {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));

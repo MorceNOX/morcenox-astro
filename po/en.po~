@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 08:08-0300\n"
+"POT-Creation-Date: 2026-08-26 09:54-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1997,7 +1997,7 @@ msgstr ""
 msgid "the Night"
 msgstr ""
 
-#: src/draw-chart.c:3817 src/draw-chart.c:3861 src/solar_return.c:512
+#: src/draw-chart.c:3817 src/draw-chart.c:3861
 msgid "    Structural Efficiency Verdict:\n"
 msgstr ""
 
@@ -2644,7 +2644,8 @@ msgid ""
 msgstr ""
 
 #: src/menu-box.c:377
-msgid "Chart data have been changed."
+#, fuzzy
+msgid "Chart data have been set."
 msgstr "Chart data have been changed."
 
 #: src/menu-box.c:380
@@ -3608,7 +3609,9 @@ msgid "SATURN ♄"
 msgstr ""
 
 #: src/solar_return.c:500
-msgid "  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
+msgid ""
+"  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:508
@@ -3618,6 +3621,12 @@ msgid ""
 "score is: %d.\n"
 "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength "
 "Points).\n"
+"\n"
+msgstr ""
+
+#: src/solar_return.c:512
+msgid ""
+"    Structural Efficiency Verdict:\n"
 "\n"
 msgstr ""
 
@@ -3663,7 +3672,9 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:554
-msgid "  [CHECK II] RADIX HOUSE TRANSIT\n"
+msgid ""
+"  [CHECK II] RADIX HOUSE TRANSIT\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:556
@@ -3674,9 +3685,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:642
-#: src/solar_return.c:686 src/solar_return.c:721
-msgid "    Interpretation:\n"
+#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:686
+#: src/solar_return.c:721
+msgid ""
+"    Interpretation:\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:562
@@ -3731,7 +3744,9 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:594
-msgid "  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
+msgid ""
+"  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:596
@@ -3774,16 +3789,22 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:632
-msgid "  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
+msgid ""
+"  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:634
 #, c-format
 msgid ""
 "    Current Firdaria Master Ruler: %s\n"
-"    Current Firdaria Sub-Ruler:   %s\n"
+"    Current Firdaria Sub-Ruler: %s\n"
 "    Solar Return Almuten (Lord of Year): %s\n"
 "\n"
+msgstr ""
+
+#: src/solar_return.c:642
+msgid "    Interpretation:\n"
 msgstr ""
 
 #: src/solar_return.c:646
@@ -3837,7 +3858,9 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:680
-msgid "  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
+msgid ""
+"  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:684
@@ -3897,7 +3920,9 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:715
-msgid "  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
+msgid ""
+"  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:719
@@ -4179,11 +4204,15 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:806
-msgid "  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
+msgid ""
+"  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:816
-msgid "    Astrological Synthesis for your Year:\n"
+msgid ""
+"    Astrological Synthesis for your Year:\n"
+"\n"
 msgstr ""
 
 #: src/solar_return.c:829

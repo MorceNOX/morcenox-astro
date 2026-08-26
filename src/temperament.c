@@ -136,7 +136,8 @@ void desenhar_barra_temperamento(WINDOW *win, int row, int col, int valor, int t
 void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fase_lunar, int estacao, int week_day, int planetary_hour) {
     // 1. EXTRAÇÃO DE COORDENADAS E IDs INICIAIS
     double sol_lon = 0, lua_lon = 0, asc_lon = 0, fortuna_lon, san_lon;
-    int id_regente_asc = 1; // Usado mais abaixo na função que encontra o regente clássico do ASC
+    int id_regente_asc = 0; // Usado mais abaixo na função que encontra o regente clássico do ASC
+    int id_regente_lua = 0;
 
     int object_diff = show_modern_planets ? 0 : 3;
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
@@ -166,8 +167,8 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     pontos_hyl.fortuna_lon = fortuna_lon; 
     pontos_hyl.sizigia_lon = san_lon;
 
-    int res_almuten_lua[12] = {0};
-    int qtd_alm_lua = get_almuten(lua_lon, res_almuten_lua, aspecto_matrix, pontos_hyl, plots);
+    //int res_almuten_lua[12] = {0};
+    //int qtd_alm_lua = get_almuten(lua_lon, res_almuten_lua, aspecto_matrix, pontos_hyl, plots);
 
     int res_figuris[12] = {0};
     int qtd_alm_fig = calcular_almuten_figuris(pontos_hyl, plots, aspecto_matrix, converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), res_figuris);
@@ -428,19 +429,24 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
     }
 
-    // Ponto 7: Signo do Almuten da Lua
-    for (int i = 0; i < qtd_alm_lua; i++) {
-        int lon_ruler_lua = plots[res_almuten_lua[i] - 1].longitude;
-        int sign_ruler_lua = (int)floor(lon_ruler_lua / 30) + 1;
+    // Ponto 7: Signo do Regente da Lua
 
-        if (get_sign_properties(sign_ruler_lua, &prop)) {
-            if (prop.temperature > 0) score.total_quente += prop.temperature; 
-            else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
-            
-            if (prop.moisture > 0) score.total_umido += prop.moisture; 
-            else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
-        }
+    get_rulers_by_sign_id(signo_lua, &id_regente_lua, &n_exalted, &n_exile, &n_fall, &n_tri1, &n_tri2, &n_tri3);
+    int lon_ruler_lua = plots[id_regente_lua - 1].longitude;
+    int sign_ruler_lua = (int)floor(lon_ruler_lua / 30) + 1;
+
+    // for (int i = 0; i < qtd_alm_lua; i++) {
+    //     int lon_ruler_lua = plots[res_almuten_lua[i] - 1].longitude;
+    //     int sign_ruler_lua = (int)floor(lon_ruler_lua / 30) + 1;
+
+    if (get_sign_properties(sign_ruler_lua, &prop)) {
+        if (prop.temperature > 0) score.total_quente += prop.temperature; 
+        else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
+        
+        if (prop.moisture > 0) score.total_umido += prop.moisture; 
+        else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
     }
+    //}
 
     // Ponto 8: Almuten Figuris e seu signo se as propriedades não forem iguais
     for (int i = 0; i < qtd_alm_fig; i++) {
