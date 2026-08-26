@@ -967,7 +967,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         wattroff(win, A_BOLD);
 
         if (campo_atual == 1) wattron(win, COLOR_PAIR(28) | A_REVERSE);
-        mvwprintw(win, 4, 18, " <%s> ", f_gender == 1 ? _("Masculine") : f_gender == 2 ? _("Feminine") : _("Neuter/Universal"));
+        mvwprintw(win, 4, 22, " <%s> ", f_gender == 1 ? _("Masculine") : f_gender == 2 ? _("Feminine") : _("Neuter/Universal"));
         wattroff(win, campo_atual == 1 ? (COLOR_PAIR(28) | A_REVERSE) : 0);
 
         // 3. Diurnal Formula

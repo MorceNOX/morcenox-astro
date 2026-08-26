@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.8.5
+VERSION = 1.9.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -57,6 +57,9 @@ CFLAGS +=  -DAPPLICATION_NAME=\"$(APP_NAME)\"
 SRCS     = $(wildcard src/*.c)
 OBJS     = $(SRCS:.c=.o)
 
+PACKAGE_NAME = $(APP_NAME)-v$(VERSION)-linux.tar.gz
+PKG_DIR      = release_dist
+
 .PHONY: all clean init-db reset-db install uninstall setup-dir translate
 
 # Regra principal (padrão - apenas compila o binário localmente)
@@ -72,35 +75,37 @@ src/%.o: src/%.c
 
 # Regra para criar a estrutura de diretórios e injetar o banco no $HOME do usuário
 setup-dir:
-	@echo "Criando diretório de configuração em $(APP_CONFIG_DIR)..."
-	@mkdir -p $(APP_CONFIG_DIR)
-		@mkdir -p $(APP_CONFIG_DIR)/ephe
+	@echo "Criando diretórios de configuração em $(APP_CONFIG_DIR)..."
+	@mkdir -p $(APP_CONFIG_DIR)/ephe
+	@sleep 0.1 # Pequena pausa de segurança para o sistema operacional consolidar as pastas no disco
 	@if [ -z "$$(ls -A $(APP_CONFIG_DIR)/ephe 2>/dev/null)" ]; then \
 	    echo "Pasta ephe vazia. Copiando arquivos da Swiss Ephemeris..." ; \
-	    cp -rv ephe/* $(APP_CONFIG_DIR)/ephe/ ; \
+	    cp -r ephe/* $(APP_CONFIG_DIR)/ephe/ ; \
 	else \
 	    echo "Arquivos da Swiss Ephemeris já existem em $(APP_CONFIG_DIR)/ephe/. Pulando cópia." ; \
 	fi
 	@if [ ! -f "$(APP_CONFIG_DIR)/help_en.txt" ]; then \
 	    cp help_en.txt $(APP_CONFIG_DIR)/; \
-		cp topics_en.txt $(APP_CONFIG_DIR)/; \
-		cp help_pt.txt $(APP_CONFIG_DIR)/; \
-		cp topics_pt.txt $(APP_CONFIG_DIR)/; \
+	    cp topics_en.txt $(APP_CONFIG_DIR)/; \
+	    cp help_pt.txt $(APP_CONFIG_DIR)/; \
+	    cp topics_pt.txt $(APP_CONFIG_DIR)/; \
 	fi
 	@if [ ! -f "$(APP_CONFIG_DIR)/.env" ]; then \
 	    cp .env $(APP_CONFIG_DIR)/; \
 	fi
 	@if [ ! -f "$(DB_FILE)" ]; then \
-		echo "Criando o banco de dados $(DB_FILE)..."; \
-		if [ -f "$(DB_SQL)" ]; then \
-			sqlite3 "$(DB_FILE)" < "$(DB_SQL)"; \
-		else \
-			sqlite3 "$(DB_FILE)" "VACUUM;"; \
-			echo "Aviso: $(DB_SQL) não encontrado. Banco criado vazio em $(DB_FILE)."; \
-		fi \
+	    echo "Criando o banco de dados estruturado em $(DB_FILE)..."; \
+	    if [ -f "$(DB_SQL)" ]; then \
+	        sqlite3 "$(DB_FILE)" "VACUUM;" && sqlite3 "$(DB_FILE)" < "$(DB_SQL)"; \
+	        echo "Banco de dados inicializado com sucesso a partir de $(DB_SQL)."; \
+	    else \
+	        echo "ERRO CRÍTICO: $(DB_SQL) não encontrado! Impossível estruturar as tabelas."; \
+	        exit 1; \
+	    fi \
 	else \
-		echo "Banco de dados já existe em $(DB_FILE). Mantendo arquivo atual."; \
+	    echo "Banco de dados já existe em $(DB_FILE). Mantendo arquivo atual."; \
 	fi
+
 
 # ==============================================================================
 # SEÇÃO AUTOMATIZADA: TRADUÇÕES E INSTALAÇÃO (GETTEXT FIXO)
@@ -173,17 +178,10 @@ reset-db: clean
 		rm -f "$(DB_FILE)"; \
 	fi
 
-# ... (keep your existing variables)
-
-PACKAGE_NAME = $(APP_NAME)-v$(VERSION)-linux.tar.gz
-PKG_DIR      = release_dist
-
 .PHONY: package
 
-# ... (rest of your Makefile)
-
 package: all translate
-	@echo "Packaging version $(VERSION) into $(PACKAGE_DIR)..."
+	@echo "Packaging version $(VERSION) into $(PKG_DIR)..."
 	@rm -rf $(PKG_DIR)
 	@mkdir -p $(PKG_DIR)/bin
 	@mkdir -p $(PKG_DIR)/lib
@@ -199,11 +197,11 @@ package: all translate
 	# 3. Copy the translations
 	@cp -r locale/* $(PKG_DIR)/locale/ 2>/dev/null || true
 
-	# 4. Copy the "Assets" (Files that astro.sh will move to HOME)
+	# 4. Copy the "Assets" (GARANTINDO QUE O SQL DO BANCO VAI JUNTO PARA O ASTRO.SH MOVER)
 	@if [ -f ".env" ]; then cp .env $(PKG_DIR)/assets/ ; fi
+	@if [ -f "$(DB_SQL)" ]; then cp $(DB_SQL) $(PKG_DIR)/assets/ ; fi
 	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
-	# Standardize ephe copying:
 	@if [ -d "ephe" ]; then cp -r ephe $(PKG_DIR)/assets/ ; fi
 
 	# 5. Copy the Launcher script
@@ -218,5 +216,5 @@ package: all translate
 	tar -czf $(PACKAGE_NAME) -C $(PKG_DIR) .
 	
 	@echo "======================================================================="
-	@echo " Package created: $(PACKAGE_NAME)"
+	@echo " Package created with database blueprints: $(PACKAGE_NAME)"
 	@echo "======================================================================="
