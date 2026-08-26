@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 14:06-0300\n"
+"POT-Creation-Date: 2026-08-26 14:12-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -88,7 +88,7 @@ msgid " Almuten Figuris Spiritual Guide "
 msgstr ""
 
 #: src/almuten.c:707 src/almuten.c:926 src/solar_return.c:464
-#: src/solar_return.c:1040
+#: src/solar_return.c:1032
 msgid " [↓↑|JK: Scroll | Q|ESC: Return to Chart] "
 msgstr ""
 
@@ -884,7 +884,7 @@ msgstr ""
 #: src/directions.c:621 src/directions.c:1074 src/draw-chart.c:419
 #: src/draw-chart.c:620 src/draw-chart.c:4241 src/draw-chart.c:5034
 #: src/draw-chart.c:5056 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
-#: src/profections.c:48 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:48 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Mars"
 msgstr "Mars orb"
@@ -892,7 +892,7 @@ msgstr "Mars orb"
 #: src/directions.c:622 src/directions.c:1075 src/draw-chart.c:425
 #: src/draw-chart.c:622 src/draw-chart.c:4239 src/draw-chart.c:5036
 #: src/draw-chart.c:5058 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
-#: src/profections.c:54 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:54 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Saturn"
 msgstr "Saturn orb"
@@ -900,7 +900,7 @@ msgstr "Saturn orb"
 #: src/directions.c:629 src/directions.c:1084 src/draw-chart.c:422
 #: src/draw-chart.c:621 src/draw-chart.c:4240 src/draw-chart.c:5035
 #: src/draw-chart.c:5057 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
-#: src/profections.c:53 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:53 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Jupiter"
 msgstr "Jupiter orb"
@@ -908,7 +908,7 @@ msgstr "Jupiter orb"
 #: src/directions.c:630 src/directions.c:1085 src/draw-chart.c:416
 #: src/draw-chart.c:619 src/draw-chart.c:4236 src/draw-chart.c:5033
 #: src/draw-chart.c:5055 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
-#: src/profections.c:49 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:49 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Venus"
 msgstr "Venus orb"
@@ -969,7 +969,7 @@ msgid " Primary Directions to Arabic Parts "
 msgstr "Location: "
 
 #: src/draw-chart.c:407 src/draw-chart.c:4235 src/firdaria.c:97 src/hyleg.c:336
-#: src/profections.c:52 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:52 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Sun"
 msgstr "Saturn orb"
@@ -980,15 +980,15 @@ msgid "Sol"
 msgstr ""
 
 #: src/draw-chart.c:410 src/draw-chart.c:4238 src/firdaria.c:98 src/hyleg.c:337
-#: src/profections.c:51 src/solar_return.c:940 src/solar_return.c:1059
+#: src/profections.c:51 src/solar_return.c:932 src/solar_return.c:1051
 #, fuzzy
 msgid "Moon"
 msgstr "Moon orb"
 
 #: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4237
 #: src/draw-chart.c:5032 src/draw-chart.c:5054 src/firdaria.c:99
-#: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:940
-#: src/solar_return.c:1059
+#: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:932
+#: src/solar_return.c:1051
 #, fuzzy
 msgid "Mercury"
 msgstr "Mercury orb"
@@ -4205,24 +4205,24 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:814
+#: src/solar_return.c:812
 msgid ""
 "    Astrological Synthesis for your Year:\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:827
+#: src/solar_return.c:819
 #, c-format
 msgid ""
 "    %s; however, %s\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:838
+#: src/solar_return.c:830
 msgid "    Context: "
 msgstr ""
 
-#: src/solar_return.c:846
+#: src/solar_return.c:838
 #, c-format
 msgid ""
 "    An intensely focused year. Your environment and your psychological "
@@ -4230,7 +4230,7 @@ msgid ""
 "friction."
 msgstr ""
 
-#: src/solar_return.c:849
+#: src/solar_return.c:841
 #, c-format
 msgid ""
 "    A polarizing year. The tension between public obligations and the "
@@ -4238,7 +4238,7 @@ msgid ""
 "avoid burnout."
 msgstr ""
 
-#: src/solar_return.c:852
+#: src/solar_return.c:844
 #, c-format
 msgid ""
 "    A year of multi-layered experiences. You will need to learn how to "
@@ -4246,28 +4246,28 @@ msgid ""
 "in House %d."
 msgstr ""
 
-#: src/solar_return.c:860
+#: src/solar_return.c:852
 msgid ""
 "    Error: Invalid house calculation data for synthesis mapping.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:873
+#: src/solar_return.c:865
 msgid ""
 "  [CONFRONTATION END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
 msgstr ""
 
-#: src/solar_return.c:1037
+#: src/solar_return.c:1029
 msgid " Annual Transits & Radical Projections "
 msgstr ""
 
-#: src/solar_return.c:1051
+#: src/solar_return.c:1043
 msgid "  ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"
 msgstr ""
 
-#: src/solar_return.c:1054
+#: src/solar_return.c:1046
 msgid ""
 "    The positions of the planets at the exact moment of your Solar Return "
 "act as a frozen\n"
@@ -4278,25 +4278,25 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1066
+#: src/solar_return.c:1058
 #, c-format
 msgid ""
 "    [CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"
 msgstr ""
 
-#: src/solar_return.c:1081
+#: src/solar_return.c:1073
 #, c-format
 msgid ""
 "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1087
+#: src/solar_return.c:1079
 msgid ""
 "       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal "
 "Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1089
+#: src/solar_return.c:1081
 msgid ""
 "       This year promises severe depletion of vital energy, physical "
 "fatigue,\n"
@@ -4305,12 +4305,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1094
+#: src/solar_return.c:1086
 msgid ""
 "       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1096
+#: src/solar_return.c:1088
 msgid ""
 "       High risk of acute inflammatory episodes, fevers, injuries, or sudden "
 "surgeries.\n"
@@ -4318,11 +4318,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1101
+#: src/solar_return.c:1093
 msgid "       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1103
+#: src/solar_return.c:1095
 msgid ""
 "       Excellent providential protection. A year of physical recovery, "
 "expansion of\n"
@@ -4331,7 +4331,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1107
+#: src/solar_return.c:1099
 #, c-format
 msgid ""
 "       The annual transit of %s brings daily focus and minor adjustments to "
@@ -4340,7 +4340,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1114
+#: src/solar_return.c:1106
 msgid ""
 "       No planetary conjunctions from the Solar Return are currently putting "
 "friction\n"
@@ -4349,17 +4349,17 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1122
+#: src/solar_return.c:1114
 #, c-format
 msgid "    %s  %s (Solar Return)\n"
 msgstr ""
 
-#: src/solar_return.c:1127
+#: src/solar_return.c:1119
 #, c-format
 msgid "    • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 
-#: src/solar_return.c:1128
+#: src/solar_return.c:1120
 #, c-format
 msgid ""
 "       This year, the physical affairs governed by your Natal House %d will "
@@ -4369,16 +4369,16 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1133
+#: src/solar_return.c:1125
 msgid "    • Active Radical Conjunctions:\n"
 msgstr ""
 
-#: src/solar_return.c:1145
+#: src/solar_return.c:1137
 #, c-format
 msgid "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1149
+#: src/solar_return.c:1141
 #, c-format
 msgid ""
 "       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
@@ -4387,7 +4387,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1152
+#: src/solar_return.c:1144
 #, c-format
 msgid ""
 "       [BENEFIC] Jupiter injects providential protection, sudden "
@@ -4396,7 +4396,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1155
+#: src/solar_return.c:1147
 #, c-format
 msgid ""
 "       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or "
@@ -4405,7 +4405,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1158
+#: src/solar_return.c:1150
 #, c-format
 msgid ""
 "       This conjunction wakes up the natal potential of your %s, making its "
@@ -4414,14 +4414,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1164
+#: src/solar_return.c:1156
 msgid ""
 "       No exact conjunctions detected over your natal planets within a 5° "
 "orb.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1171
+#: src/solar_return.c:1163
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"

@@ -642,31 +642,63 @@ int converter_codigo_planeta(int codigo_antigo) {
     }
 }
 
+// const char* get_house_roman(double longitude, double *cusps) {
+//     // Array of Roman numerals mapped to house indices (0 to 11 maps to I to XII)
+//     static const char* roman_houses[] = {
+//         "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
+//     };
+
+//     for (int i = 1; i <= 12; i++) {
+//         double current_cusp = cusps[i];
+//         // The next cusp wraps around from 12 back to 1
+//         double next_cusp = (i == 12) ? cusps[1] : cusps[i + 1];
+
+//         if (current_cusp < next_cusp) {
+//             // Normal case: house stays within the 0-360 boundaries
+//             if (longitude >= current_cusp && longitude < next_cusp) {
+//                 return roman_houses[i - 1];
+//             }
+//         } else {
+//             // Wraparound case: house crosses over 360° / 0° Aries
+//             if (longitude >= current_cusp || longitude < next_cusp) {
+//                 return roman_houses[i - 1];
+//             }
+//         }
+//     }
+//     return "I"; // Fallback safety default
+// }
+
+
 const char* get_house_roman(double longitude, double *cusps) {
-    // Array of Roman numerals mapped to house indices (0 to 11 maps to I to XII)
     static const char* roman_houses[] = {
         "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
     };
 
+    // Uma tolerância infinitesimal para engolir imprecisões do double (1e-9 graus)
+    const double EPSILON = 1e-9; 
+
     for (int i = 1; i <= 12; i++) {
         double current_cusp = cusps[i];
-        // The next cusp wraps around from 12 back to 1
         double next_cusp = (i == 12) ? cusps[1] : cusps[i + 1];
 
         if (current_cusp < next_cusp) {
-            // Normal case: house stays within the 0-360 boundaries
-            if (longitude >= current_cusp && longitude < next_cusp) {
+            // Caso Normal: adicionamos o EPSILON para garantir que limites exatos entrem na casa correta
+            if (longitude >= (current_cusp - EPSILON) && longitude < (next_cusp - EPSILON)) {
                 return roman_houses[i - 1];
             }
         } else {
-            // Wraparound case: house crosses over 360° / 0° Aries
-            if (longitude >= current_cusp || longitude < next_cusp) {
+            // Caso de cruzamento de 360°/0° Áries
+            if (longitude >= (current_cusp - EPSILON) || longitude < (next_cusp - EPSILON)) {
                 return roman_houses[i - 1];
             }
         }
     }
-    return "I"; // Fallback safety default
+
+    // Se houver uma imprecisão bizarra na borda superior da Casa XII, 
+    // o fallback mais seguro astrologicamente é a Casa XII, e não a Casa I.
+    return "XII"; 
 }
+
 
 
 int get_hour_regent(int week_day, int planetary_hour) {
