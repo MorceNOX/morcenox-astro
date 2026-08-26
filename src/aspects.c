@@ -216,14 +216,14 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
             if (closest >= 0 && min_diff <= (planet_orbis[i] + planet_orbis[j]) / 2.0) {
                 int sign_diff = diff_sign((int)floor(plots[i].longitude / 30), (int)floor(plots[j].longitude / 30));
                 
-                int aspect_diff = fabs(aspects_defs[closest].angle - angle);
+                double aspect_diff = fabs(aspects_defs[closest].angle - angle);
 
                 if ((strcmp(aspects_defs[closest].name, "Square") == 0 && sign_diff == 3) ||
                     (strcmp(aspects_defs[closest].name, "Trine") == 0 && sign_diff == 4) ||
                     (strcmp(aspects_defs[closest].name, "Sextile") == 0 && sign_diff == 2) ||
-                    (strcmp(aspects_defs[closest].name, "Opposition") == 0 && sign_diff == 6) ||
+                    (strcmp(aspects_defs[closest].name, "Opposition") == 0) ||
                     (strcmp(aspects_defs[closest].name, "Conjunction") == 0) ||
-                     aspect_diff <= 1) 
+                     aspect_diff <= 1.0) 
                 {
                     
                     // se tem aspecto não é feral
@@ -237,7 +237,7 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
 
                     bool partil = false;
-                    if (aspect_diff < 1.0) {
+                    if (aspect_diff < 1.000000000000001) {
                         partil = true;
                     }
                     

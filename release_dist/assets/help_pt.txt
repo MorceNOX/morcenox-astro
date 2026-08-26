@@ -1180,13 +1180,13 @@ Exibe os aspectos entre os corpos. Apenas os 5 aspectos
 maiores são usados: Conjunção (0°), Oposição (180°),
 Trígono (120°), Quadraturaa (90°) e Sextil (60°).
 
-Exceto para Conjunções e Aspectos Exatos, o programa não
-valida aspectos fora de signo.
+Exceto para Conjunções, Oposições e Aspectos Exatos, o programa 
+não valida aspectos fora de signo.
 
-Não usamos "orbis por aspecto." O orbis é sempre a
-média do orbis dos dois corpos envolvidos. Um aspecto
+Não usamos "orbe por aspecto." O orbe é sempre a
+média do orbe dos dois corpos envolvidos. Um aspecto
 é válido se a distância entre os 2 objetos estiver
-dentro do orbis calculado.
+dentro do orbe calculado.
 
 A tabela mostra a distância em graus, permitindo que
 você meça a força de cada aspecto.
@@ -1201,12 +1201,12 @@ Azul (favorável: trígono e sextil), vermelho (desfavorável:
 oposição e quadratura) ou magenta (fatores específicos:
 conjunção).
 
-Nota 1: Você pode controlar o orbis planetário no menu
+Nota 1: Você pode controlar o orbe planetário no menu
 "Configurações".
 
 Nota 2: Embora não sejam objetos físicos, a tradição
-recomenda que o orbis dos nodos lunares seja o mesmo
-do orbis da Lua.
+recomenda que o orbe dos nodos lunares seja o mesmo
+do orbe da Lua.
 
 Você pode pressionar F3 novamente para ver os Aspectos de
 Declinação (paralelo e contra-paralelo).
@@ -1228,8 +1228,8 @@ estimar a força da relação entre corpos.
 A relação entre corpos é fortalecida (para o bem ou
 o mal) por aspectos paralelos ou contra-paralelos.
 
-O orbis planetário não é considerado aqui; é definido
-um orbis padrão de 1.5° para ambos.
+O orbe planetário não é considerado aqui; é definido
+um orbe padrão de 1.5° para ambos.
 
 A codificação por cores indica a qualidade do aspecto:
 Azul (favorável: paralelo) ou vermelho (desfavorável:
@@ -1270,6 +1270,9 @@ Use [↓↑] para deslizar a tabela.
 
 Exibe aspectos entre os 7 principais planetas e os seus Antissia e
 Contrantissia.
+
+Aqui também não se usam os orbes dos planetas. 
+Um orbe de 1.5° é considerado para validar o aspecto.
 
 Esta funcionalidade está disponível como uma opção independente
 ao selecionar pelo menu.
@@ -1503,6 +1506,36 @@ da Lua e do Ascendente, além do Senhor do Mapa (Almuten Figuris).
 O temperamento é a soma das qualidades primitivas
 desses elementos juntos e significa o corpo físico e o
 temperamento do nativo.
+
+    • Cálculo do Temperamento:
+
+    Para calcular o Temperamento do Nativo, primeiramente 
+    somam-se as qualidades primitivas de cada um dos itens abaixo, 
+    sendo que cada signo, cada planeta (incluindo-se os nodos
+    lunares), cada fase da Lua e cada estação do ano tem suas 
+    propriedades definidas de acordo com sua natureza, com valores 
+    próprios.
+
+     1. Signo do Ascendente
+     2. Signo do planeta regente do Ascendente
+     3. Planetas na Casa 1 ou em conjunção com o Ascendente
+        (se for o Sol, tomam-se as propriedades da estação do ano)
+     4. Signo dos planetas que aspectam o Ascendente
+     5. Fase da Lua
+     6. Signo da Lua
+     7. Signo do Almuten da Lua
+     8. Planetas em conjunção com a Lua
+     9. Signo dos planetas que aspectam a Lua
+    10. Estação do ano de acordo com a posição do Sol
+    11. Planete regente do mapa (Almuten Figuris)
+    12. Signo do Almuten Figuris
+    
+    Com a soma das propriedades, chega-se no temperamento 
+    dominante do nativo, podendo ocorrer empate.
+    
+    O programa exibe o gráfico com a classificação de cada
+    temperamento, ou seja, a porção de cada temperamento
+    no valor final do temperamento do nativo.
 
 
 

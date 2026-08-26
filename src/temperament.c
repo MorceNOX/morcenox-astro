@@ -218,7 +218,14 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
                     planeta_na_casa1[id_atual] = 1;
                 }
 
-                if (get_planet_properties(id_atual, &prop)) {
+                // se o plabeta for o Sol, pega as propriedades da estação do ano
+                if (id_atual == 1) {
+                    if (estacao == 1) { score.total_quente += 1; score.total_umido += 1; } // Primavera
+                    else if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
+                    else if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono
+                    else if (estacao == 4) { score.total_frio += 1;   score.total_umido += 1; } // Inverno
+                }
+                else if (get_planet_properties(id_atual, &prop)) {
                     if (prop.temperature > 0) score.total_quente += prop.temperature; 
                     else if (prop.temperature < 0) score.total_frio += abs(prop.temperature);
                     
@@ -262,6 +269,8 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     }
 
     // 2. Processa os aspectos (Varrendo as duas direções da matriz para cada objeto)
+
+    // Ponto 4: Planetas em conjunção com a Lua e signo dos planetas que aspectam a Lua
     for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
         
         int id_planeta_aspectante = j + 1;
@@ -306,7 +315,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
                 if (aspecto_valido) {
                     PrimitiveProperties prop_asp;
-                    if (!is_conjunction) {
+                    if (is_conjunction) {
                         if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
                             if (prop_asp.temperature > 0)      score.total_quente += 1;
                             else if (prop_asp.temperature < 0) score.total_frio += 1;
@@ -331,6 +340,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
             }
         }
 
+        // Ponto 5: Planetas em conjunção com o Ascendente e signo dos planetas que aspectam o Ascendente
         // --- ASPECTOS NO ASCENDENTE ---
         if (idx_asc != -1 && j != idx_asc) {
 
@@ -349,6 +359,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
                 if (id_planeta_aspectante >= 11) {
                     if (strstr(celula_asc_1.symbol, "☌") != NULL || strstr(celula_asc_2.symbol, "☌") != NULL) {
                         aspecto_valido = true;
+                        is_conjunction = true;
                     }
                 } 
                 else {
@@ -359,19 +370,26 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
                         strstr(celula_asc_1.symbol, "⚹") != NULL || strstr(celula_asc_2.symbol, "⚹") != NULL) 
                     {
                         aspecto_valido = true;
+                        if (strstr(celula_asc_1.symbol, "☌") != NULL || strstr(celula_asc_2.symbol, "☌") != NULL) {
+                            is_conjunction = true;
+                        }
                     }
                 }
 
                 if (aspecto_valido) {
                     PrimitiveProperties prop_asp;
 
-                    if (id_planeta_aspectante == 1) {
+                    // se o planeta for o Sol, se for conjunção e se ele não estiver na casa 1, pega a estação do ano
+                    if (id_planeta_aspectante == 1 && is_conjunction && !planeta_na_casa1[id_planeta_aspectante]) {
+
                         if (estacao == 1) { score.total_quente += 1; score.total_umido += 1; } // Primavera
                         else if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
                         else if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono
                         else if (estacao == 4) { score.total_frio += 1;   score.total_umido += 1; } // Inverno
                     }
-                    else if (!is_conjunction) {
+                    // se for conjunção, se não for o Sol e se planeta não estiver na casa 1, toma-se suas propriedades
+                    else if (is_conjunction && !planeta_na_casa1[id_planeta_aspectante]) {
+
                         if (get_planet_properties(id_planeta_aspectante, &prop_asp)) {
                             if (prop_asp.temperature > 0)      score.total_quente += 1;
                             else if (prop_asp.temperature < 0) score.total_frio += 1;
@@ -380,6 +398,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
                             else if (prop_asp.moisture < 0)    score.total_seco += 1;
                         }
                     }
+                    // se planeta, inclusive o sol, não estiver na casa 1 e se for qualquer outro aspecto, pega o signo
                     else if (!planeta_na_casa1[id_planeta_aspectante]) {
 
                         int lon_ruler_aspectante = plots[id_planeta_aspectante - 1].longitude;
@@ -399,7 +418,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     }
     
 
-    // Ponto 4: Signo da Lua
+    // Ponto 6: Signo da Lua
     int signo_lua = (int)floor(lua_lon / 30.0) + 1;
     if (get_sign_properties(signo_lua, &prop)) {
         if (prop.temperature > 0) score.total_quente += prop.temperature; 
@@ -409,7 +428,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         else if (prop.moisture < 0) score.total_seco += abs(prop.moisture);
     }
 
-    // Ponto 5: Signo do Almuten da Lua
+    // Ponto 7: Signo do Almuten da Lua
     for (int i = 0; i < qtd_alm_lua; i++) {
         int lon_ruler_lua = plots[res_almuten_lua[i] - 1].longitude;
         int sign_ruler_lua = (int)floor(lon_ruler_lua / 30) + 1;
@@ -423,7 +442,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         }
     }
 
-    // Ponto 6: Almuten Figuris e seu signo se as propriedades não forem iguais
+    // Ponto 8: Almuten Figuris e seu signo se as propriedades não forem iguais
     for (int i = 0; i < qtd_alm_fig; i++) {
         PrimitiveProperties prop_alm;
         if (get_planet_properties(res_figuris[i], &prop_alm)) {
@@ -449,13 +468,13 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         }
     }
 
-    // Ponto 7: Fase Lunar (Mantém peso +1 para manter o equilíbrio com os planetas)
+    // Ponto 9: Fase Lunar (Mantém peso +1 para manter o equilíbrio com os planetas)
     if (fase_lunar == 1) { score.total_quente += 1; score.total_umido += 1; } // Nova
     else if (fase_lunar == 2) { score.total_quente += 1; score.total_seco += 1;  } // Crescente
     else if (fase_lunar == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Cheia
     else if (fase_lunar == 4) { score.total_frio += 1;   score.total_umido += 1; } // Minguante
 
-    // Ponto 8: Estação do Ano (Mantém peso +1)
+    // Ponto 10: Estação do Ano (Mantém peso +1)
     if (estacao == 1) { score.total_quente += 1; score.total_umido += 1; } // Primavera
     else if (estacao == 2) { score.total_quente += 1; score.total_seco += 1;  } // Verão
     else if (estacao == 3) { score.total_frio += 1;   score.total_seco += 1;  } // Outono

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 20:35-0300\n"
+"POT-Creation-Date: 2026-08-25 20:38-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -2192,45 +2192,45 @@ msgstr ""
 msgid "Phlegmatic"
 msgstr ""
 
-#: src/draw-chart.c:6650
+#: src/draw-chart.c:6650 src/draw-chart.c:6680
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:6651
+#: src/draw-chart.c:6651 src/draw-chart.c:6681
 msgid "02. Positions, Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:6652
+#: src/draw-chart.c:6652 src/draw-chart.c:6682
 msgid "03. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:6653
+#: src/draw-chart.c:6653 src/draw-chart.c:6683
 msgid "04. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:6654
+#: src/draw-chart.c:6654 src/draw-chart.c:6684
 msgid "05. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:6655
+#: src/draw-chart.c:6655 src/draw-chart.c:6685
 msgid "06. Declination Aspects"
 msgstr ""
 
-#: src/draw-chart.c:6656
+#: src/draw-chart.c:6656 src/draw-chart.c:6686
 msgid "07. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:6657
+#: src/draw-chart.c:6657 src/draw-chart.c:6687
 msgid "08. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:6658
+#: src/draw-chart.c:6658 src/draw-chart.c:6688
 #, fuzzy
 msgid "09. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:6659
+#: src/draw-chart.c:6659 src/draw-chart.c:6689
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr ""
 
@@ -2292,6 +2292,34 @@ msgstr ""
 
 #: src/draw-chart.c:6673
 msgid "24. Aspects to Antissia & Contrantissia"
+msgstr ""
+
+#: src/draw-chart.c:6690
+msgid "11. Radix Confrontation: Solar Return Integration"
+msgstr ""
+
+#: src/draw-chart.c:6691
+msgid "12. Annual Transits & Radical Projections"
+msgstr ""
+
+#: src/draw-chart.c:6692
+msgid "13. Arabic Parts"
+msgstr ""
+
+#: src/draw-chart.c:6693
+msgid "14. Planetary Energy Profile"
+msgstr ""
+
+#: src/draw-chart.c:6694
+msgid "15. Arabic Parts Solar Return Radix Confrontation"
+msgstr ""
+
+#: src/draw-chart.c:6695
+msgid "16. Aspects by Sign"
+msgstr ""
+
+#: src/draw-chart.c:6696
+msgid "17. Aspects to Antissia & Contrantissia"
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:352 src/hyleg.c:353 src/hyleg.c:596
