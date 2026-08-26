@@ -449,8 +449,8 @@ You can find the full license text at github.io
 (https://github.com/unicode-org/icu/blob/main/LICENSE)
 
 Astrological information has been compiled from various 
-authoritative sources related to Classical Astrology and
-some of them is included in the Technical Topics.
+authoritative sources related to Traditional Astrology and
+some of them are included in the Technical Topics.
 
 The application works 100% offline; no data is sent to or 
 retrieved from the internet.
@@ -635,12 +635,12 @@ You can set:
    • Triplicity System: Choose between Morinus, Dorotheus, 
      and Ptolemy to determine the rulership of the elements.
     
-   • Planetary Orbis: Modify the orbis value for all planets,
+   • Planetary orb: Modify the orb value for all planets,
      luminaries and the lunar nodes used in aspect calculations.
-     Note: We do not use "orbis by aspect"; each planet has a 
-     fixed orbis applied to all its aspects.
+     Note: We do not use "orb by aspect"; each planet has a 
+     fixed orb applied to all its aspects.
     
-   • Orbis for Parallel Aspects: Specific orbis values can 
+   • orb for Parallel Aspects: Specific orb values can 
      be set for parallel and contra-parallel aspects.
     
    • Modern Planet Exaltation: Although based on Classical 
@@ -1163,13 +1163,13 @@ Displays aspects between the objects. Only the 5 main aspects
 are used: Conjunction (0°), Opposition (180°), Trine (120°), 
 Square (90°), and Sextile (60°).
 
-Except for Conjunctions and Exact Aspects, the program 
+Except for Conjunctions, Oppositions and Exact Aspects, the program 
 does not validate out-of-sign aspects.
 
-We do not use "orbis by aspect." The orbis is always the 
-average of the orbis of the two involved bodies. An aspect 
+We do not use "orb by aspect." The orb is always the 
+average of the orb of the two involved bodies. An aspect 
 is valid if the distance between the 2 objects is within the 
-calculated orbis.
+calculated orb.
 
 The table shows the distance in degrees, allowing you to 
 measure the strength of each aspect.
@@ -1183,9 +1183,9 @@ Color coding indicates the quality of the aspect: Blue (favorable:
 trine and sextile), red (unfavorable: opposition and square), 
 or magenta (specific factors: conjunction).
 
-Note 1: You can control the planetary orbis in the "Settings" menu.
+Note 1: You can control the planetary orb in the "Settings" menu.
 Note 2: Although they are not physical objects, tradition lectures 
-recomend that the lunar nodes orbis be the same as the Moon orbis.
+recomend that the lunar nodes orb be the same as the Moon orb.
 
 You can press F3 again to see the Declination Aspects (parallel &
 contra-parallel).
@@ -1204,8 +1204,8 @@ for estimating the strength of the relationship between bodies.
 The relationship between bodies is strengthened (for good or 
 evil) by parallel or contra-parallel aspects. 
 
-The planetary orbis is not considered here; a default 
-orbis of 1.5° is set for both.
+The planetary orb is not considered here; a default 
+orb of 1.5° is set for both.
 
 Color coding indicates the quality of the aspect: Blue (favorable:
 parallel), or red (unfavorable: contra-parallel).
@@ -1245,6 +1245,9 @@ Use [↓↑] to scroll the table.
 
 Displays the aspects between the 7 main planets and their Antissia 
 and Contrantissia.
+
+Planetary orbs are not used here either.
+An orb of 1.5° is considered to validate the aspect.
 
 This feature is available as an independent option when
 selecting by the menu action.
@@ -1475,6 +1478,36 @@ The temperament is the sum of the primitive qualities of
 these elements together and signifies the physical body and the
 temperament of the native.
 
+    • Temperament Calculation:
+
+    To calculate the native's temperament, the primal qualities 
+    of each of the items below are first summed up; each sign, 
+    each planet (including the lunar nodes), each Moon phase, 
+    and each season has defined properties based on its nature, 
+    with specific values.
+
+     1. Ascendant sign
+     2. Sign of the Ascendant's ruling planet
+     3. Planets in the 1st House or in conjunction with the 
+        Ascendant
+        (if it is the Sun, the properties of the season are used)
+     4. Sign of planets aspecting the Ascendant
+     5. Moon phase
+     6. Moon's sign
+     7. Sign of the Moon's ruler planet
+     8. Planets in conjunction with the Moon
+     9. Sign of planets aspecting the Moon
+    10. Season of the year based on the Sun's position
+    11. Chart ruler (Almuten Figuris)
+    12. Sign of the Almuten Figuris
+    
+    Summing these properties reveals the native's dominant 
+    temperament; ties are possible.
+    
+    The program displays a chart showing the classification 
+    of each temperament—that is, the proportion of each 
+    temperament within the native's final temperament value.
+
 
 
 
@@ -1483,6 +1516,10 @@ temperament of the native.
 
 Give the native's psychological characteristics according to the 
 combination of the primitive qualities in the chart figure.
+
+The nuances of the other temperaments within the native's 
+temperament are also considered in the analysis, according to their 
+percentages.
 
 
 

@@ -459,7 +459,7 @@ encontrar o texto completo da licença em github.io
 (https://github.com/unicode-org/icu/blob/main/LICENSE)
 
 As informações astrológicas foram compiladas de várias fontes
-autoritativas relacionadas à Astrologia Clássica e algumas são
+autoritativas relacionadas à Astrologia Tradicional e algumas são
 incluídas nos Tópicos Técnicos.
 
 O aplicativo funciona 100% offline; nenhum dado é enviado nem

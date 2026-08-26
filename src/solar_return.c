@@ -639,13 +639,13 @@ void abrir_janela_confronto_natal_revolucao(
             nomes_planetas[id_almuten_rev]);
     
     wattron(pad, A_BOLD );
-    wprintw(pad, _("    Interpretation:\n"));
+    wprintw(pad, _("    Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_firdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(12)); 
         snprintf(str_text, 512, _("    MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(12));
-        snprintf(str_text, 512, _("The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
+        snprintf(str_text, 512, _("    The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
                      "In traditional astrology, this means the planet has total systemic harmony. The events "
                      "it promises this year are backed by the macro-cyclical trend of your life, bringing "
                      "profound, lasting developments that perfectly fulfill your current life chapter.\n\n\n"));
@@ -654,13 +654,13 @@ void abrir_janela_confronto_natal_revolucao(
         wattron(pad, A_BOLD | COLOR_PAIR(1)); 
         snprintf(str_text, 512, _("    SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(1));
-        snprintf(str_text, 512, _("The Lord of the Year coordinates directly with your current Firdaria sub-period. "
+        snprintf(str_text, 512, _("    The Lord of the Year coordinates directly with your current Firdaria sub-period. "
                      "This indicates that the events of the next 12 months will act as the perfect trigger "
                      "to release the potential promised by the current sub-ruler in your birth chart. "
                      "Expect a highly focused, active year regarding this planet's themes.\n\n\n"));
     } 
     else {
-        snprintf(str_text, 512, _("Parallel Current. The Lord of the Year operates on a distinct energetic line from "
+        snprintf(str_text, 512, _("    Parallel Current. The Lord of the Year operates on a distinct energetic line from "
                      "the active Firdaria rulers. This implies that while the Firdaria manages long-term "
                      "background developments in your life, the Almuten of the Return will bring immediate, "
                      "practical tasks and events that keep you busy on a day-to-day level without disrupting "
@@ -721,8 +721,6 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, _("    Interpretation:\n\n"));
     wattroff(pad, A_BOLD);
 
-    wprintw(pad, "\n");
-    
     if (casa_rev_do_asc_natal == 1) {
         snprintf(str_text, 512, _("    Total alignment. Your core identity acts with absolute clarity and autonomy."
                      "The year allows you to express your true self without masks or friction.\n\n\n"));
@@ -810,19 +808,11 @@ void abrir_janela_confronto_natal_revolucao(
     if (casa_natal_do_asc >= 1 && casa_natal_do_asc <= 12 && 
         casa_rev_do_asc_natal >= 1 && casa_rev_do_asc_natal <= 12) {
 
-        wprintw(pad, "\n");
-
         wattron(pad, A_BOLD);
         wprintw(pad, _("    Astrological Synthesis for your Year:\n\n"));
         wattroff(pad, A_BOLD);
 
-        wprintw(pad, "\n");
-
-        /* 
-           Aqui acontece a mágica: O código junta a frase da circunstância externa (onde a energia bate)
-           com a frase da atitude interna (como você reage).
-        */
-
+        
         char str_text1[512];
 
 

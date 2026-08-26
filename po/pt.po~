@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 09:54-0300\n"
+"POT-Creation-Date: 2026-08-26 14:06-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -88,7 +88,7 @@ msgid " Almuten Figuris Spiritual Guide "
 msgstr "Almuten Figuris Guia Espiritual"
 
 #: src/almuten.c:707 src/almuten.c:926 src/solar_return.c:464
-#: src/solar_return.c:1042
+#: src/solar_return.c:1040
 msgid " [↓↑|JK: Scroll | Q|ESC: Return to Chart] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar ao Mapa] "
 
@@ -1114,28 +1114,28 @@ msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 #: src/directions.c:621 src/directions.c:1074 src/draw-chart.c:419
 #: src/draw-chart.c:620 src/draw-chart.c:4241 src/draw-chart.c:5034
 #: src/draw-chart.c:5056 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
-#: src/profections.c:48 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:48 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Mars"
 msgstr "Marte"
 
 #: src/directions.c:622 src/directions.c:1075 src/draw-chart.c:425
 #: src/draw-chart.c:622 src/draw-chart.c:4239 src/draw-chart.c:5036
 #: src/draw-chart.c:5058 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
-#: src/profections.c:54 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:54 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Saturn"
 msgstr "Saturno"
 
 #: src/directions.c:629 src/directions.c:1084 src/draw-chart.c:422
 #: src/draw-chart.c:621 src/draw-chart.c:4240 src/draw-chart.c:5035
 #: src/draw-chart.c:5057 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
-#: src/profections.c:53 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:53 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Jupiter"
 msgstr "Júpiter"
 
 #: src/directions.c:630 src/directions.c:1085 src/draw-chart.c:416
 #: src/draw-chart.c:619 src/draw-chart.c:4236 src/draw-chart.c:5033
 #: src/draw-chart.c:5055 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
-#: src/profections.c:49 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:49 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Venus"
 msgstr "Vênus"
 
@@ -1200,7 +1200,7 @@ msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
 #: src/draw-chart.c:407 src/draw-chart.c:4235 src/firdaria.c:97 src/hyleg.c:336
-#: src/profections.c:52 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:52 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Sun"
 msgstr "Sol"
 
@@ -1210,14 +1210,14 @@ msgid "Sol"
 msgstr "Sol"
 
 #: src/draw-chart.c:410 src/draw-chart.c:4238 src/firdaria.c:98 src/hyleg.c:337
-#: src/profections.c:51 src/solar_return.c:942 src/solar_return.c:1061
+#: src/profections.c:51 src/solar_return.c:940 src/solar_return.c:1059
 msgid "Moon"
 msgstr "Lua"
 
 #: src/draw-chart.c:413 src/draw-chart.c:618 src/draw-chart.c:4237
 #: src/draw-chart.c:5032 src/draw-chart.c:5054 src/firdaria.c:99
-#: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:942
-#: src/solar_return.c:1061
+#: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:940
+#: src/solar_return.c:1059
 msgid "Mercury"
 msgstr "Mercúrio"
 
@@ -1435,29 +1435,29 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2143 src/draw-chart.c:2147 src/draw-chart.c:2151
-#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:639
-#: src/temperament.c:645 src/temperament.c:658 src/temperament.c:676
+#: src/motivation.c:162 src/temperament.c:71 src/temperament.c:645
+#: src/temperament.c:651 src/temperament.c:664 src/temperament.c:682
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2144 src/draw-chart.c:2148 src/draw-chart.c:2152
-#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:640
-#: src/temperament.c:648 src/temperament.c:664 src/temperament.c:684
+#: src/motivation.c:166 src/temperament.c:74 src/temperament.c:646
+#: src/temperament.c:654 src/temperament.c:670 src/temperament.c:690
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2145 src/draw-chart.c:2149 src/draw-chart.c:2153
-#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:633
-#: src/temperament.c:647 src/temperament.c:657 src/temperament.c:672
+#: src/motivation.c:171 src/temperament.c:73 src/temperament.c:639
+#: src/temperament.c:653 src/temperament.c:663 src/temperament.c:678
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2146 src/draw-chart.c:2150 src/draw-chart.c:2154
-#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:634
-#: src/temperament.c:646 src/temperament.c:663 src/temperament.c:680
+#: src/motivation.c:175 src/temperament.c:72 src/temperament.c:640
+#: src/temperament.c:652 src/temperament.c:669 src/temperament.c:686
 #, c-format
 msgid "Water"
 msgstr "Água"
@@ -1744,7 +1744,7 @@ msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
 msgid " Planetary Hours Analysis "
 msgstr "Análise da Hora Planetária"
 
-#: src/draw-chart.c:3556 src/temperament.c:780
+#: src/draw-chart.c:3556 src/temperament.c:786
 msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
 
@@ -2624,7 +2624,7 @@ msgstr "09. Casas"
 
 #: src/draw-chart.c:6659 src/draw-chart.c:6689
 msgid "10. Hylegiacal & Figuris Almuten"
-msgstr "10. Almuten Figuris & Hylegíacos"
+msgstr "10. Almuten Figuris & dos Pontos Hylegíacos"
 
 #: src/draw-chart.c:6660
 msgid "11. Temperament Analysis"
@@ -4169,8 +4169,8 @@ msgstr ""
 "sua CASA NATAL %d.\n"
 "\n"
 
-#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:686
-#: src/solar_return.c:721
+#: src/solar_return.c:559 src/solar_return.c:601 src/solar_return.c:642
+#: src/solar_return.c:686 src/solar_return.c:721
 msgid ""
 "    Interpretation:\n"
 "\n"
@@ -4344,10 +4344,6 @@ msgstr ""
 "    Almuten da Revolução Solar (Senhor do Ano): %s\n"
 "\n"
 
-#: src/solar_return.c:642
-msgid "    Interpretation:\n"
-msgstr "    Interpretação:\n"
-
 #: src/solar_return.c:646
 #, c-format
 msgid ""
@@ -4360,7 +4356,7 @@ msgstr ""
 #: src/solar_return.c:648
 #, c-format
 msgid ""
-"The Lord of the Year is also the supreme ruler of your current Firdaria "
+"    The Lord of the Year is also the supreme ruler of your current Firdaria "
 "cycle! In traditional astrology, this means the planet has total systemic "
 "harmony. The events it promises this year are backed by the macro-cyclical "
 "trend of your life, bringing profound, lasting developments that perfectly "
@@ -4368,11 +4364,12 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"O Senhor do Ano é também o regente supremo do seu atual ciclo de Firdária!Na "
-"astrologia tradicional, isso significa que o planeta desfruta de total "
-"harmonia sistêmica. Os eventos que ele promete para este ano estão alinhados "
-"à tendência macrocíclica da sua vida, trazendo desdobramentos profundos e "
-"duradouros que dão pleno sentido ao capítulo atual da sua trajetória.\n"
+"    O Senhor do Ano é também o regente supremo do seu atual ciclo de "
+"Firdária!Na astrologia tradicional, isso significa que o planeta desfruta de "
+"total harmonia sistêmica. Os eventos que ele promete para este ano estão "
+"alinhados à tendência macrocíclica da sua vida, trazendo desdobramentos "
+"profundos e duradouros que dão pleno sentido ao capítulo atual da sua "
+"trajetória.\n"
 "\n"
 "\n"
 
@@ -4388,7 +4385,7 @@ msgstr ""
 #: src/solar_return.c:657
 #, c-format
 msgid ""
-"The Lord of the Year coordinates directly with your current Firdaria sub-"
+"    The Lord of the Year coordinates directly with your current Firdaria sub-"
 "period. This indicates that the events of the next 12 months will act as the "
 "perfect trigger to release the potential promised by the current sub-ruler "
 "in your birth chart. Expect a highly focused, active year regarding this "
@@ -4396,7 +4393,7 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"O Senhor do Ano atua em direta sintonia com o seu atual subperíodo da "
+"    O Senhor do Ano atua em direta sintonia com o seu atual subperíodo da "
 "Firdaria. Isso indica que os acontecimentos dos próximos 12 meses servirão "
 "como o gatilho perfeito para liberar o potencial prometido pelo atual sub-"
 "regente no seu mapa natal.Espere um ano de grande foco e atividade em "
@@ -4407,8 +4404,8 @@ msgstr ""
 #: src/solar_return.c:663
 #, c-format
 msgid ""
-"Parallel Current. The Lord of the Year operates on a distinct energetic line "
-"from the active Firdaria rulers. This implies that while the Firdaria "
+"    Parallel Current. The Lord of the Year operates on a distinct energetic "
+"line from the active Firdaria rulers. This implies that while the Firdaria "
 "manages long-term background developments in your life, the Almuten of the "
 "Return will bring immediate, practical tasks and events that keep you busy "
 "on a day-to-day level without disrupting the macro-cycle.\n"
@@ -4531,7 +4528,7 @@ msgstr ""
 "    Seu Ascendente Natal cai em sua CASA %d DO RETORNO SOLAR.\n"
 "\n"
 
-#: src/solar_return.c:727
+#: src/solar_return.c:725
 #, c-format
 msgid ""
 "    Total alignment. Your core identity acts with absolute clarity and "
@@ -4545,7 +4542,7 @@ msgstr ""
 "máscaras ou atritos.\n"
 "\n"
 
-#: src/solar_return.c:730
+#: src/solar_return.c:728
 #, c-format
 msgid ""
 "    Your vital energy is heavily directed toward financial security and "
@@ -4560,7 +4557,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:733
+#: src/solar_return.c:731
 #, c-format
 msgid ""
 "    Your mind and immediate expression are highlighted. Communication, short "
@@ -4575,7 +4572,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:736
+#: src/solar_return.c:734
 #, c-format
 msgid ""
 "    An internal, reflective year. You are drawn to privacy, emotional "
@@ -4590,7 +4587,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:739
+#: src/solar_return.c:737
 #, c-format
 msgid ""
 "    A highly expressive and creative period. Your vital drive seeks joy, "
@@ -4605,7 +4602,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:742
+#: src/solar_return.c:740
 #, c-format
 msgid ""
 "    A year requiring duty, physical adjustment, or service. You will need to "
@@ -4620,7 +4617,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:745
+#: src/solar_return.c:743
 #, c-format
 msgid ""
 "    Your identity is mirrored through others. You will find yourself "
@@ -4635,7 +4632,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:748
+#: src/solar_return.c:746
 #, c-format
 msgid ""
 "    A period of psychological crisis or deep transformation. You are dealing "
@@ -4650,7 +4647,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:751
+#: src/solar_return.c:749
 #, c-format
 msgid ""
 "    Expansion of consciousness. Your personal focus shifts toward higher "
@@ -4665,7 +4662,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:754
+#: src/solar_return.c:752
 #, c-format
 msgid ""
 "    High public visibility. Your personal actions are on display for the "
@@ -4680,7 +4677,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:757
+#: src/solar_return.c:755
 #, c-format
 msgid ""
 "    A year of alliances and aspirations. Your focus is placed on collective "
@@ -4694,7 +4691,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:760
+#: src/solar_return.c:758
 #, c-format
 msgid ""
 "    A period of relative isolation or spiritual retreat. You operate behind "
@@ -4709,7 +4706,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:763
+#: src/solar_return.c:761
 #, c-format
 msgid ""
 "    Invalid house data calculated for the projection.\n"
@@ -4720,7 +4717,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:771
+#: src/solar_return.c:769
 msgid ""
 "The world demands immediate, independent action from you, forcing individual "
 "projects to the forefront"
@@ -4728,7 +4725,7 @@ msgstr ""
 "O mundo exige de você uma ação imediata e independente, colocando projetos "
 "individuais em primeiro plano"
 
-#: src/solar_return.c:772
+#: src/solar_return.c:770
 msgid ""
 "Financial matters, cash flow, and material security will be the central "
 "stage where events play out"
@@ -4736,7 +4733,7 @@ msgstr ""
 "Questões financeiras, fluxo de caixa e segurança material serão o palco "
 "central onde os acontecimentos se desenrolam"
 
-#: src/solar_return.c:773
+#: src/solar_return.c:771
 msgid ""
 "Circumstances will force heavy communication, frequent local travel, or "
 "immediate family/peer interactions"
@@ -4744,7 +4741,7 @@ msgstr ""
 "As circunstâncias exigirão comunicação intensa, viagens locais frequentes ou "
 "interações imediatas com familiares ou colegas"
 
-#: src/solar_return.c:774
+#: src/solar_return.c:772
 msgid ""
 "External events shift drastically toward your domestic life, home, "
 "foundations, or family property"
@@ -4752,7 +4749,7 @@ msgstr ""
 "Eventos externos voltam-se drasticamente para a sua vida doméstica, o lar, "
 "as bases, ou o patrimônio familiar"
 
-#: src/solar_return.c:775
+#: src/solar_return.c:773
 msgid ""
 "The environment opens up opportunities for creativity, speculation, "
 "children, or romance"
@@ -4760,13 +4757,13 @@ msgstr ""
 "O ambiente abre oportunidades para a criatividade, a especulação, crianças, "
 "ou o romance"
 
-#: src/solar_return.c:776
+#: src/solar_return.c:774
 msgid ""
 "The year brings heavy focus on labor obligations, health management, or "
 "addressing daily friction"
 msgstr ""
 
-#: src/solar_return.c:777
+#: src/solar_return.c:775
 msgid ""
 "Critical events will manifest through contracts, open confrontations, or "
 "important partnerships"
@@ -4774,7 +4771,7 @@ msgstr ""
 "O ano traz um forte foco em obrigações trabalhistas, gestão de saúde ou "
 "lidar com atritos cotidianos"
 
-#: src/solar_return.c:778
+#: src/solar_return.c:776
 msgid ""
 "Circumstances push you to deal with joint resources, legacy matters, deep "
 "psychological shifts, or debts"
@@ -4782,7 +4779,7 @@ msgstr ""
 "As circunstâncias levam você a lidar com recursos compartilhados, questões "
 "de legado, profundas mudanças psicológicas ou dívidas"
 
-#: src/solar_return.c:779
+#: src/solar_return.c:777
 msgid ""
 "The outer world calls you toward long journeys, academic pursuits, legal "
 "matters, or philosophical changes"
@@ -4790,7 +4787,7 @@ msgstr ""
 "O mundo exterior o chama para longas jornadas, atividades acadêmicas, "
 "questões jurídicas ou mudanças filosóficas"
 
-#: src/solar_return.c:780
+#: src/solar_return.c:778
 msgid ""
 "A massive spotlight is placed on your professional arena, public status, and "
 "career obligations"
@@ -4798,7 +4795,7 @@ msgstr ""
 "Um grande destaque recai sobre a sua esfera profissional, o seu status "
 "público e as suas obrigações de carreira"
 
-#: src/solar_return.c:781
+#: src/solar_return.c:779
 msgid ""
 "Events will actively involve your social circles, networks, benefactors, or "
 "long-term alliances"
@@ -4806,7 +4803,7 @@ msgstr ""
 "Os eventos envolverão ativamente seus círculos sociais, redes de contatos, "
 "benfeitores ou alianças de longo prazo"
 
-#: src/solar_return.c:782
+#: src/solar_return.c:780
 msgid ""
 "Circumstances will force you into the background, dealing with hidden "
 "matters, institutions, or isolation"
@@ -4814,7 +4811,7 @@ msgstr ""
 "As circunstâncias o levarão para os bastidores, lidando com questões "
 "ocultas, instituições ou isolamento"
 
-#: src/solar_return.c:787
+#: src/solar_return.c:785
 msgid ""
 "you will face this with total autonomy, absolute vitality, hand clear "
 "personal alignment."
@@ -4822,7 +4819,7 @@ msgstr ""
 "você enfrentará isso com total autonomia, vitalidade absoluta e um claro "
 "alinhamento pessoal."
 
-#: src/solar_return.c:788
+#: src/solar_return.c:786
 msgid ""
 "your primary focus will be protecting your resources, asking 'what is this "
 "worth to me?'."
@@ -4830,7 +4827,7 @@ msgstr ""
 "seu foco principal será proteger seus recursos, perguntando 'quanto isso "
 "vale para mim?'."
 
-#: src/solar_return.c:789
+#: src/solar_return.c:787
 msgid ""
 "your mind will operate at high speed, analyzing, learning, and sharing "
 "information constantly."
@@ -4838,7 +4835,7 @@ msgstr ""
 "sua mente operará em alta velocidade, analisando, aprendendo e "
 "compartilhando informações constantemente."
 
-#: src/solar_return.c:790
+#: src/solar_return.c:788
 msgid ""
 "you will respond by seeking emotional security, privacy, and anchoring "
 "yourself in your roots."
@@ -4846,7 +4843,7 @@ msgstr ""
 "você responderá buscando segurança emocional, privacidade e ancorando-se em "
 "suas raízes."
 
-#: src/solar_return.c:791
+#: src/solar_return.c:789
 msgid ""
 "your vital drive will demand joy, dramatic self-expression, and a desire to "
 "take risks."
@@ -4854,7 +4851,7 @@ msgstr ""
 "seu impulso vital exigirá alegria, autoexpressão dramática e o desejo de "
 "correr riscos."
 
-#: src/solar_return.c:792
+#: src/solar_return.c:790
 msgid ""
 "you will feel a strong call to service, requiring patience, physical "
 "discipline, and duty."
@@ -4862,7 +4859,7 @@ msgstr ""
 "você sentirá um forte chamado para servir, exigindo paciência, disciplina "
 "física e senso de dever."
 
-#: src/solar_return.c:793
+#: src/solar_return.c:791
 msgid ""
 "you will constantly seek the mirror of the 'Other', adapting your identity "
 "to keep relationships balanced."
@@ -4870,7 +4867,7 @@ msgstr ""
 "você buscará constantemente o espelho do 'Outro', adaptando sua identidade "
 "para manter o equilíbrio nas relações."
 
-#: src/solar_return.c:794
+#: src/solar_return.c:792
 msgid ""
 "you will experience an internal crisis or intense urge to transform and let "
 "go of what is dead."
@@ -4878,7 +4875,7 @@ msgstr ""
 "você vivenciará uma crise interna ou um desejo intenso de se transformar e "
 "deixar ir o que está morto."
 
-#: src/solar_return.c:795
+#: src/solar_return.c:793
 msgid ""
 "your consciousness will expand, looking at the big picture through faith, "
 "study, or exploration."
@@ -4886,7 +4883,7 @@ msgstr ""
 "sua consciência se expandirá, contemplando o panorama geral por meio da fé, "
 "do estudo ou da exploração."
 
-#: src/solar_return.c:796
+#: src/solar_return.c:794
 msgid ""
 "your ego will drive you to be seen, aiming for authority, leadership, and "
 "public recognition."
@@ -4894,7 +4891,7 @@ msgstr ""
 "seu ego o levará a querer ser visto, buscando autoridade, liderança e "
 "reconhecimento público."
 
-#: src/solar_return.c:797
+#: src/solar_return.c:795
 msgid ""
 "your energy will be poured into collective hopes, relying heavily on support "
 "from friends."
@@ -4902,7 +4899,7 @@ msgstr ""
 "sua energia será canalizada para esperanças coletivas, dependendo fortemente "
 "do apoio de amigos."
 
-#: src/solar_return.c:798
+#: src/solar_return.c:796
 msgid ""
 "you will feel internally drained or reflective, operating best from behind "
 "the scenes."
@@ -4910,7 +4907,7 @@ msgstr ""
 "você se sentirá internamente esgotado ou reflexivo, atuando melhor nos "
 "bastidores."
 
-#: src/solar_return.c:806
+#: src/solar_return.c:804
 msgid ""
 "  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
 "\n"
@@ -4918,7 +4915,7 @@ msgstr ""
 "  [CHECK VII] SÍNTESE: A PROJEÇÃO CRUZADA\n"
 "\n"
 
-#: src/solar_return.c:816
+#: src/solar_return.c:814
 msgid ""
 "    Astrological Synthesis for your Year:\n"
 "\n"
@@ -4926,7 +4923,7 @@ msgstr ""
 "    Síntese Astrológica para seu Ano:\n"
 "\n"
 
-#: src/solar_return.c:829
+#: src/solar_return.c:827
 #, c-format
 msgid ""
 "    %s; however, %s\n"
@@ -4935,11 +4932,11 @@ msgstr ""
 "    %s; entretanto, %s\n"
 "\n"
 
-#: src/solar_return.c:840
+#: src/solar_return.c:838
 msgid "    Context: "
 msgstr "    Contexto: "
 
-#: src/solar_return.c:848
+#: src/solar_return.c:846
 #, c-format
 msgid ""
 "    An intensely focused year. Your environment and your psychological "
@@ -4950,7 +4947,7 @@ msgstr ""
 "perfeitamente alinhados, acelerando resultados com pouquíssimo atrito "
 "interno."
 
-#: src/solar_return.c:851
+#: src/solar_return.c:849
 #, c-format
 msgid ""
 "    A polarizing year. The tension between public obligations and the "
@@ -4961,7 +4958,7 @@ msgstr ""
 "necessidade absoluta de recolhimento pessoal exigirá limites rígidos para "
 "evitar o esgotamento."
 
-#: src/solar_return.c:854
+#: src/solar_return.c:852
 #, c-format
 msgid ""
 "    A year of multi-layered experiences. You will need to learn how to "
@@ -4972,7 +4969,7 @@ msgstr ""
 "equilibrar as demandas externas concretas da Casa %d com suas necessidades "
 "internas na Casa %d."
 
-#: src/solar_return.c:862
+#: src/solar_return.c:860
 msgid ""
 "    Error: Invalid house calculation data for synthesis mapping.\n"
 "\n"
@@ -4982,7 +4979,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/solar_return.c:875
+#: src/solar_return.c:873
 msgid ""
 "  [CONFRONTATION END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
@@ -4990,15 +4987,15 @@ msgstr ""
 "  [FIM DA CONFRONTAÇÃO] - Pressione 'Q' ou ESC para retornar ao Mapa da "
 "Revolução Solar.\n"
 
-#: src/solar_return.c:1039
+#: src/solar_return.c:1037
 msgid " Annual Transits & Radical Projections "
 msgstr " Trânsitos do Ano & Projeções Radicais "
 
-#: src/solar_return.c:1053
+#: src/solar_return.c:1051
 msgid "  ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"
 msgstr "  TRÂNSITOS ANUAIS SOBRE O MAPA NATAL\n"
 
-#: src/solar_return.c:1056
+#: src/solar_return.c:1054
 msgid ""
 "    The positions of the planets at the exact moment of your Solar Return "
 "act as a frozen\n"
@@ -5016,7 +5013,7 @@ msgstr ""
 "a vida.\n"
 "\n"
 
-#: src/solar_return.c:1068
+#: src/solar_return.c:1066
 #, c-format
 msgid ""
 "    [CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"
@@ -5024,7 +5021,7 @@ msgstr ""
 "    [MONITORAMENTO CRÍTICO] PROTEÇÃO VITAL: TRÂNSITOS SOBRE O HYLEG NATAL "
 "(%s %s)\n"
 
-#: src/solar_return.c:1083
+#: src/solar_return.c:1081
 #, c-format
 msgid ""
 "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"
@@ -5032,7 +5029,7 @@ msgstr ""
 "       [*] %s EM TRÂNSITO ESTÁ EM CONJUNÇÃO COM O SEU HYLEG NATAL (%s) "
 "(Orbe: %.2f°)\n"
 
-#: src/solar_return.c:1089
+#: src/solar_return.c:1087
 msgid ""
 "       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal "
 "Hyleg!\n"
@@ -5040,7 +5037,7 @@ msgstr ""
 "       [ALERTA VITAL] Saturno (o Grande Maléfico) está restringindo o seu "
 "Hyleg natal!\n"
 
-#: src/solar_return.c:1091
+#: src/solar_return.c:1089
 msgid ""
 "       This year promises severe depletion of vital energy, physical "
 "fatigue,\n"
@@ -5049,12 +5046,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1096
+#: src/solar_return.c:1094
 msgid ""
 "       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1098
+#: src/solar_return.c:1096
 msgid ""
 "       High risk of acute inflammatory episodes, fevers, injuries, or sudden "
 "surgeries.\n"
@@ -5067,12 +5064,12 @@ msgstr ""
 "forma construtiva.\n"
 "\n"
 
-#: src/solar_return.c:1103
+#: src/solar_return.c:1101
 msgid "       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"
 msgstr ""
 "       [GRANDE PROTETOR] Júpiter está amplificando o seu Hyleg natal!\n"
 
-#: src/solar_return.c:1105
+#: src/solar_return.c:1103
 msgid ""
 "       Excellent providential protection. A year of physical recovery, "
 "expansion of\n"
@@ -5085,7 +5082,7 @@ msgstr ""
 "       forças vitais e um escudo protetor invisível contra grandes crises.\n"
 "\n"
 
-#: src/solar_return.c:1109
+#: src/solar_return.c:1107
 #, c-format
 msgid ""
 "       The annual transit of %s brings daily focus and minor adjustments to "
@@ -5097,7 +5094,7 @@ msgstr ""
 "       vitalidade e ao seu ambiente físico imediato neste ano.\n"
 "\n"
 
-#: src/solar_return.c:1116
+#: src/solar_return.c:1114
 msgid ""
 "       No planetary conjunctions from the Solar Return are currently putting "
 "friction\n"
@@ -5111,19 +5108,19 @@ msgstr ""
 "intocada.\n"
 "\n"
 
-#: src/solar_return.c:1124
+#: src/solar_return.c:1122
 #, c-format
 msgid "    %s  %s (Solar Return)\n"
 msgstr "    %s  %s (Retorno Solar)\n"
 
-#: src/solar_return.c:1129
+#: src/solar_return.c:1127
 #, c-format
 msgid "    • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 "    • Projeção na Casa: Atuando dentro da sua CASA NATAL %d.\n"
 "\n"
 
-#: src/solar_return.c:1130
+#: src/solar_return.c:1128
 #, c-format
 msgid ""
 "       This year, the physical affairs governed by your Natal House %d will "
@@ -5138,18 +5135,18 @@ msgstr ""
 "de %s.\n"
 "\n"
 
-#: src/solar_return.c:1135
+#: src/solar_return.c:1133
 msgid "    • Active Radical Conjunctions:\n"
 msgstr "    • Conjunções Radicais Ativas:\n"
 
-#: src/solar_return.c:1147
+#: src/solar_return.c:1145
 #, c-format
 msgid "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 "       [*] %s EM TRÂNSITO ESTÁ EM CONJUNÇÃO COM O SEU %s NATAL (Orbe: "
 "%.2f°)\n"
 
-#: src/solar_return.c:1151
+#: src/solar_return.c:1149
 #, c-format
 msgid ""
 "       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
@@ -5163,7 +5160,7 @@ msgstr ""
 "natal.\n"
 "\n"
 
-#: src/solar_return.c:1154
+#: src/solar_return.c:1152
 #, c-format
 msgid ""
 "       [BENEFIC] Jupiter injects providential protection, sudden "
@@ -5176,7 +5173,7 @@ msgstr ""
 "       e sorte nas promessas fundamentais do seu %s natal.\n"
 "\n"
 
-#: src/solar_return.c:1157
+#: src/solar_return.c:1155
 #, c-format
 msgid ""
 "       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or "
@@ -5189,7 +5186,7 @@ msgstr ""
 "       vitalidade física sobre o seu %s natal.\n"
 "\n"
 
-#: src/solar_return.c:1160
+#: src/solar_return.c:1158
 #, c-format
 msgid ""
 "       This conjunction wakes up the natal potential of your %s, making its "
@@ -5202,7 +5199,7 @@ msgstr ""
 "       muito evidentes no cotidiano ao longo deste ciclo anual.\n"
 "\n"
 
-#: src/solar_return.c:1166
+#: src/solar_return.c:1164
 msgid ""
 "       No exact conjunctions detected over your natal planets within a 5° "
 "orb.\n"
@@ -5212,7 +5209,7 @@ msgstr ""
 "de um orbe de 5°.\n"
 "\n"
 
-#: src/solar_return.c:1173
+#: src/solar_return.c:1171
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
@@ -5220,131 +5217,131 @@ msgstr ""
 "  [FIM DOS TRÂNSITOS] - Pressione 'Q' ou ESC para retornar ao Mapa da "
 "Revolução Solar.\n"
 
-#: src/temperament.c:508
+#: src/temperament.c:514
 msgid "Natal Temperament Analysis"
 msgstr "Análise do Temperamento Natal"
 
-#: src/temperament.c:514
+#: src/temperament.c:520
 msgid "Hot:"
 msgstr "Quente:"
 
-#: src/temperament.c:517
+#: src/temperament.c:523
 msgid "Cold:  "
 msgstr "Frio:"
 
-#: src/temperament.c:524
+#: src/temperament.c:530
 msgid "Moist: "
 msgstr "Úmido:"
 
-#: src/temperament.c:527
+#: src/temperament.c:533
 msgid "Dry:  "
 msgstr "Seco:"
 
-#: src/temperament.c:559
+#: src/temperament.c:565
 msgid "     Sanguine (🜁 Air):"
 msgstr "     Sanguíneo (🜁 Ar):"
 
-#: src/temperament.c:560
+#: src/temperament.c:566
 msgid "    Choleric (🜂 Fire):"
 msgstr "    Colérico (🜂 Fogo):"
 
-#: src/temperament.c:561
+#: src/temperament.c:567
 msgid " Phlegmatic (🜄 Water):"
 msgstr "  Fleumático (🜄 Água):"
 
-#: src/temperament.c:562
+#: src/temperament.c:568
 msgid "Melancholic (🜃 Earth):"
 msgstr "Melancólico (🜃 Terra):"
 
-#: src/temperament.c:583
+#: src/temperament.c:589
 msgid "Temperament Distribution (Ranked):"
 msgstr "Distribuição de Temperamento (Classificada):"
 
-#: src/temperament.c:604
+#: src/temperament.c:610
 msgid "🏆 Winner"
 msgstr "🏆 Vencedor"
 
-#: src/temperament.c:619
+#: src/temperament.c:625
 msgid "Dominant Temperament: "
 msgstr "Temperamento Dominante: "
 
-#: src/temperament.c:631
+#: src/temperament.c:637
 msgid "SANGUINE-PHLEGMATIC MIX (Balanced Temp)"
 msgstr "SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)"
 
-#: src/temperament.c:637
+#: src/temperament.c:643
 msgid "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)"
 msgstr "COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)"
 
-#: src/temperament.c:643
+#: src/temperament.c:649
 msgid "ABSOLUTE BALANCE (Quadrapartite)"
 msgstr "EQUILÍBRIO ABSOLUTO (Quadrapartite)"
 
-#: src/temperament.c:655
+#: src/temperament.c:661
 msgid "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"
 msgstr "SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)"
 
-#: src/temperament.c:661
+#: src/temperament.c:667
 msgid "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)"
 msgstr "FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)"
 
-#: src/temperament.c:671
+#: src/temperament.c:677
 msgid "SANGUINE (Hot & Wet - 🜁 Air Element)"
 msgstr "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)"
 
-#: src/temperament.c:675
+#: src/temperament.c:681
 msgid "CHOLERIC (Hot & Dry - 🜂 Fire Element)"
 msgstr "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)"
 
-#: src/temperament.c:679
+#: src/temperament.c:685
 msgid "PHLEGMATIC (Cold & Wet - 🜄 Water Element)"
 msgstr "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)"
 
-#: src/temperament.c:683
+#: src/temperament.c:689
 msgid "MELANCHOLIC (Cold & Dry - 🜃 Earth Element)"
 msgstr "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)"
 
-#: src/temperament.c:720
+#: src/temperament.c:726
 msgid "Press [i] for Full Text Interpretation | ESC/q to Return"
 msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 
-#: src/temperament.c:776
+#: src/temperament.c:782
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
 
-#: src/temperament.c:796
+#: src/temperament.c:802
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr "  1. SUMÁRIO DA PONTUAÇÃO BRUTA\n"
 
-#: src/temperament.c:800
+#: src/temperament.c:806
 msgid "Hot"
 msgstr "Quente"
 
-#: src/temperament.c:801
+#: src/temperament.c:807
 msgid "Cold"
 msgstr "Frio"
 
-#: src/temperament.c:802
+#: src/temperament.c:808
 msgid "Moist"
 msgstr "Úmido"
 
-#: src/temperament.c:803
+#: src/temperament.c:809
 msgid "Dry"
 msgstr "Seco"
 
-#: src/temperament.c:804
+#: src/temperament.c:810
 msgid "Heat Axis"
 msgstr "Eixo Calor"
 
-#: src/temperament.c:804
+#: src/temperament.c:810
 msgid "Moisture Axis"
 msgstr "Eixo Umidade"
 
-#: src/temperament.c:806
+#: src/temperament.c:812
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
-#: src/temperament.c:814
+#: src/temperament.c:820
 msgid ""
 "    SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
@@ -5352,7 +5349,7 @@ msgstr ""
 "    SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
 "\n"
 
-#: src/temperament.c:816
+#: src/temperament.c:822
 msgid ""
 "    Your vital energy functions in perfect thermal equilibrium, blending \n"
 "Air and Water.\n"
@@ -5373,7 +5370,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:824
+#: src/temperament.c:830
 msgid ""
 "    CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
@@ -5381,7 +5378,7 @@ msgstr ""
 "    COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
 "\n"
 
-#: src/temperament.c:826
+#: src/temperament.c:832
 msgid ""
 "    Your active forces exist in a state of controlled thermal poise, \n"
 "blending Fire and Earth.\n"
@@ -5403,7 +5400,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:834
+#: src/temperament.c:840
 msgid ""
 "    ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
@@ -5411,7 +5408,7 @@ msgstr ""
 "    EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
 "\n"
 
-#: src/temperament.c:836
+#: src/temperament.c:842
 msgid ""
 "    Your chart reflects the rare, ideal geometric balance of all four \n"
 "humors.\n"
@@ -5433,7 +5430,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:848
+#: src/temperament.c:854
 msgid ""
 "    SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
@@ -5441,7 +5438,7 @@ msgstr ""
 "    SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:850
+#: src/temperament.c:856
 msgid ""
 "    An expressive, warm, and highly action-oriented signature blending \n"
 "Air and Fire.\n"
@@ -5466,7 +5463,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:859
+#: src/temperament.c:865
 msgid ""
 "    PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
@@ -5474,7 +5471,7 @@ msgstr ""
 "    FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:861
+#: src/temperament.c:867
 msgid ""
 "    A calm, deeply introspective, and self-protective constitution \n"
 "blending Water and Earth.\n"
@@ -5497,7 +5494,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:874
+#: src/temperament.c:880
 msgid ""
 "    SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
@@ -5505,7 +5502,7 @@ msgstr ""
 "    SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:876
+#: src/temperament.c:882
 msgid ""
 "    Your psychological engine revolves around communication, expansion, \n"
 "and mental fluidity.\n"
@@ -5524,7 +5521,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:883
+#: src/temperament.c:889
 msgid ""
 "    CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
@@ -5532,7 +5529,7 @@ msgstr ""
 "    COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:885
+#: src/temperament.c:891
 msgid ""
 "    Your core essence is driven by swift, active, and result-oriented \n"
 "single-minded impulses.\n"
@@ -5550,7 +5547,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:892
+#: src/temperament.c:898
 msgid ""
 "    PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
@@ -5558,7 +5555,7 @@ msgstr ""
 "    FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:894
+#: src/temperament.c:900
 msgid ""
 "    You embody a stable, welcoming, and peacekeeping emotional \n"
 "constitution.\n"
@@ -5576,7 +5573,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:901
+#: src/temperament.c:907
 msgid ""
 "    MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
@@ -5584,7 +5581,7 @@ msgstr ""
 "    MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:903
+#: src/temperament.c:909
 msgid ""
 "    Your nature is built on structural caution, real-world pragmatism, \n"
 "and profound reflection.\n"
@@ -5605,7 +5602,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:933
+#: src/temperament.c:939
 msgid ""
 "    SECONDARY INFLUENCES & NUANCES\n"
 "\n"
@@ -5613,7 +5610,7 @@ msgstr ""
 "    INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
 "\n"
 
-#: src/temperament.c:935
+#: src/temperament.c:941
 msgid ""
 "    Although your core template is defined above, your psychiatric map\n"
 "    shows other active forces adding layers to your behavior:\n"
@@ -5624,11 +5621,11 @@ msgstr ""
 "    camadas ao seu comportamento:\n"
 "\n"
 
-#: src/temperament.c:944
+#: src/temperament.c:950
 msgid "    ✦ Sanguine Influence: "
 msgstr "    ✦ Influência Sanguínea: "
 
-#: src/temperament.c:946
+#: src/temperament.c:952
 msgid ""
 "Adds an overlay of communicative ease, adaptability,\n"
 "      and cognitive curiosity. This softens any rigid boundaries or\n"
@@ -5641,11 +5638,11 @@ msgstr ""
 "      pelo seu temperamento dominante.\n"
 "\n"
 
-#: src/temperament.c:953
+#: src/temperament.c:959
 msgid "    ✦ Choleric Influence: "
 msgstr "    ✦ Influência Colérica: "
 
-#: src/temperament.c:955
+#: src/temperament.c:961
 msgid ""
 "Injects raw drive, sharp focus on execution, and a\n"
 "      natural urgency to fix problems. It sharpens a passive baseline\n"
@@ -5658,11 +5655,11 @@ msgstr ""
 "      proativa.\n"
 "\n"
 
-#: src/temperament.c:962
+#: src/temperament.c:968
 msgid "    ✦ Phlegmatic Influence: "
 msgstr ""
 
-#: src/temperament.c:964
+#: src/temperament.c:970
 msgid ""
 "Acts as a natural thermal and emotional ballast, introducing\n"
 "      diplomatic mediation, structural patience, and a steady pace that\n"
@@ -5675,11 +5672,11 @@ msgstr ""
 "      proativa.\n"
 "\n"
 
-#: src/temperament.c:971
+#: src/temperament.c:977
 msgid "    ✦ Melancholic Influence: "
 msgstr "    ✦ Influência Melancólica: "
 
-#: src/temperament.c:973
+#: src/temperament.c:979
 msgid ""
 "Confers analytical depth, long-term organization skills,\n"
 "      and a realistic sense of caution. It ensures your impulses are\n"
@@ -5692,18 +5689,21 @@ msgstr ""
 "      no mundo real.\n"
 "\n"
 
-#: src/temperament.c:985
+#: src/temperament.c:991
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:989
+#: src/temperament.c:995
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:995
+#: src/temperament.c:1001
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "    Interpretation:\n"
+#~ msgstr "    Interpretação:\n"
 
 #~ msgid "Use [↑/↓] to Scroll (Showing"
 #~ msgstr "Use [↑/↓] Rolar (Exibindo"
