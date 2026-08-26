@@ -6762,7 +6762,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             if (item_index < total_opcoes) {
                 int attr = (item_index == selected_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(26);
                 wattron(win, attr);
-                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], 50 - get_visual_width(opcoes[item_index]), "");
+                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], 50 - get_visual_width(opcoes[item_index]), " ");
                 wattroff(win, attr);
             }
         }

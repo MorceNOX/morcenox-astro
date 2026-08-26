@@ -651,3 +651,132 @@ int print_text_multiline(WINDOW *win, int linha_inicial, int coluna_inicial, int
     free(w_texto);
     return linhas_impressas;
 }
+
+
+
+
+/**
+ * Imprime uma string no ncurses no fluxo natural do cursor, quebrando-a
+ * inteligentemente com base no limite de colunas e expandindo o pad se necessário.
+ */
+int imprimir_texto_fluxo(WINDOW *win, int coluna_inicial, int max_colunas_linha, const char *texto) {
+    if (texto == NULL || win == NULL) return 0;
+
+    int max_y_janela = getmaxy(win);
+    int max_x_janela = getmaxx(win);
+    int y_cursor = getcury(win);
+
+    // EXPANSÃO DINÂMICA: Se o cursor estiver perto do fim do pad (últimas 2 linhas ou além),
+    // expande o pad adicionando mais 50 linhas dinamicamente para o texto caber.
+    if (y_cursor >= max_y_janela - 2) {
+        max_y_janela += 50; 
+        wresize(win, max_y_janela, max_x_janela);
+    }
+
+    size_t tamanho_bytes = strlen(texto);
+    if (tamanho_bytes == 0) return 0;
+
+    size_t len_chars = mbstowcs(NULL, texto, tamanho_bytes);
+    if (len_chars == (size_t)-1) {
+        // Fallback de segurança contra UTF-8 truncado
+        len_chars = mbstowcs(NULL, texto, tamanho_bytes - 1);
+        if (len_chars == (size_t)-1) {
+            waddstr(win, texto);
+            return 1;
+        }
+    }
+
+    wchar_t *w_texto = malloc((len_chars + 1) * sizeof(wchar_t));
+    if (w_texto == NULL) return 0;
+    
+    mbstowcs(w_texto, texto, len_chars);
+    w_texto[len_chars] = L'\0';
+
+    size_t indice_atual = 0;
+    int linhas_impressas = 0;
+
+    while (indice_atual < len_chars) {
+        // Garante que o pad se expanda mesmo se o texto crescer muito dentro deste laço
+        if (getcury(win) >= max_y_janela - 2) {
+            max_y_janela += 50;
+            wresize(win, max_y_janela, max_x_janela);
+        }
+
+        if (linhas_impressas > 0 && w_texto[indice_atual] == L' ') {
+            if (indice_atual > 0 && w_texto[indice_atual - 1] != L'\n') {
+                while (indice_atual < len_chars && w_texto[indice_atual] == L' ') {
+                    indice_atual++;
+                }
+            }
+        }
+
+        if (indice_atual >= len_chars) break;
+
+        int x_atual = getcurx(win);
+        int limite_desta_linha = max_colunas_linha - x_atual;
+
+        if (limite_desta_linha <= 5) { 
+            waddch(win, '\n');
+            wmove(win, getcury(win), coluna_inicial);
+            x_atual = coluna_inicial;
+            limite_desta_linha = max_colunas_linha - x_atual;
+            linhas_impressas++;
+        }
+
+        int colunas_acumuladas = 0;
+        size_t ultimo_espaco = 0;
+        size_t i = indice_atual;
+        int encontrou_newline_manual = 0;
+
+        while (i < len_chars && colunas_acumuladas < limite_desta_linha) {
+            if (w_texto[i] == L'\n') {
+                encontrou_newline_manual = 1;
+                i++; 
+                break;
+            }
+
+            int largura_char = wcwidth(w_texto[i]);
+            if (largura_char < 0) largura_char = 0;
+
+            if (colunas_acumuladas + largura_char > limite_desta_linha) {
+                break;
+            }
+
+            colunas_acumuladas += largura_char;
+
+            if (w_texto[i] == L' ') {
+                ultimo_espaco = i;
+            }
+            i++;
+        }
+
+        size_t indice_quebra = i;
+
+        if (!encontrou_newline_manual && i < len_chars) {
+            if (ultimo_espaco > indice_atual) {
+                indice_quebra = ultimo_espaco;
+            } 
+            else if (indice_quebra == indice_atual) {
+                indice_quebra = indice_atual + 1;
+            }
+        }
+
+        wchar_t caractere_salvo = w_texto[indice_quebra];
+        w_texto[indice_quebra] = L'\0';
+
+        waddwstr(win, &w_texto[indice_atual]);
+
+        if (!encontrou_newline_manual && indice_quebra < len_chars) {
+            waddch(win, '\n');
+            wmove(win, getcury(win), coluna_inicial);
+        }
+        
+        linhas_impressas++;
+
+        w_texto[indice_quebra] = caractere_salvo;
+        indice_atual = indice_quebra;
+    }
+
+    free(w_texto);
+    return linhas_impressas;
+}
