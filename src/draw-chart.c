@@ -1439,11 +1439,11 @@ void draw_cusps_div(int object_count,
                         } else if (angle <= -0.9) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "▆");  // casa 8
+                            mvaddstr(y, x, "▃");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "▆");  // casa 6
+                            mvaddstr(y, x, "▃");  // casa 6
                         } else if (angle < 1.34) {
                             mvaddstr(y, x, "⧹"); // casa 5
                         } else if (angle < 1.799) {
@@ -1451,11 +1451,11 @@ void draw_cusps_div(int object_count,
                         } else if (angle < 2.25) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "▆");  // casa 2
+                            mvaddstr(y, x, "▃");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "▆");  // casa 12
+                            mvaddstr(y, x, "▃");  // casa 12
                         } else {
                             mvaddstr(y, x, "⧹"); // casa 11
                         }
@@ -1508,11 +1508,11 @@ void draw_cusps_div_axis(int object_count,
                         } else if (angle <= -0.9) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "▆");  // casa 8
+                            mvaddstr(y, x, "▃");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "▆");  // casa 6
+                            mvaddstr(y, x, "▃");  // casa 6
                         } else if (angle < 1.34) {
                             mvaddstr(y, x, "⧹"); // casa 5
                         } else if (angle < 1.799) {
@@ -1520,11 +1520,11 @@ void draw_cusps_div_axis(int object_count,
                         } else if (angle < 2.25) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "▆");  // casa 2
+                            mvaddstr(y, x, "▃");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "▆");  // casa 12
+                            mvaddstr(y, x, "▃");  // casa 12
                         } else {
                             mvaddstr(y, x, "⧹"); // casa 11
                         }
@@ -3435,13 +3435,23 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         format_hour(p_hour4, sizeof(p_hour4), hours[i+18]);
     
         wattron(table_win, COLOR_PAIR(15));
+        if (i + 1 == planetary_hour) wattron(table_win, A_REVERSE);
         mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
+        if (i + 1 == planetary_hour) wattroff(table_win, A_REVERSE);
+
+        if (i + 1 + 6 == planetary_hour) wattron(table_win, A_REVERSE);
         mvwprintw(table_win, row, 24, "%2d) %s  %s  ", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
-        wattroff(table_win, COLOR_PAIR(15));
+        if (i + 1 + 6 == planetary_hour) wattroff(table_win, A_REVERSE);
+        wattroff(table_win, COLOR_PAIR(15) );
 
         wattron(table_win, COLOR_PAIR(12));
+        if (i + 1 + 12 == planetary_hour) wattron(table_win, A_REVERSE);
         mvwprintw(table_win, row, 44, "%2d) %s  %s  ", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
+        if (i + 1 + 12 == planetary_hour) wattroff(table_win, A_REVERSE);
+        
+        if (i + 1 + 18 == planetary_hour) wattron(table_win, A_REVERSE);
         mvwprintw(table_win, row, 64, "%2d) %s  %s  ", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
+        if (i + 1 + 18 == planetary_hour) wattroff(table_win, A_REVERSE);
         wattroff(table_win, COLOR_PAIR(12));
         row += 2;
     }
