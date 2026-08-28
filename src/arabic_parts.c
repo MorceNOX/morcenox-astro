@@ -108,7 +108,7 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
 
         p->longitude = total_lon;
 
-        // Calcula dinamicamente a casa da parte usando a sua rotina interna de domificação
+        // Calcula dinamicamente a casa da parte usando a rotina interna de domificação
         // Passamos as cúspides e a longitude para resgatar a string romana (ex: "IX")
         strcpy(p->house, (char *)get_house_roman(p->longitude, cusps));
 

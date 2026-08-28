@@ -1316,18 +1316,12 @@ void resolver_sobreposicao_planetas(PlotObject *plots, int object_count, int *lo
 
         for (int i = 0; i < object_count; i++) {
             int proximo_i = (i == object_count - 1) ? 0 : i + 1;
-            //int proximo_ii = (proximo_i == object_count - 1) ? 0 : proximo_i + 1;
-            //int ant_i = (i == 0) ? object_count - 1 : i - 1;
-
+           
             int idx_atual = fila[i].index_original;
             int idx_prox  = fila[proximo_i].index_original;
-            //int idx_prox2  = fila[proximo_ii].index_original;
-            //int idx_ant1  = fila[ant_i].index_original;
-
+            
             double diff = diferenca_angular_minima(longitude_saida[idx_atual], longitude_saida[idx_prox]);
-            //double diff2 = diferenca_angular_minima(longitude_saida[idx_prox], longitude_saida[idx_prox2]);
-            //double diff0 = diferenca_angular_minima(longitude_saida[idx_ant1], longitude_saida[idx_atual]);
-
+            
             // Caso 1: Ordem normal na roda, mas estão espremidos
             if (diff >= 0.0 && diff < DISTANCIA_MINIMA) {
                 
@@ -1404,6 +1398,7 @@ void resolver_sobreposicao_planetas(PlotObject *plots, int object_count, int *lo
                     else {
                         longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 1);
                     }
+                    
                     if (signs[idx_prox] == (int)(normalizar_grau_int(longitude_saida[idx_prox] + 2) / 30)) {
                         longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 2);
                     }
@@ -5963,7 +5958,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     int i_recebe_j = (ruler_dom_de_j && strcmp(plots[i].object, ruler_dom_de_j) == 0) || 
                                     (ruler_exal_de_j && strcmp(plots[i].object, ruler_exal_de_j) == 0);
             
-                    int ha_recepcao = j_recebe_i && i_recebe_j;
+                    int ha_recepcao = j_recebe_i && i_recebe_j && strcmp(plots[i].sign, plots[j].sign) != 0;
             
                     if (ha_recepcao) {
                         int sign_i = (int)floor(plots[i].longitude / 30) + 1;
