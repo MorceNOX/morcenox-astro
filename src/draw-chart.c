@@ -5933,7 +5933,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
                 for (int j = 0; j < 12 - object_diff; j++) {
                     
-                    if (i == j) continue; 
+                    if (i == j) continue;
+                    if (strcmp(plots[i].sign, plots[j].sign) == 0) continue;
             
                     char *ruler_dom_de_i = NULL; // Quem rege o signo onde 'i' está hospedado
                     char *ruler_exal_de_i = NULL; // Quem exalta no signo onde 'i' está hospedado
