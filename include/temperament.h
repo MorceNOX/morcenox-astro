@@ -24,7 +24,7 @@
 #define MELANCOLICO 2
 #define FLEUMATICO  3
 
-#define TEMPERAMENT_RANK_PROPORTION 0.70f
+#define TEMPERAMENT_RANK_PROPORTION 0.666666667
 
 /* Estrutura para armazenar as pontuações brutas acumuladas dos planetas e pontos */
 typedef struct {

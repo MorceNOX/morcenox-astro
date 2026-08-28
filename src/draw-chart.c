@@ -4202,7 +4202,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
     mvwprintw(table_win, 0, (table_width - 56) / 2, title);
 
-    mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination"));
+    mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination                   Time zone: Local"));
     mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
@@ -4261,9 +4261,9 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
         int mid_s = h_mid.sec;
 
 
-        mvwprintw(table_win, row, 4, "%s      %02d:%02d:%02d (Local)%s", plots[i].object, rise_h, rise_m, rise_s, rise_obs);
-        mvwprintw(table_win, row, 37, "%02d:%02d:%02d (Local)%s", set_h, set_m, set_s, set_obs);
-        mvwprintw(table_win, row, 63, "%02d:%02d:%02d (Local)%s", mid_h, mid_m, mid_s, mid_obs);
+        mvwprintw(table_win, row, 4, "%s      %02d:%02d:%02d %s", plots[i].object, rise_h, rise_m, rise_s, rise_obs);
+        mvwprintw(table_win, row, 37, "%02d:%02d:%02d %s", set_h, set_m, set_s, set_obs);
+        mvwprintw(table_win, row, 63, "%02d:%02d:%02d %s", mid_h, mid_m, mid_s, mid_obs);
 
         wattron(table_win, COLOR_PAIR(10) | A_DIM);
         mvwprintw(table_win, row + 1, 3, "────────────────────────────────────────────────────────────────────────────────────"); 

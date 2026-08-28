@@ -517,7 +517,7 @@ void abrir_janela_confronto_natal_revolucao(
         wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
         snprintf(str_text, 512, _("       This planet commands the year with magnificent backing from your birth chart.\n"
-                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
+                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
                         "and powerful executive. The promises of this Solar Return will manifest with clarity, "
                         "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), aproveitamento_almuten);
     } 
