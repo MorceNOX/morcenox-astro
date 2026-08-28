@@ -22,12 +22,21 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+typedef struct {
+    int index_original;
+    double dist_relativa;
+    int type;
+} AuxOrdenacao;
+
+
 const char *str_dow(int dow);
 int get_int_greater_if_found(int *array, int count, int n, int distance);
 int get_int_lesser_if_found(int *array, int count, int n, int distance);
 int comparar_plots_por_id(const void *a, const void *b);
 int comparar_plots_por_longitude(const void *a, const void *b);
+int comparar_zodiac_por_longitude(const void *a, const void *b);
 int comparar_directions_por_idade(const void *a, const void *b);
+int comparar_distantes(const void *a, const void *b);
 int comparar_doubles(const void *a, const void *b);
 int testar_caminho_efemerides();
 int inicializar_swiss_ephemeris();

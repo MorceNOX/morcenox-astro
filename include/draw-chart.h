@@ -191,6 +191,7 @@ int converter_codigo_planeta(int codigo_antigo);
 int get_planetary_joy(int id_planet);
 int get_sign_joy(int id_planet);
 const char* get_house_roman(double longitude, double *cusps);
+int get_house(double longitude, double *cusps);
 const char* get_moon_phase_name(double elongation);
 int get_moon_phase_id(double elongation);
 int get_moon_quarter(double elongation);
@@ -213,7 +214,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 void draw_circle_points(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
 void draw_circle_outline(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
 void draw_circle_filled(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
-void draw_objects_at_radius(int radius_multiplier, int object_count, PlotObject *plots, int n, int display_center_y, int display_center_x, float current_scale, float aspect_ratio, int asc);
+void draw_objects_at_radius(int radius_multiplier, int object_count, PlotObject *plots, int n, int display_center_y, int display_center_x, float current_scale, float aspect_ratio, int asc, double *cusps);
 void draw_cusps(int radius_multiplier, int object_count, double *cusps, int n, int display_center_y, int display_center_x, float current_scale, float aspect_ratio);
 void draw_cusps_div(int object_count, double *cusps, int n, int display_center_y, int display_center_x, float current_scale, float aspect_ratio);
 void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_y, int display_center_x, float current_scale, float aspect_ratio);
@@ -260,7 +261,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
 void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, int *strength_planets, PlanetDignities *dig);
 void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str, int strength_reg_day, int strength_reg_hour, int dig_reg_day, int dig_reg_hour);
 
-void display_rising_times(PlotObject *plots);
+void display_rising_times(PlotObject *plots, double tz_offset);
 
 double get_hours_from_jd(double jd, double offset);
 void format_event_time(double jd, double offset, char *dest, size_t size_of_dest);

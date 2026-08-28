@@ -92,6 +92,14 @@ int get_int_lesser_if_found(int *array, int count, int n, int distance) {
     
 }
 
+// Para comparar AuxOrdenacao
+int comparar_distantes(const void *a, const void *b) {
+    double dist_a = ((AuxOrdenacao*)a)->dist_relativa;
+    double dist_b = ((AuxOrdenacao*)b)->dist_relativa;
+    return (dist_a > dist_b) - (dist_a < dist_b);
+}
+
+
 int comparar_doubles(const void *a, const void *b) {
     double da = *(const double*)a;
     double db = *(const double*)b;
@@ -135,6 +143,18 @@ int comparar_plots_por_longitude(const void *a, const void *b) {
     if (objA->longitude > objB->longitude) return 1;
     return 0; // Caso sejam iguais
 }
+
+int comparar_zodiac_por_longitude(const void *a, const void *b) {
+    // 1. Converte os ponteiros void para ponteiros da sua struct
+    const ZodiacLongitude *objA = (const ZodiacLongitude *)a;
+    const ZodiacLongitude *objB = (const ZodiacLongitude *)b;
+
+    // 2. Compara os valores double evitando erros de precisão no retorno int
+    if (objA->longitude < objB->longitude) return -1;
+    if (objA->longitude > objB->longitude) return 1;
+    return 0; // Caso sejam iguais
+}
+
 
 
 

@@ -151,102 +151,102 @@ Termo tabela_termos_ptolomeu[12][5] = {
 
 
 const char *sagittarius[] = {
-    "▗▚  ",
-    "▘▌▘ ",
-    "▄▙▖ ",
-    " ▌  ",
-    "    "
+    "▗▚ ",
+    "▘▌▘",
+    "▄▙▖",
+    " ▌ ",
+    "   "
 };
 
 const char *taurus[] = {
-    "▝▖  ▞ ",
-    " ▞▀▀▖ ",
-    "▐   ▐ ",
-    " ▚▄▄▘ ",
-    "      "
+    "▝▖  ▞",
+    " ▞▀▀▖",
+    "▐   ▐",
+    " ▚▄▄▘",
+    "     "
 };
 
 
 const char *aries[] = {
-    "       ",
-    "▞▀▖▞▀▖ ",
-    "  ▐    ",
-    "  ▐    ",
-    "       "
+    "      ",
+    "▞▀▖▞▀▖",
+    "  ▐   ",
+    "  ▐   ",
+    "      "
 };
 
 const char *gemini[] = {
-    "▄▄▄▄▖ ",
-    " ▌ ▌  ",
-    " ▌ ▌  ",
-    "▄▙▄▙▖ ",
-    "      "
+    "▄▄▄▄▖",
+    " ▌ ▌ ",
+    " ▌ ▌ ",
+    "▄▙▄▙▖",
+    "     "
 };
 
 const char *leo[] = {
-    " ▞▀▀▖ ",
-    "▞▚  ▞ ",
-    "▚▞ ▐  ",
-    "    ▚ ",
-    "      "
+    " ▞▀▀▖",
+    "▞▚  ▞",
+    "▚▞ ▐ ",
+    "    ▚",
+    "     "
 };
 
 
 const char *pisces[] = {
-    "▝▖  ▞ ",
-    "▗▟▄▟▄ ",
-    " ▞ ▝▖ ",
-    "▝   ▝ ",
-    "      "
+    "▝▖  ▞",
+    "▗▟▄▟▄",
+    " ▞ ▝▖",
+    "▝   ▝",
+    "     "
 };
 
 
 const char *aquarius[] = {
-    "      ",
-    "▞▚▞▚▞ ",
-    "      ",
-    "▞▚▞▚▞ ",
-    "      "
+    "     ",
+    "▞▚▞▚▞",
+    "     ",
+    "▞▚▞▚▞",
+    "     "
 };
 
 const char *cancer[] = {
-    "      ",
-    "▞▜▀▀  ",
-    "▚▞ ▞▚ ",
-    " ▄▄▙▞ ",
-    "      "
+    "     ",
+    "▞▜▀▀ ",
+    "▚▞ ▞▚",
+    " ▄▄▙▞",
+    "     "
 };
 
 const char *libra[] = {
-    "     ",
-    " ▞▚  ",
-    "▀▀▀▀ ",
-    "▀▀▀▀ ",
-    "     "
+    "    ",
+    " ▞▚ ",
+    "▀▀▀▀",
+    "▀▀▀▀",
+    "    "
 };
 
 const char *scorpio[] = {
-    "     ",
-    "▛▚▀▖ ",
-    "▌▐ ▌ ",
-    "▘▝ ▚ ",
-    "     "
+    "    ",
+    "▛▚▀▖",
+    "▌▐ ▌",
+    "▘▝ ▚",
+    "    "
 };
 
 const char *virgo[] = {
-    "      ",
-    "▛▚▀▞▚ ",
-    "▌▐ ▌▞ ",
-    "▘▝ ▜  ",
-    "      "
+    "     ",
+    "▛▚▀▞▚",
+    "▌▐ ▌▞",
+    "▘▝ ▜ ",
+    "     "
 };
 
 const char *capricorn[] = {
-    "      ",
-    "▚▗▜▞▚ ",
-    " ▘ ▚▞ ",
-    "   ▞  ",
-    "      "
+    "     ",
+    "▚▗▜▞▚",
+    " ▘ ▚▞",
+    "   ▞ ",
+    "     "
 };
 
 
@@ -1146,38 +1146,6 @@ void draw_circle_points(int center_y, int center_x, float radius,
         }
     }
 }
-// void draw_circle_filled(int center_y, int center_x, float radius, 
-//                        float aspect_ratio, float current_scale, 
-//                        const wchar_t* character) {
-//     // 1. Calcula o raio final ajustado pela escala
-//     float r = radius * current_scale;
-    
-//     // 2. Percorre o círculo linha por linha (eixo Y)
-//     for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
-//         int y = center_y + y_offset;
-        
-//         // Verifica se a linha atual está dentro dos limites da tela
-//         if (y >= 0 && y < LINES) {
-            
-//             // Teorema de Pitágoras para achar a largura horizontal daquele ponto: x = sqrt(r^2 - y^2)
-//             float x_width = sqrt((r * r) - (y_offset * y_offset));
-            
-//             // Aplica a proporção de aspecto na largura horizontal
-//             int x_offset_max = (int)(x_width * aspect_ratio);
-            
-//             // 3. Preenche desenhando horizontalmente da esquerda para a direita
-//             for (int x_offset = -x_offset_max; x_offset <= x_offset_max; x_offset++) {
-//                 int x = center_x + x_offset;
-                
-//                 // Verifica se o ponto X está dentro dos limites da tela
-//                 if (x >= 0 && x < COLS) {
-//                     mvaddwstr(y, x, character);
-//                 }
-//             }
-//         }
-//     }
-// }
-
 
 
 // Calcula a menor distância angular em um círculo (trata a virada de 360°)
@@ -1190,83 +1158,314 @@ double diferenca_angular_minima(double a, double b) {
 }
 
 int normalizar_grau_int(int angulo) {
-    int n = angulo % 360;
-    if (n < 0) n += 360;
+    // Adiciona 360 antes do módulo para garantir que o dividendo seja sempre positivo,
+    // mesmo que o ângulo seja ligeiramente negativo (como -1, -5, etc).
+    int n = (angulo % 360 + 360) % 360;
     return n;
 }
 
-void resolver_sobreposicao_planetas(PlotObject *plots, int object_count, int *longitude_saida) {
-    // 1. Inicializa o array de saída (já assumindo que plots está ordenado por qsort)
+// void resolver_sobreposicao_planetas(PlotObject *plots, int object_count, int *longitude_saida, double *cusps) {
+//     // 1. Inicializa o array de saída (já assumindo que plots está ordenado por qsort)
+//     (void)cusps;
+
+//     for (int i = 0; i < object_count; i++) {
+//         longitude_saida[i] = (int)round(plots[i].longitude);
+//     }
+
+//     // AuxOrdenacao *fila = malloc(object_count * sizeof(AuxOrdenacao));
+//     //     double longitude_ref = plots[0].longitude;
+
+//     // for (int i = 0; i < object_count; i++) {
+//     //     fila[i].index_original = i;
+        
+//     //     if (strcmp(plots[i].object, "IC") == 0 || strcmp(plots[i].object, "MC") == 0 ||
+//     //         strcmp(plots[i].object, "AC") == 0 || strcmp(plots[i].object, "DC") == 0)
+//     //     {
+//     //         fila[i].type = Z_ANGLE;
+//     //     }
+//     //     else {
+//     //         fila[i].type = Z_PLANET;
+//     //     }
+        
+//     //     double diff = plots[i].longitude - longitude_ref;
+//     //     diff = fmod(diff, 360.0);
+//     //     if (diff < 0) diff += 360.0;
+//     //     fila[i].dist_relativa = diff;
+//     // }
+
+//     //qsort(fila, object_count, sizeof(AuxOrdenacao), comparar_distantes);
+
+//     const int DISTANCIA_MINIMA = 7; // Distância mínima desejada em graus
+//     const int MAX_TENTATIVAS = 200; // Mais passadas para acomodar restrições rígidas
+//     int houve_modificacao;
+
+//     // int *casas_originais = malloc(object_count * sizeof(int));
+//     // for (int i = 0; i < object_count; i++) {
+//     //     casas_originais[i] = get_house(plots[i].longitude, cusps);
+//     // }
+
+//     // 2. Laço de Relaxamento com Restrição de Ordem
+//     for (int tentativa = 0; tentativa < MAX_TENTATIVAS; tentativa++) {
+//         houve_modificacao = 0;
+
+//         // Varre os planetas vizinhos par a par
+//         for (int i = 0; i < object_count - 1; i++) {
+//             int j = (i == object_count - 1) ? 0 : ((i == 0) ? object_count - 1 : i + 1);
+
+//             double diff = diferenca_angular_minima(longitude_saida[i], longitude_saida[j]);
+
+//             // Se a distância for menor que o mínimo, precisamos afastar
+//             if (fabs(diff) < DISTANCIA_MINIMA) {
+                
+//                 // Como o array é ordenado, o esperado é que j esteja na frente de i (diff > 0)
+//                 // Se por erro de arredondamento inicial ou empurrão severo eles colidirem:
+                
+//                 // Tenta empurrar o planeta 'i' para trás, mas APENAS se não colidir/ultrapassar o planeta anterior (i-1)
+//                 if (i > 0) {
+//                     double dist_ant = diferenca_angular_minima(longitude_saida[i-1], longitude_saida[i]);
+                                       
+//                     if (fabs(dist_ant) > 1.0) { // Tem espaço atrás?
+//                         longitude_saida[i]--;
+//                         houve_modificacao = 1;
+//                     }
+//                 } else {
+//                     double dist_ant = diferenca_angular_minima(longitude_saida[object_count - 1] - 360, longitude_saida[i]);
+//                     if (fabs(dist_ant) > 1.0) { // Tem espaço atrás?
+//                         longitude_saida[i]--;
+//                         houve_modificacao = 1;
+//                     }
+//                 }
+
+//                 // Tenta empurrar o planeta 'j' para frente, mas APENAS se não colidir/ultrapassar o próximo planeta (j+1)
+//                 if (j < object_count - 1) {
+//                     double dist_prox = diferenca_angular_minima(longitude_saida[j], longitude_saida[j+1]);
+//                     if (fabs(dist_prox) > 1.0) { // Tem espaço à frente?
+//                         longitude_saida[j]++;
+//                         houve_modificacao = 1;
+//                     }
+//                 } else {
+//                     double dist_prox = diferenca_angular_minima(longitude_saida[j], longitude_saida[0] + 360);
+//                     if (fabs(dist_prox) > 1.0) { // Tem espaço à frente?
+//                         longitude_saida[j]++;
+//                         houve_modificacao = 1;
+//                     }
+//                 }
+
+//                 // Normaliza os valores alterados imediatamente
+//                 longitude_saida[i] = normalizar_grau_int(longitude_saida[i]);
+//                 longitude_saida[j] = normalizar_grau_int(longitude_saida[j]);
+//             }
+//         }
+
+//         // Se o laço rodar sem precisar mover mais ninguém, o mapa estabilizou perfeitamente
+//         if (!houve_modificacao) {
+//             break;
+//         }
+//     }
+// }
+
+
+void resolver_sobreposicao_planetas(PlotObject *plots, int object_count, int *longitude_saida, double *cusps) {
+    if (object_count <= 0) return;
+
+    int *casas = malloc(object_count * sizeof(int));
+    int *signs = malloc(object_count * sizeof(int));
+
+    // 1. Inicializa a saída e mapeia as casas originais
     for (int i = 0; i < object_count; i++) {
         longitude_saida[i] = (int)round(plots[i].longitude);
+        casas[i] = get_house(plots[i].longitude, cusps);
+        signs[i] = (int)floor(plots[i].longitude / 30);
+    }
+    if (object_count == 1) {
+        free(casas);
+        return;
     }
 
-    const int DISTANCIA_MINIMA = 5; // Distância mínima desejada em graus
-    const int MAX_TENTATIVAS = 100; // Mais passadas para acomodar restrições rígidas
+    // 2. ORDENAÇÃO CIRCULAR
+    AuxOrdenacao *fila = malloc(object_count * sizeof(AuxOrdenacao));
+    double longitude_ref = plots[0].longitude;
+
+    for (int i = 0; i < object_count; i++) {
+        fila[i].index_original = i;
+        
+        if (strcmp(plots[i].object, "IC") == 0 || strcmp(plots[i].object, "MC") == 0 ||
+            strcmp(plots[i].object, "AC") == 0 || strcmp(plots[i].object, "DC") == 0)
+        {
+            fila[i].type = Z_ANGLE;
+        }
+        else {
+            fila[i].type = Z_PLANET;
+        }
+        
+        double diff = plots[i].longitude - longitude_ref;
+        diff = fmod(diff, 360.0);
+        if (diff < 0) diff += 360.0;
+        fila[i].dist_relativa = diff;
+    }
+
+    qsort(fila, object_count, sizeof(AuxOrdenacao), comparar_distantes);
+
+    const int DISTANCIA_MINIMA = 7;
+    const int MAX_TENTATIVAS = 200;
     int houve_modificacao;
 
-    // 2. Laço de Relaxamento com Restrição de Ordem
+    // 3. Laço de Relaxamento Circular Ponderado
     for (int tentativa = 0; tentativa < MAX_TENTATIVAS; tentativa++) {
         houve_modificacao = 0;
 
-        // Varre os planetas vizinhos par a par
-        for (int i = 0; i < object_count - 1; i++) {
-            int j = i + 1; // Próximo planeta na ordem estabelecida pelo qsort
+        for (int i = 0; i < object_count; i++) {
+            int proximo_i = (i == object_count - 1) ? 0 : i + 1;
+            //int proximo_ii = (proximo_i == object_count - 1) ? 0 : proximo_i + 1;
+            //int ant_i = (i == 0) ? object_count - 1 : i - 1;
 
-            double diff = diferenca_angular_minima(longitude_saida[i], longitude_saida[j]);
+            int idx_atual = fila[i].index_original;
+            int idx_prox  = fila[proximo_i].index_original;
+            //int idx_prox2  = fila[proximo_ii].index_original;
+            //int idx_ant1  = fila[ant_i].index_original;
 
-            // Se a distância for menor que o mínimo, precisamos afastar
-            if (fabs(diff) < DISTANCIA_MINIMA) {
+            double diff = diferenca_angular_minima(longitude_saida[idx_atual], longitude_saida[idx_prox]);
+            //double diff2 = diferenca_angular_minima(longitude_saida[idx_prox], longitude_saida[idx_prox2]);
+            //double diff0 = diferenca_angular_minima(longitude_saida[idx_ant1], longitude_saida[idx_atual]);
+
+            // Caso 1: Ordem normal na roda, mas estão espremidos
+            if (diff >= 0.0 && diff < DISTANCIA_MINIMA) {
                 
-                // Como o array é ordenado, o esperado é que j esteja na frente de i (diff > 0)
-                // Se por erro de arredondamento inicial ou empurrão severo eles colidirem:
-                
-                // Tenta empurrar o planeta 'i' para trás, mas APENAS se não colidir/ultrapassar o planeta anterior (i-1)
-                if (i > 0) {
-                    double dist_ant = diferenca_angular_minima(longitude_saida[i-1], longitude_saida[i]);
-                    if (fabs(dist_ant) > 1.0) { // Tem espaço atrás?
-                        longitude_saida[i]--;
+                // Regra do objeto ATUAL ir para TRÁS (diminuir longitude):
+                // Se for ÂNGULO, ele pode ir livremente. Se for PLANETA, só vai se continuar na mesma casa.
+                int pode_mover_atual = (fila[idx_atual].type == Z_ANGLE) || 
+                    (casas[idx_atual] == get_house(normalizar_grau_int(longitude_saida[idx_atual] - 1), cusps));
+
+                // Regra do objeto PRÓXIMO ir para FRENTE (aumentar longitude):
+                // Se for ÂNGULO, pode ir livremente. Se for PLANETA, só se continuar na mesma casa.
+                int pode_mover_prox = (fila[idx_prox].type == Z_ANGLE) || 
+                    (casas[idx_prox] == get_house(normalizar_grau_int(longitude_saida[idx_prox] + 1), cusps));
+
+                if (pode_mover_atual && pode_mover_prox) {
+                    // Cenário Ideal: Ambos se afastam 1 grau
+                    longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 1);
+                    longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 1);
+                    houve_modificacao = 1;
+                } 
+                else if (pode_mover_atual && !pode_mover_prox) {
+                    // O próximo (planeta) travou na cúspide. O atual absorve o impacto duplo sozinho!
+
+                    if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 8) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 8);
                         houve_modificacao = 1;
                     }
-                } else {
-                    // Se for o primeiro elemento, pode ir para trás livremente
-                    longitude_saida[i]--;
-                    houve_modificacao = 1;
-                }
-
-                // Tenta empurrar o planeta 'j' para frente, mas APENAS se não colidir/ultrapassar o próximo planeta (j+1)
-                if (j < object_count - 1) {
-                    double dist_prox = diferenca_angular_minima(longitude_saida[j], longitude_saida[j+1]);
-                    if (fabs(dist_prox) > 1.0) { // Tem espaço à frente?
-                        longitude_saida[j]++;
+                    else if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 7) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 7);
                         houve_modificacao = 1;
                     }
-                } else {
-                    // Se for o último elemento, pode ir para frente livremente
-                    longitude_saida[j]++;
-                    houve_modificacao = 1;
-                }
-
-                // Normaliza os valores alterados imediatamente
-                longitude_saida[i] = normalizar_grau_int(longitude_saida[i]);
-                longitude_saida[j] = normalizar_grau_int(longitude_saida[j]);
+                    else  if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 6) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 6);
+                        houve_modificacao = 1;
+                    }
+                    else  if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 5) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 5);
+                        houve_modificacao = 1;
+                    }
+                    else  if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 4) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 4);
+                        houve_modificacao = 1;
+                    }
+                    else if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 1) / 30)) {
+                       longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 1);
+                       houve_modificacao = 1;
+                    }                    
+                } 
+                else if (!pode_mover_atual && pode_mover_prox) {
+                    // O atual (planeta) travou na cúspide. O próximo absorve o avanço duplo sozinho!
+                    if (signs[idx_prox] == (int)(normalizar_grau_int(longitude_saida[idx_prox] + 2) / 30)) {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 2);
+                        houve_modificacao = 1;
+                    }
+                    else if (signs[idx_prox] == (int)(normalizar_grau_int(longitude_saida[idx_prox] + 1) / 30)) {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 1);
+                        houve_modificacao = 1;
+                    }
+                    
+                }                
             }
+            // Caso 2: Atropelo (Inversão geométrica de ordem na roda)
+            else if (diff < 0.0 && diff > -DISTANCIA_MINIMA) {
+                
+                int pode_mover_atual = (fila[idx_atual].type == Z_ANGLE) || 
+                    (casas[idx_atual] == get_house(normalizar_grau_int(longitude_saida[idx_atual] - 2), cusps));
+
+                int pode_mover_prox = (fila[idx_prox].type == Z_ANGLE) || 
+                    (casas[idx_prox] == get_house(normalizar_grau_int(longitude_saida[idx_prox] + 2), cusps));
+
+                if (pode_mover_atual && pode_mover_prox) {
+                    if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 2) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 2);
+                    }
+                    else {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 1);
+                    }
+                    if (signs[idx_prox] == (int)(normalizar_grau_int(longitude_saida[idx_prox] + 2) / 30)) {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 2);
+                    }
+                    else {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 1);
+                    }
+                    houve_modificacao = 1;
+                }
+                else if (pode_mover_atual && !pode_mover_prox) {
+                    if (signs[idx_atual] == (int)(normalizar_grau_int(longitude_saida[idx_atual] - 4) / 30)) {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 4);
+                    }
+                    else {
+                        longitude_saida[idx_atual] = normalizar_grau_int(longitude_saida[idx_atual] - 1);
+                    }
+                    houve_modificacao = 1;
+                }
+                else if (!pode_mover_atual && pode_mover_prox) {
+                    if (signs[idx_prox] == (int)(normalizar_grau_int(longitude_saida[idx_prox] + 4) / 30)) {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 4);
+                    }
+                    else {
+                        longitude_saida[idx_prox]  = normalizar_grau_int(longitude_saida[idx_prox] + 1);
+                    }
+                    houve_modificacao = 1;
+                }
+            }
+            
         }
 
-        // Se o laço rodar sem precisar mover mais ninguém, o mapa estabilizou perfeitamente
         if (!houve_modificacao) {
             break;
         }
     }
+
+    free(fila);
+    free(casas);
 }
 
+
+// Função auxiliar para encontrar em qual casa um planeta original está (Retorna 1 a 12)
+int get_house(double longitude, double *cusps) {
+    const double EPSILON = 1e-9;
+    for (int i = 1; i <= 12; i++) {
+        double current_cusp = cusps[i];
+        double next_cusp = (i == 12) ? cusps[1] : cusps[i + 1];
+
+        if (current_cusp < next_cusp) {
+            if (longitude >= (current_cusp - EPSILON) && longitude < (next_cusp - EPSILON)) return i;
+        } else {
+            if (longitude >= (current_cusp - EPSILON) || longitude < (next_cusp - EPSILON)) return i;
+        }
+    }
+    return 12;
+}
 
 
 // Helper function to draw objects at specific radius
 void draw_objects_at_radius(int radius_multiplier, int object_count, 
                            PlotObject *plots, int n, 
                            int display_center_y, int display_center_x, 
-                           float current_scale, float aspect_ratio, int asc) {
+                           float current_scale, float aspect_ratio, int asc, double *cusps) {
     
     
     float radius = radius_multiplier * current_scale;
@@ -1283,7 +1482,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
         longitude[z] = degree;
     }
 
-    resolver_sobreposicao_planetas(plots, object_count, longitude);
+    resolver_sobreposicao_planetas(plots, object_count, longitude, cusps);
                
     for (int i = -30; i < steps; i++) {
         float angle = i * PI / 180.0;
@@ -1404,8 +1603,6 @@ void draw_cusps_div(int object_count,
     int asc = (int)cusps[1];
     (void)n;
     
-    attron(A_BOLD);
-
     for (int r = 8; r < 20; r++) {    
         float radius = r * current_scale;
         
@@ -1433,31 +1630,31 @@ void draw_cusps_div(int object_count,
                     // Draw the appropriate text
                     if (j != 1 && j != 4 && j != 7 && j != 10) {
                         if (angle >= 4.93) {
-                            mvaddstr(y, x, "⧸");  // casa 9
-                        } else if (angle <= -1.34 || angle >= 4.5) {
+                            mvaddstr(y, x, "▞");  // casa 9
+                        } else if (angle <= -1.35 || angle >= 4.5) {
                             mvaddstr(y, x, "▎"); // casa 10
-                        } else if (angle <= -0.9) {
-                            mvaddstr(y, x, "⧸");  // casa 9
+                        } else if (angle <= -0.8) {
+                            mvaddstr(y, x, "▞");  // casa 9 
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "▃");  // casa 8
+                            mvaddstr(y, x, "🙼");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "▃");  // casa 6
-                        } else if (angle < 1.34) {
-                            mvaddstr(y, x, "⧹"); // casa 5
-                        } else if (angle < 1.799) {
+                            mvaddstr(y, x, "🙽");  // casa 6
+                        } else if (angle < 1.35) {
+                            mvaddstr(y, x, "▚"); // casa 5
+                        } else if (angle < 1.79) {
                             mvaddstr(y, x, "▕");  // casa 4
-                        } else if (angle < 2.25) {
-                            mvaddstr(y, x, "⧸");  // casa 3
+                        } else if (angle < 2.26) {
+                            mvaddstr(y, x, "▞");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "▃");  // casa 2
+                            mvaddstr(y, x, "🙼");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "▃");  // casa 12
+                            mvaddstr(y, x, "🙽");  // casa 12
                         } else {
-                            mvaddstr(y, x, "⧹"); // casa 11
+                            mvaddstr(y, x, "▚"); // casa 11
                         }
                     }
                 //mvprintw(y, x, "%.2f ", angle);
@@ -1465,7 +1662,6 @@ void draw_cusps_div(int object_count,
             }
         }
     }
-    attroff(A_BOLD);   
 }
 
 void draw_cusps_div_axis(int object_count, 
@@ -1475,6 +1671,9 @@ void draw_cusps_div_axis(int object_count,
     
     int asc = (int)cusps[1];
     (void)n;
+
+    attron(A_BOLD);
+
     for (int r = 8; r < 20; r++) {    
         float radius = r * current_scale;
         
@@ -1502,29 +1701,29 @@ void draw_cusps_div_axis(int object_count,
                     // Draw the appropriate text
                     if (j == 1 || j == 4 || j == 7 || j == 10) {            
                         if (angle >= 4.93) {
-                            mvaddstr(y, x, "⧸");  // casa 9
-                        } else if (angle <= -1.34 || angle >= 4.5) {
+                            mvaddstr(y, x, "⧸");  // casa 9 // ⧹⧸
+                        } else if (angle <= -1.35 || angle >= 4.5) {
                             mvaddstr(y, x, "▎"); // casa 10
-                        } else if (angle <= -0.9) {
+                        } else if (angle <= -0.8) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "▃");  // casa 8
+                            mvaddstr(y, x, "🙼");  // casa 8
                         } else if (angle <= 0.2) {
                             mvaddstr(y, x, "▔");  // casa 7
                         } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "▃");  // casa 6
-                        } else if (angle < 1.34) {
+                            mvaddstr(y, x, "🙽");  // casa 6
+                        } else if (angle < 1.35) {
                             mvaddstr(y, x, "⧹"); // casa 5
-                        } else if (angle < 1.799) {
+                        } else if (angle < 1.79) {
                             mvaddstr(y, x, "▕");  // casa 4
-                        } else if (angle < 2.25) {
+                        } else if (angle < 2.26) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
-                            mvaddstr(y, x, "▃");  // casa 2
+                            mvaddstr(y, x, "🙼");  // casa 2
                         } else if (angle <= 3.25) {
                             mvaddstr(y, x, "▁");  // casa 1
                         } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "▃");  // casa 12
+                            mvaddstr(y, x, "🙽");  // casa 12
                         } else {
                             mvaddstr(y, x, "⧹"); // casa 11
                         }
@@ -1532,7 +1731,8 @@ void draw_cusps_div_axis(int object_count,
                 }                
             }
         }
-    }    
+    }
+    attroff(A_BOLD);     
 }
 
 
@@ -1896,19 +2096,19 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
     //Draw the outer boundary using a light shade block
     int asc = (int)cusps[1];
+    attron(COLOR_PAIR(19) | A_DIM | flags);
     for (float r = 8.0 * current_scale; r <= 19.0 * current_scale; r += current_scale) {
         for (int i = -60 + asc; i < 300 + asc; i += 30) {
             float angle = i * PI / 180.0;
             int y = (int)(display_center_y + r * sin(angle));
             int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
             
-            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
-                attron(COLOR_PAIR(19) | A_DIM | flags);
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {                
                 mvaddwstr(y, x, L"░");
-                attroff(COLOR_PAIR(19) | A_DIM | flags);
             }
         }
     }
+    attroff(COLOR_PAIR(19) | A_DIM | flags);
     
     // Draw house numbers
     draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
@@ -1974,13 +2174,13 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             const char *sign_str = get_sign(sign);
             
             if (get_visual_width(plots[i].object) == 1) {
-                mvprintw(12 + i, COLS - 19, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
             }
             else if (get_visual_width(plots[i].object) == 2) {
-                mvprintw(12 + i, COLS - 20, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+                mvprintw(12 + i, COLS - 22, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
             }
             else {
-                mvprintw(12 + i, COLS - 19, "%2s → %2d°%s%02d' %s", plots[i].object, degree, sign_str, min, plots[i].house);
+                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
             }
         }
     }
@@ -1989,14 +2189,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     refresh();
     
     // Draw all objects at different radii
-    draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-    draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+    draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     if (zoom_factor >= 1.5) {
-        draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+        draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     }
-    draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-    //draw_objects_at_radius(9, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-    draw_objects_at_radius(8, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+    draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    //draw_objects_at_radius(9, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    draw_objects_at_radius(8, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     
     
     char *house_system_name;    
@@ -2035,7 +2235,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         Hora hs = get_fmt_hour(sanHour);
         
-        mvprintw(0, max_x - 36, "%s %s: %d/%d/%d %02d:%02d:%02d UTC", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
+        mvprintw(0, max_x - 39, "%s %s: %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
         mvprintw(1, max_x - 40, "%s: %s", _("Current Moon Phase"), phase);
         mvprintw(3, max_x - 36, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
         
@@ -2987,7 +3187,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     int san_min = (int)((sanHour - san_h) * 60.0);
     double san_sec_decimal = (((sanHour - san_h) * 60.0) - san_min) * 60.0;
     int san_seconds = (int)san_sec_decimal;
-    mvwprintw(table_win, 17, 87, "%s %04d/%02d/%02d (%02d:%02d:%02d) UTC", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
+    mvwprintw(table_win, 17, 87, "%s %04d/%02d/%02d (%02d:%02d:%02d) Local", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
 
     if (strcmp(plots[P_SAN - object_diff].object, "🌑") == 0) {
         mvwprintw(table_win, 18, 55, _("Conjunctional pre-natal syzygy - New Moon"));
@@ -2999,7 +3199,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 20, 55, _("Astrological Season:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 20, 76, "%s", season);
+    mvwprintw(table_win, 20, 76, _("%s (North Hemisphere)"), season);
 
 
     //char *hsol = plots[0].house;
@@ -3974,7 +4174,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
 
 
-void display_rising_times(PlotObject *plots) {
+void display_rising_times(PlotObject *plots, double tz_offset) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -4007,28 +4207,73 @@ void display_rising_times(PlotObject *plots) {
     const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
     mvwprintw(table_win, 0, (table_width - 56) / 2, title);
 
-    mvwprintw(table_win, 2, 4, _("   Rising          Setting         Culmination"));
+    mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination"));
+    mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
+    
     int row = 4;
     for (int i = 0; i < 12 - object_diff; i++) {
         
-        double rise_hours = plots[i].rising_time;
-        int rise_h = (int)rise_hours;
-        int rise_m = (int)((rise_hours - rise_h) * 60.0);
-        int rise_s = (int)((((rise_hours - rise_h) * 60.0) - rise_m) * 60.0);
+        double rise_hours = plots[i].rising_time + tz_offset;
+        const char* rise_obs = "";
+        if (rise_hours < 0.0) {
+            rise_obs = " (-1d)"; // Indicador de dia anterior
+            rise_hours += 24.0;
+        } 
+        else if (rise_hours >= 24.0) {
+            rise_obs = " (+1d)"; // Indicador de dia seguinte
+            rise_hours -= 24.0;
+        }        
 
-        double set_hours = plots[i].setting_time;
-        int set_h = (int)set_hours;
-        int set_m = (int)((set_hours - set_h) * 60.0);
-        int set_s = (int)((((set_hours - set_h) * 60.0) - set_m) * 60.0);
+        Hora h_rise = get_fmt_hour(rise_hours);
+        int rise_h = h_rise.hora;
+        int rise_m = h_rise.min;
+        int rise_s = h_rise.sec;
 
-        double mid_hours = plots[i].mid_time;
-        int mid_h = (int)mid_hours;
-        int mid_m = (int)((mid_hours - mid_h) * 60.0);
-        int mid_s = (int)((((mid_hours - mid_h) * 60.0) - mid_m) * 60.0);
+        
+        double set_hours = plots[i].setting_time + tz_offset;
+        const char* set_obs = "";
+        if (set_hours < 0.0) {
+            set_obs = " (-1d)"; // Indicador de dia anterior
+            set_hours += 24.0;
+        } 
+        else if (set_hours >= 24.0) {
+            set_obs = " (+1d)"; // Indicador de dia seguinte
+            set_hours -= 24.0;
+        }
 
-        mvwprintw(table_win, row, 4, "%s  %02d:%02d:%02d (UT)   %02d:%02d:%02d (UT)   %02d:%02d:%02d (UT)", plots[i].object, rise_h, rise_m, rise_s, set_h, set_m, set_s, mid_h, mid_m, mid_s);
+        Hora h_set = get_fmt_hour(set_hours);
+        int set_h = h_set.hora;
+        int set_m = h_set.min;
+        int set_s = h_set.sec;
+
+
+        double mid_hours = plots[i].mid_time + tz_offset;
+        const char* mid_obs = "";
+        if (mid_hours < 0.0) {
+            mid_obs = " (-1d)"; // Indicador de dia anterior
+            mid_hours += 24.0;
+        } 
+        else if (mid_hours >= 24.0) {
+            mid_obs = " (+1d)"; // Indicador de dia seguinte
+            mid_hours -= 24.0;
+        }
+
+        Hora h_mid = get_fmt_hour(mid_hours);
+        int mid_h = h_mid.hora;
+        int mid_m = h_mid.min;
+        int mid_s = h_mid.sec;
+
+
+        mvwprintw(table_win, row, 4, "%s      %02d:%02d:%02d (Local)%s", plots[i].object, rise_h, rise_m, rise_s, rise_obs);
+        mvwprintw(table_win, row, 37, "%02d:%02d:%02d (Local)%s", set_h, set_m, set_s, set_obs);
+        mvwprintw(table_win, row, 63, "%02d:%02d:%02d (Local)%s", mid_h, mid_m, mid_s, mid_obs);
+
+        wattron(table_win, COLOR_PAIR(10) | A_DIM);
+        mvwprintw(table_win, row + 1, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
+        wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+
         row += 2;
     }
 
@@ -4050,6 +4295,34 @@ void display_rising_times(PlotObject *plots) {
     refresh();
  
 }
+
+
+int extract_local_datetime_from_jd(double jd, double offset, int *y, int *m, int *d, double *h) {
+    // Retorna um valor negativo sentinela caso o Dia Juliano seja inválido
+    if (jd < 0) {
+        return -1; 
+    }
+    
+    // 1. Aplica o fuso horário diretamente no Dia Juliano antes da conversão
+    double local_jd = jd + (offset / 24.0);
+    
+    // 2. A biblioteca extrai a hora decimal local perfeita (já lida com as viradas de dia)
+    swe_revjul(local_jd, SE_GREG_CAL, y, m, d, h);
+    
+    // 3. Garante que o valor retornado esteja estritamente no intervalo de [0.0, 24.0)
+    // Isso previne anomalias matemáticas flutuantes nas bordas da meia-noite
+    if (*h >= 24.0) {
+        *h -= 24.0;
+    }
+    if (*h < 0.0) {
+        *h += 24.0;
+    }
+    
+    return 0;
+}
+
+
+
 
 
 double get_hours_from_jd(double jd, double offset) {
@@ -4791,8 +5064,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         SAN = x2[0]; // Armazena a longitude correta da SAN
         
-        swe_revjul(jdSAN, SE_GREG_CAL, &sanYear, &sanMon, &sanDay, &sanHour);
-        
+        //swe_revjul(jdSAN, SE_GREG_CAL, &sanYear, &sanMon, &sanDay, &sanHour);
+        extract_local_datetime_from_jd(jdSAN, tz_offset, &sanYear, &sanMon, &sanDay, &sanHour);
         
         // calcular declinação da SAN
 
@@ -5449,7 +5722,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             // Joy
 
             if (i < 7) {
-                if (romanToInt(plots[i].house) == get_planetary_joy(plots[i].id + 1) ) {
+                if (get_house(plots[i].longitude, cusps) == get_planetary_joy(plots[i].id + 1) ) {
                     dig[i].row.joy = 1;
                     dig[i].accidental += 2;
                 }
@@ -5483,7 +5756,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
 
             if (i < NUM_OBJECTS - object_diff) {
-                switch(romanToInt(plots[i].house)) {
+                switch(get_house(plots[i].longitude, cusps)) {
                     case 1: dig[i].accidental += HOUSE_1_PT; break;
                     case 2: dig[i].accidental += HOUSE_2_PT; break;
                     case 3: dig[i].accidental += HOUSE_3_PT; break;
@@ -5757,7 +6030,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             row->gender_match = (sign_gen == planet_gen);
 
         
-            int house_s = romanToInt(plots[i].house);
+            int house_s = get_house(plots[i].longitude, cusps);
             
             // Gender concerning to the quadrant
             get_quadrant_gender(house_s, &quadrant_gen);
@@ -5968,7 +6241,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
-                if (romanToInt(plots[j].house) == i + 1) {
+                if (get_house(plots[j].longitude, cusps) == i + 1) {
                     strncat(pHouse[i], plots[j].object, 100 - strlen(pHouse[i]) - 1);
                     strncat(pHouse[i], " ", 100 - strlen(pHouse[i]) - 1);
                 }
@@ -6089,7 +6362,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             for (int j = 0; j < NUM_OBJECTS; j++) {
                 if (obj[i].id == plotsA[j].id + 1 && obj[i].longitude == 0.0) {
                     obj[i].longitude = plotsA[j].longitude;
-                    obj[i].house = romanToInt((char *)plotsA[j].house);
+                    obj[i].house = get_house(plotsA[j].longitude, cusps);
                     break;
                 }
             }            
@@ -6099,7 +6372,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 continue;
             }
             if (obj[i].type == OBJ_ZODIAC_DEGREE) {
-                obj[i].house = romanToInt((char *)get_house_roman(obj[i].longitude, cusps));
+                obj[i].house = get_house(obj[i].longitude, cusps);
             }
             if (obj[i].type == OBJ_CUSP) {
                 for (int j = 1; j <= 12; j++) {
@@ -6109,7 +6382,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
             if (strcmp(obj[i].object, "SPI") == 0) {
                 obj[i].longitude = spirit;
-                obj[i].house = romanToInt((char *)get_house_roman(spirit, cusps));
+                obj[i].house = get_house(spirit, cusps);
             }
         }
                 
@@ -6127,7 +6400,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         for (int k = 0; k < 7; k++) {
                             if (obj[k].id == ruler) {
                                 obj[i].longitude = obj[k].longitude;
-                                obj[i].house = romanToInt((char *)get_house_roman(obj[k].longitude, cusps));
+                                obj[i].house = get_house(obj[k].longitude, cusps);
                                 break;
                             }
                         }
@@ -6203,7 +6476,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[i].longitude = plots[i].longitude;
             prom[i].latitude = planet_latitudes[i];
             prom[i].declination = plots[i].declination;
-            prom[i].house = romanToInt(plots[i].house);
+            prom[i].house = get_house(plots[i].longitude, cusps);
             prom[i].type = PROM_PLANET;
         }
 
@@ -6236,7 +6509,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[i+7].longitude = longitudes_termos[i];
             prom[i+7].latitude = 0.0;
             prom[i+7].declination = decl_termos[i];
-            prom[i+7].house = romanToInt((char *)get_house_roman(longitudes_termos[i], cusps));
+            prom[i+7].house = get_house(longitudes_termos[i], cusps);
             prom[i+7].type = PROM_TERM;
         }
 
@@ -6259,7 +6532,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
             prom[i+67].latitude = planet_latitudes[i];
             prom[i+67].declination = plots[i].declination;
-            prom[i+67].house = romanToInt((char *)get_house_roman(prom[i+67].longitude, cusps));
+            prom[i+67].house = get_house(prom[i+67].longitude, cusps);
             prom[i+67].type = PROM_ANTISCIUM;
 
             ants[i].id = i;
@@ -6287,7 +6560,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
             prom[i+74].latitude = -planet_latitudes[i];
             prom[i+74].declination = -plots[i].declination;
-            prom[i+74].house = romanToInt((char *)get_house_roman(prom[i+74].longitude, cusps));
+            prom[i+74].house = get_house(prom[i+74].longitude, cusps);
             prom[i+74].type = PROM_CONTRANTISCIUM;
 
             ants[i+7].id = i;
@@ -6367,8 +6640,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case ']':
                 anim_interval += 60;
                 break;
+            case '{':
+                anim_interval -= 1;
+                break;
+            case '}':
+                anim_interval += 1;
+                break;
+ 
             case 'a':
             case 'A':
+            case ' ':
                 animated = !animated;
                 break;
             case 'b':
@@ -6565,7 +6846,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, strength_planets, dig);
                 break;
             case KEY_F(5):
-                display_rising_times(plots);
+                display_rising_times(plots, tz_offset);
                 break;
             case KEY_F(6):
                 display_houses(cusps, pHouse, house_ruler_str, house_system_str);
@@ -6890,7 +7171,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
             break;
         case 7:
-            display_rising_times(ctx->plots);
+            display_rising_times(ctx->plots, ctx->tz_offset);
             break;
         case 8:
             display_houses(ctx->cusps, (char (*)[100])ctx->pHouse, ctx->house_ruler_str, ctx->house_system_str);

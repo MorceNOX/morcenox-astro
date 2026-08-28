@@ -22,6 +22,16 @@
 #define NUM_OBJECTS 19
 #define NUM_OBJECTS_EXT 38
 
+#define Z_ANGLE 0
+#define Z_SIGN_LIMIT 1
+#define Z_HOUSE_CUSP 2
+#define Z_PLANET 3
+
+typedef struct {
+    int longitude;
+    int type;
+} ZodiacLongitude;
+
 typedef struct {
     int id;
     char object[10];
