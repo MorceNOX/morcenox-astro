@@ -6247,13 +6247,18 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
         char **house_ruler_str = (char **)malloc(13 * sizeof(char *));
+        int house_rulers[13] = {0};
 
         for (int i = 1; i <= 12; i++) {
+
+            int sign = (int)(cusps[i] / 30);
+            int n_ruler = obter_regente_tradicional(sign + 1);
+            house_rulers[i] = n_ruler;
 
             house_ruler_str[i] = (char *)malloc(10 * sizeof(char));
     
             char sign_str[10];   
-            snprintf(sign_str, sizeof(sign_str), "%s", get_sign((int)(cusps[i] / 30)));
+            snprintf(sign_str, sizeof(sign_str), "%s", get_sign(sign));
     
             char *house_ruler;
             get_sign_ruler_by_domicile(sign_str, &house_ruler);        
@@ -6804,6 +6809,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.prom = prom;
 
                 ctx.ants = ants;
+
+                ctx.house_rulers = house_rulers;
             
                 open_menu_tables(&ctx);
 
@@ -6920,7 +6927,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case '0':
                 if (!mapa_retorno) {
-                    display_motivation(plots);
+                    display_motivation(plots, house_rulers);
                 }
                 break;
             case 27:
@@ -7271,7 +7278,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 21:
             if (!ctx->mapa_retorno) {    
-                display_motivation(ctx->plots);
+                display_motivation(ctx->plots, ctx->house_rulers);
             }
             break;
         case 22:

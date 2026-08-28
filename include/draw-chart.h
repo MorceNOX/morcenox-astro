@@ -173,6 +173,8 @@ typedef struct {
 
     AntObject *ants;
 
+    int *house_rulers;
+
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);

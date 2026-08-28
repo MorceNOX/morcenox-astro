@@ -20,6 +20,7 @@
 #define MOTIVATION_H
 
 const char *get_motivation(int sign);
-void display_motivation(PlotObject *plots);
+const char *get_planet_motivation_modifier(int planet_id);
+void display_motivation(PlotObject *plots, int *house_rulers);
 
 #endif

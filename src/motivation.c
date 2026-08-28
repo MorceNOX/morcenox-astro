@@ -66,7 +66,41 @@ const char *get_planet_motivation_modifier(int planet_id) {
 }
 
 
-void display_motivation(PlotObject *plots) {
+const char *get_house_modifier(int house_num) {
+    switch(house_num) {
+        case 1:
+            return _("physical body, temperament, personal identity");
+        case 2:
+            return _("wealth, personal finances, moveable possessions");
+        case 3:
+            return _("immediate environment, short travels, siblings, early education");
+        case 4:
+            return _("ancestry, the father, real estate, the end of life");
+        case 5:
+            return _("creativity, children, pleasure, speculative ventures");
+        case 6:
+            return _("illness, servitude, small domestic animals");
+        case 7:
+            return _("partnerships, marriage, open enemies, contracts");
+        case 8:
+            return _("death, inheritances, transformations, other people's money");
+        case 9:
+            return _("higher education, philosophy, religion, long-distance travel");
+        case 10:
+            return _("career, social status, public reputation, the mother");
+        case 11:
+            return _("friendships, alliances, group affiliations, hopes");
+        case 12:
+            return _("hidden enemies, self-undoing, sorrow, imprisonment, confinements");
+    }
+    return " ";
+}
+
+
+
+
+
+void display_motivation(PlotObject *plots, int *house_rulers) {
 
     int object_diff = show_modern_planets ? 0 : 3;
 
@@ -142,7 +176,7 @@ void display_motivation(PlotObject *plots) {
     print_text_multiline(table_win, 12, 6, 80, planet_modifier);
 
 
-    
+
 
         
     wattroff(table_win, A_ITALIC);
@@ -188,57 +222,83 @@ void display_motivation(PlotObject *plots) {
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(22) | A_BOLD);
-    mvwprintw(table_win, 24, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
+    mvwprintw(table_win, 23, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
     wattroff(table_win, COLOR_PAIR(22) | A_BOLD);
 
     char area[100] = " ";
 
-    if (strcmp(LANGUAGE, "en") == 0) {
-        get_house_meaning(romanToInt(plots[ruler - 1].house), area);
+    
+    int house_num = romanToInt(plots[ruler - 1].house);
+    switch(house_num) {
+        case 1:
+            snprintf(area, 100, "%s", _("The native’s physical body, temperament, personal identity"));
+            break;
+        case 2:
+            snprintf(area, 100, "%s", _("Wealth, personal finances, moveable possessions"));
+            break;
+        case 3:
+            snprintf(area, 100, "%s", _("Immediate environment, short travels, siblings, early education"));
+            break;
+        case 4:
+            snprintf(area, 100, "%s", _("Ancestry, the father, real estate, the end of life"));
+            break;
+        case 5:
+            snprintf(area, 100, "%s", _("Creativity, children, pleasure, speculative ventures"));
+            break;
+        case 6:
+            snprintf(area, 100, "%s", _("Illness, servitude, small domestic animals"));
+            break;
+        case 7:
+            snprintf(area, 100, "%s", _("Partnerships, marriage, open enemies, contracts"));
+            break;
+        case 8:
+            snprintf(area, 100, "%s", _("Death, inheritances, transformations, other people's money"));
+            break;
+        case 9:
+            snprintf(area, 100, "%s", _("Higher education, philosophy, religion, long-distance travel"));
+            break;
+        case 10:
+            snprintf(area, 100, "%s", _("Career, social status, public reputation, the mother"));
+            break;
+        case 11:
+            snprintf(area, 100, "%s", _("Friendships, alliances, group affiliations, hopes"));
+            break;
+        case 12:
+            snprintf(area, 100, "%s", _("Hidden enemies, self-undoing, sorrow, imprisonment, confinements"));
+            break;
     }
-    else {
-        int house_num = romanToInt(plots[ruler - 1].house);
-        switch(house_num) {
-            case 1:
-                snprintf(area, 100, "%s", _("The native’s physical body, temperament, personal identity"));
+
+    // int r_houses[13] = {0};
+    char house_modifier1[256] = "";
+    char house_modifier2[256] = "";
+
+    bool is_one = true;
+    for (int i = 1; i <= 12; i++) {
+        if (house_rulers[i] == ruler) {
+            //r_houses[i] = 1;
+            if (is_one) {
+                snprintf(house_modifier1, 256, "%s", (char *)get_house_modifier(i));
+                is_one = false;
+            }
+            else {
+                snprintf(house_modifier2, 256, "%s", (char *)get_house_modifier(i));
                 break;
-            case 2:
-                snprintf(area, 100, "%s", _("Wealth, personal finances, moveable possessions"));
-                break;
-            case 3:
-                snprintf(area, 100, "%s", _("Immediate environment, short travels, siblings, early education"));
-                break;
-            case 4:
-                snprintf(area, 100, "%s", _("Ancestry, the father, real estate, the end of life"));
-                break;
-            case 5:
-                snprintf(area, 100, "%s", _("Creativity, children, pleasure, speculative ventures"));
-                break;
-            case 6:
-                snprintf(area, 100, "%s", _("Illness, servitude, small domestic animals"));
-                break;
-            case 7:
-                snprintf(area, 100, "%s", _("Partnerships, marriage, open enemies, contracts"));
-                break;
-            case 8:
-                snprintf(area, 100, "%s", _("Death, inheritances, transformations, other people's money"));
-                break;
-            case 9:
-                snprintf(area, 100, "%s", _("Higher education, philosophy, religion, long-distance travel"));
-                break;
-            case 10:
-                snprintf(area, 100, "%s", _("Career, social status, public reputation, the mother"));
-                break;
-            case 11:
-                snprintf(area, 100, "%s", _("Friendships, alliances, group affiliations, hopes"));
-                break;
-            case 12:
-                snprintf(area, 100, "%s", _("Hidden enemies, self-undoing, sorrow, imprisonment, confinements"));
-                break;
+            }
         }
     }
+
+    char influence[700] = "";
+
+    if (ruler == 1 || ruler == 2) {
+        snprintf(influence, 700, _("%s. These areas will suffer influences from %s."), area, house_modifier1);
+    }
+    else {
+        snprintf(influence, 700, _("%s. These areas will suffer influences from %s and %s."), area, house_modifier1, house_modifier2);
+    }
     wattron(table_win, A_ITALIC);
-    mvwprintw(table_win, 25, 6, "%s", area);
+    //mvwprintw(table_win, 25, 6, "%s", area);
+
+    print_text_multiline(table_win, 24, 6, 100, influence);
     wattroff(table_win, A_ITALIC);
     
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
