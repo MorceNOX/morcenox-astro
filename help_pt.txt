@@ -281,12 +281,17 @@ Pressione Q ou ESC para retornar ao menu principal.
  
  
  
-• A - Ligar ou Desligar Animação
+• A ou Espaço - Ligar ou Desligar Animação
 
 • [ - Reduz a velocidade da animação (em 1 min ou de volta no tempo, 
       se negativo)
 
 • ] - Aumenta a velocidade da animação (em 1 min)
+
+• { - Reduz a velocidade da animação (em 1 segundo ou de volta no 
+      tempo, se negativo)
+
+• } - Aumenta a velocidade da animação (em 1 segundo)
 
 • + - Ampliar (Zoom In) 
 
@@ -1365,14 +1370,17 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Horários de Ascensão, Ocaso E Culminação (F5)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Exibe os horários (em UTC) para as horas planetárias
-de ascensão, cruzamento do Ascendente, Culminação
-(cruzamento do MC) e pôr (cruzamento do Descendente).
+Exibe os horários (em Fuso-Horário Local) de Ascensão
+(cruzamento do Ascendente), Culminação (cruzamento do MC) e Ocaso 
+(cruzamento do Descendente) dos luminares, planetas e nodos
+lunares.
 
 É importante determinar a orientalidade ou occidentalidade
-dos planetas em relação ao Sol.
+dos planetas em relação a outros corpos, principalmente o Sol, o
+que conta como dignidade acidental. Aquele que nasce (ascende)
+primeiro está oriental em relação ao outro.
 
-Você também pode usar este módulo para verificar o trânsito
+Você pode usar este módulo, inclusive, para verificar o trânsito
 dos planetas no céu e os horários em que podem ou não
 serem visíveis pela distância do Sol.
 

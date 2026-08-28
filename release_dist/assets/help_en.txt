@@ -276,12 +276,17 @@ Press Q or ESC to return to the main menu.
        
      
      
-    • A - Toggle Animation
+    • A or Space - Toggle Animation
     
     • [ - Slow down the animation pace by 1 min or backwards, 
           if negative
     
     • ] - Increase the animation pace by 1 min
+    
+    • { - Slow down the animation pace by 1 second or backwards, 
+          if negative
+    
+    • } - Increase the animation pace by 1 second
     
     • + - Zoom In 
     
@@ -1338,16 +1343,19 @@ Press Q or ESC to return to the main menu.
 • Rising, Setting, and Culmination Times (F5)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Shows the times (in UTC) for planetary rising, crossing 
-the Ascendant, Culmination (crossing the MC), and 
-setting (crossing the Descendant).
+Displays the times (in local time) of Rising (crossing the 
+Ascendant), Culmination (crossing the MC), and Setting
+(crossing the Descendant) for the luminaries, planets, and lunar
+nodes.
 
-It is important to determine the orientality or occidentality of 
-the planets in relation to the Sun.
+It is important to determine the orientality or occidentality
+of the planets relative to other bodies—primarily the Sun—as
+this counts as accidental dignity. The body that rises (ascends)
+first is oriental relative to the other.
 
-You can also use this module to check the transit of the 
-planets in the sky and the times they can be or not visible by the 
-distance from the Sun.
+You can also use this module to track planetary transits
+across the sky and determine the times when they may or may
+not be visible based on their distance from the Sun.
 
 
 
