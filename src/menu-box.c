@@ -1079,8 +1079,8 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     setcchar(&br, L"╯", 0, 0, NULL); // Bottom Right Corner
 
     while(1) {
-        bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
         clear();
+        bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
 
         
         int max_y, max_x;
@@ -1110,39 +1110,65 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         unsigned short term_w = get_terminal_width();
         unsigned short term_h = get_terminal_height();
-        
+       
+        int multiplier = 150;
+
         // 1. Draw Logo
         
         for (int i = 0; i < (int)ARRAY_SIZE(LOGO); i++) {
             draw_centered_text(stdscr, 1 + i, 0, term_w, LOGO[i], COLOR_PAIR(32));
+            napms(*delay * (multiplier / 1.5));
         }
         
-        
-        
+               
         // 5. Decorations
         wattron(stdscr, COLOR_PAIR(33) | A_DIM);
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 1+i, 2, jupiter_7lines[i]);
         }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier * 1.5);
+        }
         
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 3+i, 8, saturno_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
         }
         
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 2+i, 12, sol_7lines[i]);
         }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
 
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 1+i, term_w - 5, mercury_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
         }
         
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 3+i, term_w - 10, venus_7lines[i]);
         }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
 
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 1+i, term_w - 15, marte_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
         }
         wattroff(stdscr, COLOR_PAIR(33) | A_DIM);
 
