@@ -68,33 +68,22 @@ const char *get_planet_motivation_modifier(int planet_id) {
 
 const char *get_house_modifier(int house_num) {
     switch(house_num) {
-        case 1:
-            return _("physical body, temperament, personal identity");
-        case 2:
-            return _("wealth, personal finances, moveable possessions");
-        case 3:
-            return _("immediate environment, short travels, siblings, early education");
-        case 4:
-            return _("ancestry, the father, real estate, the end of life");
-        case 5:
-            return _("creativity, children, pleasure, speculative ventures");
-        case 6:
-            return _("illness, servitude, small domestic animals");
-        case 7:
-            return _("partnerships, marriage, open enemies, contracts");
-        case 8:
-            return _("death, inheritances, transformations, other people's money");
-        case 9:
-            return _("higher education, philosophy, religion, long-distance travel");
-        case 10:
-            return _("career, social status, public reputation, the mother");
-        case 11:
-            return _("friendships, alliances, group affiliations, hopes");
-        case 12:
-            return _("hidden enemies, self-undoing, sorrow, imprisonment, confinements");
+        case 1:  return _("personal identity, vitality, and core temperament");
+        case 2:  return _("material wealth, personal finances, and livelihood");
+        case 3:  return _("the immediate environment, siblings, and short travels");
+        case 4:  return _("ancestry, parental heritage, real estate, and private foundations");
+        case 5:  return _("creative expression, children, pleasures, and speculation");
+        case 6:  return _("physical illness, daily labor, and subordinate relationships");
+        case 7:  return _("partnerships, marriage, public adversaries, and contracts");
+        case 8:  return _("inheritances, psychological transformations, and shared resources");
+        case 9:  return _("higher knowledge, philosophy, worldview, and long-distance journeys");
+        case 10: return _("professional career, social status, and public reputation");
+        case 11: return _("alliances, supportive networks, friendships, and long-term hopes");
+        case 12: return _("hidden challenges, self-undoing, isolation, and confinement");
     }
     return " ";
 }
+
 
 
 
@@ -173,7 +162,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     
 
 
-    print_text_multiline(table_win, 12, 6, 80, planet_modifier);
+    print_text_multiline(table_win, 11, 6, 80, planet_modifier);
 
 
 
@@ -182,11 +171,11 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     wattroff(table_win, A_ITALIC);
 
     wattron(table_win, COLOR_PAIR(21) | A_BOLD);
-    mvwprintw(table_win, 15, 4, "• %s: %s (%s) %s  ", _("Sign of the Ruler"), plots[ruler - 1].sign, get_sign_name((int)plots[ruler - 1].longitude / 30), get_sign_element((int)plots[ruler - 1].longitude / 30));
+    mvwprintw(table_win, 14, 4, "• %s: %s (%s) %s  ", _("Sign of the Ruler"), plots[ruler - 1].sign, get_sign_name((int)plots[ruler - 1].longitude / 30), get_sign_element((int)plots[ruler - 1].longitude / 30));
     wattroff(table_win, COLOR_PAIR(21) | A_BOLD);
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 16, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    mvwprintw(table_win, 15, 4, "───────────────────────────────────────────────────────────────────────────────────");
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, A_ITALIC);
@@ -194,112 +183,77 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     int ruler_sign = (int)plots[ruler - 1].longitude / 30;
     
     if (strcmp(get_sign_element_name(ruler_sign), _("Fire")) == 0) {
-        mvwprintw(table_win, 18, 6, _("This drive is animated by assertive energy, dynamism, and leadership,"));
-        mvwprintw(table_win, 19, 6, _("infusing the core motivation with passion and a vital quest for expansion."));
+        mvwprintw(table_win, 16, 6, _("This drive is animated by assertive energy, dynamism, and leadership,"));
+        mvwprintw(table_win, 17, 6, _("infusing the core motivation with passion and a vital quest for expansion."));
     }
     else if (strcmp(get_sign_element_name(ruler_sign), _("Earth")) == 0) {
-        mvwprintw(table_win, 18, 6, _("This drive is anchored by pragmatism, enduring focus, and deliberation,"));
-        mvwprintw(table_win, 19, 6, _("steering the core motivation toward tangible results and material stability."));
+        mvwprintw(table_win, 16, 6, _("This drive is anchored by pragmatism, enduring focus, and deliberation,"));
+        mvwprintw(table_win, 17, 6, _("steering the core motivation toward tangible results and material stability."));
     }
     /* Corrigido para 'else if' para otimizar o fluxo de execução */
     else if (strcmp(get_sign_element_name(ruler_sign), _("Air")) == 0) {
-        mvwprintw(table_win, 18, 6, _("This drive is channeled into intellectual versatility, logical synthesis,"));
-        mvwprintw(table_win, 19, 6, _("and social exchange, occasionally spreading the core motivation across varied interests."));
+        mvwprintw(table_win, 16, 6, _("This drive is channeled into intellectual versatility, logical synthesis,"));
+        mvwprintw(table_win, 17, 6, _("and social exchange, occasionally spreading the core motivation across varied interests."));
     }
     else if (strcmp(get_sign_element_name(ruler_sign), _("Water")) == 0) {
-        mvwprintw(table_win, 18, 6, _("This drive is shaped by emotional fluidity, intuition, and psychological depth,"));
-        mvwprintw(table_win, 19, 6, _("rendering the core motivation highly adaptable to inner and outer currents."));
+        mvwprintw(table_win, 16, 6, _("This drive is shaped by emotional fluidity, intuition, and psychological depth,"));
+        mvwprintw(table_win, 17, 6, _("rendering the core motivation highly adaptable to inner and outer currents."));
     }
 
     wattroff(table_win, A_ITALIC);
     
     wattron(table_win, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
-    mvwprintw(table_win, 21, 4, "• %s: %s ", _("House of the Ruler"), plots[ruler - 1].house);    
+    mvwprintw(table_win, 19, 4, "• %s: %s ", _("House of the Ruler"), plots[ruler - 1].house);    
     wattroff(table_win, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 22, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    mvwprintw(table_win, 20, 4, "───────────────────────────────────────────────────────────────────────────────────");
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(22) | A_BOLD);
-    mvwprintw(table_win, 23, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
+    mvwprintw(table_win, 21, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
     wattroff(table_win, COLOR_PAIR(22) | A_BOLD);
 
-    char area[100] = " ";
+    int house_pos = romanToInt(plots[ruler - 1].house);
+    const char *area_foco = get_house_modifier(house_pos);
 
-    
-    int house_num = romanToInt(plots[ruler - 1].house);
-    switch(house_num) {
-        case 1:
-            snprintf(area, 100, "%s", _("The native’s physical body, temperament, personal identity"));
-            break;
-        case 2:
-            snprintf(area, 100, "%s", _("Wealth, personal finances, moveable possessions"));
-            break;
-        case 3:
-            snprintf(area, 100, "%s", _("Immediate environment, short travels, siblings, early education"));
-            break;
-        case 4:
-            snprintf(area, 100, "%s", _("Ancestry, the father, real estate, the end of life"));
-            break;
-        case 5:
-            snprintf(area, 100, "%s", _("Creativity, children, pleasure, speculative ventures"));
-            break;
-        case 6:
-            snprintf(area, 100, "%s", _("Illness, servitude, small domestic animals"));
-            break;
-        case 7:
-            snprintf(area, 100, "%s", _("Partnerships, marriage, open enemies, contracts"));
-            break;
-        case 8:
-            snprintf(area, 100, "%s", _("Death, inheritances, transformations, other people's money"));
-            break;
-        case 9:
-            snprintf(area, 100, "%s", _("Higher education, philosophy, religion, long-distance travel"));
-            break;
-        case 10:
-            snprintf(area, 100, "%s", _("Career, social status, public reputation, the mother"));
-            break;
-        case 11:
-            snprintf(area, 100, "%s", _("Friendships, alliances, group affiliations, hopes"));
-            break;
-        case 12:
-            snprintf(area, 100, "%s", _("Hidden enemies, self-undoing, sorrow, imprisonment, confinements"));
-            break;
-    }
+    int casas_governadas[2] = {0, 0};
+    int qtd_governadas = 0;
 
-    // int r_houses[13] = {0};
-    char house_modifier1[256] = "";
-    char house_modifier2[256] = "";
-
-    bool is_one = true;
     for (int i = 1; i <= 12; i++) {
         if (house_rulers[i] == ruler) {
-            //r_houses[i] = 1;
-            if (is_one) {
-                snprintf(house_modifier1, 256, "%s", (char *)get_house_modifier(i));
-                is_one = false;
-            }
-            else {
-                snprintf(house_modifier2, 256, "%s", (char *)get_house_modifier(i));
-                break;
-            }
+            casas_governadas[qtd_governadas] = i;
+            qtd_governadas++;
+            if (qtd_governadas >= 2) break; // Máximo de duas casas por planeta na astrologia tradicional
         }
     }
 
-    char influence[700] = "";
+    char influence[1024] = "";
 
-    if (ruler == 1 || ruler == 2) {
-        snprintf(influence, 700, _("%s. These areas will suffer influences from %s."), area, house_modifier1);
+    if (qtd_governadas == 1) {
+        // Caso do Sol, Lua, ou interceptações onde apenas uma casa é governada
+        snprintf(influence, sizeof(influence),
+            _("The native's primary drives are directed toward %s (House %d). "
+              "The raw material and circumstances to fulfill this motivation will be "
+              "drawn fundamentally from the affairs of %s (House %d)."),
+            area_foco, house_pos, 
+            get_house_modifier(casas_governadas[0]), casas_governadas[0]);
+    } 
+    else if (qtd_governadas == 2) {
+        // Caso padrão dos planetas tradicionais (Mercúrio, Vênus, Marte, Júpiter, Saturno)
+        snprintf(influence, sizeof(influence),
+            _("The native's primary drives are directed toward %s (House %d). "
+              "The fuel, tools, and background experiences for these matters are supplied "
+              "by a dual matrix: the affairs of %s (House %d) and %s (House %d)."),
+            area_foco, house_pos, 
+            get_house_modifier(casas_governadas[0]), casas_governadas[0],
+            get_house_modifier(casas_governadas[1]), casas_governadas[1]);
     }
-    else {
-        snprintf(influence, 700, _("%s. These areas will suffer influences from %s and %s."), area, house_modifier1, house_modifier2);
-    }
+
     wattron(table_win, A_ITALIC);
-    //mvwprintw(table_win, 25, 6, "%s", area);
-
-    print_text_multiline(table_win, 24, 6, 100, influence);
+    print_text_multiline(table_win, 22, 6, 100, influence);
     wattroff(table_win, A_ITALIC);
+
     
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     wrefresh(table_win);
