@@ -3721,7 +3721,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     format_hour(hour_len1, sizeof(hour_len1), daytime_hour);
     format_hour(hour_len2, sizeof(hour_len2), nighttime_hour);
 
-    mvwprintw(table_win, row + 4, 4, "  %s: %.4f (%s)", _("Hour length (Day)"), daytime_hour, hour_len1);
+    mvwprintw(table_win, row + 4, 4, "%s: %.4f (%s)", _("  Hour length (Day)"), daytime_hour, hour_len1);
     mvwprintw(table_win, row + 5, 4, "%s: %.4f (%s)", _("Hour length (Night)"), nighttime_hour, hour_len2);
 
     const char *regent_day_str = planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)];

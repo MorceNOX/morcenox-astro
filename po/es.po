@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 04:12-0300\n"
+"POT-Creation-Date: 2026-08-29 04:38-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1460,7 +1460,7 @@ msgid "Next day (hour 1):"
 msgstr ""
 
 #: src/draw-chart.c:3724
-msgid "Hour length (Day)"
+msgid "  Hour length (Day)"
 msgstr ""
 
 #: src/draw-chart.c:3725

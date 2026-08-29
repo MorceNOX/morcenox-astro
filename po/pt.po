@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 04:12-0300\n"
+"POT-Creation-Date: 2026-08-29 04:38-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1722,12 +1722,12 @@ msgid "Next day (hour 1):"
 msgstr "Próx.Dia (hora 1):"
 
 #: src/draw-chart.c:3724
-msgid "Hour length (Day)"
-msgstr "Hora Diurna"
+msgid "  Hour length (Day)"
+msgstr "        Hora Diurna"
 
 #: src/draw-chart.c:3725
 msgid "Hour length (Night)"
-msgstr "Hora Noturna"
+msgstr "       Hora Noturna"
 
 #: src/draw-chart.c:3730
 msgid "Chart's Planetary"
