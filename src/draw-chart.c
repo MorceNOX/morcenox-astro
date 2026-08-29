@@ -1671,7 +1671,7 @@ void draw_cusps_div(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j != 1 && j != 4 && j != 7 && j != 10) {
-                        if (angle <= -1.81) {
+                        if (angle <= -1.79) {
                             mvaddstr(y, x, "▚");  // casa 11
                         } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
                             mvaddstr(y, x, "▎"); // casa 10
@@ -1742,7 +1742,7 @@ void draw_cusps_div_axis(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j == 1 || j == 4 || j == 7 || j == 10) {            
-                        if (angle <= -1.81) {
+                        if (angle <= -1.79) {
                             mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
                         } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
                             mvaddstr(y, x, "▎"); // casa 10
@@ -2191,9 +2191,9 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         for (int i = 0; i < 6; i++) {
             if (MAPA_DIURNO) {
-                mvprintw(LINES - 14, 7, "%s", sol_ascii[i]);
+                mvprintw(LINES - 10 + i, 7, "%s", sol_ascii[i]);
             } else {
-                mvprintw(LINES - 14, 7, "%s", lua_ascii[i]);
+                mvprintw(LINES - 10 + i, 7, "%s", lua_ascii[i]);
             }
         }
     }
