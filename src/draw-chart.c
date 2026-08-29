@@ -1155,14 +1155,24 @@ void draw_circle_points(int center_y, int center_x, float radius,
  */
 void draw_circle_points_delay(int center_y, int center_x, float radius, 
                        float aspect_ratio, float current_scale, 
-                       const wchar_t* character, int delay_ms) {
+                       const wchar_t* character, int delay_ms, bool clockwise) {
     int steps = 360;  // Círculo preciso
     float r = radius * current_scale;
     
     for (int i = 0; i < steps; i++) {
         float angle = i * M_PI / 180.0; // Usando M_PI padrão ou seu PI definido
-        int y = (int)(center_y + r * sin(angle));
-        int x = (int)(center_x + aspect_ratio * r * cos(angle));
+
+        float my = 0.0, mx = 0.0;
+        if (clockwise) {
+            my = sin(angle);
+            mx = cos(angle);
+        }
+        else {
+            mx = sin(angle);
+            my = cos(angle);
+        }
+        int y = (int)(center_y + r * my);
+        int x = (int)(center_x + aspect_ratio * r * mx);
         
         if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
             mvaddwstr(y, x, character);
@@ -1661,11 +1671,11 @@ void draw_cusps_div(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j != 1 && j != 4 && j != 7 && j != 10) {
-                        if (angle >= 4.93) {
-                            mvaddstr(y, x, "▞");  // casa 9
-                        } else if (angle <= -1.35 || angle >= 4.5) {
+                        if (angle <= -1.81) {
+                            mvaddstr(y, x, "▚");  // casa 11
+                        } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
                             mvaddstr(y, x, "▎"); // casa 10
-                        } else if (angle <= -0.8) {
+                        } else if (angle <= -0.8 || angle >= 4.93) {
                             mvaddstr(y, x, "▞");  // casa 9 
                         } else if (angle <= -0.2) {
                             mvaddstr(y, x, "🙼");  // casa 8
@@ -1732,11 +1742,11 @@ void draw_cusps_div_axis(int object_count,
                                                 
                     // Draw the appropriate text
                     if (j == 1 || j == 4 || j == 7 || j == 10) {            
-                        if (angle >= 4.93) {
-                            mvaddstr(y, x, "⧸");  // casa 9 // ⧹⧸
-                        } else if (angle <= -1.35 || angle >= 4.5) {
+                        if (angle <= -1.81) {
+                            mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
+                        } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
                             mvaddstr(y, x, "▎"); // casa 10
-                        } else if (angle <= -0.8) {
+                        } else if (angle <= -0.8 || angle >= 4.93) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
                             mvaddstr(y, x, "🙼");  // casa 8
@@ -2177,6 +2187,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             const char *sign_str = get_sign(sign);
 
             mvprintw(13 + j, 2, "%s %2d: %2d°%s%02d'", _("House"), j, degree, sign_str, min);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            if (MAPA_DIURNO) {
+                mvprintw(LINES - 14, 7, "%s", sol_ascii[i]);
+            } else {
+                mvprintw(LINES - 14, 7, "%s", lua_ascii[i]);
+            }
         }
     }
 

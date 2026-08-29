@@ -306,7 +306,7 @@ void draw_centered_text(WINDOW *win, int y, int x, int available_width, const ch
         wattron(win, attr);
         mvwprintw(win, y, x, "%s", text);
         wattroff(win, attr);
-        wrefresh(win);
+        //wrefresh(win);
         return;
     }
 
@@ -317,7 +317,7 @@ void draw_centered_text(WINDOW *win, int y, int x, int available_width, const ch
     // We use %*s to handle the left padding and then the right padding
     mvwprintw(win, y, x, "%*s%s%*s", padding_left, "", text, padding_right, "");
     wattroff(win, attr);
-    wrefresh(win);
+    //wrefresh(win);
     
 }
 

@@ -1078,6 +1078,9 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     setcchar(&bl, L"╰", 0, 0, NULL); // Bottom Left Corner
     setcchar(&br, L"╯", 0, 0, NULL); // Bottom Right Corner
 
+    int multiplier = 150;
+    bool clockwise = true;
+
     while(1) {
         clear();
         bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
@@ -1111,13 +1114,14 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         unsigned short term_w = get_terminal_width();
         unsigned short term_h = get_terminal_height();
        
-        int multiplier = 150;
-
         // 1. Draw Logo
         
         for (int i = 0; i < (int)ARRAY_SIZE(LOGO); i++) {
             draw_centered_text(stdscr, 1 + i, 0, term_w, LOGO[i], COLOR_PAIR(32));
-            napms(*delay * (multiplier / 1.5));
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * (multiplier / 1.5));
+            }
         }
         
                
@@ -1180,7 +1184,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(31));
         }    
         
-        draw_circle_points_delay(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░", *delay);
+        draw_circle_points_delay(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7));
@@ -1191,7 +1195,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(9) | A_DIM);
         }
         
-        draw_circle_points_delay(center_y, center_x, 26, 2.0, 1.0, L"░▒▓█▓▒░", *delay);
+        draw_circle_points_delay(center_y, center_x, 26, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7) | COLOR_PAIR(9) | A_DIM);
