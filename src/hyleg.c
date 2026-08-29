@@ -886,6 +886,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     if (tipo_h == H_SOL) wprintw(table_win, _("☉ Sun"));
     else if (tipo_h == H_LUNA) wprintw(table_win, _("☽ Moon"));
     else if (tipo_h == H_ASC) wprintw(table_win, _("ASC (Ascendant Degree)"));
+    else if (tipo_h == H_SAN) wprintw(table_win, _("SAN (Syzygy Ante-Nativitatem)"));
     else if (tipo_h == H_FORTUNA) wprintw(table_win, _("🝴 Part of Fortune"));
     else if (tipo_h == H_ALMUTEN) {
         // CORREÇÃO: Varre o array plots para encontrar o planeta Almuten correspondente
@@ -906,6 +907,25 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
                     _("Almuten Figuris Protector"));
         } else {
             wprintw(table_win, _("Almuten Figuris Protector"));
+        }
+    }
+    else if (tipo_h == H_ALMUTEN_HYL) {
+        // CORREÇÃO: Varre o array plots para encontrar o planeta Almuten correspondente
+        int idx_almuten_plots = -1;
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+            // Se plots.id começa em 0 (0=Sol, 1=Lua...), somamos 1 para bater com a base 1-12
+            if ((plots[i].id + 1) == id_almuten_ref) {
+                idx_almuten_plots = i;
+                break;
+            }
+        }
+        
+        if (idx_almuten_plots != -1) {
+            // Imprime o glifo real e o nome do planeta (ex: ♀ Venus (Almuten Figuris))
+            wprintw(table_win, "%s %s (%s)", 
+                    plots[idx_almuten_plots].object, 
+                    plots[idx_almuten_plots].object_name,
+                    _("Almuten of Hylegiacal Points"));
         }
     }
     wattroff(table_win, A_BOLD | COLOR_PAIR(8));

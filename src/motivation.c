@@ -103,6 +103,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
 
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    int row_pad = 0;
 
     werase(shadow_win);
     wattron(shadow_win, COLOR_PAIR(9));
@@ -119,100 +121,129 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 
-   
-       
-    // Bloco 1: Condição das Faculdades Mentais
-    wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 2, 4, _("Sign of Ascendant:"));
-    wattroff(table_win, A_BOLD);
-    
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 3, 4, "───────────────────────────────────────────────────────────────────────────────────");
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    int max_linhas_dados = table_height - 6;
+    WINDOW *pad = newpad(100, table_width - 4);
+    wbkgd(pad, COLOR_PAIR(13));
 
-    wattron(table_win, COLOR_PAIR(15) | A_BOLD);
-    mvwprintw(table_win, 4, 4, "%s %s - %s  ", plots[P_ASC - object_diff].sign, get_sign_name((int)plots[P_ASC - object_diff].longitude / 30), get_sign_element((int)plots[P_ASC - object_diff].longitude / 30));
-    wattroff(table_win, COLOR_PAIR(15) | A_BOLD);
+   
+    // Bloco 1: Condição das Faculdades Mentais
+    wattron(pad, A_BOLD);
+    mvwprintw(pad, 1, 4, _("Sign of Ascendant:"));
+    wattroff(pad, A_BOLD);
+    
+    row_pad++;
+
+    wattron(pad, COLOR_PAIR(10) | A_DIM);
+    mvwprintw(pad, 2, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+    row_pad++;
+
+    wattron(pad, COLOR_PAIR(15) | A_BOLD);
+    mvwprintw(pad, 3, 4, "%s %s - %s  ", plots[P_ASC - object_diff].sign, get_sign_name((int)plots[P_ASC - object_diff].longitude / 30), get_sign_element((int)plots[P_ASC - object_diff].longitude / 30));
+    wattroff(pad, COLOR_PAIR(15) | A_BOLD);
+
+    row_pad += 2;
 
     const char *motivation = get_motivation((int)plots[P_ASC - object_diff].longitude / 30);
     
-    wattron(table_win, COLOR_PAIR(22) | A_BOLD);
-    mvwprintw(table_win, 6, 6, _("The Core Motivation:"));
-    wattroff(table_win, COLOR_PAIR(22) | A_BOLD);
+    wattron(pad, COLOR_PAIR(22) | A_BOLD);
+    mvwprintw(pad, row_pad + 1, 6, _("The Core Motivation:"));
+    wattroff(pad, COLOR_PAIR(22) | A_BOLD);
 
-    wattron(table_win, A_ITALIC);
-    mvwprintw(table_win, 7, 8, "%s", motivation);
-    wattroff(table_win, A_ITALIC);
+    row_pad += 1;
 
+    wattron(pad, A_ITALIC);
+    mvwprintw(pad, row_pad + 1, 8, "%s", motivation);
+    wattroff(pad, A_ITALIC);
+
+    row_pad += 2;
 
     int ruler = obter_regente_tradicional((int)plots[P_ASC - object_diff].longitude / 30 + 1);
 
-    wattron(table_win, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
-    mvwprintw(table_win, 9, 4, "• %s: %s (%s) ", _("Ruler of The Ascendant"), obter_glifo_planeta_por_id(ruler), obter_nome_planeta_por_id(ruler));
-    wattroff(table_win, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
+    wattron(pad, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
+    mvwprintw(pad, row_pad + 2, 4, "• %s: %s (%s) ", _("Ruler of The Ascendant"), obter_glifo_planeta_por_id(ruler), obter_nome_planeta_por_id(ruler));
+    wattroff(pad, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
 
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 10, 4, "───────────────────────────────────────────────────────────────────────────────────");
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    row_pad += 2;
+
+    wattron(pad, COLOR_PAIR(10) | A_DIM);
+    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+    row_pad++;
 
     const char *planet_modifier = get_planet_motivation_modifier(ruler - 1);
 
-    wattron(table_win, A_ITALIC);
+    wattron(pad, A_ITALIC);
 
     
 
 
-    print_text_multiline(table_win, 11, 6, 80, planet_modifier);
+    int lines = print_text_multiline(pad, row_pad + 2, 6, 80, planet_modifier);
 
 
+    row_pad += lines + 2;
 
 
         
-    wattroff(table_win, A_ITALIC);
+    wattroff(pad, A_ITALIC);
 
-    wattron(table_win, COLOR_PAIR(21) | A_BOLD);
-    mvwprintw(table_win, 14, 4, "• %s: %s (%s) %s  ", _("Sign of the Ruler"), plots[ruler - 1].sign, get_sign_name((int)plots[ruler - 1].longitude / 30), get_sign_element((int)plots[ruler - 1].longitude / 30));
-    wattroff(table_win, COLOR_PAIR(21) | A_BOLD);
+    wattron(pad, COLOR_PAIR(21) | A_BOLD);
+    mvwprintw(pad, row_pad + 2, 4, "• %s: %s (%s) %s  ", _("Sign of the Ruler"), plots[ruler - 1].sign, get_sign_name((int)plots[ruler - 1].longitude / 30), get_sign_element((int)plots[ruler - 1].longitude / 30));
+    wattroff(pad, COLOR_PAIR(21) | A_BOLD);
 
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 15, 4, "───────────────────────────────────────────────────────────────────────────────────");
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    row_pad += 2;
 
-    wattron(table_win, A_ITALIC);
+    wattron(pad, COLOR_PAIR(10) | A_DIM);
+    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wattroff(pad, COLOR_PAIR(10) | A_DIM);
+    
+    row_pad += 2;
+
+    wattron(pad, A_ITALIC);
 
     int ruler_sign = (int)plots[ruler - 1].longitude / 30;
     
     if (strcmp(get_sign_element_name(ruler_sign), _("Fire")) == 0) {
-        mvwprintw(table_win, 16, 6, _("This drive is animated by assertive energy, dynamism, and leadership,"));
-        mvwprintw(table_win, 17, 6, _("infusing the core motivation with passion and a vital quest for expansion."));
+        mvwprintw(pad, row_pad + 1, 6, _("This drive is animated by assertive energy, dynamism, and leadership,"));
+        mvwprintw(pad, row_pad + 2, 6, _("infusing the core motivation with passion and a vital quest for expansion."));
     }
     else if (strcmp(get_sign_element_name(ruler_sign), _("Earth")) == 0) {
-        mvwprintw(table_win, 16, 6, _("This drive is anchored by pragmatism, enduring focus, and deliberation,"));
-        mvwprintw(table_win, 17, 6, _("steering the core motivation toward tangible results and material stability."));
+        mvwprintw(pad, row_pad + 1, 6, _("This drive is anchored by pragmatism, enduring focus, and deliberation,"));
+        mvwprintw(pad, row_pad + 2, 6, _("steering the core motivation toward tangible results and material stability."));
     }
     /* Corrigido para 'else if' para otimizar o fluxo de execução */
     else if (strcmp(get_sign_element_name(ruler_sign), _("Air")) == 0) {
-        mvwprintw(table_win, 16, 6, _("This drive is channeled into intellectual versatility, logical synthesis,"));
-        mvwprintw(table_win, 17, 6, _("and social exchange, occasionally spreading the core motivation across varied interests."));
+        mvwprintw(pad, row_pad + 1, 6, _("This drive is channeled into intellectual versatility, logical synthesis,"));
+        mvwprintw(pad, row_pad + 2, 6, _("and social exchange, occasionally spreading the core motivation across varied interests."));
     }
     else if (strcmp(get_sign_element_name(ruler_sign), _("Water")) == 0) {
-        mvwprintw(table_win, 16, 6, _("This drive is shaped by emotional fluidity, intuition, and psychological depth,"));
-        mvwprintw(table_win, 17, 6, _("rendering the core motivation highly adaptable to inner and outer currents."));
+        mvwprintw(pad, row_pad + 1, 6, _("This drive is shaped by emotional fluidity, intuition, and psychological depth,"));
+        mvwprintw(pad, row_pad + 2, 6, _("rendering the core motivation highly adaptable to inner and outer currents."));
     }
 
-    wattroff(table_win, A_ITALIC);
+    row_pad += 2;
+
+    wattroff(pad, A_ITALIC);
     
-    wattron(table_win, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
-    mvwprintw(table_win, 19, 4, "• %s: %s ", _("House of the Ruler"), plots[ruler - 1].house);    
-    wattroff(table_win, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
+    wattron(pad, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
+    mvwprintw(pad, row_pad + 3, 4, "• %s: %s ", _("House of the Ruler"), plots[ruler - 1].house);    
+    wattroff(pad, COLOR_PAIR(27)| A_REVERSE | A_BOLD);
 
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 20, 4, "───────────────────────────────────────────────────────────────────────────────────");
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    row_pad += 3;
 
-    wattron(table_win, COLOR_PAIR(22) | A_BOLD);
-    mvwprintw(table_win, 21, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
-    wattroff(table_win, COLOR_PAIR(22) | A_BOLD);
+    wattron(pad, COLOR_PAIR(10) | A_DIM);
+    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wattroff(pad, COLOR_PAIR(10) | A_DIM);
+   
+    row_pad += 2;
+
+    wattron(pad, COLOR_PAIR(22) | A_BOLD);
+    mvwprintw(pad, row_pad + 1, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
+    wattroff(pad, COLOR_PAIR(22) | A_BOLD);
+
+    row_pad++;
 
     int house_pos = romanToInt(plots[ruler - 1].house);
     const char *area_foco = get_house_modifier(house_pos);
@@ -250,21 +281,48 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
             get_house_modifier(casas_governadas[1]), casas_governadas[1]);
     }
 
-    wattron(table_win, A_ITALIC);
-    print_text_multiline(table_win, 22, 6, 100, influence);
-    wattroff(table_win, A_ITALIC);
+    wattron(pad, A_ITALIC);
+    lines = print_text_multiline(pad, row_pad + 2, 6, 85, influence);
+    row_pad += lines + 1;
+    wattroff(pad, A_ITALIC);
 
     
-    mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
+    mvwprintw(table_win, table_height - 1, 2, _(" Press ESC to return to chart | [↓↑] Scroll "));
     wrefresh(table_win);
 
-    keypad(table_win, TRUE);
-    nodelay(table_win, FALSE);
+    wrefresh(table_win);
+
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    // Vincula o teclado à PAD virtual
+    keypad(pad, TRUE);
+    nodelay(pad, FALSE);
+
+    // Renderiza a primeira foto da PAD na tela
+    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
     int ch;
-    do {
-        ch = wgetch(table_win);
-    } while (ch != 27 && ch != 'q');
+    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {        
+        switch (ch) {
+            case KEY_UP: 
+            case 'k': 
+            case 'K':
+                if (offset_y > 0) offset_y -= 2;
+                break;
+                
+            case KEY_DOWN: 
+            case 'j': 
+            case 'J':
+                if (offset_y < max_scroll_y) offset_y += 2;
+                break;
+        }
+        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);        
+    }
     
+    // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
+    delwin(pad);
     delwin(shadow_win);
     delwin(table_win);
+    refresh();
 }

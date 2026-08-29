@@ -6251,10 +6251,15 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         for (int i = 1; i <= 12; i++) {
 
+            // Motivação Primária
+            
             int sign = (int)(cusps[i] / 30);
             int n_ruler = obter_regente_tradicional(sign + 1);
             house_rulers[i] = n_ruler;
 
+            
+            // Houses
+            
             house_ruler_str[i] = (char *)malloc(10 * sizeof(char));
     
             char sign_str[10];   

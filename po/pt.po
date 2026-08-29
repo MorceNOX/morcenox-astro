@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-28 21:10-0300\n"
+"POT-Creation-Date: 2026-08-29 00:06-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -925,8 +925,8 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:3213 src/draw-chart.c:3541
-#: src/draw-chart.c:4275 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:988
-#: src/mind.c:312 src/motivation.c:258 src/profections.c:188
+#: src/draw-chart.c:4275 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1008
+#: src/mind.c:312 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
 
@@ -1435,28 +1435,28 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2370 src/draw-chart.c:2374 src/draw-chart.c:2378
-#: src/motivation.c:185 src/temperament.c:71 src/temperament.c:645
+#: src/motivation.c:208 src/temperament.c:71 src/temperament.c:645
 #: src/temperament.c:651 src/temperament.c:664 src/temperament.c:682
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2371 src/draw-chart.c:2375 src/draw-chart.c:2379
-#: src/motivation.c:189 src/temperament.c:74 src/temperament.c:646
+#: src/motivation.c:212 src/temperament.c:74 src/temperament.c:646
 #: src/temperament.c:654 src/temperament.c:670 src/temperament.c:690
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2372 src/draw-chart.c:2376 src/draw-chart.c:2380
-#: src/motivation.c:194 src/temperament.c:73 src/temperament.c:639
+#: src/motivation.c:217 src/temperament.c:73 src/temperament.c:639
 #: src/temperament.c:653 src/temperament.c:663 src/temperament.c:678
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2373 src/draw-chart.c:2377 src/draw-chart.c:2381
-#: src/motivation.c:198 src/temperament.c:72 src/temperament.c:640
+#: src/motivation.c:221 src/temperament.c:72 src/temperament.c:640
 #: src/temperament.c:652 src/temperament.c:669 src/temperament.c:686
 #, c-format
 msgid "Water"
@@ -2595,127 +2595,127 @@ msgstr "Inverno"
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
-#: src/draw-chart.c:6976 src/draw-chart.c:7006
+#: src/draw-chart.c:6981 src/draw-chart.c:7011
 msgid "01. Chart Data Panel"
 msgstr "01. Dados do Mapa"
 
-#: src/draw-chart.c:6977 src/draw-chart.c:7007
+#: src/draw-chart.c:6982 src/draw-chart.c:7012
 msgid "02. Positions, Dignities & Rulerships"
 msgstr "02. Posições, Dignidades & Regentes"
 
-#: src/draw-chart.c:6978 src/draw-chart.c:7008
+#: src/draw-chart.c:6983 src/draw-chart.c:7013
 msgid "03. Accidental Dignities"
 msgstr "03. Dignidades Acidentais"
 
-#: src/draw-chart.c:6979 src/draw-chart.c:7009
+#: src/draw-chart.c:6984 src/draw-chart.c:7014
 msgid "04. Strength of the Planets"
 msgstr "04. Força dos Planetas"
 
-#: src/draw-chart.c:6980 src/draw-chart.c:7010
+#: src/draw-chart.c:6985 src/draw-chart.c:7015
 msgid "05. Aspects"
 msgstr "05. Aspectos"
 
-#: src/draw-chart.c:6981 src/draw-chart.c:7011
+#: src/draw-chart.c:6986 src/draw-chart.c:7016
 msgid "06. Declination Aspects"
 msgstr "06. Aspectos de Declinação"
 
-#: src/draw-chart.c:6982 src/draw-chart.c:7012
+#: src/draw-chart.c:6987 src/draw-chart.c:7017
 msgid "07. Planetary Hours"
 msgstr "07. Horas Planetárias"
 
-#: src/draw-chart.c:6983 src/draw-chart.c:7013
+#: src/draw-chart.c:6988 src/draw-chart.c:7018
 msgid "08. Rising, Setting & Culmination Times"
 msgstr "08. Horários de Ascenção, Ocaso & Culminação"
 
-#: src/draw-chart.c:6984 src/draw-chart.c:7014
+#: src/draw-chart.c:6989 src/draw-chart.c:7019
 msgid "09. Houses"
 msgstr "09. Casas"
 
-#: src/draw-chart.c:6985 src/draw-chart.c:7015
+#: src/draw-chart.c:6990 src/draw-chart.c:7020
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr "10. Almuten Figuris & dos Pontos Hylegíacos"
 
-#: src/draw-chart.c:6986
+#: src/draw-chart.c:6991
 msgid "11. Temperament Analysis"
 msgstr "11. Análise do Temperamento"
 
-#: src/draw-chart.c:6987
+#: src/draw-chart.c:6992
 msgid "12. Annual Profections"
 msgstr "12. Profecções Anuais"
 
-#: src/draw-chart.c:6988
+#: src/draw-chart.c:6993
 msgid "13. Firdaria"
 msgstr "13. Firdária"
 
-#: src/draw-chart.c:6989
+#: src/draw-chart.c:6994
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr "14. Cronocratas Vitais: Doadores de Vida"
 
-#: src/draw-chart.c:6990
+#: src/draw-chart.c:6995
 msgid "15. Vital Threats: The Anareta"
 msgstr "15. Ameaças Vitais: O Anareta"
 
-#: src/draw-chart.c:6991
+#: src/draw-chart.c:6996
 msgid "16. Primary Directions"
 msgstr "16. Direções Primárias"
 
-#: src/draw-chart.c:6992
+#: src/draw-chart.c:6997
 msgid "17. Prymary Directions to Arabic Parts"
 msgstr "17. Direções Primárias às Partes Árabes"
 
-#: src/draw-chart.c:6993
+#: src/draw-chart.c:6998
 msgid "18. Arabic Parts"
 msgstr "18. Partes Árabes"
 
-#: src/draw-chart.c:6994
+#: src/draw-chart.c:6999
 msgid "19. Mind Analysis"
 msgstr "19. Análise da Mente"
 
-#: src/draw-chart.c:6995
+#: src/draw-chart.c:7000
 msgid "20. Solar Revolution"
 msgstr "20. Revolução Solar"
 
-#: src/draw-chart.c:6996
+#: src/draw-chart.c:7001
 msgid "21. Planetary Energy Profile"
 msgstr "21. Perfil de Energia Planetária "
 
-#: src/draw-chart.c:6997
+#: src/draw-chart.c:7002
 msgid "22. Primary Motivation"
 msgstr "22. Motivação Primária"
 
-#: src/draw-chart.c:6998
+#: src/draw-chart.c:7003
 msgid "23. Aspects by Sign"
 msgstr "23. Aspectos por Signo"
 
-#: src/draw-chart.c:6999
+#: src/draw-chart.c:7004
 msgid "24. Aspects to Antissia & Contrantissia"
 msgstr "24. Aspects para Antissia & Contrantissia"
 
-#: src/draw-chart.c:7016
+#: src/draw-chart.c:7021
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr "12. Confrontação Radix e Retorno Solar"
 
-#: src/draw-chart.c:7017
+#: src/draw-chart.c:7022
 msgid "12. Annual Transits & Radical Projections"
 msgstr "12. Trânsitos do Ano & Projeções Radicais"
 
-#: src/draw-chart.c:7018
+#: src/draw-chart.c:7023
 msgid "13. Arabic Parts"
 msgstr "13. Partes Árabes"
 
-#: src/draw-chart.c:7019
+#: src/draw-chart.c:7024
 msgid "14. Planetary Energy Profile"
 msgstr "14. Perfil de Energia Planetária"
 
-#: src/draw-chart.c:7020
+#: src/draw-chart.c:7025
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr "15. Partes Árabes - Confrontação Rev. Solar/Radix"
 
-#: src/draw-chart.c:7021
+#: src/draw-chart.c:7026
 msgid "16. Aspects by Sign"
 msgstr "16. Aspectos por Signo"
 
-#: src/draw-chart.c:7022
+#: src/draw-chart.c:7027
 msgid "17. Aspects to Antissia & Contrantissia"
 msgstr "17. Aspectos para Antissia & Contrantissia"
 
@@ -2853,7 +2853,7 @@ msgstr "Grau do Ascendente (Escudo Corporal)"
 msgid "Almuten Figuris (Chart Ruler)"
 msgstr "Almuten Figuris (Regente do Mapa)"
 
-#: src/hyleg.c:329
+#: src/hyleg.c:329 src/hyleg.c:928
 msgid "Almuten of Hylegiacal Points"
 msgstr "Almuten de Pontos Hylegíacos"
 
@@ -2996,49 +2996,54 @@ msgid "ASC (Ascendant Degree)"
 msgstr "ASC (Grau do Ascendente)"
 
 #: src/hyleg.c:889
+#, fuzzy
+msgid "SAN (Syzygy Ante-Nativitatem)"
+msgstr "Sizígia Pré-Natal (SAN):"
+
+#: src/hyleg.c:890
 msgid "🝴 Part of Fortune"
 msgstr "🝴  Parte da Fortuna"
 
-#: src/hyleg.c:906 src/hyleg.c:908
+#: src/hyleg.c:907 src/hyleg.c:909
 msgid "Almuten Figuris Protector"
 msgstr "Almuten Figuris Protetor"
 
-#: src/hyleg.c:914
+#: src/hyleg.c:934
 msgid "8th House Sign & Ruler:   "
 msgstr "Signo & Regente da 8ª Casa: "
 
-#: src/hyleg.c:925
+#: src/hyleg.c:945
 msgid "THE CHOSEN ANARETA (Interfector): "
 msgstr "O ANARETA ESCOLHIDO  (Interfector): "
 
-#: src/hyleg.c:935 src/hyleg.c:971
+#: src/hyleg.c:955 src/hyleg.c:991
 msgid "Calculated Threat Score: "
 msgstr "Pontuação de Ameaça Calculada: "
 
-#: src/hyleg.c:937
+#: src/hyleg.c:957
 msgid "Points"
 msgstr "Pontos"
 
-#: src/hyleg.c:968
+#: src/hyleg.c:988
 msgid "None Active"
 msgstr "Nenhum Ativo"
 
-#: src/hyleg.c:973
+#: src/hyleg.c:993
 msgid "0 Points"
 msgstr "0 Pontos"
 
-#: src/hyleg.c:974
+#: src/hyleg.c:994
 msgid "No severe planetary afflictions targeting the vital points."
 msgstr "Não há aflições planetárias graves incidindo sobre os pontos vitais."
 
-#: src/hyleg.c:983
+#: src/hyleg.c:1003
 msgid ""
 "Note: The Anareta represents the geometric source of physical or metabolic "
 "risk."
 msgstr ""
 "Nota: O Anareta representa a fonte geométrica de risco físico ou metabólico."
 
-#: src/hyleg.c:984
+#: src/hyleg.c:1004
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
@@ -3605,56 +3610,56 @@ msgstr "alianças, redes de apoio, amizades e esperanças de longo prazo"
 msgid "hidden challenges, self-undoing, isolation, and confinement"
 msgstr "desafios ocultos, autodestruição, isolamento e confinamento"
 
-#: src/motivation.c:118
+#: src/motivation.c:120
 msgid " Primary Motivation "
 msgstr " Motivação Primária "
 
-#: src/motivation.c:126
+#: src/motivation.c:131
 msgid "Sign of Ascendant:"
 msgstr "Signo do Ascendente:"
 
-#: src/motivation.c:140
+#: src/motivation.c:151
 msgid "The Core Motivation:"
 msgstr "A Motivação Principal:"
 
-#: src/motivation.c:151
+#: src/motivation.c:165
 msgid "Ruler of The Ascendant"
 msgstr "Regente do Ascendente"
 
-#: src/motivation.c:174
+#: src/motivation.c:193
 msgid "Sign of the Ruler"
 msgstr "Signo do Regente"
 
-#: src/motivation.c:186
+#: src/motivation.c:209
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 "Essa motivação é impulsionada por energia assertiva, dinamismo e liderança,"
 
-#: src/motivation.c:187
+#: src/motivation.c:210
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr "infundindo na motivação central paixão e uma busca vital por expansão."
 
-#: src/motivation.c:190
+#: src/motivation.c:213
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 "Essa motivação se baseia no pragmatismo, no foco constante e na deliberação,"
 
-#: src/motivation.c:191
+#: src/motivation.c:214
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 "direcionando a motivação central para resultados tangíveis e estabilidade "
 "material."
 
-#: src/motivation.c:195
+#: src/motivation.c:218
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 "Essa motivação é canalizada para a versatilidade intelectual e a síntese "
 "lógica,"
 
-#: src/motivation.c:196
+#: src/motivation.c:219
 msgid ""
 "and social exchange, occasionally spreading the core motivation across "
 "varied interests."
@@ -3662,7 +3667,7 @@ msgstr ""
 "e a troca social, ocasionalmente distribuindo a motivação central por "
 "interesses variados."
 
-#: src/motivation.c:199
+#: src/motivation.c:222
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
@@ -3670,23 +3675,23 @@ msgstr ""
 "Essa motivação é moldada pela fluidez emocional, intuição e profundidade "
 "psicológica,"
 
-#: src/motivation.c:200
+#: src/motivation.c:223
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 "tornando a motivação central altamente adaptável a correntes internas e "
 "externas."
 
-#: src/motivation.c:206
+#: src/motivation.c:231
 msgid "House of the Ruler"
 msgstr "Casa do Regente"
 
-#: src/motivation.c:214
+#: src/motivation.c:243
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 "Áreas da vida nas quais a Motivação Principal é aplicada ou direcionada:"
 
-#: src/motivation.c:236
+#: src/motivation.c:267
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The raw "
@@ -3697,7 +3702,7 @@ msgstr ""
 "prima e as circunstâncias para satisfazer essa motivação serão extraídas "
 "fundamentalmente dos assuntos de %s (Casa %d)."
 
-#: src/motivation.c:245
+#: src/motivation.c:276
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The fuel, "
@@ -3708,6 +3713,10 @@ msgstr ""
 "combustível, as ferramentas e as experiências de base para essas questões "
 "são fornecidos por uma matriz dupla: os assuntos de %s (Casa %d) e %s (Casa "
 "%d)."
+
+#: src/motivation.c:290
+msgid " Press ESC to return to chart | [↓↑] Scroll "
+msgstr " Pressione Q ou ESC para retornar - [↓↑] para rolar "
 
 #: src/profections.c:96
 msgid "Annual Profections Panel"
