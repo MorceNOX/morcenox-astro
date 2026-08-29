@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 00:06-0300\n"
+"POT-Creation-Date: 2026-08-29 01:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2524,7 +2524,7 @@ msgid " Vital Threats: The Anareta "
 msgstr ""
 
 #: src/hyleg.c:883
-msgid "Target Hyleg:      "
+msgid "                Target Hyleg: "
 msgstr ""
 
 #: src/hyleg.c:886
@@ -2552,7 +2552,7 @@ msgid "Almuten Figuris Protector"
 msgstr ""
 
 #: src/hyleg.c:934
-msgid "8th House Sign & Ruler:   "
+msgid "      8th House Sign & Ruler: "
 msgstr ""
 
 #: src/hyleg.c:945

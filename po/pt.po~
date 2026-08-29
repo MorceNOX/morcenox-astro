@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-28 23:09-0300\n"
+"POT-Creation-Date: 2026-08-29 01:03-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -925,7 +925,7 @@ msgstr ""
 
 #: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:3213 src/draw-chart.c:3541
-#: src/draw-chart.c:4275 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:988
+#: src/draw-chart.c:4275 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1008
 #: src/mind.c:312 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
@@ -2853,7 +2853,7 @@ msgstr "Grau do Ascendente (Escudo Corporal)"
 msgid "Almuten Figuris (Chart Ruler)"
 msgstr "Almuten Figuris (Regente do Mapa)"
 
-#: src/hyleg.c:329
+#: src/hyleg.c:329 src/hyleg.c:928
 msgid "Almuten of Hylegiacal Points"
 msgstr "Almuten de Pontos Hylegíacos"
 
@@ -2980,8 +2980,8 @@ msgid " Vital Threats: The Anareta "
 msgstr " Ameaças Vitais: O Anareta"
 
 #: src/hyleg.c:883
-msgid "Target Hyleg:      "
-msgstr "Hyleg-alvo:       "
+msgid "                Target Hyleg: "
+msgstr "                  Hyleg Alvo: "
 
 #: src/hyleg.c:886
 msgid "☉ Sun"
@@ -2996,49 +2996,53 @@ msgid "ASC (Ascendant Degree)"
 msgstr "ASC (Grau do Ascendente)"
 
 #: src/hyleg.c:889
+msgid " SAN (Syzygy Ante-Nativitatem)"
+msgstr "SAN (Sizígia Pré-Natal)"
+
+#: src/hyleg.c:890
 msgid "🝴 Part of Fortune"
 msgstr "🝴  Parte da Fortuna"
 
-#: src/hyleg.c:906 src/hyleg.c:908
+#: src/hyleg.c:907 src/hyleg.c:909
 msgid "Almuten Figuris Protector"
 msgstr "Almuten Figuris Protetor"
 
-#: src/hyleg.c:914
-msgid "8th House Sign & Ruler:   "
-msgstr "Signo & Regente da 8ª Casa: "
+#: src/hyleg.c:934
+msgid "      8th House Sign & Ruler: "
+msgstr "  Signo & Regente da 8ª Casa: "
 
-#: src/hyleg.c:925
+#: src/hyleg.c:945
 msgid "THE CHOSEN ANARETA (Interfector): "
 msgstr "O ANARETA ESCOLHIDO  (Interfector): "
 
-#: src/hyleg.c:935 src/hyleg.c:971
+#: src/hyleg.c:955 src/hyleg.c:991
 msgid "Calculated Threat Score: "
 msgstr "Pontuação de Ameaça Calculada: "
 
-#: src/hyleg.c:937
+#: src/hyleg.c:957
 msgid "Points"
 msgstr "Pontos"
 
-#: src/hyleg.c:968
+#: src/hyleg.c:988
 msgid "None Active"
 msgstr "Nenhum Ativo"
 
-#: src/hyleg.c:973
+#: src/hyleg.c:993
 msgid "0 Points"
 msgstr "0 Pontos"
 
-#: src/hyleg.c:974
+#: src/hyleg.c:994
 msgid "No severe planetary afflictions targeting the vital points."
 msgstr "Não há aflições planetárias graves incidindo sobre os pontos vitais."
 
-#: src/hyleg.c:983
+#: src/hyleg.c:1003
 msgid ""
 "Note: The Anareta represents the geometric source of physical or metabolic "
 "risk."
 msgstr ""
 "Nota: O Anareta representa a fonte geométrica de risco físico ou metabólico."
 
-#: src/hyleg.c:984
+#: src/hyleg.c:1004
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
@@ -5736,6 +5740,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Target Hyleg:      "
+#~ msgstr "Hyleg-alvo:       "
 
 #~ msgid "physical body, temperament, personal identity"
 #~ msgstr "seu corpo físico, o temperamento, a sua identidade pessoal"

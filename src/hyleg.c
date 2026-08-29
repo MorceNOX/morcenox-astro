@@ -880,7 +880,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     int id_regente_c8 = obter_regente_tradicional(signo_casa8);
 
     // 2. RENDERIZAÇÃO DO CABEÇALHO DA INTERFACE CORRIGIDA
-    mvwprintw(table_win, 2, 4, _("Target Hyleg:      "));
+    mvwprintw(table_win, 2, 4, _("                Target Hyleg: "));
     wattron(table_win, A_BOLD | COLOR_PAIR(8));
     
     if (tipo_h == H_SOL) wprintw(table_win, _("☉ Sun"));
@@ -931,7 +931,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 3, 4, _("8th House Sign & Ruler:   "));
+    mvwprintw(table_win, 3, 4, _("      8th House Sign & Ruler: "));
     wattron(table_win, A_BOLD | COLOR_PAIR(21));
     wprintw(table_win, "%s (%s %s)", get_sign(signo_casa8 - 1), plots[id_regente_c8 - 1].object, plots[id_regente_c8 - 1].object_name);
     wattroff(table_win, A_BOLD | COLOR_PAIR(21));
@@ -962,25 +962,25 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
         wattroff(table_win, A_DIM);
 
         wattron(table_win, COLOR_PAIR(11) | A_BOLD); 
-        mvwprintw(table_win, 1, 102, "%s", "Anareta:");
+        mvwprintw(table_win, 1, table_width - 23, "%s", "Anareta:");
         const char **ascii_art = get_planet_ascii_by_gliph(anar.glifo);
 
-        mvwprintw(table_win, 2, 105, "%s", ascii_art[0]);
-        mvwprintw(table_win, 3, 105, "%s", ascii_art[1]);
-        mvwprintw(table_win, 4, 105, "%s", ascii_art[2]);
-        mvwprintw(table_win, 5, 105, "%s", ascii_art[3]);
-        mvwprintw(table_win, 6, 105, "%s", ascii_art[4]);
-        mvwprintw(table_win, 7, 105, "%s", ascii_art[5]);
+        mvwprintw(table_win, 2, table_width - 20, "%s", ascii_art[0]);
+        mvwprintw(table_win, 3, table_width - 20, "%s", ascii_art[1]);
+        mvwprintw(table_win, 4, table_width - 20, "%s", ascii_art[2]);
+        mvwprintw(table_win, 5, table_width - 20, "%s", ascii_art[3]);
+        mvwprintw(table_win, 6, table_width - 20, "%s", ascii_art[4]);
+        mvwprintw(table_win, 7, table_width - 20, "%s", ascii_art[5]);
 
-        mvwprintw(table_win, 9, 99, "%s", "Dominus Mortis:");
+        mvwprintw(table_win, 9, table_width - 26, "%s", "Dominus Mortis:");
         const char **ascii_art1 = get_planet_ascii(id_regente_c8);
 
-        mvwprintw(table_win, 10, 105, "%s", ascii_art1[0]);
-        mvwprintw(table_win, 11, 105, "%s", ascii_art1[1]);
-        mvwprintw(table_win, 12, 105, "%s", ascii_art1[2]);
-        mvwprintw(table_win, 13, 105, "%s", ascii_art1[3]);
-        mvwprintw(table_win, 14, 105, "%s", ascii_art1[4]);
-        mvwprintw(table_win, 15, 105, "%s", ascii_art1[5]);
+        mvwprintw(table_win, 10, table_width - 20, "%s", ascii_art1[0]);
+        mvwprintw(table_win, 11, table_width - 20, "%s", ascii_art1[1]);
+        mvwprintw(table_win, 12, table_width - 20, "%s", ascii_art1[2]);
+        mvwprintw(table_win, 13, table_width - 20, "%s", ascii_art1[3]);
+        mvwprintw(table_win, 14, table_width - 20, "%s", ascii_art1[4]);
+        mvwprintw(table_win, 15, table_width - 20, "%s", ascii_art1[5]);
 
         wattroff(table_win, COLOR_PAIR(11) | A_BOLD); 
     } else {

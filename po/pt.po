@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 00:06-0300\n"
+"POT-Creation-Date: 2026-08-29 01:05-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2980,8 +2980,8 @@ msgid " Vital Threats: The Anareta "
 msgstr " Ameaças Vitais: O Anareta"
 
 #: src/hyleg.c:883
-msgid "Target Hyleg:      "
-msgstr "Hyleg-alvo:       "
+msgid "                Target Hyleg: "
+msgstr "                  Hyleg Alvo: "
 
 #: src/hyleg.c:886
 msgid "☉ Sun"
@@ -2996,9 +2996,8 @@ msgid "ASC (Ascendant Degree)"
 msgstr "ASC (Grau do Ascendente)"
 
 #: src/hyleg.c:889
-#, fuzzy
 msgid "SAN (Syzygy Ante-Nativitatem)"
-msgstr "Sizígia Pré-Natal (SAN):"
+msgstr "SAN (Sizígia Pré-Natal)"
 
 #: src/hyleg.c:890
 msgid "🝴 Part of Fortune"
@@ -3009,8 +3008,8 @@ msgid "Almuten Figuris Protector"
 msgstr "Almuten Figuris Protetor"
 
 #: src/hyleg.c:934
-msgid "8th House Sign & Ruler:   "
-msgstr "Signo & Regente da 8ª Casa: "
+msgid "      8th House Sign & Ruler: "
+msgstr "  Signo & Regente da 8ª Casa: "
 
 #: src/hyleg.c:945
 msgid "THE CHOSEN ANARETA (Interfector): "
@@ -5741,6 +5740,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Target Hyleg:      "
+#~ msgstr "Hyleg-alvo:       "
 
 #~ msgid "physical body, temperament, personal identity"
 #~ msgstr "seu corpo físico, o temperamento, a sua identidade pessoal"
