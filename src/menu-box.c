@@ -1026,7 +1026,7 @@ void load_chart() {
 }
 
 
-int menu(MenuOption *options, int n_choices, int *highlight) {
+int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     WINDOW *menu_win, *shadow_win, *shadow_bar, *bar_win;
     
     int choice = -1;
@@ -1153,8 +1153,9 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
         else {
             attron(COLOR_PAIR(31));
         }    
-        //draw_circle_points(center_y, center_x, 28, 2.0, 1.0, L"░▒▓█▓▒░");
-        draw_circle_points(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░");
+        
+        draw_circle_points_delay(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░", *delay);
+        
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7));
             attron(COLOR_PAIR(9) | A_DIM);
@@ -1163,7 +1164,9 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
             attroff(COLOR_PAIR(31));
             attron(COLOR_PAIR(9) | A_DIM);
         }
-        draw_circle_points(center_y, center_x, 26, 2.0, 1.0, L"░▒▓█▓▒░");
+        
+        draw_circle_points_delay(center_y, center_x, 26, 2.0, 1.0, L"░▒▓█▓▒░", *delay);
+        
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7) | COLOR_PAIR(9) | A_DIM);
         }
@@ -1179,6 +1182,7 @@ int menu(MenuOption *options, int n_choices, int *highlight) {
         attroff(COLOR_PAIR(33) | A_BOLD);
         
         refresh();
+        *delay = 0;
 
         noecho();
         cbreak();
@@ -1923,6 +1927,7 @@ int main() {
     //int EXIT_CODE = n_choices - 1;
 
     int highlight = 0;
+    int delay = 1;
     initscr();
 
     while(1) {
@@ -1942,7 +1947,7 @@ int main() {
         int n_choices = ARRAY_SIZE(options);
         int choice = 0;
 
-        choice = menu(options, n_choices, &highlight);
+        choice = menu(options, n_choices, &highlight, &delay);
         
         // If the user pressed ESC (choice == n_choices), break the loop
         if (choice >= n_choices) break;

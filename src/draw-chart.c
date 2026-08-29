@@ -1148,6 +1148,43 @@ void draw_circle_points(int center_y, int center_x, float radius,
 }
 
 
+/**
+ * Desenha um círculo com suporte a animação de traçado em tempo real.
+ * 
+ * @param delay_ms Tempo de pausa em milisegundos a cada ponto (0 para instantâneo).
+ */
+void draw_circle_points_delay(int center_y, int center_x, float radius, 
+                       float aspect_ratio, float current_scale, 
+                       const wchar_t* character, int delay_ms) {
+    int steps = 360;  // Círculo preciso
+    float r = radius * current_scale;
+    
+    for (int i = 0; i < steps; i++) {
+        float angle = i * M_PI / 180.0; // Usando M_PI padrão ou seu PI definido
+        int y = (int)(center_y + r * sin(angle));
+        int x = (int)(center_x + aspect_ratio * r * cos(angle));
+        
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+            mvaddwstr(y, x, character);
+            
+            // Se houver um delay configurado, força a renderização do ponto e pausa
+            if (delay_ms > 0) {
+                refresh();        // Força o ncurses a jogar o ponto atual na tela física
+                napms(delay_ms);  // Pausa nativa do ncurses em milisegundos
+            }
+        }
+    }
+    
+    // Se desenhou instantaneamente (delay == 0), dá um único refresh no final de tudo
+    //if (delay_ms == 0) {
+    //    refresh();
+    //}
+}
+
+
+
+
+
 // Calcula a menor distância angular em um círculo (trata a virada de 360°)
 double diferenca_angular_minima(double a, double b) {
     double diff = b - a;
@@ -2181,7 +2218,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     }
 
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
-    refresh();
+    //refresh();
     
     // Draw all objects at different radii
     draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
@@ -6252,7 +6289,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         for (int i = 1; i <= 12; i++) {
 
             // Motivação Primária
-            
+
             int sign = (int)(cusps[i] / 30);
             int n_ruler = obter_regente_tradicional(sign + 1);
             house_rulers[i] = n_ruler;
