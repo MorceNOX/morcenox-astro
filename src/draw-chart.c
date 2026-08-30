@@ -154,16 +154,14 @@ const char *sagittarius[] = {
     "▗▚ ",
     "▘▌▘",
     "▄▙▖",
-    " ▌ ",
-    "   "
+    " ▌ "
 };
 
 const char *taurus[] = {
     "▝▖  ▞",
     " ▞▀▀▖",
     "▐   ▐",
-    " ▚▄▄▘",
-    "     "
+    " ▚▄▄▘"
 };
 
 
@@ -171,24 +169,21 @@ const char *aries[] = {
     "      ",
     "▞▀▖▞▀▖",
     "  ▐   ",
-    "  ▐   ",
-    "      "
+    "  ▐   "
 };
 
 const char *gemini[] = {
     "▄▄▄▄▖",
     " ▌ ▌ ",
     " ▌ ▌ ",
-    "▄▙▄▙▖",
-    "     "
+    "▄▙▄▙▖"
 };
 
 const char *leo[] = {
     " ▞▀▀▖",
     "▞▚  ▞",
     "▚▞ ▐ ",
-    "    ▚",
-    "     "
+    "    ▚"
 };
 
 
@@ -196,8 +191,7 @@ const char *pisces[] = {
     "▝▖  ▞",
     "▗▟▄▟▄",
     " ▞ ▝▖",
-    "▝   ▝",
-    "     "
+    "▝   ▝"
 };
 
 
@@ -205,48 +199,42 @@ const char *aquarius[] = {
     "     ",
     "▞▚▞▚▞",
     "     ",
-    "▞▚▞▚▞",
-    "     "
+    "▞▚▞▚▞"
 };
 
 const char *cancer[] = {
     "     ",
     "▞▜▀▀ ",
     "▚▞ ▞▚",
-    " ▄▄▙▞",
-    "     "
+    " ▄▄▙▞"
 };
 
 const char *libra[] = {
     "    ",
     " ▞▚ ",
     "▀▀▀▀",
-    "▀▀▀▀",
-    "    "
+    "▀▀▀▀"
 };
 
 const char *scorpio[] = {
     "    ",
     "▛▚▀▖",
     "▌▐ ▌",
-    "▘▝ ▚",
-    "    "
+    "▘▝ ▚"
 };
 
 const char *virgo[] = {
     "     ",
     "▛▚▀▞▚",
     "▌▐ ▌▞",
-    "▘▝ ▜ ",
-    "     "
+    "▘▝ ▜ "
 };
 
 const char *capricorn[] = {
     "     ",
     "▚▗▜▞▚",
     " ▘ ▚▞",
-    "   ▞ ",
-    "     "
+    "   ▞ "
 };
 
 
@@ -1674,25 +1662,27 @@ void draw_cusps_div(int object_count,
                         if (angle <= -1.79) {
                             mvaddstr(y, x, "▚");  // casa 11
                         } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                            mvaddstr(y, x, "▎"); // casa 10
+                            mvaddstr(y, x, "▍"); // casa 10
                         } else if (angle <= -0.8 || angle >= 4.93) {
                             mvaddstr(y, x, "▞");  // casa 9 
                         } else if (angle <= -0.2) {
                             mvaddstr(y, x, "🙼");  // casa 8
                         } else if (angle <= 0.2) {
-                            mvaddstr(y, x, "▔");  // casa 7
+                            mvaddstr(y-1, x, "▁▁");
+                            mvaddstr(y,   x, "▔▔");  // casa 7
                         } else if (angle <= 0.95) {
                             mvaddstr(y, x, "🙽");  // casa 6
                         } else if (angle < 1.35) {
                             mvaddstr(y, x, "▚"); // casa 5
                         } else if (angle < 1.79) {
-                            mvaddstr(y, x, "▕");  // casa 4
+                            mvaddstr(y, x, "▐");  // casa 4
                         } else if (angle < 2.26) {
                             mvaddstr(y, x, "▞");  // casa 3
                         } else if (angle < 2.99) {
                             mvaddstr(y, x, "🙼");  // casa 2
                         } else if (angle <= 3.25) {
-                            mvaddstr(y, x, "▁");  // casa 1
+                            mvaddstr(y,   x, "▁▁"); // casa 1
+                            mvaddstr(y+1, x, "▔▔");
                         } else if (angle <= 4.1) {
                             mvaddstr(y, x, "🙽");  // casa 12
                         } else {
@@ -1745,25 +1735,32 @@ void draw_cusps_div_axis(int object_count,
                         if (angle <= -1.79) {
                             mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
                         } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                            mvaddstr(y, x, "▎"); // casa 10
+                            //mvaddstr(y, x, "▎"); // casa 10
+                            mvaddstr(y, x-1, "▕▎");                            
                         } else if (angle <= -0.8 || angle >= 4.93) {
                             mvaddstr(y, x, "⧸");  // casa 9
                         } else if (angle <= -0.2) {
                             mvaddstr(y, x, "🙼");  // casa 8
                         } else if (angle <= 0.2) {
-                            mvaddstr(y, x, "▔");  // casa 7
+                            //mvaddstr(y, x, "▔");  // casa 7
+                            mvaddstr(y-1, x, "▁▁");
+                            mvaddstr(y,   x, "▔▔");
                         } else if (angle <= 0.95) {
                             mvaddstr(y, x, "🙽");  // casa 6
                         } else if (angle < 1.35) {
                             mvaddstr(y, x, "⧹"); // casa 5
                         } else if (angle < 1.79) {
-                            mvaddstr(y, x, "▕");  // casa 4
+                            //mvaddstr(y, x, "▕");  // casa 4
+                            mvaddstr(y, x, "▕▎");                            
                         } else if (angle < 2.26) {
                             mvaddstr(y, x, "⧸");  // casa 3
                         } else if (angle < 2.99) {
                             mvaddstr(y, x, "🙼");  // casa 2
                         } else if (angle <= 3.25) {
-                            mvaddstr(y, x, "▁");  // casa 1
+                            //mvaddstr(y, x, "▁");  // casa 1
+                            mvaddstr(y,   x, "▁▁");
+                            mvaddstr(y+1, x, "▔▔");
+
                         } else if (angle <= 4.1) {
                             mvaddstr(y, x, "🙽");  // casa 12
                         } else {
@@ -1857,11 +1854,17 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
         for (int j = 0; j < 4; j++) {
             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
                 if ( (k + offset) % 12 == 0 ) {
+                    
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(4) | A_NORMAL);
                     mvaddstr(y - 2 + j, x - 2, libra[j]);
                     attroff(COLOR_PAIR(4) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 1 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(3) | A_DIM);
                     mvaddstr(y - 2 + j, x - 2, virgo[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
@@ -1872,6 +1875,9 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(COLOR_PAIR(2) | A_BOLD);
                 }
                 else if ( (k + offset) % 12 == 3 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(5) | A_NORMAL);
                     mvaddstr(y - 2 + j, x - 2, cancer[j]);
                     attroff(COLOR_PAIR(5) | A_NORMAL);
@@ -1887,6 +1893,9 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
                 else if ( (k + offset) % 12 == 6 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(2) | A_BOLD);
                     mvaddstr(y - 2 + j, x - 2, aries[j]);
                     attroff(COLOR_PAIR(2) | A_BOLD);
@@ -1897,11 +1906,17 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(COLOR_PAIR(5) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 8 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(4) | A_NORMAL);
                     mvaddstr(y - 2 + j, x - 2, aquarius[j]);
                     attroff(COLOR_PAIR(4) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 9 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(3) | A_DIM);
                     mvaddstr(y - 2 + j, x - 2, capricorn[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
@@ -1912,6 +1927,9 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(COLOR_PAIR(2) | A_BOLD);
                 }
                 else if ( (k + offset) % 12 == 11 ) {
+
+                    if (j == 0) continue;
+
                     attron(COLOR_PAIR(5) | A_NORMAL);
                     mvaddstr(y - 2 + j, x - 2, scorpio[j]);
                     attroff(COLOR_PAIR(5) | A_NORMAL);
@@ -2037,7 +2055,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_BLACK, COLOR_BLUE);
-
+        init_pair(34, COLOR_WHITE, COLOR_CYAN);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -2077,7 +2095,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_WHITE, COLOR_BLUE);
-
+        init_pair(34, COLOR_CYAN, COLOR_WHITE);
     }
     
     int flags = 0;
@@ -2134,16 +2152,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
     attroff(COLOR_PAIR(19) | flags);
     
-    //attron(COLOR_PAIR(9) | A_DIM);
     attron(COLOR_PAIR(1) | flags);
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
-    //attroff(COLOR_PAIR(9) | A_DIM);
 
     //Draw the outer boundary using a light shade block
     int asc = (int)cusps[1];
-    attron(COLOR_PAIR(19) | A_DIM | flags);
-    for (float r = 8.0 * current_scale; r <= 19.0 * current_scale; r += current_scale) {
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | flags); else attron(COLOR_PAIR(34) | A_DIM | flags);
+    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += current_scale) {
         for (int i = -60 + asc; i < 300 + asc; i += 30) {
             float angle = i * PI / 180.0;
             int y = (int)(display_center_y + r * sin(angle));
@@ -2154,34 +2170,25 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             }
         }
     }
-    attroff(COLOR_PAIR(19) | A_DIM | flags);
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | flags); else attroff(COLOR_PAIR(34) | A_DIM | flags);
     
-    // Draw house numbers
-    draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-
-      
     attron(COLOR_PAIR(1));    
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
     attroff(COLOR_PAIR(1));
     
 
     if (house_div) {
-        if (!dark_mode) {
-            attron(COLOR_PAIR(10) | A_DIM);
-        }
-        else {
-            attron(COLOR_PAIR(19) | A_DIM);
-        }
+        if (dark_mode) attron(COLOR_PAIR(1) | A_DIM); else attron(COLOR_PAIR(19) | A_DIM);
+
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-        if (!dark_mode) {
-            attroff(COLOR_PAIR(10) | A_DIM);
-        }
-        else {
-            attroff(COLOR_PAIR(19) | A_DIM);
-        }       
+        
+        if (dark_mode) attroff(COLOR_PAIR(1) | A_DIM); else attroff(COLOR_PAIR(19) | A_DIM);
     }
 
+    // Draw house numbers
+    draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    
     if (zoom_factor <= 1.3) {
         attron(A_BOLD);
         for (int j = 1; j <= 12; j++) {
@@ -2196,11 +2203,14 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         attroff(A_BOLD);
 
+        int add_n = 0;
+        if (mapa_retorno) add_n = 1;
+
         for (int i = 0; i < 6; i++) {
             if (MAPA_DIURNO) {
-                mvprintw(LINES - 10 + i, 7, "%s", sol_ascii[i]);
+                mvprintw(LINES - (10 + add_n) + i, 7, "%s", sol_ascii[i]);
             } else {
-                mvprintw(LINES - 10 + i, 7, "%s", lua_ascii[i]);
+                mvprintw(LINES - (10 + add_n) + i, 7, "%s", lua_ascii[i]);
             }
         }
         

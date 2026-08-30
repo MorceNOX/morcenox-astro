@@ -1128,6 +1128,12 @@ void abrir_janela_transitos_revolucao(
            
         bool encontrou_conjuncao = false;
         for (int n = 0; n < 7; n++) {
+
+            // Sol sempre estará conjunto com o Sol Natal - Não precisa verificar quando forem iguais
+            if (p == 0 && n == 0) {
+                continue;
+            }
+
             double diff = fabs(longitudes_rev[p] - longitudes_natal[n]);
             if (diff > 180.0) diff = 360.0 - diff;
 

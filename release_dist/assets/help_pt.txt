@@ -634,12 +634,13 @@ text
         3.3) Sistema Espacial e Temporal:
         B - Alcabitius, P - Placidus, K - Koch, T - Topocentric
     
-P.S.1: O sistema mudará automaticamente para O-Porphyry 
-se a latitude selecionada for superior a 66,5° ou inferior a 
--66,5° ao usar B-Alcabitius, P-Placidus, ou K-Koch.
+Obs.1: O sistema mudará automaticamente para O-Porphyry 
+       se a latitude selecionada for superior a 66,5° ou inferior 
+       a -66,5° ao usar B-Alcabitius, P-Placidus, ou K-Koch.
 
-P.S.2: Os números das casas no círculo menor da roda do 
-mapa indicam os limites das casas.
+Obs.2: Os números das casas no círculo menor da roda do 
+       mapa indicam os limites das casas. Pressione [H] no mapa 
+       para ver as divisões das casas na roda.
 
 
 • Sistema de Triplicidade: Escolha entre Morinus, Dorotheus e
@@ -764,6 +765,10 @@ dos planetas e de outros corpos celestes.
 
 Você também pode ver a tabela de posições das cúspides de cada 
 casa no lado esquerdo da tela.
+
+Logo abaixo das cúspides você verá desenhado, em ASCII-Art, o 
+símbolo do Sol ( ☉ ) se o mapa for diurno, ou o símbolo da 
+Lua (☽ ) se o mapa for noturno.
 
 Ao aplicar zoom no mapa, todas as informações ao lado da roda são
 ocultadas se o segundo nível de zoom estiver ativo, exceto as 
