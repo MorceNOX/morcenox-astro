@@ -63,6 +63,8 @@ bool consider_modern_planets_rulling;
 
 int terms_system = 0;
 
+int FLAGS = 0;
+
 const char *planet_regent_symbols[7] = {"☉", "♀", "☿", "☽", "♄", "♃", "♂"};
 const char *planet_regent_names[7] = {"Sun", "Venus", "Mercury", "Moon", "Saturn", "Jupiter", "Mars"};
 

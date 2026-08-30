@@ -151,7 +151,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     int max_linhas_exibicao = table_height - 10;
     
     WINDOW *scroll_pad = newpad(150, table_width - 8);
-    wbkgd(scroll_pad, COLOR_PAIR(13));
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     wattron(shadow_win, COLOR_PAIR(9)); 
     box(shadow_win, 0, 0); 
@@ -165,7 +165,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         werase(scroll_pad);        
         
         box(table_win, 0, 0); 
-        wbkgd(table_win, COLOR_PAIR(13));
+        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Arabic Parts & Hermetic Lots ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -235,7 +235,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 
                 // Determina o tom da linha
                 if (is_linha_focada) {
-                    wattron(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                    wattron(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                     // Limpa e ilumina o fundo da primeira linha do registro
                     for(int x=0; x < table_width-8; x++) mvwprintw(scroll_pad, row_pad, x, " ");
                 } else if (is_major_lot) {
@@ -252,18 +252,18 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 mvwprintw(scroll_pad, row_pad, col_ruler, " %s", p->lord);
                 wattroff(scroll_pad, A_BOLD); 
                 
-                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else if (is_major_lot) wattroff(scroll_pad, COLOR_PAIR(13) | A_BOLD);
                 else wattroff(scroll_pad, COLOR_PAIR(13));
 
-                if (is_linha_focada) wattron(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
-                else wattron(scroll_pad, COLOR_PAIR(13) | A_BOLD); // Cor ciano ou destaque clássico
+                if (is_linha_focada) wattron(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
+                else wattron(scroll_pad, COLOR_PAIR(13) | A_BOLD);
                 mvwprintw(scroll_pad, row_pad, col_link, "%-3s", p->link);
-                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else wattroff(scroll_pad, COLOR_PAIR(13) | A_BOLD);
 
                 // Word Wrap da descrição
-                if (is_linha_focada) wattron(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                if (is_linha_focada) wattron(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else wattron(scroll_pad, A_DIM);
                 
                 char *texto_restante = p->description;
@@ -299,7 +299,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                         }
                     }
                 }
-                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else wattroff(scroll_pad, A_DIM);
 
                 row_pad += 2; 
@@ -396,6 +396,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 break;
             case 27:
             case 'q':
+            case 'Q':
                 loop_interativo = 0;
                 break;
         }
@@ -437,7 +438,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     int max_linhas_exibicao = table_height - 10;
     
     WINDOW *scroll_pad = newpad(150, table_width - 8);
-    wbkgd(scroll_pad, COLOR_PAIR(13));
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     wattron(shadow_win, COLOR_PAIR(9)); 
     box(shadow_win, 0, 0); 
@@ -451,7 +452,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         werase(scroll_pad);        
         
         box(table_win, 0, 0); 
-        wbkgd(table_win, COLOR_PAIR(13));
+        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Arabic Parts - Solar Revolution Radix Confrontation ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -521,7 +522,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 
                 // Determina o tom da linha
                 if (is_linha_focada) {
-                    wattron(scroll_pad, COLOR_PAIR(7) | A_BOLD | A_REVERSE);
+                    wattron(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                     // Limpa e ilumina o fundo da primeira linha do registro
                     for(int x=0; x < table_width-8; x++) mvwprintw(scroll_pad, row_pad, x, " ");
                 } else if (is_major_lot) {
@@ -537,7 +538,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 mvwprintw(scroll_pad, row_pad, col_link, "%-3s", p->link);
                 mvwprintw(scroll_pad, row_pad, col_natal, "%-3s", np->house);
                 
-                wattroff(scroll_pad, COLOR_PAIR(7) | COLOR_PAIR(13) | A_BOLD | A_REVERSE);
+                wattroff(scroll_pad, COLOR_PAIR(37) | COLOR_PAIR(13) | A_BOLD | A_REVERSE);
 
                 row_pad += 2; 
             }
@@ -597,6 +598,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 break;
             case 27:
             case 'q':
+            case 'Q':
                 loop_interativo = 0;
                 break;
         }
@@ -947,7 +949,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     werase(shadow); wattron(shadow, COLOR_PAIR(9)); box(shadow, 0, 0); wattroff(shadow, COLOR_PAIR(9)); wrefresh(shadow);
 
     while (loop) {        
-        werase(win); wbkgd(win, COLOR_PAIR(13)); box(win, 0, 0);
+        werase(win); wbkgd(win, COLOR_PAIR(13) | FLAGS); box(win, 0, 0);
 
         wattron(win, A_BOLD);
         mvwprintw(win, 0, (w_width - 28) / 2, part_id_edicao > 0 ? _(" Edit Arabic Part Formula ") : _(" New Arabic Part Formula "));
@@ -1379,7 +1381,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     while (1) {
         wclear(aspects_win);
         box(aspects_win, 0, 0);
-        wbkgd(aspects_win, COLOR_PAIR(6));
+        wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
 
         wattron(aspects_win, A_BOLD);
         const char *title = _(" Arabic Parts Aspect Matrix Grid ");
@@ -1585,7 +1587,7 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
     while (1) {
         // Redesenha a estrutura fixa da caixinha de alerta a cada ciclo
         werase(conf_win);
-        wbkgd(conf_win, COLOR_PAIR(26));
+        wbkgd(conf_win, COLOR_PAIR(26) | FLAGS);
         wattron(conf_win, COLOR_PAIR(27) | A_BOLD);
         box(conf_win, 0, 0);
         const char *title = _(" CONFIRM DELETE ");  
@@ -1596,13 +1598,13 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
         mvwprintw(conf_win, 3, 4, "\"%.46s\" ?", nome_parte);
         
         // Desenha dinamicamente o Botão YES com base no foco
-        int attr_yes = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        int attr_yes = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(conf_win, attr_yes);
         mvwprintw(conf_win, 5, 10, "   YES   ");
         wattroff(conf_win, attr_yes);
 
         // Desenha dinamicamente o Botão CANCEL com base no foco
-        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(conf_win, attr_cancel);
         mvwprintw(conf_win, 5, 32, "  CANCEL  ");
         wattroff(conf_win, attr_cancel);
@@ -1675,10 +1677,10 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
 
             return;
         }
+
+        show_alert_popup(_("Arabic Part deleted successfully!"), nome_parte);
     }
-
-    show_alert_popup(_("Arabic Part deleted successfully!"), nome_parte);
-
+    
     delwin(conf_shadow);
     delwin(conf_win);
 }

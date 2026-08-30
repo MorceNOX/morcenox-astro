@@ -505,7 +505,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     wattroff(shadow_win, COLOR_PAIR(9));
     wrefresh(shadow_win);
 
-    wbkgd(scroll_pad, COLOR_PAIR(13)); 
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
     int sentido = 2;
     int tipo = 2;
@@ -515,7 +515,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         werase(scroll_pad);
 
         box(table_win, 0, 0);
-        wbkgd(table_win, COLOR_PAIR(13));
+        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -951,7 +951,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     wattroff(shadow_win, COLOR_PAIR(9));
     wrefresh(shadow_win);
 
-    wbkgd(scroll_pad, COLOR_PAIR(13)); 
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
     int sentido = 2;
     int tipo = 2;
@@ -962,7 +962,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         werase(scroll_pad);
 
         box(table_win, 0, 0);
-        wbkgd(table_win, COLOR_PAIR(13));
+        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions to Arabic Parts ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);

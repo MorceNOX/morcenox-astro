@@ -114,7 +114,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
 
     werase(table_win);
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13)); 
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS); 
     
     wattron(table_win, A_BOLD);
     const char *title = _(" Primary Motivation ");
@@ -123,7 +123,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
 
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(100, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
    
     // Bloco 1: Condição das Faculdades Mentais

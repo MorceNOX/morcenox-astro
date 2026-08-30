@@ -143,7 +143,7 @@ void display_natal_mind_analysis(
 
     werase(table_win);
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13)); 
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS); 
     
     wattron(table_win, A_BOLD);
     const char *title = _(" Analysis of the Natal Mind ");

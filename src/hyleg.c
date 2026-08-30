@@ -502,7 +502,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     // Título Centralizado da Interface
     wattron(table_win, A_BOLD);
@@ -842,7 +842,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     wattron(table_win, A_BOLD);
     const char *title = _(" Vital Threats: The Anareta ");

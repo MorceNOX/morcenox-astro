@@ -91,14 +91,14 @@ void desenhar_barra_porcentagem(WINDOW *win, int row, int col, float porcentagem
     mvwprintw(win, row, col, "[%5.1f%%] ", porcentagem);
     
     // Desenha os blocos preenchidos da barra
-    wattron(win, COLOR_PAIR(cor_par) | A_DIM | A_UNDERLINE);
+    wattron(win, COLOR_PAIR(cor_par) | A_DIM | A_UNDERLINE | FLAGS);
     for (int i = 0; i < num_blocos; i++) {
         wprintw(win, "█");
     }
-    wattroff(win, COLOR_PAIR(cor_par) | A_DIM);
+    wattroff(win, COLOR_PAIR(cor_par) | A_DIM | FLAGS);
     
     // Desenha o fundo residual da barra (vazio)
-    wattron(win, COLOR_PAIR(10) | A_DIM);
+    wattron(win, COLOR_PAIR(10) | A_DIM | FLAGS);
     for (int i = num_blocos; i < max_barra_width; i++) {
         wprintw(win, "░");
     }
@@ -120,17 +120,17 @@ void desenhar_barra_temperamento(WINDOW *win, int row, int col, int valor, int t
     mvwprintw(win, row, col, "[%02d] ", valor);
     
     // Liga a cor correspondente e desenha os blocos
-    wattron(win, COLOR_PAIR(cor_par) | A_DIM | A_UNDERLINE);
+    wattron(win, COLOR_PAIR(cor_par) | A_DIM | A_UNDERLINE | FLAGS);
     for (int i = 0; i < num_blocos; i++) {
         wprintw(win, "█");
     }
     // Fundo da barra
-    wattroff(win, COLOR_PAIR(cor_par) | A_DIM);
-    wattron(win, COLOR_PAIR(10) | A_DIM);
+    wattroff(win, COLOR_PAIR(cor_par) | A_DIM | FLAGS);
+    wattron(win, COLOR_PAIR(10) | A_DIM | FLAGS);
     for (int i = num_blocos; i < max_barra_width; i++) {
         wprintw(win, "░");
     }
-    wattroff(win, COLOR_PAIR(10) | A_DIM | A_UNDERLINE);
+    wattroff(win, COLOR_PAIR(10) | A_DIM | A_UNDERLINE | FLAGS);
 }
 
 void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fase_lunar, int estacao, int week_day, int planetary_hour) {
@@ -508,7 +508,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
     const char *title = _("Natal Temperament Analysis");
@@ -775,7 +775,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13));
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
     box(border_win, 0, 0);
     
     wattron(border_win, A_BOLD);
@@ -790,7 +790,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
     int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);

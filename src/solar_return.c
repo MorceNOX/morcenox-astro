@@ -453,7 +453,7 @@ void abrir_janela_confronto_natal_revolucao(
 
     // 3. MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13));
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
     box(border_win, 0, 0);
     
     wattron(border_win, A_BOLD);
@@ -468,7 +468,7 @@ void abrir_janela_confronto_natal_revolucao(
     int pad_lines = 120; // Aumentado para comportar o texto da Firdária confortavelmente
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
     
     char str_text[512];
@@ -1024,7 +1024,7 @@ void abrir_janela_transitos_revolucao(
     werase(shadow_win); wattron(shadow_win, COLOR_PAIR(9)); box(shadow_win, 0, 0); wattroff(shadow_win, COLOR_PAIR(9)); wrefresh(shadow_win);
 
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13)); box(border_win, 0, 0);
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS); box(border_win, 0, 0);
     wattron(border_win, A_BOLD);
     const char *title = _(" Annual Transits & Radical Projections ");
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
@@ -1035,7 +1035,7 @@ void abrir_janela_transitos_revolucao(
     int pad_lines = 200; 
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13)); keypad(pad, TRUE); idlok(pad, TRUE); scrollok(pad, TRUE);
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS); keypad(pad, TRUE); idlok(pad, TRUE); scrollok(pad, TRUE);
 
     wprintw(pad, "\n"); 
 

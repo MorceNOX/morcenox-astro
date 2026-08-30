@@ -392,7 +392,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     wrefresh(decl_shadow);
 
     box(decl_win, 0, 0);
-    wbkgd(decl_win, COLOR_PAIR(6));
+    wbkgd(decl_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(decl_win, A_BOLD);
     const char *title = _("Parallel & Contra-Parallel");
@@ -400,7 +400,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     
@@ -539,7 +539,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     wrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
-    wbkgd(aspects_win, COLOR_PAIR(6));
+    wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
     const char *title = _("Aspects Table");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -548,7 +548,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
 
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     
@@ -799,7 +799,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     wrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
-    wbkgd(aspects_win, COLOR_PAIR(6));
+    wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
     const char *title = _("Aspects by Sign Table");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -808,7 +808,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
 
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     
@@ -1012,7 +1012,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     wrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
-    wbkgd(aspects_win, COLOR_PAIR(6));
+    wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
     const char *title = _(" Antissia & Contrantissia Aspect Matrix Grid ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -1021,7 +1021,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     

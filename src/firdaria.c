@@ -238,7 +238,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     wattron(table_win, A_BOLD);
     const char *title = _(" Planetary Firdaria Chronocrators ");
@@ -294,9 +294,9 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     mvwprintw(table_win, 4, 4, _("CURRENT MAJOR LORD: "));
     wattroff(table_win, A_BOLD | COLOR_PAIR(13)); 
 
-    wattron(table_win, COLOR_PAIR(7) | A_BOLD | A_REVERSE); 
+    wattron(table_win, COLOR_PAIR(37) | A_BOLD | A_REVERSE); 
     wprintw(table_win, " %s ", fird.glifo_major); 
-    wattroff(table_win, COLOR_PAIR(7) | A_BOLD| A_REVERSE);
+    wattroff(table_win, COLOR_PAIR(37) | A_BOLD| A_REVERSE);
 
     wprintw(table_win, " %s %s %02d/%02d/%04d %s %02d/%02d/%04d]", 
              fird.nome_major, _("Period [From:"), fird.inicio_major.dia, fird.inicio_major.mes, fird.inicio_major.ano, _("to"),
@@ -397,7 +397,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
 
             // Realce visual de fundo apenas se for a linha ativa cronológica de hoje
             if (linha_ativa) {
-                wattron(table_win, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+                wattron(table_win, A_BOLD | COLOR_PAIR(37) | A_REVERSE);
                 for (int x = 2; x < table_width - 2; x++) mvwprintw(table_win, row_tabela, x, " ");
             } else {
                 if (strcmp(status_texto, "  Passed  ") == 0) wattron(table_win, A_DIM);
@@ -412,7 +412,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
             // --- IMPRESSÃO DA TARJA DE STATUS MODIFICADA ---
             if (linha_anaretica) {
                 // Se for a linha do Anareta, exibe o aviso de gatilho vital em destaque vermelho!
-                wattroff(table_win, COLOR_PAIR(7) | A_REVERSE); // Desliga temporariamente o vídeo reverso para o texto respirar
+                wattroff(table_win, COLOR_PAIR(37) | A_REVERSE); // Desliga temporariamente o vídeo reverso para o texto respirar
                 wattron(table_win, COLOR_PAIR(11) | A_BOLD);    // Liga o Vermelho Alerta
                 
                 if (linha_ativa) {
@@ -429,7 +429,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
             }
 
             // Desliga os atributos de fechamento da linha
-            if (linha_ativa) wattroff(table_win, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+            if (linha_ativa) wattroff(table_win, A_BOLD | COLOR_PAIR(37) | A_REVERSE);
             else {
                 if (strcmp(status_texto, _("  Passed  ")) == 0) wattroff(table_win, A_DIM);
             }

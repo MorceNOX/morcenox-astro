@@ -68,7 +68,7 @@ int show_confirm_yesno(const char *name, const char *text) {
 
     // Configura e desenha a estrutura fixa da janela principal
     werase(pop_win);
-    wbkgd(pop_win, COLOR_PAIR(26));
+    wbkgd(pop_win, COLOR_PAIR(26) | FLAGS);
     wattron(pop_win, COLOR_PAIR(27) | A_BOLD);
     box(pop_win, 0, 0);
 
@@ -87,13 +87,13 @@ int show_confirm_yesno(const char *name, const char *text) {
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
         // Botão CONFIRM
-        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
         wattron(pop_win, attr_confirm);
         mvwprintw(pop_win, 5, 8, _("    YES    "));
         wattroff(pop_win, attr_confirm);
 
         // Botão CANCEL
-        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
         wattron(pop_win, attr_cancel);
         mvwprintw(pop_win, 5, 32, _("    NO    "));
         wattroff(pop_win, attr_cancel);
@@ -153,7 +153,7 @@ int show_confirm_delete_popup(const char *name) {
     wrefresh(pop_shadow);
 
     werase(pop_win);
-    wbkgd(pop_win, COLOR_PAIR(26));
+    wbkgd(pop_win, COLOR_PAIR(26) | FLAGS);
     wattron(pop_win, COLOR_PAIR(27) | A_BOLD);
     box(pop_win, 0, 0);
 
@@ -241,7 +241,7 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
     wrefresh(pop_shadow);
 
     werase(pop_win);
-    wbkgd(pop_win, COLOR_PAIR(26));
+    wbkgd(pop_win, COLOR_PAIR(26) | FLAGS);
     wattron(pop_win, COLOR_PAIR(27) | A_BOLD);
     box(pop_win, 0, 0);
 
@@ -1114,7 +1114,7 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         /* Renderiza Janela Principal (Pares de cor 13) */
         werase(win);
         wattron(win, COLOR_PAIR(13));
-        wbkgd(win, COLOR_PAIR(13));
+        wbkgd(win, COLOR_PAIR(13) | FLAGS);
         box(win, 0, 0);
 
         wattron(win, A_BOLD);
@@ -1214,7 +1214,7 @@ int selecionar_idade_visual(int idade_inicial) {
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
         wattron(win, COLOR_PAIR(13));
-        wbkgd(win, COLOR_PAIR(13));
+        wbkgd(win, COLOR_PAIR(13) | FLAGS);
         box(win, 0, 0);
 
         wattron(win, A_BOLD);

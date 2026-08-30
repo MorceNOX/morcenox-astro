@@ -2018,36 +2018,36 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     }
     
     if (dark_mode) {
-        init_pair(1, COLOR_WHITE, COLOR_BLACK);
-        init_pair(2, COLOR_WHITE, COLOR_RED);
-        init_pair(3, COLOR_WHITE, COLOR_GREEN);
-        init_pair(4, COLOR_WHITE, COLOR_YELLOW);
-        init_pair(5, COLOR_WHITE, COLOR_BLUE);
-        init_pair(6, COLOR_WHITE, COLOR_BLACK);
-        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(8, COLOR_CYAN, COLOR_BLACK);
-        init_pair(9, COLOR_CYAN, COLOR_CYAN);
-        init_pair(10, COLOR_WHITE, COLOR_BLACK);
+        init_pair(1, COLOR_BLACK, COLOR_WHITE);
+        init_pair(2, COLOR_BLACK, COLOR_RED);
+        init_pair(3, COLOR_BLACK, COLOR_GREEN);
+        init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(5, COLOR_BLACK, COLOR_BLUE);
+        init_pair(6, COLOR_BLACK, COLOR_WHITE);
+        init_pair(7, COLOR_BLACK, COLOR_MAGENTA);
+        init_pair(8, COLOR_BLACK, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_WHITE);
 
-        init_pair(11, COLOR_RED, COLOR_BLACK);
-        init_pair(12, COLOR_GREEN, COLOR_BLACK);
-        init_pair(13, COLOR_WHITE, COLOR_BLACK);
+        init_pair(11, COLOR_BLACK, COLOR_RED);
+        init_pair(12, COLOR_BLACK, COLOR_GREEN);
+        init_pair(13, COLOR_BLACK, COLOR_WHITE);
 
         init_pair(14, COLOR_BLACK, COLOR_CYAN);
         init_pair(15, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(16, COLOR_WHITE, COLOR_BLACK);
-        init_pair(17, COLOR_WHITE, COLOR_MAGENTA);
-        init_pair(18, COLOR_WHITE, COLOR_BLUE);
-        init_pair(19, COLOR_WHITE, COLOR_WHITE);
-        init_pair(20, COLOR_CYAN, COLOR_BLACK);
+        init_pair(16, COLOR_BLACK, COLOR_WHITE);
+        init_pair(17, COLOR_BLACK, COLOR_MAGENTA);
+        init_pair(18, COLOR_BLACK, COLOR_BLUE);
+        init_pair(19, COLOR_BLACK, COLOR_BLACK);
+        init_pair(20, COLOR_BLACK, COLOR_CYAN);
 
         init_pair(21, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(22, COLOR_WHITE, COLOR_BLACK);
-        init_pair(23, COLOR_RED, COLOR_WHITE);
-        init_pair(24, COLOR_CYAN, COLOR_CYAN);
-        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(26, COLOR_WHITE, COLOR_BLACK);
-        init_pair(27, COLOR_RED, COLOR_BLACK);
+        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(23, COLOR_WHITE, COLOR_RED);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(26, COLOR_BLACK, COLOR_WHITE);
+        init_pair(27, COLOR_BLACK, COLOR_RED);
         init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
@@ -2055,7 +2055,10 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_BLACK, COLOR_BLUE);
-        init_pair(34, COLOR_WHITE, COLOR_CYAN);
+        init_pair(34, COLOR_BLACK, COLOR_CYAN);
+        init_pair(35, COLOR_WHITE, COLOR_BLACK);
+        init_pair(36, COLOR_RED, COLOR_WHITE);
+        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -2096,23 +2099,26 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_WHITE, COLOR_BLUE);
         init_pair(34, COLOR_CYAN, COLOR_WHITE);
+        init_pair(35, COLOR_WHITE, COLOR_BLACK);
+        init_pair(36, COLOR_RED, COLOR_WHITE);
+        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
     }
     
-    int flags = 0;
+    FLAGS = 0;
     if (dark_mode) {
-        flags |= A_DIM | A_REVERSE;
+        FLAGS |= A_DIM | A_REVERSE;
     }
 
     if (mapa_retorno) {
         if (!dark_mode) {
-            bkgd(COLOR_PAIR(12) | flags);
+            bkgd(COLOR_PAIR(12) | FLAGS);
         }
         else {
-            bkgd(COLOR_PAIR(32) | flags); 
+            bkgd(COLOR_PAIR(32) | FLAGS); 
         }
     }
     else {
-        bkgd(COLOR_PAIR(15) | flags);
+        bkgd(COLOR_PAIR(15) | FLAGS);
     }
     
     clear();
@@ -2148,17 +2154,19 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     int display_center_x = center_x + (int)(pan_x * current_scale);
     
     // Draw the outer circle filled
-    attron(COLOR_PAIR(19) | flags);
+    attron(COLOR_PAIR(19) | FLAGS);
     draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
-    attroff(COLOR_PAIR(19) | flags);
+    attroff(COLOR_PAIR(19) | FLAGS);
     
-    attron(COLOR_PAIR(1) | flags);
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS);
+
 
     //Draw the outer boundary using a light shade block
     int asc = (int)cusps[1];
-    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | flags); else attron(COLOR_PAIR(34) | A_DIM | flags);
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(34) | A_DIM | FLAGS);
     for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += current_scale) {
         for (int i = -60 + asc; i < 300 + asc; i += 30) {
             float angle = i * PI / 180.0;
@@ -2170,19 +2178,19 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             }
         }
     }
-    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | flags); else attroff(COLOR_PAIR(34) | A_DIM | flags);
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS); else attroff(COLOR_PAIR(34) | A_DIM | FLAGS);
     
-    attron(COLOR_PAIR(1));    
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM); else attron(COLOR_PAIR(1));    
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    attroff(COLOR_PAIR(1));
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM); else attroff(COLOR_PAIR(1));
     
 
     if (house_div) {
-        if (dark_mode) attron(COLOR_PAIR(1) | A_DIM); else attron(COLOR_PAIR(19) | A_DIM);
+        if (dark_mode) attron(COLOR_PAIR(19) | A_DIM); else attron(COLOR_PAIR(19) | A_DIM);
 
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
         
-        if (dark_mode) attroff(COLOR_PAIR(1) | A_DIM); else attroff(COLOR_PAIR(19) | A_DIM);
+        if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM); else attroff(COLOR_PAIR(19) | A_DIM);
     }
 
     // Draw house numbers
@@ -2220,17 +2228,17 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
     
     if (show_dec) {
-        attron(COLOR_PAIR(17) | flags | A_BOLD);
+        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
         draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
-        attroff(COLOR_PAIR(17) | flags | A_BOLD);
+        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
     }
 
     if (show_terms) {
         Termo t[12][5];
         get_terms_longitude_to_print(terms, t);
-        attron(COLOR_PAIR(17) | flags | A_BOLD);
+        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
         draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-        attroff(COLOR_PAIR(17) | flags | A_BOLD);
+        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
     }
 
     if (zoom_factor <= 1.3) {
@@ -2582,7 +2590,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     // Cabeçalho Fixo do Formulário
     wattron(table_win, A_BOLD);
@@ -2599,7 +2607,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     // 2. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     int max_linhas_dados_visiveis = table_height - 7; // Espaço útil físico na tela para as barras
     WINDOW *pad = newpad(40, table_width - 4); // Buffer abundante de 40 linhas verticais
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int object_diff = show_modern_planets ? 0 : 3;
     int row_pad = 0;
@@ -2715,7 +2723,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     const char *title = _(" Planetary Strength ");
     wattron(table_win, A_BOLD);
@@ -2730,7 +2738,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
 
     int max_linhas_dados = table_height - 8;
     WINDOW *pad = newpad(40, table_width - 4);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
@@ -2838,7 +2846,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
     const char *title = _("Accidental Dignities");
@@ -2867,7 +2875,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
     int max_linhas_dados_visiveis = table_height - 6; 
     WINDOW *scroll_pad = newpad(40, 145); 
-    wbkgd(scroll_pad, COLOR_PAIR(13));
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     int row = 0;
 
@@ -3185,7 +3193,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
 
     // Create a border around the table
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     
     
@@ -3335,7 +3343,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     // Cabeçalho Fixo na Janela de Borda (Não rola)
     wattron(table_win, A_BOLD);
@@ -3367,7 +3375,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
     int max_linhas_dados_visiveis = table_height - 6; 
     WINDOW *scroll_pad = newpad(40, 145); 
-    wbkgd(scroll_pad, COLOR_PAIR(13));
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
@@ -3560,7 +3568,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
     const char *title = _("Houses Table");
@@ -3659,7 +3667,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(6));
+    wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(table_win, A_BOLD);
     const char *title = _("Planetary Hours");
@@ -3862,7 +3870,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13));
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
     box(border_win, 0, 0);
     
     wattron(border_win, A_BOLD);
@@ -3877,7 +3885,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
     int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
@@ -4276,7 +4284,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(6));
+    wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(table_win, A_BOLD);
     const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
@@ -4607,7 +4615,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     double ascmc[10];
     double julian_day;
     double xx_equatorial[6];
-    int flags_equatorial = SEFLG_SPEED | SEFLG_EQUATORIAL;
+    int FLAGS_equatorial = SEFLG_SPEED | SEFLG_EQUATORIAL;
 
     
     int planets[11] = {
@@ -4800,7 +4808,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
         for (int i = 0; i < 11; i++) {
-            if (swe_calc_ut(julian_day, planets[i], flags_equatorial, xx_equatorial, serr) < 0) {
+            if (swe_calc_ut(julian_day, planets[i], FLAGS_equatorial, xx_equatorial, serr) < 0) {
                 printf("Error calculating planet %d: %s\n", planets[i], err);
                 return 1;
             }
@@ -7164,7 +7172,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         mvwprintw(win, 0, (menu_width - 17) / 2, " Select a Module ");
         wattroff(win, A_BOLD);
 
-        wbkgd(win, COLOR_PAIR(26));
+        wbkgd(win, COLOR_PAIR(26) | FLAGS);
         wattroff(win, COLOR_PAIR(26) | A_DIM);
         
         // Draw options items with proper scrolling (idêntico ao seu loop do chart)

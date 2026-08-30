@@ -515,7 +515,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     wattron(table_win, A_BOLD);
     const char *title = _("Hylegiacal & Figuris Almutens");
@@ -696,7 +696,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13));
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
     box(border_win, 0, 0);
     
     wattron(border_win, A_BOLD);
@@ -711,7 +711,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     int pad_lines = 180; // Espaço vertical estendido para casos de múltiplos planetas
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
@@ -915,7 +915,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
-    wbkgd(border_win, COLOR_PAIR(13));
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
     box(border_win, 0, 0);
     
     wattron(border_win, A_BOLD);
@@ -930,7 +930,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     int pad_lines = 180; 
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13));
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);

@@ -90,7 +90,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden) {
     wrefresh(shadow_win);
 
     box(table_win, 0, 0);
-    wbkgd(table_win, COLOR_PAIR(13));
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
     const char *title = _("Annual Profections Panel");
