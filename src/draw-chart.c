@@ -2036,6 +2036,8 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
+        init_pair(33, COLOR_BLACK, COLOR_BLUE);
+
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -2074,6 +2076,8 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
+        init_pair(33, COLOR_WHITE, COLOR_BLUE);
+
     }
     
     int flags = 0;
@@ -2179,6 +2183,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     }
 
     if (zoom_factor <= 1.3) {
+        attron(A_BOLD);
         for (int j = 1; j <= 12; j++) {
             int sign = (int)(cusps[j] / 30);
             int degree = (int)cusps[j] % 30 ;
@@ -2189,6 +2194,8 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
             mvprintw(13 + j, 2, "%s %2d: %2d°%s%02d'", _("House"), j, degree, sign_str, min);
         }
 
+        attroff(A_BOLD);
+
         for (int i = 0; i < 6; i++) {
             if (MAPA_DIURNO) {
                 mvprintw(LINES - 10 + i, 7, "%s", sol_ascii[i]);
@@ -2196,6 +2203,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
                 mvprintw(LINES - 10 + i, 7, "%s", lua_ascii[i]);
             }
         }
+        
     }
 
     // Draw zodiac signs
@@ -2216,6 +2224,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     }
 
     if (zoom_factor <= 1.3) {
+        attron(A_BOLD);
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             int sign = (int)(plots[i].longitude / 30);
             int degree = (int)plots[i].longitude % 30 ;
@@ -2233,6 +2242,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
                 mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
             }
         }
+        attroff(A_BOLD);
     }
 
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
@@ -2241,7 +2251,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     // Draw all objects at different radii
     draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    if (zoom_factor >= 1.5) {
+    if (zoom_factor >= 1.4) {
         draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     }
     draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
@@ -2254,34 +2264,34 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
 
     
     attron(A_BOLD | A_REVERSE);
-    // if (mapa_retorno) {
-    //     attron(COLOR_PAIR(2));
-    // }
-    mvprintw(0, 0, "%s ", chart_name);
+    mvprintw(0, 1, "%s ", chart_name);
     attroff(A_BOLD);
-    // if (mapa_retorno) {
-    //     attroff(COLOR_PAIR(2));
-    // }
-
+    
     wprintw(stdscr, "(%s)", (gender_id == 1)?_("Masculine"):((gender_id == 2)?_("Feminine"):_("Neuter")));
 
     attroff(A_REVERSE);
 
-    mvprintw(1, 0, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("TZ"), str_dow(local_time->tm_wday));
-        
+    
     
     if (zoom_factor <= 1.2) {
-        mvprintw(3, 0, "%s / %s (%.4f)", city, country, tz_offset);
-        mvprintw(4, 0, "Lat: %.4f / Lon: %.4f / Elev: %.1f", lat, lon, elev);
-        mvprintw(6, 0, "%s: %s ", _("Sunrise"), sunrise_time);
-        mvprintw(7, 0, "%s: %s ", _("Sunset"), sunset_time);
-        
+        attron(A_BOLD);
+        mvprintw(1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("TZ"), str_dow(local_time->tm_wday));
+        attroff(A_BOLD);
+
+        mvprintw(3, 1, "%s / %s (%.4f)", city, country, tz_offset);
+        mvprintw(4, 1, "Lat: %.4f / Lon: %.4f / Elev: %.1f", lat, lon, elev);
+
+        attron(A_BOLD);
+        mvprintw(6, 1, "%s: %s ", _("Sunrise"), sunrise_time);
+        mvprintw(7, 1, "%s: %s ", _(" Sunset"), sunset_time);
+        attroff(A_BOLD);
+
         Hora hd = get_fmt_hour(daytime_hour);
         Hora hn = get_fmt_hour(nighttime_hour);
 
-        mvprintw(9, 0, "%s: %.4f (%02d:%02d:%02d)", _("Hour (Day)"), daytime_hour, hd.hora, hd.min, hd.sec);
-        mvprintw(10, 0, "%s: %.4f (%02d:%02d:%02d)", _("Hour (Night)"), nighttime_hour, hn.hora, hn.min, hn.sec);
-        mvprintw(12, 0, "%s: %s", _("Houses"), house_system_name);
+        mvprintw(9, 1,  "%s: %.4f (%02d:%02d:%02d)", _("  Hour (Day)"), daytime_hour, hd.hora, hd.min, hd.sec);
+        mvprintw(10, 1, "%s: %.4f (%02d:%02d:%02d)", _("Hour (Night)"), nighttime_hour, hn.hora, hn.min, hn.sec);
+        mvprintw(12, 1, "%s: %s", _("Houses"), house_system_name);
 
         Hora hs = get_fmt_hour(sanHour);
         
@@ -2292,15 +2302,15 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         mvprintw(5, max_x - 22, "%s: %02d:%02d:%02.0f", _("Sun Clock"), last_hr, last_min, last_sec);
 
         if (mapa_retorno) {
-            mvprintw(LINES - 6, 0, _("Divisions = Zodiac Signs"));
-            mvprintw(LINES - 4, 0, _("Radix Confrontation: C | Annual Transits: T "));
-            mvprintw(LINES - 3, 0, _("Parts Radix Confrontation: P ")); 
+            mvprintw(LINES - 6, 1, _("Divisions = Zodiac Signs"));
+            mvprintw(LINES - 4, 1, _("Radix Confrontation: C | Annual Transits: T "));
+            mvprintw(LINES - 3, 1, _("Parts Radix Confrontation: P ")); 
         }
         else {
-            mvprintw(LINES - 4, 0, _("Divisions = Zodiac Signs"));
+            mvprintw(LINES - 4, 1, _("Divisions = Zodiac Signs"));
         }
-        mvprintw(LINES - 2, 0, "Zoom: + / -  | Pan: ←↓→↑  | Reset: R ");
-        mvprintw(LINES - 1, 0, _("Animation: A | Speed: ]/[ | Quit: Q "));
+        mvprintw(LINES - 2, 1, "Zoom: + / -  | Pan: ←↓→↑  | Reset: R ");
+        mvprintw(LINES - 1, 1, _("Animation: A | Speed: ]/[ | Quit: Q "));
         
         mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
@@ -2313,6 +2323,11 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         if (animated) {
             attroff(A_BLINK);
         }
+    }
+    else {
+        attron(A_BOLD);
+        mvprintw(LINES - 1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("TZ"), str_dow(local_time->tm_wday));
+        attroff(A_BOLD);
     }
     mvprintw(LINES - 1, max_x - 25, "%s: %5d s", _("Speed Animation"), anim_interval);
 
