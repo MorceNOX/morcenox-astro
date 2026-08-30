@@ -154,8 +154,9 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
     * `[D]` - Display Decans.
     * `[B]` - Display Terms (Bounds).
     * `[H]` - Display House Boundaries.
-    * `[R]` - Reset Zoom and Pan.
-* **Sub-Modules:** Accessed via Function keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria).
+    * `[←↓↑→]` - Pan.
+    * `[R]` - Reset Zoom and Pan.    
+* **Sub-Modules:** Accessed via Function and Numeric keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria, `3` for Primary Directions).
 
 ## Screenshots
 
@@ -174,12 +175,19 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/d9bd58ad-3722-4440-88e7-9d0290c553da" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/665e2549-8011-45b6-ba7e-50ba5baf9a64" />
+---
+<img width="2560" height="1600" alt="02b-chart_wheel_example" src="https://github.com/user-attachments/assets/77704939-0b30-4a9f-9378-91a99e0a77a5" />
 <hr>
 
 ### The Chart Wheel Zoomed
 <hr>
 <img width="2560" height="1600" alt="02-chart_wheel_zoomed_02" src="https://github.com/user-attachments/assets/d56feca5-1321-4ca9-a36a-560ba532a332" />
+<hr>
+
+### Actions Menu
+<hr>
+<img width="2560" height="1600" alt="11-menu_actins" src="https://github.com/user-attachments/assets/7270b6ae-7d94-4089-a90e-97d7ae62942d" />
 <hr>
 
 ### Dignities and Rulership Table 1
@@ -188,7 +196,6 @@ Here are some screenshots of the application. You can have an idea of what you e
 <hr>
 
 ### Aspects Table
----
 <img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/43e8d389-5322-40f3-b649-9b117d835dd0" />
 <hr>
 
@@ -220,6 +227,11 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### Solar Return Transit Projection
 <hr>
 <img width="2560" height="1600" alt="06a-solar_return_transit_projection" src="https://github.com/user-attachments/assets/77be865d-f23f-4c12-baf1-92900785b7d8" />
+<hr>
+
+### Planetary Hours
+<hr>
+<img width="2560" height="1600" alt="10-planetary_hours" src="https://github.com/user-attachments/assets/844b9412-ce48-4753-94c2-2026e7ef62f1" />
 <hr>
 
 ## 📜 License
