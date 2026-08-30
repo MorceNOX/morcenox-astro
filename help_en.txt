@@ -630,11 +630,12 @@ You can set:
             B-Alcabitius, P-Placidus, K-Koch, T-Topocentric
         
     P.S.1: The system will automatically switch to O-Porphyry 
-    if the selected latitude is above 66.5° or below -66.5° 
-    when using B-Alcabitius, P-Placidus, or K-Koch.
+           if the selected latitude is above 66.5° or below -66.5° 
+           when using B-Alcabitius, P-Placidus, or K-Koch.
     
-    P.S.2: House numbers in the minor circle of the 
-    chart wheel indicate houses boundaries.
+    P.S.2: House numbers in the minor and in the outer circles
+           of the chart wheel indicate houses boundaries.
+           Hit [H] in the chart wheel to draw the house divisions.
     
 
    • Triplicity System: Choose between Morinus, Dorotheus, 
@@ -757,6 +758,10 @@ of the planets and other celestial bodies.
 
 You can also see the table of house cusp positions on the left 
 side of the screen.
+
+Under the house cusps table is drawn, in ASCII-Art, the Sun's
+symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol (☽ )
+if the chart is nocturnal.
 
 When zooming in on the chart, all information next to the wheel
 is hidden if the second zoom level is active, except for the 
