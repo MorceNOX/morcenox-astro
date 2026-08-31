@@ -455,9 +455,9 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
 
             if (cell.has_aspect) {
                 // Exibe o símbolo do aspecto injetado
-                wattron(pad, COLOR_PAIR(cell.color_pair) | A_BOLD);
+                wattron(pad, COLOR_PAIR(cell.color_pair) | A_DIM);
                 mvwprintw(pad, 1 + 2 * i, 5 + 4 * j, cell.symbol);
-                wattroff(pad, COLOR_PAIR(cell.color_pair) | A_BOLD);
+                wattroff(pad, COLOR_PAIR(cell.color_pair) | A_DIM);
                 
                 // Exibe os minutos/graus residuais exatos do orbe formatado
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
@@ -604,13 +604,13 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             if (cell.has_aspect) {
                 // Ativa os atributos dinâmicos injetados pela função chamadora
                 wattron(pad, COLOR_PAIR(cell.color_pair));
-                if (cell.is_bold) wattron(pad, A_BOLD);
+                if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
 
                 // Desenha o Símbolo Astrológico do Aspecto
                 mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, cell.symbol);
                 
                 // Desativa os atributos do símbolo
-                if (cell.is_bold) wattroff(pad, A_BOLD);
+                if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
                 wattroff(pad, COLOR_PAIR(cell.color_pair));
                 
                 // Desenha o valor numérico do ângulo abaixo do símbolo
@@ -865,13 +865,13 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                 // Ativa os atributos dinâmicos injetados pela função chamadora
                 wattron(pad, COLOR_PAIR(cell.color_pair));
                 
-                if (cell.is_bold) wattron(pad, A_BOLD);
+                if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
 
                 // Desenha o Símbolo Astrológico do Aspecto
                 mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, cell.symbol);
                 
                 // Desativa os atributos do símbolo
-                if (cell.is_bold) wattroff(pad, A_BOLD);
+                if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
                 wattroff(pad, COLOR_PAIR(cell.color_pair));
                                 
                 row_pad = 2 + 2 * i + 1;
@@ -1085,13 +1085,13 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 // Ativa os atributos dinâmicos injetados pela função chamadora
                 wattron(pad, COLOR_PAIR(cell.color_pair));
                 
-                if (cell.is_bold) wattron(pad, A_BOLD);
+                if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
 
                 // Desenha o Símbolo Astrológico do Aspecto
                 mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, cell.symbol);
                 
                 // Desativa os atributos do símbolo
-                if (cell.is_bold) wattroff(pad, A_BOLD);
+                if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
                 wattroff(pad, COLOR_PAIR(cell.color_pair));
 
                 wattron(pad, COLOR_PAIR(10) | A_DIM);

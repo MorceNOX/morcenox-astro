@@ -1462,9 +1462,9 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                 int y_pos_angulo  = 6 + 2 * r;
 
                 if (cell.has_aspect) {
-                    wattron(aspects_win, COLOR_PAIR(cell.color_pair));
+                    wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
                     mvwprintw(aspects_win, y_pos_simbolo, x_pos + 1, "%s", cell.symbol);
-                    wattroff(aspects_win, COLOR_PAIR(cell.color_pair));
+                    wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
 
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
                     double diff = fabs(obj[p_idx].longitude - lista[pagina_offset + j].longitude);
