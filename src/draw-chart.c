@@ -2017,116 +2017,11 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         object_diff = 3;
     }
     
-    if (dark_mode) {
-        init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(2, COLOR_BLACK, COLOR_RED);
-        init_pair(3, COLOR_BLACK, COLOR_GREEN);
-        init_pair(4, COLOR_BLACK, COLOR_YELLOW);
-        init_pair(5, COLOR_BLACK, COLOR_BLUE);
-        init_pair(6, COLOR_BLACK, COLOR_WHITE);
-        init_pair(7, COLOR_BLACK, COLOR_MAGENTA);
-        init_pair(8, COLOR_BLACK, COLOR_CYAN);
-        init_pair(9, COLOR_BLACK, COLOR_BLACK);
-        init_pair(10, COLOR_BLACK, COLOR_WHITE);
 
-        init_pair(11, COLOR_BLACK, COLOR_RED);
-        init_pair(12, COLOR_BLACK, COLOR_GREEN);
-        init_pair(13, COLOR_BLACK, COLOR_WHITE);
 
-        init_pair(14, COLOR_BLACK, COLOR_CYAN);
-        init_pair(15, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(16, COLOR_BLACK, COLOR_WHITE);
-        init_pair(17, COLOR_BLACK, COLOR_MAGENTA);
-        init_pair(18, COLOR_BLACK, COLOR_BLUE);
-        init_pair(19, COLOR_BLACK, COLOR_BLACK);
-        init_pair(20, COLOR_BLACK, COLOR_CYAN);
+    erase();
 
-        init_pair(21, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(23, COLOR_WHITE, COLOR_RED);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-        init_pair(26, COLOR_BLACK, COLOR_WHITE);
-        init_pair(27, COLOR_BLACK, COLOR_RED);
-        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
-        init_pair(29, COLOR_BLACK, COLOR_BLACK);
-        init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
-        
-        init_pair(31, COLOR_GREEN, COLOR_RED);
-        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
-        init_pair(33, COLOR_BLACK, COLOR_BLUE);
-        init_pair(34, COLOR_BLACK, COLOR_CYAN);
-        init_pair(35, COLOR_WHITE, COLOR_BLACK);
-        init_pair(36, COLOR_RED, COLOR_WHITE);
-        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
-    } 
-    else {
-        init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(2, COLOR_RED, COLOR_WHITE);
-        init_pair(3, COLOR_GREEN, COLOR_WHITE);
-        init_pair(4, COLOR_YELLOW, COLOR_WHITE);
-        init_pair(5, COLOR_BLUE, COLOR_WHITE);
-        init_pair(6, COLOR_BLACK, COLOR_WHITE);
-        init_pair(7, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(8, COLOR_BLUE, COLOR_WHITE);
-        init_pair(9, COLOR_BLACK, COLOR_BLACK);
-        init_pair(10, COLOR_WHITE, COLOR_WHITE);
 
-        init_pair(11, COLOR_RED, COLOR_WHITE);
-        init_pair(12, COLOR_GREEN, COLOR_MAGENTA);
-        init_pair(13, COLOR_BLACK, COLOR_WHITE);
-        
-        init_pair(14, COLOR_WHITE, COLOR_BLACK);
-        init_pair(15, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(16, COLOR_BLACK, COLOR_WHITE);
-        init_pair(17, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(18, COLOR_BLUE, COLOR_WHITE);
-        init_pair(19, COLOR_WHITE, COLOR_WHITE);
-        init_pair(20, COLOR_WHITE, COLOR_BLUE);
-
-        init_pair(21, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(23, COLOR_RED, COLOR_WHITE);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(26, COLOR_BLACK, COLOR_CYAN);
-        init_pair(27, COLOR_RED, COLOR_CYAN);
-        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(29, COLOR_WHITE, COLOR_WHITE);
-        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
-
-        init_pair(31, COLOR_GREEN, COLOR_RED);
-        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
-        init_pair(33, COLOR_WHITE, COLOR_BLUE);
-        init_pair(34, COLOR_CYAN, COLOR_WHITE);
-        init_pair(35, COLOR_WHITE, COLOR_BLACK);
-        init_pair(36, COLOR_RED, COLOR_WHITE);
-        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
-    }
-    
-    FLAGS = 0;
-    if (dark_mode) {
-        FLAGS |= A_DIM | A_REVERSE;
-    }
-
-    if (mapa_retorno) {
-        if (!dark_mode) {
-            bkgd(COLOR_PAIR(12) | FLAGS);
-        }
-        else {
-            bkgd(COLOR_PAIR(32) | FLAGS); 
-        }
-    }
-    else {
-        bkgd(COLOR_PAIR(15) | FLAGS);
-    }
-    
-    clear();
-    
-    cbreak();
-    noecho();
-    curs_set(0); 
-    keypad(stdscr, TRUE); // Enable keypad for special keys
     
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -2180,9 +2075,9 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     }
     if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS); else attroff(COLOR_PAIR(34) | A_DIM | FLAGS);
     
-    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM); else attron(COLOR_PAIR(1));    
+    if (dark_mode) attron(COLOR_PAIR(10) | A_DIM); else attron(COLOR_PAIR(1));    
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM); else attroff(COLOR_PAIR(1));
+    if (dark_mode) attroff(COLOR_PAIR(10) | A_DIM); else attroff(COLOR_PAIR(1));
     
 
     if (house_div) {
@@ -3717,25 +3612,37 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         format_hour(p_hour3, sizeof(p_hour3), hours[i+12]);
         format_hour(p_hour4, sizeof(p_hour4), hours[i+18]);
     
-        wattron(table_win, COLOR_PAIR(15));
-        if (i + 1 == planetary_hour) wattron(table_win, A_REVERSE);
-        mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
-        if (i + 1 == planetary_hour) wattroff(table_win, A_REVERSE);
+        int flag_mod = A_REVERSE;
+        int night_color_pair = 12;
+        int highlight_day_color = 15;
+        int highlight_night_color = 12;
 
-        if (i + 1 + 6 == planetary_hour) wattron(table_win, A_REVERSE);
+        if (DARK_MODE) {
+            flag_mod |= A_NORMAL;
+            night_color_pair = 32;
+            highlight_day_color = 21;
+            highlight_night_color = 31;
+        }
+
+        wattron(table_win, COLOR_PAIR(15));
+        if (i + 1 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
+        mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
+        if (i + 1 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
+
+        if (i + 1 + 6 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
         mvwprintw(table_win, row, 24, "%2d) %s  %s  ", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
-        if (i + 1 + 6 == planetary_hour) wattroff(table_win, A_REVERSE);
+        if (i + 1 + 6 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
         wattroff(table_win, COLOR_PAIR(15) );
 
-        wattron(table_win, COLOR_PAIR(12));
-        if (i + 1 + 12 == planetary_hour) wattron(table_win, A_REVERSE);
+        wattron(table_win, COLOR_PAIR(night_color_pair));
+        if (i + 1 + 12 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
         mvwprintw(table_win, row, 44, "%2d) %s  %s  ", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
-        if (i + 1 + 12 == planetary_hour) wattroff(table_win, A_REVERSE);
+        if (i + 1 + 12 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
         
-        if (i + 1 + 18 == planetary_hour) wattron(table_win, A_REVERSE);
+        if (i + 1 + 18 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
         mvwprintw(table_win, row, 64, "%2d) %s  %s  ", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
-        if (i + 1 + 18 == planetary_hour) wattroff(table_win, A_REVERSE);
-        wattroff(table_win, COLOR_PAIR(12));
+        if (i + 1 + 18 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
+        wattroff(table_win, COLOR_PAIR(night_color_pair));
         row += 2;
     }
 
@@ -4607,7 +4514,118 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     int n = 1;
     
     bool dark_mode = (darkmode)?true:false;
+
+
+    if (dark_mode) {
+        init_pair(1, COLOR_BLACK, COLOR_WHITE);
+        init_pair(2, COLOR_BLACK, COLOR_RED);
+        init_pair(3, COLOR_BLACK, COLOR_GREEN);
+        init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(5, COLOR_BLACK, COLOR_BLUE);
+        init_pair(6, COLOR_BLACK, COLOR_WHITE);
+        init_pair(7, COLOR_BLACK, COLOR_MAGENTA);
+        init_pair(8, COLOR_BLACK, COLOR_CYAN);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_BLACK, COLOR_WHITE);
+
+        init_pair(11, COLOR_BLACK, COLOR_RED);
+        init_pair(12, COLOR_BLACK, COLOR_GREEN);
+        init_pair(13, COLOR_BLACK, COLOR_WHITE);
+
+        init_pair(14, COLOR_BLACK, COLOR_CYAN);
+        init_pair(15, COLOR_BLUE, COLOR_YELLOW);
+        init_pair(16, COLOR_BLACK, COLOR_WHITE);
+        init_pair(17, COLOR_BLACK, COLOR_MAGENTA);
+        init_pair(18, COLOR_BLACK, COLOR_BLUE);
+        init_pair(19, COLOR_BLACK, COLOR_BLACK);
+        init_pair(20, COLOR_BLACK, COLOR_CYAN);
+
+        init_pair(21, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(23, COLOR_WHITE, COLOR_RED);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(26, COLOR_BLACK, COLOR_WHITE);
+        init_pair(27, COLOR_BLACK, COLOR_RED);
+        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(29, COLOR_BLACK, COLOR_BLACK);
+        init_pair(30, COLOR_GREEN, COLOR_MAGENTA);
+        
+        init_pair(31, COLOR_GREEN, COLOR_RED);
+        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
+        init_pair(33, COLOR_BLACK, COLOR_BLUE);
+        init_pair(34, COLOR_BLACK, COLOR_CYAN);
+        init_pair(35, COLOR_WHITE, COLOR_BLACK);
+        init_pair(36, COLOR_RED, COLOR_WHITE);
+        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
+    } 
+    else {
+        init_pair(1, COLOR_BLACK, COLOR_WHITE);
+        init_pair(2, COLOR_RED, COLOR_WHITE);
+        init_pair(3, COLOR_GREEN, COLOR_WHITE);
+        init_pair(4, COLOR_YELLOW, COLOR_WHITE);
+        init_pair(5, COLOR_BLUE, COLOR_WHITE);
+        init_pair(6, COLOR_BLACK, COLOR_WHITE);
+        init_pair(7, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(8, COLOR_BLUE, COLOR_WHITE);
+        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(10, COLOR_WHITE, COLOR_WHITE);
+
+        init_pair(11, COLOR_RED, COLOR_WHITE);
+        init_pair(12, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(13, COLOR_BLACK, COLOR_WHITE);
+        
+        init_pair(14, COLOR_WHITE, COLOR_BLACK);
+        init_pair(15, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(16, COLOR_BLACK, COLOR_WHITE);
+        init_pair(17, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(18, COLOR_BLUE, COLOR_WHITE);
+        init_pair(19, COLOR_WHITE, COLOR_WHITE);
+        init_pair(20, COLOR_WHITE, COLOR_BLUE);
+
+        init_pair(21, COLOR_BLUE, COLOR_YELLOW);
+        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(23, COLOR_RED, COLOR_WHITE);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(26, COLOR_BLACK, COLOR_CYAN);
+        init_pair(27, COLOR_RED, COLOR_CYAN);
+        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(29, COLOR_WHITE, COLOR_WHITE);
+        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+
+        init_pair(31, COLOR_GREEN, COLOR_RED);
+        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
+        init_pair(33, COLOR_WHITE, COLOR_BLUE);
+        init_pair(34, COLOR_CYAN, COLOR_WHITE);
+        init_pair(35, COLOR_WHITE, COLOR_BLACK);
+        init_pair(36, COLOR_RED, COLOR_WHITE);
+        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
+    }
     
+    FLAGS = 0;
+    if (dark_mode) {
+        FLAGS |= A_DIM | A_REVERSE;
+    }
+
+    if (mapa_retorno) {
+        if (!dark_mode) {
+            bkgd(COLOR_PAIR(12) | FLAGS);
+        }
+        else {
+            bkgd(COLOR_PAIR(32) | FLAGS); 
+        }
+    }
+    else {
+        bkgd(COLOR_PAIR(15) | FLAGS);
+    }
+       
+    cbreak();
+    noecho();
+    curs_set(0); 
+    keypad(stdscr, TRUE); // Enable keypad for special keys
+
+  
     char err[256];
     char serr[256];
     double x2[6];
@@ -4729,13 +4747,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         terminate_database();
         exit(1); 
     }
-
-
-
-    // Initialize ncurses
-    initscr();    
-    start_color();
-
 
 
     // Zoom factor - start with 1.0 (normal size)
@@ -7056,7 +7067,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     MAPA_DIURNO = backup_mapa_diurno;
 
     swe_close();
-    endwin();
+    //endwin();
 
     return 0;
 }

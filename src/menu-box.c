@@ -1032,50 +1032,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     int choice = -1;
     int c;
 
-    start_color();
-    init_pair(1, COLOR_GREEN, COLOR_BLUE);
-    init_pair(2, COLOR_BLACK, COLOR_WHITE);
-    init_pair(3, COLOR_RED, COLOR_WHITE);
-    init_pair(4, COLOR_BLACK, COLOR_BLACK);
-    init_pair(5, COLOR_CYAN, COLOR_BLUE);
-    init_pair(6, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(7, COLOR_YELLOW, COLOR_BLUE);
-    init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
-    init_pair(9, COLOR_BLUE, COLOR_BLUE);
-    init_pair(10, COLOR_BLACK, COLOR_CYAN);
-    init_pair(11, COLOR_CYAN, COLOR_BLUE);
-    init_pair(12, COLOR_WHITE, COLOR_BLUE);
-    init_pair(13, COLOR_GREEN, COLOR_BLUE);
-    init_pair(14, COLOR_RED, COLOR_BLUE);
-        
-    if (DARK_MODE) {
-        init_pair(21, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(23, COLOR_WHITE, COLOR_RED);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-        init_pair(26, COLOR_BLACK, COLOR_WHITE);
-        init_pair(27, COLOR_BLACK, COLOR_RED);
-        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
-        init_pair(29, COLOR_BLACK, COLOR_BLACK);
-        init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
-    }
-    else {
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(23, COLOR_RED, COLOR_WHITE);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(26, COLOR_BLACK, COLOR_CYAN);
-        init_pair(27, COLOR_RED, COLOR_CYAN);
-        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(29, COLOR_WHITE, COLOR_WHITE);
-        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
-    }
-    init_pair(31, COLOR_BLUE, COLOR_YELLOW);
-    init_pair(32, COLOR_BLUE, COLOR_GREEN);
-    init_pair(33, COLOR_BLUE, COLOR_CYAN);
-
+    
     
     cchar_t ls, rs, ts, bs, tl, tr, bl, br;
 
@@ -1094,39 +1051,51 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     int multiplier = 150;
     bool clockwise = true;
 
-    while(1) {
-        clear();
-        bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
 
-        
+    
+
+
+    bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
+
+    while(1) {
+        erase();
+
         int max_y, max_x;
         getmaxyx(stdscr, max_y, max_x);
         
         int center_y = max_y / 2;
         int center_x = max_x / 2;
 
-
-        // 0. Draw Circles
-
-        // if (DARK_MODE) {
-        //     attron(COLOR_PAIR(7) | A_DIM);
-        // }
-        // else {
-        //     attron(COLOR_PAIR(31));
-        // }
-        // draw_circle_filled(center_y, center_x, 13, 2.0, 1.0, L"█▓▒░");
-        //draw_circle_points(center_y, center_x, 20, 1.75, 1.0, L"█▓▒░");
+        unsigned short term_w = (unsigned short)max_x; // get_terminal_width();
+        unsigned short term_h = (unsigned short)max_y; // get_terminal_height();
+    
+        // 2. Calculate Menu Box Dimensions
+        int max_choice_width = 0;
+        for (int j = 0; j < n_choices; j++) {
+            int w = get_visual_width(options[j].option);
+            if (w > max_choice_width) max_choice_width = w;
+        }
         
-        // if (DARK_MODE) {
-        //     attroff(COLOR_PAIR(7) | A_DIM);
-        // }
-        // else {
-        //     attroff(COLOR_PAIR(31));
-        // }
+        int box_width = max_choice_width + 4;
+        if (box_width % 2 != 0) box_width++;
+        
+        int box_padding_x = (term_w - box_width) / 2;
+        int logo_lines = ARRAY_SIZE(LOGO);
+        int menu_y_start = logo_lines + 2;
 
-        unsigned short term_w = get_terminal_width();
-        unsigned short term_h = get_terminal_height();
-       
+        menu_win = newwin(n_choices + 2, box_width, menu_y_start, box_padding_x);
+        shadow_win = newwin(n_choices + 2, box_width, menu_y_start + 1, box_padding_x + 1);
+        bar_win = newwin(3, term_w - 3, term_h - 5, 1);
+        shadow_bar = newwin(3, term_w - 3, term_h - 4, 2);
+            
+
+        keypad(menu_win, TRUE);
+        curs_set(0);
+        noecho();
+        cbreak();
+
+                
+            
         // 1. Draw Logo
         
         for (int i = 0; i < (int)ARRAY_SIZE(LOGO); i++) {
@@ -1227,33 +1196,9 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         refresh();
         *delay = 0;
 
-        noecho();
-        cbreak();
         
-        // 2. Calculate Menu Box Dimensions
-        int max_choice_width = 0;
-        for (int j = 0; j < n_choices; j++) {
-            int w = get_visual_width(options[j].option);
-            if (w > max_choice_width) max_choice_width = w;
-        }
         
-        int box_width = max_choice_width + 4;
-        if (box_width % 2 != 0) box_width++;
         
-        int box_padding_x = (term_w - box_width) / 2;
-        int logo_lines = ARRAY_SIZE(LOGO);
-        int menu_y_start = logo_lines + 2;
-
-        menu_win = newwin(n_choices + 2, box_width, menu_y_start, box_padding_x);
-        shadow_win = newwin(n_choices + 2, box_width, menu_y_start + 1, box_padding_x + 1);
-    
-        keypad(menu_win, TRUE);
-        curs_set(0);
-
-
-        // 5. Apply the rounded border to the window
-        wborder_set(menu_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
-
         // Draw Shadow
         wattron(shadow_win, COLOR_PAIR(4));
         box(shadow_win, 0, 0);
@@ -1261,12 +1206,14 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         wrefresh(shadow_win);
     
         // Draw Menu Border
+        // 5. Apply the rounded border to the window
+        wborder_set(menu_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
+
         wattron(menu_win, COLOR_PAIR(10) | A_DIM);
-        //box(menu_win, 0, 0);
         wbkgd(menu_win, COLOR_PAIR(10));
         wattroff(menu_win, COLOR_PAIR(10) | A_DIM);
         
-        // 3. Draw Menu Options using the new function
+        // 3. Draw Menu Options
         for(int i = 0; i < n_choices; i++) {
             int attr = (i == *highlight) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(10);
             
@@ -1280,21 +1227,15 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         //draw_centered_text(stdscr, desc_y, 0, term_w, options[*highlight].text, COLOR_PAIR(7) | A_BOLD);
         
                         
-        // 6. Draw the Status Bar
-        bar_win = newwin(3, term_w - 3, term_h - 5, 1);
-        shadow_bar = newwin(3, term_w - 3, term_h - 4, 2);
-        
-        
+        // 6. Draw the Status Bar    
 
         wborder_set(bar_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
 
         wattron(shadow_bar, COLOR_PAIR(4));
-        //box(shadow_bar, 0 , 0);
         wattroff(shadow_bar, COLOR_PAIR(4));
         wrefresh(shadow_bar);
         
         wattron(bar_win, COLOR_PAIR(11));
-        //box(bar_win, 0, 0);
         wbkgd(bar_win, COLOR_PAIR(11));
         wattroff(bar_win, COLOR_PAIR(11));
         
@@ -1771,21 +1712,14 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         return;
     }
 
-    start_color();
-    init_pair(1, COLOR_CYAN, COLOR_BLUE);
-    init_pair(2, COLOR_BLACK, COLOR_WHITE);
-    init_pair(3, COLOR_RED, COLOR_WHITE);
-    init_pair(4, COLOR_BLACK, COLOR_BLACK);
-    init_pair(5, COLOR_CYAN, COLOR_BLUE);
-    init_pair(6, COLOR_YELLOW, COLOR_BLACK);
-    
+       
     // Draw shadow
     wbkgd(shadow_win, COLOR_PAIR(4));
     box(shadow_win, 0, 0);
     wrefresh(shadow_win);
     
     // Draw main window with border
-    wbkgd(help_win, COLOR_PAIR(1) | FLAGS);
+    wbkgd(help_win, COLOR_PAIR(2) | FLAGS);
     box(help_win, 0, 0);
     mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
     wrefresh(help_win);
@@ -1805,7 +1739,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         werase(help_win);
         
         // Redraw borders
-        wbkgd(help_win, COLOR_PAIR(2) | FLAGS);
         box(help_win, 0, 0);
         mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
         
@@ -1986,9 +1919,56 @@ int main() {
 
     int highlight = 0;
     int delay = 1;
+    
     initscr();
-
+    set_escdelay(25);
+    start_color();    
+    
     while(1) {
+        init_pair(1, COLOR_GREEN, COLOR_BLUE);
+        init_pair(2, COLOR_BLACK, COLOR_WHITE);
+        init_pair(3, COLOR_RED, COLOR_WHITE);
+        init_pair(4, COLOR_BLACK, COLOR_BLACK);
+        init_pair(5, COLOR_CYAN, COLOR_BLUE);
+        init_pair(6, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(7, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
+        init_pair(9, COLOR_BLUE, COLOR_BLUE);
+        init_pair(10, COLOR_BLACK, COLOR_CYAN);
+        init_pair(11, COLOR_CYAN, COLOR_BLUE);
+        init_pair(12, COLOR_WHITE, COLOR_BLUE);
+        init_pair(13, COLOR_GREEN, COLOR_BLUE);
+        init_pair(14, COLOR_RED, COLOR_BLUE);
+            
+        if (DARK_MODE) {
+            init_pair(21, COLOR_YELLOW, COLOR_BLUE);
+            init_pair(22, COLOR_BLACK, COLOR_WHITE);
+            init_pair(23, COLOR_WHITE, COLOR_RED);
+            init_pair(24, COLOR_BLACK, COLOR_BLACK);
+            init_pair(25, COLOR_BLACK, COLOR_YELLOW);
+            init_pair(26, COLOR_BLACK, COLOR_WHITE);
+            init_pair(27, COLOR_BLACK, COLOR_RED);
+            init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
+            init_pair(29, COLOR_BLACK, COLOR_BLACK);
+            init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
+        }
+        else {
+            init_pair(22, COLOR_BLACK, COLOR_WHITE);
+            init_pair(24, COLOR_BLACK, COLOR_BLACK);
+            init_pair(23, COLOR_RED, COLOR_WHITE);
+            init_pair(24, COLOR_BLACK, COLOR_BLACK);
+            init_pair(25, COLOR_YELLOW, COLOR_BLACK);
+            init_pair(26, COLOR_BLACK, COLOR_CYAN);
+            init_pair(27, COLOR_RED, COLOR_CYAN);
+            init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
+            init_pair(29, COLOR_WHITE, COLOR_WHITE);
+            init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+        }
+        init_pair(31, COLOR_BLUE, COLOR_YELLOW);
+        init_pair(32, COLOR_BLUE, COLOR_GREEN);
+        init_pair(33, COLOR_BLUE, COLOR_CYAN);
+    
+
         MenuOption options[] = { 
             {_("Quick Chart"), _("View the chart for the current moment in the default city."), call_chart_now},
             {_("New Chart"), _("Set the data to load a new chart."), set_data},
@@ -2010,7 +1990,6 @@ int main() {
         // If the user pressed ESC (choice == n_choices), break the loop
         if (choice >= n_choices) break;
 
-        //endwin();
     }
 
     endwin();
