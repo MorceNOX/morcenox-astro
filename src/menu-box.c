@@ -623,7 +623,7 @@ void del_chart() {
         werase(chart_win);
         wattron(chart_win, COLOR_PAIR(2) | A_DIM);
         box(chart_win, 0, 0);
-        wbkgd(chart_win, COLOR_PAIR(2));
+        wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
         
         const char *title = _("Select Chart to Delete");
 
@@ -856,7 +856,7 @@ void load_chart() {
         werase(chart_win);
         wattron(chart_win, COLOR_PAIR(2) | A_DIM);
         box(chart_win, 0, 0);
-        wbkgd(chart_win, COLOR_PAIR(2));
+        wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
         wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
         wrefresh(chart_win);
 
@@ -1047,18 +1047,31 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     init_pair(12, COLOR_WHITE, COLOR_BLUE);
     init_pair(13, COLOR_GREEN, COLOR_BLUE);
     init_pair(14, COLOR_RED, COLOR_BLUE);
-
-    init_pair(22, COLOR_BLACK, COLOR_WHITE);
-    init_pair(24, COLOR_BLACK, COLOR_BLACK);
-    init_pair(23, COLOR_RED, COLOR_WHITE);
-    init_pair(24, COLOR_BLACK, COLOR_BLACK);
-    init_pair(25, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(26, COLOR_BLACK, COLOR_CYAN);
-    init_pair(27, COLOR_RED, COLOR_CYAN);
-    init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-    init_pair(29, COLOR_WHITE, COLOR_WHITE);
-    init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
-    
+        
+    if (DARK_MODE) {
+        init_pair(21, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(23, COLOR_WHITE, COLOR_RED);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(26, COLOR_BLACK, COLOR_WHITE);
+        init_pair(27, COLOR_BLACK, COLOR_RED);
+        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(29, COLOR_BLACK, COLOR_BLACK);
+        init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
+    }
+    else {
+        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(23, COLOR_RED, COLOR_WHITE);
+        init_pair(24, COLOR_BLACK, COLOR_BLACK);
+        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(26, COLOR_BLACK, COLOR_CYAN);
+        init_pair(27, COLOR_RED, COLOR_CYAN);
+        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(29, COLOR_WHITE, COLOR_WHITE);
+        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+    }
     init_pair(31, COLOR_BLUE, COLOR_YELLOW);
     init_pair(32, COLOR_BLUE, COLOR_GREEN);
     init_pair(33, COLOR_BLUE, COLOR_CYAN);
@@ -1653,6 +1666,13 @@ void load_default_values() {
             free(house_system);
         }
 
+        if (DARK_MODE) {
+            FLAGS |= A_DIM | A_REVERSE;
+        }
+        else {
+            FLAGS = 0;
+        }
+
         GENDER = gender_id;
 
         if (show_mod > 0) {
@@ -1765,7 +1785,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     wrefresh(shadow_win);
     
     // Draw main window with border
-    wbkgd(help_win, COLOR_PAIR(1));
+    wbkgd(help_win, COLOR_PAIR(1) | FLAGS);
     box(help_win, 0, 0);
     mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
     wrefresh(help_win);
@@ -1785,7 +1805,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         werase(help_win);
         
         // Redraw borders
-        wbkgd(help_win, COLOR_PAIR(2));
+        wbkgd(help_win, COLOR_PAIR(2) | FLAGS);
         box(help_win, 0, 0);
         mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
         
@@ -1907,6 +1927,14 @@ void set_options() {
     }
 
     DARK_MODE = ed.options.dark_mode;
+
+    if (DARK_MODE) {
+        FLAGS |= A_DIM | A_REVERSE;
+    }
+    else {
+        FLAGS = 0;
+    }
+
     HOUSE_SYSTEM = ed.options.house_system;
     GENDER = ed.options.gender;
     snprintf(LANGUAGE, 10, "%s", ed.options.language);

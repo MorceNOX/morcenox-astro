@@ -2186,11 +2186,11 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
 
     if (house_div) {
-        if (dark_mode) attron(COLOR_PAIR(19) | A_DIM); else attron(COLOR_PAIR(19) | A_DIM);
+        if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attron(COLOR_PAIR(19) | A_DIM);
 
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
         
-        if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM); else attroff(COLOR_PAIR(19) | A_DIM);
+        if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attroff(COLOR_PAIR(19) | A_DIM);
     }
 
     // Draw house numbers
@@ -7181,7 +7181,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             if (item_index < total_opcoes) {
                 int attr = (item_index == selected_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(26);
                 wattron(win, attr);
-                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], 50 - get_visual_width(opcoes[item_index]), " ");
+                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], (menu_width - 4) - get_visual_width(opcoes[item_index]), " ");
                 wattroff(win, attr);
             }
         }

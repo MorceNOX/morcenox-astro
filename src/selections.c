@@ -542,7 +542,7 @@ OptionsEdition select_options() {
 
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2));
+        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1289,7 +1289,7 @@ int select_gender() {
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2));
+        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1370,7 +1370,7 @@ DateEdition selecionar_data() {
 
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2));
+        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1477,7 +1477,7 @@ HoraEdition selecionar_hora() {
 
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2));
+        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1613,7 +1613,7 @@ int set_tz() {
         mvwprintw(tz_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(tz_win, A_BOLD);
 
-        wbkgd(tz_win, COLOR_PAIR(2));
+        wbkgd(tz_win, COLOR_PAIR(2) | FLAGS);
                 
         // Desenha as instruções ou mensagem de erro
         if (show_error) {
@@ -1778,7 +1778,7 @@ int set_dst() {
         // Clear and redraw main menu
         werase(dst_win);
         wattron(dst_win, COLOR_PAIR(2) | A_DIM);
-        wbkgd(dst_win, COLOR_PAIR(2));
+        wbkgd(dst_win, COLOR_PAIR(2) | FLAGS);
         box(dst_win, 0, 0);        
         wattroff(dst_win, COLOR_PAIR(2) | A_DIM);
 
@@ -1917,7 +1917,7 @@ void set_chart_name(char *chart_name, size_t max_length) {
     while (!done) {
         // Renderiza e limpa a janela com segurança
         werase(dialog_win);
-        wbkgd(dialog_win, COLOR_PAIR(2));
+        wbkgd(dialog_win, COLOR_PAIR(2) | FLAGS);
         
         wattron(dialog_win, COLOR_PAIR(2) | A_DIM);
         box(dialog_win, 0, 0);
@@ -2158,7 +2158,7 @@ int select_topic(char *file) {
         werase(win);
         wattron(win, COLOR_PAIR(2) | A_DIM);
         box(win, 0, 0);        
-        wbkgd(win, COLOR_PAIR(2));
+        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         wattroff(win, COLOR_PAIR(2) | A_DIM);
         wrefresh(win);
         
@@ -2167,13 +2167,14 @@ int select_topic(char *file) {
         mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         
+        
         // Draw topic items with proper scrolling
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + topic_scroll_offset;
             if (item_index < topic_count) {
                 int attr = (item_index == selected_topic_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
                 wattron(win, attr);
-                mvwprintw(win, i + 1, 1, " %s ", topics[item_index]);
+                mvwprintw(win, i + 1, 1, " %s%*s ", topics[item_index], (menu_width - 4) - get_visual_width(topics[item_index]), " ");
                 wattroff(win, attr);
             }
         }
@@ -2315,7 +2316,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         werase(country_win);
         wattron(country_win, COLOR_PAIR(22) | A_DIM);
         box(country_win, 0, 0);        
-        wbkgd(country_win, COLOR_PAIR(22));
+        wbkgd(country_win, COLOR_PAIR(22) | FLAGS);
         wattroff(country_win, COLOR_PAIR(22) | A_DIM);
 
         wattron(country_win, A_BOLD);
@@ -2440,7 +2441,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         // Clear and redraw main menu
         werase(city_win);
         wattron(city_win, COLOR_PAIR(22) | A_DIM);
-        wbkgd(city_win, COLOR_PAIR(22));
+        wbkgd(city_win, COLOR_PAIR(22) | FLAGS);
         box(city_win, 0, 0);
         wattroff(city_win, COLOR_PAIR(22) | A_DIM);
 

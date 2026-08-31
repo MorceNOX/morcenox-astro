@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-30 19:36-0300\n"
+"POT-Creation-Date: 2026-08-30 20:43-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -614,56 +614,56 @@ msgstr ""
 msgid " Arabic Parts & Hermetic Lots "
 msgstr ""
 
-#: src/arabic_parts.c:175 src/arabic_parts.c:461
+#: src/arabic_parts.c:175 src/arabic_parts.c:462
 msgid "Current Chart Parameters: "
 msgstr ""
 
-#: src/arabic_parts.c:177 src/arabic_parts.c:463
+#: src/arabic_parts.c:177 src/arabic_parts.c:464
 msgid "Diurnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:177 src/arabic_parts.c:463
+#: src/arabic_parts.c:177 src/arabic_parts.c:464
 msgid "Nocturnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:178 src/arabic_parts.c:464 src/selections.c:1307
+#: src/arabic_parts.c:178 src/arabic_parts.c:465 src/selections.c:1307
 msgid "Gender"
 msgstr ""
 
-#: src/arabic_parts.c:178 src/arabic_parts.c:464 src/arabic_parts.c:970
+#: src/arabic_parts.c:178 src/arabic_parts.c:465 src/arabic_parts.c:972
 #: src/draw-chart.c:2288 src/selections.c:1308
 msgid "Masculine"
 msgstr ""
 
-#: src/arabic_parts.c:178 src/arabic_parts.c:464 src/arabic_parts.c:970
+#: src/arabic_parts.c:178 src/arabic_parts.c:465 src/arabic_parts.c:972
 #: src/draw-chart.c:2288 src/selections.c:1308
 msgid "Feminine"
 msgstr ""
 
-#: src/arabic_parts.c:178 src/arabic_parts.c:464 src/draw-chart.c:2288
+#: src/arabic_parts.c:178 src/arabic_parts.c:465 src/draw-chart.c:2288
 #: src/selections.c:693 src/selections.c:1308
 msgid "Neuter"
 msgstr ""
 
-#: src/arabic_parts.c:188 src/arabic_parts.c:474
+#: src/arabic_parts.c:188 src/arabic_parts.c:475
 msgid "Part Name"
 msgstr ""
 
-#: src/arabic_parts.c:189 src/arabic_parts.c:475 src/draw-chart.c:2856
+#: src/arabic_parts.c:189 src/arabic_parts.c:476 src/draw-chart.c:2856
 #: src/draw-chart.c:3354
 msgid "Position"
 msgstr ""
 
-#: src/arabic_parts.c:190 src/arabic_parts.c:476 src/draw-chart.c:2209
+#: src/arabic_parts.c:190 src/arabic_parts.c:477 src/draw-chart.c:2209
 #: src/draw-chart.c:2861 src/draw-chart.c:3357 src/profections.c:134
 msgid "House"
 msgstr ""
 
-#: src/arabic_parts.c:191 src/arabic_parts.c:477 src/firdaria.c:325
+#: src/arabic_parts.c:191 src/arabic_parts.c:478 src/firdaria.c:325
 msgid "Lord"
 msgstr ""
 
-#: src/arabic_parts.c:192 src/arabic_parts.c:478
+#: src/arabic_parts.c:192 src/arabic_parts.c:479
 msgid "Link"
 msgstr ""
 
@@ -671,7 +671,7 @@ msgstr ""
 msgid "Core Traditional Governance"
 msgstr ""
 
-#: src/arabic_parts.c:212 src/arabic_parts.c:497
+#: src/arabic_parts.c:212 src/arabic_parts.c:498
 msgid "No Arabic Parts available for this chart configuration."
 msgstr ""
 
@@ -679,104 +679,104 @@ msgstr ""
 msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects."
 msgstr ""
 
-#: src/arabic_parts.c:334 src/arabic_parts.c:570 src/directions.c:713
+#: src/arabic_parts.c:334 src/arabic_parts.c:571 src/directions.c:713
 #: src/directions.c:1175 src/draw-chart.c:3301 src/draw-chart.c:3629
 #: src/draw-chart.c:4363 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1008
 #: src/mind.c:312 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr ""
 
-#: src/arabic_parts.c:456
+#: src/arabic_parts.c:457
 msgid " Arabic Parts - Solar Revolution Radix Confrontation "
 msgstr ""
 
-#: src/arabic_parts.c:479
+#: src/arabic_parts.c:480
 msgid "Radical House"
 msgstr ""
 
-#: src/arabic_parts.c:567
+#: src/arabic_parts.c:568
 msgid "Use [↑/↓] Select | [x] Aspects."
 msgstr ""
 
-#: src/arabic_parts.c:896
+#: src/arabic_parts.c:898
 msgid "New Custom Part"
 msgstr ""
 
-#: src/arabic_parts.c:902
+#: src/arabic_parts.c:904
 msgid "User defined hermetic lot formula."
 msgstr ""
 
-#: src/arabic_parts.c:953
+#: src/arabic_parts.c:955
 msgid " Edit Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:953
+#: src/arabic_parts.c:955
 msgid " New Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:957
+#: src/arabic_parts.c:959
 msgid "Part Name: "
 msgstr ""
 
-#: src/arabic_parts.c:966
+#: src/arabic_parts.c:968
 msgid "Gender Scope: "
 msgstr ""
 
-#: src/arabic_parts.c:970
+#: src/arabic_parts.c:972
 msgid "Neuter/Universal"
 msgstr ""
 
-#: src/arabic_parts.c:975
+#: src/arabic_parts.c:977
 msgid "Diurnal Formula (Personal Point + Significator - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:990
+#: src/arabic_parts.c:992
 msgid "Nocturnal Formula (Personal Point + Significatpr - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:1005
+#: src/arabic_parts.c:1007
 msgid "Traditional Link: "
 msgstr ""
 
-#: src/arabic_parts.c:1014
+#: src/arabic_parts.c:1016
 msgid "Description: "
 msgstr ""
 
-#: src/arabic_parts.c:1050
+#: src/arabic_parts.c:1052
 msgid " [ SAVE FORMULA ] "
 msgstr ""
 
-#: src/arabic_parts.c:1054
+#: src/arabic_parts.c:1056
 msgid ""
 "Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | "
 "[ENTER] Edit Text / Save"
 msgstr ""
 
-#: src/arabic_parts.c:1385
+#: src/arabic_parts.c:1387
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:1506
+#: src/arabic_parts.c:1508
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr ""
 
-#: src/arabic_parts.c:1506
+#: src/arabic_parts.c:1508
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:1591 src/selections.c:160
+#: src/arabic_parts.c:1593 src/selections.c:160
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:1595 src/selections.c:164
+#: src/arabic_parts.c:1597 src/selections.c:164
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:1660 src/arabic_parts.c:1674
+#: src/arabic_parts.c:1662 src/arabic_parts.c:1676
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:1679
+#: src/arabic_parts.c:1681
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
@@ -2640,147 +2640,147 @@ msgstr ""
 msgid "Chart not found!"
 msgstr ""
 
-#: src/menu-box.c:1298
+#: src/menu-box.c:1311
 msgid "Location: "
 msgstr ""
 
-#: src/menu-box.c:1306
+#: src/menu-box.c:1319
 msgid "┃ Date/Time: "
 msgstr ""
 
-#: src/menu-box.c:1314
+#: src/menu-box.c:1327
 msgid "┃ Dst: "
 msgstr ""
 
-#: src/menu-box.c:1318 src/selections.c:1742 src/selections.c:1854
+#: src/menu-box.c:1331 src/selections.c:1742 src/selections.c:1854
 msgid "Yes "
 msgstr ""
 
-#: src/menu-box.c:1318 src/selections.c:1741 src/selections.c:1857
+#: src/menu-box.c:1331 src/selections.c:1741 src/selections.c:1857
 msgid "No  "
 msgstr ""
 
-#: src/menu-box.c:1318 src/selections.c:1740
+#: src/menu-box.c:1331 src/selections.c:1740
 msgid "Auto"
 msgstr ""
 
-#: src/menu-box.c:1322
+#: src/menu-box.c:1335
 msgid "┃ Gen: "
 msgstr ""
 
-#: src/menu-box.c:1499
+#: src/menu-box.c:1512
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:1871
+#: src/menu-box.c:1891
 msgid "Help file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:1875 src/menu-box.c:1973
+#: src/menu-box.c:1895 src/menu-box.c:2001
 msgid "Help"
 msgstr ""
 
-#: src/menu-box.c:1876
+#: src/menu-box.c:1896
 msgid "Help file loaded successfully!"
 msgstr ""
 
-#: src/menu-box.c:1890
+#: src/menu-box.c:1910
 msgid "Topics file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:1894 src/menu-box.c:1974
+#: src/menu-box.c:1914 src/menu-box.c:2002
 msgid "Technical Topics"
 msgstr ""
 
-#: src/menu-box.c:1895
+#: src/menu-box.c:1915
 msgid "Topics file loaded successfully!"
 msgstr ""
 
-#: src/menu-box.c:1905
+#: src/menu-box.c:1925
 msgid "Settings unchanged!"
 msgstr ""
 
-#: src/menu-box.c:1927
+#: src/menu-box.c:1955
 msgid "Settings updated!"
 msgstr ""
 
-#: src/menu-box.c:1965
+#: src/menu-box.c:1993
 msgid "Quick Chart"
 msgstr ""
 
-#: src/menu-box.c:1965
+#: src/menu-box.c:1993
 msgid "View the chart for the current moment in the default city."
 msgstr ""
 
-#: src/menu-box.c:1966
+#: src/menu-box.c:1994
 msgid "New Chart"
 msgstr ""
 
-#: src/menu-box.c:1966
+#: src/menu-box.c:1994
 msgid "Set the data to load a new chart."
 msgstr ""
 
-#: src/menu-box.c:1967
+#: src/menu-box.c:1995
 msgid "Load Chart"
 msgstr ""
 
-#: src/menu-box.c:1967
+#: src/menu-box.c:1995
 msgid "Load a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:1968
+#: src/menu-box.c:1996
 msgid "Save the Chart"
 msgstr ""
 
-#: src/menu-box.c:1968
+#: src/menu-box.c:1996
 msgid "Save the current chart."
 msgstr ""
 
-#: src/menu-box.c:1969
+#: src/menu-box.c:1997
 msgid "Delete Chart"
 msgstr ""
 
-#: src/menu-box.c:1969
+#: src/menu-box.c:1997
 msgid "Delete a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:1970
+#: src/menu-box.c:1998
 msgid "Display Chart"
 msgstr ""
 
-#: src/menu-box.c:1970
+#: src/menu-box.c:1998
 msgid "Display the current chart."
 msgstr ""
 
-#: src/menu-box.c:1971
+#: src/menu-box.c:1999
 msgid "Change the Default Location"
 msgstr ""
 
-#: src/menu-box.c:1971
+#: src/menu-box.c:1999
 msgid "Select a new city as default for the Quick Chart."
 msgstr ""
 
-#: src/menu-box.c:1972
+#: src/menu-box.c:2000
 msgid "Settings"
 msgstr ""
 
-#: src/menu-box.c:1972
+#: src/menu-box.c:2000
 msgid "Modify the default settings."
 msgstr ""
 
-#: src/menu-box.c:1973
+#: src/menu-box.c:2001
 msgid "See the help window for this application."
 msgstr ""
 
-#: src/menu-box.c:1974
+#: src/menu-box.c:2002
 msgid "Technical topics used in this program."
 msgstr ""
 
-#: src/menu-box.c:1975
+#: src/menu-box.c:2003
 msgid "Exit"
 msgstr ""
 
-#: src/menu-box.c:1975
+#: src/menu-box.c:2003
 msgid "Exit the program."
 msgstr ""
 
