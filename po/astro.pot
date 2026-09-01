@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 10:56-0300\n"
+"POT-Creation-Date: 2026-09-01 11:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -909,7 +909,7 @@ msgid "Aspects: Zodiacal with Real Latitude (Method Placidus)."
 msgstr ""
 
 #: src/directions.c:693 src/directions.c:1164
-msgid "Aspects: Mundane proportional to Semi-Arcs (Method Placidus in mundo)."
+msgid "Aspects: Mundane proportional to Semi-Arcs."
 msgstr ""
 
 #: src/directions.c:695 src/directions.c:1166

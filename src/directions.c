@@ -690,7 +690,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs (Method Placidus in mundo)."));
+            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs."));
         } else {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
         }
@@ -1161,7 +1161,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs (Method Placidus in mundo)."));
+            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs."));
         } else {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
         }
