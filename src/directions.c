@@ -234,7 +234,7 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
                 }
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
-                if (arco > 0.0 && arco <= 120.0) {
+                if (arco > 0.0 && arco <= MAX_AGE) {
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
 
                     d->sentido = s;
@@ -352,7 +352,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                 if (arco < 0) arco += 360.0; 
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
-                if (arco > 0.0 && arco <= 120.0) {
+                if (arco > 0.0 && arco <= MAX_AGE) {
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
 
                     d->sentido = s; // Salva 0 para direta ou 1 para conversa
@@ -504,7 +504,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     box(shadow_win, 0, 0); 
     wattroff(shadow_win, COLOR_PAIR(9));
     wnoutrefresh(shadow_win);
-
+   
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
     int sentido = 2;
@@ -515,7 +516,6 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         werase(scroll_pad);
 
         box(table_win, 0, 0);
-        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -853,7 +853,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                 }
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
-                if (arco > 0.0 && arco <= 150.0) {
+                if (arco > 0.0 && arco <= MAX_AGE) {
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
 
                     d->sentido = s;
@@ -902,7 +902,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     strcpy(d->tipo_direcao, "Zodiacal");
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 150) return qtd_direcoes;
+                    if (qtd_direcoes >= 300) return qtd_direcoes;
                 }
             }
         }
@@ -959,6 +959,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     wattroff(shadow_win, COLOR_PAIR(9));
     wnoutrefresh(shadow_win);
 
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
     int sentido = 2;
@@ -970,7 +971,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         werase(scroll_pad);
 
         box(table_win, 0, 0);
-        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+        
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions to Arabic Parts ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -1333,7 +1334,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                 if (arco < 0) arco += 360.0; 
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
-                if (arco > 0.0 && arco <= 120.0) {
+                if (arco > 0.0 && arco <= MAX_AGE) {
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
 
                     d->sentido = s; // Salva 0 para direta ou 1 para conversa
