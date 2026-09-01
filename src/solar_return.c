@@ -1132,8 +1132,10 @@ void abrir_janela_transitos_revolucao(
     }
 
     if (!encontrou_hyleg_transit) {
-        wprintw(pad, _("       No planetary conjunctions from the Solar Return are currently putting friction\n"
-                     "       or direct pressure on your Natal Hyleg. Your vital root remains unbothered.\n\n"));
+        print_split_lines(pad, 
+                          _("No planetary conjunctions from the Solar Return are currently putting friction "
+                            "or direct pressure on your Natal Hyleg. Your vital root remains unbothered.\n\n"),
+                            MAX_LINE_WIDTH);
     }
     wprintw(pad, "\n");
     
@@ -1146,9 +1148,13 @@ void abrir_janela_transitos_revolucao(
 
         int casa_natal = casas_planetas_rev[p];
         wprintw(pad, _("    • House Projection: Operating inside your NATAL HOUSE %d.\n"), casa_natal);
-        wprintw(pad, _("       This year, the physical affairs governed by your Natal House %d will be heavily\n"
-                     "       stimulated, triggered, and reconfigured by the active expressions of %s.\n\n"), 
-                     casa_natal, nomes[p]);
+        
+        char str[256];
+        snprintf(str, 256, _("This year, the physical affairs governed by your Natal House %d will be heavily "
+                             "stimulated, triggered, and reconfigured by the active expressions of %s.\n\n"), 
+                             casa_natal, 
+                             nomes[p]);
+        print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
 
         wattron(pad, A_BOLD);
         wprintw(pad, _("    • Active Radical Conjunctions:\n"));
@@ -1173,17 +1179,26 @@ void abrir_janela_transitos_revolucao(
                 wattroff(pad, A_BOLD | COLOR_PAIR(11));
 
                 if (p == 6) {
-                    wprintw(pad, _("       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, obstacles,\n"
-                                 "       or long-term structuring tasks to the affairs of your natal %s.\n\n"), nomes[n]);
+                    char str[256];
+                    snprintf(str, 256, _("[CRITICAL] Saturn brings a strict reality check, heavy boundaries, obstacles, "
+                                         "or long-term structuring tasks to the affairs of your natal %s.\n\n"), nomes[n]);
+
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 5) {
-                    wprintw(pad, _("       [BENEFIC] Jupiter injects providential protection, sudden opportunities, expansion,\n"
-                                 "       and luck into the baseline promises of your natal %s.\n\n"), nomes[n]);
+                    char str[256];
+                    snprintf(str, 256, _("[BENEFIC] Jupiter injects providential protection, sudden opportunities, expansion, "
+                                         "and luck into the baseline promises of your natal %s.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 4) {
-                    wprintw(pad, _("       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or high physical\n"
-                                 "       vitality expenditures upon your natal %s.\n\n"), nomes[n]);
+                    char str[256];
+                    snprintf(str, 256, _("[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high physical "
+                                         "vitality expenditures upon your natal %s.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else {
-                    wprintw(pad, _("       This conjunction wakes up the natal potential of your %s, making its themes\n"
-                                 "       highly prominent on a day-to-day level throughout this annual cycle.\n\n"), nomes[n]);
+                    char str[256];
+                    snprintf(str, 256,  _("This conjunction wakes up the natal potential of your %s, making its themes "
+                                          "highly prominent on a day-to-day level throughout this annual cycle.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 }
             }
         }

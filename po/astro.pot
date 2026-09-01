@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 11:04-0300\n"
+"POT-Creation-Date: 2026-09-01 11:18-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4287,88 +4287,82 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1135
+#: src/solar_return.c:1136
 msgid ""
-"       No planetary conjunctions from the Solar Return are currently putting "
-"friction\n"
-"       or direct pressure on your Natal Hyleg. Your vital root remains "
+"No planetary conjunctions from the Solar Return are currently putting "
+"friction or direct pressure on your Natal Hyleg. Your vital root remains "
 "unbothered.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1143
+#: src/solar_return.c:1145
 #, c-format
 msgid "    %s  %s (Solar Return)\n"
 msgstr ""
 
-#: src/solar_return.c:1148
+#: src/solar_return.c:1150
 #, c-format
 msgid "    • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 
-#: src/solar_return.c:1149
+#: src/solar_return.c:1153
 #, c-format
 msgid ""
-"       This year, the physical affairs governed by your Natal House %d will "
-"be heavily\n"
-"       stimulated, triggered, and reconfigured by the active expressions of "
+"This year, the physical affairs governed by your Natal House %d will be "
+"heavily stimulated, triggered, and reconfigured by the active expressions of "
 "%s.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1154
+#: src/solar_return.c:1160
 msgid "    • Active Radical Conjunctions:\n"
 msgstr ""
 
-#: src/solar_return.c:1172
+#: src/solar_return.c:1178
 #, c-format
 msgid "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1176
+#: src/solar_return.c:1183
 #, c-format
 msgid ""
-"       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
-"obstacles,\n"
-"       or long-term structuring tasks to the affairs of your natal %s.\n"
+"[CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
+"obstacles, or long-term structuring tasks to the affairs of your natal %s.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1179
+#: src/solar_return.c:1189
 #, c-format
 msgid ""
-"       [BENEFIC] Jupiter injects providential protection, sudden "
-"opportunities, expansion,\n"
-"       and luck into the baseline promises of your natal %s.\n"
+"[BENEFIC] Jupiter injects providential protection, sudden opportunities, "
+"expansion, and luck into the baseline promises of your natal %s.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1182
+#: src/solar_return.c:1194
 #, c-format
 msgid ""
-"       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or "
-"high physical\n"
-"       vitality expenditures upon your natal %s.\n"
+"[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high "
+"physical vitality expenditures upon your natal %s.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1185
+#: src/solar_return.c:1199
 #, c-format
 msgid ""
-"       This conjunction wakes up the natal potential of your %s, making its "
-"themes\n"
-"       highly prominent on a day-to-day level throughout this annual cycle.\n"
+"This conjunction wakes up the natal potential of your %s, making its themes "
+"highly prominent on a day-to-day level throughout this annual cycle.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1191
+#: src/solar_return.c:1206
 msgid ""
 "       No exact conjunctions detected over your natal planets within a 5° "
 "orb.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1198
+#: src/solar_return.c:1213
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
