@@ -77,11 +77,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 🝴 Parte de Fortuna
 
-🌑 Syzygy Ante Nativitatem (SAN)
-(Lua Nova na sizígia pré-natal)
+🌑 Syzygy Ante Nativitatem (SAN) (No caso de Lua Nova na sizígia pré-natal)
 
-🌕 Syzygy Ante Nativitatem (SAN)
-(Lua Cheia na sizígia pré-natal)
+🌕 Syzygy Ante Nativitatem (SAN) (No caso de Lua Cheia na sizígia pré-natal)
 
 🜊 ou Vx Vértex
 
@@ -243,15 +241,13 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F12 - Firdária
 
-• F13 (shift+F1) ou 1 - Cronocratores Vitais
-  (Hyleg & Alcochoden)
+• F13 (shift+F1) ou 1 - Cronocratores Vitais (Hyleg & Alcochoden)
 
 • F14 (shift+F2) ou 2 - Anareta (Destruidor da Vida)
 
 • F15 (shift+F3) ou 3 - Direções Primárias
 
-• F16 (shift+F4) ou 4 - Direções Primárias às Partes
-  Árabes
+• F16 (shift+F4) ou 4 - Direções Primárias às Partes Árabes
 
 • F17 (shift+F5) ou 5 - Partes Árabes
 
@@ -283,13 +279,11 @@ Pressione Q ou ESC para retornar ao menu principal.
  
 • A ou Espaço - Ligar ou Desligar Animação
 
-• [ - Reduz a velocidade da animação (em 1 min ou de volta no tempo, 
-      se negativo)
+• [ - Reduz a velocidade da animação (em 1 min ou de volta no tempo, se negativo)
 
 • ] - Aumenta a velocidade da animação (em 1 min)
 
-• { - Reduz a velocidade da animação (em 1 segundo ou de volta no 
-      tempo, se negativo)
+• { - Reduz a velocidade da animação (em 1 segundo ou de volta no tempo, se negativo)
 
 • } - Aumenta a velocidade da animação (em 1 segundo)
 
@@ -416,9 +410,7 @@ desejado.
 Algumas tabelas e painéis têm mais opções acessíveis
 enquanto estão abertos.
 
-Sempre que desejar, você pode abrir esta tela de ajuda e ver
-imediatamente as teclas e suas respectivas tabelas ou painéis,
-ou ir diretamente ao tópico desejado.
+Sempre que desejar, você pode abrir esta tela de ajuda e ver imediatamente as teclas e suas respectivas tabelas ou painéis, ou ir diretamente ao tópico desejado.
 
 Este aplicativo é desenvolvido em C, utilizando a biblioteca
 ncurses para elementos visuais e o Swiss Ephemeris para
@@ -430,8 +422,7 @@ Todos os dados são armazenados em um banco de dados SQLite
 fornecido por este aplicativo.
 
 Utilizamos um banco de dados atualizado e gratuito de cidades
-fornecido por:
- https://github.com/dr5hn/countries-states-cities-database,
+fornecido por https://github.com/dr5hn/countries-states-cities-database,
 que aprimoramos com melhorias estruturais usando as
 bibliotecas pytz (timezonefinder) e srtm para servir melhor
 às necessidades do aplicativo (Essas bibliotecas foram apenas
@@ -1033,7 +1024,7 @@ Use [↓↑] para deslizar a tabela.
 
                        Livre de Raios**** → +5 pontos
                             Sob Raios**** → -4 pontos
-                            Combinado**** → -6 pontos
+                            Combusto**** → -6 pontos
                                Cazimi**** → +5 pontos
                 (****)Um exclui o outro.
 
