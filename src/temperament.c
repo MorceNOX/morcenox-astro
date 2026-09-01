@@ -505,7 +505,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -724,7 +724,9 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
     /* ATUALIZADO: Mensagem amigável avisando da nova funcionalidade */
     mvwprintw(table_win, table_height - 1, 2, _("Press [i] for Full Text Interpretation | ESC/q to Return"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -738,8 +740,12 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
             abrir_janela_interpretacao_temperamento(score, lista, eixo_calor, eixo_umidade);
             
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
+            touchwin(shadow_win);
+            wnoutrefresh(shadow_win);
             touchwin(table_win);
-            wrefresh(table_win);
+            wnoutrefresh(table_win);
+
+            doupdate();
         }
 
     } while (ch != 27 && ch != 'q' && ch != 'Q');
@@ -771,7 +777,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattron(shadow_win, COLOR_PAIR(9)); // Par de cor preta/escura para a sombra
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
@@ -784,7 +790,9 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattroff(border_win, A_BOLD);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     // 4. CRIAÇÃO DA PAD INTERNA COM MAIS ESPAÇO HORIZONTAL
     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco

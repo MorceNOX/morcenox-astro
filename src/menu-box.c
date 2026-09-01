@@ -367,14 +367,18 @@ void set_data() {
     double lat = 0.0, lon = 0.0, elev = 0.0;
                                   
     if (load_city_coordinates(CITY, COUNTRY, STATE, TZ_IANA, &TZ_OFFSET, &lat, &lon, &elev)) {    
-        set_tz();
-        set_dst();
-        set_chart_name(chart_name, sizeof(chart_name));                                
-        snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);               
-    
-        call_chart();
         
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been set."));
+        if (set_tz()) {
+            
+            if (set_dst()) {
+                set_chart_name(chart_name, sizeof(chart_name));                                
+                snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);               
+            
+                call_chart();
+                
+                snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been set.")); 
+            }
+        }
     }
     else {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
@@ -435,7 +439,7 @@ void save_chart() {
             show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
             sqlite3_finalize(stmt);
             sqlite3_close(db);
-            exit(1);
+            return;
         }
 
         sqlite3_bind_text(stmt, 1, CHART_NAME, -1, SQLITE_STATIC);
@@ -462,6 +466,7 @@ void save_chart() {
         if (rc != SQLITE_OK) {
             //fprintf(stderr, "Failed to prepare load statement: %s\n", sqlite3_errmsg(db));
             show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
+            sqlite3_finalize(stmt);
             sqlite3_close(db);
             return;
         }
@@ -615,7 +620,9 @@ void del_chart() {
     wattron(chart_shadow, COLOR_PAIR(4));
     box(chart_shadow, 0, 0);
     wattroff(chart_shadow, COLOR_PAIR(4));
-    wrefresh(chart_shadow);
+    wnoutrefresh(chart_shadow);
+
+    wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
 
     while (!chart_selected) {
                
@@ -623,13 +630,12 @@ void del_chart() {
         werase(chart_win);
         wattron(chart_win, COLOR_PAIR(2) | A_DIM);
         box(chart_win, 0, 0);
-        wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
-        
+                
         const char *title = _("Select Chart to Delete");
 
         mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
-        wrefresh(chart_win);
+        //wrefresh(chart_win);
         
         // Draw chart items with proper scrolling
         int display_count = (row_count < max_display_items) ? row_count : max_display_items;
@@ -642,7 +648,9 @@ void del_chart() {
                 wattroff(chart_win, attr);
             }
         }
-        wrefresh(chart_win);
+        wnoutrefresh(chart_win);
+
+        doupdate();
         
         key = wgetch(chart_win);
         
@@ -688,8 +696,10 @@ void del_chart() {
                     // Se cancelou, redesenha o menu principal e continua nele
                     touchwin(chart_shadow);
                     touchwin(chart_win);
-                    wrefresh(chart_shadow);
-                    wrefresh(chart_win);
+                    wnoutrefresh(chart_shadow);
+                    wnoutrefresh(chart_win);
+
+                    doupdate();
                 }
                 break;
 
@@ -733,6 +743,14 @@ void del_chart() {
     if (rc != SQLITE_DONE) {
         fprintf(stderr, "Failed deleting chart: %s\n", sqlite3_errmsg(db));
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Error deleting chart."));
+
+        // Cleanup
+        for (int i = 0; i < row_count; i++) {
+            free(chart_names[i]);
+        }
+        free(chart_names);
+        delwin(chart_win);
+        delwin(chart_shadow);
         sqlite3_finalize(stmt);
         return;
     }
@@ -838,7 +856,7 @@ void load_chart() {
     // Initialize ncurses for this menu
     nodelay(chart_win, FALSE);
     keypad(chart_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
     
     int chart_selected = 0;
     int key;
@@ -848,7 +866,9 @@ void load_chart() {
     wattron(chart_shadow, COLOR_PAIR(4));
     box(chart_shadow, 0, 0);
     wattroff(chart_shadow, COLOR_PAIR(4));
-    wrefresh(chart_shadow);
+    wnoutrefresh(chart_shadow);
+
+    wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
 
     while (!chart_selected) {
                 
@@ -856,9 +876,9 @@ void load_chart() {
         werase(chart_win);
         wattron(chart_win, COLOR_PAIR(2) | A_DIM);
         box(chart_win, 0, 0);
-        wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
+        
         wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
-        wrefresh(chart_win);
+        //wrefresh(chart_win);
 
         wattron(chart_win, A_BOLD);
         const char *title = _("Select Chart to Load");
@@ -878,7 +898,9 @@ void load_chart() {
                 wattroff(chart_win, attr);
             }
         }
-        wrefresh(chart_win);
+        wnoutrefresh(chart_win);
+
+        doupdate();
         
         key = wgetch(chart_win);
         
@@ -1090,11 +1112,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             
 
         keypad(menu_win, TRUE);
-        curs_set(0);
-        noecho();
-        cbreak();
-
-                
+                        
             
         // 1. Draw Logo
         
@@ -1193,7 +1211,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         mvwprintw(stdscr, term_h - 6, term_w - strlen(version_str) - 3, version_str);
         attroff(COLOR_PAIR(33) | A_BOLD);
         
-        refresh();
+        wnoutrefresh(stdscr);
         *delay = 0;
 
         
@@ -1203,7 +1221,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         wattron(shadow_win, COLOR_PAIR(4));
         box(shadow_win, 0, 0);
         wattroff(shadow_win, COLOR_PAIR(4));
-        wrefresh(shadow_win);
+        wnoutrefresh(shadow_win);
     
         // Draw Menu Border
         // 5. Apply the rounded border to the window
@@ -1220,7 +1238,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             // The usable width inside the box is box_width - 2 (to account for borders)
             draw_centered_text(menu_win, i + 1, 1, box_width - 2, options[i].option, attr);
         }
-        wrefresh(menu_win);
+        wnoutrefresh(menu_win);
         
         // 4. Draw Description Text using the new function
         //int desc_y = menu_y_start + (n_choices + 2) + 2;
@@ -1233,7 +1251,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         wattron(shadow_bar, COLOR_PAIR(4));
         wattroff(shadow_bar, COLOR_PAIR(4));
-        wrefresh(shadow_bar);
+        wnoutrefresh(shadow_bar);
         
         wattron(bar_win, COLOR_PAIR(11));
         wbkgd(bar_win, COLOR_PAIR(11));
@@ -1320,7 +1338,8 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         mvwprintw(bar_win, 1, msg_start_x, "%s", msg_final);        
         wattroff(bar_win, COLOR_PAIR(12) | A_BOLD | A_BLINK);
 
-        wrefresh(bar_win);
+        wnoutrefresh(bar_win);
+        doupdate();
 
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", "");
         
@@ -1339,7 +1358,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
                 break;
             case 10: // Enter
                 choice = *highlight;
-                if (options[choice].command != NULL) options[choice].command();
+                //if (options[choice].command != NULL) options[choice].command();
                 break;
             case 27: // ESC
                 choice = n_choices;
@@ -1648,14 +1667,14 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     int term_h = getmaxy(stdscr);
     
     // Calculate window dimensions
-    int win_w = (term_w > 80) ? 70 : term_w - 4;
+    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
     int win_h = (term_h > 20) ? 20 : term_h - 4;
     int win_x = (term_w - win_w) / 2;
     int win_y = (term_h - win_h) / 2;
     
     if (file_content) {
         // Successfully loaded file, split into lines
-        help_lines = split_lines_wrap(file_content, &line_count, win_w - 1);
+        help_lines = split_lines_wrap(file_content, &line_count, win_w - 2);
         if (!help_lines) {
             // Fallback to hardcoded text if splitting fails
             free(file_content);
@@ -1697,32 +1716,44 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     // Create windows
     WINDOW *help_win = newwin(win_h, win_w, win_y, win_x);
     WINDOW *shadow_win = newwin(win_h, win_w, win_y + 1, win_x + 1);
+
+    int txt_h = win_h - 4;
+    int txt_w = win_w - 3; // Mantém o espaço da scrollbar na direita
+    int txt_y = win_y + 2; // Desce 2 linhas em relação à borda para pular o título
+    int txt_x = win_x + 1; // Avança 1 coluna em relação à borda esquerda
+    WINDOW *txt_win = newwin(txt_h, txt_w, txt_y, txt_x);
     
     // Check if windows were created successfully
-    if (!help_win || !shadow_win) {
+    if (!help_win || !shadow_win || !txt_win) {
+        if (txt_win) delwin(txt_win);
         if (help_win) delwin(help_win);
         if (shadow_win) delwin(shadow_win);
-        
+                
         // Clean up allocated memory
         for (int i = 0; help_lines[i] != NULL; i++) {
             free(help_lines[i]);
         }
         free(help_lines);
         if (file_content) free(file_content);
+
         return;
     }
 
        
     // Draw shadow
-    wbkgd(shadow_win, COLOR_PAIR(4));
-    box(shadow_win, 0, 0);
-    wrefresh(shadow_win);
+    //wbkgd(shadow_win, COLOR_PAIR(4));
+    //box(shadow_win, 0, 0);
+    wnoutrefresh(shadow_win);
     
     // Draw main window with border
     wbkgd(help_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(txt_win, COLOR_PAIR(2) | FLAGS);
+
     box(help_win, 0, 0);
+    wattron(help_win, A_BOLD);
     mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
-    wrefresh(help_win);
+    wattroff(help_win, A_BOLD);
+    //wnoutrefresh(help_win);
     
     // Calculate how many lines we can display
     int max_lines = win_h - 4;  // Leave space for border and title
@@ -1730,23 +1761,28 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     int key;
     int done = 0;
 
+    curs_set(0);
     nodelay(help_win, FALSE);
     keypad(help_win, TRUE);
-    curs_set(0);
+
+    //leaveok(stdscr, TRUE);
+    //leaveok(shadow_win, TRUE);
+    //leaveok(help_win, TRUE);
+    //leaveok(txt_win, TRUE);
     
     while (!done) {
         // Clear the text area
-        werase(help_win);
+        werase(txt_win);
         
         // Redraw borders
-        box(help_win, 0, 0);
-        mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
+        //box(help_win, 0, 0);
+        //mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
         
         // Draw text content
         int display_lines = 0;
         for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
             if (help_lines[i]) {
-                mvwprintw(help_win, 2 + display_lines, 1, "%s", help_lines[i]);
+                mvwprintw(txt_win, display_lines, 0, "%s", help_lines[i]);
                 display_lines++;
             }
         }
@@ -1764,8 +1800,12 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                 }
             }
         }
-        wrefresh(help_win);
-        
+
+        //wnoutrefresh(shadow_win);
+        wnoutrefresh(help_win);
+        wnoutrefresh(txt_win);
+        doupdate();
+
         key = wgetch(help_win);
         
         switch (key) {
@@ -1807,6 +1847,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     }
     free(help_lines);
     if (file_content) free(file_content);
+    delwin(txt_win);
     delwin(help_win);
     delwin(shadow_win);
 }
@@ -1818,7 +1859,10 @@ void show_help_screen() {
     snprintf(filename, sizeof(filename), "%s_%s.txt", "help", LANGUAGE);
     snprintf(path, sizeof(path), "%s/%s", CONFIG_PATH, filename);
 
-    int line = select_topic(path);
+    int term_w = getmaxx(stdscr);
+    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
+
+    int line = select_topic(path, win_w - 2);
 
     if (line < 0) {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Help file could not be loaded!"));
@@ -1826,7 +1870,7 @@ void show_help_screen() {
     }
     else if (line > 0) {
         show_text_file(filename, _("Help"), line);
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Help file loaded successfully!"));
+        //snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Help file loaded successfully!"));
     }
 }
 
@@ -1837,7 +1881,10 @@ void show_topics() {
     snprintf(filename, sizeof(filename), "%s_%s.txt", "topics", LANGUAGE);
     snprintf(path, sizeof(path), "%s/%s", CONFIG_PATH, filename);
 
-    int line = select_topic(path);
+    int term_w = getmaxx(stdscr);
+    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
+
+    int line = select_topic(path, win_w - 2);
 
     if (line < 0) {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Topics file could not be loaded!"));
@@ -1845,7 +1892,7 @@ void show_topics() {
     }
     else if (line > 0) {
         show_text_file(filename, _("Technical Topics"), line);
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Topics file loaded successfully!"));
+        //snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Topics file loaded successfully!"));
 
     }
 }
@@ -1921,7 +1968,12 @@ int main() {
     int delay = 1;
     
     initscr();
+
+    curs_set(0);
+    noecho();
+    cbreak();
     set_escdelay(25);
+
     start_color();    
     
     while(1) {
@@ -1989,6 +2041,7 @@ int main() {
         
         // If the user pressed ESC (choice == n_choices), break the loop
         if (choice >= n_choices) break;
+        if (options[choice].command != NULL) options[choice].command();
 
     }
 

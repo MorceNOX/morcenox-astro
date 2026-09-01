@@ -157,7 +157,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     box(shadow_win, 0, 0); 
     wattroff(shadow_win, COLOR_PAIR(9));
     wbkgd(shadow_win, COLOR_PAIR(13));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -195,7 +195,9 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
         mvwhline_set(table_win, 6, 2, &traco_horizontal, table_width - 5);
 
-        wrefresh(table_win);
+        //wnoutrefresh(table_win);
+
+
 
         // --- PREENCHIMENTO DO PAD VIRTUAL ---
         int row_pad = 0;
@@ -333,7 +335,10 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
-        wrefresh(table_win);
+        wnoutrefresh(table_win);
+
+        doupdate();
+
         prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, start_y + 7 + max_linhas_exibicao - 2, start_x + table_width - 5);
 
         int ch = wgetch(table_win);
@@ -369,9 +374,11 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                     
                     // Ao fechar a matriz, força a janela anterior a redesenhar a borda
                     touchwin(shadow_win);
-                    wrefresh(shadow_win);
+                    wnoutrefresh(shadow_win);
                     touchwin(table_win);
-                    wrefresh(table_win);
+                    wnoutrefresh(table_win);
+
+                    doupdate();
                 }
                 break;
             case 'd': 
@@ -389,9 +396,13 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                         seletor_linha_atual = qtd_partes - 1;
                     }
                     
-                    // Força o ncurses a lembrar de redesenhar a janela de sombra estática de fundo
+                    // Ao fechar a matriz, força a janela anterior a redesenhar a borda
                     touchwin(shadow_win);
-                    wrefresh(shadow_win);
+                    wnoutrefresh(shadow_win);
+                    touchwin(table_win);
+                    wnoutrefresh(table_win);
+
+                    doupdate();
                 }
                 break;
             case 27:
@@ -444,7 +455,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     box(shadow_win, 0, 0); 
     wattroff(shadow_win, COLOR_PAIR(9));
     wbkgd(shadow_win, COLOR_PAIR(13));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -452,7 +463,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         werase(scroll_pad);        
         
         box(table_win, 0, 0); 
-        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+        //wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
         const char *title = _(" Arabic Parts - Solar Revolution Radix Confrontation ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -481,8 +492,6 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
         mvwhline_set(table_win, 6, 2, &traco_horizontal, table_width - 5);
-
-        wrefresh(table_win);
 
         // --- PREENCHIMENTO DO PAD VIRTUAL ---
         int row_pad = 0;
@@ -570,7 +579,10 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
-        wrefresh(table_win);
+        wnoutrefresh(table_win);
+
+        doupdate();
+
         prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, start_y + 7 + max_linhas_exibicao - 2, start_x + table_width - 5);
 
         int ch = wgetch(table_win);
@@ -591,9 +603,11 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                     display_part_aspects(obj, num_objects, lista, qtd_partes);
                     
                     touchwin(shadow_win);
-                    wrefresh(shadow_win);
+                    wnoutrefresh(shadow_win);
                     touchwin(table_win);
-                    wrefresh(table_win);
+                    wnoutrefresh(table_win);
+
+                    doupdate();
                 }
                 break;
             case 27:
@@ -890,8 +904,9 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     
     WINDOW *win = newwin(w_height, w_width, start_y, start_x);
     WINDOW *shadow = newwin(w_height, w_width, start_y + 1, start_x + 1);
+
     keypad(win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     // Estados iniciais do formulário (Valores padrões)
     char f_name[32];
@@ -946,7 +961,11 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     int ch;
     int loop = 1;
 
-    werase(shadow); wattron(shadow, COLOR_PAIR(9)); box(shadow, 0, 0); wattroff(shadow, COLOR_PAIR(9)); wrefresh(shadow);
+    werase(shadow); 
+    wattron(shadow, COLOR_PAIR(9)); 
+    box(shadow, 0, 0); 
+    wattroff(shadow, COLOR_PAIR(9)); 
+    wnoutrefresh(shadow);
 
     while (loop) {        
         werase(win); wbkgd(win, COLOR_PAIR(13) | FLAGS); box(win, 0, 0);
@@ -1056,7 +1075,10 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         mvwprintw(win, 20, 2, _("Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | [ENTER] Edit Text / Save"));
         wattroff(win, A_DIM);
 
-        wrefresh(win);
+        wnoutrefresh(win);
+
+        doupdate();
+
         ch = wgetch(win);
 
         switch (ch) {
@@ -1363,7 +1385,13 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     wattron(aspects_shadow, COLOR_PAIR(9)); 
     box(aspects_shadow, 0, 0); 
     wattroff(aspects_shadow, COLOR_PAIR(9));
-    wrefresh(aspects_shadow);
+    wnoutrefresh(aspects_shadow);
+
+    box(aspects_win, 0, 0);
+    wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
+    wnoutrefresh(aspects_win);
+
+    doupdate();
 
     keypad(aspects_win, TRUE);
     nodelay(aspects_win, FALSE);
@@ -1571,14 +1599,14 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
     
     nodelay(conf_win, FALSE);
     keypad(conf_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     // Desenha a sombra do pop-up
     werase(conf_shadow);
     wattron(conf_shadow, COLOR_PAIR(24)); 
     box(conf_shadow, 0, 0); 
     wattroff(conf_shadow, COLOR_PAIR(24));
-    wrefresh(conf_shadow);
+    wnoutrefresh(conf_shadow);
 
     int botao_focado = 0; // 0 = Confirmar (Yes), 1 = Cancelar (Cancel)
     int confirmado = 0;
@@ -1609,7 +1637,9 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
         mvwprintw(conf_win, 5, 32, "  CANCEL  ");
         wattroff(conf_win, attr_cancel);
         
-        wrefresh(conf_win);
+        wnoutrefresh(conf_win);
+
+        doupdate();
 
         ch = wgetch(conf_win);
 

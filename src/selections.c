@@ -57,14 +57,14 @@ int show_confirm_yesno(const char *name, const char *text) {
 
     nodelay(pop_win, FALSE);
     keypad(pop_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     // Desenha sombra
     werase(pop_shadow);
     wattron(pop_shadow, COLOR_PAIR(24));
     box(pop_shadow, 0, 0);
     wattroff(pop_shadow, COLOR_PAIR(24));
-    wrefresh(pop_shadow);
+    wnoutrefresh(pop_shadow);
 
     // Configura e desenha a estrutura fixa da janela principal
     werase(pop_win);
@@ -98,7 +98,9 @@ int show_confirm_yesno(const char *name, const char *text) {
         mvwprintw(pop_win, 5, 32, _("    NO    "));
         wattroff(pop_win, attr_cancel);
 
-        wrefresh(pop_win);
+        wnoutrefresh(pop_win);
+
+        doupdate();
 
         ch = wgetch(pop_win);
 
@@ -144,13 +146,13 @@ int show_confirm_delete_popup(const char *name) {
 
     nodelay(pop_win, FALSE);
     keypad(pop_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     werase(pop_shadow);
     wattron(pop_shadow, COLOR_PAIR(24));
     box(pop_shadow, 0, 0);
     wattroff(pop_shadow, COLOR_PAIR(24));
-    wrefresh(pop_shadow);
+    wnoutrefresh(pop_shadow);
 
     werase(pop_win);
     wbkgd(pop_win, COLOR_PAIR(26) | FLAGS);
@@ -182,7 +184,9 @@ int show_confirm_delete_popup(const char *name) {
         mvwprintw(pop_win, 5, 32, _("  CANCEL  "));
         wattroff(pop_win, attr_cancel);
 
-        wrefresh(pop_win);
+        wnoutrefresh(pop_win);
+
+        doupdate();
 
         ch = wgetch(pop_win);
 
@@ -232,13 +236,13 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
 
     nodelay(pop_win, FALSE);
     keypad(pop_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     werase(pop_shadow);
     wattron(pop_shadow, COLOR_PAIR(24));
     box(pop_shadow, 0, 0);
     wattroff(pop_shadow, COLOR_PAIR(24));
-    wrefresh(pop_shadow);
+    wnoutrefresh(pop_shadow);
 
     werase(pop_win);
     wbkgd(pop_win, COLOR_PAIR(26) | FLAGS);
@@ -261,7 +265,9 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
         mvwprintw(pop_win, 5, (pop_w - 10) / 2, _("    OK    "));
         wattroff(pop_win, attr_confirm);
 
-        wrefresh(pop_win);
+        wnoutrefresh(pop_win);
+
+        doupdate();
 
         ch = wgetch(pop_win);
 
@@ -364,7 +370,7 @@ OptionsEdition select_options() {
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     keypad(win, TRUE);
-    curs_set(0); // Oculta o cursor piscante para navegação visual
+    nodelay(win, FALSE);
 
     // Load house systems from database
     char **house_systems = NULL;
@@ -533,29 +539,39 @@ OptionsEdition select_options() {
         close_database(db);
     }
 
-    while (!options_confirmed) {
-        werase(shadow);
-        wattron(shadow, COLOR_PAIR(4));
-        box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(4));
-        wrefresh(shadow);
 
-        werase(win);
-        wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2) | FLAGS);
-        box(win, 0, 0);
+    werase(shadow);
+    wattron(shadow, COLOR_PAIR(4));
+    box(shadow, 0, 0);
+    wattroff(shadow, COLOR_PAIR(4));
+    wnoutrefresh(shadow);
+
+    werase(win);
+    wattron(win, COLOR_PAIR(2));
+    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+    box(win, 0, 0);
+    
+    wattron(win, A_BOLD);
+    const char *title =  _(" Settings ");
+
+    mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
+
+    wattroff(win, A_BOLD);
+    
+    mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
+    wattroff(win, COLOR_PAIR(2));
+
+    while (!options_confirmed) {
         
+        werase(win);
+        box(win, 0, 0);
+    
         wattron(win, A_BOLD);
         const char *title =  _(" Settings ");
-
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
-
-        wattroff(win, A_BOLD);
-        
+        wattroff(win, A_BOLD); 
         mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
-        wattroff(win, COLOR_PAIR(2));
-
-        
+        wattroff(win, COLOR_PAIR(2));     
 
         // Renderização dos campos com destaque no selecionado
         for (int i = 0; i < 20; i++) {
@@ -717,7 +733,10 @@ OptionsEdition select_options() {
             else wattroff(win, COLOR_PAIR(2));
         }
 
-        wrefresh(win);
+        wnoutrefresh(win);
+
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
@@ -1100,22 +1119,28 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
+    werase(shadow);
+    wattron(shadow, COLOR_PAIR(9)); 
+    box(shadow, 0, 0);
+    wattroff(shadow, COLOR_PAIR(9));
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(13) | FLAGS);
+
     keypad(win, TRUE);
-    curs_set(0); /* Oculta o cursor piscante */
+    nodelay(win, FALSE);
+
+    //curs_set(0); // Oculta o cursor piscante
 
     while (!confirmado) {
-        /* Renderiza sombra (Usando seu par de cor 9) */
-        werase(shadow);
-        wattron(shadow, COLOR_PAIR(9)); 
-        box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(9));
-        wrefresh(shadow); /* Mantendo seu refresh de sombra */
 
-        /* Renderiza Janela Principal (Pares de cor 13) */
+        // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
         wattron(win, COLOR_PAIR(13));
-        wbkgd(win, COLOR_PAIR(13) | FLAGS);
         box(win, 0, 0);
+        
+    
+        wbkgd(win, COLOR_PAIR(13) | FLAGS);
 
         wattron(win, A_BOLD);
 
@@ -1136,19 +1161,23 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         mvwprintw(win, 2, 12, "  %s: %8.4f %s  ", age_text, idade, years_text);
         wattroff(win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
 
-        wrefresh(win);
+        wnoutrefresh(win);
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
             case KEY_UP:
                 /* Incrementa em frações de 0.1 (uma casa decimal por clique) */
-                if (idade < 120.0) {
+                if (idade < MAX_AGE - 0.1) {
                     idade += 0.1;
+                } else {
+                    idade = MAX_AGE;
                 }
                 break;
             case KEY_DOWN:
                 /* Decrementa em frações de 0.1 */
-                if (idade > 0.0) {
+                if (idade > 0.1) {
                     idade -= 0.1;
                 }
                 else {
@@ -1157,13 +1186,16 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                 break;
             case KEY_PPAGE:
                 /* Incrementa em 1 */
-                if (idade < 120.0) {
+                if (idade < MAX_AGE - 1.0) {
                     idade += 1.0;
+                }
+                else {
+                    idade = MAX_AGE;
                 }
                 break;
             case KEY_NPAGE:
                 /* Decrementa em 1 */
-                if (idade > 0.0) {
+                if (idade > 1.0) {
                     idade -= 1.0;
                 }
                 else {
@@ -1200,23 +1232,28 @@ int selecionar_idade_visual(int idade_inicial) {
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
+    werase(shadow);
+    wattron(shadow, COLOR_PAIR(9)); 
+    box(shadow, 0, 0);
+    wattroff(shadow, COLOR_PAIR(9));
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(13) | FLAGS);
+
     keypad(win, TRUE);
-    curs_set(0); // Oculta o cursor piscante
+    nodelay(win, FALSE);
+
+    //curs_set(0); // Oculta o cursor piscante
 
     while (!confirmado) {
-        // Renderiza sombra (Usando seu par de cor 4 ou 9 dependendo do seu setup)
-        werase(shadow);
-        wattron(shadow, COLOR_PAIR(9)); 
-        box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(9));
-        wrefresh(shadow);
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
         wattron(win, COLOR_PAIR(13));
-        wbkgd(win, COLOR_PAIR(13) | FLAGS);
         box(win, 0, 0);
-
+    
+        wbkgd(win, COLOR_PAIR(13) | FLAGS);
+    
         wattron(win, A_BOLD);
         const char *title = _(" Target Age Selection ");
 
@@ -1234,15 +1271,33 @@ int selecionar_idade_visual(int idade_inicial) {
         mvwprintw(win, 2, 12, "  %s: %3d %s  ", age_text, idade, years_text);
         wattroff(win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
 
-        wrefresh(win);
+        wnoutrefresh(win);
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
             case KEY_UP:
-                if (idade < 120) idade++; // Limite humano seguro
+                if (idade < MAX_AGE) idade++; // Limite humano seguro
                 break;
             case KEY_DOWN:
                 if (idade > 0) idade--;
+                break;
+            case KEY_PPAGE:
+                if (idade < MAX_AGE - 10) {
+                    idade += 10;
+                }
+                else {
+                    idade = MAX_AGE;
+                }
+                break;
+            case KEY_NPAGE:
+                if (idade > 10) {
+                    idade -= 10;
+                }
+                else {
+                    idade = 0;
+                }
                 break;
             case 10: // ENTER
                 confirmado = 1;
@@ -1271,7 +1326,7 @@ int select_gender() {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
-    int w_width = 45, w_height = 8;
+    int w_width = 50, w_height = 10;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
@@ -1284,7 +1339,7 @@ int select_gender() {
         wattron(shadow, COLOR_PAIR(4)); 
         box(shadow, 0, 0);
         wattroff(shadow, COLOR_PAIR(4));
-        wrefresh(shadow);
+        wnoutrefresh(shadow);
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
@@ -1297,8 +1352,8 @@ int select_gender() {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         
-        mvwprintw(win, 4, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
-        mvwprintw(win, 5, 3, _("[ESC] to cancel."));
+        mvwprintw(win, w_height - 3, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
+        mvwprintw(win, w_height - 2, 3, _("[ESC] to cancel."));
         wattroff(win, COLOR_PAIR(2));
 
         // Renderiza o campo gênero destacado (Pares de cor 3 ou 8)
@@ -1308,7 +1363,10 @@ int select_gender() {
         mvwprintw(win, 2, 14, "  %s: %3s  ", gen_text, (gender_id == 1)?_("Masculine"):((gender_id == 2)?_("Feminine"):_("Neuter")));
         wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
 
-        wrefresh(win);
+        wnoutrefresh(win);
+
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
@@ -1356,21 +1414,26 @@ DateEdition selecionar_data() {
     int w_width = 50, w_height = 9;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
+
+    werase(shadow);
+    wattron(shadow, COLOR_PAIR(4));
+    box(shadow, 0, 0);
+    wattroff(shadow, COLOR_PAIR(4));
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+
     keypad(win, TRUE);
-    curs_set(0); // Oculta o cursor piscante para navegação visual
+    nodelay(win, FALSE);
+
+    //curs_set(0); // Oculta o cursor piscante para navegação visual
 
     int max_dias[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     while (!data_confirmada) {
-        werase(shadow);
-        wattron(shadow, COLOR_PAIR(4));
-        box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(4));
-        wrefresh(shadow);
-
+        
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1407,7 +1470,10 @@ DateEdition selecionar_data() {
             else wattroff(win, COLOR_PAIR(2));
         }
 
-        wrefresh(win);
+        wnoutrefresh(win);
+
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
@@ -1465,19 +1531,23 @@ HoraEdition selecionar_hora() {
     int w_width = 50, w_height = 9;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
+
+    werase(shadow);
+    wattron(shadow, COLOR_PAIR(4));
+    box(shadow, 0, 0);
+    wattroff(shadow, COLOR_PAIR(4));
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+
+    nodelay(win, FALSE);
     keypad(win, TRUE);
-    curs_set(0); // Oculta o cursor para navegação puramente visual
+    //curs_set(0); // Oculta o cursor para navegação puramente visual
 
     while (!horario_confirmado) {
-        werase(shadow);
-        wattron(shadow, COLOR_PAIR(4));
-        box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(4));
-        wrefresh(shadow);
-
+        
         werase(win);
         wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1511,7 +1581,9 @@ HoraEdition selecionar_hora() {
             }
         }
 
-        wrefresh(win);
+        wnoutrefresh(win);
+        doupdate();
+
         key = wgetch(win);
 
         switch (key) {
@@ -1589,18 +1661,20 @@ int set_tz() {
     WINDOW *tz_win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
     WINDOW *tz_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
     
+    werase(tz_shadow);
+    wattron(tz_shadow, COLOR_PAIR(4));
+    box(tz_shadow, 0, 0);
+    wattroff(tz_shadow, COLOR_PAIR(4));
+    wnoutrefresh(tz_shadow);
+
     // Inicializa o ncurses para este menu
     nodelay(tz_win, FALSE);
     keypad(tz_win, TRUE);
     curs_set(1);
+
+    wbkgd(tz_win, COLOR_PAIR(2) | FLAGS);
     
     while (!tz_selected) {
-        // Limpa e desenha a sombra
-        werase(tz_shadow);
-        wattron(tz_shadow, COLOR_PAIR(4));
-        box(tz_shadow, 0, 0);
-        wattroff(tz_shadow, COLOR_PAIR(4));
-        wrefresh(tz_shadow);
         
         // Limpa e desenha a janela principal
         werase(tz_win);
@@ -1612,8 +1686,6 @@ int set_tz() {
         const char *title = _(" Enter TZ Offset ");
         mvwprintw(tz_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(tz_win, A_BOLD);
-
-        wbkgd(tz_win, COLOR_PAIR(2) | FLAGS);
                 
         // Desenha as instruções ou mensagem de erro
         if (show_error) {
@@ -1636,7 +1708,9 @@ int set_tz() {
       
         // Move o cursor físico para a posição exata da edição gráfica
         wmove(tz_win, 2, 8 + input_pos);
-        wrefresh(tz_win);
+        wnoutrefresh(tz_win);
+
+        doupdate();
         
         key = wgetch(tz_win);
         
@@ -1658,6 +1732,9 @@ int set_tz() {
             case 27: // ESC
                 delwin(tz_win);
                 delwin(tz_shadow);
+
+                curs_set(0);
+
                 return 0;
 
             case KEY_LEFT:
@@ -1729,6 +1806,9 @@ int set_tz() {
     }    
     delwin(tz_win);
     delwin(tz_shadow);
+
+    curs_set(0);
+
     return 1;
 }
 
@@ -1758,27 +1838,28 @@ int set_dst() {
     int selected_dst_index = 0;  // This tracks the actual index in the array
     int dst_scroll_offset = 0;   // This tracks which item is at the top of the visible list
     int max_display_items = menu_height - 2;  // Adjust for title and borders
+
+    werase(dst_shadow);
+    wattron(dst_shadow, COLOR_PAIR(4));
+    box(dst_shadow, 0, 0);
+    wattroff(dst_shadow, COLOR_PAIR(4));
+    wnoutrefresh(dst_shadow);
     
     // Initialize ncurses for this menu
     nodelay(dst_win, FALSE);
     keypad(dst_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
+
+    wbkgd(dst_win, COLOR_PAIR(2) | FLAGS);
     
     int dst_selected = 0;
     int key;
     
     while (!dst_selected) {
-        // Clear and redraw shadow
-        werase(dst_shadow);
-        wattron(dst_shadow, COLOR_PAIR(4));
-        box(dst_shadow, 0, 0);
-        wattroff(dst_shadow, COLOR_PAIR(4));
-        wrefresh(dst_shadow);
         
         // Clear and redraw main menu
         werase(dst_win);
         wattron(dst_win, COLOR_PAIR(2) | A_DIM);
-        wbkgd(dst_win, COLOR_PAIR(2) | FLAGS);
         box(dst_win, 0, 0);        
         wattroff(dst_win, COLOR_PAIR(2) | A_DIM);
 
@@ -1787,8 +1868,6 @@ int set_dst() {
         mvwprintw(dst_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(dst_win, COLOR_PAIR(2) | A_BOLD);
 
-        wrefresh(dst_win);
-        
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + dst_scroll_offset;
             if (item_index < dst_count) {
@@ -1798,7 +1877,9 @@ int set_dst() {
                 wattroff(dst_win, attr);
             }
         }
-        wrefresh(dst_win);
+        wnoutrefresh(dst_win);
+
+        doupdate();
         
         key = wgetch(dst_win);
         
@@ -1893,7 +1974,7 @@ void set_chart_name(char *chart_name, size_t max_length) {
     wattron(dialog_shadow, COLOR_PAIR(4));
     box(dialog_shadow, 0, 0);
     wattroff(dialog_shadow, COLOR_PAIR(4));
-    wrefresh(dialog_shadow);
+    wnoutrefresh(dialog_shadow);
     
     // Cria um buffer interno de caracteres largos (wchar_t) para evitar quebra de UTF-8
     wchar_t w_buffer[max_length];
@@ -1913,11 +1994,12 @@ void set_chart_name(char *chart_name, size_t max_length) {
     int done = 0;
     wint_t key; // Variável correta para wget_wch (suporta códigos especiais e wchar_t)
     int key_type;
+
+    wbkgd(dialog_win, COLOR_PAIR(2) | FLAGS);
     
     while (!done) {
         // Renderiza e limpa a janela com segurança
         werase(dialog_win);
-        wbkgd(dialog_win, COLOR_PAIR(2) | FLAGS);
         
         wattron(dialog_win, COLOR_PAIR(2) | A_DIM);
         box(dialog_win, 0, 0);
@@ -1945,7 +2027,9 @@ void set_chart_name(char *chart_name, size_t max_length) {
         
         // Move o cursor físico para a posição baseada no número de caracteres (e não de bytes)
         wmove(dialog_win, 5, 4 + input_pos);
-        wrefresh(dialog_win);
+        wnoutrefresh(dialog_win);
+
+        doupdate();
         
         // wget_wch retorna se é uma tecla especial (KEY_CODE_YES) ou um caractere comum
         key_type = wget_wch(dialog_win, &key);
@@ -2036,7 +2120,7 @@ void set_chart_name(char *chart_name, size_t max_length) {
 }
 
 
-#define MAX_LINHA_TAM 256
+#define MAX_LINHA_TAM 512
 
 
 int *get_topics_grep(char ***lines, int *line_count, char *file) {
@@ -2104,14 +2188,107 @@ int *get_topics_grep(char ***lines, int *line_count, char *file) {
 }
 
 
-int select_topic(char *file) {
+int *get_topics_grep_split(char ***lines, int *line_count, char *file, int max_width) {
+    if (file == NULL || strlen(file) == 0) {
+        *line_count = 0;
+        return NULL;
+    }
+
+    // Abre o arquivo diretamente pelo C (sem popen)
+    FILE *fp = fopen(file, "r");
+    if (fp == NULL) {
+        fprintf(stderr, "Erro ao abrir o arquivo %s\n", file);
+        *line_count = 0;
+        return NULL;
+    }
+
+    regex_t regex;
+    int re_status = regcomp(&regex, "^Index [0-9][0-9]:", REG_EXTENDED);
+    if (re_status != 0) {
+        fclose(fp);
+        *line_count = 0;
+        return NULL;
+    }
+
+    char raw_buffer[MAX_LINHA_TAM];
+    int *indices = NULL;
+    int contador = 0;
+    int numero_linha_atual = 0;
+
+   
+
+    // Lê o arquivo linha por linha
+    while (fgets(raw_buffer, sizeof(raw_buffer), fp) != NULL) {
+        bool sair = false;
+
+        char** line_split;
+        int num_lines = 0;
+        
+        line_split = split_lines_wrap(raw_buffer, &num_lines, max_width);
+
+                       
+        for (int j = 0; j < num_lines; j++) {
+            numero_linha_atual++;
+            
+            char *buffer = line_split[j];
+
+            // Executa a busca da regex na linha atual
+            if (regexec(&regex, buffer, 0, NULL, 0) == 0) {
+                // Remove o '\n' do fim da linha
+                buffer[strcspn(buffer, "\n")] = '\0';
+
+                // Aloca o índice (número da linha atual do arquivo)
+                int *temp_indices = realloc(indices, (contador + 1) * sizeof(int));
+                if (temp_indices == NULL) {
+                    sair = true;
+                    break;
+                }
+                indices = temp_indices;
+                indices[contador] = numero_linha_atual;
+
+                // Aloca espaço no array de strings
+                char **temp_lines = realloc(*lines, (contador + 1) * sizeof(char*));
+                if (temp_lines == NULL) {
+                    sair = true;
+                    break;
+                }
+                *lines = temp_lines;
+
+                // Copia o conteúdo inteiro da linha encontrada
+                (*lines)[contador] = malloc(strlen(buffer) + 1);
+                if ((*lines)[contador] != NULL) {
+                    strcpy((*lines)[contador], buffer);
+                }
+                contador++;
+            }
+            if (sair) break;
+            
+        }
+        for (int i = 0; i < num_lines; i++) {
+            free(line_split[i]);
+        }
+        free(line_split);
+    }
+
+    // Libera a memória da regex e fecha o arquivo
+    regfree(&regex);
+    fclose(fp);
+
+    *line_count = contador;
+    return indices;
+}
+
+
+
+
+int select_topic(char *file, int max_width) {
            
     // Get list of countries
     char **topics = NULL;
     int *indices;
     int topic_count = 0;
     
-    indices = get_topics_grep(&topics, &topic_count, file);
+    indices = get_topics_grep_split(&topics, &topic_count, file, max_width);
     
     if (topic_count == 0) {
         return -1; 
@@ -2146,11 +2323,13 @@ int select_topic(char *file) {
     int key;
 
     // Clear and draw shadow
-    werase(shadow);
+    //werase(shadow);
     wattron(shadow, COLOR_PAIR(4));
-    box(shadow, 0, 0);
+    //box(shadow, 0, 0);
     wattroff(shadow, COLOR_PAIR(4));
-    wrefresh(shadow);
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(2) | FLAGS);
         
     while (!topic_selected) {
 
@@ -2158,9 +2337,9 @@ int select_topic(char *file) {
         werase(win);
         wattron(win, COLOR_PAIR(2) | A_DIM);
         box(win, 0, 0);        
-        wbkgd(win, COLOR_PAIR(2) | FLAGS);
+        
         wattroff(win, COLOR_PAIR(2) | A_DIM);
-        wrefresh(win);
+        //wrefresh(win);
         
         wattron(win, A_BOLD);
         const char *title = _(" Select a Topic ");
@@ -2178,7 +2357,9 @@ int select_topic(char *file) {
                 wattroff(win, attr);
             }
         }
-        wrefresh(win);
+        wnoutrefresh(win);
+
+        doupdate();
         
         key = wgetch(win);
         
@@ -2298,7 +2479,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     // Initialize ncurses for this menu
     nodelay(country_win, FALSE);
     keypad(country_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
     
     int country_selected = 0;
     int key;
@@ -2308,7 +2489,9 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     wattron(country_shadow, COLOR_PAIR(24));
     box(country_shadow, 0, 0);
     wattroff(country_shadow, COLOR_PAIR(24));
-    wrefresh(country_shadow);
+    wnoutrefresh(country_shadow);
+
+    wbkgd(country_win, COLOR_PAIR(22) | FLAGS);
     
     while (!country_selected) {
 
@@ -2316,7 +2499,6 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         werase(country_win);
         wattron(country_win, COLOR_PAIR(22) | A_DIM);
         box(country_win, 0, 0);        
-        wbkgd(country_win, COLOR_PAIR(22) | FLAGS);
         wattroff(country_win, COLOR_PAIR(22) | A_DIM);
 
         wattron(country_win, A_BOLD);
@@ -2330,7 +2512,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         mvwprintw(country_win, 2, 2, "────────────────────────────────────────────────────────────────────────────────────");
         wattroff(country_win, COLOR_PAIR(29) | A_DIM);
         
-        wrefresh(country_win);
+        //wrefresh(country_win);
         
         // Draw country items with proper scrolling
         for (int i = 0; i < max_display_items; i++) {
@@ -2342,7 +2524,9 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                 wattroff(country_win, attr);
             }
         }
-        wrefresh(country_win);
+        wnoutrefresh(country_win);
+
+        doupdate();
         
         key = wgetch(country_win);
         
@@ -2376,6 +2560,32 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                     selected_country_index++;
                     // Adjust scroll offset if needed
                     if (selected_country_index >= country_scroll_offset + max_display_items) {
+                        country_scroll_offset = selected_country_index - max_display_items + 1;
+                    }
+                }
+                break;
+            case KEY_PPAGE:
+                if (selected_country_index > 0) {
+                    selected_country_index -= max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index < 0) {
+                        selected_country_index = 0;
+                    }
+                    if (selected_country_index < country_scroll_offset) {
+                        country_scroll_offset = selected_country_index;
+                    }
+                }
+                break;
+            case KEY_NPAGE:
+                if (selected_country_index < country_count - 1) {
+                    selected_country_index += max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index > country_count - 1) {
+                        selected_country_index = country_count - 1;
+                    }
+                    if (selected_country_index < country_scroll_offset) {
+                        country_scroll_offset = selected_country_index;
+                    } else if (selected_country_index >= country_scroll_offset + max_display_items) {
                         country_scroll_offset = selected_country_index - max_display_items + 1;
                     }
                 }
@@ -2427,21 +2637,22 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     // Initialize ncurses for this menu
     nodelay(city_win, FALSE);
     keypad(city_win, TRUE);
-    curs_set(0);
+    //curs_set(0);
 
     // Clear and draw shadow
     werase(city_shadow);
     wattron(city_shadow, COLOR_PAIR(24));
     box(city_shadow, 0, 0);
     wattroff(city_shadow, COLOR_PAIR(24));
-    wrefresh(city_shadow);
+    wnoutrefresh(city_shadow);
+
+    wbkgd(city_win, COLOR_PAIR(22) | FLAGS);
     
     while (!city_selected) {
                 
         // Clear and redraw main menu
         werase(city_win);
         wattron(city_win, COLOR_PAIR(22) | A_DIM);
-        wbkgd(city_win, COLOR_PAIR(22) | FLAGS);
         box(city_win, 0, 0);
         wattroff(city_win, COLOR_PAIR(22) | A_DIM);
 
@@ -2456,7 +2667,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         mvwprintw(city_win, 2, 2, "────────────────────────────────────────────────────────────────────────────────────");
         wattroff(city_win, COLOR_PAIR(29) | A_DIM);
 
-        wrefresh(city_win);
+        //wrefresh(city_win);
         
         
         for (int i = 0; i < max_display_items; i++) {
@@ -2487,7 +2698,9 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                 wattroff(city_win, attr);
             }
         }
-        wrefresh(city_win);
+        wnoutrefresh(city_win);
+
+        doupdate();
         
         key = wgetch(city_win);
         
@@ -2521,6 +2734,32 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                     selected_city_index++;
                     // Adjust scroll offset if needed
                     if (selected_city_index >= city_scroll_offset + max_display_items) {
+                        city_scroll_offset = selected_city_index - max_display_items + 1;
+                    }
+                }
+                break;
+            case KEY_PPAGE:
+                if (selected_city_index > 0) {
+                    selected_city_index -= max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_city_index < 0) {
+                        selected_city_index = 0;
+                    }
+                    if (selected_city_index < city_scroll_offset) {
+                        city_scroll_offset = selected_city_index;
+                    }
+                }
+                break;
+            case KEY_NPAGE:
+                if (selected_city_index < city_count - 1) {
+                    selected_city_index += max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_city_index > city_count - 1) {
+                        selected_city_index = city_count - 1;
+                    }
+                    if (selected_city_index < city_scroll_offset) {
+                        city_scroll_offset = selected_city_index;
+                    } else if (selected_city_index >= city_scroll_offset + max_display_items) {
                         city_scroll_offset = selected_city_index - max_display_items + 1;
                     }
                 }

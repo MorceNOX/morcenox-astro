@@ -430,7 +430,8 @@ Todos os dados são armazenados em um banco de dados SQLite
 fornecido por este aplicativo.
 
 Utilizamos um banco de dados atualizado e gratuito de cidades
-fornecido por https://github.com/dr5hn/countries-states-cities-database,
+fornecido por:
+ https://github.com/dr5hn/countries-states-cities-database,
 que aprimoramos com melhorias estruturais usando as
 bibliotecas pytz (timezonefinder) e srtm para servir melhor
 às necessidades do aplicativo (Essas bibliotecas foram apenas
@@ -439,11 +440,11 @@ desenvolvimento. Elas não são usadas pelo programa e você
 não precisa instalá-las).
 
 O banco de dados de cidades contém aproximadamente 153 mil cidades.
-É bom o suficiente para um banco de dados gratuito e bem estruturado,
-trabalhando em um software astrológico gratuito, mas vilarejos
-pequenos podem não estar listados. Portanto, para vilarejos,
-você deve procurar pelo nome da cidade onde ele está localizado,
-ou uma cidade muito próxima a ele.
+É bom o suficiente para um banco de dados gratuito e bem 
+estruturado, trabalhando em um software astrológico gratuito, 
+mas vilarejos pequenos podem não estar listados. Portanto, para 
+vilarejos, você deve procurar pelo nome da cidade onde ele está 
+localizado, ou uma cidade muito próxima a ele.
 
 Por exemplo, Princess Diana nasceu em Sandringham, uma pequena
 vila localizada no distrito de King's Lynn, no condado de
@@ -469,6 +470,9 @@ incluídas nos Tópicos Técnicos.
 
 O aplicativo funciona 100% offline; nenhum dado é enviado nem
 recuperado da internet.
+
+
+
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Index 04: O Menu Principal

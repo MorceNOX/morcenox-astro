@@ -503,7 +503,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0); 
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
@@ -713,7 +713,9 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
         
-        wrefresh(table_win);
+        wnoutrefresh(table_win);
+
+        doupdate();
 
         int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
         if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
@@ -771,10 +773,16 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
                     scroll_offset += max_linhas_exibicao;
                 }
+                else {
+                    scroll_offset = qtd_direcoes * 2 - 1;
+                }
                 break;
             case KEY_PPAGE:
                 if (scroll_offset >= 0) {
                     scroll_offset -= max_linhas_exibicao;
+                    if (scroll_offset < 0) {
+                        scroll_offset = 0;
+                    }
                 }
                 break;
             case 27:
@@ -949,7 +957,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0); 
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
@@ -1175,7 +1183,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
         
-        wrefresh(table_win);
+        wnoutrefresh(table_win);
+
+        doupdate();
 
         int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
         if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
@@ -1233,10 +1243,16 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
                     scroll_offset += max_linhas_exibicao;
                 }
+                else {
+                    scroll_offset = qtd_direcoes * 2 - 1;
+                }
                 break;
             case KEY_PPAGE:
                 if (scroll_offset >= 0) {
                     scroll_offset -= max_linhas_exibicao;
+                    if (scroll_offset < 0) {
+                        scroll_offset = 0;
+                    }
                 }
                 break;
             case 27:

@@ -68,7 +68,7 @@ int select_gender();
 DateEdition selecionar_data();
 HoraEdition selecionar_hora();
 int *get_topics_grep(char ***lines, int *line_count, char *file);
-int select_topic(char *file);
+int select_topic(char *file, int max_line_width);
 int load_city_coordinates(char *city_chart, char *country_chart, char *state_chart, char *tz_iana_chart, double *tz_offset_chart, double *lat, double *lon, double *elev);
 void set_default_city();
 

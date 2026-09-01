@@ -110,7 +110,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     werase(table_win);
     box(table_win, 0, 0);
@@ -288,9 +288,9 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
 
     
     mvwprintw(table_win, table_height - 1, 2, _(" Press ESC to return to chart | [↓↑] Scroll "));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
 
-    wrefresh(table_win);
+    doupdate();
 
     int offset_y = 0;
     int max_scroll_y = row_pad - max_linhas_dados + 2;

@@ -1519,57 +1519,59 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
-        for (int j = 0; j < object_count; j++) {
-            if (i == (180 - (longitude[j] - asc) % 360) || 
-                i == (180 - (longitude[j] - asc) % 360) + 360|| 
-                i == (180 - (longitude[j] - asc) % 360) - 360) {
-                
-                // Set color based on object type
-                if (strcmp(plots[j].object_name, _("Ascendant")) == 0 ||
-                    strcmp(plots[j].object_name, _("Midheaven")) == 0 ||
-                    strcmp(plots[j].object_name, _("Nadir")) == 0 ||
-                    strcmp(plots[j].object_name, _("Descendant")) == 0 ||
-                    strcmp(plots[j].object_name, _("Part of Fortune")) == 0 ||
-                    strcmp(plots[j].object_name, _("SAN")) == 0 ||
-                    strcmp(plots[j].object_name, _("South Node")) == 0 ||
-                    strcmp(plots[j].object_name, _("Vertex")) == 0 ||
-                    strcmp(plots[j].object_name, _("North Node")) == 0) {
-                    attron(COLOR_PAIR(16) | A_BOLD);
-                }
-                else if (strcmp(plots[j].object_name, _("Neptune")) == 0 ||
-                         strcmp(plots[j].object_name, _("Uranus")) == 0 ||
-                         strcmp(plots[j].object_name, _("Pluto")) == 0) {
-                    if (show_modern_planets) {
-                        attron(COLOR_PAIR(17) | A_BOLD);
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+            for (int j = 0; j < object_count; j++) {
+                if (i == (180 - (longitude[j] - asc) % 360) || 
+                    i == (180 - (longitude[j] - asc) % 360) + 360|| 
+                    i == (180 - (longitude[j] - asc) % 360) - 360) {
+                    
+                    // Set color based on object type
+                    if (strcmp(plots[j].object_name, _("Ascendant")) == 0 ||
+                        strcmp(plots[j].object_name, _("Midheaven")) == 0 ||
+                        strcmp(plots[j].object_name, _("Nadir")) == 0 ||
+                        strcmp(plots[j].object_name, _("Descendant")) == 0 ||
+                        strcmp(plots[j].object_name, _("Part of Fortune")) == 0 ||
+                        strcmp(plots[j].object_name, _("SAN")) == 0 ||
+                        strcmp(plots[j].object_name, _("South Node")) == 0 ||
+                        strcmp(plots[j].object_name, _("Vertex")) == 0 ||
+                        strcmp(plots[j].object_name, _("North Node")) == 0) {
+                        attron(COLOR_PAIR(16) | A_BOLD);
+                    }
+                    else if (strcmp(plots[j].object_name, _("Neptune")) == 0 ||
+                            strcmp(plots[j].object_name, _("Uranus")) == 0 ||
+                            strcmp(plots[j].object_name, _("Pluto")) == 0) {
+                        if (show_modern_planets) {
+                            attron(COLOR_PAIR(17) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(10) | A_BOLD);
+                        }
+                        
                     }
                     else {
-                        attron(COLOR_PAIR(10) | A_BOLD);
+                        attron(COLOR_PAIR(18) | A_BOLD);
                     }
                     
+                    // Draw the appropriate text
+                    const char* text_to_draw = NULL;
+                    switch(radius_multiplier) {
+                        case 14: text_to_draw = plots[j].object; break;
+                        case 12: text_to_draw = plots[j].degree; break;
+                        case 11: text_to_draw = plots[j].sign; break;
+                        case 10: text_to_draw = plots[j].min; break;
+                        case 8: text_to_draw = plots[j].retrograde; break;
+                        case 7: text_to_draw = plots[j].house; break;
+                    }
+                    
+                    if (text_to_draw) {
+                        mvaddstr(y, x , text_to_draw);
+                    }
+                    
+                    attroff(COLOR_PAIR(16) | A_BOLD);
+                    attroff(COLOR_PAIR(17) | A_BOLD);
+                    attroff(COLOR_PAIR(18) | A_BOLD);
+                    attroff(COLOR_PAIR(10) | A_BOLD);
                 }
-                else {
-                    attron(COLOR_PAIR(18) | A_BOLD);
-                }
-                
-                // Draw the appropriate text
-                const char* text_to_draw = NULL;
-                switch(radius_multiplier) {
-                    case 14: text_to_draw = plots[j].object; break;
-                    case 12: text_to_draw = plots[j].degree; break;
-                    case 11: text_to_draw = plots[j].sign; break;
-                    case 10: text_to_draw = plots[j].min; break;
-                    case 8: text_to_draw = plots[j].retrograde; break;
-                    case 7: text_to_draw = plots[j].house; break;
-                }
-                
-                if (text_to_draw) {
-                    mvaddstr(y, x , text_to_draw);
-                }
-                
-                attroff(COLOR_PAIR(16) | A_BOLD);
-                attroff(COLOR_PAIR(17) | A_BOLD);
-                attroff(COLOR_PAIR(18) | A_BOLD);
-                attroff(COLOR_PAIR(10) | A_BOLD);
             }
         }
     }
@@ -1604,18 +1606,20 @@ void draw_cusps(int radius_multiplier, int object_count,
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
-        for (int j = 1; j <= object_count; j++) {
-            if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
-                i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
-                i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
-                                               
-                // Draw the appropriate text
-                char text_to_draw[12];
-                snprintf(text_to_draw, 12, "%d", j);
-                
-                //if (text_to_draw) {
-                    mvaddstr(y, x, text_to_draw);
-                //}
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+            for (int j = 1; j <= object_count; j++) {
+                if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                    i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                
+                    // Draw the appropriate text
+                    char text_to_draw[12];
+                    snprintf(text_to_draw, 12, "%d", j);
+                    
+                    //if (text_to_draw) {
+                        mvaddstr(y, x, text_to_draw);
+                    //}
+                }
             }
         }
     }
@@ -1652,44 +1656,46 @@ void draw_cusps_div(int object_count,
             int y = (int)(display_center_y + radius * sin(angle));
             int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
             
-            for (int j = 1; j <= object_count; j++) {
-                if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
-                    i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
-                    i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
-                                                
-                    // Draw the appropriate text
-                    if (j != 1 && j != 4 && j != 7 && j != 10) {
-                        if (angle <= -1.79) {
-                            mvaddstr(y, x, "▚");  // casa 11
-                        } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                            mvaddstr(y, x, "▍"); // casa 10
-                        } else if (angle <= -0.8 || angle >= 4.93) {
-                            mvaddstr(y, x, "▞");  // casa 9 
-                        } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "🙼");  // casa 8
-                        } else if (angle <= 0.2) {
-                            mvaddstr(y-1, x, "▁▁");
-                            mvaddstr(y,   x, "▔▔");  // casa 7
-                        } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "🙽");  // casa 6
-                        } else if (angle < 1.35) {
-                            mvaddstr(y, x, "▚"); // casa 5
-                        } else if (angle < 1.79) {
-                            mvaddstr(y, x, "▐");  // casa 4
-                        } else if (angle < 2.26) {
-                            mvaddstr(y, x, "▞");  // casa 3
-                        } else if (angle < 2.99) {
-                            mvaddstr(y, x, "🙼");  // casa 2
-                        } else if (angle <= 3.25) {
-                            mvaddstr(y,   x, "▁▁"); // casa 1
-                            mvaddstr(y+1, x, "▔▔");
-                        } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "🙽");  // casa 12
-                        } else {
-                            mvaddstr(y, x, "▚"); // casa 11
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+                for (int j = 1; j <= object_count; j++) {
+                    if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                    
+                        // Draw the appropriate text
+                        if (j != 1 && j != 4 && j != 7 && j != 10) {
+                            if (angle <= -1.79) {
+                                mvaddstr(y, x, "▚");  // casa 11
+                            } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
+                                mvaddstr(y, x, "▍"); // casa 10
+                            } else if (angle <= -0.8 || angle >= 4.93) {
+                                mvaddstr(y, x, "▞");  // casa 9 
+                            } else if (angle <= -0.2) {
+                                mvaddstr(y, x, "🙼");  // casa 8
+                            } else if (angle <= 0.2) {
+                                mvaddstr(y-1, x, "▁▁");
+                                mvaddstr(y,   x, "▔▔");  // casa 7
+                            } else if (angle <= 0.95) {
+                                mvaddstr(y, x, "🙽");  // casa 6
+                            } else if (angle < 1.35) {
+                                mvaddstr(y, x, "▚"); // casa 5
+                            } else if (angle < 1.79) {
+                                mvaddstr(y, x, "▐");  // casa 4
+                            } else if (angle < 2.26) {
+                                mvaddstr(y, x, "▞");  // casa 3
+                            } else if (angle < 2.99) {
+                                mvaddstr(y, x, "🙼");  // casa 2
+                            } else if (angle <= 3.25) {
+                                mvaddstr(y,   x, "▁▁"); // casa 1
+                                mvaddstr(y+1, x, "▔▔");
+                            } else if (angle <= 4.1) {
+                                mvaddstr(y, x, "🙽");  // casa 12
+                            } else {
+                                mvaddstr(y, x, "▚"); // casa 11
+                            }
                         }
+                    //mvprintw(y, x, "%.2f ", angle);
                     }
-                //mvprintw(y, x, "%.2f ", angle);
                 }
             }
         }
@@ -1725,49 +1731,51 @@ void draw_cusps_div_axis(int object_count,
             int y = (int)(display_center_y + radius * sin(angle));
             int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
             
-            for (int j = 1; j <= object_count; j += 3) {
-                if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
-                    i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
-                    i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
-                                                
-                    // Draw the appropriate text
-                    if (j == 1 || j == 4 || j == 7 || j == 10) {            
-                        if (angle <= -1.79) {
-                            mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
-                        } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                            //mvaddstr(y, x, "▎"); // casa 10
-                            mvaddstr(y, x-1, "▕▎");                            
-                        } else if (angle <= -0.8 || angle >= 4.93) {
-                            mvaddstr(y, x, "⧸");  // casa 9
-                        } else if (angle <= -0.2) {
-                            mvaddstr(y, x, "🙼");  // casa 8
-                        } else if (angle <= 0.2) {
-                            //mvaddstr(y, x, "▔");  // casa 7
-                            mvaddstr(y-1, x, "▁▁");
-                            mvaddstr(y,   x, "▔▔");
-                        } else if (angle <= 0.95) {
-                            mvaddstr(y, x, "🙽");  // casa 6
-                        } else if (angle < 1.35) {
-                            mvaddstr(y, x, "⧹"); // casa 5
-                        } else if (angle < 1.79) {
-                            //mvaddstr(y, x, "▕");  // casa 4
-                            mvaddstr(y, x, "▕▎");                            
-                        } else if (angle < 2.26) {
-                            mvaddstr(y, x, "⧸");  // casa 3
-                        } else if (angle < 2.99) {
-                            mvaddstr(y, x, "🙼");  // casa 2
-                        } else if (angle <= 3.25) {
-                            //mvaddstr(y, x, "▁");  // casa 1
-                            mvaddstr(y,   x, "▁▁");
-                            mvaddstr(y+1, x, "▔▔");
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+                for (int j = 1; j <= object_count; j += 3) {
+                    if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                    
+                        // Draw the appropriate text
+                        if (j == 1 || j == 4 || j == 7 || j == 10) {            
+                            if (angle <= -1.79) {
+                                mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
+                            } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
+                                //mvaddstr(y, x, "▎"); // casa 10
+                                mvaddstr(y, x-1, "▕▎");                            
+                            } else if (angle <= -0.8 || angle >= 4.93) {
+                                mvaddstr(y, x, "⧸");  // casa 9
+                            } else if (angle <= -0.2) {
+                                mvaddstr(y, x, "🙼");  // casa 8
+                            } else if (angle <= 0.2) {
+                                //mvaddstr(y, x, "▔");  // casa 7
+                                mvaddstr(y-1, x, "▁▁");
+                                mvaddstr(y,   x, "▔▔");
+                            } else if (angle <= 0.95) {
+                                mvaddstr(y, x, "🙽");  // casa 6
+                            } else if (angle < 1.35) {
+                                mvaddstr(y, x, "⧹"); // casa 5
+                            } else if (angle < 1.79) {
+                                //mvaddstr(y, x, "▕");  // casa 4
+                                mvaddstr(y, x, "▕▎");                            
+                            } else if (angle < 2.26) {
+                                mvaddstr(y, x, "⧸");  // casa 3
+                            } else if (angle < 2.99) {
+                                mvaddstr(y, x, "🙼");  // casa 2
+                            } else if (angle <= 3.25) {
+                                //mvaddstr(y, x, "▁");  // casa 1
+                                mvaddstr(y,   x, "▁▁");
+                                mvaddstr(y+1, x, "▔▔");
 
-                        } else if (angle <= 4.1) {
-                            mvaddstr(y, x, "🙽");  // casa 12
-                        } else {
-                            mvaddstr(y, x, "⧹"); // casa 11
+                            } else if (angle <= 4.1) {
+                                mvaddstr(y, x, "🙽");  // casa 12
+                            } else {
+                                mvaddstr(y, x, "⧹"); // casa 11
+                            }
                         }
-                    }
-                }                
+                    }                
+                }
             }
         }
     }
@@ -1785,56 +1793,58 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
     int y = (int)(display_center_y + radius * sin(angle));
     int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
 
-    int day_regent = get_hour_regent(week_day, (MAPA_DIURNO)?0:12);
-    int hour_regent = get_hour_regent(week_day, planetary_hour);
+    if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+        int day_regent = get_hour_regent(week_day, (MAPA_DIURNO)?0:12);
+        int hour_regent = get_hour_regent(week_day, planetary_hour);
 
-    attron(COLOR_PAIR(19) | A_DIM);
-    for (int j = 0; j < 6; j++) {
-        if (day_regent == PH_SOL) {
-            mvaddstr(y + j, x + 2, sol_ascii[j]);
-        }
-        else if (day_regent == PH_LUNA) {
-            mvaddstr(y + j, x + 2, lua_ascii[j]);
-        }
-        else if (day_regent == PH_MERCURY) {
-            mvaddstr(y + j, x + 2, mercury_ascii[j]);
-        }
-        else if (day_regent == PH_VENUS) {
-            mvaddstr(y + j, x + 2, venus_ascii[j]);
-        }
-        else if (day_regent == PH_MARS) {
-            mvaddstr(y + j, x + 2, marte_ascii[j]);
-        }
-        else if (day_regent == PH_JUPITER) {
-            mvaddstr(y + j, x + 2, jupiter_ascii[j]);
-        }
-        else if (day_regent == PH_SATURN) {
-            mvaddstr(y + j, x + 2, saturno_ascii[j]);
-        }
+        attron(COLOR_PAIR(19) | A_DIM);
+        for (int j = 0; j < 6; j++) {
+            if (day_regent == PH_SOL) {
+                mvaddstr(y + j, x + 2, sol_ascii[j]);
+            }
+            else if (day_regent == PH_LUNA) {
+                mvaddstr(y + j, x + 2, lua_ascii[j]);
+            }
+            else if (day_regent == PH_MERCURY) {
+                mvaddstr(y + j, x + 2, mercury_ascii[j]);
+            }
+            else if (day_regent == PH_VENUS) {
+                mvaddstr(y + j, x + 2, venus_ascii[j]);
+            }
+            else if (day_regent == PH_MARS) {
+                mvaddstr(y + j, x + 2, marte_ascii[j]);
+            }
+            else if (day_regent == PH_JUPITER) {
+                mvaddstr(y + j, x + 2, jupiter_ascii[j]);
+            }
+            else if (day_regent == PH_SATURN) {
+                mvaddstr(y + j, x + 2, saturno_ascii[j]);
+            }
 
-        if (hour_regent == PH_SOL) {
-            mvaddstr(y + j, x + 8, sol_ascii[j]);
+            if (hour_regent == PH_SOL) {
+                mvaddstr(y + j, x + 8, sol_ascii[j]);
+            }
+            else if (hour_regent == PH_LUNA) {
+                mvaddstr(y + j, x + 8, lua_ascii[j]);
+            }
+            else if (hour_regent == PH_MERCURY) {
+                mvaddstr(y + j, x + 8, mercury_ascii[j]);
+            }
+            else if (hour_regent == PH_VENUS) {
+                mvaddstr(y + j, x + 8, venus_ascii[j]);
+            }
+            else if (hour_regent == PH_MARS) {
+                mvaddstr(y + j, x + 8, marte_ascii[j]);
+            }
+            else if (hour_regent == PH_JUPITER) {
+                mvaddstr(y + j, x + 8, jupiter_ascii[j]);
+            }
+            else if (hour_regent == PH_SATURN) {
+                mvaddstr(y + j, x + 8, saturno_ascii[j]);
+            }
         }
-        else if (hour_regent == PH_LUNA) {
-            mvaddstr(y + j, x + 8, lua_ascii[j]);
-        }
-        else if (hour_regent == PH_MERCURY) {
-            mvaddstr(y + j, x + 8, mercury_ascii[j]);
-        }
-        else if (hour_regent == PH_VENUS) {
-            mvaddstr(y + j, x + 8, venus_ascii[j]);
-        }
-        else if (hour_regent == PH_MARS) {
-            mvaddstr(y + j, x + 8, marte_ascii[j]);
-        }
-        else if (hour_regent == PH_JUPITER) {
-            mvaddstr(y + j, x + 8, jupiter_ascii[j]);
-        }
-        else if (hour_regent == PH_SATURN) {
-            mvaddstr(y + j, x + 8, saturno_ascii[j]);
-        }
+        attroff(COLOR_PAIR(19) | A_DIM);
     }
-    attroff(COLOR_PAIR(19) | A_DIM);
 }
 
 
@@ -1950,12 +1960,10 @@ void draw_decans(int display_center_y, int display_center_x,
         float angle = i * PI / 180.0;
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
-        
-        
+                
         if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
             mvaddstr(y, x, planet_regent_symbols[decans_to_print[(k) % 36]]);
-        }
-        
+        }        
     }
 }
 
@@ -1987,13 +1995,15 @@ void draw_terms(int radius_multiplier, int object_count,
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
-        for (int j = 0; j < object_count; j++) {
-            if (i == (180 - (longitudes[j] - asc) % 360) || 
-                i == (180 - (longitudes[j] - asc) % 360) + 360|| 
-                i == (180 - (longitudes[j] - asc) % 360) - 360) {
-                
-                mvaddstr(y, x , text[j]);
-                                
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+            for (int j = 0; j < object_count; j++) {
+                if (i == (180 - (longitudes[j] - asc) % 360) || 
+                    i == (180 - (longitudes[j] - asc) % 360) + 360|| 
+                    i == (180 - (longitudes[j] - asc) % 360) - 360) {
+                    
+                    mvaddstr(y, x , text[j]);
+                                    
+                }
             }
         }
     }
@@ -2482,7 +2492,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -2497,7 +2507,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
 
     // 2. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     int max_linhas_dados_visiveis = table_height - 7; // Espaço útil físico na tela para as barras
@@ -2559,7 +2569,9 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
     // Rodapé fixo na janela principal
     mvwprintw(table_win, table_height - 1, 4, _("Press Q or ESC to return - Use [↓↑ / JK] to scroll"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
@@ -2615,7 +2627,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -2683,7 +2695,9 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     }
 
     mvwprintw(table_win, table_height - 1, 2, _("Press Q or ESC to return - [↓↑] to scroll"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     int offset_y = 0;
     int max_scroll = row_pad - max_linhas_dados;
@@ -2738,7 +2752,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -2764,7 +2778,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(13));
 
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
@@ -2987,7 +3001,9 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
     
     // Refresh the window
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
@@ -3007,8 +3023,12 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         if (ch == KEY_F(3)) {
             display_force(plots, dig, strength_planets);
             
-            touchwin(shadow_win); wrefresh(shadow_win);
-            touchwin(table_win);  wrefresh(table_win);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win); 
+            wnoutrefresh(table_win);
+
+            doupdate();
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3016,8 +3036,12 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         else if (ch == KEY_F(4)) {
             display_planetary_energy_profile(plots, strength_planets);
 
-            touchwin(shadow_win); wrefresh(shadow_win);
-            touchwin(table_win);  wrefresh(table_win);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win);  
+            wnoutrefresh(table_win);
+
+            doupdate();
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3084,7 +3108,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // Create a border around the table
     box(table_win, 0, 0);
@@ -3195,7 +3219,9 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -3235,7 +3261,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -3264,7 +3290,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(13));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
@@ -3363,7 +3389,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Dignities - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
@@ -3385,8 +3413,12 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             display_dignities(plots, dig, strength_planets);
             
             // Restaura as molduras fixas da tabela principal
-            touchwin(shadow_win); wrefresh(shadow_win);
-            touchwin(table_win);  wrefresh(table_win);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win);  
+            wnoutrefresh(table_win);
+
+            doupdate();
             
             // REDESENHO CRÍTICO DA PAD: Força o ncurses a recolocar as linhas da tabela na tela
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3395,8 +3427,12 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             // Abre sua tabela de forças limpa (passando as variáveis que vieram por parâmetro)
             display_force(plots, dig, strength_planets);
             
-            touchwin(shadow_win); wrefresh(shadow_win);
-            touchwin(table_win);  wrefresh(table_win);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win);  
+            wnoutrefresh(table_win);
+
+            doupdate();
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3405,8 +3441,12 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             // Abre o novo perfil gráfico com barras horizontais (█)
             display_planetary_energy_profile(plots, strength_planets);
 
-            touchwin(shadow_win); wrefresh(shadow_win);
-            touchwin(table_win);  wrefresh(table_win);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win);  
+            wnoutrefresh(table_win);
+
+            doupdate();
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3460,7 +3500,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -3524,7 +3564,9 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     
     // Refresh the window
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -3559,7 +3601,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
@@ -3707,7 +3749,9 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart | [i] for interpretation."));
     
     // Refresh the window
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -3739,8 +3783,11 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
                                              dig_reg_hour);
             
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
+            touchwin(shadow_win);
             touchwin(table_win);
-            wrefresh(table_win);
+            wnoutrefresh(shadow_win);
+            wnoutrefresh(table_win);
+            doupdate();
         }
 
     } while (ch != 27 && ch != 'q' && ch != 'Q');
@@ -3773,7 +3820,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     wattron(shadow_win, COLOR_PAIR(9)); // Par de cor preta/escura para a sombra
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
@@ -3786,7 +3833,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     wattroff(border_win, A_BOLD);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     // 4. CRIAÇÃO DA PAD INTERNA COM MAIS ESPAÇO HORIZONTAL
     int pad_lines = 150; // Aumentado para suportar os novos espaços em branco
@@ -4188,7 +4237,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
@@ -4269,7 +4318,9 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
 
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -4608,21 +4659,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         FLAGS |= A_DIM | A_REVERSE;
     }
 
-    if (mapa_retorno) {
-        if (!dark_mode) {
-            bkgd(COLOR_PAIR(12) | FLAGS);
-        }
-        else {
-            bkgd(COLOR_PAIR(32) | FLAGS); 
-        }
-    }
-    else {
-        bkgd(COLOR_PAIR(15) | FLAGS);
-    }
+    
        
-    cbreak();
-    noecho();
-    curs_set(0); 
+    //cbreak();
+    //noecho();
+    //curs_set(0); 
     keypad(stdscr, TRUE); // Enable keypad for special keys
 
   
@@ -4737,17 +4778,31 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-
-    swe_set_ephe_path(getenv("SE_EPHE_PATH"));
-
+    if (!mapa_retorno) {
+        swe_set_ephe_path(getenv("SE_EPHE_PATH"));
     
-    if (!inicializar_swiss_ephemeris()) {
-        fprintf(stderr, "Erro Fatal: Ephemerides não inicializada!\n");
-        fprintf(stderr, "Abandono da execucao.\n");
-        terminate_database();
-        exit(1); 
+        if (!inicializar_swiss_ephemeris()) {
+            fprintf(stderr, "Erro Fatal: Ephemerides não inicializada!\n");
+            fprintf(stderr, "Abandono da execucao.\n");
+            terminate_database();
+            endwin();
+            exit(1); 
+        }
     }
 
+    if (mapa_retorno) {
+        if (!dark_mode) {
+            bkgd(COLOR_PAIR(12) | FLAGS);
+        }
+        else {
+            bkgd(COLOR_PAIR(32) | FLAGS); 
+        }
+    }
+    else {
+        bkgd(COLOR_PAIR(15) | FLAGS);
+    }
+
+    erase();
 
     // Zoom factor - start with 1.0 (normal size)
     float zoom_factor = 1.0;
@@ -7047,6 +7102,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             local_time->tm_hour += tz_offset;
             timegm(local_time);
+
+            bkgd(COLOR_PAIR(15) | FLAGS);
+            erase();
+
         }
 
         if (animated) {
@@ -7168,7 +7227,9 @@ void open_menu_tables(ContextoMenu *ctx) {
     wattron(shadow, COLOR_PAIR(24));
     box(shadow, 0, 0);
     wattroff(shadow, COLOR_PAIR(24));
-    wrefresh(shadow);
+    wnoutrefresh(shadow);
+
+    wbkgd(win, COLOR_PAIR(26) | FLAGS);
       
     bool saiu_retorno = false;
 
@@ -7183,7 +7244,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         mvwprintw(win, 0, (menu_width - 17) / 2, " Select a Module ");
         wattroff(win, A_BOLD);
 
-        wbkgd(win, COLOR_PAIR(26) | FLAGS);
+        
         wattroff(win, COLOR_PAIR(26) | A_DIM);
         
         // Draw options items with proper scrolling (idêntico ao seu loop do chart)
@@ -7196,7 +7257,9 @@ void open_menu_tables(ContextoMenu *ctx) {
                 wattroff(win, attr);
             }
         }
-        wrefresh(win);        
+        wnoutrefresh(win);
+        
+        doupdate();
         
         key = wgetch(win);
         
@@ -7404,6 +7467,8 @@ void open_menu_tables(ContextoMenu *ctx) {
 
         ctx->local_time->tm_hour += ctx->tz_offset;
         timegm(ctx->local_time);
+
+        bkgd(COLOR_PAIR(15) | FLAGS);
     }
 
     delwin(win);

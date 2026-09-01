@@ -499,7 +499,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -692,7 +692,9 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
 
     // Instruções de Encerramento Padrão
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -839,7 +841,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     // Inicialização e limpeza das janelas (sombra e fundo)
     werase(shadow_win);
     wattron(shadow_win, COLOR_PAIR(9)); box(shadow_win, 0, 0); wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -1006,7 +1008,9 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
 
     // Comando de encerramento da Janela Pop-up
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);

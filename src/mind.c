@@ -139,7 +139,7 @@ void display_natal_mind_analysis(
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     werase(table_win);
     box(table_win, 0, 0);
@@ -310,7 +310,9 @@ void display_natal_mind_analysis(
     wattroff(table_win, COLOR_PAIR(13));
 
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);

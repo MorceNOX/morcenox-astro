@@ -167,6 +167,8 @@ int get_almuten(double longitude, int *resultados, AspectMatrix *aspecto_matriz,
     int max_num_aspects = -999, max_dig_hyleg = -999, max_gov_points = -999;
     int qtd_vencedores = 0;
 
+    int object_diff = show_modern_planets ? 0 : 3;
+
     for (int k = 0; k < qtd_candidatos; k++) {
         int id_planeta = candidatos[k];
         int idx = obter_indice_matriz_dig(id_planeta);
@@ -181,7 +183,7 @@ int get_almuten(double longitude, int *resultados, AspectMatrix *aspecto_matriz,
         int gov_points = get_governed_points_count(id_planeta, plots);
 
         // 3º Critério: Quantidade total de aspectos em que se envolve
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (idx != -1 && j != idx) {
                 AspectCell c1 = aspecto_matriz->grid[j][idx];
                 AspectCell c2 = aspecto_matriz->grid[idx][j];
@@ -288,9 +290,11 @@ int get_almuten_multiplo(double *longitudes, int qtd_longitudes, int *resultados
         return 1;
     }
 
-    // --- 4. SUA CASCATA DE DESEMPATE ORIGINAL APLICADA AO TOTAL ---
+    // --- 4. CASCATA DE DESEMPATE ORIGINAL APLICADA AO TOTAL ---
     int max_num_aspects = -999, max_dig_hyleg = -999, max_gov_points = -999;
     int qtd_vencedores = 0;
+
+    int object_diff = show_modern_planets ? 0 : 3;
 
     for (int k = 0; k < qtd_candidatos; k++) {
         int id_planeta = candidatos[k];
@@ -301,7 +305,7 @@ int get_almuten_multiplo(double *longitudes, int qtd_longitudes, int *resultados
         int dig_hyleg = get_dig_hyleg_points(id_planeta, pontos);
         int gov_points = get_governed_points_count(id_planeta, plots);
 
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (idx != -1 && j != idx) {
                 AspectCell c1 = aspecto_matriz->grid[j][idx];
                 AspectCell c2 = aspecto_matriz->grid[idx][j];
@@ -442,7 +446,7 @@ int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectM
         int gov_points = get_governed_points_count(id_planeta, plots);
 
         // 3º Critério: Quantidade total de aspectos em que se envolve
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (idx != -1 && j != idx) {
                 AspectCell c1 = aspecto_matriz->grid[j][idx];
                 AspectCell c2 = aspecto_matriz->grid[idx][j];
@@ -512,7 +516,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     wattron(shadow_win, COLOR_PAIR(9));
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
@@ -634,7 +638,9 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     // Instruções de encerramento da janela
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart - [i] to open interpretation window"));
     
-    wrefresh(table_win);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
@@ -657,9 +663,11 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
             touchwin(stdscr);
             refresh();
             touchwin(shadow_win);
-            wrefresh(shadow_win);
+            wnoutrefresh(shadow_win);
             touchwin(table_win);
-            wrefresh(table_win);
+            wnoutrefresh(table_win);
+
+            doupdate();
         }
 
     } while (ch != 27 && ch != 'q' && ch != 'Q');
@@ -692,7 +700,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     wattron(shadow_win, COLOR_PAIR(9)); 
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
@@ -705,7 +713,9 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     wattroff(border_win, A_BOLD);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     // 4. CRIAÇÃO DA PAD INTERNA PARA SCROLL
     int pad_lines = 180; // Espaço vertical estendido para casos de múltiplos planetas
@@ -911,7 +921,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     wattron(shadow_win, COLOR_PAIR(9)); 
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // 3. CRIAÇÃO DA MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
@@ -924,7 +934,9 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     wattroff(border_win, A_BOLD);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     // 4. CRIAÇÃO DA PAD INTERNA PARA SCROLL
     int pad_lines = 180; 

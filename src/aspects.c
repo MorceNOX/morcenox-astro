@@ -389,7 +389,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     wattron(decl_shadow, COLOR_PAIR(9));
     box(decl_shadow, 0, 0);
     wattroff(decl_shadow, COLOR_PAIR(9));
-    wrefresh(decl_shadow);
+    wnoutrefresh(decl_shadow);
 
     box(decl_win, 0, 0);
     wbkgd(decl_win, COLOR_PAIR(6) | FLAGS);
@@ -472,7 +472,9 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     }
 
     mvwprintw(decl_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
-    wrefresh(decl_win);
+    wnoutrefresh(decl_win);
+
+    doupdate();
 
     int offset_y = 0;
     int max_scroll_y = row_pad - max_linhas_dados + 2;
@@ -536,7 +538,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     wattron(aspects_shadow, COLOR_PAIR(9));
     box(aspects_shadow, 0, 0);
     wattroff(aspects_shadow, COLOR_PAIR(9));
-    wrefresh(aspects_shadow);
+    wnoutrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
@@ -631,7 +633,9 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     }
 
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑|JK] Scroll"));
-    wrefresh(aspects_win);
+    wnoutrefresh(aspects_win);
+
+    doupdate();
 
     int offset_y = 0;
     int max_scroll_y = row_pad - max_linhas_dados + 2;
@@ -796,7 +800,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     wattron(aspects_shadow, COLOR_PAIR(9));
     box(aspects_shadow, 0, 0);
     wattroff(aspects_shadow, COLOR_PAIR(9));
-    wrefresh(aspects_shadow);
+    wnoutrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
@@ -885,7 +889,9 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     }
 
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
-    wrefresh(aspects_win);
+    wnoutrefresh(aspects_win);
+
+    doupdate();
 
     int offset_y = 0;
     int max_scroll_y = row_pad - max_linhas_dados + 2;
@@ -1009,7 +1015,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     wattron(aspects_shadow, COLOR_PAIR(9));
     box(aspects_shadow, 0, 0);
     wattroff(aspects_shadow, COLOR_PAIR(9));
-    wrefresh(aspects_shadow);
+    wnoutrefresh(aspects_shadow);
 
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
@@ -1111,7 +1117,9 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     }
 
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
-    wrefresh(aspects_win);
+    wnoutrefresh(aspects_win);
+
+    doupdate();
 
     int offset_y = 0;
     int max_scroll_y = row_pad - max_linhas_dados + 2;

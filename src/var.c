@@ -68,6 +68,9 @@ int FLAGS = 0;
 const char *planet_regent_symbols[7] = {"☉", "♀", "☿", "☽", "♄", "♃", "♂"};
 const char *planet_regent_names[7] = {"Sun", "Venus", "Mercury", "Moon", "Saturn", "Jupiter", "Mars"};
 
+const int MAX_HELP_LINE_WIDTH = 68;
+const int MAX_LINE_WIDTH = 80;
+
 
 // void update_interface_language() {
 //     setenv("LANGUAGE", LANGUAGE, 1);

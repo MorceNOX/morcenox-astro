@@ -29,6 +29,8 @@
 //#define _(String) gettext(String)
 #define _(String) dgettext(LANGUAGE, String)
 
+#define MAX_AGE 150.0
+
 extern sqlite3 *global_db;
 
 extern char LANGUAGE[8];
@@ -70,6 +72,9 @@ extern int FLAGS;
 
 extern const char *planet_regent_symbols[7];
 extern const char *planet_regent_names[7];
+
+extern const int MAX_HELP_LINE_WIDTH;
+extern const int MAX_LINE_WIDTH;
 
 void update_interface_language();
 

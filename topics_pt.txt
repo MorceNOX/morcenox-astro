@@ -316,7 +316,7 @@ Lógicas Filosóficas e Técnicas
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 03: Syzygy Ante Nativitatem (SAN)
+Index 04: Syzygy Ante Nativitatem (SAN)
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -399,7 +399,7 @@ um peso enorme em várias áreas centrais:
       
       
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 04: O Temperamento da Lua
+Index 05: O Temperamento da Lua
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -535,7 +535,7 @@ seu mapa.
 
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 05: Módulo de Temperamento Natal
+Index 06: Módulo de Temperamento Natal
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -703,7 +703,7 @@ psicológicos centrais:
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 06: Mente Natal & Análise Psicológica
+Index 07: Mente Natal & Análise Psicológica
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -848,7 +848,7 @@ PERFIS DE GOVERNADOR PLANETÁRIO:
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 07: Vértex
+Index 08: Vértex
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -993,7 +993,7 @@ Representa portas externas e imprevistas se abrindo.
           
           
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 08: Parte da Fortuna
+Index 09: Parte da Fortuna
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1098,7 +1098,7 @@ sua Casa Astrológica:
       
       
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 09: Vital Cronocratas: Hyleg & Alcochoden
+Index 10: Vital Cronocratas: Hyleg & Alcochoden
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1195,7 +1195,7 @@ estruturados por Ptolomeu, Ibn Ezra e Guido Bonatti.
      menores.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 10: Ameaças Vitais: O Anareta & Dominus Mortis
+Index 11: Ameaças Vitais: O Anareta & Dominus Mortis
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1280,7 +1280,7 @@ geométrica e circunstancial do risco físico.
    
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 11: Planeta Feral & Planeta Vazio de Curso
+Index 12: Planeta Feral & Planeta Vazio de Curso
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1372,7 +1372,7 @@ há impulso cósmico imediato para impulsionar eventos.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 12: Módulo de Direções Primárias
+Index 13: Módulo de Direções Primárias
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1502,7 +1502,7 @@ funcional nativo:
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 13: Direções Primárias: Mecânica Direta vs. Conversa
+Index 14: Direções Primárias: Mecânica Direta vs. Conversa
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1535,12 +1535,12 @@ Press Q ou ESC para retornar ao menu principal.
      AR_Significador.
    • Mecânica: O alvo natal estático do nativo (Significador) 
      permanece fixo na coordenada de nascimento. Os corpos celestes 
-     ou os vetores de seus aspectos (Promissores) movem-se no sentido 
-     horário, seguindo a rotação diurna natural até atingirem a 
-     posição do Significador.
+     ou os vetores de seus aspectos (Promissores) movem-se no 
+     sentido horário, seguindo a rotação diurna natural até 
+     atingirem a posição do Significador.
    • Conceito Astrológico: Representa o destino externo, eventos 
-     objetivos e circunstâncias trazidas pelo mundo exterior sobre o 
-     indivíduo.
+     objetivos e circunstâncias trazidas pelo mundo exterior sobre 
+     o indivíduo.
 
 3. Direções Primárias Conversas
    • Motor Astronômico: Arco_AR = AR_Significador - 
@@ -1556,9 +1556,9 @@ Press Q ou ESC para retornar ao menu principal.
      inerentes.
 
 4. O Filtro de Simetria de 180°
-   Direções primárias equatoriais puras descartam distâncias mínimas 
-   absolutas (rebatimento por fabs / 180°). Como o tempo corre 
-   apenas para a frente, um arco Direto de 15° implica um arco 
+   Direções primárias equatoriais puras descartam distâncias 
+   mínimas absolutas (rebatimento por fabs / 180°). Como o tempo 
+   corre apenas para a frente, um arco Direto de 15° implica um arco 
    Converso de 345° para o mesmo par planetário. O módulo filtra os 
    arcos complementares maiores que 150° para manter cronogramas 
    físicos humanamente viáveis.
@@ -1567,7 +1567,7 @@ Press Q ou ESC para retornar ao menu principal.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 14: Copyright
+Index 15: Copyright
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             

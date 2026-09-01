@@ -291,7 +291,7 @@ Philosophical and Technical Logics
       
       
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 03: Syzygy Ante Nativitatem (SAN)
+Index 04: Syzygy Ante Nativitatem (SAN)
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -365,7 +365,7 @@ across several core areas:
       
       
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 04: The Moon's Temperament
+Index 05: The Moon's Temperament
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -492,7 +492,7 @@ softens your chart's natural rigidity.
 
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 05: Natal Temperament Module
+Index 06: Natal Temperament Module
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -649,7 +649,7 @@ constitutional and psychological temperaments:
             
         
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 06: Natal Mind & Psychological Analysis
+Index 07: Natal Mind & Psychological Analysis
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -778,7 +778,7 @@ PLANETARY GOVERNOR PROFILES:
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 07: Vertex
+Index 08: Vertex
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -905,7 +905,7 @@ doors opening up.
           
           
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 08: Part of Fortune
+Index 09: Part of Fortune
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1000,7 +1000,7 @@ both its Zodiac Sign and its Astrological House:
       
       
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 09: Vital Chronocrators: Hyleg & Alcochoden
+Index 10: Vital Chronocrators: Hyleg & Alcochoden
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1089,7 +1089,7 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
      Malefics (Saturn/Mars) subtract their lesser years.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 10: Vital Threats: The Anareta & Dominus Mortis
+Index 11: Vital Threats: The Anareta & Dominus Mortis
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1168,7 +1168,7 @@ physical risk.
    
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 11: Feral & Void of Course Planets
+Index 12: Feral & Void of Course Planets
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1256,7 +1256,7 @@ forward.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 12: Primary Directions Module
+Index 13: Primary Directions Module
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1381,7 +1381,7 @@ natal functional chart agency:
    
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 13: Primary Directions: Direct vs. Converse Mechanics
+Index 14: Primary Directions: Direct vs. Converse Mechanics
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1431,14 +1431,14 @@ Press Q or ESC to return to the main menu.
      (counter-clockwise) against the diurnal rotation until it 
      intercepts the Promissor's original coordinate.
    • Astrological Concept: Represents internal maturation, 
-     subjective evolution, psychological shifts, or actions driven by 
-     the native's own willpower and inherent natal promises.
+     subjective evolution, psychological shifts, or actions driven 
+     by the native's own willpower and inherent natal promises.
 
 4. The 180° Symmetry Filter
    True equatorial primary directions discard absolute minimum 
-   distances (fabs / 180° rebatement). Since time only flows forward, 
-   a Direct arc of 15° implies a Converse arc of 345° for the same 
-   planetary pair. 
+   distances (fabs / 180° rebatement). Since time only flows 
+   forward, a Direct arc of 15° implies a Converse arc of 345° for 
+   the same planetary pair. 
    The module filters out complementary arcs greater than 150° 
    to maintain humanly viable physical timelines.
 
@@ -1446,7 +1446,7 @@ Press Q or ESC to return to the main menu.
 
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 14: Copyright
+Index 15: Copyright
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             

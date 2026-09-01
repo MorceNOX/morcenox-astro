@@ -449,7 +449,7 @@ void abrir_janela_confronto_natal_revolucao(
     wattron(shadow_win, COLOR_PAIR(9)); 
     box(shadow_win, 0, 0);
     wattroff(shadow_win, COLOR_PAIR(9));
-    wrefresh(shadow_win);
+    wnoutrefresh(shadow_win);
 
     // 3. MOLDURA PRINCIPAL
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
@@ -462,7 +462,9 @@ void abrir_janela_confronto_natal_revolucao(
     wattroff(border_win, A_BOLD);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     // 4. PAD INTERNA PARA SCROLL
     int pad_lines = 120; // Aumentado para comportar o texto da Firdária confortavelmente
@@ -470,6 +472,8 @@ void abrir_janela_confronto_natal_revolucao(
     WINDOW *pad = newpad(pad_lines, pad_cols);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
     keypad(pad, TRUE);
+    idlok(pad, TRUE); 
+    scrollok(pad, TRUE);
     
     char str_text[512];
 
@@ -1021,7 +1025,11 @@ void abrir_janela_transitos_revolucao(
     int i_start_x = (p_max_x - i_width) / 2;
 
     WINDOW *shadow_win = newwin(i_height, i_width, i_start_y + 1, i_start_x + 1);
-    werase(shadow_win); wattron(shadow_win, COLOR_PAIR(9)); box(shadow_win, 0, 0); wattroff(shadow_win, COLOR_PAIR(9)); wrefresh(shadow_win);
+    werase(shadow_win); 
+    wattron(shadow_win, COLOR_PAIR(9)); 
+    box(shadow_win, 0, 0); 
+    wattroff(shadow_win, COLOR_PAIR(9)); 
+    wnoutrefresh(shadow_win);
 
     WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
     wbkgd(border_win, COLOR_PAIR(13) | FLAGS); box(border_win, 0, 0);
@@ -1030,12 +1038,17 @@ void abrir_janela_transitos_revolucao(
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
     wattroff(border_win, A_BOLD);
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
-    wrefresh(border_win);
+    wnoutrefresh(border_win);
+
+    doupdate();
 
     int pad_lines = 200; 
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
-    wbkgd(pad, COLOR_PAIR(13) | FLAGS); keypad(pad, TRUE); idlok(pad, TRUE); scrollok(pad, TRUE);
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS); 
+    keypad(pad, TRUE); 
+    idlok(pad, TRUE); 
+    scrollok(pad, TRUE);
 
     wprintw(pad, "\n"); 
 
@@ -1043,9 +1056,12 @@ void abrir_janela_transitos_revolucao(
     wprintw(pad, _("  ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wprintw(pad, _("    The positions of the planets at the exact moment of your Solar Return act as a frozen\n"
-                 "    layer of transits governing the next 12 months. Below is the mapping of where this year's\n"
-                 "    forces physically position themselves over your life-long natal structure.\n\n"));
+    
+    print_split_lines(pad, 
+               _("The positions of the planets at the exact moment of your Solar Return act as a frozen "
+                 "layer of transits governing the next 12 months. Below is the mapping of where this year's "
+                 "forces physically position themselves over your life-long natal structure.\n\n"), 
+                 MAX_LINE_WIDTH);
 
     const char *glifos[] = {"☉", "☽", "☿", "♀", "♂", "♃", "♄"};
     const char *nomes[]  = {_("Sun"), _("Moon"), _("Mercury"), _("Venus"), _("Mars"), _("Jupiter"), _("Saturn")};
@@ -1078,26 +1094,39 @@ void abrir_janela_transitos_revolucao(
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
                 wprintw(pad, _("       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
-                wprintw(pad, _("       This year promises severe depletion of vital energy, physical fatigue,\n"
-                             "       or structural health tests. Rest, discipline, and caution are mandatory.\n\n"));
+                
+                print_split_lines(pad,
+                                  _("This year promises severe depletion of vital energy, physical fatigue, "
+                                    "or structural health tests. Rest, discipline, and caution are mandatory.\n\n"),
+                                   MAX_LINE_WIDTH);
             } 
             else if (p == 4) { // Marte pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
                 wprintw(pad, _("       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"));
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
-                wprintw(pad, _("       High risk of acute inflammatory episodes, fevers, injuries, or sudden surgeries.\n"
-                             "       Avoid reckless physical behavior and channel stress constructively.\n\n"));
+                
+                print_split_lines(pad,
+                                  _("High risk of acute inflammatory episodes, fevers, injuries, or sudden surgeries. "
+                                    "Avoid reckless physical behavior and channel stress constructively.\n\n"),
+                                  MAX_LINE_WIDTH);
             } 
             else if (p == 5) { // Júpiter pisando no Hyleg
                 wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE); // Verde/Sucesso
                 wprintw(pad, _("       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"));
                 wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
-                wprintw(pad, _("       Excellent providential protection. A year of physical recovery, expansion of\n"
-                             "       vital forces, and an invisible protective shield against major crises.\n\n"));
+                
+                print_split_lines(pad, 
+                                 _("Excellent providential protection. A year of physical recovery, expansion of "
+                                   "vital forces, and an invisible protective shield against major crises.\n\n"),
+                                  MAX_LINE_WIDTH);
             } 
             else {
-                wprintw(pad, _("       The annual transit of %s brings daily focus and minor adjustments to your\n"
-                             "       vitality and immediate physical environment this year.\n\n"), nomes[p]);
+                char str[256];
+                snprintf(str, 256, _("The annual transit of %s brings daily focus and minor adjustments to your "
+                    "vitality and immediate physical environment this year.\n\n"), nomes[p]);
+                print_split_lines(pad, 
+                                  (const char *)str,
+                                   MAX_LINE_WIDTH);
             }
         }
     }

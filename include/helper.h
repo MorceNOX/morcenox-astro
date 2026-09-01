@@ -52,6 +52,7 @@ void draw_scrolled_menu(WINDOW *win, const char **items, int count, int selected
 char* load_file_content(const char* filename);
 char** split_lines(char* content, int* line_count);
 char** split_lines_wrap(char* content, int* line_count, int max_width);
+int print_split_lines(WINDOW *win, const char *text, int max_width);
 int print_text_multiline(WINDOW *win, int linha_inicial, int coluna_inicial, int max_colunas_linha, const char *texto);
 int imprimir_texto_fluxo(WINDOW *win, int coluna_inicial, int max_colunas_linha, const char *texto);
 #endif

@@ -518,7 +518,7 @@ char** split_lines_wrap(char* content, int* line_count, int max_width) {
         // --- CÓDIGO DE WRAPPING (RODA APENAS PARA PARÁGRAFOS EXCEPCIONALMENTE LONGOS) ---
         char *texto_restante = buffer;
         while (get_visual_width(texto_restante) > 0) {
-            if ((int)strlen(texto_restante) <= max_width) {
+            if (get_visual_width(texto_restante) < max_width) {
                 char **temp = realloc(lines, (contador + 1) * sizeof(char*));
                 if (!temp) break;
                 lines = temp;
@@ -527,14 +527,14 @@ char** split_lines_wrap(char* content, int* line_count, int max_width) {
             }
 
             // Procura o último espaço em branco antes do limite da janela
-            int ponto_quebra = max_width;
+            int ponto_quebra = max_width - 1;
             while (ponto_quebra > 0 && texto_restante[ponto_quebra] != ' ') {
                 ponto_quebra--;
             }
 
             // Se for uma palavra gigante sem espaços, força a quebra no limite máximo
             if (ponto_quebra == 0) {
-                ponto_quebra = max_width;
+                ponto_quebra = max_width - 1;
             }
 
             char **temp = realloc(lines, (contador + 1) * sizeof(char*));
@@ -567,7 +567,21 @@ char** split_lines_wrap(char* content, int* line_count, int max_width) {
 }
 
 
+int print_split_lines(WINDOW *win, const char *text, int max_width) {
+    char **lines;
+    int num_lines = 0;
 
+    lines = split_lines_wrap((char *)text, &num_lines, max_width);
+
+    for (int i = 0; i < num_lines; i++) {
+        wprintw(win, lines[i]);
+        wprintw(win, "\n");
+    }
+    wprintw(win, "\n");
+
+    return num_lines + 1;
+
+}
 
 
 /**
