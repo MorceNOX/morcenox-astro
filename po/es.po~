@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 10:15-0300\n"
+"POT-Creation-Date: 2026-09-01 10:26-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4287,7 +4287,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1133
+#: src/solar_return.c:1135
 msgid ""
 "       No planetary conjunctions from the Solar Return are currently putting "
 "friction\n"
@@ -4296,17 +4296,17 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1141
+#: src/solar_return.c:1143
 #, c-format
 msgid "    %s  %s (Solar Return)\n"
 msgstr ""
 
-#: src/solar_return.c:1146
+#: src/solar_return.c:1148
 #, c-format
 msgid "    • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 
-#: src/solar_return.c:1147
+#: src/solar_return.c:1149
 #, c-format
 msgid ""
 "       This year, the physical affairs governed by your Natal House %d will "
@@ -4316,16 +4316,16 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1152
+#: src/solar_return.c:1154
 msgid "    • Active Radical Conjunctions:\n"
 msgstr ""
 
-#: src/solar_return.c:1170
+#: src/solar_return.c:1172
 #, c-format
 msgid "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1174
+#: src/solar_return.c:1176
 #, c-format
 msgid ""
 "       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
@@ -4334,7 +4334,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1177
+#: src/solar_return.c:1179
 #, c-format
 msgid ""
 "       [BENEFIC] Jupiter injects providential protection, sudden "
@@ -4343,7 +4343,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1180
+#: src/solar_return.c:1182
 #, c-format
 msgid ""
 "       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or "
@@ -4352,7 +4352,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1183
+#: src/solar_return.c:1185
 #, c-format
 msgid ""
 "       This conjunction wakes up the natal potential of your %s, making its "
@@ -4361,14 +4361,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1189
+#: src/solar_return.c:1191
 msgid ""
 "       No exact conjunctions detected over your natal planets within a 5° "
 "orb.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1196
+#: src/solar_return.c:1198
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"

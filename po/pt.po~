@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 10:15-0300\n"
+"POT-Creation-Date: 2026-09-01 10:26-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -5027,7 +5027,6 @@ msgid "  ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"
 msgstr "  TRÂNSITOS ANUAIS SOBRE O MAPA NATAL\n"
 
 #: src/solar_return.c:1061
-#, fuzzy
 msgid ""
 "The positions of the planets at the exact moment of your Solar Return act as "
 "a frozen layer of transits governing the next 12 months. Below is the "
@@ -5036,10 +5035,9 @@ msgid ""
 "\n"
 msgstr ""
 "    As posições dos planetas no momento exato do seu Retorno Solar atuam "
-"como \n"
-"uma camada estática de trânsitos que rege os próximos 12 meses. Abaixo, \n"
-"apresenta-se o mapeamento de onde as forças deste ano se posicionam \n"
-"fisicamente sobre a estrutura do seu mapa natal, que o acompanha por toda \n"
+"como uma camada estática de trânsitos que rege os próximos 12 meses. Abaixo, "
+"apresenta-se o mapeamento de onde as forças deste ano se posicionam "
+"fisicamente sobre a estrutura do seu mapa natal, que o acompanha por toda "
 "a vida.\n"
 "\n"
 
@@ -5080,16 +5078,15 @@ msgid ""
 msgstr ""
 
 #: src/solar_return.c:1109
-#, fuzzy
 msgid ""
 "High risk of acute inflammatory episodes, fevers, injuries, or sudden "
 "surgeries. Avoid reckless physical behavior and channel stress "
 "constructively.\n"
 "\n"
 msgstr ""
-"       Alto risco de episódios inflamatórios agudos, febres, lesões ou "
-"cirurgias de emergência.\n"
-"       Evite comportamentos físicos imprudentes e canalize o estresse de "
+"Alto risco de episódios inflamatórios agudos, febres, lesões ou "
+"cirurgias de emergência. "
+"Evite comportamentos físicos imprudentes e canalize o estresse de "
 "forma construtiva.\n"
 "\n"
 
@@ -5099,29 +5096,28 @@ msgstr ""
 "       [GRANDE PROTETOR] Júpiter está amplificando o seu Hyleg natal!\n"
 
 #: src/solar_return.c:1119
-#, fuzzy
 msgid ""
 "Excellent providential protection. A year of physical recovery, expansion of "
 "vital forces, and an invisible protective shield against major crises.\n"
 "\n"
 msgstr ""
-"       Excelente proteção providencial. Um ano de recuperação física, "
-"expansão das\n"
-"       forças vitais e um escudo protetor invisível contra grandes crises.\n"
+"Excelente proteção providencial. Um ano de recuperação física, "
+"expansão das "
+"forças vitais e um escudo protetor invisível contra grandes crises.\n"
 "\n"
 
 #: src/solar_return.c:1125
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The annual transit of %s brings daily focus and minor adjustments to your "
 "vitality and immediate physical environment this year.\n"
 "\n"
 msgstr ""
-"       O trânsito anual de %s traz um foco diário e pequenos ajustes à sua\n"
-"       vitalidade e ao seu ambiente físico imediato neste ano.\n"
+"O trânsito anual de %s traz um foco diário e pequenos ajustes à sua "
+"vitalidade e ao seu ambiente físico imediato neste ano.\n"
 "\n"
 
-#: src/solar_return.c:1133
+#: src/solar_return.c:1135
 msgid ""
 "       No planetary conjunctions from the Solar Return are currently putting "
 "friction\n"
@@ -5135,19 +5131,19 @@ msgstr ""
 "intocada.\n"
 "\n"
 
-#: src/solar_return.c:1141
+#: src/solar_return.c:1143
 #, c-format
 msgid "    %s  %s (Solar Return)\n"
 msgstr "    %s  %s (Retorno Solar)\n"
 
-#: src/solar_return.c:1146
+#: src/solar_return.c:1148
 #, c-format
 msgid "    • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 "    • Projeção na Casa: Atuando dentro da sua CASA NATAL %d.\n"
 "\n"
 
-#: src/solar_return.c:1147
+#: src/solar_return.c:1149
 #, c-format
 msgid ""
 "       This year, the physical affairs governed by your Natal House %d will "
@@ -5162,18 +5158,18 @@ msgstr ""
 "de %s.\n"
 "\n"
 
-#: src/solar_return.c:1152
+#: src/solar_return.c:1154
 msgid "    • Active Radical Conjunctions:\n"
 msgstr "    • Conjunções Radicais Ativas:\n"
 
-#: src/solar_return.c:1170
+#: src/solar_return.c:1172
 #, c-format
 msgid "       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 "       [*] %s EM TRÂNSITO ESTÁ EM CONJUNÇÃO COM O SEU %s NATAL (Orbe: "
 "%.2f°)\n"
 
-#: src/solar_return.c:1174
+#: src/solar_return.c:1176
 #, c-format
 msgid ""
 "       [CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
@@ -5187,7 +5183,7 @@ msgstr ""
 "natal.\n"
 "\n"
 
-#: src/solar_return.c:1177
+#: src/solar_return.c:1179
 #, c-format
 msgid ""
 "       [BENEFIC] Jupiter injects providential protection, sudden "
@@ -5200,7 +5196,7 @@ msgstr ""
 "       e sorte nas promessas fundamentais do seu %s natal.\n"
 "\n"
 
-#: src/solar_return.c:1180
+#: src/solar_return.c:1182
 #, c-format
 msgid ""
 "       [DYNAMISM] Mars triggers acute friction, conflicts, separation, or "
@@ -5213,7 +5209,7 @@ msgstr ""
 "       vitalidade física sobre o seu %s natal.\n"
 "\n"
 
-#: src/solar_return.c:1183
+#: src/solar_return.c:1185
 #, c-format
 msgid ""
 "       This conjunction wakes up the natal potential of your %s, making its "
@@ -5226,7 +5222,7 @@ msgstr ""
 "       muito evidentes no cotidiano ao longo deste ciclo anual.\n"
 "\n"
 
-#: src/solar_return.c:1189
+#: src/solar_return.c:1191
 msgid ""
 "       No exact conjunctions detected over your natal planets within a 5° "
 "orb.\n"
@@ -5236,7 +5232,7 @@ msgstr ""
 "de um orbe de 5°.\n"
 "\n"
 
-#: src/solar_return.c:1196
+#: src/solar_return.c:1198
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
