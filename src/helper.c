@@ -528,7 +528,7 @@ char** split_lines_wrap(char* content, int* line_count, int max_width) {
 
             // Procura o último espaço em branco antes do limite da janela
             int ponto_quebra = max_width - 1;
-            while (ponto_quebra > 0 && texto_restante[ponto_quebra] != ' ') {
+            while (ponto_quebra > 0 && (texto_restante[ponto_quebra] != ' ')) {
                 ponto_quebra--;
             }
 

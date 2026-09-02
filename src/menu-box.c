@@ -1667,14 +1667,14 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     int term_h = getmaxy(stdscr);
     
     // Calculate window dimensions
-    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
+    int win_w = (term_w > 71) ? MAX_HELP_LINE_WIDTH + 3 : term_w - 3;
     int win_h = (term_h > 20) ? 20 : term_h - 4;
     int win_x = (term_w - win_w) / 2;
     int win_y = (term_h - win_h) / 2;
     
     if (file_content) {
         // Successfully loaded file, split into lines
-        help_lines = split_lines_wrap(file_content, &line_count, win_w - 2);
+        help_lines = split_lines_wrap(file_content, &line_count, win_w - 3);
         if (!help_lines) {
             // Fallback to hardcoded text if splitting fails
             free(file_content);
@@ -1860,9 +1860,9 @@ void show_help_screen() {
     snprintf(path, sizeof(path), "%s/%s", CONFIG_PATH, filename);
 
     int term_w = getmaxx(stdscr);
-    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
+    int win_w = (term_w > 71) ? MAX_HELP_LINE_WIDTH + 3 : term_w - 3;
 
-    int line = select_topic(path, win_w - 2);
+    int line = select_topic(path, win_w - 3);
 
     if (line < 0) {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Help file could not be loaded!"));
@@ -1882,9 +1882,9 @@ void show_topics() {
     snprintf(path, sizeof(path), "%s/%s", CONFIG_PATH, filename);
 
     int term_w = getmaxx(stdscr);
-    int win_w = (term_w > 74) ? MAX_HELP_LINE_WIDTH + 2 : term_w - 2;
+    int win_w = (term_w > 71) ? MAX_HELP_LINE_WIDTH + 3 : term_w - 3;
 
-    int line = select_topic(path, win_w - 2);
+    int line = select_topic(path, win_w - 3);
 
     if (line < 0) {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Topics file could not be loaded!"));

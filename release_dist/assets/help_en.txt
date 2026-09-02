@@ -1208,24 +1208,17 @@ Use [↓↑] to scroll the table.
 • Parallel & Contra-Parallel - F3 in the Aspects Table
 ───────────────────────────────────────────────────────────────────
 
-Shows Parallel and Contra-parallel aspects, which are vital 
-for estimating the strength of the relationship between bodies. 
+Shows Parallel and Contra-parallel aspects, which are vital for estimating the strength of the relationship between bodies. 
 
-The relationship between bodies is strengthened (for good or 
-evil) by parallel or contra-parallel aspects. 
+The relationship between bodies is strengthened (for good or evil) by parallel or contra-parallel aspects. 
 
-The planetary orb is not considered here; a default 
-orb of 1.5° is set for both.
+The planetary orb is not considered here; a default orb of 1.5° is set for both.
 
-Color coding indicates the quality of the aspect: Blue (favorable:
-parallel), or red (unfavorable: contra-parallel).
+Right under the aspect symbol the angular difference is displayed in degrees.
 
-Note: The application consider the SAN's (pre-natal syzygy) 
-declination as the Moon's declination as in the moment of the 
-previous conjunction/opposition to the Sun.
+Color coding indicates the quality of the aspect: Blue (favorable: parallel), or red (unfavorable: contra-parallel).
 
-This feature is available as an independent option when
-selecting by the menu action.
+This feature is available as an independent option when selecting by the menu action.
 
 Use [↓↑] to scroll the table.
 
@@ -1235,14 +1228,11 @@ Use [↓↑] to scroll the table.
 • Aspects by Sign - F4 in the Aspects Table
 ───────────────────────────────────────────────────────────────────
 
-Displays aspects between two objects according to their respective 
-signs distance.
+Displays aspects between two objects according to their respective signs distance.
 
-If there is no aspect by sign between two objects, so they are in 
-aversion, or their respective signs are inconjunct.
+If there is no aspect by sign between two objects, so they are in aversion, or their respective signs are inconjunct.
 
-This option is available as an independent option when
-selecting by the menu action.
+This option is available as an independent option when selecting by the menu action.
 
 Use [↓↑] to scroll the table.
 
@@ -1253,14 +1243,14 @@ Use [↓↑] to scroll the table.
   F5 na Tabela de Aspectos
 ───────────────────────────────────────────────────────────────────
 
-Displays the aspects between the 7 main planets and their Antissia 
-and Contrantissia.
+Displays the aspects between the 7 main planets and their Antissia and Contrantissia.
 
 Planetary orbs are not used here either.
 An orb of 1.5° is considered to validate the aspect.
 
-This feature is available as an independent option when
-selecting by the menu action.
+Right under the aspect symbol the angular distance is displayed in degrees.
+
+This feature is available as an independent option when selecting by the menu action.
 
 
 
@@ -1288,39 +1278,24 @@ Press Q or ESC to return to the main menu.
 • Planetary Hours (F4)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Displays the planetary hours for the entire astrological day, 
-the length of the hours, and their respective rulers.
+Displays the planetary hours for the entire astrological day, the length of the hours, and their respective rulers.
 
-Every planetary hour is 1/12 of the period (day or night) length 
-which are calculated according to the times of sunrise and sunset,
-considering that the planetary day starts on the sunrise and ends
-on the next sunrise. The application takes this in account when
-working with the planetary hours.
+Every planetary hour is 1/12 of the period (day or night) length which are calculated according to the times of sunrise and sunset,
+considering that the planetary day starts on the sunrise and ends on the next sunrise. The application takes this in account when working with the planetary hours.
 
-You will notice that after midnigth when the time in the chart 
-indicates, for example, Wednesday, which is the real official
-Wednesday, the ruler of the night will be the ruler of the 
-Tuesday nigth, because the entire planetary day ends only at the 
-next sunrise.
+You will notice that after midnigth when the time in the chart indicates, for example, Wednesday, which is the real official Wednesday, the ruler of the night will be the ruler of the Tuesday nigth, because the entire planetary day ends only at the next sunrise.
 
-Press [i] in this screen to open the Planetary Hour Analysis
-window.
+Press [i] in this screen to open the Planetary Hour Analysis window.
 
 
 
 
-• Planetary Hour Interpretation – Press [i] in the Planetary
-  Hours Table
+• Planetary Hour Interpretation – Press [i] in the Planetary Hours Table
 ───────────────────────────────────────────────────────────────────
 
-A report showing the meaning and interpretation of the
-rulers of the day (or night) and the planetary hour at the
-current time of the chart being analyzed.
+A report showing the meaning and interpretation of the rulers of the day (or night) and the planetary hour at the current time of the chart being analyzed.
 
-In addition to the interpretation, the module analyzes the
-strength and operational capacity of the ruling planets
-based on their respective dignities in the chart, indicating
-whether or not their tasks can be successfully carried out.
+In addition to the interpretation, the module analyzes the strength and operational capacity of the ruling planets based on their respective dignities in the chart, indicating whether or not their tasks can be successfully carried out.
 
 
 
@@ -1348,19 +1323,12 @@ Press Q or ESC to return to the main menu.
 • Rising, Setting, and Culmination Times (F5)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Displays the times (in local time) of Rising (crossing the 
-Ascendant), Culmination (crossing the MC), and Setting
-(crossing the Descendant) for the luminaries, planets, and lunar
-nodes.
+Displays the times (in local time) of Rising (crossing the Ascendant), Culmination (crossing the MC), and Setting (crossing the Descendant) for the luminaries, planets, and lunar nodes.
 
-It is important to determine the orientality or occidentality
-of the planets relative to other bodies—primarily the Sun—as
-this counts as accidental dignity. The body that rises (ascends)
-first is oriental relative to the other.
+It is important to determine the orientality or occidentality of the planets relative to other bodies—primarily the Sun—as
+this counts as accidental dignity. The body that rises (ascends) first is oriental relative to the other.
 
-You can also use this module to track planetary transits
-across the sky and determine the times when they may or may
-not be visible based on their distance from the Sun.
+You can also use this module to track planetary transits across the sky and determine the times when they may or may not be visible based on their distance from the Sun.
 
 
 
@@ -1388,11 +1356,9 @@ Press Q or ESC to return to the main menu.
 • Houses Table (F6)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-• House cusps, their positions, rulers and the planets and 
-objects within the houses.
+• House cusps, their positions, rulers and the planets and objects within the houses.
 
-The table also indicates the house system in use by the 
-chart, which can be chosen in the settings.
+The table also indicates the house system in use by the chart, which can be chosen in the settings.
 
 
 
@@ -1420,26 +1386,17 @@ Press Q or ESC to return to the main menu.
 • Hylegiacal and Figuris Almuten (F7)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Here we can see which planets are the lord of the chart and of the
-hylegiacal points, as the Ascendant, the Sun, the Moon, the Part of
-Fortune and the Syzygy Ante-Nativitatem (SAN).
+Here we can see which planets are the lord of the chart and of the hylegiacal points, as the Ascendant, the Sun, the Moon, the Part of Fortune and the Syzygy Ante-Nativitatem (SAN).
 
-The almuten is the planet which has more dignities in determined
-longitude or point in the chart. 
+The almuten is the planet which has more dignities in determined longitude or point in the chart. 
 
-The planet with more dignities in the hylegiacal points is the 
-Almuten Figuris, or the Lord of the Chart.
+The planet with more dignities in the hylegiacal points is the Almuten Figuris, or the Lord of the Chart.
 
-The Almuten for a point is the planet with more essential
-dignities in that location, also added points according to the 
-house of the planet.
+The Almuten for a point is the planet with more essential dignities in that location, also added points according to the house of the planet.
 
-The Almuten Figuris is the planet with more dignities in all the 
-five hylegiacal points, considering also points per house, for the 
-regents of the day or night and the hour. 
+The Almuten Figuris is the planet with more dignities in all the five hylegiacal points, considering also points per house, for the regents of the day or night and the hour. 
 
-If two or more planets received the same score, the criteria to 
-elect the winner is:
+If two or more planets received the same score, the criteria to elect the winner are:
 
 1) the one which has more dignities in hylegiacal points, 
 2) the one which rules more planets and points in the chart, and
@@ -1451,11 +1408,9 @@ elect the winner is:
 • Almuten Interpretation - Press [i] in the Almuten Panel
 ───────────────────────────────────────────────────────────────────
 
-A report showing the meaning and interpretation of the Almuten
-Figuris.
+A report showing the meaning and interpretation of the Almuten Figuris.
 
-The interpretation of the Almuten Figuris depends on the type of 
-the chart: Radix or Solar Revolution.
+The interpretation of the Almuten Figuris depends on the type of the chart: Radix or Solar Revolution.
 
 
 
@@ -1483,21 +1438,13 @@ Press Q or ESC to return to the main menu.
 • Native's Temperament (F8)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Shows the temperament of the native calculated according to 
-the Ascendant, the Moon and the Sun positions and aspects, as well
-as the Lord of the Chart.
+Shows the temperament of the native calculated according to the Ascendant, the Moon and the Sun positions and aspects, as well as the Lord of the Chart.
 
-The temperament is the sum of the primitive qualities of 
-these elements together and signifies the physical body and the
-temperament of the native.
+The temperament is the sum of the primitive qualities of these elements together and signifies the physical body and the temperament of the native.
 
     • Temperament Calculation:
 
-    To calculate the native's temperament, the primal qualities 
-    of each of the items below are first summed up; each sign, 
-    each planet (including the lunar nodes), each Moon phase, 
-    and each season has defined properties based on its nature, 
-    with specific values.
+    To calculate the native's temperament, the primal qualities of each of the items below are first summed up; each sign, each planet (including the lunar nodes), each Moon phase, and each season has defined properties based on its nature, with specific values.
 
      1. Ascendant sign
      2. Sign of the Ascendant's ruling planet
@@ -1514,12 +1461,9 @@ temperament of the native.
     11. Chart ruler (Almuten Figuris)
     12. Sign of the Almuten Figuris
     
-    Summing these properties reveals the native's dominant 
-    temperament; ties are possible.
+    Summing these properties reveals the native's dominant temperament; ties are possible.
     
-    The program displays a chart showing the classification 
-    of each temperament—that is, the proportion of each 
-    temperament within the native's final temperament value.
+    The program displays a chart showing the classification of each temperament—that is, the proportion of each temperament within the native's final temperament value.
 
 
 
@@ -1527,12 +1471,9 @@ temperament of the native.
 • Temperament Analysis - Press [i] in the Temperament Panel
 ───────────────────────────────────────────────────────────────────
 
-Give the native's psychological characteristics according to the 
-combination of the primitive qualities in the chart figure.
+Give the native's psychological characteristics according to the combination of the primitive qualities in the chart figure.
 
-The nuances of the other temperaments within the native's 
-temperament are also considered in the analysis, according to their 
-percentages.
+The nuances of the other temperaments within the native's temperament are also considered in the analysis, according to their percentages.
 
 
 
@@ -1560,16 +1501,11 @@ Press Q or ESC to return to the main menu.
 • Annual Profections (F9)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-You can see what area of native's life and what forces are 
-activated in determined age, as well as which is the planet 
-rulling the specific year of the native's life.
+You can see what area of native's life and what forces are activated in determined age, as well as which is the planet rulling the specific year of the native's life.
 
-You select an age and the application shows the rulling
-planet of the year, the house, which is the area of life
-activated, and the planets in the activated house.
+You select an age and the application shows the rulling planet of the year, the house, which is the area of life activated, and the planets in the activated house.
 
-An alert will appear when the age coincides with the 
-pulsation cycle of the Alcochoden.
+An alert will appear when the age coincides with the pulsation cycle of the Alcochoden.
 
 
 

@@ -52,6 +52,15 @@
 #define SAN_CONJUNCIONAL 1
 #define SAN_PREVENCIONAL 2
 
+#define OBJ_PLANET 1
+#define OBJ_ANGLE 2
+#define OBJ_POINT 3
+#define OBJ_ARABIC_PART 4
+#define OBJ_ZODIAC_DEGREE 5
+#define OBJ_CUSP 6
+#define OBJ_FIXED_STAR 7
+#define OBJ_DISPOSITOR 8
+
 #include "directions.h"
 
 // Estrutura para mapear cada fatia do termo

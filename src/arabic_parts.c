@@ -159,13 +159,15 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     wbkgd(shadow_win, COLOR_PAIR(13));
     wnoutrefresh(shadow_win);
 
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+
     int loop_interativo = 1;
     while (loop_interativo) {
         werase(table_win);
         werase(scroll_pad);        
         
         box(table_win, 0, 0); 
-        wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+        
         wattron(table_win, A_BOLD);
         const char *title = _(" Arabic Parts & Hermetic Lots ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
@@ -353,11 +355,12 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                     seletor_linha_atual--;
                 }
                 break;
-            case 'i': case 'a': // Inclusão
+            case 'i': case 'a': case 'I': case 'A': // Inclusão
                 form_arabic_part(obj, num_objects, 0); 
                 qtd_partes = load_and_calculate_arabic_parts(obj, num_objects, cusps, lista);
                 break;
             case 'e': // Edição do lote selecionado!
+            case 'E':
                 if (qtd_partes > 0) {
                     // Captura dinamicamente o nome exato do lote que está com a barra iluminada!
                     int id_banco_alvo = obter_id_parte_por_nome(lista[seletor_linha_atual].name);
@@ -367,6 +370,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 }
                 break;
             case 'x': 
+            case 'X': 
             case KEY_F(3):
                 if (qtd_partes > 0) {
                     // Passamos os dados que JÁ ESTÃO mastigados na memória RAM!
@@ -381,7 +385,8 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                     doupdate();
                 }
                 break;
-            case 'd': 
+            case 'd':
+            case 'D': 
                 if (qtd_partes > 0) {
                     int id_banco_alvo = obter_id_parte_por_nome(lista[seletor_linha_atual].name);
                     
@@ -414,7 +419,11 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     }
  // Fim do grande while (loop_interativo)
 
-    delwin(scroll_pad); delwin(shadow_win); delwin(table_win); touchwin(stdscr); refresh();
+    delwin(scroll_pad); 
+    delwin(shadow_win); 
+    delwin(table_win); 
+    touchwin(stdscr); 
+    refresh();
 }
 
 
@@ -1249,7 +1258,7 @@ void calcular_aspectos_partes(ChartObject *obj, int num_objects, ArabicPartCalcu
     int idx_planeta_valido = 0;
 
     for (int p = 0; p < num_objects; p++) {
-        if (obj[p].type != 1) continue; 
+        if (obj[p].type != OBJ_PLANET) continue; 
         
         // BLOQUEIO MATEMÁTICO: Impede que Urano, Netuno e Plutão ocupem espaço nas linhas da matriz
         if (!show_modern_planets && (obj[p].id >= 8 && obj[p].id <= 10)) {
@@ -1402,19 +1411,26 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     
     int row_offset = 0; // Deslocamento vertical inicial
     // Cada planeta ocupa 2 linhas físicas na tabela. Descontamos 5 linhas de cabeçalho/rodapé.
-    int max_linhas_tela = (table_height - 6) / 2; 
+    int max_linhas_tela = (table_height - 10) / 2; 
     
-    bool deve_fazer_wipe = true; 
+    bool deve_fazer_wipe = true;
+
+    wattron(aspects_win, A_DIM);
+    mvwprintw(aspects_win, 2, table_width - 35, _("[←/→] More Parts [↑/↓] Scroll"));
+    wattroff(aspects_win, A_DIM);
 
     while (1) {
-        wclear(aspects_win);
+        werase(aspects_win);
         box(aspects_win, 0, 0);
-        wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
-
+        
         wattron(aspects_win, A_BOLD);
         const char *title = _(" Arabic Parts Aspect Matrix Grid ");
         mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(aspects_win, A_BOLD);
+
+        wattron(aspects_win, A_DIM);
+        mvwprintw(aspects_win, 2, table_width - 35, _("[←/→] More Parts [↑/↓] Scroll"));
+        wattroff(aspects_win, A_DIM);
 
         int partes_nesta_pagina = qtd_partes - pagina_offset;
         if (partes_nesta_pagina > max_partes_tela) {
@@ -1531,11 +1547,13 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
         // --- RODAPÉ DINÂMICO ADAPTADO PARA SCROLL VERTICAL ---
         int ate_qual = pagina_offset + partes_nesta_pagina;
+        mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
         mvwprintw(aspects_win, table_height - 1, 2, 
             "%s (%d-%d/%d) - [ ↑/↓ ] %s (%d/%d)", 
             _("ESC: Exit - [ ←/→ ] Parts"), pagina_offset + 1, ate_qual, qtd_partes, _("Scroll Planets"), row_offset + linhas_nesta_tela, total_planetas_validos);
 
-        wrefresh(aspects_win);
+        wnoutrefresh(aspects_win);
+        doupdate();
 
         int ch = wgetch(aspects_win);
 
@@ -1612,10 +1630,11 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
     int confirmado = 0;
     int ch;
 
+    wbkgd(conf_win, COLOR_PAIR(26) | FLAGS);
+
     while (1) {
         // Redesenha a estrutura fixa da caixinha de alerta a cada ciclo
         werase(conf_win);
-        wbkgd(conf_win, COLOR_PAIR(26) | FLAGS);
         wattron(conf_win, COLOR_PAIR(27) | A_BOLD);
         box(conf_win, 0, 0);
         const char *title = _(" CONFIRM DELETE ");  
@@ -1663,11 +1682,6 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
     }
 
     if (confirmado) {
-        // char sql_delete[128];
-        // snprintf(sql_delete, sizeof(sql_delete), "DELETE FROM arabic_parts WHERE id = %d;", id_banco_alvo);
-        // char *err_msg = NULL;
-        // sqlite3_exec(global_db, sql_delete, NULL, NULL, &err_msg);
-
         sqlite3 *db;
         sqlite3_stmt *stmt;
         int rc;

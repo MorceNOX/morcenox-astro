@@ -471,6 +471,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
         }
     }
 
+    mvwprintw(decl_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
     mvwprintw(decl_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(decl_win);
 
@@ -485,7 +486,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {        
@@ -502,7 +503,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);        
+        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);        
     }
     
     // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
@@ -632,6 +633,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
     }
 
+    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
 
@@ -646,7 +648,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
@@ -658,7 +660,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             wrefresh(aspects_shadow);
             touchwin(aspects_win);  // Marca a janela da tabela para atualização total
             wrefresh(aspects_win);
-            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         }
         else if (ch == KEY_F(4)) {
             AspectMatrix matrix_sign = {0}; 
@@ -670,7 +672,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             wrefresh(aspects_shadow);
             touchwin(aspects_win);
             wrefresh(aspects_win);
-            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         }
         else if (ch == KEY_F(5)) {
             AspectMatrix matrix_ants = {0}; 
@@ -682,7 +684,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             wrefresh(aspects_shadow);
             touchwin(aspects_win);
             wrefresh(aspects_win);
-            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         }
         else {
             // Se não foi nenhuma tecla de função, processa a rolagem vertical do texto
@@ -700,7 +702,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                     break;
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
-            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+            prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         }
     }
     
@@ -902,7 +904,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
@@ -920,7 +922,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         
     }
     
@@ -933,7 +935,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
 
 
 
-AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects) {
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_ants) {
    
     AspectMatrix matrix = {0};
 
@@ -945,10 +947,12 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
         {180.0, "☍", "Opposition"}
     };
     
+    int object_diff = show_modern_planets ? 0 : 3;
+
     // Varredura para calcular os aspectos
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 12 - object_diff; i++) {
         
-        for (int j = 0; j < num_objects; j++) {
+        for (int j = 0; j < num_ants; j++) {
             if (i >= j) continue;
 
             // returns the angle between -180 and 180 degrees
@@ -1003,6 +1007,8 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
+    int object_diff = show_modern_planets ? 0 : 3;
+
     int table_height = 24;
     int table_width = max_x - 5;
     int start_y = (max_y - table_height) / 2;
@@ -1046,14 +1052,14 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     }
 
     // 2. Cabeçalhos Laterais (Símbolos dos Planetas)
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 12 - object_diff; i++) {
         wattron(pad, A_BOLD);
         mvwprintw(pad, 2 + 2 * i, 0, plots[i].object);
         wattroff(pad, A_BOLD);
     }
 
     // 3. Desenho das Linhas do Grid
-    for (int i = 0; i < 7 + 1; i++) {
+    for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < num_ants; j++) {
             if (i == 0) {
                 mvwprintw(aspects_win, 3, 4 + 6 * j, "______");
@@ -1066,14 +1072,14 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     }
 
     // 4. Desenho das Linhas Verticais
-    for (int i = 0; i < (7 * 2); i++) {
+    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
         for (int j = 0; j < num_ants + 1; j++) {
             mvwprintw(pad, 2 + i, 2 + 6 * j, "|");
         }
     }
 
     // 5. Renderização dos Dados Pré-Calculados da Matriz
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 12 - object_diff; i++) {
         for (int j = 0; j < num_ants; j++) {
             
             // Se i >= j, renderiza o bloco nulo/vazio (Triângulo inferior da matriz)
@@ -1081,6 +1087,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
+                row_pad = 2 + 2 * i + 1;
                 continue;
             }
 
@@ -1105,17 +1112,19 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 snprintf(ag, 8, "%4.2f", cell.angle);
                 mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
-                                
-                row_pad = 2 + 2 * i + 1;
+                               
             }
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "░░░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
+
+            row_pad = 2 + 2 * i + 1;
         }
     }
 
+    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
 
@@ -1130,7 +1139,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+    prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
@@ -1148,7 +1157,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 2, start_x + table_width - 3);
+        prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         
     }
     

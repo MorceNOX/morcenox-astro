@@ -105,16 +105,6 @@ int decans_to_print[36] = {
 #define A_NENHUM   0
 #define A_PLANETA  1
 
-#define OBJ_PLANET 1
-#define OBJ_ANGLE 2
-#define OBJ_POINT 3
-#define OBJ_ARABIC_PART 4
-#define OBJ_ZODIAC_DEGREE 5
-#define OBJ_CUSP 6
-#define OBJ_FIXED_STAR 7
-#define OBJ_DISPOSITOR 8
-
-
 
 
 Termo tabela_termos_egipcios[12][5] = {
@@ -237,7 +227,13 @@ const char *capricorn[] = {
     "   ▞ "
 };
 
-
+const char *capricorn__[] = {
+    "      ",
+    "▚▗▜▞▚ ",
+    " ▌ ▚▞ ",
+    "   ▞  ",
+    "      "
+};
 
 
 const char *sol_ascii[] = {
@@ -4824,7 +4820,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
-    timeout(1000); // This will make getch() wait for 1 second max
+    timeout(984); // This will make getch() wait for 1 second max
     
     while (running) {
         
