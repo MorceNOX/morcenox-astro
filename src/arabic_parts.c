@@ -1407,7 +1407,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
     // --- VARIÁVEIS DE CONTROLE DA PAGINAÇÃO E SCROLL ---
     int pagina_offset = 0;
-    int max_partes_tela = (table_width - 16) / 6; // Ajustado de 32 para 16 para maximizar colunas úteis
+    int max_partes_tela = (table_width - 64) / 6;
     
     int row_offset = 0; // Deslocamento vertical inicial
     // Cada planeta ocupa 2 linhas físicas na tabela. Descontamos 5 linhas de cabeçalho/rodapé.
