@@ -978,7 +978,7 @@ Não usamos "orbe por aspecto." O orbe é sempre a média do orbe dos dois corpo
 
 A tabela mostra a distância em graus, permitindo que você meça a força de cada aspecto.
 
-Uma letra 'a' ou 's' é mostrada no lado direito do símbolo do aspecto, indicando se o aspecto é aplicativo ou separativo. Se o aspecto é exato (partil) nenhuma letra é exibida após o símbolo do aspecto.
+Uma letra 'a' ou 's' é mostrada no lado direito do símbolo do aspecto, indicando se o aspecto é aplicativo ou separativo. Se o aspecto é exato (partil) nenhuma letra é exibida e o símbolo do aspecto aparece destacado.
 
 A codificação por cores indica a qualidade do aspecto: Azul (favorável: trígono e sextil), vermelho (desfavorável: oposição e quadratura) ou magenta (fatores específicos: conjunção).
 
@@ -1007,6 +1007,8 @@ O orbe planetário não é considerado aqui; é definido um orbe padrão de 1.5�
 A diferença angular é exibida logo abaixo do símbolo do aspecto.
 
 A codificação por cores indica a qualidade do aspecto: Azul (favorável: paralelo) ou vermelho (desfavorável: contra-paralelo).
+
+Para aspectos muito exatos (≤ 10% do orbe para aspectos de declinação) o símbolo do aspecto aparece destacado na tabela.
 
 Esta funcionalidade está disponível como uma opção independente ao selecionar pelo Menu de Ações.
 
@@ -1038,6 +1040,8 @@ Exibe aspectos entre os planetas e os Antissia e Contrantissia dos 7 planetas tr
 Aqui também não se usam os orbes dos planetas. Um orbe de 1.5° é considerado para validar o aspecto.
 
 Abaixo do símbolo do aspecto é exibida a distância angular em graus entre os dois objetos.
+
+Para aspectos muito exatos (≤ 10% do orbe para aspectos com antissia e contrantissia) o símbolo do aspecto aparece destacado na tabela.
 
 Esta funcionalidade está disponível como uma opção independente ao selecionar pelo menu de ações.
 
