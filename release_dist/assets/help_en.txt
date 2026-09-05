@@ -1533,18 +1533,13 @@ Press Q or ESC to return to the main menu.
 • Firdaria (F12)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-You select an age and the application shows a table containing 
-the lord of the period and the sublords, highlighting the 
-current sublord according to the entered age.
+You select an age and the application shows a table containing the lord of the period and the sublords, highlighting the current sublord according to the entered age.
 
-An alert will appear when the age corresponds to the 
-anaretic return cycle.
+An alert will appear when the age corresponds to the anaretic return cycle.
 
 The anaretic subperiod will be indicated as a trigger zone.
 
-The Firdaria's calculated regent and sub-regent will be 
-confrontated with the Solar Return's data automatically in 
-the Solar Revolution module.
+The Firdaria's calculated regent and sub-regent will be confrontated with the Solar Return's data automatically in the Solar Revolution module.
 
 Note: When opening the Firdaria's module you will be 
       asked for the age and this age is a floating point number 

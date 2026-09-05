@@ -35,13 +35,15 @@ void processar_confronto_natal_revolucao(
     double jd_revolucao_ut,
     double armc_rev,
     double lat_rev,
-    double asc_natal);           /* ADICIONADO: ASC calculado para a cidade do aniversário */
+    double asc_natal,                 /* ADICIONADO: ASC calculado para a cidade do aniversário */
+    double *cusps_rev,
+    double *cups_natal);           
 
 
 struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horario_destino);
 double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada, double sol_natal_exibido);
 double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada);
-void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal);
+void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects);
 
 void abrir_janela_confronto_natal_revolucao(
     int id_almuten_rev, 
@@ -56,13 +58,15 @@ void abrir_janela_confronto_natal_revolucao(
 
 void get_natal_houses_rev_planets(double jd_natal, double *rev_longitudes, double *rev_latitudes, double armc_natal, double lat_natal, char house_system, int *casas_planetas_natal_proj);
 void get_hyleg_data(int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double *lon_hyleg_radix_real, char *nome_hyleg_texto, char *glifo_hyleg_texto);
-void process_revolution_transits(double jd_natal, double *rev_longitudes, double *rev_latitudes, double armc_natal, double lat_natal, char house_system, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal);
+void process_revolution_transits(double jd_natal, double *rev_longitudes, double *rev_latitudes, double armc_natal, double lat_natal, char house_system, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double *cusps_natal, ChartObject *obj_natal, int num_natal_objects);
 void abrir_janela_transitos_revolucao(
     double *longitudes_rev, 
     double *longitudes_natal, 
     int *casas_planetas_rev,
     double lon_hyleg_natal,       /* ADICIONADO: Longitude do Hyleg do Radix */
     char *nome_hyleg_natal,       /* ADICIONADO: Nome do Hyleg (ex: "Jupiter", "Ascendant") */
-    char *glifo_hyleg_natal);
+    char *glifo_hyleg_natal,
+    ArabicPartCalculada *lista,
+    int qtd_partes);
 
 #endif

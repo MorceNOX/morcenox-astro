@@ -222,7 +222,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         setcchar(&traco_horizontal, L"─", A_NORMAL, 0, NULL);
         mvwhline_set(table_win, 4, 2, &traco_horizontal, table_width - 5);
 
-        int col_name = 1, col_pos = 32, col_house = 42, col_ruler = 49, col_link = 58, col_desc = 69;
+        int col_name = 1, col_pos = 33, col_house = 42, col_ruler = 49, col_link = 58, col_desc = 69;
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_name + 4, _("Part Name"));
         mvwprintw(table_win, 5, col_pos + 4, _("Position"));
@@ -544,7 +544,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         setcchar(&traco_horizontal, L"─", A_NORMAL, 0, NULL);
         mvwhline_set(table_win, 4, 2, &traco_horizontal, table_width - 5);
 
-        int col_name = 1, col_pos = 32, col_house = 42, col_ruler = 49, col_link = 58, col_natal = 69; //, col_natal_ruler = 82;
+        int col_name = 1, col_pos = 33, col_house = 42, col_ruler = 49, col_link = 58, col_natal = 69; //, col_natal_ruler = 82;
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_name + 4, _("Part Name"));
         mvwprintw(table_win, 5, col_pos + 4, _("Position"));
@@ -757,7 +757,7 @@ static int rotate_dynamic_id(int id_atual, int direcao, ChartObject *obj, int nu
 
 
 static int campo_texto_amigavel_avancado(WINDOW *win, int y, int x, char *buffer, int max_len) {
-    char backup[255];
+    char backup[512];
     strcpy(backup, buffer); // Mantém o backup seguro para o caso de ESC
 
     // len agora rastreia o número TOTAL DE BYTES da string na memória
@@ -808,7 +808,7 @@ static int campo_texto_amigavel_avancado(WINDOW *win, int y, int x, char *buffer
         wprintw(win, " ");
 
         // 2. Extrai e exibe apenas a fatia visível do buffer
-        char buffer_visivel[255] = {0};
+        char buffer_visivel[512] = {0};
         if (offset < len) {
             strncpy(buffer_visivel, &buffer[offset], largura_campo_visivel);
         }
@@ -821,10 +821,10 @@ static int campo_texto_amigavel_avancado(WINDOW *win, int y, int x, char *buffer
         if (cursor_idx > offset) {
             // Cria uma string temporária para a fatia entre o offset e o cursor
             int tamanho_fatia_bytes = cursor_idx - offset;
-            char fatia_cursor[255] = {0};
+            char fatia_cursor[512] = {0};
             
             // Limita para não estourar o tamanho do buffer temporário
-            if (tamanho_fatia_bytes > 254) tamanho_fatia_bytes = 254;
+            if (tamanho_fatia_bytes > 511) tamanho_fatia_bytes = 511;
 
             strncpy(fatia_cursor, &buffer[offset], tamanho_fatia_bytes);
             fatia_cursor[tamanho_fatia_bytes] = '\0';
@@ -992,8 +992,8 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     int f_n_personal = 15, f_n_sig = 2, f_n_trigger = 1; 
     char f_link[8] = "-"; // NOVO: Inicializa o link vazio
     char f_link2[8] = "-";
-    char f_desc[255];
-    snprintf(f_desc, 255, "%s", _("User defined hermetic lot formula."));
+    char f_desc[5121];
+    snprintf(f_desc, 512, "%s", _("User defined hermetic lot formula."));
 
     // Se for Edição, puxa os dados do SQLite incluindo a nova coluna link
     if (part_id_edicao > 0) {
@@ -1226,7 +1226,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                 }
                 if (campo_atual == 6) { // Campo Description: mvwprintw na coordenada (15, 4)
                     // Passamos x = 17 exatamente para sincronizar com mvwprintw(win, 14, 17, ...)
-                    campo_texto_amigavel_avancado(win, 16, 4, f_desc, 255);
+                    campo_texto_amigavel_avancado(win, 16, 4, f_desc, 512);
                 }
                 if (campo_atual == 7) { // SAVE FORMULA (Sua rotina SQLite global idêntica...)
 
@@ -1583,7 +1583,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         for (int j = 0; j < partes_nesta_pagina; j++) {
             
             // A) Desenha a abreviação do cabeçalho superior desta coluna específica
-            char abreviacao[4];
+            char abreviacao[6];
             get_part_abbreviation(lista[pagina_offset + j].name, abreviacao);
             wattron(aspects_win, A_BOLD | COLOR_PAIR(13));
             mvwprintw(aspects_win, 2, 14 + 6 * j, "%s", abreviacao); // Movido para X=14 para alinhar com o grid

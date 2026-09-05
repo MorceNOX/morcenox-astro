@@ -234,6 +234,103 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
 
 /* Certifique-se de passar jd_natal e jd_revolucao para a assinatura da função */
+// void processar_confronto_natal_revolucao(
+//     int id_almuten_rev,               
+//     double longitude_almuten_rev,     
+//     double latitude_almuten_rev,      
+//     int dignidade_natal,           
+//     double lat_natal,                 
+//     double armc_natal,                
+//     int id_senhor_profeccao,          
+//     int id_senhor_firdaria,           
+//     int id_senhor_subfirdaria,
+//     double asc_revolucao,
+//     int *strength_planets,
+//     double jd_natal,                  /* ADICIONADO: JD real do Nascimento */
+//     double jd_revolucao_ut,           /* ADICIONADO: JD real da Revolução Solar */
+//     double armc_rev,
+//     double lat_rev,
+//     double asc_natal,
+//     double *cusps_rev,
+//     double *cusps_natal)           
+// {
+
+//     (void)armc_rev;
+//     (void)lat_rev;
+
+
+//     char serr[256];
+//     double xx[6];
+//     double eps_natal;
+//     //double eps_rev;
+
+//     // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
+//     if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+//         eps_natal = xx[0]; 
+//     } else {
+//         eps_natal = 23.439291; 
+//     }
+
+//     // 2. OBLIQUIDADE DA REVOLUÇÃO (Para o Ascendente do Ano)
+//     if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+//         //eps_rev = xx[0]; 
+//     } else {
+//         //eps_rev = 23.439291; 
+//     }
+
+//     /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS
+//           Trocado 'P' pela sua variável global HOUSE_SYSTEM */
+//     double xpin_almuten[2];
+//     xpin_almuten[0] = longitude_almuten_rev;
+//     xpin_almuten[1] = latitude_almuten_rev;
+
+//     double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
+//     int casa_natal_transitada = (int)floor(casa_alm_dec);
+//     if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
+
+//     /* 4. PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO NAS CASAS NATAIS
+//           Agora usando o eps_rev correto e a global HOUSE_SYSTEM */
+//     //double xpin_asc[2];
+//     //xpin_asc[0] = asc_revolucao; 
+//     //xpin_asc[1] = 0.0;    
+
+
+//     //double casa_asc_dec = swe_house_pos(armc_natal, lat_natal, eps_rev, HOUSE_SYSTEM, xpin_asc, serr);
+//     //(void)casa_asc_dec;
+    
+//     int casa_natal_do_asc = get_house(asc_revolucao, cusps_natal); //(int)floor(casa_asc_dec);
+
+
+
+//     if (casa_natal_do_asc < 1 || casa_natal_do_asc > 12) casa_natal_do_asc = 1;
+
+//     //double xpin_asc_nat[2];
+//     //xpin_asc_nat[0] = asc_natal; 
+//     //xpin_asc_nat[1] = 0.0;
+//     //double casa_rev_asc_dec = swe_house_pos(armc_rev, lat_rev, eps_natal, HOUSE_SYSTEM, xpin_asc_nat, serr);
+//     //(void)casas_rev_asc_dec;
+
+//     int casa_rev_do_asc_natal = get_house(asc_natal, cusps_rev); //(int)floor(casa_rev_asc_dec);
+    
+//     if (casa_rev_do_asc_natal < 1 || casa_rev_do_asc_natal > 12) casa_rev_do_asc_natal = 1;
+
+//     int pontuacao_dignidade_natal = dignidade_natal;
+//     int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
+
+//     // DISPARA A JANELA VISUAL COM OS INTEIROS CALCULADOS SOB PRECISÃO MÁXIMA
+//     abrir_janela_confronto_natal_revolucao(
+//         id_almuten_rev, 
+//         pontuacao_dignidade_natal, 
+//         casa_natal_transitada, 
+//         id_senhor_profeccao,
+//         id_senhor_firdaria,
+//         id_senhor_subfirdaria,
+//         casa_natal_do_asc,
+//         aproveitamento_almuten,
+//         casa_rev_do_asc_natal
+//     );
+// }
+
 void processar_confronto_natal_revolucao(
     int id_almuten_rev,               
     double longitude_almuten_rev,     
@@ -247,15 +344,22 @@ void processar_confronto_natal_revolucao(
     double asc_revolucao,
     int *strength_planets,
     double jd_natal,                  /* ADICIONADO: JD real do Nascimento */
-    double jd_revolucao_ut,
+    double jd_revolucao_ut,           /* ADICIONADO: JD real da Revolução Solar */
     double armc_rev,
     double lat_rev,
-    double asc_natal)           /* ADICIONADO: JD real da Revolução Solar */
+    double asc_natal,
+    double *cusps_rev,
+    double *cusps_natal)           
 {
+
+    (void)armc_rev;
+    (void)lat_rev;
+    (void)jd_revolucao_ut;
+
+
     char serr[256];
     double xx[6];
     double eps_natal;
-    double eps_rev;
 
     // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
     if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
@@ -264,40 +368,19 @@ void processar_confronto_natal_revolucao(
         eps_natal = 23.439291; 
     }
 
-    // 2. OBLIQUIDADE DA REVOLUÇÃO (Para o Ascendente do Ano)
-    if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
-        eps_rev = xx[0]; 
-    } else {
-        eps_rev = 23.439291; 
-    }
-
-    /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS
-          Trocado 'P' pela sua variável global HOUSE_SYSTEM */
+    
+    /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
     double xpin_almuten[2];
     xpin_almuten[0] = longitude_almuten_rev;
     xpin_almuten[1] = latitude_almuten_rev;
 
-    double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, (int)HOUSE_SYSTEM, xpin_almuten, serr);
+    double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
     int casa_natal_transitada = (int)floor(casa_alm_dec);
     if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
 
-    /* 4. PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO NAS CASAS NATAIS
-          Agora usando o eps_rev correto e a global HOUSE_SYSTEM */
-    double xpin_asc[2];
-    xpin_asc[0] = asc_revolucao; 
-    xpin_asc[1] = 0.0;           
-
-    double casa_asc_dec = swe_house_pos(armc_natal, lat_natal, eps_rev, (int)HOUSE_SYSTEM, xpin_asc, serr);
-    int casa_natal_do_asc = (int)floor(casa_asc_dec);
-    if (casa_natal_do_asc < 1 || casa_natal_do_asc > 12) casa_natal_do_asc = 1;
-
-    double xpin_asc_nat[2];
-    xpin_asc_nat[0] = asc_natal; 
-    xpin_asc_nat[1] = 0.0;
-    double casa_rev_asc_dec = swe_house_pos(armc_rev, lat_rev, eps_natal, (int)HOUSE_SYSTEM, xpin_asc_nat, serr);
-    int casa_rev_do_asc_natal = (int)floor(casa_rev_asc_dec);
-    if (casa_rev_do_asc_natal < 1 || casa_rev_do_asc_natal > 12) casa_rev_do_asc_natal = 1;
-
+    int casa_natal_do_asc = get_house(asc_revolucao, cusps_natal);
+    int casa_rev_do_asc_natal = get_house(asc_natal, cusps_rev);
+    
     int pontuacao_dignidade_natal = dignidade_natal;
     int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
 
@@ -317,7 +400,7 @@ void processar_confronto_natal_revolucao(
 
 
 
-void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal) {
+void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects) {
     
     double idade_padrao = obter_idade_padrao_mapa_double();
     double idade_escolhida = selecionar_idade_visual_fracionada(idade_padrao);
@@ -414,7 +497,8 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
         strength_planets,
         cusps_natal[1],
         cusps_natal,
-        obj_natal
+        obj_natal,
+        num_objects
     );
 
 }
@@ -969,7 +1053,7 @@ void get_natal_houses_rev_planets(double jd_natal, double *rev_longitudes, doubl
 
     // 3. LOOP PARA CALCULAR A PROJEÇÃO DE CADA PLANETA DA REVOLUÇÃO NAS CASAS NATAIS
     // 'rev_longitudes' e 'rev_latitudes' são os arrays que você já calculou para a Revolução nesta chart
-    for (int p = 0; p < 7; p++) {
+    for (int p = 0; p < 12; p++) {
         double xpin[2];
         xpin[0] = rev_longitudes[p]; // Longitude do planeta na Revolução
         xpin[1] = rev_latitudes[p];  // Latitude do planeta na Revolução
@@ -985,8 +1069,8 @@ void get_natal_houses_rev_planets(double jd_natal, double *rev_longitudes, doubl
     }
 }
 
-void process_revolution_transits(double jd_natal, double *rev_longitudes, double *rev_latitudes, double armc_natal, double lat_natal, char house_system, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal) {
-    int casas_planetas_natal_proj[7]; // Guarda em qual casa natal cada planeta da rev caiu
+void process_revolution_transits(double jd_natal, double *rev_longitudes, double *rev_latitudes, double armc_natal, double lat_natal, char house_system, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double *cusps_natal, ChartObject *obj_natal, int num_natal_objects) {
+    int casas_planetas_natal_proj[12]; // Guarda em qual casa natal cada planeta da rev caiu
 
     get_natal_houses_rev_planets(jd_natal, rev_longitudes, rev_latitudes, armc_natal, lat_natal, house_system, casas_planetas_natal_proj);
                         
@@ -996,13 +1080,20 @@ void process_revolution_transits(double jd_natal, double *rev_longitudes, double
 
     get_hyleg_data(tipo_h_natal, idx_hyleg_natal, longitudes_natal, &lon_hyleg_radix_real, nome_hyleg_texto, glifo_hyleg_texto);
 
+    ArabicPartCalculada lista[MAX_PARTS];
+    memset(lista, 0, sizeof(lista));
+
+    int qtd_partes = load_and_calculate_arabic_parts(obj_natal, num_natal_objects, cusps_natal, lista);
+
     abrir_janela_transitos_revolucao(
         rev_longitudes,              // Longitudes da Revolução Solar (0 a 6)
         longitudes_natal,            // Longitudes do Natal (0 a 6) vindas por parâmetro
         casas_planetas_natal_proj,   // Array de projeções recém-calculado
         lon_hyleg_radix_real,        // Longitude real do Hyleg Natal
         nome_hyleg_texto,            // Nome limpo ("Jupiter")
-        glifo_hyleg_texto            // Glifo limpo ("♃")
+        glifo_hyleg_texto,            // Glifo limpo ("♃")
+        lista,
+        qtd_partes
     );
 }
 
@@ -1012,7 +1103,10 @@ void abrir_janela_transitos_revolucao(
     int *casas_planetas_rev,
     double lon_hyleg_natal,       /* ADICIONADO: Longitude do Hyleg do Radix */
     char *nome_hyleg_natal,       /* ADICIONADO: Nome do Hyleg (ex: "Jupiter", "Ascendant") */
-    char *glifo_hyleg_natal)      /* ADICIONADO: Glifo do Hyleg (ex: "♃", "▲") */
+    char *glifo_hyleg_natal,      /* ADICIONADO: Glifo do Hyleg (ex: "♃", "▲") */
+    ArabicPartCalculada *lista,
+    int qtd_partes
+)      
 {
     int p_max_y, p_max_x;
     getmaxyx(stdscr, p_max_y, p_max_x); 
@@ -1043,7 +1137,7 @@ void abrir_janela_transitos_revolucao(
 
     doupdate();
 
-    int pad_lines = 200; 
+    int pad_lines = 400; 
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS); 
@@ -1064,22 +1158,56 @@ void abrir_janela_transitos_revolucao(
                  "forces physically position themselves over your life-long natal structure.\n\n"), 
                  MAX_LINE_WIDTH);
 
-    const char *glifos[] = {"☉", "☽", "☿", "♀", "♂", "♃", "♄"};
-    const char *nomes[]  = {_("Sun"), _("Moon"), _("Mercury"), _("Venus"), _("Mars"), _("Jupiter"), _("Saturn")};
+    const char *glifos_planets[] = {"☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "⯓", "☊", "☋"};
+    const char *nomes_planets[]  = {_("Sun"), _("Moon"), _("Mercury"), _("Venus"), _("Mars"), _("Jupiter"), _("Saturn"), _("Uranus"), _("Neptune"), _("Pluto"), _("North Node"), _("South Node")};
+
+    const char *glifos_parts[qtd_partes];
+    const char *nomes_parts[qtd_partes];
+
+    for (int i = 0; i < qtd_partes; i++) {
+        char abreviacao[6];
+        get_part_abbreviation(lista[i].name, abreviacao);
+        glifos_parts[i] = abreviacao;
+
+        nomes_parts[i] = lista[i].name;
+    }
+
+    const char *glifos[12 + qtd_partes];
+    const char *nomes[12 + qtd_partes];
+
+    for (int i = 0; i < 12 + qtd_partes; i++) {
+        if (i < 12) {
+            glifos[i] = glifos_planets[i];
+            nomes[i] = nomes_planets[i];
+        }
+        else {
+            glifos[i] = glifos_parts[i - 12];
+            nomes[i] = nomes_parts[i - 12];
+        }
+    }
 
     /* ======================================================================
        BLOCO ADICIONADO: SEÇÃO EXCLUSIVA DE TRÂNSITOS SOBRE O HYLEG NATAL
        ====================================================================== */
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE); // Cor de destaque máxima para a Vida/Saúde
-    wprintw(pad, _("    [CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"), 
+
+    char str[512] = "";
+    snprintf(str, 512, _("    [CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"), 
             glifo_hyleg_natal, nome_hyleg_natal);
+    print_split_lines(pad, str, MAX_LINE_WIDTH);
+
     wattroff(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
 
     bool encontrou_hyleg_transit = false;
 
-    for (int p = 0; p < 7; p++) {
+    for (int p = 0; p < 12; p++) {
+
+        if (!show_modern_planets && p > 6 && p < 10) {
+            continue;
+        }
+
         double diff = fabs(longitudes_rev[p] - lon_hyleg_natal);
         if (diff > 180.0) diff = 360.0 - diff;
 
@@ -1087,13 +1215,17 @@ void abrir_janela_transitos_revolucao(
             encontrou_hyleg_transit = true;
             
             wattron(pad, A_BOLD | COLOR_PAIR(11)); // Alerta Vermelho
-            wprintw(pad, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"), 
+            snprintf(str, 512, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"), 
                     nomes[p], nome_hyleg_natal, diff);
+            
+            print_split_lines(pad, str, MAX_LINE_WIDTH);
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
 
             if (p == 6) { // Saturno pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
-                wprintw(pad, _("       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
+                snprintf(str, 512, _("       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
+                print_split_lines(pad, str, MAX_LINE_WIDTH);
+
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
                 print_split_lines(pad,
@@ -1103,7 +1235,7 @@ void abrir_janela_transitos_revolucao(
             } 
             else if (p == 4) { // Marte pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
-                wprintw(pad, _("       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"));
+                print_split_lines(pad, _("       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
                 print_split_lines(pad,
@@ -1113,7 +1245,7 @@ void abrir_janela_transitos_revolucao(
             } 
             else if (p == 5) { // Júpiter pisando no Hyleg
                 wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE); // Verde/Sucesso
-                wprintw(pad, _("       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"));
+                print_split_lines(pad, _("       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
                 
                 print_split_lines(pad, 
@@ -1140,7 +1272,12 @@ void abrir_janela_transitos_revolucao(
     }
     wprintw(pad, "\n");
     
-    for (int p = 0; p < 7; p++) {
+    for (int p = 0; p < 12; p++) {
+
+        if (!show_modern_planets && p > 6 && p < 10) {
+            continue;
+        }
+
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
         wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
         wprintw(pad, _("    %s  %s (Solar Return)\n"), glifos[p], nomes[p]);
@@ -1163,20 +1300,33 @@ void abrir_janela_transitos_revolucao(
 
            
         bool encontrou_conjuncao = false;
-        for (int n = 0; n < 7; n++) {
+        for (int n = 0; n < 12 + qtd_partes; n++) {
+
+            if (!show_modern_planets && n > 6 && n < 10) {
+                continue;
+            }
 
             // Sol sempre estará conjunto com o Sol Natal - Não precisa verificar quando forem iguais
             if (p == 0 && n == 0) {
                 continue;
             }
 
-            double diff = fabs(longitudes_rev[p] - longitudes_natal[n]);
+            double diff = 0.0;
+            
+            if (n < 12) {
+                diff = fabs(longitudes_rev[p] - longitudes_natal[n]);
+            }
+            else {
+                diff = fabs(longitudes_rev[p] - lista[n - 12].longitude);
+            }
+
             if (diff > 180.0) diff = 360.0 - diff;
 
             if (diff <= 5.0) {
                 encontrou_conjuncao = true;
                 wattron(pad, A_BOLD | COLOR_PAIR(11));
-                wprintw(pad, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"), nomes[p], nomes[n], diff);
+                snprintf(str, 512, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"), nomes[p], nomes[n], diff);
+                print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(11));
 
                 if (p == 6) {
@@ -1216,7 +1366,7 @@ void abrir_janela_transitos_revolucao(
 
     // Loop de controle de scroll
     int pad_line_pos = 0;
-    int max_scroll_y = 180;
+    int max_scroll_y = 400;
     int ch;
     prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {

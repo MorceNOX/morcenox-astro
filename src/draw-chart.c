@@ -4557,7 +4557,7 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
 
 
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal) {
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal) {
     int n = 1;
     
     bool dark_mode = (darkmode)?true:false;
@@ -4677,9 +4677,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         SE_SUN, SE_MOON, SE_MERCURY, SE_VENUS, SE_MARS, 
         SE_JUPITER, SE_SATURN, SE_URANUS, SE_NEPTUNE, SE_PLUTO, SE_TRUE_NODE
     };
-    double planet_longitudes[11];
-    double planet_declinations[11];
-    double planet_latitudes[11];
+    double planet_longitudes[18];
+    double planet_declinations[18];
+    double planet_latitudes[18];
     double speed[11];
 
     double ascendant;
@@ -5393,6 +5393,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double south_node_declination = -planet_declinations[10];
         double descendant_declination = -ascendant_declination;
         double ic_declination = -mc_declination;
+
+        planet_longitudes[11] = south_node;
+        planet_longitudes[12] = fortuna;
+        planet_longitudes[13] = SAN;
+        planet_longitudes[14] = ascendant;
+        planet_longitudes[15] = mc;
+        planet_longitudes[16] = descendant;
+        planet_longitudes[17] = ic;
+
+        planet_latitudes[11] = -planet_latitudes[10];
         
         char d0[12];
         snprintf(d0, sizeof(d0), "%d°", (int)planet_longitudes[0] % 30);
@@ -6834,7 +6844,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         julian_day,
                         armc,
                         lat,
-                        asc_natal
+                        asc_natal,
+                        cusps,
+                        cusps_natal
                     );
                 }
                 break;
@@ -6968,6 +6980,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.house_rulers = house_rulers;
 
                 ctx.obj_natal = obj_natal;
+                ctx.total_obj_natal = total_obj_natal;
             
                 open_menu_tables(&ctx);
 
@@ -6984,7 +6997,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 't':
             case 'T':
                 if (mapa_retorno) {
-                    process_revolution_transits(jd_natal, planet_longitudes, planet_latitudes, armc_natal, lat_natal, house_system, tipo_h_natal, idx_hyleg_natal, longitudes_natal);
+                    process_revolution_transits(jd_natal, planet_longitudes, planet_latitudes, armc_natal, lat_natal, house_system, tipo_h_natal, idx_hyleg_natal, longitudes_natal, cusps_natal, obj_natal, total_obj_natal);
                 }
                 break;
             case KEY_F(1):
@@ -7074,7 +7087,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '7':
             case KEY_F(19):
                 if (!mapa_retorno) {
-                    disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj);
+                    disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects);
                     saiu_retorno = true;
                 }                                
                 break; 
@@ -7368,7 +7381,9 @@ void open_menu_tables(ContextoMenu *ctx) {
                     ctx->julian_day,
                     ctx->armc,
                     ctx->lat,
-                    ctx->asc_natal
+                    ctx->asc_natal,
+                    ctx->cusps,
+                    ctx->cusps_natal
                 );
             }
             break;
@@ -7378,7 +7393,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             
             else {
-                process_revolution_transits(ctx->jd_natal, ctx->planet_longitudes, ctx->planet_latitudes, ctx->armc_natal, ctx->lat_natal, ctx->house_system, ctx->tipo_h_natal, ctx->idx_hyleg_natal, ctx->longitudes_natal);
+                process_revolution_transits(ctx->jd_natal, ctx->planet_longitudes, ctx->planet_latitudes, ctx->armc_natal, ctx->lat_natal, ctx->house_system, ctx->tipo_h_natal, ctx->idx_hyleg_natal, ctx->longitudes_natal, ctx->cusps_natal, ctx->obj_natal, ctx->total_obj_natal);
             }    
             break;
         case 12:
@@ -7434,7 +7449,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 19:
             if (!ctx->mapa_retorno) {    
-                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj);
+                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects);
                 saiu_retorno = true;
             }
             break;
