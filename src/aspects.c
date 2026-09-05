@@ -29,6 +29,10 @@
 #include "db-utils.h"
 #include "aspects.h"
 
+double ASP_ANTISSIA_EXACT() { return ANTISCIUM_ORB * 0.1; }
+double ASP_PARALLEL_EXACT() { return get_decl_orbis() * 0.1; }
+
+
 // ids começam por 0
 bool has_aspect(int id1, int id2, AspectMatrix *matrix) {
     if (id1 < 0 || id2 < 0 || id1 == id2) {
@@ -224,7 +228,7 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     (strcmp(aspects_defs[closest].name, "Sextile") == 0 && sign_diff == 2) ||
                     (strcmp(aspects_defs[closest].name, "Opposition") == 0) ||
                     (strcmp(aspects_defs[closest].name, "Conjunction") == 0) ||
-                     aspect_diff <= 1.0) 
+                     aspect_diff < ASP_MAJOR_EXACT + DBL_EPSILON) 
                 {
                     
                     // se tem aspecto não é feral
@@ -238,7 +242,7 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                     strncpy(matrix.grid[i][j].symbol, aspects_defs[closest].symbol, 3);
 
                     bool partil = false;
-                    if (aspect_diff < 1.0 + DBL_EPSILON) {
+                    if (aspect_diff < ASP_MAJOR_EXACT + DBL_EPSILON) {
                         partil = true;
                     }
                     
@@ -293,9 +297,11 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
 
                     if (partil) {
                         matrix.grid[i][j].is_partil = true;
+                        matrix.grid[i][j].is_reverse = true;
                     }
                     else {
                         matrix.grid[i][j].is_partil = false;
+                        matrix.grid[i][j].is_reverse = false;
                     }
                     
                     if (aplicativo && !partil) {
@@ -354,6 +360,13 @@ DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis) {
                 strncpy(matrix_decl.grid[i][j].symbol, "∦", 4);
                 matrix_decl.grid[i][j].diff = diff_contra;
                 matrix_decl.grid[i][j].color_pair = 11; // Vermelho para Contra-Paralelo
+            }
+
+            if (matrix_decl.grid[i][j].has_aspect && matrix_decl.grid[i][j].diff < ASP_PARALLEL_EXACT() + DBL_EPSILON) {
+                matrix_decl.grid[i][j].is_reverse = true;
+            }
+            else {
+                matrix_decl.grid[i][j].is_reverse = false;
             }
         }            
     }
@@ -456,7 +469,12 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
             if (cell.has_aspect) {
                 // Exibe o símbolo do aspecto injetado
                 wattron(pad, COLOR_PAIR(cell.color_pair) | A_DIM);
-                mvwprintw(pad, 1 + 2 * i, 5 + 4 * j, cell.symbol);
+
+                if (cell.is_reverse) {
+                    wattron(pad, A_REVERSE);
+                }
+                mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
+                
                 wattroff(pad, COLOR_PAIR(cell.color_pair) | A_DIM);
                 
                 // Exibe os minutos/graus residuais exatos do orbe formatado
@@ -465,6 +483,8 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 snprintf(orbe_str, 8, "%3.1f", cell.diff);
                 mvwprintw(pad, 2 + 2 * i, 3 + 4 * j, orbe_str);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+                if (cell.is_reverse) wattroff(pad, A_REVERSE);
 
                 row_pad = 2 + 2 * i + 1;
             }
@@ -608,9 +628,15 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 // Ativa os atributos dinâmicos injetados pela função chamadora
                 wattron(pad, COLOR_PAIR(cell.color_pair));
                 if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
+                if (cell.is_reverse) {
+                    wattron(pad, A_REVERSE);
 
-                // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, cell.symbol);
+                    // Desenha o Símbolo Astrológico do Aspecto
+                    mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
+                }
+                else {
+                    mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, "%s", cell.symbol);
+                }
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
@@ -622,6 +648,8 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 snprintf(ag, 8, "%3.0f", cell.angle);
                 mvwprintw(pad, 2 + 2 * i, 3 + 4 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+                if (cell.is_reverse) wattroff(pad, A_REVERSE);
 
                 row_pad = 2 + 2 * i + 1;
             }
@@ -991,6 +1019,13 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
                     matrix.grid[i][j].color_pair = 7;
                     matrix.grid[i][j].is_bold = true;
                 }
+
+                if (matrix.grid[i][j].angle < ASP_ANTISSIA_EXACT() + DBL_EPSILON) {
+                    matrix.grid[i][j].is_reverse = true;
+                }
+                else {
+                    matrix.grid[i][j].is_reverse = false;
+                }
                 
             }
         }
@@ -1102,8 +1137,10 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 
                 if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
 
+                if (cell.is_reverse) wattron(pad, A_REVERSE);
+
                 // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, cell.symbol);
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "  %s  ", cell.symbol);
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
@@ -1111,9 +1148,11 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8] = "";
-                snprintf(ag, 8, "%4.2f", cell.angle);
-                mvwprintw(pad, 3 + 2 * i, 4 + 6 * j, ag);
+                snprintf(ag, 8, "%5.2f", cell.angle);
+                mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+                if (cell.is_reverse) wattroff(pad, A_REVERSE);
                                
             }
             else {

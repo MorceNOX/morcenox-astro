@@ -730,22 +730,22 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
 
     // --- PREÂMBULO ESPIRITUAL ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, _("  THE LORD OF THE CHART (ALMUTEN FIGURIS)\n"));
+    wprintw(pad, _(" THE LORD OF THE CHART (ALMUTEN FIGURIS) \n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wprintw(pad, _("    The Almuten Figuris acts as the supreme ruler of your natal chart,\n"
-                 "    representing the evolutionary helmsman of your soul. While the Ascendant\n"
-                 "    governs the physical vessel, the Almuten dictates the highest spiritual\n"
-                 "    purpose, latent talents, and the path to inner mastery.\n\n"));
+    wprintw(pad, _("The Almuten Figuris acts as the supreme ruler of your natal chart,\n"
+                 "representing the evolutionary helmsman of your soul. While the Ascendant\n"
+                 "governs the physical vessel, the Almuten dictates the highest spiritual\n"
+                 "purpose, latent talents, and the path to inner mastery.\n\n"));
 
     // TRATAMENTO DE CO-REGÊNCIA (CASOS DE EMPATE)
     if (qtd_vencedores > 1) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("    CO-REGENCY DETECTED: Spiritual Conjunction\n\n"));
+        wprintw(pad, _("CO-REGENCY DETECTED: Spiritual Conjunction\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("    Your chart presents a rare cosmic occurrence: a shared throne. Multiple\n"
-                     "    archaic planetary forces balance each other perfectly, demanding that you\n"
-                     "    integrate both streams of consciousness to achieve your destiny.\n\n"));
+        wprintw(pad, _("Your chart presents a rare cosmic occurrence: a shared throne. Multiple\n"
+                     "archaic planetary forces balance each other perfectly, demanding that you\n"
+                     "integrate both streams of consciousness to achieve your destiny.\n\n"));
     }
 
     // 5. LOOP DE RENDERIZAÇÃO DOS PLANETAS VENCEDORES
@@ -754,8 +754,8 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-        wattron(pad, A_BOLD | COLOR_PAIR(7));
-        wprintw(pad, "    %s  %s ", glifo, _("ARCHETYPAL RULER"));
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, " %s  %s ", glifo, _("ARCHETYPAL RULER"));
         
         // Define o título nominal baseado no ID astronômico da Swiss Ephemeris
         if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉)\n"));
@@ -765,98 +765,98 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂)\n"));
         else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃)\n"));
         else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄)\n"));
-        wattroff(pad, A_BOLD | COLOR_PAIR(7));
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
         // IMPRESSÃO DOS TEXTOS DE ACORDO COM O ID DO PLANETA
         if (id_planeta == 1) { // SOL
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The soul seeks the expression of pure individuality, truth, and integrity.\n"
-                         "    There is an intrinsic calling to become a source of light, clarity, and\n"
-                         "    centrality for yourself and others.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Confers natural nobility, personal magnetism, generosity, and a sharp\n"
-                         "    sense of destiny or mission. The native leads through dignified actions.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic\n"
-                         "    need for constant external validation and applause.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The soul seeks the expression of pure individuality, truth, and integrity.\n"
+                         "There is an intrinsic calling to become a source of light, clarity, and\n"
+                         "centrality for yourself and others.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Confers natural nobility, personal magnetism, generosity, and a sharp\n"
+                         "sense of destiny or mission. The native leads through dignified actions.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic\n"
+                         "need for constant external validation and applause.\n\n\n"));
         }
         else if (id_planeta == 2) { // LUA
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The spiritual path is realized through nurturing, cosmic alignment, and a\n"
-                         "    deep connection to the emotional tides of the world. The soul protects.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Grants extreme empathy, razor-sharp intuition, a bond with ancestry,\n"
-                         "    and a rich imagination. Highly adept at reading environmental atmospheres.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Mastering unstable mood swings, hypersensitivity, over-attachment to the\n"
-                         "    past, and a natural tendency to slide into passive dependency.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The spiritual path is realized through nurturing, cosmic alignment, and a\n"
+                         "deep connection to the emotional tides of the world. The soul protects.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Grants extreme empathy, razor-sharp intuition, a bond with ancestry,\n"
+                         "and a rich imagination. Highly adept at reading environmental atmospheres.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Mastering unstable mood swings, hypersensitivity, over-attachment to the\n"
+                         "past, and a natural tendency to slide into passive dependency.\n\n\n"));
         }
         else if (id_planeta == 3) { // MERCÚRIO
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Evolution occurs via the intellect, the translation of reality, and the\n"
-                         "    unraveling of the laws that weave and connect all structural data.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Brings a brilliant mind, precise adaptability, and an elite talent for\n"
-                         "    the written or spoken word. An eternal learner and master problem solver.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Guarding against nervous system exhaustion, oscillating opinions,\n"
-                         "    intellectual duplicity, and a tendency to rationalize true emotions.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Evolution occurs via the intellect, the translation of reality, and the\n"
+                         "unraveling of the laws that weave and connect all structural data.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Brings a brilliant mind, precise adaptability, and an elite talent for\n"
+                         "the written or spoken word. An eternal learner and master problem solver.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Guarding against nervous system exhaustion, oscillating opinions,\n"
+                         "intellectual duplicity, and a tendency to rationalize true emotions.\n\n\n"));
         }
         else if (id_planeta == 4) { // VÊNUS
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The soul seeks beauty, balance, absolute justice, love, and the sacred\n"
-                         "    reconciliation of opposites. Growth mirrors through deep relationships.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Confers authentic charm, innate diplomacy, refined aesthetic taste, and\n"
-                         "    magnetic attraction. You attract assets, art, and peace with comfort.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Evading superficiality, self-indulgence, a chronic fear of confrontation\n"
-                         "    (which breeds false diplomacy), and codependency.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The soul seeks beauty, balance, absolute justice, love, and the sacred\n"
+                         "reconciliation of opposites. Growth mirrors through deep relationships.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Confers authentic charm, innate diplomacy, refined aesthetic taste, and\n"
+                         "magnetic attraction. You attract assets, art, and peace with comfort.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Evading superficiality, self-indulgence, a chronic fear of confrontation\n"
+                         "(which breeds false diplomacy), and codependency.\n\n\n"));
         }
         else if (id_planeta == 5) { // MARTE
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The soul refines itself through friction, righteous combat, courage,\n"
-                         "    and severing stagnant attachments. Vital force demands protection of the weak.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Grants unyielding determination, executive focus, wild independence, and\n"
-                         "    pioneering drives. The native actively thrives under extreme pressure.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Channelling destructive wrath, chronic impatience, verbal aggression,\n"
-                         "    and the base impulse to act tyrannically or purely out of self-interest.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The soul refines itself through friction, righteous combat, courage,\n"
+                         "and severing stagnant attachments. Vital force demands protection of the weak.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Grants unyielding determination, executive focus, wild independence, and\n"
+                         "pioneering drives. The native actively thrives under extreme pressure.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Channelling destructive wrath, chronic impatience, verbal aggression,\n"
+                         "and the base impulse to act tyrannically or purely out of self-interest.\n\n\n"));
         }
         else if (id_planeta == 6) { // JÚPITER
-            wattron(pad, A_BOLD); wprintw(pad, _("    Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The journey is bound to higher consciousness expansion, unwavering faith\n"
-                         "    in natural law, philosophy, and magnifying the spirit of benevolence.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Brings infectious optimism, a broad structural worldview, accidental luck,\n"
-                         "    and deep ethical codes. Acts as a natural, comforting counselor.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The journey is bound to higher consciousness expansion, unwavering faith\n"
+                         "in natural law, philosophy, and magnifying the spirit of benevolence.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Brings infectious optimism, a broad structural worldview, accidental luck,\n"
+                         "and deep ethical codes. Acts as a natural, comforting counselor.\n\n"));
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Evolutionary Hurdles:\n\n")); 
+            wprintw(pad, _("Evolutionary Hurdles:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Controlling the slope toward excess (dogmatism, over-spending), naive\n"
-                        "    optimism that miscalculates physical danger, and intellectual arrogance.\n\n\n"));
+            wprintw(pad, _("Controlling the slope toward excess (dogmatism, over-spending), naive\n"
+                        "optimism that miscalculates physical danger, and intellectual arrogance.\n\n\n"));
         }
         else if (id_planeta == 7) { // SATURNO
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Spiritual Essence:\n\n")); 
+            wprintw(pad, _("Spiritual Essence:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The soul elected absolute mastery via self-discipline, heavy responsibility,\n"
-                        "    the laws of time, hard boundaries, and wisdom etched directly into stone.\n\n"));
+            wprintw(pad, _("The soul elected absolute mastery via self-discipline, heavy responsibility,\n"
+                        "the laws of time, hard boundaries, and wisdom etched directly into stone.\n\n"));
     
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Character Impact:\n\n")); 
+            wprintw(pad, _("Character Impact:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Confers exceptional sobriety, titanic resilience, strategic patience, and\n"
-                        "    pragmatism. Built to harvest true success and authority in maturity.\n\n"));
+            wprintw(pad, _("Confers exceptional sobriety, titanic resilience, strategic patience, and\n"
+                        "pragmatism. Built to harvest true success and authority in maturity.\n\n"));
     
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Evolutionary Hurdles:\n\n")); 
+            wprintw(pad, _("Evolutionary Hurdles:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Avoiding chronic pessimism, paralyzing melancholy, fear of material failure,\n"
-                        "    mental rigidity, and crushing yourself under unearned guilt.\n\n\n"));
+            wprintw(pad, _("Avoiding chronic pessimism, paralyzing melancholy, fear of material failure,\n"
+                        "mental rigidity, and crushing yourself under unearned guilt.\n\n\n"));
         }
     }
     
@@ -951,21 +951,21 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
 
     // --- PREÂMBULO DA REVOLUÇÃO SOLAR ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, _("  THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN)\n"));
+    wprintw(pad, _(" THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN) \n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wprintw(pad, _("    Unlike your Natal Almuten, which rules over your entire lifetime and soul blueprint,\n"
-                 "    the Almuten of the Solar Return operates as the temporal manager of your current year.\n"
-                 "    It indicates where the cosmic focus will manifest most intensely, driving events,\n"
-                 "    circumstances, and the psychological tone of these specific 12 months.\n\n"));
+    wprintw(pad, _("Unlike your Natal Almuten, which rules over your entire lifetime and soul blueprint,\n"
+                 "the Almuten of the Solar Return operates as the temporal manager of your current year.\n"
+                 "It indicates where the cosmic focus will manifest most intensely, driving events,\n"
+                 "circumstances, and the psychological tone of these specific 12 months.\n\n"));
 
     if (qtd_vencedores > 1) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("    CO-REGENCY DETECTED: Shared Annual Focus\n\n"));
+        wprintw(pad, _("CO-REGENCY DETECTED: Shared Annual Focus\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("    Two or more planetary archetypes share equal operational strength this year.\n"
-                     "    Your experiences will be double-sided, forcing you to balance both planetary themes\n"
-                     "    simultaneously to navigate the year's challenges effectively.\n\n"));
+        wprintw(pad, _("Two or more planetary archetypes share equal operational strength this year.\n"
+                     "Your experiences will be double-sided, forcing you to balance both planetary themes\n"
+                     "simultaneously to navigate the year's challenges effectively.\n\n"));
     }
 
     // 5. LOOP DE RENDERIZAÇÃO DOS PLANETAS VENCEDORES DO ANO
@@ -974,113 +974,113 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-        wattron(pad, A_BOLD | COLOR_PAIR(7));
-        wprintw(pad, "    %s  %s ", glifo, _("ANNUAL OPERATIONAL RULER"));
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, " %s  %s ", glifo, _(" ANNUAL OPERATIONAL RULER "));
         
-        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉)\n"));
-        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽)\n"));
-        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿)\n"));
-        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀)\n"));
-        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂)\n"));
-        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃)\n"));
-        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄)\n"));
-        wattroff(pad, A_BOLD | COLOR_PAIR(7));
+        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉) \n"));
+        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽) \n"));
+        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿) \n"));
+        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀) \n"));
+        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂) \n"));
+        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃) \n"));
+        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄) \n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
         if (id_planeta == 1) { // SOL
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    The Focus of the Year:\n\n")); 
+            wprintw(pad, _("The Focus of the Year:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    This is a year of high visibility, core awakening, and personal sovereignty.\n"
-                         "    Circumstances will push you to step into the center stage of your own life,\n"
-                         "    demanding absolute clarity of purpose and professional recognition.\n\n"));
+            wprintw(pad, _("This is a year of high visibility, core awakening, and personal sovereignty.\n"
+                         "Circumstances will push you to step into the center stage of your own life,\n"
+                         "demanding absolute clarity of purpose and professional recognition.\n\n"));
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Practical Manifestations:\n\n")); 
+            wprintw(pad, _("Practical Manifestations:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Expect opportunities for career promotion, leadership roles, and a surge in\n"
-                         "    vital energy. Important encounters with authoritative figures are highly likely.\n\n"));
+            wprintw(pad, _("Expect opportunities for career promotion, leadership roles, and a surge in\n"
+                         "vital energy. Important encounters with authoritative figures are highly likely.\n\n"));
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Guard heavily against egotism, prideful power struggles, and burning out due to\n"
-                         "    a neurotic need for constant public approval and validation.\n\n\n"));
+            wprintw(pad, _("Guard heavily against egotism, prideful power struggles, and burning out due to\n"
+                         "a neurotic need for constant public approval and validation.\n\n\n"));
         }
         else if (id_planeta == 2) { // LUA
-            wattron(pad, A_BOLD); wprintw(pad, _("    The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    A highly personal, internal, and emotional 12-month chapter. The focus shifts\n"
-                         "    entirely toward foundations, family, domestic stability, and inner security.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Strong indicators of real estate adjustments, changes in the household or family\n"
-                         "    dynamics, and events that will test and restructure your emotional resilience.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Beware of volatile mood swings, hypersensitivity to external criticism, and the\n"
-                         "    tendency to retreat into defensive, nostalgic isolation when friction arises.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("A highly personal, internal, and emotional 12-month chapter. The focus shifts\n"
+                         "entirely toward foundations, family, domestic stability, and inner security.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Strong indicators of real estate adjustments, changes in the household or family\n"
+                         "dynamics, and events that will test and restructure your emotional resilience.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Beware of volatile mood swings, hypersensitivity to external criticism, and the\n"
+                         "tendency to retreat into defensive, nostalgic isolation when friction arises.\n\n\n"));
         }
         else if (id_planeta == 3) { // MERCÚRIO
-            wattron(pad, A_BOLD); wprintw(pad, _("    The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    A year driven by intense mental activity, intellectual output, and networking.\n"
-                         "    Your analytical skills and communication channels will be highly accelerated.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Excellent periods for signing contracts, negotiating business deals, academic\n"
-                         "    pursuits, writing, and multiple short-distance travels or structural moves.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    High risk of nervous system exhaustion, acute mental anxiety, split focus, and\n"
-                         "    the danger of over-rationalizing critical decisions that require emotional depth.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("A year driven by intense mental activity, intellectual output, and networking.\n"
+                         "Your analytical skills and communication channels will be highly accelerated.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Excellent periods for signing contracts, negotiating business deals, academic\n"
+                         "pursuits, writing, and multiple short-distance travels or structural moves.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("High risk of nervous system exhaustion, acute mental anxiety, split focus, and\n"
+                         "the danger of over-rationalizing critical decisions that require emotional depth.\n\n\n"));
         }
         else if (id_planeta == 4) { // VÊNUS
-            wattron(pad, A_BOLD); wprintw(pad, _("    The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    A year designated for harmonic consolidation, financial focus, and relationship\n"
-                         "    evaluations. The core theme is finding value, alignment, and social peace.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Favorable timelines for artistic endeavors, income enhancement, entering strategic\n"
-                         "    alliances, and experiencing a profound growth in your active romantic life.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Watch out for financial extravagance, lazy self-indulgence, and avoiding necessary\n"
-                         "    confrontations out of a codependent desire to keep up superficial appearances.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("A year designated for harmonic consolidation, financial focus, and relationship\n"
+                         "evaluations. The core theme is finding value, alignment, and social peace.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Favorable timelines for artistic endeavors, income enhancement, entering strategic\n"
+                         "alliances, and experiencing a profound growth in your active romantic life.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Watch out for financial extravagance, lazy self-indulgence, and avoiding necessary\n"
+                         "confrontations out of a codependent desire to keep up superficial appearances.\n\n\n"));
         }
         else if (id_planeta == 5) { // MARTE
-            wattron(pad, A_BOLD); wprintw(pad, _("    The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    A dynamic, highly friction-based, and action-heavy period. This year demands\n"
-                         "    intense physical courage, independent initiatives, and cutting away dead weight.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Overcoming major obstacles through raw effort, launch of independent enterprises,\n"
-                         "    but also a strong indicator of physical expenditures and competitive standoffs.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Prone to acute accidents due to rash haste, explosive outbursts of anger,\n"
-                         "    unnecessary litigations, and burnouts caused by operating in perpetual survival mode.\n\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("A dynamic, highly friction-based, and action-heavy period. This year demands\n"
+                         "intense physical courage, independent initiatives, and cutting away dead weight.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Overcoming major obstacles through raw effort, launch of independent enterprises,\n"
+                         "but also a strong indicator of physical expenditures and competitive standoffs.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Prone to acute accidents due to rash haste, explosive outbursts of anger,\n"
+                         "unnecessary litigations, and burnouts caused by operating in perpetual survival mode.\n\n\n"));
         }
         else if (id_planeta == 6) { // JÚPITER
-            wattron(pad, A_BOLD); wprintw(pad, _("    The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    The year of expansion, philosophical growth, and providential opportunities.\n"
-                         "    A benevolent energy wraps around your efforts, granting a protective buffer.\n\n"));
-            wattron(pad, A_BOLD); wprintw(pad, _("    Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Financial expansion, legal resolutions rolling in your favor, publishing success,\n"
-                         "    and meaningful long-distance journeys that broaden your entire existential worldview.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("The year of expansion, philosophical growth, and providential opportunities.\n"
+                         "A benevolent energy wraps around your efforts, granting a protective buffer.\n\n"));
+            wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
+            wprintw(pad, _("Financial expansion, legal resolutions rolling in your favor, publishing success,\n"
+                         "and meaningful long-distance journeys that broaden your entire existential worldview.\n\n"));
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Severe risk of over-expansion and arrogance. Blind, naive optimism that ignores\n"
-                            "    material safety nets, leading to over-leveraging and ideological dogmatism.\n\n\n"));
+            wprintw(pad, _("Severe risk of over-expansion and arrogance. Blind, naive optimism that ignores\n"
+                            "material safety nets, leading to over-leveraging and ideological dogmatism.\n\n\n"));
         }
         else if (id_planeta == 7) { // SATURNO
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    The Focus of the Year:\n\n")); 
+            wprintw(pad, _("The Focus of the Year:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    A sobering year of evaluation, heavy duty, consolidation, and setting limits.\n"
-                           "    Time demands that you build structure and account for real-world responsibilities.\n\n"));
+            wprintw(pad, _("A sobering year of evaluation, heavy duty, consolidation, and setting limits.\n"
+                           "Time demands that you build structure and account for real-world responsibilities.\n\n"));
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Practical Manifestations:\n\n")); 
+            wprintw(pad, _("Practical Manifestations:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Hard, grinding work that yields long-term security, settling deep debts, dealing\n"
-                           "    with administrative inheritances, and professional solidifications under pressure.\n\n"));
+            wprintw(pad, _("Hard, grinding work that yields long-term security, settling deep debts, dealing\n"
+                           "with administrative inheritances, and professional solidifications under pressure.\n\n"));
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("    Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n")); 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("    Prone to chronic fatigue, paralyzing fear of failure, bouts of deep melancholy,\n"
-                           "    and feeling crushed under structural delays or burdens that are not yours to carry.\n\n\n"));
+            wprintw(pad, _("Prone to chronic fatigue, paralyzing fear of failure, bouts of deep melancholy,\n"
+                           "and feeling crushed under structural delays or burdens that are not yours to carry.\n\n\n"));
         }
     }
 

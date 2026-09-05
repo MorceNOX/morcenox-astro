@@ -26,6 +26,7 @@
 #include <ctype.h>
 #include <wchar.h>
 #include <locale.h>
+#include <float.h>
 
 #include "var.h"
 #include "arabic_parts.h"
@@ -61,12 +62,6 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
     int qtd_partes = 0;
     sqlite3_stmt *stmt;
     
-    // Query que filtra apenas as partes Universais (3) e as do Gênero atual do mapa (1 ou 2)
-    // char query[256];
-    // snprintf(query, sizeof(query), 
-    // "SELECT name, diurnal_personal_point, diurnal_significator, diurnal_trigger, "
-    // "nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link "
-    // "FROM arabic_parts WHERE gender_id = 3 OR gender_id = %d;", GENDER);
     const char *query = 
         "SELECT "
             "ap.name, ap.description, ap.link, ap.link2, "
@@ -528,7 +523,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         box(table_win, 0, 0); 
         //wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
         wattron(table_win, A_BOLD);
-        const char *title = _(" Arabic Parts - Solar Revolution Radix Confrontation ");
+        const char *title = _(" Arabic Parts of Solar Revolution / Radix Confrontation ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(table_win, A_BOLD);
         
@@ -649,7 +644,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         mvwhline_set(table_win, table_height - 4, 2, &traco_horizontal, table_width - 5);
 
         wattron(table_win, A_DIM);
-        mvwprintw(table_win, table_height - 3, 4, _("Use [↑/↓] Select | [x] Aspects with Radical Planets."));
+        mvwprintw(table_win, table_height - 3, 4, _("Use [↑/↓] Select | [x] or [F3] Aspects between Solar Return Parts and Radical Planets."));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
@@ -1372,6 +1367,15 @@ void calcular_aspectos_partes(ChartObject *obj, int num_objects, ArabicPartCalcu
                     PartAspectCell *cell = &m_part->grid[idx_planeta_valido][i];
                     cell->has_aspect = true;
                     strcpy(cell->symbol, simbolos_aspectos[a]);
+
+                    cell->diff = fabs(diff - target_angulo);
+
+                    if (cell->diff < ASP_MAJOR_EXACT + DBL_EPSILON) {
+                        cell->is_reverse = true;
+                    }
+                    else {
+                        cell->is_reverse = false;
+                    }
                     
                     // Acopla a paleta de cores padronizada da sua aplicação
                     if (a == 2 || a == 4) cell->color_pair = 11;      // Vermelho para □ e ☍
@@ -1619,8 +1623,10 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                 int y_pos_angulo  = 6 + 2 * r;
 
                 if (cell.has_aspect) {
+                    if (cell.is_reverse) wattron(aspects_win, A_REVERSE);
+
                     wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
-                    mvwprintw(aspects_win, y_pos_simbolo, x_pos + 1, "%s", cell.symbol);
+                    mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "  %s  ", cell.symbol);
                     wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
 
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
@@ -1640,9 +1646,11 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     }
 
                     char ag_txt[8];
-                    snprintf(ag_txt, sizeof(ag_txt), "%3.1f", orbe_real);
-                    mvwprintw(aspects_win, y_pos_angulo, x_pos + 1, "%s", ag_txt);
+                    snprintf(ag_txt, sizeof(ag_txt), "%5.1f", orbe_real);
+                    mvwprintw(aspects_win, y_pos_angulo, x_pos - 1, "%s", ag_txt);
                     wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
+
+                    if (cell.is_reverse) wattroff(aspects_win, A_REVERSE);
                 } else {
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
                     mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "░░░░░");

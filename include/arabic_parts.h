@@ -51,6 +51,8 @@ typedef struct {
     bool has_aspect;
     char symbol[8];  // ☌, ⚹, □, △, ☍
     int color_pair;   // Armazena a cor correspondente à natureza do aspecto
+    bool is_reverse;
+    double diff;
 } PartAspectCell;
 
 typedef struct {

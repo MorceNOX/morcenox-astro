@@ -71,6 +71,9 @@ const char *planet_regent_names[7] = {"Sun", "Venus", "Mercury", "Moon", "Saturn
 const int MAX_HELP_LINE_WIDTH = 68;
 const int MAX_LINE_WIDTH = 80;
 
+const double ANTISCIUM_ORB = 2.0;
+const double ASP_MAJOR_EXACT = 1.0;
+
 
 // void update_interface_language() {
 //     setenv("LANGUAGE", LANGUAGE, 1);

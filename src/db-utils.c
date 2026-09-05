@@ -1494,7 +1494,24 @@ int get_chart_objects(ChartObject obj[100]) {
 }
 
 
+double get_decl_orbis() {
+    double decl_orbis = 1.0;  // Orbe padrão se o banco falhar
+    sqlite3 *db = open_database();
+    if (db) {
+        sqlite3_stmt *stmt;
+        const char *sql_select_p_orbis = "SELECT parallel_orbis FROM profiles WHERE profile = 'default';";
+        int rc = sqlite3_prepare_v2(db, sql_select_p_orbis, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                decl_orbis = sqlite3_column_double(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
 
+    return decl_orbis;
+}
 
 
 

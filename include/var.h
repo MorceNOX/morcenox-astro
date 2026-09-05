@@ -76,6 +76,9 @@ extern const char *planet_regent_names[7];
 extern const int MAX_HELP_LINE_WIDTH;
 extern const int MAX_LINE_WIDTH;
 
+extern const double ANTISCIUM_ORB;
+extern const double ASP_MAJOR_EXACT;
+
 void update_interface_language();
 
 #endif

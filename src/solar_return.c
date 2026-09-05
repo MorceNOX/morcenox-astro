@@ -234,6 +234,96 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
 
 /* Certifique-se de passar jd_natal e jd_revolucao para a assinatura da função */
+void processar_confronto_natal_revolucao(
+    int id_almuten_rev,               
+    double longitude_almuten_rev,     
+    double latitude_almuten_rev,      
+    int dignidade_natal,           
+    double lat_natal,                 
+    double armc_natal,                
+    int id_senhor_profeccao,          
+    int id_senhor_firdaria,           
+    int id_senhor_subfirdaria,
+    double asc_revolucao,
+    int *strength_planets,
+    double jd_natal,                  /* ADICIONADO: JD real do Nascimento */
+    double jd_revolucao_ut,           /* ADICIONADO: JD real da Revolução Solar */
+    double armc_rev,
+    double lat_rev,
+    double asc_natal,
+    double *cusps_rev,
+    double *cusps_natal)           
+{
+
+    (void)cusps_rev;
+    (void)cusps_natal;
+
+
+    char serr[256];
+    double xx[6];
+    double eps_natal;
+    double eps_rev;
+
+    // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
+    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+        eps_natal = xx[0]; 
+    } else {
+        eps_natal = 23.439291; 
+    }
+
+    // 2. OBLIQUIDADE DA REVOLUÇÃO (Para o Ascendente do Ano)
+    if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+        eps_rev = xx[0]; 
+    } else {
+        eps_rev = 23.439291; 
+    }
+
+    /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
+    double xpin_almuten[2];
+    xpin_almuten[0] = longitude_almuten_rev;
+    xpin_almuten[1] = latitude_almuten_rev;
+
+    double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
+    int casa_natal_transitada = (int)floor(casa_alm_dec);
+    if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
+
+    /* 4. PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO NAS CASAS NATAIS
+          Agora usando o eps_rev correto e a global HOUSE_SYSTEM */
+    double xpin_asc[2];
+    xpin_asc[0] = asc_revolucao; 
+    xpin_asc[1] = 0.0;    
+
+
+    double casa_asc_dec = swe_house_pos(armc_natal, lat_natal, eps_rev, HOUSE_SYSTEM, xpin_asc, serr);
+    
+    int casa_natal_do_asc = (int)floor(casa_asc_dec);
+    if (casa_natal_do_asc < 1 || casa_natal_do_asc > 12) casa_natal_do_asc = 1;
+
+    double xpin_asc_nat[2];
+    xpin_asc_nat[0] = asc_natal; 
+    xpin_asc_nat[1] = 0.0;
+    double casa_rev_asc_dec = swe_house_pos(armc_rev, lat_rev, eps_natal, HOUSE_SYSTEM, xpin_asc_nat, serr);
+
+    int casa_rev_do_asc_natal = (int)floor(casa_rev_asc_dec);    
+    if (casa_rev_do_asc_natal < 1 || casa_rev_do_asc_natal > 12) casa_rev_do_asc_natal = 1;
+
+    int pontuacao_dignidade_natal = dignidade_natal;
+    int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
+
+    // DISPARA A JANELA VISUAL COM OS INTEIROS CALCULADOS SOB PRECISÃO MÁXIMA
+    abrir_janela_confronto_natal_revolucao(
+        id_almuten_rev, 
+        pontuacao_dignidade_natal, 
+        casa_natal_transitada, 
+        id_senhor_profeccao,
+        id_senhor_firdaria,
+        id_senhor_subfirdaria,
+        casa_natal_do_asc,
+        aproveitamento_almuten,
+        casa_rev_do_asc_natal
+    );
+}
+
 // void processar_confronto_natal_revolucao(
 //     int id_almuten_rev,               
 //     double longitude_almuten_rev,     
@@ -257,12 +347,12 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
 //     (void)armc_rev;
 //     (void)lat_rev;
+//     (void)jd_revolucao_ut;
 
 
 //     char serr[256];
 //     double xx[6];
 //     double eps_natal;
-//     //double eps_rev;
 
 //     // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
 //     if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
@@ -271,15 +361,8 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 //         eps_natal = 23.439291; 
 //     }
 
-//     // 2. OBLIQUIDADE DA REVOLUÇÃO (Para o Ascendente do Ano)
-//     if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
-//         //eps_rev = xx[0]; 
-//     } else {
-//         //eps_rev = 23.439291; 
-//     }
-
-//     /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS
-//           Trocado 'P' pela sua variável global HOUSE_SYSTEM */
+    
+//     /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
 //     double xpin_almuten[2];
 //     xpin_almuten[0] = longitude_almuten_rev;
 //     xpin_almuten[1] = latitude_almuten_rev;
@@ -288,32 +371,9 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 //     int casa_natal_transitada = (int)floor(casa_alm_dec);
 //     if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
 
-//     /* 4. PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO NAS CASAS NATAIS
-//           Agora usando o eps_rev correto e a global HOUSE_SYSTEM */
-//     //double xpin_asc[2];
-//     //xpin_asc[0] = asc_revolucao; 
-//     //xpin_asc[1] = 0.0;    
-
-
-//     //double casa_asc_dec = swe_house_pos(armc_natal, lat_natal, eps_rev, HOUSE_SYSTEM, xpin_asc, serr);
-//     //(void)casa_asc_dec;
+//     int casa_natal_do_asc = get_house(asc_revolucao, cusps_natal);
+//     int casa_rev_do_asc_natal = get_house(asc_natal, cusps_rev);
     
-//     int casa_natal_do_asc = get_house(asc_revolucao, cusps_natal); //(int)floor(casa_asc_dec);
-
-
-
-//     if (casa_natal_do_asc < 1 || casa_natal_do_asc > 12) casa_natal_do_asc = 1;
-
-//     //double xpin_asc_nat[2];
-//     //xpin_asc_nat[0] = asc_natal; 
-//     //xpin_asc_nat[1] = 0.0;
-//     //double casa_rev_asc_dec = swe_house_pos(armc_rev, lat_rev, eps_natal, HOUSE_SYSTEM, xpin_asc_nat, serr);
-//     //(void)casas_rev_asc_dec;
-
-//     int casa_rev_do_asc_natal = get_house(asc_natal, cusps_rev); //(int)floor(casa_rev_asc_dec);
-    
-//     if (casa_rev_do_asc_natal < 1 || casa_rev_do_asc_natal > 12) casa_rev_do_asc_natal = 1;
-
 //     int pontuacao_dignidade_natal = dignidade_natal;
 //     int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
 
@@ -330,73 +390,6 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 //         casa_rev_do_asc_natal
 //     );
 // }
-
-void processar_confronto_natal_revolucao(
-    int id_almuten_rev,               
-    double longitude_almuten_rev,     
-    double latitude_almuten_rev,      
-    int dignidade_natal,           
-    double lat_natal,                 
-    double armc_natal,                
-    int id_senhor_profeccao,          
-    int id_senhor_firdaria,           
-    int id_senhor_subfirdaria,
-    double asc_revolucao,
-    int *strength_planets,
-    double jd_natal,                  /* ADICIONADO: JD real do Nascimento */
-    double jd_revolucao_ut,           /* ADICIONADO: JD real da Revolução Solar */
-    double armc_rev,
-    double lat_rev,
-    double asc_natal,
-    double *cusps_rev,
-    double *cusps_natal)           
-{
-
-    (void)armc_rev;
-    (void)lat_rev;
-    (void)jd_revolucao_ut;
-
-
-    char serr[256];
-    double xx[6];
-    double eps_natal;
-
-    // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
-    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
-        eps_natal = xx[0]; 
-    } else {
-        eps_natal = 23.439291; 
-    }
-
-    
-    /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
-    double xpin_almuten[2];
-    xpin_almuten[0] = longitude_almuten_rev;
-    xpin_almuten[1] = latitude_almuten_rev;
-
-    double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
-    int casa_natal_transitada = (int)floor(casa_alm_dec);
-    if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
-
-    int casa_natal_do_asc = get_house(asc_revolucao, cusps_natal);
-    int casa_rev_do_asc_natal = get_house(asc_natal, cusps_rev);
-    
-    int pontuacao_dignidade_natal = dignidade_natal;
-    int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
-
-    // DISPARA A JANELA VISUAL COM OS INTEIROS CALCULADOS SOB PRECISÃO MÁXIMA
-    abrir_janela_confronto_natal_revolucao(
-        id_almuten_rev, 
-        pontuacao_dignidade_natal, 
-        casa_natal_transitada, 
-        id_senhor_profeccao,
-        id_senhor_firdaria,
-        id_senhor_subfirdaria,
-        casa_natal_do_asc,
-        aproveitamento_almuten,
-        casa_rev_do_asc_natal
-    );
-}
 
 
 
@@ -552,7 +545,7 @@ void abrir_janela_confronto_natal_revolucao(
     doupdate();
 
     // 4. PAD INTERNA PARA SCROLL
-    int pad_lines = 120; // Aumentado para comportar o texto da Firdária confortavelmente
+    int pad_lines = 300; // Aumentado para comportar o texto da Firdária confortavelmente
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
@@ -566,15 +559,15 @@ void abrir_janela_confronto_natal_revolucao(
 
     // --- CABEÇALHO DO CONFRONTO ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, _("  THE GOLDEN RADIX RULE: CONFRONTING THE LORD OF THE YEAR\n"));
+    wprintw(pad, _("THE GOLDEN RADIX RULE: CONFRONTING THE LORD OF THE YEAR\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    snprintf(str_text, 256, "%s", _("    According to Hellenistic and Medieval tradition, the Solar Return Almuten "
+    snprintf(str_text, 256, "%s", _("According to Hellenistic and Medieval tradition, the Solar Return Almuten "
                  "cannot be interpreted in a vacuum. Its promises are deeply filtered by its "
                  "fundamental condition in your Birth Chart (Radix) and its structural "
                  "cross-transits.\n\n"));
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n\n");
 
     const char *nomes_planetas[] = {"", _("SUN ☉"), _("MOON ☽"), _("MERCURY ☿"), _("VENUS ♀"), _("MARS ♂"), _("JUPITER ♃"), _("SATURN ♄")};
@@ -594,43 +587,44 @@ void abrir_janela_confronto_natal_revolucao(
     get_weights(weights, show_modern_planets);
     int pontos_finais_exibicao = (int)ceil(((double)aproveitamento_almuten * weights[id_almuten_rev]) / 10.0);
 
-    wprintw(pad, _("    The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d.\n"
-                    "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+    wprintw(pad, _("The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d.\n"
+                    "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
             nomes_planetas[id_almuten_rev], pontuacao_dignidade_natal, aproveitamento_almuten, pontos_finais_exibicao);
     
-    wprintw(pad, _("    Structural Efficiency Verdict:\n\n"));
+    wattron(pad, A_BOLD);
+    wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (aproveitamento_almuten >= 65) {
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
-        wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        snprintf(str_text, 512, _("       This planet commands the year with magnificent backing from your birth chart.\n"
-                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
+        snprintf(str_text, 512, _("This planet commands the year with magnificent backing from your birth chart.\n"
+                        "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
                         "and powerful executive. The promises of this Solar Return will manifest with clarity, "
                         "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), aproveitamento_almuten);
     } 
     else if (aproveitamento_almuten >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
-        wprintw(pad, _("    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(8));
-        snprintf(str_text, 512, _("       This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
-                        "       It possesses the standard authority to execute its functions, but will demand steady "
+        snprintf(str_text, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                        "It possesses the standard authority to execute its functions, but will demand steady "
                         "discipline and continuous focus from you. Events will unfold normally, tracking your "
                         "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), aproveitamento_almuten);
     } 
     else {
         wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
-        wprintw(pad, _("    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        snprintf(str_text, 512, _("       WARNING: The Lord of the Year operates under extreme systemic debility (%d%%).\n"
-                        "       Even though it governs the time stream of this anniversary, it lacks the raw vital "
+        snprintf(str_text, 512, _("WARNING: The Lord of the Year operates under extreme systemic debility (%d%%).\n"
+                        "Even though it governs the time stream of this anniversary, it lacks the raw vital "
                         "resources to fulfill its promises easily. The sectors it triggers this year will demand "
                         "intense adjustments, manifesting through chronic delays, heavy exhaustion, "
                         "administrative blocks, or the feeling of working against a locked door.\n\n\n"), aproveitamento_almuten);
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
@@ -642,35 +636,69 @@ void abrir_janela_confronto_natal_revolucao(
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK II] RADIX HOUSE TRANSIT\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
-    wprintw(pad, _("    The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada);
+    wprintw(pad, _("The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada);
     
     wattron(pad, A_BOLD );
-    wprintw(pad, _("    Interpretation:\n\n"));
+    wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
+
     if (casa_natal_transitada == 1) {
-        snprintf(str_text, 512, _("    The lens focuses strictly on your physical body, personal vitality, "
+        snprintf(str_text, 512, _("The lens focuses strictly on your physical body, personal vitality, "
                      "and identity.\n"
-                     "    A year to actively reinvent yourself and take direct command of your "
+                     "A year to actively reinvent yourself and take direct command of your "
                      "path.\n\n\n"));
     } else if (casa_natal_transitada == 2) {
-        snprintf(str_text, 512, _("    The core theme will revolve entirely around your personal resources, "
+        snprintf(str_text, 512, _("The core theme will revolve entirely around your personal resources, "
                      "finances, and material possessions. Events will force a heavy evaluation "
                      "of security and income.\n\n\n"));
-    } else if (casa_natal_transitada == 6 || casa_natal_transitada == 8 || casa_natal_transitada == 12) {
-        snprintf(str_text, 512, _("    The planet activates an obscure house of your radix. Focus shifts toward "
-                     "heavy adjustments, health maintenance, administrative debts, or psychological "
-                     "shedding and deep spiritual isolation.\n\n\n"));
+    } else if (casa_natal_transitada == 3) {
+        snprintf(str_text, 512, _("The activation shifts attention to your immediate environment, daily communications, "
+                     "intellectual pursuits, and short travels. Connections with siblings or neighbors will "
+                     "become prominent catalyst points.\n\n\n"));
+    } else if (casa_natal_transitada == 4) {
+        snprintf(str_text, 512, _("The spotlight falls deeply upon your private life, home environment, family roots, "
+                     "and internal emotional foundation. Matters regarding domestic security or property "
+                     "will demand your focus.\n\n\n"));
+    } else if (casa_natal_transitada == 5) {
+        snprintf(str_text, 512, _("The cosmic current vitalizes your sectors of creative self-expression, romance, "
+                     "joy, and children. A highly fertile period to pursue personal pleasures, hobbies, "
+                     "and things that fuel your heart's passions.\n\n\n"));
+        } else if (casa_natal_transitada == 6) {
+        snprintf(str_text, 512, _("The planet activates the house of bodily challenges and daily labors. "
+                     "Focus shifts toward physical health maintenance, managing somatic stress, acute adjustments, "
+                     "and the routines required to keep your life functioning.\n\n\n"));
+    } else if (casa_natal_transitada == 8) {
+        snprintf(str_text, 512, _("The planet activates the gateway of shared resources and deep transformations. "
+                     "Events will drive you to confront administrative debts, financial obligations, inheritance, "
+                     "or psychological crises and profound internal shedding.\n\n\n"));
+    } else if (casa_natal_transitada == 12) {
+        snprintf(str_text, 512, _("The planet activates the house of the unseen and self-undoing. "
+                     "The cosmic current pulls your attention toward deep spiritual isolation, hidden vulnerabilities, "
+                     "subconscious patterns, and necessary psychological retreats from the outer world.\n\n\n"));
+    } else if (casa_natal_transitada == 7) {
+        snprintf(str_text, 512, _("The mirror of relationship is triggered, bringing your significant partnerships, "
+                     "marriage, business alliances, or open contractual agreements to the forefront. Growth comes "
+                     "directly through the other.\n\n\n"));
+    } else if (casa_natal_transitada == 9) {
+        snprintf(str_text, 512, _("The horizon widens toward higher education, long-distance journeys, legal affairs, "
+                     "and your overarching worldview. Events will challenge and expand your belief systems and "
+                     "philosophical paradigms.\n\n\n"));
     } else if (casa_natal_transitada == 10) {
-        snprintf(str_text, 512, _("    The cosmic spotlight hits your professional destiny, career elevation, "
+        snprintf(str_text, 512, _("The cosmic spotlight hits your professional destiny, career elevation, "
                      "and social standing. Major events will directly reshape your public reputation "
                      "and authority.\n\n\n"));
+    } else if (casa_natal_transitada == 11) {
+        snprintf(str_text, 512, _("The lens energizes your network, long-term aspirations, community involvement, "
+                     "and supportive alliances. Fruitful rewards flow through collaborations, friendships, "
+                     "and group endeavors.\n\n\n"));
     } else {
-        snprintf(str_text, 512, _("    This alignment directly activates the social, relational, and communicative "
-                     "sectors of your radix, driving daily encounters and local environment shifting "
-                     "over the next 12 months.\n\n\n"));
+        // Fallback de segurança para valores inesperados fora do intervalo 1-12
+        snprintf(str_text, 512, _("This alignment directly activates the baseline promises of your radix, "
+                     "driving key encounters and environmental shifts over the next 12 months.\n\n\n"));
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
@@ -681,33 +709,32 @@ void abrir_janela_confronto_natal_revolucao(
 
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK III] THE TIMELORD CO-ALIGNMENT\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
-    wprintw(pad, _("    The current Profection Lord of the Year is: %s.\n"
-                 "    The current Solar Return Almuten is: %s.\n\n"), 
+    wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
+    wprintw(pad, _(" ✦ The current Profection Lord of the Year is: %s.\n"
+                 " ✦ The current Solar Return Almuten is: %s.\n\n"), 
             nomes_planetas[id_senhor_profeccao], nomes_planetas[id_almuten_rev]);
     
-    wattron(pad, A_BOLD );
-    wprintw(pad, _("    Interpretation:\n\n"));
+    wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_profeccao) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("    CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n\n"));
+        wprintw(pad, _("CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        snprintf(str_text, 512, _("    The Lord of the Return is the EXACT same planet ruling your profection "
+        snprintf(str_text, 512, _("The Lord of the Return is the EXACT same planet ruling your profection "
                      "time stream!\n"
-                     "    In traditional astrology, this synchronization indicates a highly "
+                     "In traditional astrology, this synchronization indicates a highly "
                      "turning-point year.\n"
-                     "    The planet gains double cosmic authorization. The events scheduled under "
+                     "The planet gains double cosmic authorization. The events scheduled under "
                      "its watch are unavoidable, highly prominent, and will actively reshape your "
                      "life history.\n\n\n"));
     } else {
-        snprintf(str_text, 512, _("    Standard Alignment. The Return Lord and the Profection Lord are operating "
+        snprintf(str_text, 512, _("Standard Alignment. The Return Lord and the Profection Lord are operating "
                      "under distinct frequencies. This distributes your energy evenly, allowing you to "
                      "manage professional matters and internal shifts along separate, parallel tracks "
                      "without overwhelming intensity.\n\n\n"));
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
@@ -719,44 +746,43 @@ void abrir_janela_confronto_natal_revolucao(
 
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
-    wprintw(pad, _("    Current Firdaria Master Ruler: %s\n"
-                 "    Current Firdaria Sub-Ruler: %s\n"
-                 "    Solar Return Almuten (Lord of Year): %s\n\n"), 
+    wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
+    wprintw(pad, _(" ✦ Current Firdaria Master Ruler: %s\n"
+                 " ✦ Current Firdaria Sub-Ruler: %s\n"
+                 " ✦ Solar Return Almuten (Lord of Year): %s\n\n"), 
             nomes_planetas[id_senhor_firdaria], 
             nomes_planetas[id_senhor_subfirdaria],
             nomes_planetas[id_almuten_rev]);
     
-    wattron(pad, A_BOLD );
-    wprintw(pad, _("    Interpretation:\n\n"));
+    wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_firdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(12)); 
-        snprintf(str_text, 512, _("    MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
+        snprintf(str_text, 512, _("MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(12));
-        snprintf(str_text, 512, _("    The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
+        snprintf(str_text, 512, _("The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
                      "In traditional astrology, this means the planet has total systemic harmony. The events "
                      "it promises this year are backed by the macro-cyclical trend of your life, bringing "
                      "profound, lasting developments that perfectly fulfill your current life chapter.\n\n\n"));
     } 
     else if (id_almuten_rev == id_senhor_subfirdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(1)); 
-        snprintf(str_text, 512, _("    SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
+        snprintf(str_text, 512, _("SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(1));
-        snprintf(str_text, 512, _("    The Lord of the Year coordinates directly with your current Firdaria sub-period. "
+        snprintf(str_text, 512, _("The Lord of the Year coordinates directly with your current Firdaria sub-period. "
                      "This indicates that the events of the next 12 months will act as the perfect trigger "
                      "to release the potential promised by the current sub-ruler in your birth chart. "
                      "Expect a highly focused, active year regarding this planet's themes.\n\n\n"));
     } 
     else {
-        snprintf(str_text, 512, _("    Parallel Current. The Lord of the Year operates on a distinct energetic line from "
+        snprintf(str_text, 512, _("Parallel Current. The Lord of the Year operates on a distinct energetic line from "
                      "the active Firdaria rulers. This implies that while the Firdaria manages long-term "
                      "background developments in your life, the Almuten of the Return will bring immediate, "
                      "practical tasks and events that keep you busy on a day-to-day level without disrupting "
                      "the macro-cycle.\n\n\n"));
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
@@ -770,29 +796,29 @@ void abrir_janela_confronto_natal_revolucao(
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     
     /* Agora a impressão é direta, limpa e imune a falhas de compilação */
-    wprintw(pad, _("    The Solar Return Ascendant falls into your NATAL HOUSE %d.\n\n"), casa_natal_do_asc);
+    wprintw(pad, _("The Solar Return Ascendant falls into your NATAL HOUSE %d.\n\n"), casa_natal_do_asc);
     wattron(pad, A_BOLD );
-    wprintw(pad, _("    Interpretation:\n\n"));
+    wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
     
     if (casa_natal_do_asc == 1) {
-        snprintf(str_text, 512, _("    A year of absolute self-empowerment. Your personal choices, physical vitality, "
+        snprintf(str_text, 512, _("A year of absolute self-empowerment. Your personal choices, physical vitality, "
                      "and individual projects take absolute priority over external demands.\n\n\n"));
     } else if (casa_natal_do_asc == 4) {
-        snprintf(str_text, 512, _("    Focus on foundations, family, and home life. Events will deeply affect your "
+        snprintf(str_text, 512, _("Focus on foundations, family, and home life. Events will deeply affect your "
                      "domestic environment, property management, or ancestral roots.\n\n\n"));
     } else if (casa_natal_do_asc == 7) {
-        snprintf(str_text, 512, _("    The year centers on partnerships, contracts, and legal matters. Relationships "
+        snprintf(str_text, 512, _("The year centers on partnerships, contracts, and legal matters. Relationships "
                      "(both romantic and professional) will face testing and restructuring.\n\n\n"));
     } else if (casa_natal_do_asc == 10) {
-        snprintf(str_text, 512, _("    A powerful professional window. Your career, public standing, and long-term "
+        snprintf(str_text, 512, _("A powerful professional window. Your career, public standing, and long-term "
                      "ambitions are directly activated, pushing you into positions of authority.\n\n\n"));
     } else {
-        snprintf(str_text, 512, _("    This house activation indicates that your immediate daily affairs, social circles, "
+        snprintf(str_text, 512, _("This house activation indicates that your immediate daily affairs, social circles, "
                      "or resource management will absorb your primary energetic focus this year.\n\n\n"));
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
@@ -805,52 +831,52 @@ void abrir_janela_confronto_natal_revolucao(
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     
     /* Substitua 'casa_sr_do_natal' pela sua variável de cálculo */
-    wprintw(pad, _("    Your Natal Ascendant falls into your SOLAR RETURN HOUSE %d.\n\n"), casa_rev_do_asc_natal);
+    wprintw(pad, _("Your Natal Ascendant falls into your SOLAR RETURN HOUSE %d.\n\n"), casa_rev_do_asc_natal);
     wattron(pad, A_BOLD);
-    wprintw(pad, _("    Interpretation:\n\n"));
+    wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD);
 
     if (casa_rev_do_asc_natal == 1) {
-        snprintf(str_text, 512, _("    Total alignment. Your core identity acts with absolute clarity and autonomy."
+        snprintf(str_text, 512, _("Total alignment. Your core identity acts with absolute clarity and autonomy."
                      "The year allows you to express your true self without masks or friction.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 2) {
-        snprintf(str_text, 512, _("    Your vital energy is heavily directed toward financial security and values."
+        snprintf(str_text, 512, _("Your vital energy is heavily directed toward financial security and values."
                      "You will feel a deep, personal need to consolidate resources and self-worth.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 3) {
-        snprintf(str_text, 512, _("    Your mind and immediate expression are highlighted. Communication, short travels, "
+        snprintf(str_text, 512, _("Your mind and immediate expression are highlighted. Communication, short travels, "
                      "and local networks will demand your active intellectual engagement.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 4) {
-        snprintf(str_text, 512, _("    An internal, reflective year. You are drawn to privacy, emotional security, "
+        snprintf(str_text, 512, _("An internal, reflective year. You are drawn to privacy, emotional security, "
                      "and resolving matters tied to family, real estate, or your private world.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 5) {
-        snprintf(str_text, 512, _("    A highly expressive and creative period. Your vital drive seeks joy, speculation, "
+        snprintf(str_text, 512, _("A highly expressive and creative period. Your vital drive seeks joy, speculation, "
                      "romance, or projects involving children and individual self-expression.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 6) {
-        snprintf(str_text, 512, _("    A year requiring duty, physical adjustment, or service. You will need to focus "
+        snprintf(str_text, 512, _("A year requiring duty, physical adjustment, or service. You will need to focus "
                      "heavily on your physical health, daily routines, or workplace obligations.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 7) {
-        snprintf(str_text, 512, _("    Your identity is mirrored through others. You will find yourself adapting you r"
+        snprintf(str_text, 512, _("Your identity is mirrored through others. You will find yourself adapting you r"
                      "personal goals to fit the needs of significant partners or legal agreements.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 8) {
-        snprintf(str_text, 512, _("    A period of psychological crisis or deep transformation. You are dealing with "
+        snprintf(str_text, 512, _("A period of psychological crisis or deep transformation. You are dealing with "
                      "shared resources, debts, or letting go of old attachments to allow rebirth.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 9) {
-        snprintf(str_text, 512, _("    Expansion of consciousness. Your personal focus shifts toward higher learning, "
+        snprintf(str_text, 512, _("Expansion of consciousness. Your personal focus shifts toward higher learning, "
                      "long-distance travel, astrology, philosophy, or defining your belief system.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 10) {
-        snprintf(str_text, 512, _("    High public visibility. Your personal actions are on display for the world to see, "
+        snprintf(str_text, 512, _("High public visibility. Your personal actions are on display for the world to see, "
                      "strongly impacting your career reputation and societal standing this year.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 11) {
-        snprintf(str_text, 512, _("    A year of alliances and aspirations. Your focus is placed on collective projects, "
+        snprintf(str_text, 512, _("A year of alliances and aspirations. Your focus is placed on collective projects, "
                      "friendships, benefactors, and the realization of long-held hopes.\n\n\n"));
     } else if (casa_rev_do_asc_natal == 12) {
-        snprintf(str_text, 512, _("    A period of relative isolation or spiritual retreat. You operate behind the scenes, "
+        snprintf(str_text, 512, _("A period of relative isolation or spiritual retreat. You operate behind the scenes, "
                      "dealing with hidden matters, subconscious patterns, or karmic endings.\n\n\n"));
     } else {
-        snprintf(str_text, 512, _("    Invalid house data calculated for the projection.\n\n\n"));
+        snprintf(str_text, 512, _("Invalid house data calculated for the projection.\n\n\n"));
     }
 
-    imprimir_texto_fluxo(pad, 4, 80, str_text);
+    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
 
 
     const char* msg_cenario_externo[13] = {
@@ -898,25 +924,25 @@ void abrir_janela_confronto_natal_revolucao(
         casa_rev_do_asc_natal >= 1 && casa_rev_do_asc_natal <= 12) {
 
         wattron(pad, A_BOLD);
-        wprintw(pad, _("    Astrological Synthesis for your Year:\n\n"));
+        wprintw(pad, _("Astrological Synthesis for your Year:\n\n"));
         wattroff(pad, A_BOLD);
 
         
         char str_text1[512];
 
 
-        snprintf(str_text1, 512, _("    %s; however, %s\n\n"), 
+        snprintf(str_text1, 512, _("%s; however, %s\n\n"), 
                 msg_cenario_externo[casa_natal_do_asc], 
                 msg_atitude_interna[casa_rev_do_asc_natal]);
 
-        imprimir_texto_fluxo(pad, 4, 80, str_text1);
+        print_split_lines(pad, str_text1, MAX_LINE_WIDTH);
         wprintw(pad, "\n");
 
 
 
         // Uma breve conclusão tradicional dependendo se as duas posições combinam ou conflitam
         wattron(pad, A_BOLD);
-        wprintw(pad, _("    Context: "));
+        wprintw(pad, _("Context: "));
         wprintw(pad, "\n");
         wprintw(pad, "\n");
         wattroff(pad, A_BOLD);
@@ -924,21 +950,21 @@ void abrir_janela_confronto_natal_revolucao(
         char str_text2[200];
 
         if (casa_natal_do_asc == casa_rev_do_asc_natal) {
-            snprintf(str_text2, 200, _("    An intensely focused year. Your environment and your psychological drive"
-                         "    are perfectly aligned, accelerating results with very little inner friction."));
+            snprintf(str_text2, 200, _("An intensely focused year. Your environment and your psychological drive"
+                         "are perfectly aligned, accelerating results with very little inner friction."));
         } else if ((casa_natal_do_asc == 10 && casa_rev_do_asc_natal == 12) || (casa_natal_do_asc == 12 && casa_rev_do_asc_natal == 10)) {
-            snprintf(str_text2, 200, _("    A polarizing year. The tension between public obligations and the absolute"
-                         "    need for private withdrawal will require strict boundaries to avoid burnout."));
+            snprintf(str_text2, 200, _("A polarizing year. The tension between public obligations and the absolute"
+                         "need for private withdrawal will require strict boundaries to avoid burnout."));
         } else {
-            snprintf(str_text2, 200, _("    A year of multi-layered experiences. You will need to learn how to balance the"
-                         "    concrete external demands of House %d with your inner needs in House %d."), 
+            snprintf(str_text2, 200, _("A year of multi-layered experiences. You will need to learn how to balance the"
+                         "concrete external demands of House %d with your inner needs in House %d."), 
                          casa_natal_do_asc, casa_rev_do_asc_natal);
         }
-        imprimir_texto_fluxo(pad, 4, 80, str_text2);
+        print_split_lines(pad, str_text2, MAX_LINE_WIDTH);
 
 
     } else {
-        wprintw(pad, _("    Error: Invalid house calculation data for synthesis mapping.\n\n\n"));
+        wprintw(pad, _("Error: Invalid house calculation data for synthesis mapping.\n\n\n"));
 
     }
 
@@ -1148,7 +1174,7 @@ void abrir_janela_transitos_revolucao(
     wprintw(pad, "\n"); 
 
     wattron(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, _("  ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"));
+    wprintw(pad, _("ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     
@@ -1193,7 +1219,7 @@ void abrir_janela_transitos_revolucao(
     wattron(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE); // Cor de destaque máxima para a Vida/Saúde
 
     char str[512] = "";
-    snprintf(str, 512, _("    [CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"), 
+    snprintf(str, 512, _("[CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"), 
             glifo_hyleg_natal, nome_hyleg_natal);
     print_split_lines(pad, str, MAX_LINE_WIDTH);
 
@@ -1214,16 +1240,24 @@ void abrir_janela_transitos_revolucao(
         if (diff <= 5.0) { // Orbe estreita de trânsito
             encontrou_hyleg_transit = true;
             
-            wattron(pad, A_BOLD | COLOR_PAIR(11)); // Alerta Vermelho
-            snprintf(str, 512, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"), 
+            if (strcmp(nomes[p], _("Saturn")) == 0 || strcmp(nomes[p], _("Mars")) == 0 || strcmp(nomes[p], _("South Node")) == 0 ) {
+                wattron(pad, A_BOLD | COLOR_PAIR(11));
+            }
+            else if (strcmp(nomes[p], _("Jupiter")) == 0 || strcmp(nomes[p], _("Venus")) == 0 || strcmp(nomes[p], _("North Node")) == 0 ) {
+                wattron(pad, A_BOLD | COLOR_PAIR(32));
+            }
+            else {
+                wattron(pad, A_BOLD | COLOR_PAIR(25) | A_REVERSE);
+            }
+            snprintf(str, 512, _("[*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"), 
                     nomes[p], nome_hyleg_natal, diff);
             
             print_split_lines(pad, str, MAX_LINE_WIDTH);
-            wattroff(pad, A_BOLD | COLOR_PAIR(11));
+            wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32) | COLOR_PAIR(25) | A_REVERSE);
 
             if (p == 6) { // Saturno pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
-                snprintf(str, 512, _("       [VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
+                snprintf(str, 512, _("[VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
                 print_split_lines(pad, str, MAX_LINE_WIDTH);
 
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
@@ -1235,7 +1269,7 @@ void abrir_janela_transitos_revolucao(
             } 
             else if (p == 4) { // Marte pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
-                print_split_lines(pad, _("       [VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                print_split_lines(pad, _("[VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
                 print_split_lines(pad,
@@ -1245,7 +1279,7 @@ void abrir_janela_transitos_revolucao(
             } 
             else if (p == 5) { // Júpiter pisando no Hyleg
                 wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE); // Verde/Sucesso
-                print_split_lines(pad, _("       [GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                print_split_lines(pad, _("[GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
                 
                 print_split_lines(pad, 
@@ -1285,7 +1319,7 @@ void abrir_janela_transitos_revolucao(
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
 
         int casa_natal = casas_planetas_rev[p];
-        wprintw(pad, _("    • House Projection: Operating inside your NATAL HOUSE %d.\n"), casa_natal);
+        wprintw(pad, _(" • House Projection: Operating inside your NATAL HOUSE %d.\n"), casa_natal);
         
         char str[256];
         snprintf(str, 256, _("This year, the physical affairs governed by your Natal House %d will be heavily "
@@ -1295,7 +1329,7 @@ void abrir_janela_transitos_revolucao(
         print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
 
         wattron(pad, A_BOLD);
-        wprintw(pad, _("    • Active Radical Conjunctions:\n"));
+        wprintw(pad, _(" • Active Radical Conjunctions:\n"));
         wattroff(pad, A_BOLD);
 
            
@@ -1324,10 +1358,19 @@ void abrir_janela_transitos_revolucao(
 
             if (diff <= 5.0) {
                 encontrou_conjuncao = true;
-                wattron(pad, A_BOLD | COLOR_PAIR(11));
-                snprintf(str, 512, _("       [*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"), nomes[p], nomes[n], diff);
+                
+                if (strcmp(nomes[p], _("Saturn")) == 0 || strcmp(nomes[p], _("Mars")) == 0 || strcmp(nomes[p], _("South Node")) == 0 ) {
+                    wattron(pad, A_BOLD | COLOR_PAIR(11));
+                }
+                else if (strcmp(nomes[p], _("Jupiter")) == 0 || strcmp(nomes[p], _("Venus")) == 0 || strcmp(nomes[p], _("North Node")) == 0 ) {
+                    wattron(pad, A_BOLD | COLOR_PAIR(32));
+                }
+                else {
+                    wattron(pad, A_BOLD | COLOR_PAIR(25) | A_REVERSE);
+                }
+                snprintf(str, 512, _("[*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"), nomes[p], nomes[n], diff);
                 print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
-                wattroff(pad, A_BOLD | COLOR_PAIR(11));
+                wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32) | COLOR_PAIR(25) | A_REVERSE);
 
                 if (p == 6) {
                     char str[256];
@@ -1345,6 +1388,21 @@ void abrir_janela_transitos_revolucao(
                     snprintf(str, 256, _("[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high physical "
                                          "vitality expenditures upon your natal %s.\n\n"), nomes[n]);
                     print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                } else if (p == 3) {
+                    char str[256];
+                    snprintf(str, 256, _("[BENEFIC] Venus injects harmony, personal magnetism, ease, pleasure, "
+                                         "and social or financial alignment into the baseline promises of your natal %s.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                }  else if (p == 10) {
+                    char str[256];
+                    snprintf(str, 256, _("[BENEFIC] The North Node injects a powerful drive for growth, intense amplification, "
+                        "destined advancements, and new evolutionary opportunities into your natal %s.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                } else if (p == 11 ) {
+                    char str[256];
+                    snprintf(str, 256, _("[CRITICAL] The South Node triggers energy drainage, necessary releases, karmic closures, "
+                        "or a pull toward past familiar patterns regarding your natal %s.\n\n"), nomes[n]);
+                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else {
                     char str[256];
                     snprintf(str, 256,  _("This conjunction wakes up the natal potential of your %s, making its themes "
@@ -1354,7 +1412,7 @@ void abrir_janela_transitos_revolucao(
             }
         }
         if (!encontrou_conjuncao) {
-            wprintw(pad, _("       No exact conjunctions detected over your natal planets within a 5° orb.\n\n"));
+            wprintw(pad, _("No exact conjunctions detected over your natal planets within a 5° orb.\n\n"));
         }
         wprintw(pad, "\n");
     }

@@ -21,8 +21,6 @@
 
 #include "planet_table.h"
 
-#define ANTISCIUM_ORB 2.0
-
 typedef struct { 
     double angle; 
     char *symbol; 
@@ -36,7 +34,8 @@ typedef struct {
     char symbol[10];          // Símbolo Unicode do aspecto (ex: "☌", "□", "▓▓▓")
     int color_pair;          // Par de cor Ncurses pré-calculado para o aspecto
     double angle;            // O ângulo real ou a distância (orbe) para exibição
-    bool is_bold;            // Flag para destacar aspectos maiores (quadratura/oposição)
+    bool is_bold;
+    bool is_reverse;           // Flag para destacar aspectos maiores (quadratura/oposição)
     bool is_aplicative;
     bool is_partil;            
 } AspectCell;
@@ -49,6 +48,7 @@ typedef struct {
 typedef struct {
     bool has_aspect;       // Indica se há paralelo ou contra-paralelo válido
     char symbol[10];        // Símbolo Unicode do aspecto ("∥", "∦")
+    bool is_reverse;
     int color_pair;        // Par de cor Ncurses injetado
     double diff;           // A diferença residual do orbe para exibição (%3.1f)
 } DeclCell;
@@ -56,6 +56,9 @@ typedef struct {
 typedef struct {
     DeclCell grid[NUM_OBJECTS][NUM_OBJECTS];
 } DeclMatrix;
+
+double ASP_ANTISSIA_EXACT();
+double ASP_PARALLEL_EXACT();
 
 bool has_aspect(int id1, int id2, AspectMatrix *matrix);
 bool has_aspect_aplicative(int id1, int id2, AspectMatrix *matrix);
