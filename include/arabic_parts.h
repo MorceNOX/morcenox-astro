@@ -22,6 +22,7 @@
 #include "helper.h"
 #include "planet_table.h"
 
+#define MAX_PARTS 150
 
 typedef struct {
     int id;
@@ -30,16 +31,20 @@ typedef struct {
     int personal_point;
     int significator;
     int trigger;
-    char description[256];
+    char description[512];
 } ArabicPartFormula;
 
 typedef struct {
-    char name[50];
+    char name[64];
     double longitude;
     char house[8];
-    char lord[8];
+    char lord[10];
     char link[10];
-    char description[256];
+    char link2[10];
+    char pp[20];
+    char sig[20];
+    char trig[20];
+    char description[512];
 } ArabicPartCalculada;
 
 typedef struct {
@@ -51,19 +56,15 @@ typedef struct {
 typedef struct {
     // Linhas = Planetas (Até 12: 7 Tradicionais + 3 Modernos + 2 Nodos)
     // Colunas = Partes Árabes (Até 50 registros carregados do SQLite)
-    PartAspectCell grid[12][50]; 
+    PartAspectCell grid[12][MAX_PARTS]; 
 } AspectPartMatrix;
-
-
-
-#define MAX_PARTS 100
 
 
 void get_part_abbreviation(char *name, char *abreviacao);
 double get_longitude_by_id(int id, int num_objects, ChartObject *obj);
 int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *cusps, ArabicPartCalculada *lista_resultado);
 void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects);
-void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cusps, int num_objects, double *cusps_natal);
+void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cusps, int num_objects, double *cusps_natal, ChartObject *obj_natal);
 int obter_id_parte_por_nome(const char *name_lote);
 
 void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao);

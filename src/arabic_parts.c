@@ -62,16 +62,34 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
     sqlite3_stmt *stmt;
     
     // Query que filtra apenas as partes Universais (3) e as do Gênero atual do mapa (1 ou 2)
-    char query[256];
-    snprintf(query, sizeof(query), 
-    "SELECT name, diurnal_personal_point, diurnal_significator, diurnal_trigger, "
-    "nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link "
-    "FROM arabic_parts WHERE gender_id = 3 OR gender_id = %d;", GENDER);
+    // char query[256];
+    // snprintf(query, sizeof(query), 
+    // "SELECT name, diurnal_personal_point, diurnal_significator, diurnal_trigger, "
+    // "nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link "
+    // "FROM arabic_parts WHERE gender_id = 3 OR gender_id = %d;", GENDER);
+    const char *query = 
+        "SELECT "
+            "ap.name, ap.description, ap.link, ap.link2, "
+            "ap.diurnal_personal_point, ap.diurnal_significator, ap.diurnal_trigger, "
+            "ap.nocturnal_personal_point, ap.nocturnal_significator, ap.nocturnal_trigger, "
+            "obj_d_pp.symbol, obj_d_sig.symbol, obj_d_trig.symbol, "
+            "obj_n_pp.symbol, obj_n_sig.symbol, obj_n_trig.symbol "
+        "FROM arabic_parts AS ap "
+        "LEFT JOIN objects AS obj_d_pp   ON ap.diurnal_personal_point = obj_d_pp.id "
+        "LEFT JOIN objects AS obj_d_sig  ON ap.diurnal_significator = obj_d_sig.id "
+        "LEFT JOIN objects AS obj_d_trig ON ap.diurnal_trigger = obj_d_trig.id "
+        "LEFT JOIN objects AS obj_n_pp   ON ap.nocturnal_personal_point = obj_n_pp.id "
+        "LEFT JOIN objects AS obj_n_sig  ON ap.nocturnal_significator = obj_n_sig.id "
+        "LEFT JOIN objects AS obj_n_trig ON ap.nocturnal_trigger = obj_n_trig.id "
+        "WHERE ap.gender_id = ?1 OR ap.gender_id = ?2;";
 
     int rc = sqlite3_prepare_v2(global_db, query, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         return 0; // Falha ao preparar consulta
     }
+
+    sqlite3_bind_int(stmt, 1, 3);    // Associa o valor fixo 3 ao ?1
+    sqlite3_bind_int(stmt, 2, GENDER);
 
     // Varre as linhas retornadas pelo SQLite
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -79,19 +97,28 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
         
         // Coleta o nome e a descrição textuais
         strcpy(p->name, (const char *)sqlite3_column_text(stmt, 0));
-        strcpy(p->description, (const char *)sqlite3_column_text(stmt, 7));
-        strcpy(p->link, (const char *)sqlite3_column_text(stmt, 8));
+        strcpy(p->description, (const char *)sqlite3_column_text(stmt, 1));
+        strcpy(p->link, (const char *)sqlite3_column_text(stmt, 2));
+        strcpy(p->link2, (const char *)sqlite3_column_text(stmt, 3));
 
         // Seleção dinâmica dos fatores (Personal, Significator, Trigger) baseada na SEITA global
         int id_personal, id_sig, id_trigger;
+        //char pp[20], sig[20], trig[20];
+
         if (MAPA_DIURNO) {
-            id_personal = sqlite3_column_int(stmt, 1);
-            id_sig      = sqlite3_column_int(stmt, 2);
-            id_trigger  = sqlite3_column_int(stmt, 3);
-        } else {
             id_personal = sqlite3_column_int(stmt, 4);
             id_sig      = sqlite3_column_int(stmt, 5);
             id_trigger  = sqlite3_column_int(stmt, 6);
+            strcpy(p->pp, (const char *)sqlite3_column_text(stmt, 10));
+            strcpy(p->sig, (const char *)sqlite3_column_text(stmt, 11));
+            strcpy(p->trig, (const char *)sqlite3_column_text(stmt, 12));
+        } else {
+            id_personal = sqlite3_column_int(stmt, 7);
+            id_sig      = sqlite3_column_int(stmt, 8);
+            id_trigger  = sqlite3_column_int(stmt, 9);
+            strcpy(p->pp, (const char *)sqlite3_column_text(stmt, 13));
+            strcpy(p->sig, (const char *)sqlite3_column_text(stmt, 14));
+            strcpy(p->trig, (const char *)sqlite3_column_text(stmt, 15));
         }
 
         // Busca as longitudes físicas no seu array plots usando a função utilitária que criamos
@@ -113,10 +140,20 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
         strcpy(p->house, (char *)get_house_roman(p->longitude, cusps));
 
         int lord = 0;
+        int lord2 = 0;
         get_ruler_dom_by_sign_id((int)floor(p->longitude / 30.0) + 1, &lord);
+        get_ruler_exalt_by_sign_id((int)floor(p->longitude / 30.0) + 1, &lord2, consider_modern_planets_rulling);
         const char *lord_str = obter_glifo_planeta_por_id(lord);
+        const char *lord2_str = obter_glifo_planeta_por_id(lord2);
 
-        snprintf(p->lord, 8, "%s", lord_str);
+        if (lord2 == 0) {
+            snprintf(p->lord, 8, "%s", lord_str);
+        }
+        else {
+            snprintf(p->lord, 8, "%s %s", lord_str, lord2_str);
+        }
+
+        
 
         qtd_partes++;
         if (qtd_partes >= MAX_PARTS) break; // Trava de segurança do buffer
@@ -150,7 +187,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     int scroll_offset = 0;
     int max_linhas_exibicao = table_height - 10;
     
-    WINDOW *scroll_pad = newpad(150, table_width - 8);
+    WINDOW *scroll_pad = newpad(qtd_partes * 6 + 100, table_width - 8);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     wattron(shadow_win, COLOR_PAIR(9)); 
@@ -185,12 +222,12 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         setcchar(&traco_horizontal, L"─", A_NORMAL, 0, NULL);
         mvwhline_set(table_win, 4, 2, &traco_horizontal, table_width - 5);
 
-        int col_name = 2, col_pos = 32, col_house = 44, col_ruler = 53, col_link = 61, col_desc = 69;
+        int col_name = 1, col_pos = 32, col_house = 42, col_ruler = 49, col_link = 58, col_desc = 69;
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_name + 4, _("Part Name"));
         mvwprintw(table_win, 5, col_pos + 4, _("Position"));
         mvwprintw(table_win, 5, col_house + 4, _("House"));
-        mvwprintw(table_win, 5, col_ruler + 4, _("Lord"));
+        mvwprintw(table_win, 5, col_ruler + 4, _("Lords"));
         mvwprintw(table_win, 5, col_link + 4, _("Link"));
         mvwprintw(table_win, 5, col_desc + 4, _("Core Traditional Governance"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
@@ -228,14 +265,27 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 if (minutos_inteiros == 60) { minutos_inteiros = 0; graus_inteiros++; }
 
                 char coord_texto[32];
-                snprintf(coord_texto, sizeof(coord_texto), "%02d° %s %02d'", graus_inteiros, get_sign(sign_id), minutos_inteiros);
+                snprintf(coord_texto, sizeof(coord_texto), "%2d°%s%02d'", graus_inteiros, get_sign(sign_id), minutos_inteiros);
 
                 // NOVO: Se este registro for o selecionado atual, aplica o REVERSE na linha inteira!
                 bool is_linha_focada = (i == seletor_linha_atual);
                 bool is_major_lot = (strcmp(p->name, "Part of Fortune") == 0 || 
                                      strcmp(p->name, "Part of Spirit") == 0 || 
                                      strcmp(p->name, "Parte do Espírito") == 0 || 
-                                     strcmp(p->name, "Parte da Fortuna") == 0);
+                                     strcmp(p->name, "Parte da Fortuna") == 0 ||
+                                     strcmp(p->name, "Lot of Fortune") == 0 || 
+                                     strcmp(p->name, "Lot of Spirit") == 0 || 
+                                     strcmp(p->name, "Lot do Espírito") == 0 || 
+                                     strcmp(p->name, "Lot da Fortuna") == 0);
+
+                if (is_linha_focada) {
+                    wattron(table_win, A_BOLD);
+                    mvwprintw(table_win, 2, col_desc + 1, _("|  Formula: "));
+                    wattron(table_win, A_BOLD | COLOR_PAIR(37) | A_BOLD | A_REVERSE);
+                    wprintw(table_win, "[ %s + %s - %s ]", p->pp, p->sig, p->trig);
+                    wattroff(table_win, A_BOLD | COLOR_PAIR(37) | A_BOLD | A_REVERSE);
+                }
+
                 
                 // Determina o tom da linha
                 if (is_linha_focada) {
@@ -247,6 +297,8 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 } else {
                     wattron(scroll_pad, COLOR_PAIR(13));
                 }
+
+                
 
                 mvwprintw(scroll_pad, row_pad, col_name, "%-26s", p->name);
                 mvwprintw(scroll_pad, row_pad, col_pos, "%-16s", coord_texto);
@@ -262,7 +314,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
                 if (is_linha_focada) wattron(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else wattron(scroll_pad, COLOR_PAIR(13) | A_BOLD);
-                mvwprintw(scroll_pad, row_pad, col_link, "%-3s", p->link);
+                mvwprintw(scroll_pad, row_pad, col_link, "%-3s %-3s", p->link, p->link2);
                 if (is_linha_focada) wattroff(scroll_pad, COLOR_PAIR(37) | A_BOLD | A_REVERSE);
                 else wattroff(scroll_pad, COLOR_PAIR(13) | A_BOLD);
 
@@ -428,7 +480,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
 
 
-void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cusps, int num_objects, double *cusps_natal) {
+void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cusps, int num_objects, double *cusps_natal, ChartObject *obj_natal) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -457,7 +509,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     int scroll_offset = 0;
     int max_linhas_exibicao = table_height - 10;
     
-    WINDOW *scroll_pad = newpad(150, table_width - 8);
+    WINDOW *scroll_pad = newpad(qtd_partes * 6 + 100, table_width - 8);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
     wattron(shadow_win, COLOR_PAIR(9)); 
@@ -465,6 +517,8 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     wattroff(shadow_win, COLOR_PAIR(9));
     wbkgd(shadow_win, COLOR_PAIR(13));
     wnoutrefresh(shadow_win);
+
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -490,12 +544,12 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         setcchar(&traco_horizontal, L"─", A_NORMAL, 0, NULL);
         mvwhline_set(table_win, 4, 2, &traco_horizontal, table_width - 5);
 
-        int col_name = 2, col_pos = 32, col_house = 44, col_ruler = 53, col_link = 61, col_natal = 69; //, col_natal_ruler = 82;
+        int col_name = 1, col_pos = 32, col_house = 42, col_ruler = 49, col_link = 58, col_natal = 69; //, col_natal_ruler = 82;
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_name + 4, _("Part Name"));
         mvwprintw(table_win, 5, col_pos + 4, _("Position"));
         mvwprintw(table_win, 5, col_house + 4, _("House"));
-        mvwprintw(table_win, 5, col_ruler + 4, _("Lord"));
+        mvwprintw(table_win, 5, col_ruler + 4, _("Lords"));
         mvwprintw(table_win, 5, col_link + 4, _("Link"));
         mvwprintw(table_win, 5, col_natal + 4, _("Radical House"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
@@ -529,14 +583,26 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 if (minutos_inteiros == 60) { minutos_inteiros = 0; graus_inteiros++; }
 
                 char coord_texto[32];
-                snprintf(coord_texto, sizeof(coord_texto), "%02d° %s %02d'", graus_inteiros, get_sign(sign_id), minutos_inteiros);
+                snprintf(coord_texto, sizeof(coord_texto), "%02d°%s%02d'", graus_inteiros, get_sign(sign_id), minutos_inteiros);
 
                 // NOVO: Se este registro for o selecionado atual, aplica o REVERSE na linha inteira!
                 bool is_linha_focada = (i == seletor_linha_atual);
                 bool is_major_lot = (strcmp(p->name, "Part of Fortune") == 0 || 
                                      strcmp(p->name, "Part of Spirit") == 0 || 
                                      strcmp(p->name, "Parte do Espírito") == 0 || 
-                                     strcmp(p->name, "Parte da Fortuna") == 0);
+                                     strcmp(p->name, "Parte da Fortuna") == 0 ||
+                                     strcmp(p->name, "Lot of Fortune") == 0 || 
+                                     strcmp(p->name, "Lot of Spirit") == 0 || 
+                                     strcmp(p->name, "Lot do Espírito") == 0 || 
+                                     strcmp(p->name, "Lot da Fortuna") == 0);
+
+                if (is_linha_focada) {
+                    wattron(table_win, A_BOLD);
+                    mvwprintw(table_win, 2, col_natal + 1, _("|  Formula: "));
+                    wattron(table_win, A_BOLD | COLOR_PAIR(37) | A_BOLD | A_REVERSE);
+                    wprintw(table_win, "[ %s + %s - %s ]", p->pp, p->sig, p->trig);
+                    wattroff(table_win, A_BOLD | COLOR_PAIR(37) | A_BOLD | A_REVERSE);
+                }
                 
                 // Determina o tom da linha
                 if (is_linha_focada) {
@@ -553,7 +619,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 mvwprintw(scroll_pad, row_pad, col_pos, "%-16s", coord_texto);
                 mvwprintw(scroll_pad, row_pad, col_house, " %-3s", p->house);
                 mvwprintw(scroll_pad, row_pad, col_ruler, " %s", p->lord);
-                mvwprintw(scroll_pad, row_pad, col_link, "%-3s", p->link);
+                mvwprintw(scroll_pad, row_pad, col_link, "%-3s %-3s", p->link, p->link2);
                 mvwprintw(scroll_pad, row_pad, col_natal, "%-3s", np->house);
                 
                 wattroff(scroll_pad, COLOR_PAIR(37) | COLOR_PAIR(13) | A_BOLD | A_REVERSE);
@@ -583,7 +649,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         mvwhline_set(table_win, table_height - 4, 2, &traco_horizontal, table_width - 5);
 
         wattron(table_win, A_DIM);
-        mvwprintw(table_win, table_height - 3, 4, _("Use [↑/↓] Select | [x] Aspects."));
+        mvwprintw(table_win, table_height - 3, 4, _("Use [↑/↓] Select | [x] Aspects with Radical Planets."));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
@@ -609,7 +675,8 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
             case 'x': 
             case KEY_F(3):
                 if (qtd_partes > 0) {
-                    display_part_aspects(obj, num_objects, lista, qtd_partes);
+                    //int object_diff = show_modern_planets ? 0 : 3;
+                    display_part_aspects(obj_natal, num_objects, lista, qtd_partes);
                     
                     touchwin(shadow_win);
                     wnoutrefresh(shadow_win);
@@ -905,7 +972,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int w_height = 23;
+    int w_height = 24;
     int w_width = max_x - 14;
 
     int start_y = (max_y - w_height) / 2;
@@ -924,6 +991,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     int f_d_personal = 15, f_d_sig = 1, f_d_trigger = 2; 
     int f_n_personal = 15, f_n_sig = 2, f_n_trigger = 1; 
     char f_link[8] = "-"; // NOVO: Inicializa o link vazio
+    char f_link2[8] = "-";
     char f_desc[255];
     snprintf(f_desc, 255, "%s", _("User defined hermetic lot formula."));
 
@@ -936,7 +1004,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         db = open_database();
         
         const char *sql = "SELECT name, gender_id, diurnal_personal_point, diurnal_significator, diurnal_trigger, "
-                          "nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link "
+                          "nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link, link2 "
                           "FROM arabic_parts WHERE id = ?;";
 
         rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
@@ -960,11 +1028,12 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
             f_n_trigger  = sqlite3_column_int(stmt, 7);
             strcpy(f_desc, (const char *)sqlite3_column_text(stmt, 8));
             strcpy(f_link, (const char *)sqlite3_column_text(stmt, 9)); // NOVO
+            strcpy(f_link2, (const char *)sqlite3_column_text(stmt, 10));
         }
         sqlite3_finalize(stmt);        
     }
 
-    // Expandido para 7 campos: 0=Name, 1=Gender, 2=Diurnal, 3=Nocturnal, 4=Desc, 5=Link, 6=Save
+    // Expandido para 8 campos: 0=Name, 1=Gender, 2=Diurnal, 3=Nocturnal, 4=Desc, 5=Link, 6=Link2, 7=Save
     int campo_atual = 0; 
     int sub_campo = 0;   
     int ch;
@@ -1032,19 +1101,23 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
 
         // 5. NOVO CAMPO: Link Tradicional (Selecionável por Setas)
         wattron(win, A_BOLD);
-        mvwprintw(win, 12, 4, _("Traditional Link: "));
+        mvwprintw(win, 12, 4, _("Traditional Links: "));
         wattroff(win, A_BOLD);
 
         if (campo_atual == 4) wattron(win, COLOR_PAIR(15) | A_REVERSE | A_BOLD); // Amarelo destaque para seleção
         mvwprintw(win, 12, 22, " < %s > ", f_link);
         wattroff(win, campo_atual == 4 ? (COLOR_PAIR(15) | A_REVERSE | A_BOLD) : 0);
 
+        if (campo_atual == 5) wattron(win, COLOR_PAIR(15) | A_REVERSE | A_BOLD); // Amarelo destaque para seleção
+        mvwprintw(win, 13, 22, " < %s > ", f_link2);
+        wattroff(win, campo_atual == 5 ? (COLOR_PAIR(15) | A_REVERSE | A_BOLD) : 0);
+
         // 6. Description Textual (Empurrado para a linha 14)
         wattron(win, A_BOLD);
-        mvwprintw(win, 14, 4, _("Description: "));
+        mvwprintw(win, 15, 4, _("Description: "));
         wattroff(win, A_BOLD);
 
-        if (campo_atual == 5) wattron(win, COLOR_PAIR(28) | A_REVERSE);
+        if (campo_atual == 6) wattron(win, COLOR_PAIR(28) | A_REVERSE);
         
         // 1. Coleta dinamicamente os limites de largura da janela atual
         int w_max_y, w_max_x;
@@ -1058,7 +1131,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         if (largura_util > 120) largura_util = 120; // Limite máximo do seu campo
 
         // 3. Limpa a área imprimindo os espaços em branco controlados pelo limite real
-        mvwprintw(win, 15, 4, " ");
+        mvwprintw(win, 16, 4, " ");
         for (int i = 0; i < largura_util; i++) {
             wprintw(win, " ");
         }
@@ -1069,19 +1142,19 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         strncpy(f_desc_visivel, f_desc, largura_util);
 
         // 5. Imprime o texto truncado com segurança dentro da área reservada
-        mvwprintw(win, 15, 5, "%s", f_desc_visivel);
+        mvwprintw(win, 16, 5, "%s", f_desc_visivel);
 
-        if (campo_atual == 5) wattroff(win, COLOR_PAIR(28) | A_REVERSE);
+        if (campo_atual == 6) wattroff(win, COLOR_PAIR(28) | A_REVERSE);
 
 
         // 7. Botão de Gravação (Empurrado para a linha 17)
-        if (campo_atual == 6) wattron(win, COLOR_PAIR(11) | A_REVERSE);
+        if (campo_atual == 7) wattron(win, COLOR_PAIR(11) | A_REVERSE);
         else wattron(win, COLOR_PAIR(11));
-        mvwprintw(win, 18, (w_width - 16) / 2, _(" [ SAVE FORMULA ] "));
+        mvwprintw(win, 19, (w_width - 16) / 2, _(" [ SAVE FORMULA ] "));
         wattroff(win, COLOR_PAIR(11) | A_REVERSE);
 
         wattron(win, A_DIM);
-        mvwprintw(win, 20, 2, _("Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | [ENTER] Edit Text / Save"));
+        mvwprintw(win, 21, 2, _("Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | [ENTER] Edit Text / Save"));
         wattroff(win, A_DIM);
 
         wnoutrefresh(win);
@@ -1092,11 +1165,11 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
 
         switch (ch) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 7) % 7; // Módulo 7 campos
+                campo_atual = (campo_atual - 1 + 8) % 8; // Módulo 7 campos
                 sub_campo = 0;
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 7;
+                campo_atual = (campo_atual + 1) % 8;
                 sub_campo = 0;
                 break;
             case KEY_RIGHT:
@@ -1115,6 +1188,10 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     int next_idx = rotacionar_indice_link(f_link, 1);
                     strcpy(f_link, OPCOES_LINK[next_idx]);
                 }
+                if (campo_atual == 5) { // NOVO: Roda os glifos/casas para a DIREITA
+                    int next_idx2 = rotacionar_indice_link(f_link2, 1);
+                    strcpy(f_link2, OPCOES_LINK[next_idx2]);
+                }
                 break;
             case KEY_LEFT:
                 if (campo_atual == 1) { f_gender = (f_gender - 2 + 3) % 3 + 1; }
@@ -1132,6 +1209,10 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     int prev_idx = rotacionar_indice_link(f_link, -1);
                     strcpy(f_link, OPCOES_LINK[prev_idx]);
                 }
+                if (campo_atual == 5) { // NOVO: Roda os glifos/casas para a ESQUERDA
+                    int prev_idx2 = rotacionar_indice_link(f_link2, -1);
+                    strcpy(f_link2, OPCOES_LINK[prev_idx2]);
+                }
                 break;
             case '\t': 
                 if (campo_atual == 2 || campo_atual == 3) {
@@ -1143,11 +1224,11 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     // Passamos x = 17 exatamente para sincronizar com mvwprintw(win, 2, 17, ...)
                     campo_texto_amigavel_avancado(win, 2, 17, f_name, 32);
                 }
-                if (campo_atual == 5) { // Campo Description: mvwprintw na coordenada (15, 4)
+                if (campo_atual == 6) { // Campo Description: mvwprintw na coordenada (15, 4)
                     // Passamos x = 17 exatamente para sincronizar com mvwprintw(win, 14, 17, ...)
-                    campo_texto_amigavel_avancado(win, 15, 4, f_desc, 255);
+                    campo_texto_amigavel_avancado(win, 16, 4, f_desc, 255);
                 }
-                if (campo_atual == 6) { // SAVE FORMULA (Sua rotina SQLite global idêntica...)
+                if (campo_atual == 7) { // SAVE FORMULA (Sua rotina SQLite global idêntica...)
 
                     sqlite3_stmt *stmt = NULL;
                     const char *sql_query = NULL;
@@ -1157,12 +1238,12 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                         sql_query = "UPDATE arabic_parts SET name=?, gender_id=?, "
                                     "diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, "
                                     "nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, "
-                                    "description=?, link=? WHERE id=?;";
+                                    "description=?, link=?, link2=? WHERE id=?;";
                     } else {
                         sql_query = "INSERT INTO arabic_parts (name, gender_id, diurnal_personal_point, "
                                     "diurnal_significator, diurnal_trigger, nocturnal_personal_point, "
-                                    "nocturnal_significator, nocturnal_trigger, description, link) "
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                                    "nocturnal_significator, nocturnal_trigger, description, link, link2) "
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                     }
 
                     // 2. Compila a query no SQLite
@@ -1186,10 +1267,11 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                         // TEXTOS
                         sqlite3_bind_text(stmt, 9, f_desc, -1, SQLITE_TRANSIENT);
                         sqlite3_bind_text(stmt, 10, f_link, -1, SQLITE_TRANSIENT);
+                        sqlite3_bind_text(stmt, 11, f_link2, -1, SQLITE_TRANSIENT);
                         
                         // Se for UPDATE, vincula o ID no 11º ponto de interrogação
                         if (part_id_edicao > 0) {
-                            sqlite3_bind_int(stmt, 11, part_id_edicao);
+                            sqlite3_bind_int(stmt, 12, part_id_edicao);
                         }
 
                         // 4. Executa a query
@@ -1360,14 +1442,44 @@ void get_part_abbreviation(char *name, char *abreviacao) {
     else if (strncmp(name, "Lot of ", 7) == 0) {
         copy_upper3_utf8(&name[7], abreviacao);
     }
-    else if (strncmp(name, "Lote d", 6) == 0) { 
+    else if (strncmp(name, "Lote do ", 8) == 0) { 
+        copy_upper3_utf8(&name[8], abreviacao);
+    }
+    else if (strncmp(name, "Lote da ", 8) == 0) { 
+        copy_upper3_utf8(&name[8], abreviacao);
+    }    
+    else if (strncmp(name, "Lot do ", 7) == 0) { 
+        copy_upper3_utf8(&name[7], abreviacao);
+    }
+    else if (strncmp(name, "Lot da ", 7) == 0) { 
+        copy_upper3_utf8(&name[7], abreviacao);
+    }
+    else if (strncmp(name, "Lote dos ", 9) == 0) { 
+        copy_upper3_utf8(&name[9], abreviacao);
+    }
+    else if (strncmp(name, "Lote das ", 9) == 0) { 
+        copy_upper3_utf8(&name[9], abreviacao);
+    }    
+    else if (strncmp(name, "Lot dos ", 8) == 0) { 
+        copy_upper3_utf8(&name[8], abreviacao);
+    }
+    else if (strncmp(name, "Lot das ", 8) == 0) { 
         copy_upper3_utf8(&name[8], abreviacao);
     }
     else if (strncmp(name, "Pars ", 5) == 0) {
         copy_upper3_utf8(&name[5], abreviacao);
     }
-    else if (strncmp(name, "Parte d", 7) == 0) {
+    else if (strncmp(name, "Parte do ", 9) == 0) {
         copy_upper3_utf8(&name[9], abreviacao); 
+    }
+    else if (strncmp(name, "Parte da ", 9) == 0) {
+        copy_upper3_utf8(&name[9], abreviacao); 
+    }    
+    else if (strncmp(name, "Parte dos ", 10) == 0) {
+        copy_upper3_utf8(&name[10], abreviacao); 
+    }
+    else if (strncmp(name, "Parte das ", 10) == 0) {
+        copy_upper3_utf8(&name[10], abreviacao); 
     }
     else {
         copy_upper3_utf8(&name[0], abreviacao);
@@ -1485,16 +1597,17 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
             mvwprintw(aspects_win, 3, 14 + 6 * j, text);
 
             // B) Desenha o Grid Estrutural desta coluna (Linhas horizontais e verticais)
-            for (int i = 0; i < linhas_nesta_tela + 1; i++) {
-                mvwprintw(aspects_win, 4 + 2 * i, 12 + 6 * j, "______");
-            }
             for (int i = 0; i < (linhas_nesta_tela * 2); i++) {
-                mvwprintw(aspects_win, 5 + i, 12 + 6 * j, "|");
+                mvwprintw(aspects_win, 5 + i, 12 + 6 * j, "│");
                 if (j == partes_nesta_pagina - 1) {
-                    mvwprintw(aspects_win, 5 + i, 12 + 6 * (j + 1), "|");
+                    mvwprintw(aspects_win, 5 + i, 12 + 6 * (j + 1), "│");
                 }
             }
 
+            for (int i = 0; i < linhas_nesta_tela + 1; i++) {
+                mvwprintw(aspects_win, 4 + 2 * i, 12 + 6 * j, (i == 0) ? "┼─────┼" : "┼─────┼");
+            }
+            
             // C) Preenche os dados astrológicos baseados no deslocamento vertical
             for (int r = 0; r < linhas_nesta_tela; r++) {
                 int idx_p_matriz = row_offset + r; // Posição real do planeta na matriz calculada
@@ -1527,7 +1640,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     }
 
                     char ag_txt[8];
-                    snprintf(ag_txt, sizeof(ag_txt), "%3.1f°", orbe_real);
+                    snprintf(ag_txt, sizeof(ag_txt), "%3.1f", orbe_real);
                     mvwprintw(aspects_win, y_pos_angulo, x_pos + 1, "%s", ag_txt);
                     wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
                 } else {

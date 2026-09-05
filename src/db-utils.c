@@ -720,6 +720,46 @@ int get_ruler_dom_by_sign_id(int sign, int *n_ruler) {
 }
 
 
+int get_ruler_exalt_by_sign_id(int sign, int *n_ruler, bool consider_modern_planets_rulling) {    
+
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    int rc;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in get_ruler_exalt_by_sign_id\n");
+        return 0;
+    }
+
+    const char *sql_select = "SELECT exalted FROM signs WHERE id = ?;";
+    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
+    
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        close_database(db);
+        return 0;
+    }
+
+    sqlite3_bind_int(stmt, 1, sign);
+
+    int found = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {            
+        *n_ruler = sqlite3_column_int(stmt, 0);
+
+        if (!consider_modern_planets_rulling && (*n_ruler > 7 && *n_ruler < 11)) {
+            *n_ruler = 0;
+        }
+        found = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    close_database(db);
+
+    return found;
+
+}
+
 
 
 int get_planet_gender(char *planet_symbol, int *gender_id) {

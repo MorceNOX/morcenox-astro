@@ -418,23 +418,23 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
         wattroff(pad, A_BOLD);
     }
 
+    // 4. Desenho das Linhas Verticais
+    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
+            mvwprintw(pad, 1 + i, 2 + 4 * j, "│");
+        }
+    }
+
     // 3. Desenho das Linhas do Grid
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (i == 0) {
-                mvwprintw(decl_win, 2, 4 + 4 * j, "_____");
+                mvwprintw(decl_win, 2, 4 + 4 * j, "┼───┼");
             }
             else {
-                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "_____");
+                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "┼───┼");
             }
             
-        }
-    }
-
-    // 4. Desenho das Linhas Verticais
-    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
-        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
-            mvwprintw(pad, 1 + i, 2 + 4 * j, "|");
         }
     }
 
@@ -569,23 +569,23 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         wattroff(pad, A_BOLD);
     }
 
+    // 4. Desenho das Linhas Verticais
+    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
+            mvwprintw(pad, 1 + i, 2 + 4 * j, "│");
+        }
+    }
+    
     // 3. Desenho das Linhas do Grid
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (i == 0) {
-                mvwprintw(aspects_win, 2, 4 + 4 * j, "_____");
+                mvwprintw(aspects_win, 2, 4 + 4 * j, "┼───┼");
             }
             else {
-                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "_____");
+                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "┼───┼");
             }
             
-        }
-    }
-
-    // 4. Desenho das Linhas Verticais
-    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
-        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
-            mvwprintw(pad, 1 + i, 2 + 4 * j, "|");
         }
     }
 
@@ -832,23 +832,23 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
         wattroff(pad, A_BOLD);
     }
 
+    // 4. Desenho das Linhas Verticais
+    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
+            mvwprintw(pad, 1 + i, 2 + 4 * j, "│");
+        }
+    }
+    
     // 3. Desenho das Linhas do Grid
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (i == 0) {
-                mvwprintw(aspects_win, 2, 4 + 4 * j, "_____");
+                mvwprintw(aspects_win, 2, 4 + 4 * j, "┼───┼");
             }
             else {
-                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "_____");
+                mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "┼───┼");
             }
             
-        }
-    }
-
-    // 4. Desenho das Linhas Verticais
-    for (int i = 0; i < ((12 - object_diff) * 2); i++) {
-        for (int j = 0; j < NUM_OBJECTS - object_diff + 1; j++) {
-            mvwprintw(pad, 1 + i, 2 + 4 * j, "|");
         }
     }
 
@@ -1058,23 +1058,25 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
         wattroff(pad, A_BOLD);
     }
 
-    // 3. Desenho das Linhas do Grid
-    for (int i = 0; i < 12 - object_diff + 1; i++) {
-        for (int j = 0; j < num_ants; j++) {
-            if (i == 0) {
-                mvwprintw(aspects_win, 3, 4 + 6 * j, "______");
-            }
-            else {
-                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "______");
-            }
-            
-        }
-    }
+    
 
     // 4. Desenho das Linhas Verticais
     for (int i = 0; i < ((12 - object_diff) * 2); i++) {
         for (int j = 0; j < num_ants + 1; j++) {
-            mvwprintw(pad, 2 + i, 2 + 6 * j, "|");
+            mvwprintw(pad, 2 + i, 2 + 6 * j, "│");
+        }
+    }
+
+    // 3. Desenho das Linhas do Grid
+    for (int i = 0; i < 12 - object_diff + 1; i++) {
+        for (int j = 0; j < num_ants; j++) {
+            if (i == 0) {
+                mvwprintw(aspects_win, 3, 4 + 6 * j, "┼─────┼");
+            }
+            else {
+                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
+            }
+            
         }
     }
 
@@ -1110,7 +1112,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8] = "";
                 snprintf(ag, 8, "%4.2f", cell.angle);
-                mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
+                mvwprintw(pad, 3 + 2 * i, 4 + 6 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
                                
             }
@@ -1124,7 +1126,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
         }
     }
 
-    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
+    mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
 
@@ -1139,7 +1141,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     nodelay(pad, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+    prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
@@ -1157,7 +1159,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+        prefresh(pad, offset_y + 2, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         
     }
     

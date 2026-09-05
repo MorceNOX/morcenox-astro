@@ -41,7 +41,7 @@ void processar_confronto_natal_revolucao(
 struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horario_destino);
 double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada, double sol_natal_exibido);
 double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada);
-void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets);
+void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal);
 
 void abrir_janela_confronto_natal_revolucao(
     int id_almuten_rev, 

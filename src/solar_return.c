@@ -317,7 +317,7 @@ void processar_confronto_natal_revolucao(
 
 
 
-void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets) {
+void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal) {
     
     double idade_padrao = obter_idade_padrao_mapa_double();
     double idade_escolhida = selecionar_idade_visual_fracionada(idade_padrao);
@@ -413,7 +413,8 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
         julian_day,
         strength_planets,
         cusps_natal[1],
-        cusps_natal
+        cusps_natal,
+        obj_natal
     );
 
 }

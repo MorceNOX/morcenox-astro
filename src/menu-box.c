@@ -1469,7 +1469,7 @@ void call_chart_now() {
     //PlanetDignities *dig_natal;
     //double cusps[13] = {0};
 
-    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, _("Here And Now"), HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL);
+    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, _("Here And Now"), HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL);
 }
 
 
@@ -1558,7 +1558,7 @@ void call_chart() {
 
     tz_offset = tz_offset + dst_offset;
 
-    chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL);
+    chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL);
 }
 
 

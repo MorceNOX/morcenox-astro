@@ -4557,7 +4557,7 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
 
 
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal) {
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal) {
     int n = 1;
     
     bool dark_mode = (darkmode)?true:false;
@@ -4820,7 +4820,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
-    timeout(984); // This will make getch() wait for 1 second max
+    timeout(985); // This will make getch() wait for 1 second max
     
     while (running) {
         
@@ -6161,12 +6161,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
 
             double sun_rising_time = plots[0].rising_time;
-            double sun_rise_plus_12 = plots[0].rising_time + 12.0;
-            if (sun_rise_plus_12 < 0.0) sun_rise_plus_12 += 24.0;
-            if (sun_rise_plus_12 > 24.0) sun_rise_plus_12 -= 24.0;
+            double sun_setting_time = plots[0].setting_time;
+            //if (sun_rise_plus_12 < 0.0) sun_rise_plus_12 += 24.0;
+            //if (sun_rise_plus_12 > 24.0) sun_rise_plus_12 -= 24.0;
 
             if (i == 2) { // Mercúrio Condicional Oriental/Ocidental
-                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_rise_plus_12) {
+                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
                     planet_gen = 1;
                 }
                 else {
@@ -6189,7 +6189,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             
             if (i == 2) { // Mercúrio Condicional Oriental/Ocidental
-                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_rise_plus_12) {
+                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
                     planet_sect = 1;
                 }
                 else {
@@ -6272,7 +6272,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 int found = get_planet_orientality(plots[i].object, &planet_orientality);
 
 
-                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_rise_plus_12) {
+                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
                     snprintf(row->orientality_str, 30, "%s", _("Orient"));
                     snprintf(orientality_str, 11, "%s", "Oriental");
                 }
@@ -6966,6 +6966,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.ants = ants;
 
                 ctx.house_rulers = house_rulers;
+
+                ctx.obj_natal = obj_natal;
             
                 open_menu_tables(&ctx);
 
@@ -6976,7 +6978,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'p':
             case 'P':
                 if (mapa_retorno) {
-                    display_arabic_parts_solar_natal_confrontation(obj, cusps, total_objects, cusps_natal);
+                    display_arabic_parts_solar_natal_confrontation(obj, cusps, total_objects, cusps_natal, obj_natal);
                 }
                 break;                
             case 't':
@@ -7072,7 +7074,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '7':
             case KEY_F(19):
                 if (!mapa_retorno) {
-                    disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets);
+                    disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj);
                     saiu_retorno = true;
                 }                                
                 break; 
@@ -7400,7 +7402,7 @@ void open_menu_tables(ContextoMenu *ctx) {
                 display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             }
             else {
-                display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal);
+                display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal, ctx->obj_natal);
             }
             break;
         case 15:
@@ -7432,7 +7434,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 19:
             if (!ctx->mapa_retorno) {    
-                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets);
+                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj);
                 saiu_retorno = true;
             }
             break;

@@ -46,7 +46,8 @@ int get_rulers(char *sign_symbol, int *n_ruler, int *n_exalted, int *n_exile, in
 int get_planet_gender(char *planet_symbol, int *gender_id);
 int get_rulers_by_lon(double longitude, bool consider_modern_planets_rulling, int *n_dom, int *n_exalted, int *n_tri1, int *n_tri2, int *n_tri3, int *n_term, int *n_dec);
 int get_rulers_by_sign_id(int sign, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3);
-int get_ruler_dom_by_sign_id(int sign, int *n_ruler);  
+int get_ruler_dom_by_sign_id(int sign, int *n_ruler);
+int get_ruler_exalt_by_sign_id(int sign, int *n_ruler, bool consider_modern_planets_rulling);
 int get_sign_gender(char *sign_symbol, int *gender_id);
 int get_quadrant_gender(int house, int *gender_id);
 int get_planet_sect(char *planet_symbol, int *sect_id);
