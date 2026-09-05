@@ -577,15 +577,8 @@ OptionsEdition select_options() {
         for (int i = 0; i < 20; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(2));
-
+            
             if (i == 0) {
-                // Show 'yes' or 'no' instead of 0 or 1
-                const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
-
-                const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 2, 5, "%s: %s ", dark_mode_text, dark_mode_str);
-            }
-            if (i == 1) {
                 // Show the char id and the name of the house system
                 char house_system_name[128];
                 snprintf(house_system_name, 128, "%s", _("Unknown"));
@@ -600,9 +593,9 @@ OptionsEdition select_options() {
                     }
                 }
                 const char *house_system_text = _("House System");
-                mvwprintw(win, 4, 5, "%s: %s ", house_system_text, house_system_name);
+                mvwprintw(win, 2, 5, "%s: %s ", house_system_text, house_system_name);
             }
-            if (i == 2) {
+            else if (i == 1) {
                 // Show the name of the triplicity system instead of just the number
                 char triplicity_system_name[128];
                 snprintf(triplicity_system_name, 128, "%s", _("Unknown"));
@@ -618,9 +611,9 @@ OptionsEdition select_options() {
                 }
                 const char *trip_text = _("Triplicity System");
 
-                mvwprintw(win, 5, 5, "%s: %s ", trip_text, triplicity_system_name);
+                mvwprintw(win, 3, 5, "%s: %s ", trip_text, triplicity_system_name);
             }
-            if (i == 3) {
+            else if (i == 2) {
                 // Show the name of the terms system instead of just the number
                 char terms_system_name[128];
                 snprintf(terms_system_name, 128, "%s", _("Unknown"));
@@ -636,83 +629,83 @@ OptionsEdition select_options() {
                 }
 
                 const char *terms_text = _("Terms (bounds) System");
-                mvwprintw(win, 6, 5, "%s: %s ", terms_text, terms_system_name);
+                mvwprintw(win, 4, 5, "%s: %s ", terms_text, terms_system_name);
             }
             
             
-            if (i == 4) {
+            else if (i == 3) {
                 const char *orb1 = _("Sun orb");
-                mvwprintw(win, 8, 5, "%s: %.1f ", orb1, planet_orbis[0]);
+                mvwprintw(win, 6, 5, "%s: %.1f ", orb1, planet_orbis[0]);
             }
-            if (i == 5) {
+            else if (i == 4) {
                 const char *orb2 = _("Moon orb");
-                mvwprintw(win, 9, 5, "%s: %.1f ", orb2, planet_orbis[1]);
+                mvwprintw(win, 7, 5, "%s: %.1f ", orb2, planet_orbis[1]);
             }
-            if (i == 6) {
+            else if (i == 5) {
                 const char *orb3 = _("Mercury orb");
-                mvwprintw(win, 10, 5, "%s: %.1f ", orb3, planet_orbis[2]);
+                mvwprintw(win, 8, 5, "%s: %.1f ", orb3, planet_orbis[2]);
             }
-            if (i == 7) {
+            else if (i == 6) {
                 const char *orb4 = _("Venus orb");
-                mvwprintw(win, 11, 5, "%s: %.1f ", orb4, planet_orbis[3]);
+                mvwprintw(win, 9, 5, "%s: %.1f ", orb4, planet_orbis[3]);
             }
-            if (i == 8) {
+            else if (i == 7) {
                 const char *orb5 = _("Mars orb");
-                mvwprintw(win, 12, 5, "%s: %.1f ", orb5, planet_orbis[4]);
+                mvwprintw(win, 10, 5, "%s: %.1f ", orb5, planet_orbis[4]);
             }
-            if (i == 9) {
+            else if (i == 8) {
                 const char *orb6 = _("Jupiter orb");
-                mvwprintw(win, 13, 5, "%s: %.1f ", orb6, planet_orbis[5]);
+                mvwprintw(win, 11, 5, "%s: %.1f ", orb6, planet_orbis[5]);
             }
-            if (i == 10) {
+            else if (i == 9) {
                 const char *orb7 = _("Saturn orb");
-                mvwprintw(win, 14, 5, "%s: %.1f ", orb7, planet_orbis[6]);
+                mvwprintw(win, 12, 5, "%s: %.1f ", orb7, planet_orbis[6]);
             }
-            if (i == 11) {
+            else if (i == 10) {
                 const char *orb8 = _("Uranus orb");
-                mvwprintw(win, 15, 5, "%s: %.1f ", orb8, planet_orbis[7]);
+                mvwprintw(win, 13, 5, "%s: %.1f ", orb8, planet_orbis[7]);
             }
-            if (i == 12) {
+            else if (i == 11) {
                 const char *orb9 = _("Neptune orb");
-                mvwprintw(win, 16, 5, "%s: %.1f ", orb9, planet_orbis[8]);
+                mvwprintw(win, 14, 5, "%s: %.1f ", orb9, planet_orbis[8]);
             }
-            if (i == 13) {
+            else if (i == 12) {
                 const char *orb10 = _("Pluto orb");
-                mvwprintw(win, 17, 5, "%s: %.1f ", orb10, planet_orbis[9]);
+                mvwprintw(win, 15, 5, "%s: %.1f ", orb10, planet_orbis[9]);
             }
-            if (i == 14) {
+            else if (i == 13) {
                 const char *orb11 = _("Lunar Nodes orb");
-                mvwprintw(win, 18, 5, "%s: %.1f ", orb11, planet_orbis[10]);
+                mvwprintw(win, 16, 5, "%s: %.1f ", orb11, planet_orbis[10]);
             }
 
-            if (i == 15) {
+            else if (i == 14) {
                 const char *orb12 = _("Parallel / Contra-parallel orb");
-                mvwprintw(win, 19, 5, "%s: %.1f ", orb12, parallel_orbis);
+                mvwprintw(win, 17, 5, "%s: %.1f ", orb12, parallel_orbis);
             }
 
-            if (i == 16) {
+            else if (i == 15) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
                 const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
-                mvwprintw(win, 21, 5, "%s %s ", consider_text, consider_modern_planets_str);
+                mvwprintw(win, 19, 5, "%s %s ", consider_text, consider_modern_planets_str);
             }
 
-            if (i == 17) {
+            else if (i == 16) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *show_modern_planets_str = options.show_modern_planets ? _("yes") : _("no");
                 const char *use_text = _("Use Modern Planets?");
 
-                mvwprintw(win, 22, 5, "%s %s ", use_text, show_modern_planets_str);
+                mvwprintw(win, 20, 5, "%s %s ", use_text, show_modern_planets_str);
             }
 
-            if (i == 18) {
+            else if (i == 17) {
                 const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
                 const char *gen_text = _("Default Gender");
 
-                mvwprintw(win, 24, 5, "%s: %s ", gen_text, gender_str);
+                mvwprintw(win, 22, 5, "%s: %s ", gen_text, gender_str);
             }
 
-            if (i == 19) {
+            else if (i == 18) {
                 char language_name[128];
                 snprintf(language_name, 128, "%s", _("Unknown"));
                 if (lang_count > 0) {
@@ -726,7 +719,14 @@ OptionsEdition select_options() {
                 }
                 const char *lang_text = _("Interface Language");
 
-                mvwprintw(win, 26, 5, "%s: %s ", lang_text, language_name);
+                mvwprintw(win, 24, 5, "%s: %s ", lang_text, language_name);
+            }
+            else if (i == 19) {
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
+
+                const char *dark_mode_text = _("Dark Mode");
+                mvwprintw(win, 25, 5, "%s: %s ", dark_mode_text, dark_mode_str);
             }
 
             if (i == campo_atual) wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
@@ -747,11 +747,8 @@ OptionsEdition select_options() {
                 campo_atual = (campo_atual + 1) % 20;
                 break;
             case KEY_RIGHT:
-                if (campo_atual == 0) {
-                    // Toggle dark mode
-                    options.dark_mode = !options.dark_mode;
-                }
-                else if (campo_atual == 1) { 
+                
+                if (campo_atual == 0) { 
                     // Cycle through house systems
                     if (house_system_count > 0) {
                         // Find current position
@@ -773,7 +770,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 2) {
+                else if (campo_atual == 1) {
                     // Cycle through triplicity systems
                     if (triplicity_count > 0) {
                         // Find current position
@@ -795,7 +792,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 3) {
+                else if (campo_atual == 2) {
                     // Cycle through terms systems
                     if (terms_count > 0) {
                         // Find current position
@@ -817,29 +814,29 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual >= 4 && campo_atual <= 14) {
+                else if (campo_atual >= 3 && campo_atual <= 13) {
                     // Increment planet orbis value
                     int planet_index = campo_atual - 3;
                     if (planet_orbis[planet_index] < 30.0) {
                         planet_orbis[planet_index] += 0.5;
                     }
                 }
-                else if (campo_atual == 15) {
+                else if (campo_atual == 14) {
                     if (parallel_orbis < 5.0) {
                         parallel_orbis += 0.5;
                     }
                 }
-                else if (campo_atual == 16) {
+                else if (campo_atual == 15) {
                     options.modern_planets_rulling = !options.modern_planets_rulling;
                 }
-                else if (campo_atual == 17) {
+                else if (campo_atual == 16) {
                     options.show_modern_planets = !options.show_modern_planets;
                 }
-                else if (campo_atual == 18) {
+                else if (campo_atual == 17) {
                     if (options.gender < 4) options.gender++;
                     if (options.gender == 4) options.gender = 1;            
                 }
-                else if (campo_atual == 19) {
+                else if (campo_atual == 18) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -858,14 +855,15 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                break;
-
-            case KEY_LEFT:
-                if (campo_atual == 0) {
+                else if (campo_atual == 19) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
-                else if (campo_atual == 1) { 
+                break;
+
+            case KEY_LEFT:
+               
+                if (campo_atual == 0) { 
                     // Cycle backwards through house systems
                     if (house_system_count > 0) {
                         // Find current position
@@ -887,7 +885,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 2) {
+                else if (campo_atual == 1) {
                     // Cycle backwards through triplicity systems
                     if (triplicity_count > 0) {
                         // Find current position
@@ -909,7 +907,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 3) {
+                else if (campo_atual == 2) {
                     // Cycle backwards through terms systems
                     if (terms_count > 0) {
                         // Find current position
@@ -931,29 +929,29 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual >= 4 && campo_atual <= 14) {
+                else if (campo_atual >= 3 && campo_atual <= 13) {
                     // Decrement planet orbis value
                     int planet_index = campo_atual - 3;
                     if (planet_orbis[planet_index] > 2.0) {
                         planet_orbis[planet_index] -= 0.5;
                     }
                 }
-                else if (campo_atual == 15) {
+                else if (campo_atual == 14) {
                     if (parallel_orbis > 1.0) {
                         parallel_orbis -= 0.5;
                     }
                 }
-                else if (campo_atual == 16) {
+                else if (campo_atual == 15) {
                     options.modern_planets_rulling = !options.modern_planets_rulling;
                 }
-                else if (campo_atual == 17) {
+                else if (campo_atual == 16) {
                     options.show_modern_planets = !options.show_modern_planets;
                 }
-                else if (campo_atual == 18) {
+                else if (campo_atual == 17) {
                     if (options.gender > 0) options.gender--;
                     if (options.gender == 0) options.gender = 3;
                 }
-                else if (campo_atual == 19) {
+                else if (campo_atual == 18) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -972,6 +970,10 @@ OptionsEdition select_options() {
                             snprintf(options.language, 10, "%s", lang_cods[0]);
                         }
                     }
+                }
+                else  if (campo_atual == 19) {
+                    // Toggle dark mode
+                    options.dark_mode = !options.dark_mode;
                 }
                 break;
             case 10: // Enter

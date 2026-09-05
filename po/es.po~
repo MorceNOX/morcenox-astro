@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-05 16:31-0300\n"
+"POT-Creation-Date: 2026-09-05 16:33-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -615,187 +615,187 @@ msgid ""
 "  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"
 msgstr ""
 
-#: src/arabic_parts.c:203
+#: src/arabic_parts.c:204
 msgid " Arabic Parts & Hermetic Lots "
 msgstr ""
 
-#: src/arabic_parts.c:208 src/arabic_parts.c:530
+#: src/arabic_parts.c:209 src/arabic_parts.c:531
 msgid "Current Chart Parameters: "
 msgstr ""
 
-#: src/arabic_parts.c:210 src/arabic_parts.c:532
+#: src/arabic_parts.c:211 src/arabic_parts.c:533
 msgid "Diurnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:210 src/arabic_parts.c:532
+#: src/arabic_parts.c:211 src/arabic_parts.c:533
 msgid "Nocturnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:211 src/arabic_parts.c:533 src/selections.c:1362
+#: src/arabic_parts.c:212 src/arabic_parts.c:534 src/selections.c:1362
 msgid "Gender"
 msgstr ""
 
-#: src/arabic_parts.c:211 src/arabic_parts.c:533 src/arabic_parts.c:1063
+#: src/arabic_parts.c:212 src/arabic_parts.c:534 src/arabic_parts.c:1064
 #: src/draw-chart.c:2189 src/selections.c:1363
 msgid "Masculine"
 msgstr ""
 
-#: src/arabic_parts.c:211 src/arabic_parts.c:533 src/arabic_parts.c:1063
+#: src/arabic_parts.c:212 src/arabic_parts.c:534 src/arabic_parts.c:1064
 #: src/draw-chart.c:2189 src/selections.c:1363
 msgid "Feminine"
 msgstr ""
 
-#: src/arabic_parts.c:211 src/arabic_parts.c:533 src/draw-chart.c:2189
+#: src/arabic_parts.c:212 src/arabic_parts.c:534 src/draw-chart.c:2189
 #: src/selections.c:709 src/selections.c:1363
 msgid "Neuter"
 msgstr ""
 
-#: src/arabic_parts.c:221 src/arabic_parts.c:543
+#: src/arabic_parts.c:222 src/arabic_parts.c:544
 msgid "Part Name"
 msgstr ""
 
-#: src/arabic_parts.c:222 src/arabic_parts.c:544 src/draw-chart.c:2761
+#: src/arabic_parts.c:223 src/arabic_parts.c:545 src/draw-chart.c:2761
 #: src/draw-chart.c:3271
 msgid "Position"
 msgstr ""
 
-#: src/arabic_parts.c:223 src/arabic_parts.c:545 src/draw-chart.c:2110
+#: src/arabic_parts.c:224 src/arabic_parts.c:546 src/draw-chart.c:2110
 #: src/draw-chart.c:2766 src/draw-chart.c:3274 src/profections.c:134
 msgid "House"
 msgstr ""
 
-#: src/arabic_parts.c:224 src/arabic_parts.c:546
+#: src/arabic_parts.c:225 src/arabic_parts.c:547
 msgid "Lords"
 msgstr ""
 
-#: src/arabic_parts.c:225 src/arabic_parts.c:547
+#: src/arabic_parts.c:226 src/arabic_parts.c:548
 msgid "Link"
 msgstr ""
 
-#: src/arabic_parts.c:226
+#: src/arabic_parts.c:227
 msgid "Core Traditional Governance"
 msgstr ""
 
-#: src/arabic_parts.c:247 src/arabic_parts.c:564
+#: src/arabic_parts.c:248 src/arabic_parts.c:565
 msgid "No Arabic Parts available for this chart configuration."
 msgstr ""
 
-#: src/arabic_parts.c:277 src/arabic_parts.c:595
+#: src/arabic_parts.c:278 src/arabic_parts.c:596
 msgid "|  Formula: "
 msgstr ""
 
-#: src/arabic_parts.c:381
+#: src/arabic_parts.c:382
 msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects."
 msgstr ""
 
-#: src/arabic_parts.c:384 src/arabic_parts.c:649 src/directions.c:713
+#: src/arabic_parts.c:385 src/arabic_parts.c:650 src/directions.c:713
 #: src/directions.c:1184 src/draw-chart.c:3216 src/draw-chart.c:3560
 #: src/draw-chart.c:4315 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1010
 #: src/mind.c:312 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr ""
 
-#: src/arabic_parts.c:525
+#: src/arabic_parts.c:526
 msgid " Arabic Parts of Solar Revolution / Radix Confrontation "
 msgstr ""
 
-#: src/arabic_parts.c:548
+#: src/arabic_parts.c:549
 msgid "Radical House"
 msgstr ""
 
-#: src/arabic_parts.c:646
+#: src/arabic_parts.c:647
 msgid ""
 "Use [↑/↓] Select | [x] or [F3] Aspects between Solar Return Parts and "
 "Radical Planets."
 msgstr ""
 
-#: src/arabic_parts.c:983
+#: src/arabic_parts.c:984
 msgid "New Custom Part"
 msgstr ""
 
-#: src/arabic_parts.c:990
+#: src/arabic_parts.c:991
 msgid "User defined hermetic lot formula."
 msgstr ""
 
-#: src/arabic_parts.c:1046
+#: src/arabic_parts.c:1047
 msgid " Edit Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:1046
+#: src/arabic_parts.c:1047
 msgid " New Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:1050
+#: src/arabic_parts.c:1051
 msgid "Part Name: "
 msgstr ""
 
-#: src/arabic_parts.c:1059
+#: src/arabic_parts.c:1060
 msgid "Gender Scope: "
 msgstr ""
 
-#: src/arabic_parts.c:1063
+#: src/arabic_parts.c:1064
 msgid "Neuter/Universal"
 msgstr ""
 
-#: src/arabic_parts.c:1068
+#: src/arabic_parts.c:1069
 msgid "Diurnal Formula (Personal Point + Significator - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:1083
+#: src/arabic_parts.c:1084
 msgid "Nocturnal Formula (Personal Point + Significatpr - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:1098
+#: src/arabic_parts.c:1099
 msgid "Traditional Links: "
 msgstr ""
 
-#: src/arabic_parts.c:1111
+#: src/arabic_parts.c:1112
 msgid "Description: "
 msgstr ""
 
-#: src/arabic_parts.c:1147
+#: src/arabic_parts.c:1148
 msgid " [ SAVE FORMULA ] "
 msgstr ""
 
-#: src/arabic_parts.c:1151
+#: src/arabic_parts.c:1152
 msgid ""
 "Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | "
 "[ENTER] Edit Text / Save"
 msgstr ""
 
-#: src/arabic_parts.c:1534 src/arabic_parts.c:1547
+#: src/arabic_parts.c:1535 src/arabic_parts.c:1548
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr ""
 
-#: src/arabic_parts.c:1542
+#: src/arabic_parts.c:1543
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:1670 src/aspects.c:494
+#: src/arabic_parts.c:1671 src/aspects.c:494
 msgid "(*) Numbers = angular difference in degrees"
 msgstr ""
 
-#: src/arabic_parts.c:1673
+#: src/arabic_parts.c:1674
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr ""
 
-#: src/arabic_parts.c:1673
+#: src/arabic_parts.c:1674
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:1760 src/selections.c:162
+#: src/arabic_parts.c:1761 src/selections.c:162
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:1764 src/selections.c:166
+#: src/arabic_parts.c:1765 src/selections.c:166
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:1826 src/arabic_parts.c:1840
+#: src/arabic_parts.c:1827 src/arabic_parts.c:1841
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:1845
+#: src/arabic_parts.c:1846
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
