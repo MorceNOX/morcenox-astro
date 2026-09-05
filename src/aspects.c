@@ -472,6 +472,14 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
 
                 if (cell.is_reverse) {
                     wattron(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "∦") == 0) {
+                            wattron(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattron(pad, COLOR_PAIR(38));
+                        }
+                    }
                 }
                 mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
                 
@@ -481,10 +489,25 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char orbe_str[8];
                 snprintf(orbe_str, 8, "%3.1f", cell.diff);
+
+                if (cell.is_reverse && DARK_MODE) {
+                    wattron(pad, COLOR_PAIR(35));
+                }
                 mvwprintw(pad, 2 + 2 * i, 3 + 4 * j, orbe_str);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-                if (cell.is_reverse) wattroff(pad, A_REVERSE);
+                if (cell.is_reverse) {
+                    wattroff(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "∦") == 0) {
+                            wattroff(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattroff(pad, COLOR_PAIR(38));
+                        }
+                        wattroff(pad, COLOR_PAIR(35));
+                    }
+                }
 
                 row_pad = 2 + 2 * i + 1;
             }
@@ -628,8 +651,20 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 // Ativa os atributos dinâmicos injetados pela função chamadora
                 wattron(pad, COLOR_PAIR(cell.color_pair));
                 if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
+                
                 if (cell.is_reverse) {
                     wattron(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattron(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattron(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattron(pad, COLOR_PAIR(38));
+                        }
+                    }
 
                     // Desenha o Símbolo Astrológico do Aspecto
                     mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
@@ -646,10 +681,28 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8];
                 snprintf(ag, 8, "%3.0f", cell.angle);
+
+                if (cell.is_reverse && DARK_MODE) {
+                    wattron(pad, COLOR_PAIR(35));
+                }
                 mvwprintw(pad, 2 + 2 * i, 3 + 4 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-                if (cell.is_reverse) wattroff(pad, A_REVERSE);
+                if (cell.is_reverse) {
+                    wattroff(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattroff(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattroff(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattroff(pad, COLOR_PAIR(38));
+                        }
+                        wattroff(pad, COLOR_PAIR(35));
+                    }
+                }
 
                 row_pad = 2 + 2 * i + 1;
             }
@@ -704,7 +757,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
         else if (ch == KEY_F(5)) {
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants);
+            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis());
 
             display_aspects_antissium(plots, ants, num_ants, &matrix_ants);
             
@@ -963,7 +1016,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
 
 
 
-AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_ants) {
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_ants, double antissia_orb) {
    
     AspectMatrix matrix = {0};
 
@@ -998,7 +1051,7 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
             }
 
             // Validação de Orbe e Signo
-            if (closest >= 0 && min_diff <= ANTISCIUM_ORB) {
+            if (closest >= 0 && min_diff <= antissia_orb) {
                
                 double aspect_diff = fabs(aspects_defs[closest].angle - angle);
 
@@ -1136,8 +1189,21 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattron(pad, COLOR_PAIR(cell.color_pair));
                 
                 if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
-
-                if (cell.is_reverse) wattron(pad, A_REVERSE);
+                
+                if (cell.is_reverse) {
+                    wattron(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattron(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattron(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattron(pad, COLOR_PAIR(38));
+                        }
+                    }
+                }
 
                 // Desenha o Símbolo Astrológico do Aspecto
                 mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "  %s  ", cell.symbol);
@@ -1149,10 +1215,28 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8] = "";
                 snprintf(ag, 8, "%5.2f", cell.angle);
+
+                if (cell.is_reverse && DARK_MODE) {
+                    wattron(pad, COLOR_PAIR(35));
+                }
                 mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-                if (cell.is_reverse) wattroff(pad, A_REVERSE);
+                if (cell.is_reverse) {
+                    wattroff(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattroff(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattroff(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattroff(pad, COLOR_PAIR(38));
+                        }
+                        wattroff(pad, COLOR_PAIR(35));
+                    }
+                }
                                
             }
             else {

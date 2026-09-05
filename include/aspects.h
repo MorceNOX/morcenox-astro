@@ -75,6 +75,6 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
 void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix);
 AspectMatrix calculate_aspects_by_sign(PlotObject *plots);
 void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix);
-AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects);
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects, double antissia_orb);
 void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix);
 #endif

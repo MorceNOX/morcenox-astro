@@ -4605,6 +4605,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(38, COLOR_BLUE, COLOR_WHITE);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -4648,6 +4649,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(38, COLOR_BLUE, COLOR_WHITE);
     }
     
     FLAGS = 0;
@@ -7437,7 +7439,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             else {
                 AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14);
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14, get_antissia_orbis());
                 display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);  
             }           
             break;
@@ -7468,7 +7470,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 23:
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14);
+            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14, get_antissia_orbis());
             display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);
             break;
         default:

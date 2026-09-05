@@ -507,6 +507,21 @@ OptionsEdition select_options() {
         close_database(db);
     }
 
+    // Load antissia aspect orbis from database
+    double antissia_orbis = 0.0;
+    db = open_database();
+    if (db) {
+        const char *sql_select_p_orbis = "SELECT antissia_orb FROM profiles WHERE profile = 'default';";
+        rc = sqlite3_prepare_v2(db, sql_select_p_orbis, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                antissia_orbis = sqlite3_column_double(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
 
     // Load languages from database
     char **lang_cods = NULL;
@@ -574,7 +589,7 @@ OptionsEdition select_options() {
         wattroff(win, COLOR_PAIR(2));     
 
         // Renderização dos campos com destaque no selecionado
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 21; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(2));
             
@@ -684,28 +699,33 @@ OptionsEdition select_options() {
             }
 
             else if (i == 15) {
-                // Show 'yes' or 'no' instead of 0 or 1
-                const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
-                const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
-                mvwprintw(win, 19, 5, "%s %s ", consider_text, consider_modern_planets_str);
+                const char *orb13 = _("Antissia / Contrantissia orb");
+                mvwprintw(win, 18, 5, "%s: %.1f ", orb13, antissia_orbis);
             }
 
             else if (i == 16) {
                 // Show 'yes' or 'no' instead of 0 or 1
-                const char *show_modern_planets_str = options.show_modern_planets ? _("yes") : _("no");
-                const char *use_text = _("Use Modern Planets?");
-
-                mvwprintw(win, 20, 5, "%s %s ", use_text, show_modern_planets_str);
+                const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
+                const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
+                mvwprintw(win, 20, 5, "%s %s ", consider_text, consider_modern_planets_str);
             }
 
             else if (i == 17) {
-                const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
-                const char *gen_text = _("Default Gender");
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *show_modern_planets_str = options.show_modern_planets ? _("yes") : _("no");
+                const char *use_text = _("Use Modern Planets?");
 
-                mvwprintw(win, 22, 5, "%s: %s ", gen_text, gender_str);
+                mvwprintw(win, 21, 5, "%s %s ", use_text, show_modern_planets_str);
             }
 
             else if (i == 18) {
+                const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
+                const char *gen_text = _("Default Gender");
+
+                mvwprintw(win, 23, 5, "%s: %s ", gen_text, gender_str);
+            }
+
+            else if (i == 19) {
                 char language_name[128];
                 snprintf(language_name, 128, "%s", _("Unknown"));
                 if (lang_count > 0) {
@@ -719,14 +739,14 @@ OptionsEdition select_options() {
                 }
                 const char *lang_text = _("Interface Language");
 
-                mvwprintw(win, 24, 5, "%s: %s ", lang_text, language_name);
+                mvwprintw(win, 25, 5, "%s: %s ", lang_text, language_name);
             }
-            else if (i == 19) {
+            else if (i == 20) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
 
                 const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 25, 5, "%s: %s ", dark_mode_text, dark_mode_str);
+                mvwprintw(win, 26, 5, "%s: %s ", dark_mode_text, dark_mode_str);
             }
 
             if (i == campo_atual) wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
@@ -741,10 +761,10 @@ OptionsEdition select_options() {
 
         switch (key) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 20) % 20; // Now 13 fields
+                campo_atual = (campo_atual - 1 + 21) % 21; // Now 21 fields
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 20;
+                campo_atual = (campo_atual + 1) % 21;
                 break;
             case KEY_RIGHT:
                 
@@ -827,16 +847,21 @@ OptionsEdition select_options() {
                     }
                 }
                 else if (campo_atual == 15) {
-                    options.modern_planets_rulling = !options.modern_planets_rulling;
+                    if (antissia_orbis < 5.0) {
+                        antissia_orbis += 0.5;
+                    }
                 }
                 else if (campo_atual == 16) {
-                    options.show_modern_planets = !options.show_modern_planets;
+                    options.modern_planets_rulling = !options.modern_planets_rulling;
                 }
                 else if (campo_atual == 17) {
+                    options.show_modern_planets = !options.show_modern_planets;
+                }
+                else if (campo_atual == 18) {
                     if (options.gender < 4) options.gender++;
                     if (options.gender == 4) options.gender = 1;            
                 }
-                else if (campo_atual == 18) {
+                else if (campo_atual == 19) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -855,7 +880,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 19) {
+                else if (campo_atual == 20) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
@@ -942,16 +967,21 @@ OptionsEdition select_options() {
                     }
                 }
                 else if (campo_atual == 15) {
-                    options.modern_planets_rulling = !options.modern_planets_rulling;
+                    if (antissia_orbis > 1.0) {
+                        antissia_orbis -= 0.5;
+                    }
                 }
                 else if (campo_atual == 16) {
-                    options.show_modern_planets = !options.show_modern_planets;
+                    options.modern_planets_rulling = !options.modern_planets_rulling;
                 }
                 else if (campo_atual == 17) {
+                    options.show_modern_planets = !options.show_modern_planets;
+                }
+                else if (campo_atual == 18) {
                     if (options.gender > 0) options.gender--;
                     if (options.gender == 0) options.gender = 3;
                 }
-                else if (campo_atual == 18) {
+                else if (campo_atual == 19) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -971,7 +1001,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else  if (campo_atual == 19) {
+                else  if (campo_atual == 20) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
@@ -995,10 +1025,18 @@ OptionsEdition select_options() {
                         }
                     }
 
-                    const char *sql_update2 = "UPDATE profiles SET parallel_orbis = ? WHERE profile = 'default";
+                    const char *sql_update2 = "UPDATE profiles SET parallel_orbis = ? WHERE profile = 'default'";
                     rc = sqlite3_prepare_v2(db, sql_update2, -1, &stmt, NULL);
                     if (rc == SQLITE_OK) {
                         sqlite3_bind_double(stmt, 1, parallel_orbis);
+                        sqlite3_step(stmt);
+                        sqlite3_finalize(stmt);
+                    }
+
+                    const char *sql_update3 = "UPDATE profiles SET antissia_orb = ? WHERE profile = 'default'";
+                    rc = sqlite3_prepare_v2(db, sql_update3, -1, &stmt, NULL);
+                    if (rc == SQLITE_OK) {
+                        sqlite3_bind_double(stmt, 1, antissia_orbis);
                         sqlite3_step(stmt);
                         sqlite3_finalize(stmt);
                     }

@@ -1623,12 +1623,29 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                 int y_pos_angulo  = 6 + 2 * r;
 
                 if (cell.has_aspect) {
-                    if (cell.is_reverse) wattron(aspects_win, A_REVERSE);
+                    if (cell.is_reverse) {
+                        wattron(aspects_win, A_REVERSE);
+                        if (DARK_MODE) {
+                            if (strcmp(cell.symbol, "☌") == 0) {
+                                wattron(aspects_win, COLOR_PAIR(37));
+                            }
+                            else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                                wattron(aspects_win, COLOR_PAIR(36));
+                            }
+                            else {
+                                wattron(aspects_win, COLOR_PAIR(38));
+                            }
+                        }
+                    }
 
-                    wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
+                    if (!DARK_MODE || !cell.is_reverse) {
+                        wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
+                    }
                     mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "  %s  ", cell.symbol);
-                    wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
-
+                    
+                    if (!DARK_MODE || !cell.is_reverse) {
+                        wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
+                    }
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
                     double diff = fabs(obj[p_idx].longitude - lista[pagina_offset + j].longitude);
                     if (diff > 180.0) diff = 360.0 - diff;
@@ -1647,10 +1664,28 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
                     char ag_txt[8];
                     snprintf(ag_txt, sizeof(ag_txt), "%5.1f", orbe_real);
+
+                    if (cell.is_reverse && DARK_MODE) {
+                        wattron(aspects_win, COLOR_PAIR(35));
+                    }
                     mvwprintw(aspects_win, y_pos_angulo, x_pos - 1, "%s", ag_txt);
                     wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
 
-                    if (cell.is_reverse) wattroff(aspects_win, A_REVERSE);
+                    if (cell.is_reverse) {
+                        wattroff(aspects_win, A_REVERSE);
+                        if (DARK_MODE) {
+                            if (strcmp(cell.symbol, "☌") == 0) {
+                                wattroff(aspects_win, COLOR_PAIR(37));
+                            }
+                            else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                                wattroff(aspects_win, COLOR_PAIR(36));
+                            }
+                            else {
+                                wattroff(aspects_win, COLOR_PAIR(38));
+                            }
+                            wattroff(aspects_win, COLOR_PAIR(35));
+                        }
+                    }
                 } else {
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
                     mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "░░░░░");
