@@ -294,6 +294,10 @@ Press Q or ESC to return to the main menu.
     
     • ←↓↑→ - Pan 
     
+    • * - Increase aspect ratio by 0.1
+    
+    • / - Decrease aspect ratio by 0.1
+    
     • R - Reset Zoom and Pan
     
     • D - Display Decans

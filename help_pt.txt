@@ -291,7 +291,11 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • - - Diminuir (Zoom Out) 
 
-• ←↓↑→ - Pan (Mover Posição) 
+• ←↓↑→ - Pan (Mover Posição)
+
+• * - Aumenta a proporção de tela em 0,1
+
+• / - Diminui a proporção de tela em 0,1 
 
 • R - Resetar Zoom e Pan
 
