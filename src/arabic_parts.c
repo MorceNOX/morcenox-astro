@@ -421,7 +421,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
             case KEY_F(3):
                 if (qtd_partes > 0) {
                     // Passamos os dados que JÁ ESTÃO mastigados na memória RAM!
-                    display_part_aspects(obj, num_objects, lista, qtd_partes);
+                    display_part_aspects(obj, num_objects, lista, qtd_partes, false);
                     
                     // Ao fechar a matriz, força a janela anterior a redesenhar a borda
                     touchwin(shadow_win);
@@ -671,7 +671,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
             case KEY_F(3):
                 if (qtd_partes > 0) {
                     //int object_diff = show_modern_planets ? 0 : 3;
-                    display_part_aspects(obj_natal, num_objects, lista, qtd_partes);
+                    display_part_aspects(obj_natal, num_objects, lista, qtd_partes, true);
                     
                     touchwin(shadow_win);
                     wnoutrefresh(shadow_win);
@@ -1493,7 +1493,7 @@ void get_part_abbreviation(char *name, char *abreviacao) {
 
 
 
-void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada *lista, int qtd_partes) {
+void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada *lista, int qtd_partes, bool radix_confrontation) {
     
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -1540,7 +1540,14 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         box(aspects_win, 0, 0);
         
         wattron(aspects_win, A_BOLD);
-        const char *title = _(" Arabic Parts Aspect Matrix Grid ");
+        const char *title;
+        
+        if (radix_confrontation) {
+            title = _(" Aspects of Radical Planets over Solar Return Arabic Parts ");
+        }
+        else {
+            title = _(" Arabic Parts Aspect Matrix Grid ");
+        }
         mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(aspects_win, A_BOLD);
 

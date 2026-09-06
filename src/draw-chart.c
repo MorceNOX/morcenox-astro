@@ -2191,10 +2191,10 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
     
     if (zoom_factor <= 1.2) {
         attron(A_BOLD);
-        mvprintw(1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("TZ"), str_dow(local_time->tm_wday));
+        mvprintw(1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("Local"), str_dow(local_time->tm_wday));
         attroff(A_BOLD);
 
-        mvprintw(3, 1, "%s / %s (%.4f)", city, country, tz_offset);
+        mvprintw(3, 1, "%s / %s (%.1f)", city, country, tz_offset);
         mvprintw(4, 1, "Lat: %.4f / Lon: %.4f / Elev: %.1f", lat, lon, elev);
 
         attron(A_BOLD);

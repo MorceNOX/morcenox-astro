@@ -596,11 +596,14 @@ void abrir_janela_confronto_natal_revolucao(
     get_weights(weights, show_modern_planets);
     int pontos_finais_exibicao = (int)ceil(((double)aproveitamento_almuten * weights[id_almuten_rev]) / 10.0);
 
-    wprintw(pad, _("The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d.\n"
-                    "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
-            nomes_planetas[id_almuten_rev], pontuacao_dignidade_natal, aproveitamento_almuten, pontos_finais_exibicao);
+    snprintf(str_text, 512, _("The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d. "
+                              "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+                            nomes_planetas[id_almuten_rev], 
+                            pontuacao_dignidade_natal, 
+                            aproveitamento_almuten, 
+                            pontos_finais_exibicao);
     
-    line_count += 4;
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
 
     wattron(pad, A_BOLD);
     wprintw(pad, _("Structural Efficiency Verdict:\n\n"));

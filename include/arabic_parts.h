@@ -71,7 +71,7 @@ int obter_id_parte_por_nome(const char *name_lote);
 
 void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao);
 void calcular_aspectos_partes(ChartObject *obj, int num_objects, ArabicPartCalculada *lista, int qtd_partes, AspectPartMatrix *m_part);
-void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada *lista, int qtd_partes);
+void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada *lista, int qtd_partes, bool radix_confrontation);
 void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_parte);
 
 
