@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 11:25-0300\n"
+"POT-Creation-Date: 2026-09-06 14:46-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1127,7 +1127,7 @@ msgstr ""
 msgid "Sun Clock"
 msgstr ""
 
-#: src/draw-chart.c:2221 src/draw-chart.c:2226
+#: src/draw-chart.c:2219
 msgid "Divisions = Zodiac Signs"
 msgstr ""
 
@@ -1136,11 +1136,15 @@ msgid "Radix Confrontation: C | Annual Transits: T "
 msgstr ""
 
 #: src/draw-chart.c:2223
-msgid "Parts Radix Confrontation: P "
+msgid "Anim: A | Parts Radix Confrontation: P "
+msgstr ""
+
+#: src/draw-chart.c:2226
+msgid "Anim: A "
 msgstr ""
 
 #: src/draw-chart.c:2229
-msgid "Animation: A | Speed: ]/[ | Quit: Q "
+msgid "Aspect: / *| Speed: ]/[ | Quit: Q "
 msgstr ""
 
 #: src/draw-chart.c:2230

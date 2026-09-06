@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 11:25-0300\n"
+"POT-Creation-Date: 2026-09-06 14:46-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1355,21 +1355,25 @@ msgstr "Atual Fase da Lua"
 msgid "Sun Clock"
 msgstr "Rel. de Sol"
 
-#: src/draw-chart.c:2221 src/draw-chart.c:2226
+#: src/draw-chart.c:2219
 msgid "Divisions = Zodiac Signs"
 msgstr "Divisões = Signos do Zodíaco"
 
 #: src/draw-chart.c:2222
 msgid "Radix Confrontation: C | Annual Transits: T "
-msgstr "Confrontação com Radix: C | Trânsitos do Ano: T"
+msgstr "Confrontação Radix: C | Trânsitos do Ano: T"
 
 #: src/draw-chart.c:2223
-msgid "Parts Radix Confrontation: P "
-msgstr "Confrontação das Partes com Radix: P"
+msgid "Anim: A | Parts Radix Confrontation: P "
+msgstr "Anim: A | Confrontação Partes / Radix: P"
+
+#: src/draw-chart.c:2226
+msgid "Anim: A "
+msgstr ""
 
 #: src/draw-chart.c:2229
-msgid "Animation: A | Speed: ]/[ | Quit: Q "
-msgstr "Animação: A  | Veloc: ]/[ | Sair: Q "
+msgid "Aspect: / *| Speed: ]/[ | Quit: Q "
+msgstr "Aspecto: /*| Veloc: ]/[ | Sair: Q "
 
 #: src/draw-chart.c:2230
 msgid " Action: F1..F9, F12, 0-8 "
@@ -5844,11 +5848,10 @@ msgstr ""
 "\n"
 
 #: src/temperament.c:990
-#, fuzzy
 msgid ""
 " ✦ Sanguine Influence: \n"
 "\n"
-msgstr " ✦ Influência Sanguínea: "
+msgstr " ✦ Influência Sanguínea: \n\n"
 
 #: src/temperament.c:992
 msgid ""
@@ -5863,11 +5866,10 @@ msgstr ""
 "\n"
 
 #: src/temperament.c:999
-#, fuzzy
 msgid ""
 " ✦ Choleric Influence: \n"
 "\n"
-msgstr " ✦ Influência Colérica: "
+msgstr " ✦ Influência Colérica: \n\n"
 
 #: src/temperament.c:1001
 msgid ""
@@ -5881,11 +5883,10 @@ msgstr ""
 "\n"
 
 #: src/temperament.c:1008
-#, fuzzy
 msgid ""
 " ✦ Phlegmatic Influence: \n"
 "\n"
-msgstr " ✦ Influência Colérica: "
+msgstr " ✦ Influência Colérica: \n\n"
 
 #: src/temperament.c:1010
 msgid ""
@@ -5900,11 +5901,10 @@ msgstr ""
 "\n"
 
 #: src/temperament.c:1017
-#, fuzzy
 msgid ""
 " ✦ Melancholic Influence: \n"
 "\n"
-msgstr " ✦ Influência Melancólica: "
+msgstr " ✦ Influência Melancólica: \n\n"
 
 #: src/temperament.c:1019
 msgid ""
