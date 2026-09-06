@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 08:20-0300\n"
+"POT-Creation-Date: 2026-09-06 09:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4661,268 +4661,254 @@ msgstr ""
 msgid " Temperament Detailed Analysis "
 msgstr ""
 
-#: src/temperament.c:810
+#: src/temperament.c:812
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr ""
 
-#: src/temperament.c:814
+#: src/temperament.c:820
 msgid "Hot"
 msgstr ""
 
-#: src/temperament.c:815
+#: src/temperament.c:821
 msgid "Cold"
 msgstr ""
 
-#: src/temperament.c:816
+#: src/temperament.c:822
 msgid "Moist"
 msgstr ""
 
-#: src/temperament.c:817
+#: src/temperament.c:823
 msgid "Dry"
 msgstr ""
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Heat Axis"
 msgstr ""
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Moisture Axis"
 msgstr ""
 
-#: src/temperament.c:820
+#: src/temperament.c:828
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr ""
 
-#: src/temperament.c:828
+#: src/temperament.c:840
 msgid ""
 "SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:830
+#: src/temperament.c:844
 msgid ""
-"Your vital energy functions in perfect thermal equilibrium, blending \n"
-"Air and Water.\n"
-"This grants a deeply flexible, empathetic, and highly social persona.\n"
-"The talkative mind flows smoothly with natural emotional sensitivity, \n"
-"offering extreme social adaptability but risking mild emotional \n"
-"scattering.\n"
+"Your vital energy functions in perfect thermal equilibrium, blending Air and "
+"Water. This grants a deeply flexible, empathetic, and highly social persona. "
+"The talkative mind flows smoothly with natural emotional sensitivity, "
+"offering extreme social adaptability but risking mild emotional scattering.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:838
+#: src/temperament.c:852
 msgid ""
 "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:840
+#: src/temperament.c:856
 msgid ""
-"Your active forces exist in a state of controlled thermal poise, \n"
-"blending Fire and Earth.\n"
-"This creates an unstoppable achiever rooted in deep structural \n"
-"efficiency and discipline.\n"
-"You possess immense willpower, though you must guard against chronic \n"
-"internal stress, rigid perfectionism, and deep stubbornness.\n"
+"Your active forces exist in a state of controlled thermal poise, blending "
+"Fire and Earth. This creates an unstoppable achiever rooted in deep "
+"structural efficiency and discipline. You possess immense willpower, though "
+"you must guard against chronic internal stress, rigid perfectionism, and "
+"deep stubbornness.\n"
 "\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:848
-msgid ""
-"ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:850
-msgid ""
-"Your chart reflects the rare, ideal geometric balance of all four \n"
-"humors.\n"
-"Fire, Water, Air, and Earth converge into perfect cosmic proportion. \n"
-"You possess the courage of the Choleric, the social grace of the Sanguine, \n"
-"the empathy of the Phlegmatic, and the objective realism of the "
-"Melancholic, \n"
-"activated exactly when needed.\n"
-"\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:862
-msgid ""
-"SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:864
 msgid ""
-"An expressive, warm, and highly action-oriented signature blending \n"
-"Air and Fire.\n"
-"Your dynamic energy acts as a strong catalyst in social or \n"
-"professional domains.\n"
-"The intellectual curiosity of Air merges with the raw ambition \n"
-"of Fire, fueling powerful leadership qualities, with a risk of occasional \n"
-"impatience.\n"
+"ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:868
+msgid ""
+"Your chart reflects the rare, ideal geometric balance of all four humors. "
+"Fire, Water, Air, and Earth converge into perfect cosmic proportion. You "
+"possess the courage of the Choleric, the social grace of the Sanguine, the "
+"empathy of the Phlegmatic, and the objective realism of the Melancholic, "
+"activated exactly when needed.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:873
+#: src/temperament.c:880
+msgid ""
+"SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:884
+msgid ""
+"An expressive, warm, and highly action-oriented signature blending Air and "
+"Fire. Your dynamic energy acts as a strong catalyst in social or "
+"professional domains. The intellectual curiosity of Air merges with the raw "
+"ambition of Fire, fueling powerful leadership qualities, with a risk of "
+"occasional impatience.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:893
 msgid ""
 "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:875
+#: src/temperament.c:897
 msgid ""
-"A calm, deeply introspective, and self-protective constitution \n"
-"blending Water and Earth.\n"
-"Your operating engine is deliberate, highly structured, and \n"
-"cautious.\n"
-"The emotional depths of Water anchor onto the realistic stability \n"
-"of Earth, yielding an exceptionally reliable, analytical individual \n"
-"who moves at a careful pace.\n"
+"A calm, deeply introspective, and self-protective constitution blending "
+"Water and Earth.Your operating engine is deliberate, highly structured, and "
+"cautious. The emotional depths of Water anchor onto the realistic stability "
+"of Earth, yielding an exceptionally reliable, analytical individual who "
+"moves at a careful pace.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:888
+#: src/temperament.c:910
 msgid ""
 "SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:890
+#: src/temperament.c:914
 msgid ""
-"Your psychological engine revolves around communication, expansion, \n"
-"and mental fluidity.\n"
-"You absorb external impressions instantly and possess an adaptable, \n"
-"expressive mind that thrives on curiosity and social exchange. Guard \n"
-"against scattering focus.\n"
+"Your psychological engine revolves around communication, expansion, and "
+"mental fluidity. You absorb external impressions instantly and possess an "
+"adaptable, expressive mind that thrives on curiosity and social exchange. "
+"Guard against scattering focus.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:897
+#: src/temperament.c:921
 msgid ""
 "CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:899
+#: src/temperament.c:925
 msgid ""
-"Your core essence is driven by swift, active, and result-oriented \n"
-"single-minded impulses.\n"
-"You possess an innate leadership spark, extreme courage when \n"
-"confronting adversity, and unyielding passion. Your chief challenge \n"
-"is mastering reactive impatience.\n"
+"Your core essence is driven by swift, active, and result-oriented single-"
+"minded impulses. You possess an innate leadership spark, extreme courage "
+"when confronting adversity, and unyielding passion. Your chief challenge is "
+"mastering reactive impatience.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:906
+#: src/temperament.c:932
 msgid ""
 "PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:908
+#: src/temperament.c:936
 msgid ""
-"You embody a stable, welcoming, and peacekeeping emotional \n"
-"constitution.\n"
-"You operate through deep empathy, automatic diplomatic mediation, \n"
-"and a steady, reliable operational rhythm. Watch out for behavioral \n"
-"inertia or stagnation.\n"
+"You embody a stable, welcoming, and peacekeeping emotional constitution. You "
+"operate through deep empathy, automatic diplomatic mediation, and a steady, "
+"reliable operational rhythm. Watch out for behavioral inertia or "
+"stagnation.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:915
+#: src/temperament.c:943
 msgid ""
 "MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:917
+#: src/temperament.c:947
 msgid ""
-"Your nature is built on structural caution, real-world pragmatism, \n"
-"and profound reflection.\n"
-"An exceptional asset for deep analysis, long-term organization, and \n"
-"concrete security  building. Beware a natural tendency toward brooding \n"
-"or social withdrawal.\n"
+"Your nature is built on structural caution, real-world pragmatism, and "
+"profound reflection. An exceptional asset for deep analysis, long-term "
+"organization, and concrete security  building. Beware a natural tendency "
+"toward brooding or social withdrawal.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:947
+#: src/temperament.c:977
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:949
+#: src/temperament.c:981
 msgid ""
-"Although your core template is defined above, your psychiatric map\n"
-"shows other active forces adding layers to your behavior:\n"
+"Although your core template is defined above, your psychiatric map shows "
+"other active forces adding layers to your behavior:\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:958
+#: src/temperament.c:990
 msgid " ✦ Sanguine Influence: "
 msgstr ""
 
-#: src/temperament.c:960
+#: src/temperament.c:992
 msgid ""
-"Adds an overlay of communicative ease, adaptability,\n"
-"and cognitive curiosity. This softens any rigid boundaries or\n"
-"stagnation imposed by your dominant humor.\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:967
-msgid " ✦ Choleric Influence: "
-msgstr ""
-
-#: src/temperament.c:969
-msgid ""
-"Injects raw drive, sharp focus on execution, and a\n"
-"natural urgency to fix problems. It sharpens a passive baseline\n"
-"into a highly proactive mindset.\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:976
-msgid " ✦ Phlegmatic Influence: "
-msgstr ""
-
-#: src/temperament.c:978
-msgid ""
-"Acts as a natural thermal and emotional ballast, introducing\n"
-"diplomatic mediation, structural patience, and a steady pace that\n"
-"protects you from chronic stress.\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:985
-msgid " ✦ Melancholic Influence: "
-msgstr ""
-
-#: src/temperament.c:987
-msgid ""
-"Confers analytical depth, long-term organization skills,\n"
-"and a realistic sense of caution. It ensures your impulses are\n"
-"grounded in real-world feasibility.\n"
+"Adds an overlay of communicative ease, adaptability, and cognitive "
+"curiosity. This softens any rigid boundaries or stagnation imposed by your "
+"dominant humor.\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:999
+msgid " ✦ Choleric Influence: "
+msgstr ""
+
+#: src/temperament.c:1001
+msgid ""
+"Injects raw drive, sharp focus on execution, and a natural urgency to fix "
+"problems. It sharpens a passive baseline into a highly proactive mindset.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1008
+msgid " ✦ Phlegmatic Influence: "
+msgstr ""
+
+#: src/temperament.c:1010
+msgid ""
+"Acts as a natural thermal and emotional ballast, introducing diplomatic "
+"mediation, structural patience, and a steady pace that protects you from "
+"chronic stress.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1017
+msgid " ✦ Melancholic Influence: "
+msgstr ""
+
+#: src/temperament.c:1019
+msgid ""
+"Confers analytical depth, long-term organization skills, and a realistic "
+"sense of caution. It ensures your impulses are grounded in real-world "
+"feasibility.\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1033
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr ""
 
-#: src/temperament.c:1003
+#: src/temperament.c:1041
 msgid "Rank"
 msgstr ""
 
-#: src/temperament.c:1009
+#: src/temperament.c:1051
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""

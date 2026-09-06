@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 07:29-0300\n"
+"POT-Creation-Date: 2026-09-06 09:13-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -5569,39 +5569,39 @@ msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
 
-#: src/temperament.c:810
+#: src/temperament.c:812
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr "  1. SUMÁRIO DA PONTUAÇÃO BRUTA\n"
 
-#: src/temperament.c:814
+#: src/temperament.c:820
 msgid "Hot"
 msgstr "Quente"
 
-#: src/temperament.c:815
+#: src/temperament.c:821
 msgid "Cold"
 msgstr "Frio"
 
-#: src/temperament.c:816
+#: src/temperament.c:822
 msgid "Moist"
 msgstr "Úmido"
 
-#: src/temperament.c:817
+#: src/temperament.c:823
 msgid "Dry"
 msgstr "Seco"
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Heat Axis"
 msgstr "Eixo Calor"
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Moisture Axis"
 msgstr "Eixo Umidade"
 
-#: src/temperament.c:820
+#: src/temperament.c:828
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
-#: src/temperament.c:828
+#: src/temperament.c:840
 msgid ""
 "SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
@@ -5609,28 +5609,26 @@ msgstr ""
 "SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
 "\n"
 
-#: src/temperament.c:830
+#: src/temperament.c:844
 msgid ""
-"Your vital energy functions in perfect thermal equilibrium, blending \n"
-"Air and Water.\n"
-"This grants a deeply flexible, empathetic, and highly social persona.\n"
-"The talkative mind flows smoothly with natural emotional sensitivity, \n"
-"offering extreme social adaptability but risking mild emotional \n"
-"scattering.\n"
+"Your vital energy functions in perfect thermal equilibrium, blending Air and "
+"Water. This grants a deeply flexible, empathetic, and highly social persona. "
+"The talkative mind flows smoothly with natural emotional sensitivity, "
+"offering extreme social adaptability but risking mild emotional scattering.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua energia vital opera em perfeito equilíbrio térmico, combinando \n"
-"Ar e Água.\n"
-"Isso confere uma personalidade profundamente flexível, empática e \n"
-"altamente sociável.\n"
-"A mente comunicativa flui com natural sensibilidade emocional, \n"
+"Sua energia vital opera em perfeito equilíbrio térmico, combinando "
+"Ar e Água. "
+"Isso confere uma personalidade profundamente flexível, empática e "
+"altamente sociável. "
+"A mente comunicativa flui com natural sensibilidade emocional, "
 "proporcionando extrema adaptabilidade social, mas com o risco de uma \n"
 "leve dispersão emocional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:838
+#: src/temperament.c:852
 msgid ""
 "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
@@ -5638,27 +5636,26 @@ msgstr ""
 "COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
 "\n"
 
-#: src/temperament.c:840
+#: src/temperament.c:856
 msgid ""
-"Your active forces exist in a state of controlled thermal poise, \n"
-"blending Fire and Earth.\n"
-"This creates an unstoppable achiever rooted in deep structural \n"
-"efficiency and discipline.\n"
-"You possess immense willpower, though you must guard against chronic \n"
-"internal stress, rigid perfectionism, and deep stubbornness.\n"
+"Your active forces exist in a state of controlled thermal poise, blending "
+"Fire and Earth. This creates an unstoppable achiever rooted in deep "
+"structural efficiency and discipline. You possess immense willpower, though "
+"you must guard against chronic internal stress, rigid perfectionism, and "
+"deep stubbornness.\n"
 "\n"
 "\n"
 msgstr ""
-"Suas forças ativas existem em um estado de equilíbrio térmico controlado, \n"
-"combinando Fogo e Terra.\n"
-"Isso cria uma pessoa de realizações imparáveis, alicerçada em uma \n"
-"profunda eficiência estrutural e disciplina.\n"
-"Você possui imensa força de vontade, embora precise se precaver contra o \n"
+"Suas forças ativas existem em um estado de equilíbrio térmico controlado, "
+"combinando Fogo e Terra. "
+"Isso cria uma pessoa de realizações imparáveis, alicerçada em uma "
+"profunda eficiência estrutural e disciplina. "
+"Você possui imensa força de vontade, embora precise se precaver contra o "
 "estresse interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:848
+#: src/temperament.c:864
 msgid ""
 "ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
@@ -5666,28 +5663,26 @@ msgstr ""
 "EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
 "\n"
 
-#: src/temperament.c:850
+#: src/temperament.c:868
 msgid ""
-"Your chart reflects the rare, ideal geometric balance of all four \n"
-"humors.\n"
-"Fire, Water, Air, and Earth converge into perfect cosmic proportion. \n"
-"You possess the courage of the Choleric, the social grace of the Sanguine, \n"
-"the empathy of the Phlegmatic, and the objective realism of the "
-"Melancholic, \n"
+"Your chart reflects the rare, ideal geometric balance of all four humors. "
+"Fire, Water, Air, and Earth converge into perfect cosmic proportion. You "
+"possess the courage of the Choleric, the social grace of the Sanguine, the "
+"empathy of the Phlegmatic, and the objective realism of the Melancholic, "
 "activated exactly when needed.\n"
 "\n"
 "\n"
 msgstr ""
-"Seu mapa reflete o raro e ideal equilíbrio geométrico de todos os quatro \n"
-"humores.\n"
-"Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. \n"
-"Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, \n"
-"a empatia do Fleumático e o realismo objetivo do Melancólico, \n"
+"Seu mapa reflete o raro e ideal equilíbrio geométrico de todos os quatro "
+"humores. "
+"Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. "
+"Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, "
+"a empatia do Fleumático e o realismo objetivo do Melancólico, "
 "ativados exatamente quando necessário.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:862
+#: src/temperament.c:880
 msgid ""
 "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
@@ -5695,29 +5690,27 @@ msgstr ""
 "SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:864
+#: src/temperament.c:884
 msgid ""
-"An expressive, warm, and highly action-oriented signature blending \n"
-"Air and Fire.\n"
-"Your dynamic energy acts as a strong catalyst in social or \n"
-"professional domains.\n"
-"The intellectual curiosity of Air merges with the raw ambition \n"
-"of Fire, fueling powerful leadership qualities, with a risk of occasional \n"
-"impatience.\n"
+"An expressive, warm, and highly action-oriented signature blending Air and "
+"Fire. Your dynamic energy acts as a strong catalyst in social or "
+"professional domains. The intellectual curiosity of Air merges with the raw "
+"ambition of Fire, fueling powerful leadership qualities, with a risk of "
+"occasional impatience.\n"
 "\n"
 "\n"
 msgstr ""
-"Uma assinatura expressiva, calorosa e fortemente orientada para a ação, \n"
-"que combina Ar e Fogo.\n"
-"Sua energia dinâmica atua como um poderoso catalisador nas esferas social \n"
-"ou profissional.\n"
-"A curiosidade intelectual do Ar funde-se com a ambição intensa do Fogo, \n"
-"impulsionando fortes qualidades de liderança, embora com o risco de \n"
+"Uma assinatura expressiva, calorosa e fortemente orientada para a ação, "
+"que combina Ar e Fogo. "
+"Sua energia dinâmica atua como um poderoso catalisador nas esferas social "
+"ou profissional. "
+"A curiosidade intelectual do Ar funde-se com a ambição intensa do Fogo, "
+"impulsionando fortes qualidades de liderança, embora com o risco de "
 "impaciência ocasional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:873
+#: src/temperament.c:893
 msgid ""
 "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
@@ -5725,29 +5718,27 @@ msgstr ""
 "FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:875
+#: src/temperament.c:897
 msgid ""
-"A calm, deeply introspective, and self-protective constitution \n"
-"blending Water and Earth.\n"
-"Your operating engine is deliberate, highly structured, and \n"
-"cautious.\n"
-"The emotional depths of Water anchor onto the realistic stability \n"
-"of Earth, yielding an exceptionally reliable, analytical individual \n"
-"who moves at a careful pace.\n"
+"A calm, deeply introspective, and self-protective constitution blending "
+"Water and Earth.Your operating engine is deliberate, highly structured, and "
+"cautious. The emotional depths of Water anchor onto the realistic stability "
+"of Earth, yielding an exceptionally reliable, analytical individual who "
+"moves at a careful pace.\n"
 "\n"
 "\n"
 msgstr ""
-"Uma natureza calma, profundamente introspectiva e que busca se proteger, \n"
-"combinando Água e Terra.\n"
-"Seu modo de agir é ponderado, altamente estruturado e cauteloso.\n"
-"A profundidade emocional da Água ancora-se na estabilidade realista \n"
+"Uma natureza calma, profundamente introspectiva e que busca se proteger, "
+"combinando Água e Terra. "
+"Seu modo de agir é ponderado, altamente estruturado e cauteloso. "
+"A profundidade emocional da Água ancora-se na estabilidade realista "
 "da Terra, resultando em um indivíduo excepcionalmente confiável e "
-"analítico, \n"
+"analítico, "
 "que avança em um ritmo cuidadoso.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:888
+#: src/temperament.c:910
 msgid ""
 "SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
@@ -5755,26 +5746,25 @@ msgstr ""
 "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:890
+#: src/temperament.c:914
 msgid ""
-"Your psychological engine revolves around communication, expansion, \n"
-"and mental fluidity.\n"
-"You absorb external impressions instantly and possess an adaptable, \n"
-"expressive mind that thrives on curiosity and social exchange. Guard \n"
-"against scattering focus.\n"
+"Your psychological engine revolves around communication, expansion, and "
+"mental fluidity. You absorb external impressions instantly and possess an "
+"adaptable, expressive mind that thrives on curiosity and social exchange. "
+"Guard against scattering focus.\n"
 "\n"
 "\n"
 msgstr ""
-"Seu motor psicológico gira em torno da comunicação, da expansão \n"
-"e da fluidez mental. \n"
-"Você absorve impressões externas instantaneamente e possui uma mente \n"
+"Seu motor psicológico gira em torno da comunicação, da expansão "
+"e da fluidez mental. "
+"Você absorve impressões externas instantaneamente e possui uma mente "
 "adaptável e expressiva, que prospera com a curiosidade e a interação "
-"social. \n"
+"social. "
 "Evite dispersar o foco. \n"
 "\n"
 "\n"
 
-#: src/temperament.c:897
+#: src/temperament.c:921
 msgid ""
 "CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
@@ -5782,25 +5772,24 @@ msgstr ""
 "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:899
+#: src/temperament.c:925
 msgid ""
-"Your core essence is driven by swift, active, and result-oriented \n"
-"single-minded impulses.\n"
-"You possess an innate leadership spark, extreme courage when \n"
-"confronting adversity, and unyielding passion. Your chief challenge \n"
-"is mastering reactive impatience.\n"
+"Your core essence is driven by swift, active, and result-oriented single-"
+"minded impulses. You possess an innate leadership spark, extreme courage "
+"when confronting adversity, and unyielding passion. Your chief challenge is "
+"mastering reactive impatience.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua essência fundamental é impulsionada por impulsos céleres, ativos e \n"
-"focados em resultados, marcados por uma determinação inabalável.\n"
-"Você possui uma centelha inata de liderança, extrema coragem ao \n"
-"enfrentar adversidades e uma paixão inabalável. Seu principal desafio \n"
+"Sua essência fundamental é impulsionada por impulsos céleres, ativos e "
+"focados em resultados, marcados por uma determinação inabalável. "
+"Você possui uma centelha inata de liderança, extrema coragem ao "
+"enfrentar adversidades e uma paixão inabalável. Seu principal desafio "
 "é dominar a impaciência reativa.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:906
+#: src/temperament.c:932
 msgid ""
 "PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
@@ -5808,25 +5797,24 @@ msgstr ""
 "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:908
+#: src/temperament.c:936
 msgid ""
-"You embody a stable, welcoming, and peacekeeping emotional \n"
-"constitution.\n"
-"You operate through deep empathy, automatic diplomatic mediation, \n"
-"and a steady, reliable operational rhythm. Watch out for behavioral \n"
-"inertia or stagnation.\n"
+"You embody a stable, welcoming, and peacekeeping emotional constitution. You "
+"operate through deep empathy, automatic diplomatic mediation, and a steady, "
+"reliable operational rhythm. Watch out for behavioral inertia or "
+"stagnation.\n"
 "\n"
 "\n"
 msgstr ""
-"Você personifica uma constituição emocional estável, acolhedora \n"
-"e pacificadora.\n"
-"Você atua com base em profunda empatia, mediação diplomática \n"
-"espontânea e um ritmo de trabalho constante e confiável. Fique \n"
+"Você personifica uma constituição emocional estável, acolhedora "
+"e pacificadora. "
+"Você atua com base em profunda empatia, mediação diplomática "
+"espontânea e um ritmo de trabalho constante e confiável. Fique "
 "atento à inércia comportamental ou à estagnação.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:915
+#: src/temperament.c:943
 msgid ""
 "MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
@@ -5834,26 +5822,25 @@ msgstr ""
 "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:917
+#: src/temperament.c:947
 msgid ""
-"Your nature is built on structural caution, real-world pragmatism, \n"
-"and profound reflection.\n"
-"An exceptional asset for deep analysis, long-term organization, and \n"
-"concrete security  building. Beware a natural tendency toward brooding \n"
-"or social withdrawal.\n"
+"Your nature is built on structural caution, real-world pragmatism, and "
+"profound reflection. An exceptional asset for deep analysis, long-term "
+"organization, and concrete security  building. Beware a natural tendency "
+"toward brooding or social withdrawal.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua natureza baseia-se em uma cautela estrutural, no pragmatismo voltado \n"
-"para a realidade e na reflexão profunda. \n"
-"É um atributo excepcional para análises aprofundadas, organização a longo \n"
+"Sua natureza baseia-se em uma cautela estrutural, no pragmatismo voltado "
+"para a realidade e na reflexão profunda. "
+"É um atributo excepcional para análises aprofundadas, organização a longo "
 "prazo e a construção de uma segurança sólida. Cuidado com a tendência "
-"natural \n"
+"natural "
 "de remoer pensamentos ou de se isolar socialmente. \n"
 "\n"
 "\n"
 
-#: src/temperament.c:947
+#: src/temperament.c:977
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
@@ -5861,94 +5848,93 @@ msgstr ""
 "INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
 "\n"
 
-#: src/temperament.c:949
+#: src/temperament.c:981
 msgid ""
-"Although your core template is defined above, your psychiatric map\n"
-"shows other active forces adding layers to your behavior:\n"
+"Although your core template is defined above, your psychiatric map shows "
+"other active forces adding layers to your behavior:\n"
 "\n"
 msgstr ""
-"Embora seu modelo central esteja definido acima, seu mapa \n"
-"psiquiátrico mostra outras forças ativas que acrescentam \n"
+"Embora seu modelo central esteja definido acima, seu mapa "
+"psiquiátrico mostra outras forças ativas que acrescentam "
 "camadas ao seu comportamento:\n"
 "\n"
 
-#: src/temperament.c:958
+#: src/temperament.c:990
 msgid " ✦ Sanguine Influence: "
 msgstr " ✦ Influência Sanguínea: "
 
-#: src/temperament.c:960
+#: src/temperament.c:992
 msgid ""
-"Adds an overlay of communicative ease, adaptability,\n"
-"and cognitive curiosity. This softens any rigid boundaries or\n"
-"stagnation imposed by your dominant humor.\n"
+"Adds an overlay of communicative ease, adaptability, and cognitive "
+"curiosity. This softens any rigid boundaries or stagnation imposed by your "
+"dominant humor.\n"
 "\n"
 msgstr ""
-"Acrescenta uma camada de facilidade de comunicação, \n"
-"adaptabilidade e curiosidade cognitiva. \n"
-"Isso suaviza quaisquer limites rígidos ou estagnação impostos \n"
+"Acrescenta uma camada de facilidade de comunicação, "
+"adaptabilidade e curiosidade cognitiva. "
+"Isso suaviza quaisquer limites rígidos ou estagnação impostos "
 "pelo seu temperamento dominante.\n"
 "\n"
 
-#: src/temperament.c:967
+#: src/temperament.c:999
 msgid " ✦ Choleric Influence: "
 msgstr " ✦ Influência Colérica: "
 
-#: src/temperament.c:969
+#: src/temperament.c:1001
 msgid ""
-"Injects raw drive, sharp focus on execution, and a\n"
-"natural urgency to fix problems. It sharpens a passive baseline\n"
-"into a highly proactive mindset.\n"
+"Injects raw drive, sharp focus on execution, and a natural urgency to fix "
+"problems. It sharpens a passive baseline into a highly proactive mindset.\n"
 "\n"
 msgstr ""
-"Injeta uma determinação genuína, um foco aguçado na \n"
-"execução e uma urgência natural para resolver problemas. \n"
-"Transforma uma postura inicial passiva em uma mentalidade altamente \n"
+"Injeta uma determinação genuína, um foco aguçado na "
+"execução e uma urgência natural para resolver problemas. "
+"Transforma uma postura inicial passiva em uma mentalidade altamente "
 "proativa.\n"
 "\n"
 
-#: src/temperament.c:976
+#: src/temperament.c:1008
 msgid " ✦ Phlegmatic Influence: "
 msgstr " ✦ Influência Colérica: "
 
-#: src/temperament.c:978
+#: src/temperament.c:1010
 msgid ""
-"Acts as a natural thermal and emotional ballast, introducing\n"
-"diplomatic mediation, structural patience, and a steady pace that\n"
-"protects you from chronic stress.\n"
+"Acts as a natural thermal and emotional ballast, introducing diplomatic "
+"mediation, structural patience, and a steady pace that protects you from "
+"chronic stress.\n"
 "\n"
 msgstr ""
-"Injeta uma determinação genuína, um foco aguçado na \n"
-"execução e uma urgência natural para resolver problemas. \n"
-"Transforma uma postura inicial passiva em uma mentalidade altamente \n"
+"Injeta uma determinação genuína, um foco aguçado na "
+"execução e uma urgência natural para resolver problemas. "
+"Transforma uma postura inicial passiva em uma mentalidade altamente "
 "proativa.\n"
 "\n"
 
-#: src/temperament.c:985
+#: src/temperament.c:1017
 msgid " ✦ Melancholic Influence: "
 msgstr " ✦ Influência Melancólica: "
 
-#: src/temperament.c:987
+#: src/temperament.c:1019
 msgid ""
-"Confers analytical depth, long-term organization skills,\n"
-"and a realistic sense of caution. It ensures your impulses are\n"
-"grounded in real-world feasibility.\n"
+"Confers analytical depth, long-term organization skills, and a realistic "
+"sense of caution. It ensures your impulses are grounded in real-world "
+"feasibility.\n"
 "\n"
 msgstr ""
-"Confere profundidade analítica, habilidades de organização a \n"
-"longo prazo e um senso realista de cautela. \n"
-"Garante que seus impulsos estejam alicerçados na viabilidade \n"
+"Confere profundidade analítica, habilidades de organização a "
+"longo prazo e um senso realista de cautela. "
+"Garante que seus impulsos estejam alicerçados na viabilidade "
 "no mundo real.\n"
 "\n"
 
-#: src/temperament.c:999
+#: src/temperament.c:1033
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:1003
+#: src/temperament.c:1041
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:1009
+#: src/temperament.c:1051
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"

@@ -804,55 +804,73 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     scrollok(pad, TRUE);
 
     // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
-    wprintw(pad, "\n"); 
+    wprintw(pad, "\n");
+
+    int line_count = 1;
 
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  1. RAW SCORE SUMMARY\n"));
+    line_count += 2;
+
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    line_count += 2;
+
     wprintw(pad, "    %s: %d  |  %s: %d  |  %s: %d  |  %s: %d\n\n", 
             _("Hot"), score.total_quente, 
             _("Cold"), score.total_frio, 
             _("Moist"), score.total_umido, 
             _("Dry"), score.total_seco);
+    line_count += 2;
+
     wprintw(pad, "    %s: %d  |  %s: %d\n\n\n", _("Heat Axis"), eixo_calor, _("Moisture Axis"), eixo_umidade);
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"));
+    line_count += 2;
+
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    line_count += 2;
+
     
     // 1. CASO DE EMPATE NO CALOR (Eixo Calor == 0)
     if (eixo_calor == 0) {
         if (eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
             wprintw(pad, _("SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n\n"));
+            line_count += 2;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-            wprintw(pad, _("Your vital energy functions in perfect thermal equilibrium, blending \n"
-                         "Air and Water.\n"
-                         "This grants a deeply flexible, empathetic, and highly social persona.\n"
-                         "The talkative mind flows smoothly with natural emotional sensitivity, \n"
-                         "offering extreme social adaptability but risking mild emotional \n"
-                         "scattering.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your vital energy functions in perfect thermal equilibrium, blending "
+                         "Air and Water. "
+                         "This grants a deeply flexible, empathetic, and highly social persona. "
+                         "The talkative mind flows smoothly with natural emotional sensitivity, "
+                         "offering extreme social adaptability but risking mild emotional "
+                         "scattering.\n\n\n"), MAX_LINE_WIDTH);
         } else if (eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(21));
             wprintw(pad, _("CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(21));
-            wprintw(pad, _("Your active forces exist in a state of controlled thermal poise, \n"
-                         "blending Fire and Earth.\n"
-                         "This creates an unstoppable achiever rooted in deep structural \n"
-                         "efficiency and discipline.\n"
-                         "You possess immense willpower, though you must guard against chronic \n"
-                         "internal stress, rigid perfectionism, and deep stubbornness.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your active forces exist in a state of controlled thermal poise, "
+                         "blending Fire and Earth. "
+                         "This creates an unstoppable achiever rooted in deep structural "
+                         "efficiency and discipline. "
+                         "You possess immense willpower, though you must guard against chronic "
+                         "internal stress, rigid perfectionism, and deep stubbornness.\n\n\n"), MAX_LINE_WIDTH);
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(13));
             wprintw(pad, _("ABSOLUTE BALANCE (Quadrapartite Temperament)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(13));
-            wprintw(pad, _("Your chart reflects the rare, ideal geometric balance of all four \n"
-                         "humors.\n"
-                         "Fire, Water, Air, and Earth converge into perfect cosmic proportion. \n"
-                         "You possess the courage of the Choleric, the social grace of the Sanguine, \n"
-                         "the empathy of the Phlegmatic, and the objective realism of the Melancholic, \n"
-                         "activated exactly when needed.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your chart reflects the rare, ideal geometric balance of all four "
+                         "humors. "
+                         "Fire, Water, Air, and Earth converge into perfect cosmic proportion. "
+                         "You possess the courage of the Choleric, the social grace of the Sanguine, "
+                         "the empathy of the Phlegmatic, and the objective realism of the Melancholic, "
+                         "activated exactly when needed.\n\n\n"), MAX_LINE_WIDTH);
         }
     }
     // 2. CASO DE EMPATE NA UMIDADE (Eixo Umidade == 0)
@@ -860,25 +878,29 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         if (eixo_calor > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
             wprintw(pad, _("SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
-            wprintw(pad, _("An expressive, warm, and highly action-oriented signature blending \n"
-                         "Air and Fire.\n"
-                         "Your dynamic energy acts as a strong catalyst in social or \n"
-                         "professional domains.\n"
-                         "The intellectual curiosity of Air merges with the raw ambition \n"
-                         "of Fire, fueling powerful leadership qualities, with a risk of occasional \n"
-                         "impatience.\n\n\n"));
+            line_count += print_split_lines(pad, _("An expressive, warm, and highly action-oriented signature blending "
+                         "Air and Fire. "
+                         "Your dynamic energy acts as a strong catalyst in social or "
+                         "professional domains. "
+                         "The intellectual curiosity of Air merges with the raw ambition "
+                         "of Fire, fueling powerful leadership qualities, with a risk of occasional "
+                         "impatience.\n\n\n"), MAX_LINE_WIDTH);
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
             wprintw(pad, _("PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
-            wprintw(pad, _("A calm, deeply introspective, and self-protective constitution \n"
-                         "blending Water and Earth.\n"
-                         "Your operating engine is deliberate, highly structured, and \n"
-                         "cautious.\n"
-                         "The emotional depths of Water anchor onto the realistic stability \n"
-                         "of Earth, yielding an exceptionally reliable, analytical individual \n"
-                         "who moves at a careful pace.\n\n\n"));
+            line_count += print_split_lines(pad, _("A calm, deeply introspective, and self-protective constitution "
+                         "blending Water and Earth."
+                         "Your operating engine is deliberate, highly structured, and "
+                         "cautious. "
+                         "The emotional depths of Water anchor onto the realistic stability "
+                         "of Earth, yielding an exceptionally reliable, analytical individual "
+                         "who moves at a careful pace.\n\n\n"), MAX_LINE_WIDTH);
         }
     }
     // 3. CASOS PURA E ESTREITAMENTE CONFIGURADOS (Sem empates nos eixos)
@@ -886,39 +908,47 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         if (eixo_calor > 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
             wprintw(pad, _("SANGUINE (Hot & Wet - Air Element)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
-            wprintw(pad, _("Your psychological engine revolves around communication, expansion, \n"
-                         "and mental fluidity.\n"
-                         "You absorb external impressions instantly and possess an adaptable, \n"
-                         "expressive mind that thrives on curiosity and social exchange. Guard \n"
-                         "against scattering focus.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your psychological engine revolves around communication, expansion, "
+                         "and mental fluidity. "
+                         "You absorb external impressions instantly and possess an adaptable, "
+                         "expressive mind that thrives on curiosity and social exchange. Guard "
+                         "against scattering focus.\n\n\n"), MAX_LINE_WIDTH);
         } else if (eixo_calor > 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
             wprintw(pad, _("CHOLERIC (Hot & Dry - Fire Element)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
-            wprintw(pad, _("Your core essence is driven by swift, active, and result-oriented \n"
-                         "single-minded impulses.\n"
-                         "You possess an innate leadership spark, extreme courage when \n"
-                         "confronting adversity, and unyielding passion. Your chief challenge \n"
-                         "is mastering reactive impatience.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your core essence is driven by swift, active, and result-oriented "
+                         "single-minded impulses. "
+                         "You possess an innate leadership spark, extreme courage when "
+                         "confronting adversity, and unyielding passion. Your chief challenge "
+                         "is mastering reactive impatience.\n\n\n"), MAX_LINE_WIDTH);
         } else if (eixo_calor < 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(8));
             wprintw(pad, _("PHLEGMATIC (Cold & Wet - Water Element)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(8));
-            wprintw(pad, _("You embody a stable, welcoming, and peacekeeping emotional \n"
-                         "constitution.\n"
-                         "You operate through deep empathy, automatic diplomatic mediation, \n"
-                         "and a steady, reliable operational rhythm. Watch out for behavioral \n"
-                         "inertia or stagnation.\n\n\n"));
+            line_count += print_split_lines(pad, _("You embody a stable, welcoming, and peacekeeping emotional "
+                         "constitution. "
+                         "You operate through deep empathy, automatic diplomatic mediation, "
+                         "and a steady, reliable operational rhythm. Watch out for behavioral "
+                         "inertia or stagnation.\n\n\n"), MAX_LINE_WIDTH);
         } else if (eixo_calor < 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(30));
             wprintw(pad, _("MELANCHOLIC (Cold & Dry - Earth Element)\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD | COLOR_PAIR(30));
-            wprintw(pad, _("Your nature is built on structural caution, real-world pragmatism, \n"
-                         "and profound reflection.\n"
-                         "An exceptional asset for deep analysis, long-term organization, and \n"
-                         "concrete security  building. Beware a natural tendency toward brooding \n"
-                         "or social withdrawal.\n\n\n"));
+            line_count += print_split_lines(pad, _("Your nature is built on structural caution, real-world pragmatism, "
+                         "and profound reflection. "
+                         "An exceptional asset for deep analysis, long-term organization, and "
+                         "concrete security  building. Beware a natural tendency toward brooding "
+                         "or social withdrawal.\n\n\n"), MAX_LINE_WIDTH);
         }
     }
 
@@ -945,9 +975,11 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
             if (!exibiu_conector) {
                 wattron(pad, A_BOLD);
                 wprintw(pad, _("SECONDARY INFLUENCES & NUANCES\n\n"));
+                line_count += 3;
+
                 wattroff(pad, A_BOLD);
-                wprintw(pad, _("Although your core template is defined above, your psychiatric map\n"
-                             "shows other active forces adding layers to your behavior:\n\n"));
+                line_count += print_split_lines(pad, _("Although your core template is defined above, your psychiatric map "
+                             "shows other active forces adding layers to your behavior:\n\n"), MAX_LINE_WIDTH);
                 exibiu_conector = 1;
             }
 
@@ -957,79 +989,122 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                     wattron(pad, COLOR_PAIR(12) | A_REVERSE);
                     wprintw(pad, _(" ✦ Sanguine Influence: "));
                     wattroff(pad, COLOR_PAIR(12) | A_REVERSE);
-                    wprintw(pad, _("Adds an overlay of communicative ease, adaptability,\n"
-                                 "and cognitive curiosity. This softens any rigid boundaries or\n"
-                                 "stagnation imposed by your dominant humor.\n\n"));
+                    line_count += print_split_lines(pad, _("Adds an overlay of communicative ease, adaptability, "
+                                 "and cognitive curiosity. This softens any rigid boundaries or "
+                                 "stagnation imposed by your dominant humor.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case COLERICO: // Choleric
                     wattron(pad, COLOR_PAIR(11));
                     wprintw(pad, _(" ✦ Choleric Influence: "));
                     wattroff(pad, COLOR_PAIR(11));
-                    wprintw(pad, _("Injects raw drive, sharp focus on execution, and a\n"
-                                 "natural urgency to fix problems. It sharpens a passive baseline\n"
-                                 "into a highly proactive mindset.\n\n"));
+                    line_count += print_split_lines(pad, _("Injects raw drive, sharp focus on execution, and a "
+                                 "natural urgency to fix problems. It sharpens a passive baseline "
+                                 "into a highly proactive mindset.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case FLEUMATICO: // Phlegmatic
                     wattron(pad, COLOR_PAIR(8));
                     wprintw(pad, _(" ✦ Phlegmatic Influence: "));
                     wattroff(pad, COLOR_PAIR(8));
-                    wprintw(pad, _("Acts as a natural thermal and emotional ballast, introducing\n"
-                                 "diplomatic mediation, structural patience, and a steady pace that\n"
-                                 "protects you from chronic stress.\n\n"));
+                    line_count += print_split_lines(pad, _("Acts as a natural thermal and emotional ballast, introducing "
+                                 "diplomatic mediation, structural patience, and a steady pace that "
+                                 "protects you from chronic stress.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case MELANCOLICO: // Melancholic
                     wattron(pad, COLOR_PAIR(7));
                     wprintw(pad, _(" ✦ Melancholic Influence: "));
                     wattroff(pad, COLOR_PAIR(7));
-                    wprintw(pad, _("Confers analytical depth, long-term organization skills,\n"
-                                 "and a realistic sense of caution. It ensures your impulses are\n"
-                                 "grounded in real-world feasibility.\n\n"));
+                    line_count += print_split_lines(pad, _("Confers analytical depth, long-term organization skills, "
+                                 "and a realistic sense of caution. It ensures your impulses are "
+                                 "grounded in real-world feasibility.\n\n"), MAX_LINE_WIDTH);
                     break;
             }
         }
     }
 
     wprintw(pad, "\n\n");
+    line_count += 3;
+
     
     /* --- CAMADA 3: PORCENTAGENS DO RANKING (AUXILIAR) --- */
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  3. RANKED DISTRIBUTION DATA\n"));
+    line_count += 2;
+
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    line_count += 2;
+
     for (int i = 0; i < 4; i++) {
         wprintw(pad, "%s %d: %s %5.1f%%\n", _("Rank"), i + 1, lista[i].label, lista[i].porcentagem);
+        line_count += 2;
+
     }
     wprintw(pad, "\n\n");
+    line_count += 3;
+
 
     wattron(pad, A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"));
     wattroff(pad, A_DIM);
 
+    line_count += 3;;
+
     // 6. LOOP DE INTERAÇÃO E REDESENHO CONSTANTE DA PAD
     int pad_line_pos = 0;
-    int max_scroll_y = 65; 
     int ch;
+    
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
 
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
 
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
+        }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
         switch (ch) {
-            case KEY_UP:
-            case 'k':
-            case 'K':
-                if (pad_line_pos > 0) pad_line_pos--;
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
                 break;
-            case KEY_DOWN:
-            case 'j':
-            case 'J':
-                if (pad_line_pos < max_scroll_y) pad_line_pos++;
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
     }
 
     // 7. DESTRUIÇÃO E LIMPEZA
