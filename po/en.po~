@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 02:45-0300\n"
+"POT-Creation-Date: 2026-09-06 03:03-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -774,40 +774,44 @@ msgid ""
 "[ENTER] Edit Text / Save"
 msgstr ""
 
-#: src/arabic_parts.c:1535 src/arabic_parts.c:1548
+#: src/arabic_parts.c:1535 src/arabic_parts.c:1555
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr ""
 
-#: src/arabic_parts.c:1543
+#: src/arabic_parts.c:1546
+msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
+msgstr ""
+
+#: src/arabic_parts.c:1549
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:1706 src/aspects.c:517
+#: src/arabic_parts.c:1713 src/aspects.c:517
 msgid "(*) Numbers = angular difference in degrees"
 msgstr ""
 
-#: src/arabic_parts.c:1709
+#: src/arabic_parts.c:1716
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr ""
 
-#: src/arabic_parts.c:1709
+#: src/arabic_parts.c:1716
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:1796 src/selections.c:162
+#: src/arabic_parts.c:1803 src/selections.c:162
 msgid " CONFIRM DELETE "
 msgstr " CONFIRM DELETE "
 
-#: src/arabic_parts.c:1800 src/selections.c:166
+#: src/arabic_parts.c:1807 src/selections.c:166
 msgid "Are you sure you want to permanently delete:"
 msgstr "Are you sure you want to permanently delete:"
 
-#: src/arabic_parts.c:1862 src/arabic_parts.c:1876
+#: src/arabic_parts.c:1869 src/arabic_parts.c:1883
 #, fuzzy
 msgid "Failed deleting arabic part!"
 msgstr "Failed saving chart!"
 
-#: src/arabic_parts.c:1881
+#: src/arabic_parts.c:1888
 #, fuzzy
 msgid "Arabic Part deleted successfully!"
 msgstr "Chart deleted successfully."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 03:03-0300\n"
+"POT-Creation-Date: 2026-09-06 03:26-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1124,8 +1124,8 @@ msgstr ""
 msgid "Time"
 msgstr " Time "
 
-#: src/draw-chart.c:2194 src/draw-chart.c:2245
-msgid "TZ"
+#: src/draw-chart.c:2194
+msgid "Local"
 msgstr ""
 
 #: src/draw-chart.c:2201
@@ -1197,6 +1197,10 @@ msgstr ""
 
 #: src/draw-chart.c:2237
 msgid "⏸️  Stopped"
+msgstr ""
+
+#: src/draw-chart.c:2245
+msgid "TZ"
 msgstr ""
 
 #: src/draw-chart.c:2248

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 02:45-0300\n"
+"POT-Creation-Date: 2026-09-06 03:03-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -999,39 +999,43 @@ msgstr ""
 "Use [↑/↓] Campos Verticais | [←/→] Ajustar Valor | [TAB] Campos Horizontais "
 "| [ENTER] Editar Texto / Salvar"
 
-#: src/arabic_parts.c:1535 src/arabic_parts.c:1548
+#: src/arabic_parts.c:1535 src/arabic_parts.c:1555
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr "[←/→] Mais Partes [↑/↓] Rolagem"
 
-#: src/arabic_parts.c:1543
+#: src/arabic_parts.c:1546
+msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
+msgstr " Aspectos dos Planetas Radicais sobre as Partes Árabes do Retorno Solar "
+
+#: src/arabic_parts.c:1549
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr " Matriz de Aspectos das Partes Árabes "
 
-#: src/arabic_parts.c:1706 src/aspects.c:517
+#: src/arabic_parts.c:1713 src/aspects.c:517
 msgid "(*) Numbers = angular difference in degrees"
 msgstr "(*) Numerais = diferença angular em graus"
 
-#: src/arabic_parts.c:1709
+#: src/arabic_parts.c:1716
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr "ESC: Sair - [ ←/→ ] Partes"
 
-#: src/arabic_parts.c:1709
+#: src/arabic_parts.c:1716
 msgid "Scroll Planets"
 msgstr "Rolar Planetas"
 
-#: src/arabic_parts.c:1796 src/selections.c:162
+#: src/arabic_parts.c:1803 src/selections.c:162
 msgid " CONFIRM DELETE "
 msgstr " CONFIRMA APAGAR "
 
-#: src/arabic_parts.c:1800 src/selections.c:166
+#: src/arabic_parts.c:1807 src/selections.c:166
 msgid "Are you sure you want to permanently delete:"
 msgstr "Tem certeza que você quer apagar permanentemente:"
 
-#: src/arabic_parts.c:1862 src/arabic_parts.c:1876
+#: src/arabic_parts.c:1869 src/arabic_parts.c:1883
 msgid "Failed deleting arabic part!"
 msgstr "Falha ao deletar parte árabe!"
 
-#: src/arabic_parts.c:1881
+#: src/arabic_parts.c:1888
 msgid "Arabic Part deleted successfully!"
 msgstr "Parte Árabe excluída com sucesso."
 
@@ -4133,8 +4137,8 @@ msgid ""
 "\n"
 msgstr ""
 "O Senhor do Ano é %s. No seu Mapa Natal, a pontuação de sua dignidade base "
-"é: %d. Sua eficiência cósmica relativa é: %d%% (Resultando em %d Pontos de Força "
-"Líquida).\n"
+"é: %d. Sua eficiência cósmica relativa é: %d%% (Resultando em %d Pontos de "
+"Força Líquida).\n"
 "\n"
 
 #: src/solar_return.c:609

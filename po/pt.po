@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 03:03-0300\n"
+"POT-Creation-Date: 2026-09-06 03:26-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1005,7 +1005,8 @@ msgstr "[←/→] Mais Partes [↑/↓] Rolagem"
 
 #: src/arabic_parts.c:1546
 msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
-msgstr " Aspectos dos Planetas Radicais sobre as Partes Árabes do Retorno Solar "
+msgstr ""
+" Aspectos dos Planetas Radicais sobre as Partes Árabes do Retorno Solar "
 
 #: src/arabic_parts.c:1549
 msgid " Arabic Parts Aspect Matrix Grid "
@@ -1335,8 +1336,8 @@ msgstr "Vértex"
 msgid "Time"
 msgstr "Horário"
 
-#: src/draw-chart.c:2194 src/draw-chart.c:2245
-msgid "TZ"
+#: src/draw-chart.c:2194
+msgid "Local"
 msgstr "Local"
 
 #: src/draw-chart.c:2201
@@ -1406,6 +1407,10 @@ msgstr "▶️  Rodando"
 #: src/draw-chart.c:2237
 msgid "⏸️  Stopped"
 msgstr "⏸️  Parado"
+
+#: src/draw-chart.c:2245
+msgid "TZ"
+msgstr "Local"
 
 #: src/draw-chart.c:2248
 msgid "Speed Animation"
