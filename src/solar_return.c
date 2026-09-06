@@ -555,20 +555,27 @@ void abrir_janela_confronto_natal_revolucao(
     
     char str_text[512];
 
-    wprintw(pad, "\n\n"); 
+    wprintw(pad, "\n\n");
+
+    int line_count = 2;
 
     // --- CABEÇALHO DO CONFRONTO ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("THE GOLDEN RADIX RULE: CONFRONTING THE LORD OF THE YEAR\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    
+    line_count += 2;
+
     snprintf(str_text, 256, "%s", _("According to Hellenistic and Medieval tradition, the Solar Return Almuten "
                  "cannot be interpreted in a vacuum. Its promises are deeply filtered by its "
                  "fundamental condition in your Birth Chart (Radix) and its structural "
                  "cross-transits.\n\n"));
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n\n");
+
+    line_count += 2;
 
     const char *nomes_planetas[] = {"", _("SUN ☉"), _("MOON ☽"), _("MERCURY ☿"), _("VENUS ♀"), _("MARS ♂"), _("JUPITER ♃"), _("SATURN ♄")};
     
@@ -582,6 +589,8 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, _("  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     
+    line_count += 3;
+
     /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
     double weights[50];
     get_weights(weights, show_modern_planets);
@@ -591,13 +600,20 @@ void abrir_janela_confronto_natal_revolucao(
                     "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
             nomes_planetas[id_almuten_rev], pontuacao_dignidade_natal, aproveitamento_almuten, pontos_finais_exibicao);
     
+    line_count += 4;
+
     wattron(pad, A_BOLD);
     wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
+
+    line_count += 2;
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (aproveitamento_almuten >= 65) {
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
         wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        
+        line_count += 2;
+
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
         snprintf(str_text, 512, _("This planet commands the year with magnificent backing from your birth chart.\n"
                         "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
@@ -607,6 +623,9 @@ void abrir_janela_confronto_natal_revolucao(
     else if (aproveitamento_almuten >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
         wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        
+        line_count += 2;
+
         wattroff(pad, A_BOLD | COLOR_PAIR(8));
         snprintf(str_text, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
                         "It possesses the standard authority to execute its functions, but will demand steady "
@@ -616,6 +635,9 @@ void abrir_janela_confronto_natal_revolucao(
     else {
         wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
         wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        
+        line_count += 2;
+
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
         snprintf(str_text, 512, _("WARNING: The Lord of the Year operates under extreme systemic debility (%d%%).\n"
                         "Even though it governs the time stream of this anniversary, it lacks the raw vital "
@@ -624,23 +646,31 @@ void abrir_janela_confronto_natal_revolucao(
                         "administrative blocks, or the feeling of working against a locked door.\n\n\n"), aproveitamento_almuten);
     }
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
+
+    line_count += 2;
 
     // --- VERIFICAÇÃO 2: A POSIÇÃO POR CASA RADICAL ---
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
+    line_count++;
+
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK II] RADIX HOUSE TRANSIT\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada);
     
+    line_count += 3;
+
     wattron(pad, A_BOLD );
     wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
+
+    line_count += 3;
 
     if (casa_natal_transitada == 1) {
         snprintf(str_text, 512, _("The lens focuses strictly on your physical body, personal vitality, "
@@ -698,27 +728,40 @@ void abrir_janela_confronto_natal_revolucao(
     }
 
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
+
+    line_count += 2;
 
     // --- VERIFICAÇÃO 3: CONDIÇÃO DO SENHOR DA PROFECÇÃO ---
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
+    line_count++;
+
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK III] THE TIMELORD CO-ALIGNMENT\n\n"));
+
+    line_count += 3;
+
     wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _(" ✦ The current Profection Lord of the Year is: %s.\n"
                  " ✦ The current Solar Return Almuten is: %s.\n\n"), 
             nomes_planetas[id_senhor_profeccao], nomes_planetas[id_almuten_rev]);
     
     wprintw(pad, _("Interpretation:\n\n"));
+
+    line_count += 5;
+
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_profeccao) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
         wprintw(pad, _("CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n\n"));
+        
+        line_count += 2;
+
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
         snprintf(str_text, 512, _("The Lord of the Return is the EXACT same planet ruling your profection "
                      "time stream!\n"
@@ -734,18 +777,25 @@ void abrir_janela_confronto_natal_revolucao(
                      "without overwhelming intensity.\n\n\n"));
     }
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
 
+    line_count += 2;
 
     // --- VERIFICAÇÃO 4: O ALINHAMENTO CRONOCRÁTICO DAS FIRDÁRIAS ---
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    
+    line_count++;
+
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n\n"));
+    
+    line_count++;
+
     wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _(" ✦ Current Firdaria Master Ruler: %s\n"
                  " ✦ Current Firdaria Sub-Ruler: %s\n"
@@ -755,6 +805,9 @@ void abrir_janela_confronto_natal_revolucao(
             nomes_planetas[id_almuten_rev]);
     
     wprintw(pad, _("Interpretation:\n\n"));
+
+    line_count += 6;
+
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_firdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(12)); 
@@ -782,24 +835,32 @@ void abrir_janela_confronto_natal_revolucao(
                      "the macro-cycle.\n\n\n"));
     }
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
+
+    line_count += 2;
 
     // --- VERIFICAÇÃO 5: PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO ---
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
+    line_count++;
+
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     
+    line_count++;
+
     /* Agora a impressão é direta, limpa e imune a falhas de compilação */
     wprintw(pad, _("The Solar Return Ascendant falls into your NATAL HOUSE %d.\n\n"), casa_natal_do_asc);
     wattron(pad, A_BOLD );
     wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
+
+    line_count += 4;
     
     if (casa_natal_do_asc == 1) {
         snprintf(str_text, 512, _("A year of absolute self-empowerment. Your personal choices, physical vitality, "
@@ -818,23 +879,31 @@ void abrir_janela_confronto_natal_revolucao(
                      "or resource management will absorb your primary energetic focus this year.\n\n\n"));
     }
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     wprintw(pad, "\n");
     wprintw(pad, "\n");
+
+    line_count += 2;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
+    line_count++;
+
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     
+    line_count += 2;
+
     /* Substitua 'casa_sr_do_natal' pela sua variável de cálculo */
     wprintw(pad, _("Your Natal Ascendant falls into your SOLAR RETURN HOUSE %d.\n\n"), casa_rev_do_asc_natal);
     wattron(pad, A_BOLD);
     wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD);
+
+    line_count += 4;
 
     if (casa_rev_do_asc_natal == 1) {
         snprintf(str_text, 512, _("Total alignment. Your core identity acts with absolute clarity and autonomy."
@@ -876,7 +945,7 @@ void abrir_janela_confronto_natal_revolucao(
         snprintf(str_text, 512, _("Invalid house data calculated for the projection.\n\n\n"));
     }
 
-    print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
 
 
     const char* msg_cenario_externo[13] = {
@@ -915,9 +984,13 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
+    line_count++;
+
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+
+    line_count += 2;
 
     // Validação de segurança para os índices do vetor (evita falha de segmentação)
     if (casa_natal_do_asc >= 1 && casa_natal_do_asc <= 12 && 
@@ -925,6 +998,9 @@ void abrir_janela_confronto_natal_revolucao(
 
         wattron(pad, A_BOLD);
         wprintw(pad, _("Astrological Synthesis for your Year:\n\n"));
+
+        line_count += 2;
+
         wattroff(pad, A_BOLD);
 
         
@@ -935,10 +1011,10 @@ void abrir_janela_confronto_natal_revolucao(
                 msg_cenario_externo[casa_natal_do_asc], 
                 msg_atitude_interna[casa_rev_do_asc_natal]);
 
-        print_split_lines(pad, str_text1, MAX_LINE_WIDTH);
+        line_count += print_split_lines(pad, str_text1, MAX_LINE_WIDTH);
         wprintw(pad, "\n");
 
-
+        line_count++;
 
         // Uma breve conclusão tradicional dependendo se as duas posições combinam ou conflitam
         wattron(pad, A_BOLD);
@@ -946,6 +1022,8 @@ void abrir_janela_confronto_natal_revolucao(
         wprintw(pad, "\n");
         wprintw(pad, "\n");
         wattroff(pad, A_BOLD);
+
+        line_count += 3;
 
         char str_text2[200];
 
@@ -960,16 +1038,20 @@ void abrir_janela_confronto_natal_revolucao(
                          "concrete external demands of House %d with your inner needs in House %d."), 
                          casa_natal_do_asc, casa_rev_do_asc_natal);
         }
-        print_split_lines(pad, str_text2, MAX_LINE_WIDTH);
+        line_count += print_split_lines(pad, str_text2, MAX_LINE_WIDTH);
 
 
     } else {
         wprintw(pad, _("Error: Invalid house calculation data for synthesis mapping.\n\n\n"));
 
+        line_count += 4;
+
     }
 
     wprintw(pad, "\n");
     wprintw(pad, "\n");
+
+    line_count += 2;
 
 
 
@@ -980,56 +1062,59 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, _("  [CONFRONTATION END] - Press 'Q' or ESC to return to the Solar Return interface.\n"));
     wattroff(pad, A_DIM);
 
-    // 6. LOOP DE INTERAÇÃO DO SCROLL
+    line_count += 3;
+
     int pad_line_pos = 0;
-    //int max_scroll_y = 120; // Aumentado para permitir a leitura do Check IV até o final
     int ch;
+    
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
 
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
 
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
-        switch (ch) {
-            case KEY_UP:
-            case 'k':
-            case 'K':
-                if (pad_line_pos > 0) {
-                    pad_line_pos--;
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
                 }
-                break;
-                
-            case KEY_DOWN:
-            case 'j':
-            case 'J': {
-                // 1. Descobre a altura total atualizada do pad na memória (incluindo os wresize)
-                int total_linhas_pad = getmaxy(pad);
-                
-                // 2. Calcula o tamanho da "janela" física na tela onde o texto é renderizado
-                int altura_janela_tela = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
-                
-                // 3. O limite dinâmico é a diferença entre o tamanho do pergaminho e a janela de exibição
-                int limite_dinamico_scroll = total_linhas_pad - altura_janela_tela;
-                if (limite_dinamico_scroll < 0) {
-                    limite_dinamico_scroll = 0;
-                }
-
-                // 4. Se o texto que você imprimiu não preencheu o pad todo, o cursor final
-                // do ncurses nos diz onde a última linha real foi escrita.
-                int y_cursor_atual = getcury(pad);
-                int ultima_linha_com_texto = (y_cursor_atual < total_linhas_pad) ? y_cursor_atual : total_linhas_pad;
-                
-                int limite_real_texto = ultima_linha_com_texto - altura_janela_tela + 1;
-                if (limite_real_texto < 0) limite_real_texto = 0;
-                
-                // Escolhe o menor limite seguro para não rolar uma tela em branco infinita
-                int max_scroll_atual = (limite_real_texto < limite_dinamico_scroll) ? limite_real_texto : limite_dinamico_scroll;
-
-                if (pad_line_pos < max_scroll_atual) {
-                    pad_line_pos++;
-                }
-                break;
             }
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
+        switch (ch) {
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
+                break;
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
+                break;
+        }
     }
 
 
@@ -1175,6 +1260,8 @@ void abrir_janela_transitos_revolucao(
     idlok(pad, TRUE); 
     scrollok(pad, TRUE);
 
+    int line_count = 0;
+
     wprintw(pad, "\n"); 
 
     wattron(pad, A_BOLD | COLOR_PAIR(15));
@@ -1182,7 +1269,10 @@ void abrir_janela_transitos_revolucao(
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     
-    print_split_lines(pad, 
+
+    line_count += 2;
+
+    line_count += print_split_lines(pad, 
                _("The positions of the planets at the exact moment of your Solar Return act as a frozen "
                  "layer of transits governing the next 12 months. Below is the mapping of where this year's "
                  "forces physically position themselves over your life-long natal structure.\n\n"), 
@@ -1222,13 +1312,17 @@ void abrir_janela_transitos_revolucao(
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE); // Cor de destaque máxima para a Vida/Saúde
 
+    line_count++;
+
     char str[512] = "";
     snprintf(str, 512, _("[CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"), 
             glifo_hyleg_natal, nome_hyleg_natal);
-    print_split_lines(pad, str, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
 
     wattroff(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE);
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+
+    line_count++;
 
     bool encontrou_hyleg_transit = false;
 
@@ -1256,36 +1350,36 @@ void abrir_janela_transitos_revolucao(
             snprintf(str, 512, _("[*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"), 
                     nomes[p], nome_hyleg_natal, diff);
             
-            print_split_lines(pad, str, MAX_LINE_WIDTH);
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
             wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32) | COLOR_PAIR(25) | A_REVERSE);
 
             if (p == 6) { // Saturno pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
                 snprintf(str, 512, _("[VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
-                print_split_lines(pad, str, MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
-                print_split_lines(pad,
+                line_count += print_split_lines(pad,
                                   _("This year promises severe depletion of vital energy, physical fatigue, "
                                     "or structural health tests. Rest, discipline, and caution are mandatory.\n\n"),
                                    MAX_LINE_WIDTH);
             } 
             else if (p == 4) { // Marte pisando no Hyleg
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
-                print_split_lines(pad, _("[VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, _("[VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
-                print_split_lines(pad,
+                line_count += print_split_lines(pad,
                                   _("High risk of acute inflammatory episodes, fevers, injuries, or sudden surgeries. "
                                     "Avoid reckless physical behavior and channel stress constructively.\n\n"),
                                   MAX_LINE_WIDTH);
             } 
             else if (p == 5) { // Júpiter pisando no Hyleg
                 wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE); // Verde/Sucesso
-                print_split_lines(pad, _("[GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, _("[GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
                 
-                print_split_lines(pad, 
+                line_count += print_split_lines(pad, 
                                  _("Excellent providential protection. A year of physical recovery, expansion of "
                                    "vital forces, and an invisible protective shield against major crises.\n\n"),
                                   MAX_LINE_WIDTH);
@@ -1295,27 +1389,27 @@ void abrir_janela_transitos_revolucao(
                 print_split_lines(pad, _("[LESSER BENEFIC] Venus is soothing your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(12));
                 
-                print_split_lines(pad, 
+                line_count += print_split_lines(pad, 
                                  _("A period of physical ease, revitalization, and biochemical harmony. "
                                    "Excellent for aesthetic improvements, restorative treatments, and bodily well-being.\n\n"),
                                   MAX_LINE_WIDTH);
             }
             else if (p == 10) { // Nodo Norte pisando no Hyleg (Ajuste o índice se necessário)
                 wattron(pad, A_BOLD | COLOR_PAIR(12)); // Considerado benéfico/amplificador
-                print_split_lines(pad, _("[AMPLIFIER] The North Node is expanding your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, _("[AMPLIFIER] The North Node is expanding your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(12));
                 
-                print_split_lines(pad, 
+                line_count += print_split_lines(pad, 
                                  _("A massive surge of physical ambition and vital drive. While it grants great evolutionary "
                                    "energy, guard against bodily overexcitation, nervous strain, or overindulgence.\n\n"),
                                   MAX_LINE_WIDTH);
             }
             else if (p == 11) { // Nodo Sul pisando no Hyleg (Índice manual do Nodo Sul)
                 wattron(pad, A_BLINK | COLOR_PAIR(11)); // Maléfico/Drenador
-                print_split_lines(pad, _("[VITAL ALERT] The South Node is draining your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, _("[VITAL ALERT] The South Node is draining your Natal Hyleg!\n"), MAX_LINE_WIDTH);
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
-                print_split_lines(pad, 
+                line_count += print_split_lines(pad, 
                                  _("High risk of sudden vitality leaks, unexplained fatigue, or lowered immunity. "
                                    "A crucial year to detoxify the physical body, release toxic habits, and avoid overexertion.\n\n"),
                                   MAX_LINE_WIDTH);
@@ -1324,7 +1418,7 @@ void abrir_janela_transitos_revolucao(
                 char str[256];
                 snprintf(str, 256, _("The annual transit of %s brings daily focus and minor adjustments to your "
                     "vitality and immediate physical environment this year.\n\n"), nomes[p]);
-                print_split_lines(pad, 
+                    line_count += print_split_lines(pad, 
                                   (const char *)str,
                                    MAX_LINE_WIDTH);
             }
@@ -1333,13 +1427,15 @@ void abrir_janela_transitos_revolucao(
     }
 
     if (!encontrou_hyleg_transit) {
-        print_split_lines(pad, 
+        line_count += print_split_lines(pad, 
                           _("No planetary conjunctions from the Solar Return are currently putting friction "
                             "or direct pressure on your Natal Hyleg. Your vital root remains unbothered.\n\n"),
                             MAX_LINE_WIDTH);
     }
     wprintw(pad, "\n");
     
+    line_count++;
+
     for (int p = 0; p < 12; p++) {
 
         if (!show_modern_planets && p > 6 && p < 10) {
@@ -1352,20 +1448,25 @@ void abrir_janela_transitos_revolucao(
         wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
 
+        line_count += 4;
+
         int casa_natal = casas_planetas_rev[p];
         wprintw(pad, _(" • House Projection: Operating inside your NATAL HOUSE %d.\n"), casa_natal);
         
+        line_count++;
+
         char str[256];
         snprintf(str, 256, _("This year, the physical affairs governed by your Natal House %d will be heavily "
                              "stimulated, triggered, and reconfigured by the active expressions of %s.\n\n"), 
                              casa_natal, 
                              nomes[p]);
-        print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+        line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
 
         wattron(pad, A_BOLD);
         wprintw(pad, _(" • Active Radical Conjunctions:\n"));
         wattroff(pad, A_BOLD);
 
+        line_count += 2;
            
         bool encontrou_conjuncao = false;
         for (int n = 0; n < 12 + qtd_partes; n++) {
@@ -1403,7 +1504,7 @@ void abrir_janela_transitos_revolucao(
                     wattron(pad, A_BOLD | COLOR_PAIR(25) | A_REVERSE);
                 }
                 snprintf(str, 512, _("[*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"), nomes[p], nomes[n], diff);
-                print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32) | COLOR_PAIR(25) | A_REVERSE);
 
                 if (p == 6) {
@@ -1411,44 +1512,46 @@ void abrir_janela_transitos_revolucao(
                     snprintf(str, 256, _("[CRITICAL] Saturn brings a strict reality check, heavy boundaries, obstacles, "
                                          "or long-term structuring tasks to the affairs of your natal %s.\n\n"), nomes[n]);
 
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 5) {
                     char str[256];
                     snprintf(str, 256, _("[BENEFIC] Jupiter injects providential protection, sudden opportunities, expansion, "
                                          "and luck into the baseline promises of your natal %s.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 4) {
                     char str[256];
                     snprintf(str, 256, _("[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high physical "
                                          "vitality expenditures upon your natal %s.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 3) {
                     char str[256];
                     snprintf(str, 256, _("[BENEFIC] Venus injects harmony, personal magnetism, ease, pleasure, "
                                          "and social or financial alignment into the baseline promises of your natal %s.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 }  else if (p == 10) {
                     char str[256];
                     snprintf(str, 256, _("[BENEFIC] The North Node injects a powerful drive for growth, intense amplification, "
                         "destined advancements, and new evolutionary opportunities into your natal %s.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 11 ) {
                     char str[256];
                     snprintf(str, 256, _("[CRITICAL] The South Node triggers energy drainage, necessary releases, karmic closures, "
                         "or a pull toward past familiar patterns regarding your natal %s.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else {
                     char str[256];
                     snprintf(str, 256,  _("This conjunction wakes up the natal potential of your %s, making its themes "
                                           "highly prominent on a day-to-day level throughout this annual cycle.\n\n"), nomes[n]);
-                    print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 }
             }
         }
         if (!encontrou_conjuncao) {
             wprintw(pad, _("No exact conjunctions detected over your natal planets within a 5° orb.\n\n"));
+            line_count += 2;
         }
         wprintw(pad, "\n");
+        line_count += 2;
     }
 
     wattron(pad, A_DIM);
@@ -1456,18 +1559,61 @@ void abrir_janela_transitos_revolucao(
     wprintw(pad, _("  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return interface.\n"));
     wattroff(pad, A_DIM);
 
-    // Loop de controle de scroll
+    line_count += 4;
+
     int pad_line_pos = 0;
-    int max_scroll_y = 400;
     int ch;
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
-        switch (ch) {
-            case KEY_UP: case 'k': case 'K': if (pad_line_pos > 0) pad_line_pos--; break;
-            case KEY_DOWN: case 'j': case 'J': if (pad_line_pos < max_scroll_y) pad_line_pos++; break;
+    
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
+
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
+
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
         }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
         prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
+        switch (ch) {
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
+                break;
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
+                break;
+        }
     }
+
 
     delwin(pad); 
     delwin(border_win); 

@@ -1178,7 +1178,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
  
         if (DARK_MODE) {
-            attron(COLOR_PAIR(7) | A_DIM);
+            attron(COLOR_PAIR(25) | A_DIM);
         }
         else {
             attron(COLOR_PAIR(31));
@@ -1187,7 +1187,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         draw_circle_points_delay(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
-            attroff(COLOR_PAIR(7));
+            attroff(COLOR_PAIR(25));
             attron(COLOR_PAIR(9) | A_DIM);
         }
         else {
@@ -1796,7 +1796,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                 if (i >= scrollbar_pos && i < scrollbar_pos + 1) {
                     mvwaddch(help_win, 2 + i, win_w - 2, ACS_BLOCK);
                 } else {
-                    mvwaddch(help_win, 2 + i, win_w - 2, ' ');
+                    mvwaddch(help_win, 2 + i, win_w - 2, ACS_VLINE);
                 }
             }
         }
