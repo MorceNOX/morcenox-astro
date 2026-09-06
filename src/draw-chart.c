@@ -2229,7 +2229,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
         mvprintw(LINES - 1, 1, _("Animation: A | Speed: ]/[ | Quit: Q "));
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
-        mvprintw(LINES - 2, max_x - 25, "%s%.1f",_("      Aspect Ratio: "), aspect_ratio);
+        mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
 
         if (animated) {
             attron(A_BLINK);
@@ -4810,7 +4810,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     // Defined aspect ratio based on characters mono dimensions
     float aspect_ratio = ((float)max_x / (float)max_y);
     if (aspect_ratio >= 3.56) {
-        aspect_ratio = aspect_ratio / 1.9;
+        aspect_ratio = aspect_ratio / 1.8659;
     }
     else {
         aspect_ratio = aspect_ratio / 1.7;
