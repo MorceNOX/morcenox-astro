@@ -726,26 +726,41 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
 
-    wprintw(pad, "\n"); 
+    char str[512];
+
+    wprintw(pad, "\n");
+
+    int line_count = 1;
 
     // --- PREÂMBULO ESPIRITUAL ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _(" THE LORD OF THE CHART (ALMUTEN FIGURIS) \n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wprintw(pad, _("The Almuten Figuris acts as the supreme ruler of your natal chart,\n"
-                 "representing the evolutionary helmsman of your soul. While the Ascendant\n"
-                 "governs the physical vessel, the Almuten dictates the highest spiritual\n"
+    
+    line_count += 2;
+
+    snprintf(str, 512, _("The Almuten Figuris acts as the supreme ruler of your natal chart, "
+                 "representing the evolutionary helmsman of your soul. While the Ascendant "
+                 "governs the physical vessel, the Almuten dictates the highest spiritual "
                  "purpose, latent talents, and the path to inner mastery.\n\n"));
 
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+    
     // TRATAMENTO DE CO-REGÊNCIA (CASOS DE EMPATE)
     if (qtd_vencedores > 1) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
         wprintw(pad, _("CO-REGENCY DETECTED: Spiritual Conjunction\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("Your chart presents a rare cosmic occurrence: a shared throne. Multiple\n"
-                     "archaic planetary forces balance each other perfectly, demanding that you\n"
+        
+        line_count += 2;
+        
+        snprintf(str, 512,  _("Your chart presents a rare cosmic occurrence: a shared throne. Multiple "
+                     "archaic planetary forces balance each other perfectly, demanding that you "
                      "integrate both streams of consciousness to achieve your destiny.\n\n"));
+    
+        line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
     }
 
     // 5. LOOP DE RENDERIZAÇÃO DOS PLANETAS VENCEDORES
@@ -754,6 +769,9 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        
+        line_count++;
+
         wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, " %s  %s ", glifo, _("ARCHETYPAL RULER"));
         
@@ -768,95 +786,186 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
+        line_count += 3;
+
         // IMPRESSÃO DOS TEXTOS DE ACORDO COM O ID DO PLANETA
         if (id_planeta == 1) { // SOL
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The soul seeks the expression of pure individuality, truth, and integrity.\n"
-                         "There is an intrinsic calling to become a source of light, clarity, and\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("The soul seeks the expression of pure individuality, truth, and integrity. "
+                         "There is an intrinsic calling to become a source of light, clarity, and "
                          "centrality for yourself and others.\n\n"));
+            
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Confers natural nobility, personal magnetism, generosity, and a sharp\n"
+            line_count += 2;
+            
+            snprintf(str, 512,  _("Confers natural nobility, personal magnetism, generosity, and a sharp "
                          "sense of destiny or mission. The native leads through dignified actions.\n\n"));
+            
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic\n"
+            line_count += 2;
+
+            snprintf(str, 512,  _("Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic "
                          "need for constant external validation and applause.\n\n\n"));
+
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 2) { // LUA
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The spiritual path is realized through nurturing, cosmic alignment, and a\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("The spiritual path is realized through nurturing, cosmic alignment, and a "
                          "deep connection to the emotional tides of the world. The soul protects.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Grants extreme empathy, razor-sharp intuition, a bond with ancestry,\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Grants extreme empathy, razor-sharp intuition, a bond with ancestry, "
                          "and a rich imagination. Highly adept at reading environmental atmospheres.\n\n"));
+            
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Mastering unstable mood swings, hypersensitivity, over-attachment to the\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Mastering unstable mood swings, hypersensitivity, over-attachment to the "
                          "past, and a natural tendency to slide into passive dependency.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 3) { // MERCÚRIO
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Evolution occurs via the intellect, the translation of reality, and the\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Evolution occurs via the intellect, the translation of reality, and the "
                          "unraveling of the laws that weave and connect all structural data.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Brings a brilliant mind, precise adaptability, and an elite talent for\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Brings a brilliant mind, precise adaptability, and an elite talent for "
                          "the written or spoken word. An eternal learner and master problem solver.\n\n"));
+
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Guarding against nervous system exhaustion, oscillating opinions,\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Guarding against nervous system exhaustion, oscillating opinions, "
                          "intellectual duplicity, and a tendency to rationalize true emotions.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 4) { // VÊNUS
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The soul seeks beauty, balance, absolute justice, love, and the sacred\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("The soul seeks beauty, balance, absolute justice, love, and the sacred "
                          "reconciliation of opposites. Growth mirrors through deep relationships.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Confers authentic charm, innate diplomacy, refined aesthetic taste, and\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Confers authentic charm, innate diplomacy, refined aesthetic taste, and "
                          "magnetic attraction. You attract assets, art, and peace with comfort.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Evading superficiality, self-indulgence, a chronic fear of confrontation\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Evading superficiality, self-indulgence, a chronic fear of confrontation "
                          "(which breeds false diplomacy), and codependency.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 5) { // MARTE
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The soul refines itself through friction, righteous combat, courage,\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("The soul refines itself through friction, righteous combat, courage, "
                          "and severing stagnant attachments. Vital force demands protection of the weak.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Grants unyielding determination, executive focus, wild independence, and\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Grants unyielding determination, executive focus, wild independence, and "
                          "pioneering drives. The native actively thrives under extreme pressure.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Evolutionary Hurdles:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Channelling destructive wrath, chronic impatience, verbal aggression,\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Channelling destructive wrath, chronic impatience, verbal aggression, "
                          "and the base impulse to act tyrannically or purely out of self-interest.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 6) { // JÚPITER
             wattron(pad, A_BOLD); wprintw(pad, _("Spiritual Essence:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The journey is bound to higher consciousness expansion, unwavering faith\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("The journey is bound to higher consciousness expansion, unwavering faith "
                          "in natural law, philosophy, and magnifying the spirit of benevolence.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
             wattron(pad, A_BOLD); wprintw(pad, _("Character Impact:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Brings infectious optimism, a broad structural worldview, accidental luck,\n"
+            line_count += 2;
+
+            snprintf(str, 512, _("Brings infectious optimism, a broad structural worldview, accidental luck, "
                          "and deep ethical codes. Acts as a natural, comforting counselor.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
 
             wattron(pad, A_BOLD); 
             wprintw(pad, _("Evolutionary Hurdles:\n\n")); 
+            line_count += 2;
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Controlling the slope toward excess (dogmatism, over-spending), naive\n"
+            
+            snprintf(str, 512, _("Controlling the slope toward excess (dogmatism, over-spending), naive "
                         "optimism that miscalculates physical danger, and intellectual arrogance.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
         else if (id_planeta == 7) { // SATURNO
             wattron(pad, A_BOLD); 
             wprintw(pad, _("Spiritual Essence:\n\n")); 
+            line_count += 2;
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("The soul elected absolute mastery via self-discipline, heavy responsibility,\n"
+            
+            snprintf(str, 512, _("The soul elected absolute mastery via self-discipline, heavy responsibility, "
                         "the laws of time, hard boundaries, and wisdom etched directly into stone.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
     
             wattron(pad, A_BOLD); 
             wprintw(pad, _("Character Impact:\n\n")); 
+            line_count += 2;
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Confers exceptional sobriety, titanic resilience, strategic patience, and\n"
+            
+            snprintf(str, 512, _("Confers exceptional sobriety, titanic resilience, strategic patience, and "
                         "pragmatism. Built to harvest true success and authority in maturity.\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
     
             wattron(pad, A_BOLD); 
             wprintw(pad, _("Evolutionary Hurdles:\n\n")); 
+            line_count += 2;
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Avoiding chronic pessimism, paralyzing melancholy, fear of material failure,\n"
+            
+            snprintf(str, 512, _("Avoiding chronic pessimism, paralyzing melancholy, fear of material failure, "
                         "mental rigidity, and crushing yourself under unearned guilt.\n\n\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
         }
     }
     
@@ -865,32 +974,62 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the Almuten panel.\n"));
     wattroff(pad, A_DIM);
     
+    line_count += 3;
+
     // 6. LOOP DE INTERAÇÃO E SCROLL DA PAD
     int pad_line_pos = 0;
-    int max_scroll_y = (qtd_vencedores > 1) ? 90 : 45; // Adapta a profundidade de scroll
+    //int max_scroll_y = (qtd_vencedores > 1) ? 90 : 45; // Adapta a profundidade de scroll
     int ch;
     
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+   
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
+
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
+
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
+        }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
         switch (ch) {
-            case KEY_UP:
-            case 'k':
-            case 'K':
-                if (pad_line_pos > 0) {
-                    pad_line_pos--;
-                }
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
                 break;
-                
-            case KEY_DOWN:
-            case 'j':
-            case 'J':
-                if (pad_line_pos < max_scroll_y) {
-                    pad_line_pos++;
-                }
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
     }
     
     // 7. LIMPEZA COMPLETA DA MEMÓRIA
@@ -948,24 +1087,32 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     scrollok(pad, TRUE);
 
     wprintw(pad, "\n"); 
+    int line_count = 1;
 
     // --- PREÂMBULO DA REVOLUÇÃO SOLAR ---
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _(" THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN) \n"));
+    line_count++;
+
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wprintw(pad, _("Unlike your Natal Almuten, which rules over your entire lifetime and soul blueprint,\n"
-                 "the Almuten of the Solar Return operates as the temporal manager of your current year.\n"
-                 "It indicates where the cosmic focus will manifest most intensely, driving events,\n"
-                 "circumstances, and the psychological tone of these specific 12 months.\n\n"));
+    line_count++;
+
+    line_count += print_split_lines(pad, _("Unlike your Natal Almuten, which rules over your entire lifetime and soul blueprint, "
+                 "the Almuten of the Solar Return operates as the temporal manager of your current year. "
+                 "It indicates where the cosmic focus will manifest most intensely, driving events, "
+                 "circumstances, and the psychological tone of these specific 12 months.\n\n"), MAX_LINE_WIDTH);
+
 
     if (qtd_vencedores > 1) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
         wprintw(pad, _("CO-REGENCY DETECTED: Shared Annual Focus\n\n"));
+        line_count += 2;
+
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("Two or more planetary archetypes share equal operational strength this year.\n"
-                     "Your experiences will be double-sided, forcing you to balance both planetary themes\n"
-                     "simultaneously to navigate the year's challenges effectively.\n\n"));
+        line_count += print_split_lines(pad, _("Two or more planetary archetypes share equal operational strength this year. "
+                     "Your experiences will be double-sided, forcing you to balance both planetary themes "
+                     "simultaneously to navigate the year's challenges effectively.\n\n"), MAX_LINE_WIDTH);
     }
 
     // 5. LOOP DE RENDERIZAÇÃO DOS PLANETAS VENCEDORES DO ANO
@@ -974,6 +1121,8 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         const char *glifo = obter_glifo_planeta_por_id(id_planeta);
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        line_count++;
+
         wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, " %s  %s ", glifo, _(" ANNUAL OPERATIONAL RULER "));
         
@@ -984,103 +1133,147 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂) \n"));
         else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃) \n"));
         else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄) \n"));
+        line_count++;
+
         wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+        line_count += 2;
 
         if (id_planeta == 1) { // SOL
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("The Focus of the Year:\n\n")); 
+            wprintw(pad, _("The Focus of the Year:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("This is a year of high visibility, core awakening, and personal sovereignty.\n"
-                         "Circumstances will push you to step into the center stage of your own life,\n"
-                         "demanding absolute clarity of purpose and professional recognition.\n\n"));
+            line_count += print_split_lines(pad, _("This is a year of high visibility, core awakening, and personal sovereignty. "
+                         "Circumstances will push you to step into the center stage of your own life, "
+                         "demanding absolute clarity of purpose and professional recognition.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("Practical Manifestations:\n\n")); 
+            wprintw(pad, _("Practical Manifestations:\n\n"));
+            line_count += 3; 
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Expect opportunities for career promotion, leadership roles, and a surge in\n"
-                         "vital energy. Important encounters with authoritative figures are highly likely.\n\n"));
+            line_count += print_split_lines(pad, _("Expect opportunities for career promotion, leadership roles, and a surge in "
+                         "vital energy. Important encounters with authoritative figures are highly likely.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Guard heavily against egotism, prideful power struggles, and burning out due to\n"
-                         "a neurotic need for constant public approval and validation.\n\n\n"));
+            line_count += print_split_lines(pad, _("Guard heavily against egotism, prideful power struggles, and burning out due to "
+                         "a neurotic need for constant public approval and validation.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 2) { // LUA
             wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("A highly personal, internal, and emotional 12-month chapter. The focus shifts\n"
-                         "entirely toward foundations, family, domestic stability, and inner security.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("A highly personal, internal, and emotional 12-month chapter. The focus shifts "
+                         "entirely toward foundations, family, domestic stability, and inner security.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Strong indicators of real estate adjustments, changes in the household or family\n"
-                         "dynamics, and events that will test and restructure your emotional resilience.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Strong indicators of real estate adjustments, changes in the household or family "
+                         "dynamics, and events that will test and restructure your emotional resilience.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Beware of volatile mood swings, hypersensitivity to external criticism, and the\n"
-                         "tendency to retreat into defensive, nostalgic isolation when friction arises.\n\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Beware of volatile mood swings, hypersensitivity to external criticism, and the "
+                         "tendency to retreat into defensive, nostalgic isolation when friction arises.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 3) { // MERCÚRIO
             wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("A year driven by intense mental activity, intellectual output, and networking.\n"
-                         "Your analytical skills and communication channels will be highly accelerated.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("A year driven by intense mental activity, intellectual output, and networking. "
+                         "Your analytical skills and communication channels will be highly accelerated.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Excellent periods for signing contracts, negotiating business deals, academic\n"
-                         "pursuits, writing, and multiple short-distance travels or structural moves.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Excellent periods for signing contracts, negotiating business deals, academic "
+                         "pursuits, writing, and multiple short-distance travels or structural moves.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("High risk of nervous system exhaustion, acute mental anxiety, split focus, and\n"
-                         "the danger of over-rationalizing critical decisions that require emotional depth.\n\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("High risk of nervous system exhaustion, acute mental anxiety, split focus, and "
+                         "the danger of over-rationalizing critical decisions that require emotional depth.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 4) { // VÊNUS
             wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("A year designated for harmonic consolidation, financial focus, and relationship\n"
-                         "evaluations. The core theme is finding value, alignment, and social peace.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("A year designated for harmonic consolidation, financial focus, and relationship "
+                         "evaluations. The core theme is finding value, alignment, and social peace.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Favorable timelines for artistic endeavors, income enhancement, entering strategic\n"
-                         "alliances, and experiencing a profound growth in your active romantic life.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Favorable timelines for artistic endeavors, income enhancement, entering strategic "
+                         "alliances, and experiencing a profound growth in your active romantic life.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Watch out for financial extravagance, lazy self-indulgence, and avoiding necessary\n"
-                         "confrontations out of a codependent desire to keep up superficial appearances.\n\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Watch out for financial extravagance, lazy self-indulgence, and avoiding necessary "
+                         "confrontations out of a codependent desire to keep up superficial appearances.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 5) { // MARTE
             wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("A dynamic, highly friction-based, and action-heavy period. This year demands\n"
-                         "intense physical courage, independent initiatives, and cutting away dead weight.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("A dynamic, highly friction-based, and action-heavy period. This year demands "
+                         "intense physical courage, independent initiatives, and cutting away dead weight.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Overcoming major obstacles through raw effort, launch of independent enterprises,\n"
-                         "but also a strong indicator of physical expenditures and competitive standoffs.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Overcoming major obstacles through raw effort, launch of independent enterprises, "
+                         "but also a strong indicator of physical expenditures and competitive standoffs.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Annual Warnings:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Prone to acute accidents due to rash haste, explosive outbursts of anger,\n"
-                         "unnecessary litigations, and burnouts caused by operating in perpetual survival mode.\n\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Prone to acute accidents due to rash haste, explosive outbursts of anger, "
+                         "unnecessary litigations, and burnouts caused by operating in perpetual survival mode.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 6) { // JÚPITER
             wattron(pad, A_BOLD); wprintw(pad, _("The Focus of the Year:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("The year of expansion, philosophical growth, and providential opportunities.\n"
-                         "A benevolent energy wraps around your efforts, granting a protective buffer.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("The year of expansion, philosophical growth, and providential opportunities. "
+                         "A benevolent energy wraps around your efforts, granting a protective buffer.\n\n"), MAX_LINE_WIDTH);
             wattron(pad, A_BOLD); wprintw(pad, _("Practical Manifestations:\n\n")); wattroff(pad, A_BOLD);
-            wprintw(pad, _("Financial expansion, legal resolutions rolling in your favor, publishing success,\n"
-                         "and meaningful long-distance journeys that broaden your entire existential worldview.\n\n"));
+            line_count += 3;
+
+            line_count += print_split_lines(pad, _("Financial expansion, legal resolutions rolling in your favor, publishing success, "
+                         "and meaningful long-distance journeys that broaden your entire existential worldview.\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Severe risk of over-expansion and arrogance. Blind, naive optimism that ignores\n"
-                            "material safety nets, leading to over-leveraging and ideological dogmatism.\n\n\n"));
+            line_count += print_split_lines(pad, _("Severe risk of over-expansion and arrogance. Blind, naive optimism that ignores "
+                            "material safety nets, leading to over-leveraging and ideological dogmatism.\n\n\n"), MAX_LINE_WIDTH);
         }
         else if (id_planeta == 7) { // SATURNO
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("The Focus of the Year:\n\n")); 
+            wprintw(pad, _("The Focus of the Year:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("A sobering year of evaluation, heavy duty, consolidation, and setting limits.\n"
-                           "Time demands that you build structure and account for real-world responsibilities.\n\n"));
+            line_count += print_split_lines(pad, _("A sobering year of evaluation, heavy duty, consolidation, and setting limits. "
+                           "Time demands that you build structure and account for real-world responsibilities.\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("Practical Manifestations:\n\n")); 
+            wprintw(pad, _("Practical Manifestations:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Hard, grinding work that yields long-term security, settling deep debts, dealing\n"
-                           "with administrative inheritances, and professional solidifications under pressure.\n\n"));
+            line_count += print_split_lines(pad, _("Hard, grinding work that yields long-term security, settling deep debts, dealing "
+                           "with administrative inheritances, and professional solidifications under pressure.\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD); 
-            wprintw(pad, _("Annual Warnings:\n\n")); 
+            wprintw(pad, _("Annual Warnings:\n\n"));
+            line_count += 3;
+
             wattroff(pad, A_BOLD);
-            wprintw(pad, _("Prone to chronic fatigue, paralyzing fear of failure, bouts of deep melancholy,\n"
-                           "and feeling crushed under structural delays or burdens that are not yours to carry.\n\n\n"));
+            line_count += print_split_lines(pad, _("Prone to chronic fatigue, paralyzing fear of failure, bouts of deep melancholy, "
+                           "and feeling crushed under structural delays or burdens that are not yours to carry.\n\n\n"), MAX_LINE_WIDTH);
         }
     }
 
@@ -1089,32 +1282,62 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"));
     wattroff(pad, A_DIM);
 
+    line_count += 3;
+
     // 6. LOOP DE INTERAÇÃO E SCROLL DA PAD
     int pad_line_pos = 0;
-    int max_scroll_y = (qtd_vencedores > 1) ? 95 : 45;
+    //int max_scroll_y = (qtd_vencedores > 1) ? 90 : 45; // Adapta a profundidade de scroll
     int ch;
+    
+   
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
 
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
 
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
+        }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
         switch (ch) {
-            case KEY_UP:
-            case 'k':
-            case 'K':
-                if (pad_line_pos > 0) {
-                    pad_line_pos--;
-                }
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
                 break;
-                
-            case KEY_DOWN:
-            case 'j':
-            case 'J':
-                if (pad_line_pos < max_scroll_y) {
-                    pad_line_pos++;
-                }
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
     }
 
     // 7. LIMPEZA COMPLETA DA MEMÓRIA

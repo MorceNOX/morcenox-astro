@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 03:03-0300\n"
+"POT-Creation-Date: 2026-09-06 05:08-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -85,532 +85,533 @@ msgstr ""
 msgid " Almuten Figuris Spiritual Guide "
 msgstr ""
 
-#: src/almuten.c:715 src/almuten.c:936 src/solar_return.c:542
+#: src/almuten.c:715 src/almuten.c:1075 src/solar_return.c:542
 #: src/solar_return.c:1253
 msgid " [↓↑|JK: Scroll | Q|ESC: Return to Chart] "
 msgstr ""
 
-#: src/almuten.c:733
+#: src/almuten.c:737
 msgid " THE LORD OF THE CHART (ALMUTEN FIGURIS) \n"
 msgstr ""
 
-#: src/almuten.c:736
+#: src/almuten.c:743
+#, c-format
 msgid ""
-"The Almuten Figuris acts as the supreme ruler of your natal chart,\n"
-"representing the evolutionary helmsman of your soul. While the Ascendant\n"
-"governs the physical vessel, the Almuten dictates the highest spiritual\n"
+"The Almuten Figuris acts as the supreme ruler of your natal chart, "
+"representing the evolutionary helmsman of your soul. While the Ascendant "
+"governs the physical vessel, the Almuten dictates the highest spiritual "
 "purpose, latent talents, and the path to inner mastery.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:744
+#: src/almuten.c:753
 msgid ""
 "CO-REGENCY DETECTED: Spiritual Conjunction\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:746
+#: src/almuten.c:758
+#, c-format
 msgid ""
-"Your chart presents a rare cosmic occurrence: a shared throne. Multiple\n"
-"archaic planetary forces balance each other perfectly, demanding that you\n"
+"Your chart presents a rare cosmic occurrence: a shared throne. Multiple "
+"archaic planetary forces balance each other perfectly, demanding that you "
 "integrate both streams of consciousness to achieve your destiny.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:758
+#: src/almuten.c:776
 msgid "ARCHETYPAL RULER"
 msgstr ""
 
-#: src/almuten.c:761
+#: src/almuten.c:779
 msgid "(THE SUN - ☉)\n"
 msgstr ""
 
-#: src/almuten.c:762
+#: src/almuten.c:780
 msgid "(THE MOON - ☽)\n"
 msgstr ""
 
-#: src/almuten.c:763
+#: src/almuten.c:781
 msgid "(MERCURY - ☿)\n"
 msgstr ""
 
-#: src/almuten.c:764
+#: src/almuten.c:782
 msgid "(VENUS - ♀)\n"
 msgstr ""
 
-#: src/almuten.c:765
+#: src/almuten.c:783
 msgid "(MARS - ♂)\n"
 msgstr ""
 
-#: src/almuten.c:766
+#: src/almuten.c:784
 msgid "(JUPITER - ♃)\n"
 msgstr ""
 
-#: src/almuten.c:767
+#: src/almuten.c:785
 msgid "(SATURN - ♄)\n"
 msgstr ""
 
-#: src/almuten.c:773 src/almuten.c:785 src/almuten.c:796 src/almuten.c:807
-#: src/almuten.c:818 src/almuten.c:829 src/almuten.c:844
+#: src/almuten.c:793 src/almuten.c:820 src/almuten.c:844 src/almuten.c:868
+#: src/almuten.c:891 src/almuten.c:914 src/almuten.c:941
 msgid ""
 "Spiritual Essence:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:774
+#: src/almuten.c:796
+#, c-format
 msgid ""
-"The soul seeks the expression of pure individuality, truth, and integrity.\n"
-"There is an intrinsic calling to become a source of light, clarity, and\n"
+"The soul seeks the expression of pure individuality, truth, and integrity. "
+"There is an intrinsic calling to become a source of light, clarity, and "
 "centrality for yourself and others.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:777 src/almuten.c:788 src/almuten.c:799 src/almuten.c:810
-#: src/almuten.c:821 src/almuten.c:832 src/almuten.c:850
+#: src/almuten.c:802 src/almuten.c:827 src/almuten.c:851 src/almuten.c:875
+#: src/almuten.c:898 src/almuten.c:921 src/almuten.c:951
 msgid ""
 "Character Impact:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:778
+#: src/almuten.c:805
+#, c-format
 msgid ""
-"Confers natural nobility, personal magnetism, generosity, and a sharp\n"
-"sense of destiny or mission. The native leads through dignified actions.\n"
+"Confers natural nobility, personal magnetism, generosity, and a sharp sense "
+"of destiny or mission. The native leads through dignified actions.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:780 src/almuten.c:791 src/almuten.c:802 src/almuten.c:813
-#: src/almuten.c:824 src/almuten.c:837 src/almuten.c:856
+#: src/almuten.c:810 src/almuten.c:835 src/almuten.c:859 src/almuten.c:882
+#: src/almuten.c:905 src/almuten.c:930 src/almuten.c:961
 msgid ""
 "Evolutionary Hurdles:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:781
+#: src/almuten.c:813
+#, c-format
 msgid ""
-"Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic\n"
-"need for constant external validation and applause.\n"
+"Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic need "
+"for constant external validation and applause.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:786
+#: src/almuten.c:823
+#, c-format
 msgid ""
-"The spiritual path is realized through nurturing, cosmic alignment, and a\n"
+"The spiritual path is realized through nurturing, cosmic alignment, and a "
 "deep connection to the emotional tides of the world. The soul protects.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:789
+#: src/almuten.c:830
+#, c-format
 msgid ""
-"Grants extreme empathy, razor-sharp intuition, a bond with ancestry,\n"
-"and a rich imagination. Highly adept at reading environmental atmospheres.\n"
+"Grants extreme empathy, razor-sharp intuition, a bond with ancestry, and a "
+"rich imagination. Highly adept at reading environmental atmospheres.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:792
+#: src/almuten.c:838
+#, c-format
 msgid ""
-"Mastering unstable mood swings, hypersensitivity, over-attachment to the\n"
+"Mastering unstable mood swings, hypersensitivity, over-attachment to the "
 "past, and a natural tendency to slide into passive dependency.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:797
+#: src/almuten.c:847
+#, c-format
 msgid ""
-"Evolution occurs via the intellect, the translation of reality, and the\n"
+"Evolution occurs via the intellect, the translation of reality, and the "
 "unraveling of the laws that weave and connect all structural data.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:800
+#: src/almuten.c:854
+#, c-format
 msgid ""
-"Brings a brilliant mind, precise adaptability, and an elite talent for\n"
-"the written or spoken word. An eternal learner and master problem solver.\n"
+"Brings a brilliant mind, precise adaptability, and an elite talent for the "
+"written or spoken word. An eternal learner and master problem solver.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:803
+#: src/almuten.c:862
+#, c-format
 msgid ""
-"Guarding against nervous system exhaustion, oscillating opinions,\n"
+"Guarding against nervous system exhaustion, oscillating opinions, "
 "intellectual duplicity, and a tendency to rationalize true emotions.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:808
+#: src/almuten.c:871
+#, c-format
 msgid ""
-"The soul seeks beauty, balance, absolute justice, love, and the sacred\n"
+"The soul seeks beauty, balance, absolute justice, love, and the sacred "
 "reconciliation of opposites. Growth mirrors through deep relationships.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:811
+#: src/almuten.c:878
+#, c-format
 msgid ""
-"Confers authentic charm, innate diplomacy, refined aesthetic taste, and\n"
+"Confers authentic charm, innate diplomacy, refined aesthetic taste, and "
 "magnetic attraction. You attract assets, art, and peace with comfort.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:814
+#: src/almuten.c:885
+#, c-format
 msgid ""
-"Evading superficiality, self-indulgence, a chronic fear of confrontation\n"
+"Evading superficiality, self-indulgence, a chronic fear of confrontation "
 "(which breeds false diplomacy), and codependency.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:819
+#: src/almuten.c:894
+#, c-format
 msgid ""
-"The soul refines itself through friction, righteous combat, courage,\n"
-"and severing stagnant attachments. Vital force demands protection of the "
-"weak.\n"
+"The soul refines itself through friction, righteous combat, courage, and "
+"severing stagnant attachments. Vital force demands protection of the weak.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:822
+#: src/almuten.c:901
+#, c-format
 msgid ""
-"Grants unyielding determination, executive focus, wild independence, and\n"
+"Grants unyielding determination, executive focus, wild independence, and "
 "pioneering drives. The native actively thrives under extreme pressure.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:825
+#: src/almuten.c:908
+#, c-format
 msgid ""
-"Channelling destructive wrath, chronic impatience, verbal aggression,\n"
-"and the base impulse to act tyrannically or purely out of self-interest.\n"
+"Channelling destructive wrath, chronic impatience, verbal aggression, and "
+"the base impulse to act tyrannically or purely out of self-interest.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:830
+#: src/almuten.c:917
+#, c-format
 msgid ""
-"The journey is bound to higher consciousness expansion, unwavering faith\n"
-"in natural law, philosophy, and magnifying the spirit of benevolence.\n"
+"The journey is bound to higher consciousness expansion, unwavering faith in "
+"natural law, philosophy, and magnifying the spirit of benevolence.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:833
+#: src/almuten.c:924
+#, c-format
 msgid ""
-"Brings infectious optimism, a broad structural worldview, accidental luck,\n"
+"Brings infectious optimism, a broad structural worldview, accidental luck, "
 "and deep ethical codes. Acts as a natural, comforting counselor.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:839
+#: src/almuten.c:934
+#, c-format
 msgid ""
-"Controlling the slope toward excess (dogmatism, over-spending), naive\n"
+"Controlling the slope toward excess (dogmatism, over-spending), naive "
 "optimism that miscalculates physical danger, and intellectual arrogance.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:846
+#: src/almuten.c:945
+#, c-format
 msgid ""
-"The soul elected absolute mastery via self-discipline, heavy "
-"responsibility,\n"
+"The soul elected absolute mastery via self-discipline, heavy responsibility, "
 "the laws of time, hard boundaries, and wisdom etched directly into stone.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:852
+#: src/almuten.c:955
+#, c-format
 msgid ""
-"Confers exceptional sobriety, titanic resilience, strategic patience, and\n"
+"Confers exceptional sobriety, titanic resilience, strategic patience, and "
 "pragmatism. Built to harvest true success and authority in maturity.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:858
+#: src/almuten.c:965
+#, c-format
 msgid ""
-"Avoiding chronic pessimism, paralyzing melancholy, fear of material "
-"failure,\n"
+"Avoiding chronic pessimism, paralyzing melancholy, fear of material failure, "
 "mental rigidity, and crushing yourself under unearned guilt.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:865
+#: src/almuten.c:974
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the Almuten panel.\n"
 msgstr ""
 
-#: src/almuten.c:932
+#: src/almuten.c:1071
 msgid " Solar Return Almuten: Lord of the Year "
 msgstr ""
 
-#: src/almuten.c:954
+#: src/almuten.c:1094
 msgid " THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN) \n"
 msgstr ""
 
-#: src/almuten.c:957
+#: src/almuten.c:1101
 msgid ""
 "Unlike your Natal Almuten, which rules over your entire lifetime and soul "
-"blueprint,\n"
-"the Almuten of the Solar Return operates as the temporal manager of your "
-"current year.\n"
-"It indicates where the cosmic focus will manifest most intensely, driving "
-"events,\n"
-"circumstances, and the psychological tone of these specific 12 months.\n"
+"blueprint, the Almuten of the Solar Return operates as the temporal manager "
+"of your current year. It indicates where the cosmic focus will manifest most "
+"intensely, driving events, circumstances, and the psychological tone of "
+"these specific 12 months.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:964
+#: src/almuten.c:1109
 msgid ""
 "CO-REGENCY DETECTED: Shared Annual Focus\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:966
+#: src/almuten.c:1113
 msgid ""
-"Two or more planetary archetypes share equal operational strength this "
-"year.\n"
+"Two or more planetary archetypes share equal operational strength this year. "
 "Your experiences will be double-sided, forcing you to balance both planetary "
-"themes\n"
-"simultaneously to navigate the year's challenges effectively.\n"
+"themes simultaneously to navigate the year's challenges effectively.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:978
+#: src/almuten.c:1125
 msgid " ANNUAL OPERATIONAL RULER "
 msgstr ""
 
-#: src/almuten.c:980
+#: src/almuten.c:1127
 msgid "(THE SUN - ☉) \n"
 msgstr ""
 
-#: src/almuten.c:981
+#: src/almuten.c:1128
 msgid "(THE MOON - ☽) \n"
 msgstr ""
 
-#: src/almuten.c:982
+#: src/almuten.c:1129
 msgid "(MERCURY - ☿) \n"
 msgstr ""
 
-#: src/almuten.c:983
+#: src/almuten.c:1130
 msgid "(VENUS - ♀) \n"
 msgstr ""
 
-#: src/almuten.c:984
+#: src/almuten.c:1131
 msgid "(MARS - ♂) \n"
 msgstr ""
 
-#: src/almuten.c:985
+#: src/almuten.c:1132
 msgid "(JUPITER - ♃) \n"
 msgstr ""
 
-#: src/almuten.c:986
+#: src/almuten.c:1133
 msgid "(SATURN - ♄) \n"
 msgstr ""
 
-#: src/almuten.c:992 src/almuten.c:1009 src/almuten.c:1020 src/almuten.c:1031
-#: src/almuten.c:1042 src/almuten.c:1053 src/almuten.c:1068
+#: src/almuten.c:1139 src/almuten.c:1161 src/almuten.c:1178 src/almuten.c:1195
+#: src/almuten.c:1212 src/almuten.c:1229 src/almuten.c:1250
 msgid ""
 "The Focus of the Year:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:994
+#: src/almuten.c:1143
 msgid ""
-"This is a year of high visibility, core awakening, and personal "
-"sovereignty.\n"
-"Circumstances will push you to step into the center stage of your own life,\n"
+"This is a year of high visibility, core awakening, and personal sovereignty. "
+"Circumstances will push you to step into the center stage of your own life, "
 "demanding absolute clarity of purpose and professional recognition.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:998 src/almuten.c:1012 src/almuten.c:1023 src/almuten.c:1034
-#: src/almuten.c:1045 src/almuten.c:1056 src/almuten.c:1074
+#: src/almuten.c:1147 src/almuten.c:1166 src/almuten.c:1183 src/almuten.c:1200
+#: src/almuten.c:1217 src/almuten.c:1234 src/almuten.c:1258
 msgid ""
 "Practical Manifestations:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1000
+#: src/almuten.c:1150
 msgid ""
-"Expect opportunities for career promotion, leadership roles, and a surge in\n"
+"Expect opportunities for career promotion, leadership roles, and a surge in "
 "vital energy. Important encounters with authoritative figures are highly "
 "likely.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1003 src/almuten.c:1015 src/almuten.c:1026 src/almuten.c:1037
-#: src/almuten.c:1048 src/almuten.c:1061 src/almuten.c:1080
+#: src/almuten.c:1153 src/almuten.c:1171 src/almuten.c:1188 src/almuten.c:1205
+#: src/almuten.c:1222 src/almuten.c:1241 src/almuten.c:1266
 msgid ""
 "Annual Warnings:\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1005
+#: src/almuten.c:1157
 msgid ""
 "Guard heavily against egotism, prideful power struggles, and burning out due "
-"to\n"
-"a neurotic need for constant public approval and validation.\n"
+"to a neurotic need for constant public approval and validation.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1010
+#: src/almuten.c:1164
 msgid ""
 "A highly personal, internal, and emotional 12-month chapter. The focus "
-"shifts\n"
-"entirely toward foundations, family, domestic stability, and inner "
+"shifts entirely toward foundations, family, domestic stability, and inner "
 "security.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1013
+#: src/almuten.c:1169
 msgid ""
 "Strong indicators of real estate adjustments, changes in the household or "
-"family\n"
-"dynamics, and events that will test and restructure your emotional "
+"family dynamics, and events that will test and restructure your emotional "
 "resilience.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1016
+#: src/almuten.c:1174
 msgid ""
 "Beware of volatile mood swings, hypersensitivity to external criticism, and "
-"the\n"
-"tendency to retreat into defensive, nostalgic isolation when friction "
+"the tendency to retreat into defensive, nostalgic isolation when friction "
 "arises.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1021
+#: src/almuten.c:1181
 msgid ""
 "A year driven by intense mental activity, intellectual output, and "
-"networking.\n"
-"Your analytical skills and communication channels will be highly "
+"networking. Your analytical skills and communication channels will be highly "
 "accelerated.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1024
+#: src/almuten.c:1186
 msgid ""
 "Excellent periods for signing contracts, negotiating business deals, "
-"academic\n"
-"pursuits, writing, and multiple short-distance travels or structural moves.\n"
+"academic pursuits, writing, and multiple short-distance travels or "
+"structural moves.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1027
+#: src/almuten.c:1191
 msgid ""
 "High risk of nervous system exhaustion, acute mental anxiety, split focus, "
-"and\n"
-"the danger of over-rationalizing critical decisions that require emotional "
-"depth.\n"
+"and the danger of over-rationalizing critical decisions that require "
+"emotional depth.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1032
+#: src/almuten.c:1198
 msgid ""
 "A year designated for harmonic consolidation, financial focus, and "
-"relationship\n"
-"evaluations. The core theme is finding value, alignment, and social peace.\n"
+"relationship evaluations. The core theme is finding value, alignment, and "
+"social peace.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1035
+#: src/almuten.c:1203
 msgid ""
 "Favorable timelines for artistic endeavors, income enhancement, entering "
-"strategic\n"
-"alliances, and experiencing a profound growth in your active romantic life.\n"
+"strategic alliances, and experiencing a profound growth in your active "
+"romantic life.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1038
+#: src/almuten.c:1208
 msgid ""
 "Watch out for financial extravagance, lazy self-indulgence, and avoiding "
-"necessary\n"
-"confrontations out of a codependent desire to keep up superficial "
+"necessary confrontations out of a codependent desire to keep up superficial "
 "appearances.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1043
+#: src/almuten.c:1215
 msgid ""
-"A dynamic, highly friction-based, and action-heavy period. This year "
-"demands\n"
+"A dynamic, highly friction-based, and action-heavy period. This year demands "
 "intense physical courage, independent initiatives, and cutting away dead "
 "weight.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1046
+#: src/almuten.c:1220
 msgid ""
 "Overcoming major obstacles through raw effort, launch of independent "
-"enterprises,\n"
-"but also a strong indicator of physical expenditures and competitive "
-"standoffs.\n"
+"enterprises, but also a strong indicator of physical expenditures and "
+"competitive standoffs.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1049
+#: src/almuten.c:1225
 msgid ""
-"Prone to acute accidents due to rash haste, explosive outbursts of anger,\n"
+"Prone to acute accidents due to rash haste, explosive outbursts of anger, "
 "unnecessary litigations, and burnouts caused by operating in perpetual "
 "survival mode.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1054
+#: src/almuten.c:1232
 msgid ""
-"The year of expansion, philosophical growth, and providential "
-"opportunities.\n"
+"The year of expansion, philosophical growth, and providential opportunities. "
 "A benevolent energy wraps around your efforts, granting a protective "
 "buffer.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1057
+#: src/almuten.c:1237
 msgid ""
 "Financial expansion, legal resolutions rolling in your favor, publishing "
-"success,\n"
-"and meaningful long-distance journeys that broaden your entire existential "
-"worldview.\n"
+"success, and meaningful long-distance journeys that broaden your entire "
+"existential worldview.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1063
+#: src/almuten.c:1245
 msgid ""
 "Severe risk of over-expansion and arrogance. Blind, naive optimism that "
-"ignores\n"
-"material safety nets, leading to over-leveraging and ideological dogmatism.\n"
+"ignores material safety nets, leading to over-leveraging and ideological "
+"dogmatism.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1070
+#: src/almuten.c:1254
 msgid ""
 "A sobering year of evaluation, heavy duty, consolidation, and setting "
-"limits.\n"
-"Time demands that you build structure and account for real-world "
+"limits. Time demands that you build structure and account for real-world "
 "responsibilities.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1076
+#: src/almuten.c:1262
 msgid ""
 "Hard, grinding work that yields long-term security, settling deep debts, "
-"dealing\n"
-"with administrative inheritances, and professional solidifications under "
-"pressure.\n"
+"dealing with administrative inheritances, and professional solidifications "
+"under pressure.\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1082
+#: src/almuten.c:1270
 msgid ""
 "Prone to chronic fatigue, paralyzing fear of failure, bouts of deep "
-"melancholy,\n"
-"and feeling crushed under structural delays or burdens that are not yours to "
-"carry.\n"
+"melancholy, and feeling crushed under structural delays or burdens that are "
+"not yours to carry.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:1089
+#: src/almuten.c:1277
 msgid ""
 "  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"
 msgstr ""
@@ -1092,8 +1093,8 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: src/draw-chart.c:2194 src/draw-chart.c:2245
-msgid "TZ"
+#: src/draw-chart.c:2194
+msgid "Local"
 msgstr ""
 
 #: src/draw-chart.c:2201
@@ -1162,6 +1163,10 @@ msgstr ""
 
 #: src/draw-chart.c:2237
 msgid "⏸️  Stopped"
+msgstr ""
+
+#: src/draw-chart.c:2245
+msgid "TZ"
 msgstr ""
 
 #: src/draw-chart.c:2248
