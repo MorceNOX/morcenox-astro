@@ -4808,7 +4808,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     float pan_y = 0.0;
 
     // Defined aspect ratio based on characters mono dimensions
-    float aspect_ratio = ((float)max_x / (float)max_y) / 1.8;
+    float aspect_ratio = ((float)max_x / (float)max_y);
+    if (aspect_ratio >= 3.56) {
+        aspect_ratio = aspect_ratio / 1.9;
+    }
+    else {
+        aspect_ratio = aspect_ratio / 1.7;
+    }
        
     // Main loop for handling input and redrawing
     int ch;
@@ -5194,12 +5200,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         char san[10];
         
         if (last_conj > last_opp) {
-            snprintf(san, sizeof(san), "%s", "🌑");
+            snprintf(san, sizeof(san), "%s", "🌑"); // 
             jdSAN = last_conj;
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "🌕");
+            snprintf(san, sizeof(san), "%s", "🌕"); // ⛔︎
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }

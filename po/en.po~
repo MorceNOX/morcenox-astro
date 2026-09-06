@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 05:19-0300\n"
+"POT-Creation-Date: 2026-09-06 06:59-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -32,17 +32,17 @@ msgid "Sol "
 msgstr ""
 
 #: src/almuten.c:538 src/draw-chart.c:394 src/draw-chart.c:601
-#: src/draw-chart.c:5502 src/draw-chart.c:5524 src/hyleg.c:337
+#: src/draw-chart.c:5504 src/draw-chart.c:5526 src/hyleg.c:337
 msgid "Luna"
 msgstr ""
 
-#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5515
-#: src/draw-chart.c:5534
+#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5517
+#: src/draw-chart.c:5536
 msgid "Ascendant"
 msgstr ""
 
 #: src/almuten.c:538 src/directions.c:452 src/draw-chart.c:427
-#: src/draw-chart.c:1529 src/draw-chart.c:5513 src/draw-chart.c:5532
+#: src/draw-chart.c:1529 src/draw-chart.c:5515 src/draw-chart.c:5534
 msgid "Part of Fortune"
 msgstr ""
 
@@ -911,8 +911,8 @@ msgid "No directional contacts available for this specific point."
 msgstr ""
 
 #: src/directions.c:621 src/directions.c:1083 src/draw-chart.c:403
-#: src/draw-chart.c:604 src/draw-chart.c:4691 src/draw-chart.c:5505
-#: src/draw-chart.c:5527 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
+#: src/draw-chart.c:604 src/draw-chart.c:4691 src/draw-chart.c:5507
+#: src/draw-chart.c:5529 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
 #: src/profections.c:48 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1344 src/solar_return.c:1500
 #, fuzzy
@@ -920,8 +920,8 @@ msgid "Mars"
 msgstr "Mars orb"
 
 #: src/directions.c:622 src/directions.c:1084 src/draw-chart.c:409
-#: src/draw-chart.c:606 src/draw-chart.c:4689 src/draw-chart.c:5507
-#: src/draw-chart.c:5529 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
+#: src/draw-chart.c:606 src/draw-chart.c:4689 src/draw-chart.c:5509
+#: src/draw-chart.c:5531 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
 #: src/profections.c:54 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1344 src/solar_return.c:1500
 #, fuzzy
@@ -929,8 +929,8 @@ msgid "Saturn"
 msgstr "Saturn orb"
 
 #: src/directions.c:629 src/directions.c:1093 src/draw-chart.c:406
-#: src/draw-chart.c:605 src/draw-chart.c:4690 src/draw-chart.c:5506
-#: src/draw-chart.c:5528 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
+#: src/draw-chart.c:605 src/draw-chart.c:4690 src/draw-chart.c:5508
+#: src/draw-chart.c:5530 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
 #: src/profections.c:53 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1347 src/solar_return.c:1503
 #, fuzzy
@@ -938,8 +938,8 @@ msgid "Jupiter"
 msgstr "Jupiter orb"
 
 #: src/directions.c:630 src/directions.c:1094 src/draw-chart.c:400
-#: src/draw-chart.c:603 src/draw-chart.c:4686 src/draw-chart.c:5504
-#: src/draw-chart.c:5526 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
+#: src/draw-chart.c:603 src/draw-chart.c:4686 src/draw-chart.c:5506
+#: src/draw-chart.c:5528 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
 #: src/profections.c:49 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1347 src/solar_return.c:1503
 #, fuzzy
@@ -1007,8 +1007,8 @@ msgstr "Location: "
 msgid "Sun"
 msgstr "Saturn orb"
 
-#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5501
-#: src/draw-chart.c:5523 src/hyleg.c:336
+#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5503
+#: src/draw-chart.c:5525 src/hyleg.c:336
 msgid "Sol"
 msgstr ""
 
@@ -1019,7 +1019,7 @@ msgid "Moon"
 msgstr "Moon orb"
 
 #: src/draw-chart.c:397 src/draw-chart.c:602 src/draw-chart.c:4687
-#: src/draw-chart.c:5503 src/draw-chart.c:5525 src/firdaria.c:99
+#: src/draw-chart.c:5505 src/draw-chart.c:5527 src/firdaria.c:99
 #: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:1135
 #: src/solar_return.c:1285
 #, fuzzy
@@ -1027,25 +1027,25 @@ msgid "Mercury"
 msgstr "Mercury orb"
 
 #: src/draw-chart.c:412 src/draw-chart.c:607 src/draw-chart.c:1537
-#: src/draw-chart.c:5508 src/solar_return.c:1285
+#: src/draw-chart.c:5510 src/solar_return.c:1285
 #, fuzzy
 msgid "Uranus"
 msgstr "Uranus orb"
 
 #: src/draw-chart.c:415 src/draw-chart.c:608 src/draw-chart.c:1536
-#: src/draw-chart.c:5509 src/solar_return.c:1285
+#: src/draw-chart.c:5511 src/solar_return.c:1285
 #, fuzzy
 msgid "Neptune"
 msgstr "Neptune orb"
 
 #: src/draw-chart.c:418 src/draw-chart.c:609 src/draw-chart.c:1538
-#: src/draw-chart.c:5510 src/solar_return.c:1285
+#: src/draw-chart.c:5512 src/solar_return.c:1285
 #, fuzzy
 msgid "Pluto"
 msgstr "Pluto orb"
 
 #: src/draw-chart.c:421 src/draw-chart.c:610 src/draw-chart.c:1533
-#: src/draw-chart.c:5511 src/draw-chart.c:5530 src/firdaria.c:104
+#: src/draw-chart.c:5513 src/draw-chart.c:5532 src/firdaria.c:104
 #: src/solar_return.c:1285 src/solar_return.c:1347 src/solar_return.c:1503
 msgid "North Node"
 msgstr ""
@@ -1055,7 +1055,7 @@ msgid "Caput Draconis"
 msgstr ""
 
 #: src/draw-chart.c:424 src/draw-chart.c:611 src/draw-chart.c:1531
-#: src/draw-chart.c:5512 src/draw-chart.c:5531 src/firdaria.c:105
+#: src/draw-chart.c:5514 src/draw-chart.c:5533 src/firdaria.c:105
 #: src/solar_return.c:1285 src/solar_return.c:1344 src/solar_return.c:1500
 msgid "South Node"
 msgstr ""
@@ -1100,23 +1100,23 @@ msgstr ""
 msgid "🌒 Waning Crescent"
 msgstr ""
 
-#: src/draw-chart.c:1526 src/draw-chart.c:5516 src/draw-chart.c:5535
+#: src/draw-chart.c:1526 src/draw-chart.c:5518 src/draw-chart.c:5537
 msgid "Midheaven"
 msgstr ""
 
-#: src/draw-chart.c:1527 src/draw-chart.c:5518 src/draw-chart.c:5537
+#: src/draw-chart.c:1527 src/draw-chart.c:5520 src/draw-chart.c:5539
 msgid "Nadir"
 msgstr ""
 
-#: src/draw-chart.c:1528 src/draw-chart.c:5517 src/draw-chart.c:5536
+#: src/draw-chart.c:1528 src/draw-chart.c:5519 src/draw-chart.c:5538
 msgid "Descendant"
 msgstr ""
 
-#: src/draw-chart.c:1530 src/draw-chart.c:5514 src/draw-chart.c:5533
+#: src/draw-chart.c:1530 src/draw-chart.c:5516 src/draw-chart.c:5535
 msgid "SAN"
 msgstr ""
 
-#: src/draw-chart.c:1532 src/draw-chart.c:5519 src/draw-chart.c:5538
+#: src/draw-chart.c:1532 src/draw-chart.c:5521 src/draw-chart.c:5540
 msgid "Vertex"
 msgstr ""
 
@@ -1496,7 +1496,7 @@ msgstr ""
 msgid "Gen/Sect/Quad"
 msgstr ""
 
-#: src/draw-chart.c:3275 src/draw-chart.c:6287
+#: src/draw-chart.c:3275 src/draw-chart.c:6289
 msgid "Orient"
 msgstr ""
 
@@ -2177,201 +2177,201 @@ msgid ""
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/draw-chart.c:5957
+#: src/draw-chart.c:5959
 msgid "Dom "
 msgstr ""
 
-#: src/draw-chart.c:5973
+#: src/draw-chart.c:5975
 msgid "Exalt "
 msgstr ""
 
-#: src/draw-chart.c:5989
+#: src/draw-chart.c:5991
 msgid "Tri "
 msgstr ""
 
-#: src/draw-chart.c:6003
+#: src/draw-chart.c:6005
 msgid "Dec "
 msgstr ""
 
-#: src/draw-chart.c:6017
+#: src/draw-chart.c:6019
 msgid "Term "
 msgstr ""
 
-#: src/draw-chart.c:6033
+#: src/draw-chart.c:6035
 msgid "Exile "
 msgstr ""
 
-#: src/draw-chart.c:6045
+#: src/draw-chart.c:6047
 msgid "Fall "
 msgstr ""
 
-#: src/draw-chart.c:6065
+#: src/draw-chart.c:6067
 msgid "pilgrim "
 msgstr ""
 
-#: src/draw-chart.c:6291
+#: src/draw-chart.c:6293
 msgid "Occid"
 msgstr ""
 
-#: src/draw-chart.c:6345
+#: src/draw-chart.c:6347
 msgid "Spring"
 msgstr ""
 
-#: src/draw-chart.c:6345 src/draw-chart.c:6366
+#: src/draw-chart.c:6347 src/draw-chart.c:6368
 msgid "Sanguine"
 msgstr ""
 
-#: src/draw-chart.c:6348
+#: src/draw-chart.c:6350
 msgid "Summer"
 msgstr ""
 
-#: src/draw-chart.c:6348 src/draw-chart.c:6370
+#: src/draw-chart.c:6350 src/draw-chart.c:6372
 msgid "Choleric"
 msgstr ""
 
-#: src/draw-chart.c:6351
+#: src/draw-chart.c:6353
 msgid "Autumn"
 msgstr ""
 
-#: src/draw-chart.c:6351 src/draw-chart.c:6374
+#: src/draw-chart.c:6353 src/draw-chart.c:6376
 msgid "Melancholic"
 msgstr ""
 
-#: src/draw-chart.c:6354
+#: src/draw-chart.c:6356
 msgid "Winter"
 msgstr ""
 
-#: src/draw-chart.c:6354 src/draw-chart.c:6378
+#: src/draw-chart.c:6356 src/draw-chart.c:6380
 msgid "Phlegmatic"
 msgstr ""
 
-#: src/draw-chart.c:7158 src/draw-chart.c:7188
+#: src/draw-chart.c:7160 src/draw-chart.c:7190
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:7159 src/draw-chart.c:7189
+#: src/draw-chart.c:7161 src/draw-chart.c:7191
 msgid "02. Positions, Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:7160 src/draw-chart.c:7190
+#: src/draw-chart.c:7162 src/draw-chart.c:7192
 msgid "03. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:7161 src/draw-chart.c:7191
+#: src/draw-chart.c:7163 src/draw-chart.c:7193
 msgid "04. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:7162 src/draw-chart.c:7192
+#: src/draw-chart.c:7164 src/draw-chart.c:7194
 msgid "05. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7163 src/draw-chart.c:7193
+#: src/draw-chart.c:7165 src/draw-chart.c:7195
 msgid "06. Declination Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7164 src/draw-chart.c:7194
+#: src/draw-chart.c:7166 src/draw-chart.c:7196
 msgid "07. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:7165 src/draw-chart.c:7195
+#: src/draw-chart.c:7167 src/draw-chart.c:7197
 msgid "08. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:7166 src/draw-chart.c:7196
+#: src/draw-chart.c:7168 src/draw-chart.c:7198
 #, fuzzy
 msgid "09. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:7167 src/draw-chart.c:7197
+#: src/draw-chart.c:7169 src/draw-chart.c:7199
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:7168
+#: src/draw-chart.c:7170
 msgid "11. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:7169
+#: src/draw-chart.c:7171
 msgid "12. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:7170
+#: src/draw-chart.c:7172
 msgid "13. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:7171
+#: src/draw-chart.c:7173
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:7172
+#: src/draw-chart.c:7174
 msgid "15. Vital Threats: The Anareta"
 msgstr ""
 
-#: src/draw-chart.c:7173
+#: src/draw-chart.c:7175
 #, fuzzy
 msgid "16. Primary Directions"
 msgstr "Location: "
 
-#: src/draw-chart.c:7174
+#: src/draw-chart.c:7176
 #, fuzzy
 msgid "17. Prymary Directions to Arabic Parts"
 msgstr "Location: "
 
-#: src/draw-chart.c:7175
+#: src/draw-chart.c:7177
 msgid "18. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:7176
-msgid "19. Mind Analysis"
-msgstr ""
-
-#: src/draw-chart.c:7177
-#, fuzzy
-msgid "20. Solar Revolution"
-msgstr "Error deleting chart."
-
 #: src/draw-chart.c:7178
-msgid "21. Planetary Energy Profile"
+msgid "19. Mind Analysis"
 msgstr ""
 
 #: src/draw-chart.c:7179
 #, fuzzy
-msgid "22. Primary Motivation"
-msgstr "Location: "
+msgid "20. Solar Revolution"
+msgstr "Error deleting chart."
 
 #: src/draw-chart.c:7180
-msgid "23. Aspects by Sign"
+msgid "21. Planetary Energy Profile"
 msgstr ""
 
 #: src/draw-chart.c:7181
+#, fuzzy
+msgid "22. Primary Motivation"
+msgstr "Location: "
+
+#: src/draw-chart.c:7182
+msgid "23. Aspects by Sign"
+msgstr ""
+
+#: src/draw-chart.c:7183
 msgid "24. Aspects to Antissia & Contrantissia"
 msgstr ""
 
-#: src/draw-chart.c:7198
+#: src/draw-chart.c:7200
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:7199
+#: src/draw-chart.c:7201
 msgid "12. Annual Transits & Radical Projections"
 msgstr ""
 
-#: src/draw-chart.c:7200
+#: src/draw-chart.c:7202
 msgid "13. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:7201
+#: src/draw-chart.c:7203
 msgid "14. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:7202
+#: src/draw-chart.c:7204
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:7203
+#: src/draw-chart.c:7205
 msgid "16. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:7204
+#: src/draw-chart.c:7206
 msgid "17. Aspects to Antissia & Contrantissia"
 msgstr ""
 
@@ -2787,107 +2787,107 @@ msgstr "┃ Gen: "
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:1868
+#: src/menu-box.c:1870
 msgid "Help file could not be loaded!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:1872 src/menu-box.c:2033
+#: src/menu-box.c:1874 src/menu-box.c:2035
 msgid "Help"
 msgstr "Help"
 
-#: src/menu-box.c:1890
+#: src/menu-box.c:1892
 msgid "Topics file could not be loaded!"
 msgstr "Topics file could not be loaded."
 
-#: src/menu-box.c:1894 src/menu-box.c:2034
+#: src/menu-box.c:1896 src/menu-box.c:2036
 msgid "Technical Topics"
 msgstr "Technical Topics"
 
-#: src/menu-box.c:1905
+#: src/menu-box.c:1907
 msgid "Settings unchanged!"
 msgstr "Settings unchanged!"
 
-#: src/menu-box.c:1935
+#: src/menu-box.c:1937
 msgid "Settings updated!"
 msgstr "Settings updated!"
 
-#: src/menu-box.c:2025
+#: src/menu-box.c:2027
 msgid "Quick Chart"
 msgstr "Quick Chart"
 
-#: src/menu-box.c:2025
+#: src/menu-box.c:2027
 msgid "View the chart for the current moment in the default city."
 msgstr "View the chart for the current moment in the default city."
 
-#: src/menu-box.c:2026
+#: src/menu-box.c:2028
 msgid "New Chart"
 msgstr "New Chart"
 
-#: src/menu-box.c:2026
+#: src/menu-box.c:2028
 msgid "Set the data to load a new chart."
 msgstr "Set the data to load a new chart."
 
-#: src/menu-box.c:2027
+#: src/menu-box.c:2029
 msgid "Load Chart"
 msgstr "Load Chart"
 
-#: src/menu-box.c:2027
+#: src/menu-box.c:2029
 msgid "Load a previously saved chart."
 msgstr "Load a previously saved chart."
 
-#: src/menu-box.c:2028
+#: src/menu-box.c:2030
 msgid "Save the Chart"
 msgstr "Save the Chart"
 
-#: src/menu-box.c:2028
+#: src/menu-box.c:2030
 msgid "Save the current chart."
 msgstr "Save the current chart."
 
-#: src/menu-box.c:2029
+#: src/menu-box.c:2031
 msgid "Delete Chart"
 msgstr "Delete Chart"
 
-#: src/menu-box.c:2029
+#: src/menu-box.c:2031
 msgid "Delete a previously saved chart."
 msgstr "Delete a previously saved chart."
 
-#: src/menu-box.c:2030
+#: src/menu-box.c:2032
 msgid "Display Chart"
 msgstr "Display Chart"
 
-#: src/menu-box.c:2030
+#: src/menu-box.c:2032
 msgid "Display the current chart."
 msgstr "Display the current chart."
 
-#: src/menu-box.c:2031
+#: src/menu-box.c:2033
 msgid "Change the Default Location"
 msgstr "Change the Default Location"
 
-#: src/menu-box.c:2031
+#: src/menu-box.c:2033
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Select a new city as default for the Quick Chart."
 
-#: src/menu-box.c:2032
+#: src/menu-box.c:2034
 msgid "Settings"
 msgstr "Settings"
 
-#: src/menu-box.c:2032
+#: src/menu-box.c:2034
 msgid "Modify the default settings."
 msgstr "Modify the default settings."
 
-#: src/menu-box.c:2033
+#: src/menu-box.c:2035
 msgid "See the help window for this application."
 msgstr "See the help window for this application."
 
-#: src/menu-box.c:2034
+#: src/menu-box.c:2036
 msgid "Technical topics used in this program."
 msgstr "Technical topics used in this program."
 
-#: src/menu-box.c:2035
+#: src/menu-box.c:2037
 msgid "Exit"
 msgstr "Exit"
 
-#: src/menu-box.c:2035
+#: src/menu-box.c:2037
 msgid "Exit the program."
 msgstr "Exit the program."
 
