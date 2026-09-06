@@ -1059,6 +1059,10 @@ void get_hyleg_data(int tipo_h_natal, int idx_hyleg_natal, double *longitudes_na
             strcpy(nome_hyleg_texto, "Part of Fortune");
             strcpy(glifo_hyleg_texto, "🝴");
         }
+        else if (tipo_h_natal == H_SAN) {
+            strcpy(nome_hyleg_texto, "Syzygy Ante-Nativitatem");
+            strcpy(glifo_hyleg_texto, "SAN");
+        }
     }
 }
 
@@ -1259,7 +1263,6 @@ void abrir_janela_transitos_revolucao(
                 wattron(pad, A_BLINK | COLOR_PAIR(11));
                 snprintf(str, 512, _("[VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"));
                 print_split_lines(pad, str, MAX_LINE_WIDTH);
-
                 wattroff(pad, A_BLINK | COLOR_PAIR(11));
                 
                 print_split_lines(pad,
@@ -1287,6 +1290,36 @@ void abrir_janela_transitos_revolucao(
                                    "vital forces, and an invisible protective shield against major crises.\n\n"),
                                   MAX_LINE_WIDTH);
             } 
+            else if (p == 3) { // Vênus pisando no Hyleg (Ajuste o índice se necessário)
+                wattron(pad, A_BOLD | COLOR_PAIR(12)); // Verde/Sucesso sem piscar
+                print_split_lines(pad, _("[LESSER BENEFIC] Venus is soothing your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                wattroff(pad, A_BOLD | COLOR_PAIR(12));
+                
+                print_split_lines(pad, 
+                                 _("A period of physical ease, revitalization, and biochemical harmony. "
+                                   "Excellent for aesthetic improvements, restorative treatments, and bodily well-being.\n\n"),
+                                  MAX_LINE_WIDTH);
+            }
+            else if (p == 10) { // Nodo Norte pisando no Hyleg (Ajuste o índice se necessário)
+                wattron(pad, A_BOLD | COLOR_PAIR(12)); // Considerado benéfico/amplificador
+                print_split_lines(pad, _("[AMPLIFIER] The North Node is expanding your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                wattroff(pad, A_BOLD | COLOR_PAIR(12));
+                
+                print_split_lines(pad, 
+                                 _("A massive surge of physical ambition and vital drive. While it grants great evolutionary "
+                                   "energy, guard against bodily overexcitation, nervous strain, or overindulgence.\n\n"),
+                                  MAX_LINE_WIDTH);
+            }
+            else if (p == 11) { // Nodo Sul pisando no Hyleg (Índice manual do Nodo Sul)
+                wattron(pad, A_BLINK | COLOR_PAIR(11)); // Maléfico/Drenador
+                print_split_lines(pad, _("[VITAL ALERT] The South Node is draining your Natal Hyleg!\n"), MAX_LINE_WIDTH);
+                wattroff(pad, A_BLINK | COLOR_PAIR(11));
+                
+                print_split_lines(pad, 
+                                 _("High risk of sudden vitality leaks, unexplained fatigue, or lowered immunity. "
+                                   "A crucial year to detoxify the physical body, release toxic habits, and avoid overexertion.\n\n"),
+                                  MAX_LINE_WIDTH);
+            }
             else {
                 char str[256];
                 snprintf(str, 256, _("The annual transit of %s brings daily focus and minor adjustments to your "
@@ -1295,6 +1328,7 @@ void abrir_janela_transitos_revolucao(
                                   (const char *)str,
                                    MAX_LINE_WIDTH);
             }
+
         }
     }
 

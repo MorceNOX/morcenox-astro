@@ -2007,7 +2007,7 @@ void draw_terms(int radius_multiplier, int object_count,
 
 
 
-void draw_chart(float zoom_factor, float pan_x, float pan_y, 
+void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y, 
                 int n, struct tm *local_time, double lat, double lon, double elev, double tz_offset,
                 PlotObject *plots, double *cusps, int sanYear, int sanMon, int sanDay, double sanHour, 
                 char *sunrise_time, char *sunset_time, char *city, char *country, 
@@ -2034,10 +2034,7 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
     
     int center_y = max_y / 2;
     int center_x = max_x / 2;
-    
-    // Defined aspect ratio based on characters mono dimensions
-    float aspect_ratio = 2.0;
-    
+        
     // Determine the maximum possible radius that fits in the terminal
     float max_r_y = (max_y / 2.0) - 0.0;
     float max_r_x = (max_x / 2.0) / aspect_ratio;
@@ -2230,9 +2227,9 @@ void draw_chart(float zoom_factor, float pan_x, float pan_y,
         }
         mvprintw(LINES - 2, 1, "Zoom: + / -  | Pan: ←↓→↑  | Reset: R ");
         mvprintw(LINES - 1, 1, _("Animation: A | Speed: ]/[ | Quit: Q "));
-        
+        mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
-        mvprintw(LINES - 2, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
+        mvprintw(LINES - 2, max_x - 25, "%s%.1f",_("      Aspect Ratio: "), aspect_ratio);
 
         if (animated) {
             attron(A_BLINK);
@@ -3662,25 +3659,23 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
             highlight_night_color = 31;
         }
 
-        wattron(table_win, COLOR_PAIR(15));
-        if (i + 1 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
-        mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
-        if (i + 1 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
-
-        if (i + 1 + 6 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
-        mvwprintw(table_win, row, 24, "%2d) %s  %s  ", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
-        if (i + 1 + 6 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod);
-        wattroff(table_win, COLOR_PAIR(15) );
-
-        wattron(table_win, COLOR_PAIR(night_color_pair));
-        if (i + 1 + 12 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
-        mvwprintw(table_win, row, 44, "%2d) %s  %s  ", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
-        if (i + 1 + 12 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
         
-        if (i + 1 + 18 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
+        if (i + 1 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod); else wattron(table_win, COLOR_PAIR(15));
+        mvwprintw(table_win, row, 4, "%2d) %s  %s  ", i + 1, p_hour, planet_regent_symbols[get_hour_regent(week_day - 1, i)]);
+        if (i + 1 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod); else wattroff(table_win, COLOR_PAIR(15));
+
+        if (i + 1 + 6 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_day_color) | flag_mod); else wattron(table_win, COLOR_PAIR(15));
+        mvwprintw(table_win, row, 24, "%2d) %s  %s  ", i + 1 + 6, p_hour2, planet_regent_symbols[get_hour_regent(week_day - 1, i + 6)]);
+        if (i + 1 + 6 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_day_color) | flag_mod); else wattroff(table_win, COLOR_PAIR(15) );
+
+        
+        if (i + 1 + 12 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod); else wattron(table_win, COLOR_PAIR(night_color_pair));
+        mvwprintw(table_win, row, 44, "%2d) %s  %s  ", i + 1 + 12, p_hour3, planet_regent_symbols[get_hour_regent(week_day - 1, i + 12)]);
+        if (i + 1 + 12 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);else wattroff(table_win, COLOR_PAIR(night_color_pair));
+        
+        if (i + 1 + 18 == planetary_hour) wattron(table_win, COLOR_PAIR(highlight_night_color) | flag_mod); else wattron(table_win, COLOR_PAIR(night_color_pair));
         mvwprintw(table_win, row, 64, "%2d) %s  %s  ", i + 1 + 18, p_hour4, planet_regent_symbols[get_hour_regent(week_day - 1, i + 18)]);
-        if (i + 1 + 18 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod);
-        wattroff(table_win, COLOR_PAIR(night_color_pair));
+        if (i + 1 + 18 == planetary_hour) wattroff(table_win, COLOR_PAIR(highlight_night_color) | flag_mod); else wattroff(table_win, COLOR_PAIR(night_color_pair));
         row += 2;
     }
 
@@ -4802,6 +4797,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     erase();
 
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
     // Zoom factor - start with 1.0 (normal size)
     float zoom_factor = 1.0;
                 
@@ -4809,7 +4807,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     float pan_x = 1.0;
     float pan_y = 0.0;
 
-    
+    // Defined aspect ratio based on characters mono dimensions
+    float aspect_ratio = ((float)max_x / (float)max_y) / 1.8;
        
     // Main loop for handling input and redrawing
     int ch;
@@ -6748,7 +6747,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
              
         
         // Draw the chart
-        draw_chart(zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
+        draw_chart(aspect_ratio, zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
                    sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 
                    daytime_hour, nighttime_hour, week_day + 1, planetary_hour + 1, phase, 
                    dark_mode, animated, anim_interval, mapa_retorno, chart_name, house_system, gender_id, 
@@ -6765,6 +6764,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ch = getch();
         
         switch (ch) {
+            case '*':
+                aspect_ratio += 0.1;
+                break;
+            case '/':
+                aspect_ratio -= 0.1;
+                if (zoom_factor < 0.3) zoom_factor = 0.3; // Cap at 0.3x zoom
+                break;
             case '+':
             case '=':
                 zoom_factor += 0.1;

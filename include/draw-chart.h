@@ -236,7 +236,7 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
 void draw_zodiac_signs(int display_center_y, int display_center_x, float current_scale, float aspect_ratio, int n, int asc);
 void draw_decans(int display_center_y, int display_center_x, float current_scale, float aspect_ratio, int n, int asc);
 
-void draw_chart(float zoom_factor, float pan_x, float pan_y, 
+void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y, 
     int n, struct tm *local_time, double lat, double lon, double elev, double tz_offset,
     PlotObject *plots, double *cusps, int sanYear, int sanMon, int sanDay, double sanHour, 
     char *sunrise_time, char *sunset_time, char *city, char *country, 
