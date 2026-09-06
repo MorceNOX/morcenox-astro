@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 11:23-0300\n"
+"POT-Creation-Date: 2026-09-06 11:25-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4853,7 +4853,9 @@ msgid ""
 msgstr ""
 
 #: src/temperament.c:990
-msgid " ✦ Sanguine Influence: \n"
+msgid ""
+" ✦ Sanguine Influence: \n"
+"\n"
 msgstr ""
 
 #: src/temperament.c:992
@@ -4865,7 +4867,9 @@ msgid ""
 msgstr ""
 
 #: src/temperament.c:999
-msgid " ✦ Choleric Influence: \n"
+msgid ""
+" ✦ Choleric Influence: \n"
+"\n"
 msgstr ""
 
 #: src/temperament.c:1001
@@ -4876,7 +4880,9 @@ msgid ""
 msgstr ""
 
 #: src/temperament.c:1008
-msgid " ✦ Phlegmatic Influence: \n"
+msgid ""
+" ✦ Phlegmatic Influence: \n"
+"\n"
 msgstr ""
 
 #: src/temperament.c:1010
@@ -4888,7 +4894,9 @@ msgid ""
 msgstr ""
 
 #: src/temperament.c:1017
-msgid " ✦ Melancholic Influence: \n"
+msgid ""
+" ✦ Melancholic Influence: \n"
+"\n"
 msgstr ""
 
 #: src/temperament.c:1019

@@ -2216,17 +2216,17 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
         mvprintw(3, max_x - 36, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
         
         mvprintw(5, max_x - 22, "%s: %02d:%02d:%02.0f", _("Sun Clock"), last_hr, last_min, last_sec);
+        mvprintw(LINES - 6, 1, _("Divisions = Zodiac Signs"));
 
         if (mapa_retorno) {
-            mvprintw(LINES - 6, 1, _("Divisions = Zodiac Signs"));
             mvprintw(LINES - 4, 1, _("Radix Confrontation: C | Annual Transits: T "));
-            mvprintw(LINES - 3, 1, _("Parts Radix Confrontation: P ")); 
+            mvprintw(LINES - 3, 1, _("Anim: A | Parts Radix Confrontation: P ")); 
         }
         else {
-            mvprintw(LINES - 4, 1, _("Divisions = Zodiac Signs"));
+            mvprintw(LINES - 3, 1, _("Anim: A "));
         }
-        mvprintw(LINES - 2, 1, "Zoom: + / -  | Pan: ←↓→↑  | Reset: R ");
-        mvprintw(LINES - 1, 1, _("Animation: A | Speed: ]/[ | Quit: Q "));
+        mvprintw(LINES - 2, 1,   "Zoom: + -  | Pan: ←↓→↑  | Reset: R ");
+        mvprintw(LINES - 1, 1, _("Aspect: / *| Speed: ]/[ | Quit: Q "));
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);

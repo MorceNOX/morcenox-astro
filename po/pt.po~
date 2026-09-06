@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 11:23-0300\n"
+"POT-Creation-Date: 2026-09-06 11:25-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -5845,7 +5845,9 @@ msgstr ""
 
 #: src/temperament.c:990
 #, fuzzy
-msgid " ✦ Sanguine Influence: \n"
+msgid ""
+" ✦ Sanguine Influence: \n"
+"\n"
 msgstr " ✦ Influência Sanguínea: "
 
 #: src/temperament.c:992
@@ -5862,7 +5864,9 @@ msgstr ""
 
 #: src/temperament.c:999
 #, fuzzy
-msgid " ✦ Choleric Influence: \n"
+msgid ""
+" ✦ Choleric Influence: \n"
+"\n"
 msgstr " ✦ Influência Colérica: "
 
 #: src/temperament.c:1001
@@ -5878,7 +5882,9 @@ msgstr ""
 
 #: src/temperament.c:1008
 #, fuzzy
-msgid " ✦ Phlegmatic Influence: \n"
+msgid ""
+" ✦ Phlegmatic Influence: \n"
+"\n"
 msgstr " ✦ Influência Colérica: "
 
 #: src/temperament.c:1010
@@ -5895,7 +5901,9 @@ msgstr ""
 
 #: src/temperament.c:1017
 #, fuzzy
-msgid " ✦ Melancholic Influence: \n"
+msgid ""
+" ✦ Melancholic Influence: \n"
+"\n"
 msgstr " ✦ Influência Melancólica: "
 
 #: src/temperament.c:1019
