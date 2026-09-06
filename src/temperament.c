@@ -850,7 +850,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else if (eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(21));
             wprintw(pad, _("CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(21));
             line_count += print_split_lines(pad, _("Your active forces exist in a state of controlled thermal poise, "
@@ -862,7 +862,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(13));
             wprintw(pad, _("ABSOLUTE BALANCE (Quadrapartite Temperament)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(13));
             line_count += print_split_lines(pad, _("Your chart reflects the rare, ideal geometric balance of all four "
@@ -878,7 +878,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         if (eixo_calor > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
             wprintw(pad, _("SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
             line_count += print_split_lines(pad, _("An expressive, warm, and highly action-oriented signature blending "
@@ -891,7 +891,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
             wprintw(pad, _("PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
             line_count += print_split_lines(pad, _("A calm, deeply introspective, and self-protective constitution "
@@ -908,7 +908,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         if (eixo_calor > 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
             wprintw(pad, _("SANGUINE (Hot & Wet - Air Element)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
             line_count += print_split_lines(pad, _("Your psychological engine revolves around communication, expansion, "
@@ -919,7 +919,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else if (eixo_calor > 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
             wprintw(pad, _("CHOLERIC (Hot & Dry - Fire Element)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
             line_count += print_split_lines(pad, _("Your core essence is driven by swift, active, and result-oriented "
@@ -930,7 +930,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else if (eixo_calor < 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(8));
             wprintw(pad, _("PHLEGMATIC (Cold & Wet - Water Element)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(8));
             line_count += print_split_lines(pad, _("You embody a stable, welcoming, and peacekeeping emotional "
@@ -941,7 +941,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
         } else if (eixo_calor < 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(30));
             wprintw(pad, _("MELANCHOLIC (Cold & Dry - Earth Element)\n\n"));
-            line_count += 3;
+            line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(30));
             line_count += print_split_lines(pad, _("Your nature is built on structural caution, real-world pragmatism, "
@@ -986,41 +986,42 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
             // Renderiza o modificador específico baseado no ID de cor do temperamento
             switch (lista[i].id) {
                 case SANGUINEO: // Sanguine
-                    wattron(pad, COLOR_PAIR(12) | A_REVERSE);
-                    wprintw(pad, _(" ✦ Sanguine Influence: "));
-                    wattroff(pad, COLOR_PAIR(12) | A_REVERSE);
+                    wattron(pad, COLOR_PAIR(12) | A_REVERSE | A_BOLD);
+                    wprintw(pad, _(" ✦ Sanguine Influence: \n\n"));
+                    wattroff(pad, COLOR_PAIR(12) | A_REVERSE | A_BOLD);
                     line_count += print_split_lines(pad, _("Adds an overlay of communicative ease, adaptability, "
                                  "and cognitive curiosity. This softens any rigid boundaries or "
                                  "stagnation imposed by your dominant humor.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case COLERICO: // Choleric
-                    wattron(pad, COLOR_PAIR(11));
-                    wprintw(pad, _(" ✦ Choleric Influence: "));
-                    wattroff(pad, COLOR_PAIR(11));
+                    wattron(pad, COLOR_PAIR(11) | A_BOLD);
+                    wprintw(pad, _(" ✦ Choleric Influence: \n\n"));
+                    wattroff(pad, COLOR_PAIR(11) | A_BOLD);
                     line_count += print_split_lines(pad, _("Injects raw drive, sharp focus on execution, and a "
                                  "natural urgency to fix problems. It sharpens a passive baseline "
                                  "into a highly proactive mindset.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case FLEUMATICO: // Phlegmatic
-                    wattron(pad, COLOR_PAIR(8));
-                    wprintw(pad, _(" ✦ Phlegmatic Influence: "));
-                    wattroff(pad, COLOR_PAIR(8));
+                    wattron(pad, COLOR_PAIR(8) | A_BOLD);
+                    wprintw(pad, _(" ✦ Phlegmatic Influence: \n\n"));
+                    wattroff(pad, COLOR_PAIR(8) | A_BOLD);
                     line_count += print_split_lines(pad, _("Acts as a natural thermal and emotional ballast, introducing "
                                  "diplomatic mediation, structural patience, and a steady pace that "
                                  "protects you from chronic stress.\n\n"), MAX_LINE_WIDTH);
                     break;
 
                 case MELANCOLICO: // Melancholic
-                    wattron(pad, COLOR_PAIR(7));
-                    wprintw(pad, _(" ✦ Melancholic Influence: "));
-                    wattroff(pad, COLOR_PAIR(7));
+                    wattron(pad, COLOR_PAIR(7) | A_BOLD);
+                    wprintw(pad, _(" ✦ Melancholic Influence: \n\n"));
+                    wattroff(pad, COLOR_PAIR(7) | A_BOLD);
                     line_count += print_split_lines(pad, _("Confers analytical depth, long-term organization skills, "
                                  "and a realistic sense of caution. It ensures your impulses are "
                                  "grounded in real-world feasibility.\n\n"), MAX_LINE_WIDTH);
                     break;
             }
+            line_count += 2;
         }
     }
 

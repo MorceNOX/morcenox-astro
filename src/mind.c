@@ -127,7 +127,7 @@ void display_natal_mind_analysis(
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
     
-    int table_width = term_w - 10;
+    int table_width = term_w - 60;
     int table_height = 28;
     int start_x = (term_w - table_width) / 2;
     int start_y = (term_h - table_height) / 2;

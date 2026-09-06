@@ -504,10 +504,10 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 24; 
-    int table_width = max_x - 5;
+    int table_height = 31; 
+    int table_width = max_x - 60;
     int start_y = (max_y - table_height) / 2;
-    int start_x = 2;
+    int start_x = (max_x - table_width) / 2;
     
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
@@ -527,7 +527,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // Cabeçalho da tabela
-    mvwprintw(table_win, 1, 2, _("   Hylegiacal Point       Longitude       Calculated Almuten                             Almuten Figuris"));
+    mvwprintw(table_win, 2, 2, _("   Hylegiacal Point       Longitude       Calculated Almuten"));
     wattroff(table_win, A_BOLD);
 
     // Arrays para receber as respostas dos cálculos
@@ -540,7 +540,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
 
     for (int i = 0; i < 5; i++) {
         wattron(table_win, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, row, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         // Processa graus e minutos da longitude do ponto hylegíaco
@@ -562,7 +562,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     
 
         // Desenha a linha na janela
-        mvwprintw(table_win, row, 5, "%-25s %02d° %s %02.0f'      ", nomes_pontos[i], deg, sign_str, min);
+        mvwprintw(table_win, row + 1, 5, "%-25s %02d° %s %02.0f'      ", nomes_pontos[i], deg, sign_str, min);
         
         // Destaca o planeta vencedor aplicando o Glifo Unicode em Negrito e com a Cor Azul (Par 8)
         wattron(table_win, COLOR_PAIR(8) | A_BOLD);
@@ -572,11 +572,11 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         row += 2;
     }
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    mvwprintw(table_win, row, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, row + 1, 5, "%s %s(%d)/%s(%d): ", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour);
+    mvwprintw(table_win, row + 2, 5, "%s %s(%d)/%s(%d): ", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour);
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(8) | A_BOLD);
@@ -587,34 +587,36 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     // SEÇÃO INFERIOR: Exibição Destacada do Almuten Figuris
     // ────────────────────────────────────────────────────────────────────────────────
     wattron(table_win, COLOR_PAIR(6));
-    mvwprintw(table_win, row + 3, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    mvwprintw(table_win, row + 4, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(6));
+
+    row++;
 
     int res_figuris[12];
     
     int qtd_figuris = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, row + 4, 5, _("ALMUTEN FIGURIS (Lord of the Chart): "));
+    mvwprintw(table_win, row + 6, 5, _("ALMUTEN FIGURIS (Lord of the Chart): "));
     wattroff(table_win, A_BOLD);
 
     // Exibe o Glifo Unicode do Almuten Figuris com destaque sublinhado
     if (qtd_figuris == 1) {
-        wattron(table_win, COLOR_PAIR(8) | A_BOLD);
-        wprintw(table_win, " %s ", obter_glifo_planeta_por_id(res_figuris[0]));
-        wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+        // wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+        // wprintw(table_win, " %s ", obter_glifo_planeta_por_id(res_figuris[0]));
+        // wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
 
         const char **ascii_art = get_planet_ascii(res_figuris[0]);
         
         wattron(table_win, COLOR_PAIR(7) | A_BOLD);
-        mvwprintw(table_win, 2, 95, "%s", ascii_art[0]);
-        mvwprintw(table_win, 3, 95, "%s", ascii_art[1]);
-        mvwprintw(table_win, 4, 95, "%s", ascii_art[2]);
-        mvwprintw(table_win, 5, 95, "%s", ascii_art[3]);
-        mvwprintw(table_win, 6, 95, "%s", ascii_art[4]);
-        mvwprintw(table_win, 7, 95, "%s", ascii_art[5]);
+        mvwprintw(table_win, row + 4, 43, "%s", ascii_art[0]);
+        mvwprintw(table_win, row + 5, 43, "%s", ascii_art[1]);
+        mvwprintw(table_win, row + 6, 43, "%s", ascii_art[2]);
+        mvwprintw(table_win, row + 7, 43, "%s", ascii_art[3]);
+        mvwprintw(table_win, row + 8, 43, "%s", ascii_art[4]);
+        mvwprintw(table_win, row + 9, 43, "%s", ascii_art[5]);
 
-        mvwprintw(table_win, 8, 92, "%s", obter_nome_planeta_por_id(res_figuris[0]));
+        //mvwprintw(table_win, 8, 92, "%s", obter_nome_planeta_por_id(res_figuris[0]));
     } else {
         wattron(table_win, COLOR_PAIR(11) | A_BOLD);
         wprintw(table_win, " %s & %s (Tie) ", obter_glifo_planeta_por_id(res_figuris[0]), obter_glifo_planeta_por_id(res_figuris[1]));
@@ -624,14 +626,14 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         const char **ascii_art2 = get_planet_ascii(res_figuris[1]);
         
         wattron(table_win, COLOR_PAIR(7) | A_BOLD);
-        mvwprintw(table_win, 2, 90, "%s  %s", ascii_art1[0], ascii_art2[0]);
-        mvwprintw(table_win, 3, 90, "%s  %s", ascii_art1[1], ascii_art2[1]);
-        mvwprintw(table_win, 4, 90, "%s  %s", ascii_art1[2], ascii_art2[2]);
-        mvwprintw(table_win, 5, 90, "%s  %s", ascii_art1[3], ascii_art2[3]);
-        mvwprintw(table_win, 6, 90, "%s  %s", ascii_art1[4], ascii_art2[4]);
-        mvwprintw(table_win, 7, 90, "%s  %s", ascii_art1[5], ascii_art2[5]);
+        mvwprintw(table_win, row + 4, 43, "%s  %s", ascii_art1[0], ascii_art2[0]);
+        mvwprintw(table_win, row + 5, 43, "%s  %s", ascii_art1[1], ascii_art2[1]);
+        mvwprintw(table_win, row + 6, 43, "%s  %s", ascii_art1[2], ascii_art2[2]);
+        mvwprintw(table_win, row + 7, 43, "%s  %s", ascii_art1[3], ascii_art2[3]);
+        mvwprintw(table_win, row + 8, 43, "%s  %s", ascii_art1[4], ascii_art2[4]);
+        mvwprintw(table_win, row + 9, 43, "%s  %s", ascii_art1[5], ascii_art2[5]);
 
-        mvwprintw(table_win, 8, 90, "%s & %s", obter_nome_planeta_por_id(res_figuris[0]), obter_nome_planeta_por_id(res_figuris[1]));
+        //mvwprintw(table_win, 8, 90, "%s & %s", obter_nome_planeta_por_id(res_figuris[0]), obter_nome_planeta_por_id(res_figuris[1]));
     }
     wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
 

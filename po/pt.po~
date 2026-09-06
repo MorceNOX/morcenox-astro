@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 07:29-0300\n"
+"POT-Creation-Date: 2026-09-06 11:23-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -22,12 +22,8 @@ msgid "Hylegiacal & Figuris Almutens"
 msgstr "Almuten Figuris & dos Pontos Hylegíacos"
 
 #: src/almuten.c:530
-msgid ""
-"   Hylegiacal Point       Longitude       Calculated "
-"Almuten                             Almuten Figuris"
-msgstr ""
-"   Ponto Hylegíaco        Longitude       Almuten "
-"Calculado                              Almuten Figuris"
+msgid "   Hylegiacal Point       Longitude       Calculated Almuten"
+msgstr "   Ponto Hylegíaco        Longitude       Almuten Calculado"
 
 #: src/almuten.c:538
 msgid "Sol "
@@ -75,28 +71,28 @@ msgstr "Noite"
 msgid "Hour"
 msgstr "Hora"
 
-#: src/almuten.c:598
+#: src/almuten.c:600
 msgid "ALMUTEN FIGURIS (Lord of the Chart): "
 msgstr "ALMUTEN FIGURIS (Regente do Mapa): "
 
-#: src/almuten.c:639
+#: src/almuten.c:641
 msgid "Press ESC to return to chart - [i] to open interpretation window"
 msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
 
-#: src/almuten.c:711
+#: src/almuten.c:713
 msgid " Almuten Figuris Spiritual Guide "
 msgstr "Almuten Figuris Guia Espiritual"
 
-#: src/almuten.c:715 src/almuten.c:1075 src/solar_return.c:542
+#: src/almuten.c:717 src/almuten.c:1077 src/solar_return.c:542
 #: src/solar_return.c:1253
 msgid " [↓↑|JK: Scroll | Q|ESC: Return to Chart] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar ao Mapa] "
 
-#: src/almuten.c:737
+#: src/almuten.c:739
 msgid " THE LORD OF THE CHART (ALMUTEN FIGURIS) \n"
 msgstr " O REGENTE DO MAPA (ALMUTEN FIGURIS) \n"
 
-#: src/almuten.c:743
+#: src/almuten.c:745
 #, c-format
 msgid ""
 "The Almuten Figuris acts as the supreme ruler of your natal chart, "
@@ -111,7 +107,7 @@ msgstr ""
 "elevado, os talentos latentes e o caminho para a maestria interior.\n"
 "\n"
 
-#: src/almuten.c:753
+#: src/almuten.c:755
 msgid ""
 "CO-REGENCY DETECTED: Spiritual Conjunction\n"
 "\n"
@@ -119,7 +115,7 @@ msgstr ""
 "CO-REGÊNCIA DETECTADA: Conjunção Espiritual\n"
 "\n"
 
-#: src/almuten.c:758
+#: src/almuten.c:760
 #, c-format
 msgid ""
 "Your chart presents a rare cosmic occurrence: a shared throne. Multiple "
@@ -132,40 +128,40 @@ msgstr ""
 "que você integre ambos os fluxos de consciência para alcançar seu destino.\n"
 "\n"
 
-#: src/almuten.c:776
+#: src/almuten.c:778
 msgid "ARCHETYPAL RULER"
 msgstr "REGENTE ARQUETÍPICO"
 
-#: src/almuten.c:779
+#: src/almuten.c:781
 msgid "(THE SUN - ☉)\n"
 msgstr "(O SOL - ☉)\n"
 
-#: src/almuten.c:780
+#: src/almuten.c:782
 msgid "(THE MOON - ☽)\n"
 msgstr "(A LUA - ☽)\n"
 
-#: src/almuten.c:781
+#: src/almuten.c:783
 msgid "(MERCURY - ☿)\n"
 msgstr "(MERCÚRIO - ☿)\n"
 
-#: src/almuten.c:782
+#: src/almuten.c:784
 msgid "(VENUS - ♀)\n"
 msgstr "(VÊNUS - ♀)\n"
 
-#: src/almuten.c:783
+#: src/almuten.c:785
 msgid "(MARS - ♂)\n"
 msgstr "(MARTE - ♂)\n"
 
-#: src/almuten.c:784
+#: src/almuten.c:786
 msgid "(JUPITER - ♃)\n"
 msgstr "(JÚPITER - ♃)\n"
 
-#: src/almuten.c:785
+#: src/almuten.c:787
 msgid "(SATURN - ♄)\n"
 msgstr "(SATURNO - ♄)\n"
 
-#: src/almuten.c:793 src/almuten.c:820 src/almuten.c:844 src/almuten.c:868
-#: src/almuten.c:891 src/almuten.c:914 src/almuten.c:941
+#: src/almuten.c:795 src/almuten.c:822 src/almuten.c:846 src/almuten.c:870
+#: src/almuten.c:893 src/almuten.c:916 src/almuten.c:943
 msgid ""
 "Spiritual Essence:\n"
 "\n"
@@ -173,7 +169,7 @@ msgstr ""
 "Essência Espiritual:\n"
 "\n"
 
-#: src/almuten.c:796
+#: src/almuten.c:798
 #, c-format
 msgid ""
 "The soul seeks the expression of pure individuality, truth, and integrity. "
@@ -186,8 +182,8 @@ msgstr ""
 "clareza e centralidade para si mesmo e para os outros.\n"
 "\n"
 
-#: src/almuten.c:802 src/almuten.c:827 src/almuten.c:851 src/almuten.c:875
-#: src/almuten.c:898 src/almuten.c:921 src/almuten.c:951
+#: src/almuten.c:804 src/almuten.c:829 src/almuten.c:853 src/almuten.c:877
+#: src/almuten.c:900 src/almuten.c:923 src/almuten.c:953
 msgid ""
 "Character Impact:\n"
 "\n"
@@ -195,7 +191,7 @@ msgstr ""
 "Impacto do Caráter:\n"
 "\n"
 
-#: src/almuten.c:805
+#: src/almuten.c:807
 #, c-format
 msgid ""
 "Confers natural nobility, personal magnetism, generosity, and a sharp sense "
@@ -206,8 +202,8 @@ msgstr ""
 "de destino ou missão. O nativo lidera por meio de ações dignas.\n"
 "\n"
 
-#: src/almuten.c:810 src/almuten.c:835 src/almuten.c:859 src/almuten.c:882
-#: src/almuten.c:905 src/almuten.c:930 src/almuten.c:961
+#: src/almuten.c:812 src/almuten.c:837 src/almuten.c:861 src/almuten.c:884
+#: src/almuten.c:907 src/almuten.c:932 src/almuten.c:963
 msgid ""
 "Evolutionary Hurdles:\n"
 "\n"
@@ -215,7 +211,7 @@ msgstr ""
 "Obstáculos Evolutivos:\n"
 "\n"
 
-#: src/almuten.c:813
+#: src/almuten.c:815
 #, c-format
 msgid ""
 "Avoid the trap of excessive pride, egocentrism, vanity, or a neurotic need "
@@ -228,7 +224,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:823
+#: src/almuten.c:825
 #, c-format
 msgid ""
 "The spiritual path is realized through nurturing, cosmic alignment, and a "
@@ -240,7 +236,7 @@ msgstr ""
 "protege.\n"
 "\n"
 
-#: src/almuten.c:830
+#: src/almuten.c:832
 #, c-format
 msgid ""
 "Grants extreme empathy, razor-sharp intuition, a bond with ancestry, and a "
@@ -252,7 +248,7 @@ msgstr ""
 "ambiente.\n"
 "\n"
 
-#: src/almuten.c:838
+#: src/almuten.c:840
 #, c-format
 msgid ""
 "Mastering unstable mood swings, hypersensitivity, over-attachment to the "
@@ -265,7 +261,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:847
+#: src/almuten.c:849
 #, c-format
 msgid ""
 "Evolution occurs via the intellect, the translation of reality, and the "
@@ -277,7 +273,7 @@ msgstr ""
 "estruturais.\n"
 "\n"
 
-#: src/almuten.c:854
+#: src/almuten.c:856
 #, c-format
 msgid ""
 "Brings a brilliant mind, precise adaptability, and an elite talent for the "
@@ -289,7 +285,7 @@ msgstr ""
 "problemas.\n"
 "\n"
 
-#: src/almuten.c:862
+#: src/almuten.c:864
 #, c-format
 msgid ""
 "Guarding against nervous system exhaustion, oscillating opinions, "
@@ -302,7 +298,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:871
+#: src/almuten.c:873
 #, c-format
 msgid ""
 "The soul seeks beauty, balance, absolute justice, love, and the sacred "
@@ -314,7 +310,7 @@ msgstr ""
 "profundos.\n"
 "\n"
 
-#: src/almuten.c:878
+#: src/almuten.c:880
 #, c-format
 msgid ""
 "Confers authentic charm, innate diplomacy, refined aesthetic taste, and "
@@ -325,7 +321,7 @@ msgstr ""
 "atração magnética. Você atrai bens, arte e paz com conforto.\n"
 "\n"
 
-#: src/almuten.c:885
+#: src/almuten.c:887
 #, c-format
 msgid ""
 "Evading superficiality, self-indulgence, a chronic fear of confrontation "
@@ -338,7 +334,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:894
+#: src/almuten.c:896
 #, c-format
 msgid ""
 "The soul refines itself through friction, righteous combat, courage, and "
@@ -350,7 +346,7 @@ msgstr ""
 "fracos.\n"
 "\n"
 
-#: src/almuten.c:901
+#: src/almuten.c:903
 #, c-format
 msgid ""
 "Grants unyielding determination, executive focus, wild independence, and "
@@ -361,7 +357,7 @@ msgstr ""
 "espírito pioneiro. O nativo prospera ativamente sob pressão extrema.\n"
 "\n"
 
-#: src/almuten.c:908
+#: src/almuten.c:910
 #, c-format
 msgid ""
 "Channelling destructive wrath, chronic impatience, verbal aggression, and "
@@ -374,7 +370,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:917
+#: src/almuten.c:919
 #, c-format
 msgid ""
 "The journey is bound to higher consciousness expansion, unwavering faith in "
@@ -386,7 +382,7 @@ msgstr ""
 "benevolência.\n"
 "\n"
 
-#: src/almuten.c:924
+#: src/almuten.c:926
 #, c-format
 msgid ""
 "Brings infectious optimism, a broad structural worldview, accidental luck, "
@@ -398,7 +394,7 @@ msgstr ""
 "natural e reconfortante.\n"
 "\n"
 
-#: src/almuten.c:934
+#: src/almuten.c:936
 #, c-format
 msgid ""
 "Controlling the slope toward excess (dogmatism, over-spending), naive "
@@ -411,7 +407,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:945
+#: src/almuten.c:947
 #, c-format
 msgid ""
 "The soul elected absolute mastery via self-discipline, heavy responsibility, "
@@ -423,7 +419,7 @@ msgstr ""
 "gravada diretamente na pedra.\n"
 "\n"
 
-#: src/almuten.c:955
+#: src/almuten.c:957
 #, c-format
 msgid ""
 "Confers exceptional sobriety, titanic resilience, strategic patience, and "
@@ -435,7 +431,7 @@ msgstr ""
 "maturidade.\n"
 "\n"
 
-#: src/almuten.c:965
+#: src/almuten.c:967
 #, c-format
 msgid ""
 "Avoiding chronic pessimism, paralyzing melancholy, fear of material failure, "
@@ -449,21 +445,21 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:974
+#: src/almuten.c:976
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the Almuten panel.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar ao painel do "
 "Almuten.\n"
 
-#: src/almuten.c:1071
+#: src/almuten.c:1073
 msgid " Solar Return Almuten: Lord of the Year "
 msgstr " Almuten da Revolução Solar: Regente do Ano "
 
-#: src/almuten.c:1094
+#: src/almuten.c:1096
 msgid " THE LORD OF THE YEAR (ALMUTEN OF SOLAR RETURN) \n"
 msgstr " O REGENTE DO ANO (ALMUTEN FIGURIS DA REVOLUÇÃO SOLAR) \n"
 
-#: src/almuten.c:1101
+#: src/almuten.c:1103
 msgid ""
 "Unlike your Natal Almuten, which rules over your entire lifetime and soul "
 "blueprint, the Almuten of the Solar Return operates as the temporal manager "
@@ -479,7 +475,7 @@ msgstr ""
 "destes 12 meses específicos.\n"
 "\n"
 
-#: src/almuten.c:1109
+#: src/almuten.c:1111
 msgid ""
 "CO-REGENCY DETECTED: Shared Annual Focus\n"
 "\n"
@@ -487,7 +483,7 @@ msgstr ""
 "CO-REGÊNCIA DETECTADA: Foco Anual Compartilhado\n"
 "\n"
 
-#: src/almuten.c:1113
+#: src/almuten.c:1115
 msgid ""
 "Two or more planetary archetypes share equal operational strength this year. "
 "Your experiences will be double-sided, forcing you to balance both planetary "
@@ -500,40 +496,40 @@ msgstr ""
 "com os desafios do ano.\n"
 "\n"
 
-#: src/almuten.c:1127
+#: src/almuten.c:1129
 msgid " ANNUAL OPERATIONAL RULER "
 msgstr " REGENTE ANUAL OPERACIONAL "
 
-#: src/almuten.c:1129
+#: src/almuten.c:1131
 msgid "(THE SUN - ☉) \n"
 msgstr "(O SOL - ☉) \n"
 
-#: src/almuten.c:1130
+#: src/almuten.c:1132
 msgid "(THE MOON - ☽) \n"
 msgstr "(A LUA - ☽) \n"
 
-#: src/almuten.c:1131
+#: src/almuten.c:1133
 msgid "(MERCURY - ☿) \n"
 msgstr "(MERCÚRIO - ☿) \n"
 
-#: src/almuten.c:1132
+#: src/almuten.c:1134
 msgid "(VENUS - ♀) \n"
 msgstr "(VÊNUS - ♀) \n"
 
-#: src/almuten.c:1133
+#: src/almuten.c:1135
 msgid "(MARS - ♂) \n"
 msgstr "(MARTE - ♂) \n"
 
-#: src/almuten.c:1134
+#: src/almuten.c:1136
 msgid "(JUPITER - ♃) \n"
 msgstr "(JÚPITER - ♃) \n"
 
-#: src/almuten.c:1135
+#: src/almuten.c:1137
 msgid "(SATURN - ♄) \n"
 msgstr "(SATURNO - ♄) \n"
 
-#: src/almuten.c:1144 src/almuten.c:1166 src/almuten.c:1183 src/almuten.c:1200
-#: src/almuten.c:1217 src/almuten.c:1234 src/almuten.c:1255
+#: src/almuten.c:1146 src/almuten.c:1168 src/almuten.c:1185 src/almuten.c:1202
+#: src/almuten.c:1219 src/almuten.c:1236 src/almuten.c:1257
 msgid ""
 "The Focus of the Year:\n"
 "\n"
@@ -541,7 +537,7 @@ msgstr ""
 "O Foco do Ano:\n"
 "\n"
 
-#: src/almuten.c:1148
+#: src/almuten.c:1150
 msgid ""
 "This is a year of high visibility, core awakening, and personal sovereignty. "
 "Circumstances will push you to step into the center stage of your own life, "
@@ -554,8 +550,8 @@ msgstr ""
 "profissional.\n"
 "\n"
 
-#: src/almuten.c:1152 src/almuten.c:1171 src/almuten.c:1188 src/almuten.c:1205
-#: src/almuten.c:1222 src/almuten.c:1239 src/almuten.c:1263
+#: src/almuten.c:1154 src/almuten.c:1173 src/almuten.c:1190 src/almuten.c:1207
+#: src/almuten.c:1224 src/almuten.c:1241 src/almuten.c:1265
 msgid ""
 "Practical Manifestations:\n"
 "\n"
@@ -563,7 +559,7 @@ msgstr ""
 "Manifestações Práticas:\n"
 "\n"
 
-#: src/almuten.c:1155
+#: src/almuten.c:1157
 msgid ""
 "Expect opportunities for career promotion, leadership roles, and a surge in "
 "vital energy. Important encounters with authoritative figures are highly "
@@ -575,8 +571,8 @@ msgstr ""
 "são muito prováveis.\n"
 "\n"
 
-#: src/almuten.c:1158 src/almuten.c:1176 src/almuten.c:1193 src/almuten.c:1210
-#: src/almuten.c:1227 src/almuten.c:1246 src/almuten.c:1271
+#: src/almuten.c:1160 src/almuten.c:1178 src/almuten.c:1195 src/almuten.c:1212
+#: src/almuten.c:1229 src/almuten.c:1248 src/almuten.c:1273
 msgid ""
 "Annual Warnings:\n"
 "\n"
@@ -584,7 +580,7 @@ msgstr ""
 "Avisos (alertas) anuais:\n"
 "\n"
 
-#: src/almuten.c:1162
+#: src/almuten.c:1164
 msgid ""
 "Guard heavily against egotism, prideful power struggles, and burning out due "
 "to a neurotic need for constant public approval and validation.\n"
@@ -597,7 +593,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1169
+#: src/almuten.c:1171
 msgid ""
 "A highly personal, internal, and emotional 12-month chapter. The focus "
 "shifts entirely toward foundations, family, domestic stability, and inner "
@@ -609,7 +605,7 @@ msgstr ""
 "segurança interior.\n"
 "\n"
 
-#: src/almuten.c:1174
+#: src/almuten.c:1176
 msgid ""
 "Strong indicators of real estate adjustments, changes in the household or "
 "family dynamics, and events that will test and restructure your emotional "
@@ -621,7 +617,7 @@ msgstr ""
 "emocional.\n"
 "\n"
 
-#: src/almuten.c:1179
+#: src/almuten.c:1181
 msgid ""
 "Beware of volatile mood swings, hypersensitivity to external criticism, and "
 "the tendency to retreat into defensive, nostalgic isolation when friction "
@@ -635,7 +631,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1186
+#: src/almuten.c:1188
 msgid ""
 "A year driven by intense mental activity, intellectual output, and "
 "networking. Your analytical skills and communication channels will be highly "
@@ -648,7 +644,7 @@ msgstr ""
 "acelerados.\n"
 "\n"
 
-#: src/almuten.c:1191
+#: src/almuten.c:1193
 msgid ""
 "Excellent periods for signing contracts, negotiating business deals, "
 "academic pursuits, writing, and multiple short-distance travels or "
@@ -660,7 +656,7 @@ msgstr ""
 "mudanças estruturais. \n"
 "\n"
 
-#: src/almuten.c:1196
+#: src/almuten.c:1198
 msgid ""
 "High risk of nervous system exhaustion, acute mental anxiety, split focus, "
 "and the danger of over-rationalizing critical decisions that require "
@@ -674,7 +670,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1203
+#: src/almuten.c:1205
 msgid ""
 "A year designated for harmonic consolidation, financial focus, and "
 "relationship evaluations. The core theme is finding value, alignment, and "
@@ -686,7 +682,7 @@ msgstr ""
 "e paz social.\n"
 "\n"
 
-#: src/almuten.c:1208
+#: src/almuten.c:1210
 msgid ""
 "Favorable timelines for artistic endeavors, income enhancement, entering "
 "strategic alliances, and experiencing a profound growth in your active "
@@ -698,7 +694,7 @@ msgstr ""
 "sua vida amorosa ativa.\n"
 "\n"
 
-#: src/almuten.c:1213
+#: src/almuten.c:1215
 msgid ""
 "Watch out for financial extravagance, lazy self-indulgence, and avoiding "
 "necessary confrontations out of a codependent desire to keep up superficial "
@@ -712,7 +708,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1220
+#: src/almuten.c:1222
 msgid ""
 "A dynamic, highly friction-based, and action-heavy period. This year demands "
 "intense physical courage, independent initiatives, and cutting away dead "
@@ -724,7 +720,7 @@ msgstr ""
 "mortos.\n"
 "\n"
 
-#: src/almuten.c:1225
+#: src/almuten.c:1227
 msgid ""
 "Overcoming major obstacles through raw effort, launch of independent "
 "enterprises, but also a strong indicator of physical expenditures and "
@@ -736,7 +732,7 @@ msgstr ""
 "físico e confrontos competitivos.\n"
 "\n"
 
-#: src/almuten.c:1230
+#: src/almuten.c:1232
 msgid ""
 "Prone to acute accidents due to rash haste, explosive outbursts of anger, "
 "unnecessary litigations, and burnouts caused by operating in perpetual "
@@ -750,7 +746,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1237
+#: src/almuten.c:1239
 msgid ""
 "The year of expansion, philosophical growth, and providential opportunities. "
 "A benevolent energy wraps around your efforts, granting a protective "
@@ -762,7 +758,7 @@ msgstr ""
 "protetor.\n"
 "\n"
 
-#: src/almuten.c:1242
+#: src/almuten.c:1244
 msgid ""
 "Financial expansion, legal resolutions rolling in your favor, publishing "
 "success, and meaningful long-distance journeys that broaden your entire "
@@ -774,7 +770,7 @@ msgstr ""
 "mundo existencial.\n"
 "\n"
 
-#: src/almuten.c:1250
+#: src/almuten.c:1252
 msgid ""
 "Severe risk of over-expansion and arrogance. Blind, naive optimism that "
 "ignores material safety nets, leading to over-leveraging and ideological "
@@ -788,7 +784,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1259
+#: src/almuten.c:1261
 msgid ""
 "A sobering year of evaluation, heavy duty, consolidation, and setting "
 "limits. Time demands that you build structure and account for real-world "
@@ -800,7 +796,7 @@ msgstr ""
 "assuma as responsabilidades do mundo real.\n"
 "\n"
 
-#: src/almuten.c:1267
+#: src/almuten.c:1269
 msgid ""
 "Hard, grinding work that yields long-term security, settling deep debts, "
 "dealing with administrative inheritances, and professional solidifications "
@@ -812,7 +808,7 @@ msgstr ""
 "consolidação profissional sob pressão.\n"
 "\n"
 
-#: src/almuten.c:1275
+#: src/almuten.c:1277
 msgid ""
 "Prone to chronic fatigue, paralyzing fear of failure, bouts of deep "
 "melancholy, and feeling crushed under structural delays or burdens that are "
@@ -826,7 +822,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1282
+#: src/almuten.c:1284
 msgid ""
 "  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"
 msgstr ""
@@ -5569,39 +5565,39 @@ msgstr "Press [i] para Interpretação Textual | ESC/q Retornar"
 msgid " Temperament Detailed Analysis "
 msgstr "Análise Detalhada do Temperamento"
 
-#: src/temperament.c:810
+#: src/temperament.c:812
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr "  1. SUMÁRIO DA PONTUAÇÃO BRUTA\n"
 
-#: src/temperament.c:814
+#: src/temperament.c:820
 msgid "Hot"
 msgstr "Quente"
 
-#: src/temperament.c:815
+#: src/temperament.c:821
 msgid "Cold"
 msgstr "Frio"
 
-#: src/temperament.c:816
+#: src/temperament.c:822
 msgid "Moist"
 msgstr "Úmido"
 
-#: src/temperament.c:817
+#: src/temperament.c:823
 msgid "Dry"
 msgstr "Seco"
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Heat Axis"
 msgstr "Eixo Calor"
 
-#: src/temperament.c:818
+#: src/temperament.c:826
 msgid "Moisture Axis"
 msgstr "Eixo Umidade"
 
-#: src/temperament.c:820
+#: src/temperament.c:828
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
-#: src/temperament.c:828
+#: src/temperament.c:840
 msgid ""
 "SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
 "\n"
@@ -5609,28 +5605,25 @@ msgstr ""
 "SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
 "\n"
 
-#: src/temperament.c:830
+#: src/temperament.c:844
 msgid ""
-"Your vital energy functions in perfect thermal equilibrium, blending \n"
-"Air and Water.\n"
-"This grants a deeply flexible, empathetic, and highly social persona.\n"
-"The talkative mind flows smoothly with natural emotional sensitivity, \n"
-"offering extreme social adaptability but risking mild emotional \n"
-"scattering.\n"
+"Your vital energy functions in perfect thermal equilibrium, blending Air and "
+"Water. This grants a deeply flexible, empathetic, and highly social persona. "
+"The talkative mind flows smoothly with natural emotional sensitivity, "
+"offering extreme social adaptability but risking mild emotional scattering.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua energia vital opera em perfeito equilíbrio térmico, combinando \n"
-"Ar e Água.\n"
-"Isso confere uma personalidade profundamente flexível, empática e \n"
-"altamente sociável.\n"
-"A mente comunicativa flui com natural sensibilidade emocional, \n"
-"proporcionando extrema adaptabilidade social, mas com o risco de uma \n"
+"Sua energia vital opera em perfeito equilíbrio térmico, combinando Ar e "
+"Água. Isso confere uma personalidade profundamente flexível, empática e "
+"altamente sociável. A mente comunicativa flui com natural sensibilidade "
+"emocional, proporcionando extrema adaptabilidade social, mas com o risco de "
+"uma \n"
 "leve dispersão emocional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:838
+#: src/temperament.c:852
 msgid ""
 "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
 "\n"
@@ -5638,27 +5631,25 @@ msgstr ""
 "COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
 "\n"
 
-#: src/temperament.c:840
+#: src/temperament.c:856
 msgid ""
-"Your active forces exist in a state of controlled thermal poise, \n"
-"blending Fire and Earth.\n"
-"This creates an unstoppable achiever rooted in deep structural \n"
-"efficiency and discipline.\n"
-"You possess immense willpower, though you must guard against chronic \n"
-"internal stress, rigid perfectionism, and deep stubbornness.\n"
+"Your active forces exist in a state of controlled thermal poise, blending "
+"Fire and Earth. This creates an unstoppable achiever rooted in deep "
+"structural efficiency and discipline. You possess immense willpower, though "
+"you must guard against chronic internal stress, rigid perfectionism, and "
+"deep stubbornness.\n"
 "\n"
 "\n"
 msgstr ""
-"Suas forças ativas existem em um estado de equilíbrio térmico controlado, \n"
-"combinando Fogo e Terra.\n"
-"Isso cria uma pessoa de realizações imparáveis, alicerçada em uma \n"
-"profunda eficiência estrutural e disciplina.\n"
-"Você possui imensa força de vontade, embora precise se precaver contra o \n"
-"estresse interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
+"Suas forças ativas existem em um estado de equilíbrio térmico controlado, "
+"combinando Fogo e Terra. Isso cria uma pessoa de realizações imparáveis, "
+"alicerçada em uma profunda eficiência estrutural e disciplina. Você possui "
+"imensa força de vontade, embora precise se precaver contra o estresse "
+"interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:848
+#: src/temperament.c:864
 msgid ""
 "ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
 "\n"
@@ -5666,28 +5657,25 @@ msgstr ""
 "EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
 "\n"
 
-#: src/temperament.c:850
+#: src/temperament.c:868
 msgid ""
-"Your chart reflects the rare, ideal geometric balance of all four \n"
-"humors.\n"
-"Fire, Water, Air, and Earth converge into perfect cosmic proportion. \n"
-"You possess the courage of the Choleric, the social grace of the Sanguine, \n"
-"the empathy of the Phlegmatic, and the objective realism of the "
-"Melancholic, \n"
+"Your chart reflects the rare, ideal geometric balance of all four humors. "
+"Fire, Water, Air, and Earth converge into perfect cosmic proportion. You "
+"possess the courage of the Choleric, the social grace of the Sanguine, the "
+"empathy of the Phlegmatic, and the objective realism of the Melancholic, "
 "activated exactly when needed.\n"
 "\n"
 "\n"
 msgstr ""
-"Seu mapa reflete o raro e ideal equilíbrio geométrico de todos os quatro \n"
-"humores.\n"
-"Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. \n"
-"Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, \n"
-"a empatia do Fleumático e o realismo objetivo do Melancólico, \n"
-"ativados exatamente quando necessário.\n"
+"Seu mapa reflete o raro e ideal equilíbrio geométrico de todos os quatro "
+"humores. Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. "
+"Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, a "
+"empatia do Fleumático e o realismo objetivo do Melancólico, ativados "
+"exatamente quando necessário.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:862
+#: src/temperament.c:880
 msgid ""
 "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
@@ -5695,29 +5683,25 @@ msgstr ""
 "SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:864
+#: src/temperament.c:884
 msgid ""
-"An expressive, warm, and highly action-oriented signature blending \n"
-"Air and Fire.\n"
-"Your dynamic energy acts as a strong catalyst in social or \n"
-"professional domains.\n"
-"The intellectual curiosity of Air merges with the raw ambition \n"
-"of Fire, fueling powerful leadership qualities, with a risk of occasional \n"
-"impatience.\n"
+"An expressive, warm, and highly action-oriented signature blending Air and "
+"Fire. Your dynamic energy acts as a strong catalyst in social or "
+"professional domains. The intellectual curiosity of Air merges with the raw "
+"ambition of Fire, fueling powerful leadership qualities, with a risk of "
+"occasional impatience.\n"
 "\n"
 "\n"
 msgstr ""
-"Uma assinatura expressiva, calorosa e fortemente orientada para a ação, \n"
-"que combina Ar e Fogo.\n"
-"Sua energia dinâmica atua como um poderoso catalisador nas esferas social \n"
-"ou profissional.\n"
-"A curiosidade intelectual do Ar funde-se com a ambição intensa do Fogo, \n"
-"impulsionando fortes qualidades de liderança, embora com o risco de \n"
-"impaciência ocasional.\n"
+"Uma assinatura expressiva, calorosa e fortemente orientada para a ação, que "
+"combina Ar e Fogo. Sua energia dinâmica atua como um poderoso catalisador "
+"nas esferas social ou profissional. A curiosidade intelectual do Ar funde-se "
+"com a ambição intensa do Fogo, impulsionando fortes qualidades de liderança, "
+"embora com o risco de impaciência ocasional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:873
+#: src/temperament.c:893
 msgid ""
 "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
 "\n"
@@ -5725,29 +5709,25 @@ msgstr ""
 "FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
 "\n"
 
-#: src/temperament.c:875
+#: src/temperament.c:897
 msgid ""
-"A calm, deeply introspective, and self-protective constitution \n"
-"blending Water and Earth.\n"
-"Your operating engine is deliberate, highly structured, and \n"
-"cautious.\n"
-"The emotional depths of Water anchor onto the realistic stability \n"
-"of Earth, yielding an exceptionally reliable, analytical individual \n"
-"who moves at a careful pace.\n"
+"A calm, deeply introspective, and self-protective constitution blending "
+"Water and Earth.Your operating engine is deliberate, highly structured, and "
+"cautious. The emotional depths of Water anchor onto the realistic stability "
+"of Earth, yielding an exceptionally reliable, analytical individual who "
+"moves at a careful pace.\n"
 "\n"
 "\n"
 msgstr ""
-"Uma natureza calma, profundamente introspectiva e que busca se proteger, \n"
-"combinando Água e Terra.\n"
-"Seu modo de agir é ponderado, altamente estruturado e cauteloso.\n"
-"A profundidade emocional da Água ancora-se na estabilidade realista \n"
-"da Terra, resultando em um indivíduo excepcionalmente confiável e "
-"analítico, \n"
-"que avança em um ritmo cuidadoso.\n"
+"Uma natureza calma, profundamente introspectiva e que busca se proteger, "
+"combinando Água e Terra. Seu modo de agir é ponderado, altamente estruturado "
+"e cauteloso. A profundidade emocional da Água ancora-se na estabilidade "
+"realista da Terra, resultando em um indivíduo excepcionalmente confiável e "
+"analítico, que avança em um ritmo cuidadoso.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:888
+#: src/temperament.c:910
 msgid ""
 "SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
@@ -5755,26 +5735,23 @@ msgstr ""
 "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:890
+#: src/temperament.c:914
 msgid ""
-"Your psychological engine revolves around communication, expansion, \n"
-"and mental fluidity.\n"
-"You absorb external impressions instantly and possess an adaptable, \n"
-"expressive mind that thrives on curiosity and social exchange. Guard \n"
-"against scattering focus.\n"
+"Your psychological engine revolves around communication, expansion, and "
+"mental fluidity. You absorb external impressions instantly and possess an "
+"adaptable, expressive mind that thrives on curiosity and social exchange. "
+"Guard against scattering focus.\n"
 "\n"
 "\n"
 msgstr ""
-"Seu motor psicológico gira em torno da comunicação, da expansão \n"
-"e da fluidez mental. \n"
-"Você absorve impressões externas instantaneamente e possui uma mente \n"
-"adaptável e expressiva, que prospera com a curiosidade e a interação "
-"social. \n"
+"Seu motor psicológico gira em torno da comunicação, da expansão e da fluidez "
+"mental. Você absorve impressões externas instantaneamente e possui uma mente "
+"adaptável e expressiva, que prospera com a curiosidade e a interação social. "
 "Evite dispersar o foco. \n"
 "\n"
 "\n"
 
-#: src/temperament.c:897
+#: src/temperament.c:921
 msgid ""
 "CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
@@ -5782,25 +5759,24 @@ msgstr ""
 "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:899
+#: src/temperament.c:925
 msgid ""
-"Your core essence is driven by swift, active, and result-oriented \n"
-"single-minded impulses.\n"
-"You possess an innate leadership spark, extreme courage when \n"
-"confronting adversity, and unyielding passion. Your chief challenge \n"
-"is mastering reactive impatience.\n"
+"Your core essence is driven by swift, active, and result-oriented single-"
+"minded impulses. You possess an innate leadership spark, extreme courage "
+"when confronting adversity, and unyielding passion. Your chief challenge is "
+"mastering reactive impatience.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua essência fundamental é impulsionada por impulsos céleres, ativos e \n"
-"focados em resultados, marcados por uma determinação inabalável.\n"
-"Você possui uma centelha inata de liderança, extrema coragem ao \n"
-"enfrentar adversidades e uma paixão inabalável. Seu principal desafio \n"
-"é dominar a impaciência reativa.\n"
+"Sua essência fundamental é impulsionada por impulsos céleres, ativos e "
+"focados em resultados, marcados por uma determinação inabalável. Você possui "
+"uma centelha inata de liderança, extrema coragem ao enfrentar adversidades e "
+"uma paixão inabalável. Seu principal desafio é dominar a impaciência "
+"reativa.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:906
+#: src/temperament.c:932
 msgid ""
 "PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
@@ -5808,25 +5784,23 @@ msgstr ""
 "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:908
+#: src/temperament.c:936
 msgid ""
-"You embody a stable, welcoming, and peacekeeping emotional \n"
-"constitution.\n"
-"You operate through deep empathy, automatic diplomatic mediation, \n"
-"and a steady, reliable operational rhythm. Watch out for behavioral \n"
-"inertia or stagnation.\n"
+"You embody a stable, welcoming, and peacekeeping emotional constitution. You "
+"operate through deep empathy, automatic diplomatic mediation, and a steady, "
+"reliable operational rhythm. Watch out for behavioral inertia or "
+"stagnation.\n"
 "\n"
 "\n"
 msgstr ""
-"Você personifica uma constituição emocional estável, acolhedora \n"
-"e pacificadora.\n"
-"Você atua com base em profunda empatia, mediação diplomática \n"
-"espontânea e um ritmo de trabalho constante e confiável. Fique \n"
-"atento à inércia comportamental ou à estagnação.\n"
+"Você personifica uma constituição emocional estável, acolhedora e "
+"pacificadora. Você atua com base em profunda empatia, mediação diplomática "
+"espontânea e um ritmo de trabalho constante e confiável. Fique atento à "
+"inércia comportamental ou à estagnação.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:915
+#: src/temperament.c:943
 msgid ""
 "MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
@@ -5834,26 +5808,24 @@ msgstr ""
 "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:917
+#: src/temperament.c:947
 msgid ""
-"Your nature is built on structural caution, real-world pragmatism, \n"
-"and profound reflection.\n"
-"An exceptional asset for deep analysis, long-term organization, and \n"
-"concrete security  building. Beware a natural tendency toward brooding \n"
-"or social withdrawal.\n"
+"Your nature is built on structural caution, real-world pragmatism, and "
+"profound reflection. An exceptional asset for deep analysis, long-term "
+"organization, and concrete security  building. Beware a natural tendency "
+"toward brooding or social withdrawal.\n"
 "\n"
 "\n"
 msgstr ""
-"Sua natureza baseia-se em uma cautela estrutural, no pragmatismo voltado \n"
-"para a realidade e na reflexão profunda. \n"
-"É um atributo excepcional para análises aprofundadas, organização a longo \n"
-"prazo e a construção de uma segurança sólida. Cuidado com a tendência "
-"natural \n"
-"de remoer pensamentos ou de se isolar socialmente. \n"
+"Sua natureza baseia-se em uma cautela estrutural, no pragmatismo voltado "
+"para a realidade e na reflexão profunda. É um atributo excepcional para "
+"análises aprofundadas, organização a longo prazo e a construção de uma "
+"segurança sólida. Cuidado com a tendência natural de remoer pensamentos ou "
+"de se isolar socialmente. \n"
 "\n"
 "\n"
 
-#: src/temperament.c:947
+#: src/temperament.c:977
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
@@ -5861,94 +5833,92 @@ msgstr ""
 "INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
 "\n"
 
-#: src/temperament.c:949
+#: src/temperament.c:981
 msgid ""
-"Although your core template is defined above, your psychiatric map\n"
-"shows other active forces adding layers to your behavior:\n"
+"Although your core template is defined above, your psychiatric map shows "
+"other active forces adding layers to your behavior:\n"
 "\n"
 msgstr ""
-"Embora seu modelo central esteja definido acima, seu mapa \n"
-"psiquiátrico mostra outras forças ativas que acrescentam \n"
-"camadas ao seu comportamento:\n"
+"Embora seu modelo central esteja definido acima, seu mapa psiquiátrico "
+"mostra outras forças ativas que acrescentam camadas ao seu comportamento:\n"
 "\n"
 
-#: src/temperament.c:958
-msgid " ✦ Sanguine Influence: "
+#: src/temperament.c:990
+#, fuzzy
+msgid " ✦ Sanguine Influence: \n"
 msgstr " ✦ Influência Sanguínea: "
 
-#: src/temperament.c:960
+#: src/temperament.c:992
 msgid ""
-"Adds an overlay of communicative ease, adaptability,\n"
-"and cognitive curiosity. This softens any rigid boundaries or\n"
-"stagnation imposed by your dominant humor.\n"
+"Adds an overlay of communicative ease, adaptability, and cognitive "
+"curiosity. This softens any rigid boundaries or stagnation imposed by your "
+"dominant humor.\n"
 "\n"
 msgstr ""
-"Acrescenta uma camada de facilidade de comunicação, \n"
-"adaptabilidade e curiosidade cognitiva. \n"
-"Isso suaviza quaisquer limites rígidos ou estagnação impostos \n"
-"pelo seu temperamento dominante.\n"
-"\n"
-
-#: src/temperament.c:967
-msgid " ✦ Choleric Influence: "
-msgstr " ✦ Influência Colérica: "
-
-#: src/temperament.c:969
-msgid ""
-"Injects raw drive, sharp focus on execution, and a\n"
-"natural urgency to fix problems. It sharpens a passive baseline\n"
-"into a highly proactive mindset.\n"
-"\n"
-msgstr ""
-"Injeta uma determinação genuína, um foco aguçado na \n"
-"execução e uma urgência natural para resolver problemas. \n"
-"Transforma uma postura inicial passiva em uma mentalidade altamente \n"
-"proativa.\n"
-"\n"
-
-#: src/temperament.c:976
-msgid " ✦ Phlegmatic Influence: "
-msgstr " ✦ Influência Colérica: "
-
-#: src/temperament.c:978
-msgid ""
-"Acts as a natural thermal and emotional ballast, introducing\n"
-"diplomatic mediation, structural patience, and a steady pace that\n"
-"protects you from chronic stress.\n"
-"\n"
-msgstr ""
-"Injeta uma determinação genuína, um foco aguçado na \n"
-"execução e uma urgência natural para resolver problemas. \n"
-"Transforma uma postura inicial passiva em uma mentalidade altamente \n"
-"proativa.\n"
-"\n"
-
-#: src/temperament.c:985
-msgid " ✦ Melancholic Influence: "
-msgstr " ✦ Influência Melancólica: "
-
-#: src/temperament.c:987
-msgid ""
-"Confers analytical depth, long-term organization skills,\n"
-"and a realistic sense of caution. It ensures your impulses are\n"
-"grounded in real-world feasibility.\n"
-"\n"
-msgstr ""
-"Confere profundidade analítica, habilidades de organização a \n"
-"longo prazo e um senso realista de cautela. \n"
-"Garante que seus impulsos estejam alicerçados na viabilidade \n"
-"no mundo real.\n"
+"Acrescenta uma camada de facilidade de comunicação, adaptabilidade e "
+"curiosidade cognitiva. Isso suaviza quaisquer limites rígidos ou estagnação "
+"impostos pelo seu temperamento dominante.\n"
 "\n"
 
 #: src/temperament.c:999
+#, fuzzy
+msgid " ✦ Choleric Influence: \n"
+msgstr " ✦ Influência Colérica: "
+
+#: src/temperament.c:1001
+msgid ""
+"Injects raw drive, sharp focus on execution, and a natural urgency to fix "
+"problems. It sharpens a passive baseline into a highly proactive mindset.\n"
+"\n"
+msgstr ""
+"Injeta uma determinação genuína, um foco aguçado na execução e uma urgência "
+"natural para resolver problemas. Transforma uma postura inicial passiva em "
+"uma mentalidade altamente proativa.\n"
+"\n"
+
+#: src/temperament.c:1008
+#, fuzzy
+msgid " ✦ Phlegmatic Influence: \n"
+msgstr " ✦ Influência Colérica: "
+
+#: src/temperament.c:1010
+msgid ""
+"Acts as a natural thermal and emotional ballast, introducing diplomatic "
+"mediation, structural patience, and a steady pace that protects you from "
+"chronic stress.\n"
+"\n"
+msgstr ""
+"Injeta uma determinação genuína, um foco aguçado na execução e uma urgência "
+"natural para resolver problemas. Transforma uma postura inicial passiva em "
+"uma mentalidade altamente proativa.\n"
+"\n"
+
+#: src/temperament.c:1017
+#, fuzzy
+msgid " ✦ Melancholic Influence: \n"
+msgstr " ✦ Influência Melancólica: "
+
+#: src/temperament.c:1019
+msgid ""
+"Confers analytical depth, long-term organization skills, and a realistic "
+"sense of caution. It ensures your impulses are grounded in real-world "
+"feasibility.\n"
+"\n"
+msgstr ""
+"Confere profundidade analítica, habilidades de organização a longo prazo e "
+"um senso realista de cautela. Garante que seus impulsos estejam alicerçados "
+"na viabilidade no mundo real.\n"
+"\n"
+
+#: src/temperament.c:1034
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:1003
+#: src/temperament.c:1042
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:1009
+#: src/temperament.c:1052
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"

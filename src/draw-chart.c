@@ -4177,7 +4177,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int max_scroll_y = 65; 
     int ch;
 
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
 
     while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
         switch (ch) {
@@ -4192,7 +4192,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
                 if (pad_line_pos < max_scroll_y) pad_line_pos++;
                 break;
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
     }
 
     // 7. DESTRUIÇÃO E LIMPEZA
@@ -4589,9 +4589,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(25, COLOR_BLACK, COLOR_YELLOW);
         init_pair(26, COLOR_BLACK, COLOR_WHITE);
         init_pair(27, COLOR_BLACK, COLOR_RED);
-        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
-        init_pair(30, COLOR_GREEN, COLOR_MAGENTA);
+        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
@@ -4635,7 +4635,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(27, COLOR_RED, COLOR_CYAN);
         init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(29, COLOR_WHITE, COLOR_WHITE);
-        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
 
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
@@ -4810,10 +4810,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     // Defined aspect ratio based on characters mono dimensions
     float aspect_ratio = ((float)max_x / (float)max_y);
     if (aspect_ratio >= 3.56) {
-        aspect_ratio = aspect_ratio / 1.8659;
+        aspect_ratio = aspect_ratio / 1.8659 + 0.0523;
     }
     else {
-        aspect_ratio = aspect_ratio / 1.7;
+        aspect_ratio = aspect_ratio / 1.7 + 0.0523;
     }
        
     // Main loop for handling input and redrawing
