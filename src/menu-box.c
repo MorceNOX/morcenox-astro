@@ -1782,7 +1782,9 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         int display_lines = 0;
         for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
             if (help_lines[i]) {
+                if (strstr(help_lines[i], "•") != NULL) wattron(txt_win, A_BOLD);
                 mvwprintw(txt_win, display_lines, 0, "%s", help_lines[i]);
+                if (strstr(help_lines[i], "•") != NULL) wattroff(txt_win, A_BOLD);
                 display_lines++;
             }
         }

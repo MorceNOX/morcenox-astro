@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 05:08-0300\n"
+"POT-Creation-Date: 2026-09-06 05:19-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -500,40 +500,40 @@ msgstr ""
 "com os desafios do ano.\n"
 "\n"
 
-#: src/almuten.c:1125
+#: src/almuten.c:1127
 msgid " ANNUAL OPERATIONAL RULER "
 msgstr " REGENTE ANUAL OPERACIONAL "
 
-#: src/almuten.c:1127
+#: src/almuten.c:1129
 msgid "(THE SUN - ☉) \n"
 msgstr "(O SOL - ☉) \n"
 
-#: src/almuten.c:1128
+#: src/almuten.c:1130
 msgid "(THE MOON - ☽) \n"
 msgstr "(A LUA - ☽) \n"
 
-#: src/almuten.c:1129
+#: src/almuten.c:1131
 msgid "(MERCURY - ☿) \n"
 msgstr "(MERCÚRIO - ☿) \n"
 
-#: src/almuten.c:1130
+#: src/almuten.c:1132
 msgid "(VENUS - ♀) \n"
 msgstr "(VÊNUS - ♀) \n"
 
-#: src/almuten.c:1131
+#: src/almuten.c:1133
 msgid "(MARS - ♂) \n"
 msgstr "(MARTE - ♂) \n"
 
-#: src/almuten.c:1132
+#: src/almuten.c:1134
 msgid "(JUPITER - ♃) \n"
 msgstr "(JÚPITER - ♃) \n"
 
-#: src/almuten.c:1133
+#: src/almuten.c:1135
 msgid "(SATURN - ♄) \n"
 msgstr "(SATURNO - ♄) \n"
 
-#: src/almuten.c:1139 src/almuten.c:1161 src/almuten.c:1178 src/almuten.c:1195
-#: src/almuten.c:1212 src/almuten.c:1229 src/almuten.c:1250
+#: src/almuten.c:1144 src/almuten.c:1166 src/almuten.c:1183 src/almuten.c:1200
+#: src/almuten.c:1217 src/almuten.c:1234 src/almuten.c:1255
 msgid ""
 "The Focus of the Year:\n"
 "\n"
@@ -541,7 +541,7 @@ msgstr ""
 "O Foco do Ano:\n"
 "\n"
 
-#: src/almuten.c:1143
+#: src/almuten.c:1148
 msgid ""
 "This is a year of high visibility, core awakening, and personal sovereignty. "
 "Circumstances will push you to step into the center stage of your own life, "
@@ -549,14 +549,13 @@ msgid ""
 "\n"
 msgstr ""
 "Este é um ano de grande visibilidade, despertar da essência e soberania "
-"pessoal. "
-"As circunstâncias o levarão a assumir o papel de protagonista na sua "
-"própria vida, exigindo clareza absoluta de propósito e "
-"reconhecimento profissional.\n"
+"pessoal. As circunstâncias o levarão a assumir o papel de protagonista na "
+"sua própria vida, exigindo clareza absoluta de propósito e reconhecimento "
+"profissional.\n"
 "\n"
 
-#: src/almuten.c:1147 src/almuten.c:1166 src/almuten.c:1183 src/almuten.c:1200
-#: src/almuten.c:1217 src/almuten.c:1234 src/almuten.c:1258
+#: src/almuten.c:1152 src/almuten.c:1171 src/almuten.c:1188 src/almuten.c:1205
+#: src/almuten.c:1222 src/almuten.c:1239 src/almuten.c:1263
 msgid ""
 "Practical Manifestations:\n"
 "\n"
@@ -564,7 +563,7 @@ msgstr ""
 "Manifestações Práticas:\n"
 "\n"
 
-#: src/almuten.c:1150
+#: src/almuten.c:1155
 msgid ""
 "Expect opportunities for career promotion, leadership roles, and a surge in "
 "vital energy. Important encounters with authoritative figures are highly "
@@ -572,12 +571,12 @@ msgid ""
 "\n"
 msgstr ""
 "Espere oportunidades de promoção na carreira, cargos de liderança e um "
-"aumento de energia vital. Encontros importantes com figuras "
-"de autoridade são muito prováveis.\n"
+"aumento de energia vital. Encontros importantes com figuras de autoridade "
+"são muito prováveis.\n"
 "\n"
 
-#: src/almuten.c:1153 src/almuten.c:1171 src/almuten.c:1188 src/almuten.c:1205
-#: src/almuten.c:1222 src/almuten.c:1241 src/almuten.c:1266
+#: src/almuten.c:1158 src/almuten.c:1176 src/almuten.c:1193 src/almuten.c:1210
+#: src/almuten.c:1227 src/almuten.c:1246 src/almuten.c:1271
 msgid ""
 "Annual Warnings:\n"
 "\n"
@@ -585,45 +584,44 @@ msgstr ""
 "Avisos (alertas) anuais:\n"
 "\n"
 
-#: src/almuten.c:1157
+#: src/almuten.c:1162
 msgid ""
 "Guard heavily against egotism, prideful power struggles, and burning out due "
 "to a neurotic need for constant public approval and validation.\n"
 "\n"
 "\n"
 msgstr ""
-"Proteja-se rigorosamente contra o egoísmo, as disputas de poder "
-"motivadas pelo orgulho e a exaustão decorrentes de "
-"uma necessidade neurótica de constante aprovação e "
-"validação pública.\n"
+"Proteja-se rigorosamente contra o egoísmo, as disputas de poder motivadas "
+"pelo orgulho e a exaustão decorrentes de uma necessidade neurótica de "
+"constante aprovação e validação pública.\n"
 "\n"
 "\n"
 
-#: src/almuten.c:1164
+#: src/almuten.c:1169
 msgid ""
 "A highly personal, internal, and emotional 12-month chapter. The focus "
 "shifts entirely toward foundations, family, domestic stability, and inner "
 "security.\n"
 "\n"
 msgstr ""
-"Um capítulo de 12 meses profundamente pessoal, interno e emocional. "
-"O foco se volta inteiramente para as bases, a família, a estabilidade "
-"doméstica e a segurança interior.\n"
+"Um capítulo de 12 meses profundamente pessoal, interno e emocional. O foco "
+"se volta inteiramente para as bases, a família, a estabilidade doméstica e a "
+"segurança interior.\n"
 "\n"
 
-#: src/almuten.c:1169
+#: src/almuten.c:1174
 msgid ""
 "Strong indicators of real estate adjustments, changes in the household or "
 "family dynamics, and events that will test and restructure your emotional "
 "resilience.\n"
 "\n"
 msgstr ""
-"Fortes indícios de ajustes imobiliários, mudanças na dinâmica doméstica "
-"ou familiar e eventos que colocarão à prova e "
-"reestruturarão sua resiliência emocional.\n"
+"Fortes indícios de ajustes imobiliários, mudanças na dinâmica doméstica ou "
+"familiar e eventos que colocarão à prova e reestruturarão sua resiliência "
+"emocional.\n"
 "\n"
 
-#: src/almuten.c:1174
+#: src/almuten.c:1179
 msgid ""
 "Beware of volatile mood swings, hypersensitivity to external criticism, and "
 "the tendency to retreat into defensive, nostalgic isolation when friction "
@@ -631,13 +629,13 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"Cuidado com oscilações de humor repentinas, hipersensibilidade a "
-"críticas externas e a tendência a se recolher em um isolamento "
-"defensivo e nostálgico quando surgem atritos.\n"
+"Cuidado com oscilações de humor repentinas, hipersensibilidade a críticas "
+"externas e a tendência a se recolher em um isolamento defensivo e nostálgico "
+"quando surgem atritos.\n"
 "\n"
 "\n"
 
-#: src/almuten.c:1181
+#: src/almuten.c:1186
 msgid ""
 "A year driven by intense mental activity, intellectual output, and "
 "networking. Your analytical skills and communication channels will be highly "
@@ -646,11 +644,11 @@ msgid ""
 msgstr ""
 "Um ano marcado por intensa atividade mental, produção intelectual e "
 "networking.\n"
-"Suas habilidades analíticas e seus canais de comunicação serão "
-"fortemente acelerados.\n"
+"Suas habilidades analíticas e seus canais de comunicação serão fortemente "
+"acelerados.\n"
 "\n"
 
-#: src/almuten.c:1186
+#: src/almuten.c:1191
 msgid ""
 "Excellent periods for signing contracts, negotiating business deals, "
 "academic pursuits, writing, and multiple short-distance travels or "
@@ -662,7 +660,7 @@ msgstr ""
 "mudanças estruturais. \n"
 "\n"
 
-#: src/almuten.c:1191
+#: src/almuten.c:1196
 msgid ""
 "High risk of nervous system exhaustion, acute mental anxiety, split focus, "
 "and the danger of over-rationalizing critical decisions that require "
@@ -676,7 +674,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1198
+#: src/almuten.c:1203
 msgid ""
 "A year designated for harmonic consolidation, financial focus, and "
 "relationship evaluations. The core theme is finding value, alignment, and "
@@ -684,11 +682,11 @@ msgid ""
 "\n"
 msgstr ""
 "Um ano voltado para a consolidação harmoniosa, o foco financeiro e a "
-"avaliação de relacionamentos. O tema central é encontrar valor, "
-"alinhamento e paz social.\n"
+"avaliação de relacionamentos. O tema central é encontrar valor, alinhamento "
+"e paz social.\n"
 "\n"
 
-#: src/almuten.c:1203
+#: src/almuten.c:1208
 msgid ""
 "Favorable timelines for artistic endeavors, income enhancement, entering "
 "strategic alliances, and experiencing a profound growth in your active "
@@ -700,7 +698,7 @@ msgstr ""
 "sua vida amorosa ativa.\n"
 "\n"
 
-#: src/almuten.c:1208
+#: src/almuten.c:1213
 msgid ""
 "Watch out for financial extravagance, lazy self-indulgence, and avoiding "
 "necessary confrontations out of a codependent desire to keep up superficial "
@@ -708,37 +706,37 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"Cuidado com a extravagância financeira, a autocomplacência preguiçosa "
-"e a evitação de confrontos necessários, motivada por um desejo "
-"codependente de manter aparências superficiais.\n"
+"Cuidado com a extravagância financeira, a autocomplacência preguiçosa e a "
+"evitação de confrontos necessários, motivada por um desejo codependente de "
+"manter aparências superficiais.\n"
 "\n"
 "\n"
 
-#: src/almuten.c:1215
+#: src/almuten.c:1220
 msgid ""
 "A dynamic, highly friction-based, and action-heavy period. This year demands "
 "intense physical courage, independent initiatives, and cutting away dead "
 "weight.\n"
 "\n"
 msgstr ""
-"Um período dinâmico, marcado por forte atrito e intensa ação. "
-"Este ano exige intensa coragem física, iniciativas independentes e o "
-"descarte de pesos mortos.\n"
+"Um período dinâmico, marcado por forte atrito e intensa ação. Este ano exige "
+"intensa coragem física, iniciativas independentes e o descarte de pesos "
+"mortos.\n"
 "\n"
 
-#: src/almuten.c:1220
+#: src/almuten.c:1225
 msgid ""
 "Overcoming major obstacles through raw effort, launch of independent "
 "enterprises, but also a strong indicator of physical expenditures and "
 "competitive standoffs.\n"
 "\n"
 msgstr ""
-"Superação de grandes obstáculos por meio de esforço intenso, lançamento "
-"de empreendimentos independentes, mas também um forte indicador de "
-"desgaste físico e confrontos competitivos.\n"
+"Superação de grandes obstáculos por meio de esforço intenso, lançamento de "
+"empreendimentos independentes, mas também um forte indicador de desgaste "
+"físico e confrontos competitivos.\n"
 "\n"
 
-#: src/almuten.c:1225
+#: src/almuten.c:1230
 msgid ""
 "Prone to acute accidents due to rash haste, explosive outbursts of anger, "
 "unnecessary litigations, and burnouts caused by operating in perpetual "
@@ -746,38 +744,37 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"Propensão a acidentes agudos devido à pressa imprudente, explosões de "
-"raiva, litígios desnecessários e esgotamento causado por operar "
-"em um estado perpétuo de sobrevivência.\n"
+"Propensão a acidentes agudos devido à pressa imprudente, explosões de raiva, "
+"litígios desnecessários e esgotamento causado por operar em um estado "
+"perpétuo de sobrevivência.\n"
 "\n"
 "\n"
 
-#: src/almuten.c:1232
+#: src/almuten.c:1237
 msgid ""
 "The year of expansion, philosophical growth, and providential opportunities. "
 "A benevolent energy wraps around your efforts, granting a protective "
 "buffer.\n"
 "\n"
 msgstr ""
-"O ano de expansão, crescimento filosófico e oportunidades "
-"providenciais. "
-"Uma energia benevolente envolve seus esforços, proporcionando "
-"um escudo protetor.\n"
+"O ano de expansão, crescimento filosófico e oportunidades providenciais. Uma "
+"energia benevolente envolve seus esforços, proporcionando um escudo "
+"protetor.\n"
 "\n"
 
-#: src/almuten.c:1237
+#: src/almuten.c:1242
 msgid ""
 "Financial expansion, legal resolutions rolling in your favor, publishing "
 "success, and meaningful long-distance journeys that broaden your entire "
 "existential worldview.\n"
 "\n"
 msgstr ""
-"Expansão financeira, decisões judiciais favoráveis, sucesso editorial, "
-"e viagens significativas de longa distância que ampliam toda a sua visão "
-"de mundo existencial.\n"
+"Expansão financeira, decisões judiciais favoráveis, sucesso editorial, e "
+"viagens significativas de longa distância que ampliam toda a sua visão de "
+"mundo existencial.\n"
 "\n"
 
-#: src/almuten.c:1245
+#: src/almuten.c:1250
 msgid ""
 "Severe risk of over-expansion and arrogance. Blind, naive optimism that "
 "ignores material safety nets, leading to over-leveraging and ideological "
@@ -785,38 +782,37 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"Risco grave de expansão excessiva e arrogância. Um otimismo cego e "
-"ingênuo que ignora redes de segurança materiais, levando ao "
-"endividamento excessivo e ao dogmatismo ideológico.\n"
+"Risco grave de expansão excessiva e arrogância. Um otimismo cego e ingênuo "
+"que ignora redes de segurança materiais, levando ao endividamento excessivo "
+"e ao dogmatismo ideológico.\n"
 "\n"
 "\n"
 
-#: src/almuten.c:1254
+#: src/almuten.c:1259
 msgid ""
 "A sobering year of evaluation, heavy duty, consolidation, and setting "
 "limits. Time demands that you build structure and account for real-world "
 "responsibilities.\n"
 "\n"
 msgstr ""
-"Um ano de avaliação, trabalho árduo, consolidação e definição de limites "
-"que convida à sobriedade."
-"O momento exige que você construa uma estrutura e assuma as "
-"responsabilidades do mundo real.\n"
+"Um ano de avaliação, trabalho árduo, consolidação e definição de limites que "
+"convida à sobriedade.O momento exige que você construa uma estrutura e "
+"assuma as responsabilidades do mundo real.\n"
 "\n"
 
-#: src/almuten.c:1262
+#: src/almuten.c:1267
 msgid ""
 "Hard, grinding work that yields long-term security, settling deep debts, "
 "dealing with administrative inheritances, and professional solidifications "
 "under pressure.\n"
 "\n"
 msgstr ""
-"Trabalho árduo e extenuante que proporciona segurança a longo prazo, "
-"a quitação de dívidas profundas, lidar "
-"com heranças administrativas e a consolidação profissional sob pressão.\n"
+"Trabalho árduo e extenuante que proporciona segurança a longo prazo, a "
+"quitação de dívidas profundas, lidar com heranças administrativas e a "
+"consolidação profissional sob pressão.\n"
 "\n"
 
-#: src/almuten.c:1270
+#: src/almuten.c:1275
 msgid ""
 "Prone to chronic fatigue, paralyzing fear of failure, bouts of deep "
 "melancholy, and feeling crushed under structural delays or burdens that are "
@@ -830,7 +826,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/almuten.c:1277
+#: src/almuten.c:1282
 msgid ""
 "  [NARRATIVE END] - Press 'Q' or ESC to return to the Solar Return panel.\n"
 msgstr ""
