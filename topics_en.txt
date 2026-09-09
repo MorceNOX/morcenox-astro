@@ -430,9 +430,11 @@ temperaments to each lunar quadrant:
 
 1. First Quadrant: From New Moon to First Quarter
 
-    • Primitive Qualities: Hot and Wet (Moist)
+    • Primitive Qualities: 
+      Hot and Wet (Moist)
     
-    • Associated Temperament: Sanguine
+    • Associated Temperament: 
+      Sanguine
     
     • Characteristics: 
       This phase corresponds to Spring. 
