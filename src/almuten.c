@@ -724,7 +724,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     int pad_cols = i_width - 6; 
     WINDOW *pad = newpad(pad_lines, pad_cols);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
-    keypad(pad, TRUE);
+    //keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
 

@@ -3835,19 +3835,26 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int pad_cols = i_width - 6; // Margem lateral ligeiramente maior para o texto respirar
     WINDOW *pad = newpad(pad_lines, pad_cols);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
-    keypad(pad, TRUE);
+    //keypad(pad, TRUE);
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
 
-    // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
-    wprintw(pad, "\n"); 
+    char str[512];
+    char str2[512];
 
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    // 5. ESCRITA DOS TEXTOS NA PAD (COM ESPAÇAMENTO E MARGENS REFORÇADAS)
+    wprintw(pad, "\n");
+
+    int line_count = 1;
+
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  1. REGENT OF THE %s: %s  \n"), (MAPA_DIURNO) ? _("DAY") : _("NIGHT"), regent_day_str);
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
+    line_count += 4;
+
     switch(regente_dia) {
         case 1: // Sol
             wprintw(pad, _("Leadership and visibility."));
@@ -3873,110 +3880,121 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     }
     wprintw(pad, "\n\n"); 
 
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    line_count += 3;
+
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(12));
     wprintw(pad, _("  2. REGENT OF THE HOUR: %s  \n"), regent_hour_str);
     wattroff(pad, A_BOLD | COLOR_PAIR(12));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
+    line_count += 4;
+
     switch(regente_hora) {
         case 1: // Sol
-            wprintw(pad, _("This is a favorable time for energetic activities or those involving leadership.\n"
-                           "It is a suitable time for public actions and activities requiring visibility; therefore,\n"
+            snprintf(str, 512, _("This is a favorable time for energetic activities or those involving leadership. "
+                           "It is a suitable time for public actions and activities requiring visibility; therefore, "
                            "it is a good moment to speak with influential people.\n"
                            "It is a neutral time for business dealings, weddings, and construction projects.\n\n"));
-            wprintw(pad, _("Time to shine. It favors activities requiring energy or matters related to strength, power,\n"
-                           "and leadership. This is a moment when your energy will be in full swing. It is a good time\n"
-                           "to deal with matters concerning money, prosperity, and business, as well as to look for a\n"
+            snprintf(str2, 512, _("Time to shine. It favors activities requiring energy or matters related to strength, power, "
+                           "and leadership. This is a moment when your energy will be in full swing. It is a good time "
+                           "to deal with matters concerning money, prosperity, and business, as well as to look for a "
                            "job, make plans for the future, and buy new things.\n"));
             break;
         case 2: // Lua
-            wprintw(pad, _("A favorable time for all domestic activities (especially buying food) and for anything\n"
-                           "requiring imagination (ranging from useful inventions to activities that are not recommended,\n"
-                           "such as fraud and acts of betrayal).\n"
-                           "A beneficial time for tasks requiring rapid execution.\n"
+            snprintf(str, 512, _("A favorable time for all domestic activities (especially buying food) and for anything "
+                           "requiring imagination (ranging from useful inventions to activities that are not recommended, "
+                           "such as fraud and acts of betrayal). \n"
+                           "A beneficial time for tasks requiring rapid execution. \n"
                            "Unfavorable for tasks requiring stability.\n\n"));
-            wprintw(pad, _("Ideal for routine tasks. It is a good time to review and re-evaluate your feelings and emotions.\n"
-                           "Your sensitivity will be heightened, making you more emotionally volatile than usual. \n"
-                           "It is a favorable time for making quick decisions, cleaning and organizing your home or business,\n"
+            snprintf(str2, 512, _("Ideal for routine tasks. It is a good time to review and re-evaluate your feelings and emotions. "
+                           "Your sensitivity will be heightened, making you more emotionally volatile than usual. "
+                           "It is a favorable time for making quick decisions, cleaning and organizing your home or business, "
                            "and traveling to visit relatives. However, it is not a good time to move house.\n"));
             break;
         case 3: // Mercúrio
-            wprintw(pad, _("Mercury is suitable for communication, as well as for sending, signing, and renewing documents.\n"
-                           "It is favorable for study, writing, teaching, and general learning activities, as well as for\n"
-                           "business, commerce, and all forms of communication and partnerships.\n"
+            snprintf(str, 512, _("Mercury is suitable for communication, as well as for sending, signing, and renewing documents. "
+                           "It is favorable for study, writing, teaching, and general learning activities, as well as for "
+                           "business, commerce, and all forms of communication and partnerships. "
                            "It favors requests of all kinds (including prayers and marriage proposals).\n"
                            "It is a good time for medical treatments and travel, especially for business purposes.\n\n"));
-            wprintw(pad, _("Time for communication. It is an excellent time for sending documents and signing contracts,\n"
-                           "closing profitable deals, sending letters, and consulting with lawyers. \n"
-                           "You will find success in signing paperwork during this period. \n"
-                           "It is also a good time to obtain or renew official documents, engage in study-related \n"
+            snprintf(str2, 512, _("Time for communication. It is an excellent time for sending documents and signing contracts, "
+                           "closing profitable deals, sending letters, and consulting with lawyers. "
+                           "You will find success in signing paperwork during this period. "
+                           "It is also a good time to obtain or renew official documents, engage in study-related "
                            "activities or teaching in general, and memorize texts.\n"));
             break;
         case 4: // Vênus
-            wprintw(pad, _("A suitable time for harmony and beauty, and ideal for pleasure, social contacts, and \n"
-                           "relationships.\n"
-                           "A good moment to purchase ornaments and items related to beauty, as well as things associated\n"
-                           "with pleasure and entertainment.\n"
-                           "An excellent time for weddings and partnerships, as well as for speaking with superiors, \n"
-                           "authorities, and women in general.\n"
-                           "Given the playful and carefree nature of Venus, activities requiring great seriousness, \n"
+            snprintf(str, 512, _("A suitable time for harmony and beauty, and ideal for pleasure, social contacts, and "
+                           "relationships. "
+                           "A good moment to purchase ornaments and items related to beauty, as well as things associated "
+                           "with pleasure and entertainment. "
+                           "An excellent time for weddings and partnerships, as well as for speaking with superiors, "
+                           "authorities, and women in general. "
+                           "Given the playful and carefree nature of Venus, activities requiring great seriousness, "
                            "concentration, or effort are not recommended.\n\n"));
-            wprintw(pad, _("A time for harmony and matters related to beauty. It is ideal for activities centered on \n"
-                           "pleasure, as well as for intimate encounters, social interactions, and relationships. \n"
-                           "It is an excellent time to boost your social life. \n"
-                           "Do you want to buy something beautiful that will last a lifetime? This is the perfect moment to\n"
-                           "purchase items for your home, refresh your wardrobe, or set a date for your engagement or a \n"
+            snprintf(str2, 512, _("A time for harmony and matters related to beauty. It is ideal for activities centered on "
+                           "pleasure, as well as for intimate encounters, social interactions, and relationships. "
+                           "It is an excellent time to boost your social life. "
+                           "Do you want to buy something beautiful that will last a lifetime? This is the perfect moment to "
+                           "purchase items for your home, refresh your wardrobe, or set a date for your engagement or a "
                            "happy wedding.\n"));
             break;
         case 5: // Marte
-            wprintw(pad, _("A time for action, achievements, and new beginnings. Ideal for starting treatments and \n"
+            snprintf(str, 512,  _("A time for action, achievements, and new beginnings. Ideal for starting treatments and "
                            "medication. It favors any work involving fire.\n"
-                           "A suitable time for assertive, competitive, and bold endeavors, though caution regarding \n"
+                           "A suitable time for assertive, competitive, and bold endeavors, though caution regarding "
                            "conflicts and disagreements is necessary.\n"
-                           "Not a recommended time for negotiations, travel, construction activities, dealing with \n"
+                           "Not a recommended time for negotiations, travel, construction activities, dealing with "
                            "superiors and authorities, or forming partnerships.\n\n"));
-            wprintw(pad, _("A time for action, achievements, and picking up where you left off. \n"
-                           "It is ideal for tasks requiring discipline, assertiveness, and a competitive spirit. \n"
-                           "Caution is advised regarding arguments, accidents, and fires, given the powerful energy of \n"
+            snprintf(str2, 512, _("A time for action, achievements, and picking up where you left off. "
+                           "It is ideal for tasks requiring discipline, assertiveness, and a competitive spirit. "
+                           "Caution is advised regarding arguments, accidents, and fires, given the powerful energy of "
                            "this hour.\n"));
             break;
         case 6: // Júpiter
-            wprintw(pad, _("An auspicious time to launch any type of venture or project. An ideal moment for broadening \n"
+            snprintf(str, 512, _("An auspicious time to launch any type of venture or project. An ideal moment for broadening "
                            "horizons and finding inspiration.\n"
-                           "It is a balanced, tranquil period, favorable for changes and financial matters, as well as for\n"
+                           "It is a balanced, tranquil period, favorable for changes and financial matters, as well as for "
                            "business, travel, medical treatments, and construction.\n"
                            "A good time to address matters of peace and harmony, friendship, and governance.\n\n"));
-            wprintw(pad, _("It is time to expand toward new horizons and find happiness. It brings inspiration. \n"
-                           "This is the ideal moment for shopping, making visits, and handling matters related to money, \n"
+            snprintf(str2, 512, _("It is time to expand toward new horizons and find happiness. It brings inspiration. "
+                           "This is the ideal moment for shopping, making visits, and handling matters related to money, "
                            "abundance, and prosperity, as well as for expediting legal issues.\n"));
             break;
         case 7: // Saturno
-            wprintw(pad, _("A suitable time for deep reflection, organizing ideas, and carrying out tasks that \n"
+            snprintf(str, 512, _("A suitable time for deep reflection, organizing ideas, and carrying out tasks that "
                            "require patience and discipline.\n"
-                           "It may bring moments of mild depression due to the planet's melancholic nature; therefore, \n"
+                           "It may bring moments of mild depression due to the planet's melancholic nature; therefore, "
                            "one should be wary of thoughts centered on sadness.\n"
                            "A good time to devise strategies against adversaries.\n"
-                           "Not a recommended time for medical treatments, taking medication, or speaking with authorities\n"
-                           "and superiors. It is also ill-advised for construction activities or forming partnerships \n"
+                           "Not a recommended time for medical treatments, taking medication, or speaking with authorities "
+                           "and superiors. It is also ill-advised for construction activities or forming partnerships "
                            "(such as business ventures or marriages).\n\n"));
-            wprintw(pad, _("It is time to resolve matters. This period calls for deep reflection, a restructuring of ideas,\n"
-                           "and the execution of tasks requiring patience and discipline. It is a more tense time that \n"
-                           "demands attention and care, as conditions tend to be unfavorable for almost everything. \n"
-                           "It is a good time to attend to your health and pay close attention to any proposals made to you.\n"
+            snprintf(str2, 512, _("It is time to resolve matters. This period calls for deep reflection, a restructuring of ideas, "
+                           "and the execution of tasks requiring patience and discipline. It is a more tense time that "
+                           "demands attention and care, as conditions tend to be unfavorable for almost everything. "
+                           "It is a good time to attend to your health and pay close attention to any proposals made to you. "
                            "It is excellent for wrapping up affairs but terrible for starting new things.\n"));
             break;
     }
+
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+    line_count += print_split_lines(pad, str2, MAX_LINE_WIDTH);
     
     wprintw(pad, "\n\n");
 
+    line_count += 2;
+
 
     // SYNTHESIS
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(32));
     wprintw(pad, _("  3. PLANETARY ALIGNMENT SYNTHESIS:  \n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(32));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+
+    line_count += 4;
 
     // To keep it readable, we check the Day first, then the Hour.
     wattron(pad, A_DIM);       
@@ -4062,16 +4080,21 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
             break;
     }
     
+    line_count++;
+
     wprintw(pad, "\n\n");
 
+    line_count += 2;
 
     // SYNTHESIS
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(27));
     wprintw(pad, _("  4. REGENTS' STRENGTH:  \n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(27));
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
+    line_count += 4;
+
     wattroff(pad, A_DIM);
 
 
@@ -4081,120 +4104,191 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int pontos_finais_exibicao_day = (int)ceil(((double)strength_reg_day * weights[regente_dia]) / 10.0);
 
     wattron(pad, A_BOLD); 
-    wprintw(pad, _("• REGENT OF %s: ( %s )\n\n"), (MAPA_DIURNO)?_("THE DAY"):_("THE NIGHT"), regent_day_str);
-    wattroff(pad, A_BOLD); 
+    wprintw(pad, _(" • REGENT OF %s: ( %s )\n\n"), (MAPA_DIURNO)?_("THE DAY"):_("THE NIGHT"), regent_day_str);
+    wattroff(pad, A_BOLD);
 
-    wprintw(pad, _("    The base dignity score of the Regent of %s is: %d.\n"
-                    "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+    line_count += 2;
+
+    snprintf(str, 512, _("The base dignity score of the Regent of %s is: %d.\n"
+                    "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
             (MAPA_DIURNO)?_("the Day"):_("the Night"), dig_reg_day, strength_reg_day, pontos_finais_exibicao_day);
     
-    wprintw(pad, _("    Structural Efficiency Verdict:\n"));
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+    wattron(pad, A_BOLD); 
+    wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
+    wattroff(pad, A_BOLD);
+
+    line_count += 2;
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (strength_reg_day >= 65) {
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
-        wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        wprintw(pad, _("       This planet commands %s with magnificent backing.\n"
-                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("This planet commands %s with magnificent backing.\n"
+                        "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
                         "and powerful executive. The promises of this planet will manifest with clarity,\n"
                         "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO)?_("the day"):_("the night"), strength_reg_day);
     } 
     else if (strength_reg_day >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
-        wprintw(pad, _("    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(8));
-        wprintw(pad, _("       This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
-                        "       It possesses the standard authority to execute its functions, but will demand steady\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                        "It possesses the standard authority to execute its functions, but will demand steady\n"
                         "discipline and continuous focus from you. Events will unfold normally, tracking your\n"
                         "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), strength_reg_day);
     } 
     else {
         wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
-        wprintw(pad, _("    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("       WARNING: The Lord of %s operates under extreme systemic debility (%d%%).\n"
-                        "       Even though it governs this time stream, it lacks the raw vital\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("WARNING: The Lord of %s operates under extreme systemic debility (%d%%).\n"
+                        "Even though it governs this time stream, it lacks the raw vital\n"
                         "resources to fulfill its promises easily. The sectors it triggers this day will demand\n"
                         "intense adjustments, manifesting through chronic delays, heavy exhaustion,\n"
                         "administrative blocks, or the feeling of working against a locked door.\n\n\n"), (MAPA_DIURNO)?_("the Day"):_("the Night"), strength_reg_day);
     }
 
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
     wprintw(pad, "\n\n");
+    line_count += 2;
 
     int pontos_finais_exibicao_hour = (int)ceil(((double)strength_reg_hour * weights[regente_hora]) / 10.0);
 
     wattron(pad, A_BOLD); 
-    wprintw(pad, _("• REGENT OF THE HOUR: ( %s )\n\n"), regent_hour_str);
-    wattroff(pad, A_BOLD); 
+    wprintw(pad, _(" • REGENT OF THE HOUR: ( %s )\n\n"), regent_hour_str);
+    wattroff(pad, A_BOLD);
 
-    wprintw(pad, _("    The base dignity score of the Regent of the hour is: %d.\n"
-                    "    Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+    line_count += 2;
+
+    snprintf(str, 512, _("The base dignity score of the Regent of the hour is: %d.\n"
+                    "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
             dig_reg_hour, strength_reg_hour, pontos_finais_exibicao_hour);
     
-    wprintw(pad, _("    Structural Efficiency Verdict:\n"));
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+    wattron(pad, A_BOLD); 
+    wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
+    wattroff(pad, A_BOLD);
+
+    line_count += 2;
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (strength_reg_hour >= 65) {
         wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
-        wprintw(pad, _("    • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+        wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        wprintw(pad, _("       This planet commands the hour with magnificent backing.\n"
-                        "       Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("This planet commands the hour with magnificent backing.\n"
+                        "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
                         "and powerful executive. The promises of this planet will manifest with clarity,\n"
                         "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), strength_reg_hour);
     } 
     else if (strength_reg_hour >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
-        wprintw(pad, _("    • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+        wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(8));
-        wprintw(pad, _("       This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
-                        "       It possesses the standard authority to execute its functions, but will demand steady\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                        "It possesses the standard authority to execute its functions, but will demand steady\n"
                         "discipline and continuous focus from you. Events will unfold normally, tracking your\n"
                         "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), strength_reg_hour);
     } 
     else {
         wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
-        wprintw(pad, _("    • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+        wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("       WARNING: The Lord of the hour operates under extreme systemic debility (%d%%).\n"
-                        "       Even though it governs this time stream, it lacks the raw vital\n"
+
+        line_count += 2;
+
+        snprintf(str, 512, _("WARNING: The Lord of the hour operates under extreme systemic debility (%d%%).\n"
+                        "Even though it governs this time stream, it lacks the raw vital\n"
                         "resources to fulfill its promises easily. The sectors it triggers this day will demand\n"
                         "intense adjustments, manifesting through chronic delays, heavy exhaustion,\n"
                         "administrative blocks, or the feeling of working against a locked door.\n\n\n"), strength_reg_hour);
     }
 
-
+    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
 
     wprintw(pad, "\n\n");
 
+    line_count += 2;
 
     wattron(pad, A_DIM);
-    wprintw(pad, "  ─────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wprintw(pad, _("  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"));
     wattroff(pad, A_DIM);
 
+    line_count += 2;
+
     // 6. LOOP DE INTERAÇÃO E REDESENHO CONSTANTE DA PAD
     int pad_line_pos = 0;
-    int max_scroll_y = 65; 
+    //int max_scroll_y = (qtd_vencedores > 1) ? 90 : 45; // Adapta a profundidade de scroll
     int ch;
+    
+   
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = i_height - 2; 
 
-    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(border_win, TRUE);
 
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (line_count > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = line_count - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
+        }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(border_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
         switch (ch) {
-            case KEY_UP:
-            case 'k':
-            case 'K':
-                if (pad_line_pos > 0) pad_line_pos--;
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
                 break;
-            case KEY_DOWN:
-            case 'j':
-            case 'J':
-                if (pad_line_pos < max_scroll_y) pad_line_pos++;
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
         }
-        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
     }
 
     // 7. DESTRUIÇÃO E LIMPEZA

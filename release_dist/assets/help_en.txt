@@ -294,6 +294,10 @@ Press Q or ESC to return to the main menu.
     
     • ←↓↑→ - Pan 
     
+    • * - Increase aspect ratio by 0.1
+    
+    • / - Decrease aspect ratio by 0.1
+    
     • R - Reset Zoom and Pan
     
     • D - Display Decans
@@ -305,26 +309,13 @@ Press Q or ESC to return to the main menu.
     • Q or ESC - Back to Main Menu 
     
     
-    F11 is reserved for the Operational System, so it is not 
-    a shortcut in this program. By default it is used to maximize 
-    the current window hiding its top bar (fullscreen), which is 
-    very usefull for this application, specially in the chart 
-    wheel, because it magnifies it. So, use it!
+    F11 is reserved for the Operational System, so it is not a shortcut in this program. By default it is used to maximize the current window hiding its top bar (fullscreen), which is very usefull for this application, specially in the chart wheel, because it magnifies it. So, use it!
         
-    Several terminal windows use the F10 key to access the
-    terminal menu. It generally depends on the user 
-    configurations. To avoid conflicts, we decide in letting 
-    the F10 key alone. So it is not used in this application.
+    Several terminal windows use the F10 key to access the terminal menu. It generally depends on the user configurations. To avoid conflicts, we decide in letting the F10 key alone. So it is not used in this application.
     
-    Another nice shortcut from your terminal is the key combination
-    to increase and to decrease the font size. Most terminal 
-    windows use the keys [CTRL]+[+] to zoom in and [CTRL]+[-] to 
-    zoom out. Check the configuration of your terminal and be 
-    welcome to use these key combinations here, for this program
-    is prepared to refresh and redraw its windows accordingly. 
+    Another nice shortcut from your terminal is the key combination to increase and to decrease the font size. Most terminal windows use the keys [CTRL]+[+] to zoom in and [CTRL]+[-] to zoom out. Check the configuration of your terminal and be welcome to use these key combinations here, for this program is prepared to refresh and redraw its windows accordingly. 
     
-    Every action is also available by pressing [M] and selecting 
-    the desired module in the Actions Menu.
+    Every action is also available by pressing [M] and selecting the desired module in the Actions Menu.
 
 
 
@@ -353,112 +344,51 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 This application is designed to be your astrological companion.
-Here, you can calculate and visualize astrological charts, 
-view the current transit chart, and access tables and panels to 
-assist you in deep analysis and full horoscope interpretation.
+Here, you can calculate and visualize astrological charts, view the current transit chart, and access tables and panels to assist you in deep analysis and full horoscope interpretation.
 
-You can zoom in and out the charts, pan them across the screen,
-and use animation mode to visualize the past and future 
-movements of planets and other celestial objects. 
-You can even control the pace of the animation! 
+You can zoom in and out the charts, pan them across the screen, and use animation mode to visualize the past and future movements of planets and other celestial objects. You can even control the pace of the animation! 
 
-Navigation is handled entirely by arrow keys, function keys,
-menus and intuitive shortcuts — all within your terminal.
+Navigation is handled entirely by arrow keys, function keys, menus and intuitive shortcuts — all within your terminal.
 
-The modules provide charts, tables and panels, accessible 
-via function and numerical keys, which contains all the data you 
-need to make good interpretations and also predictions.
+The modules provide charts, tables and panels, accessible via function and numerical keys, which contains all the data you need to make good interpretations and also predictions.
 
-The texts are direct and objective, yet as complete as possible to 
-guide you throughout the charts and tables. Color coding is also 
-used everywhere to help you quickly interpret the significance of 
-the data.
+The texts are direct and objective, yet as complete as possible to guide you throughout the charts and tables. Color coding is also used everywhere to help you quickly interpret the significance of the data.
 
-We also use colors within the chart to differentiate celestial 
-bodies according to their types and mathematical points.
+We also use colors within the chart to differentiate celestial bodies according to their types and mathematical points.
 
-All calculations are performed in the light of Classical 
-Astrology, though we also display the outer planets and their 
-relationships with all other bodies in the chart and tables. 
-Using these modern additions is entirely up to your preference.
+All calculations are performed in the light of Classical Astrology, though we also display the outer planets and their relationships with all other bodies in the chart and tables. Using these modern additions is entirely up to your preference.
 
-Additionally, you can access settings to configure your charts 
-according to various Classical Astrology systems. You can also 
-set a default city to generate quick charts for your current 
-location and time.
+Additionally, you can access settings to configure your charts according to various Classical Astrology systems. You can also set a default city to generate quick charts for your current location and time.
 
-The app's core was designed to ensure accuracy in all 
-calculations and offer the widest possible scope, making it an 
-extremely useful astrological tool for any astrologer, from 
-students to the most experienced professionals.   
+The app's core was designed to ensure accuracy in all calculations and offer the widest possible scope, making it an extremely useful astrological tool for any astrologer, from students to the most experienced professionals.   
  
-The interface was designed to offer efficiency and beauty; 
-most actions require only one or two keystrokes, and the 
-color system displays relevant information across all modules.
+The interface was designed to offer efficiency and beauty; most actions require only one or two keystrokes, and the color system displays relevant information across all modules.
  
-To save a custom chart, simply enter the data and select the 
-save option from the main menu.
+To save a custom chart, simply enter the data and select the save option from the main menu.
 
-To view and interact with the action modules hit the function 
-or numeric keys of the keyboard while the chart wheel is being 
-displayed, or the key [M] to open the action menu and choosing
-the desired one. 
+To view and interact with the action modules hit the function or numeric keys of the keyboard while the chart wheel is being displayed, or the key [M] to open the action menu and choosing the desired one. 
 
-Some tables and panels have more options accessible while 
-they are open.
+Some tables and panels have more options accessible while they are open.
 
-Whenever you wish you can open this help screen and see 
-immediately the keys and their respective table or 
-panel, or go directly to the desired topic.
+Whenever you wish you can open this help screen and see immediately the keys and their respective table or panel, or go directly to the desired topic.
 
-This application is developed in C, utilizing the ncurses 
-library for visual elements and the Swiss Ephemeris for 
-astronomical calculations. This ensures a fast, solid, and 
-accurate system that is precise and visually appealing, 
-even within a terminal environment.
+This application is developed in C, utilizing the ncurses library for visual elements and the Swiss Ephemeris for astronomical calculations. This ensures a fast, solid, and accurate system that is precise and visually appealing, even within a terminal environment.
 
-All data is stored in an SQLite database provided by this
-application.
+All data is stored in an SQLite database provided by this application.
 
-We utilize an up-to-date free database of cities provided by
-https://github.com/dr5hn/countries-states-cities-database, 
-which we have enhanced with structural improvements using the 
-pytz (timezonefinder) and srtm libraries to better serve the 
-application's needs (These libraries were only used to enhance 
-the application's database during the development phase. 
-They are not used by the program and you don't need to install 
-them).
+We utilize an up-to-date free database of cities provided by https://github.com/dr5hn/countries-states-cities-database, which we have enhanced with structural improvements using the pytz (timezonefinder) and srtm libraries to better serve the application's needs (These libraries were only used to enhance the application's database during the development phase. They are not used by the program and you don't need to install them).
 
-The cities' database contains approximately 153 thousand
-cities. It is good enough for a free and well-structured database,
-working on a free astrological software, but small villages may 
-not be listed. Therefore, for small villages, you should look for 
-the name of the town where it is located, or a city very close 
-to it. 
+The cities' database contains approximately 153 thousand cities. It is good enough for a free and well-structured database, working on a free astrological software, but small villages may not be listed. Therefore, for small villages, you should look for the name of the town where it is located, or a city very close to it. 
 
-For example, Princess Diana was born in Sandringham, a small 
-village located in King's Lynn borough, in the county of Norfolk.
-You will see that Sandringham is not listed. So, to get her chart, 
-you must select United Kingdom as the country, then look for 
-King's Lynn in Norfolk county or state. (County or State is the 
-2nd column in the cities table).
+For example, Princess Diana was born in Sandringham, a small village located in King's Lynn borough, in the county of Norfolk. You will see that Sandringham is not listed. So, to get her chart, you must select United Kingdom as the country, then look for King's Lynn in Norfolk county or state. (County or State is the 2nd column in the cities table).
 
-The same happens to the Friedrich Nietzsche's chart. He was born
-in Röcken, a small village that was recently annexed to the town 
-of Lützen, in Germany. So you must select Lützen, in the 
-Saxony-Anhalt state, as the Nietzsche's hometown.
+The same happens to the Friedrich Nietzsche's chart. He was born in Röcken, a small village that was recently annexed to the town of Lützen, in Germany. So you must select Lützen, in the Saxony-Anhalt state, as the Nietzsche's hometown.
 
-This software links with the ICU library (libicu), which is 
-licensed under the ICU License and Unicode License. 
-You can find the full license text at github.io 
-(https://github.com/unicode-org/icu/blob/main/LICENSE)
+This software links with the ICU library (libicu), which is licensed under the ICU License and Unicode License. You can find the full license text at github.io (https://github.com/unicode-org/icu/blob/main/LICENSE)
 
-Astrological information has been compiled from various 
-authoritative sources related to Traditional Astrology and
-some of them are included in the Technical Topics.
+Astrological information has been compiled from various authoritative sources related to Traditional Astrology and some of them are included in the Technical Topics.
 
-The application works 100% offline; no data is sent to or 
-retrieved from the internet.
+The application works 100% offline; no data is sent to or retrieved from the internet.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -490,12 +420,9 @@ Available options in the Main Menu:
 • Quick Chart: View chart for current time and location
 ───────────────────────────────────────────────────────────────────
 
-Displays the chart wheel for the current time (now) and the 
-pre-set default location. The chart is animated and 
-updates every second.
+Displays the chart wheel for the current time (now) and the pre-set default location. The chart is animated and updates every second.
 
-When hitting this option the previous loaded chart is replaced
-by the quick new chart. If you didn't save it you've lost it.
+When hitting this option the previous loaded chart is replaced by the quick new chart. If you didn't save it you've lost it.
 
 Note: The loaded chart info is displayed at the bottom status bar.
 
@@ -503,59 +430,39 @@ Note: The loaded chart info is displayed at the bottom status bar.
 • New Chart: Configure chart parameters
 ───────────────────────────────────────────────────────────────────
 
-Define the parameters for chart generation. This allows you 
-to create Natal Charts or set data for specific historical 
-events or projects, or for any other purpose.
+Define the parameters for chart generation. This allows you to create Natal Charts or set data for specific historical events or projects, or for any other purpose.
 
 The selection boxes appear in the following sequence:
 
 1. Date (set year, month, and day using the arrow keys).
 
-2. Time (set hour, minute, and second using arrow keys). This must
-   be the local time, the time in effect in the birthday place and
-   not the universal time.
+2. Time (set hour, minute, and second using arrow keys). This must be the local time, the time in effect in the birthday place and not the universal time.
 
-3. The gender of the native; or neuter for non personal
-   charts.
+3. The gender of the native; or neuter for non personal charts.
 
 4. Country (Select from the scrolling list).
 
-5. City (Select from the scrolling list; the State/County/Province
-   is displayed in the 2nd column to help you distinguish 
-   homonymous cities).
+5. City (Select from the scrolling list; the State/County/Province/Region is displayed in the 2nd column to help you distinguish homonymous cities).
 
-6. Timezone (TZ) (Displays the timezone from the cities 
-   database; you may confirm or manually type a new one). Actually 
-   this is shown only for reference, because the program allways
-   calculates the correct timezone for the selected city.
+6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program allways calculates the correct timezone for the selected city.
 
-7. DST (Daylight Saving Time: choose between Yes, No, or Auto. 
-   If Auto, the application applies the correct DST 
-   interval for the specific date).
+7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date).
 
-8. Chart Name (Type a name for your new chart). The name of the 
-   current chart will appear by default. You can maintain this
-   name to overwrite the current chart with the new data or
-   select another name to get a new chart.
+8. Chart Name (Type a name for your new chart). The name of the current chart will appear by default. You can maintain this name to overwrite the current chart with the new data or select another name to get a new chart.
 
-The values are selected by using the arrow keys and <ENTER> to 
-confirm.
+The values are selected by using the arrow keys and <ENTER> to confirm.
 
 You can hit the <ESC> key in any box to cancel the edition.
 
-After setting the data, remember to save the chart. If you 
-close the application without saving, or if you open the 
-Quick Chart, the data will be lost.
+After setting the data, remember to save the chart. If you close the application without saving, or if you open the Quick Chart, the data will be lost.
 
-The Quick Chart will overwrite the selected data by the 
-current time and default location.
+The Quick Chart will overwrite the selected data by the current time and default location.
 
 
 • Load Chart: Load a previously saved chart
 ───────────────────────────────────────────────────────────────────
 
-Scroll through a list of your saved charts and select one to load.
-The chosen chart will become the "current chart".
+Scroll through a list of your saved charts and select one to load. The chosen chart will become the "current chart".
 
 
 
@@ -564,14 +471,11 @@ The chosen chart will become the "current chart".
 
 Save the current chart data to the database.
 
-A dialog will ask you about the chart name, which you can 
-preserve the current or set a new one.
+A dialog will ask you about the chart name, which you can preserve the current or set a new one.
 
-This option can also be used to save the current loaded chart 
-with a different name (so you can delete or not the previous one).
+This option can also be used to save the current loaded chart with a different name (so you can delete or not the previous one).
 
-If you set an existing chat's name the previous one will be 
-overwritten after the confirmation.
+If you set an existing chat's name the previous one will be overwritten after the confirmation.
 
 
 
@@ -579,8 +483,7 @@ overwritten after the confirmation.
 ───────────────────────────────────────────────────────────────────
 
 Select a chart from the list and hit <ENTER> to delete it. 
-Note: This action is permanent and removes the chart from the
-database.
+Note: This action is permanent and removes the chart from the database.
 
 It is very usefull to clean up the things.
 
@@ -591,8 +494,7 @@ It is very usefull to clean up the things.
 
 Display the loaded chart even if it has not been saved yet.
 
-The status bar in the main menu screen shows the data of the 
-current loaded chart to be displayed.
+The status bar in the main menu screen shows the data of the current loaded chart to be displayed.
 
 
 
@@ -604,11 +506,8 @@ calculation parameters and other options.
 
 You can set:
 
-   • Display Mode (Dark/Light): Changes the color schemes 
-     for the chart wheel and tables.
-       
-   • House Systems: Choose from various systems to suit 
-     your needs:
+   • House Systems: 
+     Choose from various systems to suit your needs:
     
     The available house systems and their classification:
     
@@ -638,28 +537,34 @@ You can set:
            Hit [H] in the chart wheel to draw the house divisions.
     
 
-   • Triplicity System: Choose between Morinus, Dorotheus, 
-     and Ptolemy to determine the rulership of the elements.
+   • Triplicity System: 
+     Choose between Morinus, Dorotheus, and Ptolemy to determine the rulership of the elements.
     
-   • Planetary orb: Modify the orb value for all planets,
-     luminaries and the lunar nodes used in aspect calculations.
-     Note: We do not use "orb by aspect"; each planet has a 
-     fixed orb applied to all its aspects.
+   • Planetary orb: 
+     Modify the orb value for all planets, luminaries and the lunar nodes used in aspect calculations. Note: We do not use "orb by aspect"; each planet has a fixed orb applied to all its aspects.
     
-   • orb for Parallel Aspects: Specific orb values can 
-     be set for parallel and contra-parallel aspects.
-    
-   • Modern Planet Exaltation: Although based on Classical 
-     Astrology, you can choose whether to include the 
-     exaltation rulerships of the outer planets. 
-     (Note: We do not consider modern planets for domicile 
-     rulership).
+   • orb for Parallel Aspects: 
+     Specific orb values can be set for parallel and contra-parallel aspects.
      
-   • Show Modern Planets: You can choose if the 3 modern planets
-     will be part or not of your charts. But remember that we 
-     do not include dignities by domicile for these planets.
+    • orb for Aspects with Antissia & Contrantissia: 
+     Specific orb values can be set for Aspects with Antissia & Contrantissia.
+    
+   • Modern Planet Exaltation: 
+     Although based on Classical Astrology, you can choose whether to include the exaltation rulerships of the outer planets. (Note: We do not consider modern planets for domicile rulership).
      
-   • The Default Gender: Male, Female or Neuter.
+   • Show Modern Planets: 
+     You can choose if the 3 modern planets will be part or not of your charts. But remember that we do not include dignities by domicile for these planets.
+     
+   • The Default Gender: 
+     Male, Female or Neuter.
+     
+   • Interface Language: 
+     Choose the language for the interface. Currently English and Brazilian Portuguese are available.
+       
+   • Display Mode (Dark/Light): 
+     Changes the color schemes for the chart wheel and tables.
+       
+
 
 
 All settings are persistent and saved in the application database.
@@ -670,12 +575,9 @@ All settings are persistent and saved in the application database.
 
 Set the default city for "Quick Charts".
  
-The chosen city will update immediately and will persist 
-upon restarting the application. 
+The chosen city will update immediately and will persist upon restarting the application. 
 
-This option does not overwrite previously saved chart and does not
-change the city of the currently loaded chart, it only indicates 
-to the application what is the city for the new Quick Chart.
+This option does not overwrite previously saved chart and does not change the city of the currently loaded chart, it only indicates to the application what is the city for the new Quick Chart.
 
 
 
@@ -711,88 +613,57 @@ Press Q or ESC to return to the main menu.
 • The Chart Wheel:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-When a chart is loaded, the wheel is calculated according 
-to the selected data.
+When a chart is loaded, the wheel is calculated according to the selected data.
 
-The status bar in the Main Menu shows the location and time 
-for the current chart. Here this information is displayed at the 
-top left corner of the screen.
+The status bar in the Main Menu shows the location and time for the current chart. Here this information is displayed at the top left corner of the screen.
 
-The chart screen also displays detailed information 
-while showing the wheel and your Horoscope in the center.
+The chart screen also displays detailed information while showing the wheel and your Horoscope in the center.
 
-The wheel is divided into 12 segments representing the signs. 
-The 12 zodiac signs are displayed prominently using ASCII art.
+The wheel is divided into 12 segments representing the signs. The 12 zodiac signs are displayed prominently using ASCII art.
 
-The two main axes — Ascendant/Descendant and 
-Midheaven/Imum Coeli — are also prominently displayed on the 
-chart wheel.
+The two main axes — Ascendant/Descendant and Midheaven/Imum Coeli — are also prominently displayed on the chart wheel.
 
-Next to the outer circle, if you wish, you can see the rulers 
-of the decans by pressing [D], three by sign, according to the 
-Chaldean order, each one rulling ten degrees of the respective 
-sign. The ruler charactere is drawn at the center of its decan.
+Next to the outer circle, if you wish, you can see the rulers of the decans by pressing [D], three by sign, according to the Chaldean order, each one rulling ten degrees of the respective sign. The ruler charactere is drawn at the center of its decan.
 
-You can also see the terms rulers by pressing [B]. Each term 
-ruler is drawn in the beggining of its term. There are five
-terms by sign and their degrees vary according to the chosen
-system.
+You can also see the terms rulers by pressing [B]. Each term ruler is drawn in the beggining of its term. There are five terms by sign and their degrees vary according to the chosen system.
 
-This way you can graphically see the rulers by term and decan of 
-a body in the chart wheel.
+This way you can graphically see the rulers by term and decan of a body in the chart wheel.
 
-Below the signs, planets and points rotate within their 
-respective signs, displaying their angle (degree and 
-minutes) and retrograde symbol (if applicable).
+Below the signs, planets and points rotate within their respective signs, displaying their angle (degree and minutes) and retrograde symbol (if applicable).
 
-The chart displays a number in the inner and in the outer 
-circles indicating the respective house cusp. So you can see the
-boundaries of the houses.
+The chart displays a number in the inner and in the outer circles indicating the respective house cusp. So you can see the boundaries of the houses.
 
-In the center, in ASCII art, appear the symbols of the planets 
-rulling respectively the day and the hour in effect at the 
-date/time of the chart.
+In the center, in ASCII art, appear the symbols of the planets rulling respectively the day and the hour in effect at the date/time of the chart.
 
-On the right side, you can see a table indicating the positions
-of the planets and other celestial bodies.
+On the right side, you can see a table indicating the positions of the planets and other celestial bodies.
 
-You can also see the table of house cusp positions on the left 
-side of the screen.
+You can also see the table of house cusp positions on the left side of the screen.
 
-Under the house cusps table is drawn, in ASCII-Art, the Sun's
-symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol (☽ )
-if the chart is nocturnal.
+Under the house cusps table is drawn, in ASCII-Art, the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol (☽ ) if the chart is nocturnal.
 
-When zooming in on the chart, all information next to the wheel
-is hidden if the second zoom level is active, except for the 
-planet and house tables, which disappear at the third zoom level.
+When zooming in on the chart, all information next to the wheel is hidden if the second zoom level is active, except for the planet and house tables, which disappear at the third zoom level.
 
 You can zoom in/out and pan the chart.
 Use [+] or [-] to zoom and the arrow keys to pan.
-The [R] key resets the chart wheel to its original size and 
-position.
+The [R] key resets the chart wheel to its original size and position.
 
 Type [H] to show the houses boundaries in the chart.
 
-You can activate animation mode by pressing [A]. Use ] and [ 
-to adjust the animation pace in 60-second increments. 
-A positive pace shows future events; a negative pace simulates 
-traveling back in time.
+You can activate animation mode by pressing [A]. Use ] and [ to adjust the animation pace in 60-second increments. A positive pace shows future events; a negative pace simulates traveling back in time.
+
+The program was developed using the "Adwaita Mono" font for the terminal, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio.
+
 
 • The Colors:
 ───────────────────────────────────────────────────────────────────
 
 To differentiate celestial bodies, the chart uses color coding:
 
-   • The 7 Main Planets (Sun, Moon, Mercury, Venus, Mars, 
-     Jupiter, and Saturn) are displayed in Blue.
+   • The 7 Main Planets (Sun, Moon, Mercury, Venus, Mars, Jupiter, and Saturn) are displayed in Blue.
     
-   • The 3 Modern Planets (Uranus, Neptune, and Pluto) 
-     are displayed in Magenta.
+   • The 3 Modern Planets (Uranus, Neptune, and Pluto) are displayed in Magenta.
     
-   • Points and Angles (Asc, Desc, IC, MC, Vertex, Part of 
-     Fortune, Syzygy Ante Nativitatem, North/South Node) are 
-     in Black.
+   • Points and Angles (Asc, Desc, IC, MC, Vertex, Part of Fortune, Syzygy Ante Nativitatem, North/South Node) are in Black.
     
 The signs are color-coded by element:
 
@@ -804,17 +675,11 @@ The signs are color-coded by element:
 • The Animation:
 ───────────────────────────────────────────────────────────────────
 
-By default, "Quick Chart" is animated at a 1-second interval, 
-allowing you to track celestial motion almost in real-time.
+By default, "Quick Chart" is animated at a 1-second interval, allowing you to track celestial motion almost in real-time.
 
-The animation updates the chart every second in the pace displayed
-at the right bottom corner of the screen.
+The animation updates the chart every second in the pace displayed at the right bottom corner of the screen.
 
-To animate a loaded chart, press [A]. Use ] to increase 
-speed and [ to decrease speed by 1 minute per step. 
-The clock and Moon phase in the upper corners will update 
-accordingly to the animation pace, as well as the objects within
-the chart wheel and the planetary rulers.
+To animate a loaded chart, press [A]. Use ] to increase speed and [ to decrease speed by 1 minute per step. The clock and Moon phase in the upper corners will update accordingly to the animation pace, as well as the objects within the chart wheel and the planetary rulers.
 
 The wheel spins 1° clockwise every time the Ascendant adds 1°.
 
@@ -842,14 +707,9 @@ Press Q or ESC to return to the main menu.
 • The Available Modules, the Tables and Panels:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Function keys F1 to F9 and F12, F13 to F20 (or 1 to 8) load the 
-following modules that calculate and create tables, panels and 
-reports when the respective key is pressed in the Chart Wheel
-screen. 
+Function keys F1 to F9 and F12, F13 to F20 (or 1 to 8) load the following modules that calculate and create tables, panels and reports when the respective key is pressed in the Chart Wheel screen. 
 
-The keys are shortcuts, but you can also access the modules by 
-pressing [M] in the Chart Wheel screen and choose the desired 
-one with the arrow keys and [ENTER].
+The keys are shortcuts, but you can also access the modules by pressing [M] in the Chart Wheel screen and choose the desired one with the arrow keys and [ENTER].
 
 
 
@@ -929,30 +789,18 @@ Press Q or ESC to return to the main menu.
 
 • Rulers by domicile, exaltation, triplicity, term and decan;
 
-• Mutual reception: This column shows the pair of
-  planets that are in mutual reception, either by domicile
-  or by exaltation. In this column, the program identifies the
-  planets regardless of whether there is a valid aspect
-  between them. In the next table—accessible by pressing
-  F2 again—we can see the (Asp) flag if an aspect exists,
-  as well as more detailed information regarding
-  accidental dignities.
+• Mutual reception: 
+  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. In this column, the program identifies the planets regardless of whether there is a valid aspect between them. In the next table—accessible by pressing F2 again—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
 
-Pressing F2 again and you can see details of the accidental
-dignities and the state of the planets and bodies.
+Pressing F2 again and you can see details of the accidental dignities and the state of the planets and bodies.
 
-F3 shows the strength of each planet in the chart based on 
-their dignities and their relevance.
+F3 shows the strength of each planet in the chart based on their dignities and their relevance.
 
-F4 shows the Planetary Energy Profile, a chart of bars displaying
-the strength and the relevance of each planet in a visual fashion
-way (also pressing [8] in the chart wheel screen).
+F4 shows the Planetary Energy Profile, a chart of bars displaying the strength and the relevance of each planet in a visual fashion way (also pressing [8] in the chart wheel screen).
 
-When choosing by the menu actions, these submodules are available
-as independent options.
+When choosing by the menu actions, these submodules are available as independent options.
 
-Color coding indicates the quality of data: Blue (favorable), 
-red (unfavorable), black (neutral), or magenta (specific factors).
+Color coding indicates the quality of data: Blue (favorable), red (unfavorable), black (neutral), or magenta (specific factors).
 
 Use [↓↑] to scroll the table.
 
@@ -1040,8 +888,7 @@ Mutual Reception without Aspect*** → +1 point
 • Accidental Dignities Details (F2 in the Dignities Table)
 ───────────────────────────────────────────────────────────────────
 
-You can see the accidental conditions of all the planets in the 
-current chart.
+You can see the accidental conditions of all the planets in the current chart.
 
 Use [↓↑] to scroll the table.
 
@@ -1581,7 +1428,8 @@ The Hyleg (Giver of Life) and Alcochoden (Giver of Years) form the
 foundation of traditional longevity and constitutional vitality 
 analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
 
-    • Hyleg is the planet with more vital force in the chart 
+    • Hyle:
+      Hyleg is the planet with more vital force in the chart 
       elected according to criteria based primary on the chart's 
       sect and the house placing. 
 
@@ -1589,7 +1437,8 @@ analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
         physical shields and the terminal target for time projection 
         techniques (Primary Directions).
         
-    • The planet that aspects the Hyleg and holds the highest 
+    • Alcochoden:
+      The planet that aspects the Hyleg and holds the highest 
       essential dignities at that exact degree is elected the 
       Alcochoden. 
       
@@ -1693,17 +1542,13 @@ The first columns shows the age and the date of the event.
 Color coding indicate potential destructive directions, good
 directions and a period of alert.
 
-    • When the promissor is the Anareta or Dominus Mortiis and 
-      their terms (red reverse for malefic aspects and red bold 
-      for other aspects). 
+    • When the promissor is the Anareta or Dominus Mortiis and their terms (red reverse for malefic aspects and red bold for other aspects). 
     
     • Bad aspects directed by malefics or their terms (red). 
     
-    • Bad aspects directed by no malefics and their terms 
-      (yellow) indicate an alert. 
+    • Bad aspects directed by no malefics and their terms (yellow) indicate an alert. 
     
-    • Good aspects directed by benefics and the terms of these 
-      planets (blue) are potencialy good directions. 
+    • Good aspects directed by benefics and the terms of these planets (blue) are potencialy good directions. 
       
     • Conjunctions (magenta) demand some analysis.
     
@@ -1894,12 +1739,14 @@ Press Q or ESC to return to the main menu.
  
 1. Core Architectural Engine
 
-    • Exact Astronomical Return: The module uses a native Swiss 
+    • Exact Astronomical Return: 
+      The module uses a native Swiss 
       Ephemeris algorithm to locate the exact Julian Day in 
       Universal Time (UTC) when the transiting Sun returns to the 
       precise ecliptic longitude of the birth blueprint.
       
-    • Relocation & Domification: The mathematical instant of the 
+    • Relocation & Domification: 
+      The mathematical instant of the 
       return is absolute and independent of the user's location. 
       However, house cusps and spatial orientations are dynamic. 
       The system tracks whether the anniversary occurs at the 
@@ -1912,7 +1759,8 @@ Press Q or ESC to return to the main menu.
       city as default and will give you the option to select 
       another one. It is by your choice.
       
-    • Temporal Synchronization: Time variables are strictly 
+    • Temporal Synchronization: 
+      Time variables are strictly 
       unified using double-precision floats (double) to prevent 
       truncation bugs. Age-related chronocrators (Firdaria 
       sub-periods and Profections) are aligned by feeding the 
@@ -1948,56 +1796,25 @@ the Solar Return and the Birth Chart (Radix) through seven
 distinct checkpoints:
    
    • [CHECK I] Annual Lord of the Year (Almuten Figuris): 
-     Identifies the planet commanding the annual chart based on 
-     essential and accidental dignities computed for the return 
-     moment. Its raw operational strength is filtered against 
-     its root Natal Dignity Score, showing whether its annual 
-     promises will manifest smoothly (strong radix) or through 
-     heavy evolutionary hurdles (weak radix).
+     Identifies the planet commanding the annual chart based on essential and accidental dignities computed for the return moment. Its raw operational strength is filtered against its root Natal Dignity Score, showing whether its annual promises will manifest smoothly (strong radix) or through heavy evolutionary hurdles (weak radix).
    
-   • [CHECK II] Radix House Transit: Projects the ecliptic 
-     coordinate of the annual Almuten back onto the native's birth 
-     horizon via swe_house_pos(armc_natal, lat_natal, ...). 
-     This maps exactly which natal life-sector (e.g., Career in 
-     House 10, Finances in House 2) is being physically triggered 
-     by the "Manager of the Year."
+   • [CHECK II] Radix House Transit: 
+     Projects the ecliptic coordinate of the annual Almuten back onto the native's birth horizon via swe_house_pos(armc_natal, lat_natal, ...). This maps exactly which natal life-sector (e.g., Career in House 10, Finances in House 2) is being physically triggered by the "Manager of the Year."
    
-   • [CHECK III] Time-Lord Co-Alignment: Cross-checks the annual 
-     Almuten against the Hellenistic Profection Lord of the Year. 
-     A perfect match signals an extraordinary "Turning-Point Year," 
-     giving the planet double cosmic authorization to trigger 
-     inevitable, life-shaping events.
+   • [CHECK III] Time-Lord Co-Alignment: 
+     Cross-checks the annual Almuten against the Hellenistic Profection Lord of the Year. A perfect match signals an extraordinary "Turning-Point Year," giving the planet double cosmic authorization to trigger inevitable, life-shaping events.
    
-   • [CHECK IV] Firdaria Cronocrator Alignment: Embeds the annual 
-     chart into the medieval long-term time stream. It verifies 
-     if the Lord of the Year matches the current Firdaria Master 
-     Ruler (Macro-cycle) or Sub-Ruler (Active sub-period), 
-     validating if immediate daily events are backed by long-term 
-     destiny trends.    
+   • [CHECK IV] Firdaria Cronocrator Alignment: 
+     Embeds the annual chart into the medieval long-term time stream. It verifies if the Lord of the Year matches the current Firdaria Master Ruler (Macro-cycle) or Sub-Ruler (Active sub-period), validating if immediate daily events are backed by long-term destiny trends.    
    
-   • [CHECK V] Annual Ascendant Projection: Computes where the 
-     annual local horizon cuts through the birth 
-     houses. This reveals the primary target of the native's vital 
-     energy and focus during these specific 12 months.
+   • [CHECK V] Annual Ascendant Projection: 
+     Computes where the annual local horizon cuts through the birth houses. This reveals the primary target of the native's vital energy and focus during these specific 12 months.
      
-   • [CHECK VI] SOLAR RETURN ASCENDANT PROJECTION: Computes the 
-     inverse horizon intersection by projecting the native's 
-     radical Ascendant coordinate back onto the dynamic Solar 
-     Return wheel. While Check V maps the objective environment 
-     knocking at the native's door, this checkpoint uncovers the 
-     psychological attitude, internal vitality, and subjective 
-     coping mechanisms the native will adopt when facing the 
-     year's challenges.
+   • [CHECK VI] SOLAR RETURN ASCENDANT PROJECTION: 
+     Computes the inverse horizon intersection by projecting the native's radical Ascendant coordinate back onto the dynamic Solar Return wheel. While Check V maps the objective environment knocking at the native's door, this checkpoint uncovers the psychological attitude, internal vitality, and subjective coping mechanisms the native will adopt when facing the year's challenges.
    
    • [CHECK VII] NATAL ASCENDANT PROJECTION IN SOLAR RETURN: 
-     The Cross Projection: Executes a multi-layered combinatorial 
-     analysis that bridges Check V (circumstantial reality) 
-     and Check VI (psychological response). By contrasting the 
-     external demands against the internal disposition, it detects 
-     structural alignments or structural friction (such as a 
-     public House 10 career spotlight colliding with an internal 
-     House 12 urge for withdrawal), preventing flat, linear 
-     interpretations.
+     The Cross Projection: Executes a multi-layered combinatorial analysis that bridges Check V (circumstantial reality) and Check VI (psychological response). By contrasting the external demands against the internal disposition, it detects structural alignments or structural friction (such as a public House 10 career spotlight colliding with an internal House 12 urge for withdrawal), preventing flat, linear interpretations.
      
  
  
@@ -2006,55 +1823,27 @@ distinct checkpoints:
 
     1. Architectural Framework & Spatial Projections
     
-        • Static Transit Layer: This module treats the exact 
-          mathematical sky of the Solar Return as a continuous, 
-          frozen layer of transits that dictates structural rules 
-          over the native's baseline life for 12 months.
+        • Static Transit Layer: 
+          This module treats the exact mathematical sky of the Solar Return as a continuous, frozen layer of transits that dictates structural rules over the native's baseline life for 12 months.
     
-        • Radix Ecliptic Correlation: The engine extracts the 
-          annual coordinates—specifically filtering the true 
-          ecliptic longitudes (preventing inadvertent 
-          latitude or speed swaps)—and cross-examines them 
-          against the original Birth Chart (Radix).
+        • Radix Ecliptic Correlation: 
+          The engine extracts the annual coordinates—specifically filtering the true ecliptic longitudes (preventing inadvertent latitude or speed swaps)—and cross-examines them against the original Birth Chart (Radix).
       
-        • Astronomical Space Domification: By anchoring the 
-          calculation strictly to the native's Natal ARMC 
-          and Natal Latitude, the module projects 
-          exactly which birth life-sector (Natal House 1–12) is 
-          being activated by the current year's transiting forces.
+        • Astronomical Space Domification: 
+          By anchoring the calculation strictly to the native's Natal ARMC and Natal Latitude, the module projects exactly which birth life-sector (Natal House 1–12) is being activated by the current year's transiting forces.
       
     2. Analytical Checkpoints & Risk Mitigation
 
-    To preserve traditional rigor and eliminate generic, alarmist 
-    automated outputs, the engine applies precise parameters across 
-    two distinct analytical lenses:
+    To preserve traditional rigor and eliminate generic, alarmist automated outputs, the engine applies precise parameters across two distinct analytical lenses:
 
-        • [CRITICAL MONITOR] Hyleg Vital Protection: The system 
-          isolates the native's true lifetime Natal Hyleg (whether
-          a planet or an abstract point like the Ascendant). 
-          It tests if any transiting planet from the anniversary 
-          cuts through this exact degree within a strict, 
-          traditional 5° orb. Conjunctions from Benefics 
-          (Jupiter/Venus) highlight years of physical recovery 
-          and systemic protection, while alignments from Malefics
-          (Mars/Saturn) trigger immediate, highlighted vital 
-          alerts for acute inflammation or chronic 
-          physical constriction.
+        • [CRITICAL MONITOR] Hyleg Vital Protection: 
+          The system isolates the native's true lifetime Natal Hyleg (whether a planet or an abstract point like the Ascendant). It tests if any transiting planet from the anniversary cuts through this exact degree within a strict, traditional 5° orb. Conjunctions from Benefics (Jupiter/Venus) highlight years of physical recovery and systemic protection, while alignments from Malefics (Mars/Saturn) trigger immediate, highlighted vital alerts for acute inflammation or chronic physical constriction.
                 
-        • Active Radical Conjunctions: The engine loops through 
-          the seven traditional planets, 
-          mapping Sun to Saturn) using absolute modular distance 
-          checks. If an annual planet lands within 5° of 
-          any natal body, it awakens that specific natal promise.
+        • Active Radical Conjunctions: 
+          The engine loops through the seven traditional planets, mapping Sun to Saturn) using absolute modular distance checks. If an annual planet lands within 5° of any natal body, it awakens that specific natal promise.
                 
-        • Functional Weighting: The narrative dynamically adjusts 
-          based on the transiting planet's nature. A transiting 
-          Saturn or Mars conjunct a natal point triggers 
-          structural friction or sudden expenditure of energy, 
-          while a transiting Jupiter injects cosmic protection 
-          and expansion into that sector—ensuring the user can 
-          easily distinguish between high-stress years and 
-          structural growth windows.
+        • Functional Weighting: 
+          The narrative dynamically adjusts based on the transiting planet's nature. A transiting Saturn or Mars conjunct a natal point triggers structural friction or sudden expenditure of energy, while a transiting Jupiter injects cosmic protection and expansion into that sector—ensuring the user can easily distinguish between high-stress years and structural growth windows.
           
 In the Solar Return Chart the prediction modules are not available,
 as well as the Temperament, Mind Analysis and Primary Motivation, 

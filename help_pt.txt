@@ -293,9 +293,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • ←↓↑→ - Pan (Mover Posição)
 
-• * - Aumenta a proporção de tela em 0,1
+• * - Aumenta o aspecto do círculo em 0,1
 
-• / - Diminui a proporção de tela em 0,1 
+• / - Diminui o aspecto do círculo em 0,1 
 
 • R - Resetar Zoom e Pan
 
@@ -497,9 +497,8 @@ Esta opção abre um diálogo para modificar modos de exibição e parâmetros d
 
 Você pode definir:
 
-• Modo de Exibição (Escuro/Claro): Altera os esquemas de cores da roda do mapa e tabelas.
-
-• Sistemas de Casas: Escolha entre vários sistemas para atender às suas necessidades:
+• Sistemas de Casas: 
+  Escolha entre vários sistemas para atender às suas necessidades:
 
     1) Sistemas Naturais ou Simbólicos:
     W - Signos Integrais (Whole Signs), 
@@ -527,19 +526,33 @@ Obs.2: Os números das casas no círculo menor da roda do
        para ver as divisões das casas na roda.
 
 
-• Sistema de Triplicidade: Escolha entre Morinus, Dorotheus e Ptolomeu para determinar os regentes dos elementos.
+• Sistema de Triplicidade: 
+  Escolha entre Morinus, Dorotheus e Ptolomeu para determinar os regentes dos elementos.
 
-• Orbe Planetário: Modifique o valor de orbe para todos os planetas, luminares e os nodos lunares usados em cálculos de aspecto. Nota: Não usamos "orbe por aspecto"; cada planeta tem um orbe fixo aplicado a todos os seus aspectos.
+• Orbe Planetário: 
+  Modifique o valor de orbe para todos os planetas, luminares e os nodos lunares usados em cálculos de aspecto. Nota: Não usamos "orbe por aspecto"; cada planeta tem um orbe fixo aplicado a todos os seus aspectos.
 
-• Orbe para Aspectos Paralelos: Valores de orbe específicos podem ser definidos para aspectos paralelo e contra-paralelo. (nestes aspectos não se aplicam os orbes planetários).
+• Orbe para Aspectos Paralelos: 
+  Valores de orbe específicos podem ser definidos para aspectos paralelo e contra-paralelo. (nestes aspectos não se aplicam os orbes planetários).
+  
+ • Orbe para Aspectos com Antissia e Contrantissia: 
+  Valores de orbe específicos podem ser definidos para aspectos com Antissia e Contrantissia. (nestes aspectos não se aplicam os orbes planetários).
 
-• Exaltação dos Planetas Modernos: Embora baseado na Astrologia Clássica, você pode escolher incluir ou não a regência por exaltação dos planetas modernos. (Nota: Não consideramos a regência por domicílio dos planetas modernos).
+• Exaltação dos Planetas Modernos: 
+  Embora baseado na Astrologia Clássica, você pode escolher incluir ou não a regência por exaltação dos planetas modernos. (Nota: Não consideramos a regência por domicílio dos planetas modernos).
 
-• Mostrar Planetas Modernos: Você pode escolher se os 3 planetas modernos farão parte ou não dos seus mapas. Mas lembre-se que não incluímos dignidades por domicílio para esses planetas.
+• Mostrar Planetas Modernos: 
+  Você pode escolher se os 3 planetas modernos farão parte ou não dos seus mapas. Mas lembre-se que não incluímos dignidades por domicílio para esses planetas.
 
-• O Gênero Padrão: Masculino, Feminino ou Neutro.
+• O Gênero Padrão: 
+  Masculino, Feminino ou Neutro.
 
-• Idioma da Interface: Escolha entre Inglês e Português o idioma dos elementos da interface (o nome dos países estará sempre em Inglês).
+• Idioma da Interface: 
+  Escolha entre Inglês e Português o idioma dos elementos da interface (o nome dos países estará sempre em Inglês).
+
+• Modo de Exibição (Escuro/Claro): 
+  Altera os esquemas de cores da roda do mapa e tabelas.
+
 
 Todas as configurações são persistentes e salvas no banco de dados do aplicativo.
 
@@ -624,6 +637,8 @@ A tecla [R] reseta a roda do mapa para seu tamanho e posição originais.
 Digite [H] para mostrar os limites das casas no mapa.
 
 Você pode ativar o modo de animação pressionando [A]. Use ] e [ para ajustar a velocidade da animação em incrementos de 60 segundos. Valores positivos mostra eventos futuros; valores negativos simulam viajar de volta no tempo.
+
+O programa foi desenvolvido usando a fonte "Adwaita Mono" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer um pouco alongados, em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
 
 • As Cores:
@@ -763,7 +778,8 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • Regentes por domicílio, exaltação, triplicidade, termo e decanato;
 
-• Recepção mútua: Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Nesta coluna  o programa identifica os planetas, independentemente de haver ou não aspecto válido entre eles. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+• Recepção mútua: 
+Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Nesta coluna  o programa identifica os planetas, independentemente de haver ou não aspecto válido entre eles. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
 Ao pressionar F2 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
@@ -1086,8 +1102,7 @@ Pressione [i] nesta tela para abrir a janela de análise da hora planetária.
 
 
 
-• Interpretação da Hora Planetária - Pressione [i] na Tabela
-  de Horas PLanetárias
+• Interpretação da Hora Planetária - Pressione [i] na Tabela de Horas PLanetárias
 ───────────────────────────────────────────────────────────────────
 
 Um relatório mostrando o significado e a interpretação dos regentes do dia (ou noite) e da hora planetária no horário corrente do mapa analisado.
@@ -1372,11 +1387,13 @@ Mostra o Hyleg (o doador de vida) e o Alcochoden (o doador de anos), bem como os
 
 O Hyleg (Doador de Vida) e o Alcochoden (Doador de Anos) formam a base da análise tradicional de longevidade e vitalidade constitucional, conforme estruturada por Ptolomeu, Ibn Ezra e Guido Bonatti.
 
-• O Hyleg é o planeta com maior força vital no mapa eleito de acordo com critérios baseados primariamente na seita do mapa e na colocação por casa.
+• Hyleg:
+O Hyleg é o planeta com maior força vital no mapa eleito de acordo com critérios baseados primariamente na seita do mapa e na colocação por casa.
 
 O ponto eleito atua como o foco geométrico primário para escudos físicos e o alvo terminal para técnicas de projeção de tempo (Direções Primárias).
 
-• O planeta que aspecta o Hyleg e possui as maiores   dignidades essenciais naquele grau exato é eleito   o Alcochoden.
+• Alcochoden:
+O planeta que aspecta o Hyleg e possui as maiores dignidades essenciais naquele grau exato é eleito o Alcochoden.
 
 Ele concede um número base de anos de acordo com sua força de quadrante (posição corpórea nas casas).
 
@@ -1614,13 +1631,16 @@ Press Q or ESC to return to the main menu.
 
 1. Motor Arquitetônico Central
 
-• Retorno Astronômico Exato: O módulo utiliza um algoritmo para localizar o Dia Juliano exato em Tempo Universal (UTC) quando o Sol transitório retorna à longitude eclíptica precisa do mapa de nascimento.
+• Retorno Astronômico Exato: 
+O módulo utiliza um algoritmo para localizar o Dia Juliano exato em Tempo Universal (UTC) quando o Sol transitório retorna à longitude eclíptica precisa do mapa de nascimento.
 
-• Relocação e Domificação: O instante matemático do retorno é absoluto e independente da localização do usuário. No entanto, as cúspides das casas e as orientações espaciais são dinâmicas. O sistema rastreia se o aniversário ocorre nas coordenadas de nascimento ou em uma cidade relocada, computando o Ascendente (ASC), Meio do Céu (MC) e as 12 cúspides das casas.
+• Relocação e Domificação: 
+O instante matemático do retorno é absoluto e independente da localização do usuário. No entanto, as cúspides das casas e as orientações espaciais são dinâmicas. O sistema rastreia se o aniversário ocorre nas coordenadas de nascimento ou em uma cidade relocada, computando o Ascendente (ASC), Meio do Céu (MC) e as 12 cúspides das casas.
 
 Nota: Alguns astrólogos sempre usam a mesma cidade de nascimento para o Mapa do Retorno Solar, mas outros consideram a cidade relocada. Portanto, o programa mostrará a cidade de nascimento por padrão e lhe dará a opção de selecionar outra. É escolha sua.
 
-• Sincronização Temporal: As variáveis de tempo são estritamente unificadas usando floats de precisão dupla (double) para evitar bugs de truncamento. Os cronocratas relacionados à idade (subperíodos Firdária e Profecções) são alinhados ao alimentar a fração decimal da vida na idade, garantindo continuidade absoluta entre janelas.
+• Sincronização Temporal: 
+As variáveis de tempo são estritamente unificadas usando floats de precisão dupla (double) para evitar bugs de truncamento. Os cronocratas relacionados à idade (subperíodos Firdária e Profecções) são alinhados ao alimentar a fração decimal da vida na idade, garantindo continuidade absoluta entre janelas.
 
 Nota: Ao abrir o Mapa do Retorno Solar, você será perguntado pela idade e esta é um número de ponto flutuante cujo valor decimal não faz diferença para o o novo mapa de retorno solar em si, mas é importante para fazer um bom confronto com o regente do sub-período da Firdária, pois os regentes da Firdária podem ser um ou outro dependendo da idade fracionária selecionada.
 
@@ -1663,22 +1683,27 @@ O módulo impede previsões anuais isoladas e genéricas, executando um exame cr
 
     1. Estrutura Arquitetônica e Projeções Espaciais
 
-    • Camada de Trânsito Estático: Este módulo trata o céu matemático exato do Retorno Solar como uma camada contínua e congelada de trânsitos que dita regras estruturais sobre a vida de base do nativo por 12 meses.
+    • Camada de Trânsito Estático: 
+      Este módulo trata o céu matemático exato do Retorno Solar como uma camada contínua e congelada de trânsitos que dita regras estruturais sobre a vida de base do nativo por 12 meses.
 
-    • Correlação Eclíptica Radix: O motor extrai as coordenadas anuais—filtrando especificamente as longitudes eclípticas verdadeiras (evitando troca inadvertida de latitude ou velocidade)—e as confronta com o Mapa de Nascimento original (Radix).
+    • Correlação Eclíptica Radix: 
+      O motor extrai as coordenadas anuais—filtrando especificamente as longitudes eclípticas verdadeiras (evitando troca inadvertida de latitude ou velocidade)—e as confronta com o Mapa de Nascimento original (Radix).
 
-    • Domificação Espacial Astronômica: Ao ancorar o cálculo estritamente no ARMC Natal e na Latitude Natal do nativo, o módulo projeta exatamente qual setor de vida de nascimento (Casa Natal 1–12) está sendo ativado pelas forças transitórias do ano.
+    • Domificação Espacial Astronômica: 
+      Ao ancorar o cálculo estritamente no ARMC Natal e na Latitude Natal do nativo, o módulo projeta exatamente qual setor de vida de nascimento (Casa Natal 1–12) está sendo ativado pelas forças transitórias do ano.
 
     2. Pontos de Verificação Analítica e Mitigação de Risco
 
     Para preservar o rigor tradicional e eliminar saídas automatizadas genéricas e alarmistas, o motor aplica parâmetros precisos em duas lentes analíticas distintas:
 
     • [MONITOR CRÍTICO] Proteção Vital Hyleg: 
-    O sistema isola o Hyleg Natal verdadeiro do nativo (seja um planeta ou um ponto abstrato como o Ascendente). Ele testa se algum planeta transitório do aniversário corta este grau exato dentro de um orbe tradicional e estrito de 5°. Conjunções de Benéficos (Júpiter/Vênus) destacam anos de recuperação física e proteção sistêmica, enquanto alinhamentos de Maléficos (Marte/Saturno) disparam alertas vitais imediatos e destacados para inflamação aguda ou constrição física crônica.
+      O sistema isola o Hyleg Natal verdadeiro do nativo (seja um planeta ou um ponto abstrato como o Ascendente). Ele testa se algum planeta transitório do aniversário corta este grau exato dentro de um orbe tradicional e estrito de 5°. Conjunções de Benéficos (Júpiter/Vênus) destacam anos de recuperação física e proteção sistêmica, enquanto alinhamentos de Maléficos (Marte/Saturno) disparam alertas vitais imediatos e destacados para inflamação aguda ou constrição física crônica.
 
-    • Conjunções Radicais Ativas: O motor percorre os sete planetas tradicionais, mapeando (Sol a Saturno) usando verificações de distância modular absoluta. Se um planeta anual cair a 5° de qualquer corpo natal, ele desperta aquela promessa natal específica.
+    • Conjunções Radicais Ativas: 
+      O motor percorre os sete planetas tradicionais, mapeando (Sol a Saturno) usando verificações de distância modular absoluta. Se um planeta anual cair a 5° de qualquer corpo natal, ele desperta aquela promessa natal específica.
 
-    • Ponderação Funcional: A narrativa ajusta dinâm namicamente com base na natureza do planeta transitório. Um Saturno ou Marte transitando em conjunção com um ponto natal dispara fricção estrutural ou gasto súbito de energia, enquanto um Júpiter transitando injeta proteção cósmica e expansão naquele setor—garantindo que o usuário possa distinguir facilmente entre anos de alto estresse e janelas de crescimento estrutural.
+    • Ponderação Funcional: 
+      A narrativa ajusta dinâm namicamente com base na natureza do planeta transitório. Um Saturno ou Marte transitando em conjunção com um ponto natal dispara fricção estrutural ou gasto súbito de energia, enquanto um Júpiter transitando injeta proteção cósmica e expansão naquele setor—garantindo que o usuário possa distinguir facilmente entre anos de alto estresse e janelas de crescimento estrutural.
 
 No Mapa de Retorno Solar, os módulos de previsão não estão disponíveis, assim como o Temperamento, Análise de Mente e Motivação Primária, porque esses cálculos são relevantes apenas para Mapas Natais (Radix).
 
