@@ -2225,12 +2225,12 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
         }
         else {
             mvprintw(LINES - 5, 1, _("Divisions = Zodiac Signs"));
-            mvprintw(LINES - 3, 1, _("Anim: A "));
+            mvprintw(LINES - 3, 1, _("Anim: A    | Menu: M "));
         }
-        mvprintw(LINES - 2, 1,   "Zoom: + -  | Pan: ←↓→↑  | Reset: R ");
+        mvprintw(LINES - 2, 1,       "Zoom: + -  | Pan: ←↓→↑  | Reset: R ");
         mvprintw(LINES - 1, 1, _("Aspect: / *| Speed: ]/[ | Quit: Q "));
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
-        mvprintw(LINES - 3, max_x - 45, _(" Menu: M | Houses: H | Terms: B | Decans: D "));
+        mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
 
         if (animated) {

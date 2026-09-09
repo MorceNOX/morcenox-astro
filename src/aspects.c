@@ -29,8 +29,8 @@
 #include "db-utils.h"
 #include "aspects.h"
 
-double ASP_ANTISSIA_EXACT() { return get_antissia_orbis() * 0.1; }
-double ASP_PARALLEL_EXACT() { return get_decl_orbis() * 0.1; }
+double ASP_ANTISSIA_EXACT() { return ASP_MAJOR_EXACT; }
+double ASP_PARALLEL_EXACT() { return ASP_MAJOR_EXACT; }
 
 
 // ids começam por 0

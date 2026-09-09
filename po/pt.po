@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 14:54-0300\n"
+"POT-Creation-Date: 2026-09-06 15:09-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1368,7 +1368,7 @@ msgid "Anim: A | Parts Radix Confrontation: P "
 msgstr "Anim: A | Confrontação Partes / Radix: P"
 
 #: src/draw-chart.c:2228
-msgid "Anim: A "
+msgid "Anim: A    | Menu: M "
 msgstr ""
 
 #: src/draw-chart.c:2231
@@ -1380,12 +1380,12 @@ msgid " Action: F1..F9, F12, 0-8 "
 msgstr " Ação: F1..F9, F12, 0-8 "
 
 #: src/draw-chart.c:2233
-msgid " Menu: M | Houses: H | Terms: B | Decans: D "
-msgstr " Menu: M | Casas: H | Termos: B | Decanos: D "
+msgid " Houses: H | Terms: B | Decans: D "
+msgstr " Casas: H | Termos: B | Decans: D "
 
 #: src/draw-chart.c:2234
 msgid "      Aspect Ratio: "
-msgstr " Proporção de Tela: "
+msgstr "           Aspecto: "
 
 #: src/draw-chart.c:2239
 msgid "▶️  Running"

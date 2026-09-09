@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 14:54-0300\n"
+"POT-Creation-Date: 2026-09-06 15:09-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1140,7 +1140,7 @@ msgid "Anim: A | Parts Radix Confrontation: P "
 msgstr ""
 
 #: src/draw-chart.c:2228
-msgid "Anim: A "
+msgid "Anim: A    | Menu: M "
 msgstr ""
 
 #: src/draw-chart.c:2231
@@ -1152,7 +1152,7 @@ msgid " Action: F1..F9, F12, 0-8 "
 msgstr ""
 
 #: src/draw-chart.c:2233
-msgid " Menu: M | Houses: H | Terms: B | Decans: D "
+msgid " Houses: H | Terms: B | Decans: D "
 msgstr ""
 
 #: src/draw-chart.c:2234
