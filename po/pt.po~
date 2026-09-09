@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 14:02-0300\n"
+"POT-Creation-Date: 2026-09-09 18:21-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -30,17 +30,17 @@ msgid "Sol "
 msgstr "Sol "
 
 #: src/almuten.c:538 src/draw-chart.c:394 src/draw-chart.c:601
-#: src/draw-chart.c:5600 src/draw-chart.c:5622 src/hyleg.c:337
+#: src/draw-chart.c:5604 src/draw-chart.c:5626 src/hyleg.c:337
 msgid "Luna"
 msgstr "Lua"
 
-#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5613
-#: src/draw-chart.c:5632
+#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5617
+#: src/draw-chart.c:5636
 msgid "Ascendant"
 msgstr "Ascendente"
 
 #: src/almuten.c:538 src/directions.c:452 src/draw-chart.c:427
-#: src/draw-chart.c:1529 src/draw-chart.c:5611 src/draw-chart.c:5630
+#: src/draw-chart.c:1529 src/draw-chart.c:5615 src/draw-chart.c:5634
 msgid "Part of Fortune"
 msgstr "Parte da Fortuna"
 
@@ -905,7 +905,7 @@ msgstr ""
 
 #: src/arabic_parts.c:385 src/arabic_parts.c:650 src/directions.c:713
 #: src/directions.c:1184 src/draw-chart.c:3215 src/draw-chart.c:3559
-#: src/draw-chart.c:4402 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1010
+#: src/draw-chart.c:4406 src/firdaria.c:448 src/hyleg.c:694 src/hyleg.c:1010
 #: src/mind.c:312 src/profections.c:188
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
@@ -1113,32 +1113,32 @@ msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
 #: src/directions.c:621 src/directions.c:1083 src/draw-chart.c:403
-#: src/draw-chart.c:604 src/draw-chart.c:4783 src/draw-chart.c:5603
-#: src/draw-chart.c:5625 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
+#: src/draw-chart.c:604 src/draw-chart.c:4787 src/draw-chart.c:5607
+#: src/draw-chart.c:5629 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
 #: src/profections.c:48 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1344 src/solar_return.c:1500
 msgid "Mars"
 msgstr "Marte"
 
 #: src/directions.c:622 src/directions.c:1084 src/draw-chart.c:409
-#: src/draw-chart.c:606 src/draw-chart.c:4781 src/draw-chart.c:5605
-#: src/draw-chart.c:5627 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
+#: src/draw-chart.c:606 src/draw-chart.c:4785 src/draw-chart.c:5609
+#: src/draw-chart.c:5631 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
 #: src/profections.c:54 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1344 src/solar_return.c:1500
 msgid "Saturn"
 msgstr "Saturno"
 
 #: src/directions.c:629 src/directions.c:1093 src/draw-chart.c:406
-#: src/draw-chart.c:605 src/draw-chart.c:4782 src/draw-chart.c:5604
-#: src/draw-chart.c:5626 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
+#: src/draw-chart.c:605 src/draw-chart.c:4786 src/draw-chart.c:5608
+#: src/draw-chart.c:5630 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
 #: src/profections.c:53 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1347 src/solar_return.c:1503
 msgid "Jupiter"
 msgstr "Júpiter"
 
 #: src/directions.c:630 src/directions.c:1094 src/draw-chart.c:400
-#: src/draw-chart.c:603 src/draw-chart.c:4778 src/draw-chart.c:5602
-#: src/draw-chart.c:5624 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
+#: src/draw-chart.c:603 src/draw-chart.c:4782 src/draw-chart.c:5606
+#: src/draw-chart.c:5628 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
 #: src/profections.c:49 src/solar_return.c:1135 src/solar_return.c:1285
 #: src/solar_return.c:1347 src/solar_return.c:1503
 msgid "Venus"
@@ -1202,45 +1202,45 @@ msgstr ""
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
-#: src/draw-chart.c:391 src/draw-chart.c:4777 src/firdaria.c:97 src/hyleg.c:336
+#: src/draw-chart.c:391 src/draw-chart.c:4781 src/firdaria.c:97 src/hyleg.c:336
 #: src/profections.c:52 src/solar_return.c:1135 src/solar_return.c:1285
 msgid "Sun"
 msgstr "Sol"
 
-#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5599
-#: src/draw-chart.c:5621 src/hyleg.c:336
+#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5603
+#: src/draw-chart.c:5625 src/hyleg.c:336
 msgid "Sol"
 msgstr "Sol"
 
-#: src/draw-chart.c:394 src/draw-chart.c:4780 src/firdaria.c:98 src/hyleg.c:337
+#: src/draw-chart.c:394 src/draw-chart.c:4784 src/firdaria.c:98 src/hyleg.c:337
 #: src/profections.c:51 src/solar_return.c:1135 src/solar_return.c:1285
 msgid "Moon"
 msgstr "Lua"
 
-#: src/draw-chart.c:397 src/draw-chart.c:602 src/draw-chart.c:4779
-#: src/draw-chart.c:5601 src/draw-chart.c:5623 src/firdaria.c:99
+#: src/draw-chart.c:397 src/draw-chart.c:602 src/draw-chart.c:4783
+#: src/draw-chart.c:5605 src/draw-chart.c:5627 src/firdaria.c:99
 #: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:1135
 #: src/solar_return.c:1285
 msgid "Mercury"
 msgstr "Mercúrio"
 
 #: src/draw-chart.c:412 src/draw-chart.c:607 src/draw-chart.c:1537
-#: src/draw-chart.c:5606 src/solar_return.c:1285
+#: src/draw-chart.c:5610 src/solar_return.c:1285
 msgid "Uranus"
 msgstr "Urano"
 
 #: src/draw-chart.c:415 src/draw-chart.c:608 src/draw-chart.c:1536
-#: src/draw-chart.c:5607 src/solar_return.c:1285
+#: src/draw-chart.c:5611 src/solar_return.c:1285
 msgid "Neptune"
 msgstr "Netuno"
 
 #: src/draw-chart.c:418 src/draw-chart.c:609 src/draw-chart.c:1538
-#: src/draw-chart.c:5608 src/solar_return.c:1285
+#: src/draw-chart.c:5612 src/solar_return.c:1285
 msgid "Pluto"
 msgstr "Plutão"
 
 #: src/draw-chart.c:421 src/draw-chart.c:610 src/draw-chart.c:1533
-#: src/draw-chart.c:5609 src/draw-chart.c:5628 src/firdaria.c:104
+#: src/draw-chart.c:5613 src/draw-chart.c:5632 src/firdaria.c:104
 #: src/solar_return.c:1285 src/solar_return.c:1347 src/solar_return.c:1503
 msgid "North Node"
 msgstr "Nodo Norte"
@@ -1250,7 +1250,7 @@ msgid "Caput Draconis"
 msgstr "Cabeça do Dragão"
 
 #: src/draw-chart.c:424 src/draw-chart.c:611 src/draw-chart.c:1531
-#: src/draw-chart.c:5610 src/draw-chart.c:5629 src/firdaria.c:105
+#: src/draw-chart.c:5614 src/draw-chart.c:5633 src/firdaria.c:105
 #: src/solar_return.c:1285 src/solar_return.c:1344 src/solar_return.c:1500
 msgid "South Node"
 msgstr "Nodo Sul"
@@ -1295,23 +1295,23 @@ msgstr "🌓 Quarto Minguante"
 msgid "🌒 Waning Crescent"
 msgstr "🌒 Minguante Côncava"
 
-#: src/draw-chart.c:1526 src/draw-chart.c:5614 src/draw-chart.c:5633
+#: src/draw-chart.c:1526 src/draw-chart.c:5618 src/draw-chart.c:5637
 msgid "Midheaven"
 msgstr "Meio-do-Céu"
 
-#: src/draw-chart.c:1527 src/draw-chart.c:5616 src/draw-chart.c:5635
+#: src/draw-chart.c:1527 src/draw-chart.c:5620 src/draw-chart.c:5639
 msgid "Nadir"
 msgstr "Fundo-do-Céu"
 
-#: src/draw-chart.c:1528 src/draw-chart.c:5615 src/draw-chart.c:5634
+#: src/draw-chart.c:1528 src/draw-chart.c:5619 src/draw-chart.c:5638
 msgid "Descendant"
 msgstr "Descendente"
 
-#: src/draw-chart.c:1530 src/draw-chart.c:5612 src/draw-chart.c:5631
+#: src/draw-chart.c:1530 src/draw-chart.c:5616 src/draw-chart.c:5635
 msgid "SAN"
 msgstr "SAN"
 
-#: src/draw-chart.c:1532 src/draw-chart.c:5617 src/draw-chart.c:5636
+#: src/draw-chart.c:1532 src/draw-chart.c:5621 src/draw-chart.c:5640
 msgid "Vertex"
 msgstr "Vértex"
 
@@ -1682,7 +1682,7 @@ msgstr "Dignidade"
 msgid "Gen/Sect/Quad"
 msgstr "Gên/Seita/Quad"
 
-#: src/draw-chart.c:3277 src/draw-chart.c:6385
+#: src/draw-chart.c:3277 src/draw-chart.c:6389
 msgid "Orient"
 msgstr "Orient"
 
@@ -2304,15 +2304,15 @@ msgstr ""
 "Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:4114 src/draw-chart.c:4157
+#: src/draw-chart.c:4114 src/draw-chart.c:4159
 msgid "the Day"
 msgstr "o Dia"
 
-#: src/draw-chart.c:4114 src/draw-chart.c:4157
+#: src/draw-chart.c:4114 src/draw-chart.c:4159
 msgid "the Night"
 msgstr "a Noite"
 
-#: src/draw-chart.c:4117 src/draw-chart.c:4178 src/solar_return.c:609
+#: src/draw-chart.c:4118 src/draw-chart.c:4181 src/solar_return.c:609
 msgid ""
 "Structural Efficiency Verdict:\n"
 "\n"
@@ -2320,7 +2320,7 @@ msgstr ""
 "Veredito sobre a Eficiência Estrutural:\n"
 "\n"
 
-#: src/draw-chart.c:4124 src/draw-chart.c:4185 src/solar_return.c:616
+#: src/draw-chart.c:4126 src/draw-chart.c:4189 src/solar_return.c:616
 msgid ""
 " • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n"
 "\n"
@@ -2328,7 +2328,7 @@ msgstr ""
 " • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n"
 "\n"
 
-#: src/draw-chart.c:4129
+#: src/draw-chart.c:4131
 #, c-format
 msgid ""
 "This planet commands %s with magnificent backing.\n"
@@ -2348,15 +2348,15 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:4132
+#: src/draw-chart.c:4134
 msgid "the day"
 msgstr "o dia"
 
-#: src/draw-chart.c:4132
+#: src/draw-chart.c:4134
 msgid "the night"
 msgstr "a noite"
 
-#: src/draw-chart.c:4136 src/draw-chart.c:4197 src/solar_return.c:628
+#: src/draw-chart.c:4138 src/draw-chart.c:4201 src/solar_return.c:628
 msgid ""
 " • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n"
 "\n"
@@ -2364,7 +2364,7 @@ msgstr ""
 " • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n"
 "\n"
 
-#: src/draw-chart.c:4141 src/draw-chart.c:4202
+#: src/draw-chart.c:4143 src/draw-chart.c:4206
 #, c-format
 msgid ""
 "This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
@@ -2385,7 +2385,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:4148 src/draw-chart.c:4209 src/solar_return.c:640
+#: src/draw-chart.c:4150 src/draw-chart.c:4213 src/solar_return.c:640
 msgid ""
 " • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n"
 "\n"
@@ -2393,7 +2393,7 @@ msgstr ""
 " • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n"
 "\n"
 
-#: src/draw-chart.c:4153
+#: src/draw-chart.c:4155
 #, c-format
 msgid ""
 "WARNING: The Lord of %s operates under extreme systemic debility (%d%%).\n"
@@ -2413,7 +2413,7 @@ msgstr ""
 "bloqueios administrativos ou a sensação de tentar abrir uma porta \n"
 "trancada.\n"
 
-#: src/draw-chart.c:4168
+#: src/draw-chart.c:4170
 #, c-format
 msgid ""
 " • REGENT OF THE HOUR: ( %s )\n"
@@ -2422,7 +2422,7 @@ msgstr ""
 " • REGENTE DA HORA: ( %s )\n"
 "\n"
 
-#: src/draw-chart.c:4173
+#: src/draw-chart.c:4175
 #, c-format
 msgid ""
 "The base dignity score of the Regent of the hour is: %d.\n"
@@ -2435,7 +2435,7 @@ msgstr ""
 "Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:4190
+#: src/draw-chart.c:4194
 #, c-format
 msgid ""
 "This planet commands the hour with magnificent backing.\n"
@@ -2455,7 +2455,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:4214
+#: src/draw-chart.c:4218
 #, c-format
 msgid ""
 "WARNING: The Lord of the hour operates under extreme systemic debility "
@@ -2476,15 +2476,15 @@ msgstr ""
 "bloqueios administrativos ou a sensação de tentar abrir uma porta \n"
 "trancada.\n"
 
-#: src/draw-chart.c:4229
+#: src/draw-chart.c:4233
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"
 msgstr "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar à tabela.\n"
 
-#: src/draw-chart.c:4329
+#: src/draw-chart.c:4333
 msgid "Rising Times | Setting Times | Upper Culmination Times"
 msgstr "Horários de Ascenção, Ocaso & Culminação Superior"
 
-#: src/draw-chart.c:4332
+#: src/draw-chart.c:4336
 msgid ""
 "       Rising                    Setting                   "
 "Culmination                   Time zone: Local"
@@ -2492,195 +2492,195 @@ msgstr ""
 "       Ascenção                  Ocaso                     "
 "Culminação                   Fuso Horário: Local"
 
-#: src/draw-chart.c:6055
+#: src/draw-chart.c:6059
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:6071
+#: src/draw-chart.c:6075
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:6087
+#: src/draw-chart.c:6091
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:6101
+#: src/draw-chart.c:6105
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:6115
+#: src/draw-chart.c:6119
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:6131
+#: src/draw-chart.c:6135
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:6143
+#: src/draw-chart.c:6147
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:6163
+#: src/draw-chart.c:6167
 msgid "pilgrim "
 msgstr "peregrino "
 
-#: src/draw-chart.c:6389
+#: src/draw-chart.c:6393
 msgid "Occid"
 msgstr "Ocid"
 
-#: src/draw-chart.c:6443
+#: src/draw-chart.c:6447
 msgid "Spring"
 msgstr "Primavera"
 
-#: src/draw-chart.c:6443 src/draw-chart.c:6464
+#: src/draw-chart.c:6447 src/draw-chart.c:6468
 msgid "Sanguine"
 msgstr "Sanguíneo"
 
-#: src/draw-chart.c:6446
+#: src/draw-chart.c:6450
 msgid "Summer"
 msgstr "Verão"
 
-#: src/draw-chart.c:6446 src/draw-chart.c:6468
+#: src/draw-chart.c:6450 src/draw-chart.c:6472
 msgid "Choleric"
 msgstr "Colérico"
 
-#: src/draw-chart.c:6449
+#: src/draw-chart.c:6453
 msgid "Autumn"
 msgstr "Outono"
 
-#: src/draw-chart.c:6449 src/draw-chart.c:6472
+#: src/draw-chart.c:6453 src/draw-chart.c:6476
 msgid "Melancholic"
 msgstr "Melancólico"
 
-#: src/draw-chart.c:6452
+#: src/draw-chart.c:6456
 msgid "Winter"
 msgstr "Inverno"
 
-#: src/draw-chart.c:6452 src/draw-chart.c:6476
+#: src/draw-chart.c:6456 src/draw-chart.c:6480
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
-#: src/draw-chart.c:7256 src/draw-chart.c:7286
+#: src/draw-chart.c:7260 src/draw-chart.c:7290
 msgid "01. Chart Data Panel"
 msgstr "01. Dados do Mapa"
 
-#: src/draw-chart.c:7257 src/draw-chart.c:7287
+#: src/draw-chart.c:7261 src/draw-chart.c:7291
 msgid "02. Positions, Dignities & Rulerships"
 msgstr "02. Posições, Dignidades & Regentes"
 
-#: src/draw-chart.c:7258 src/draw-chart.c:7288
+#: src/draw-chart.c:7262 src/draw-chart.c:7292
 msgid "03. Accidental Dignities"
 msgstr "03. Dignidades Acidentais"
 
-#: src/draw-chart.c:7259 src/draw-chart.c:7289
+#: src/draw-chart.c:7263 src/draw-chart.c:7293
 msgid "04. Strength of the Planets"
 msgstr "04. Força dos Planetas"
 
-#: src/draw-chart.c:7260 src/draw-chart.c:7290
+#: src/draw-chart.c:7264 src/draw-chart.c:7294
 msgid "05. Aspects"
 msgstr "05. Aspectos"
 
-#: src/draw-chart.c:7261 src/draw-chart.c:7291
+#: src/draw-chart.c:7265 src/draw-chart.c:7295
 msgid "06. Declination Aspects"
 msgstr "06. Aspectos de Declinação"
 
-#: src/draw-chart.c:7262 src/draw-chart.c:7292
+#: src/draw-chart.c:7266 src/draw-chart.c:7296
 msgid "07. Planetary Hours"
 msgstr "07. Horas Planetárias"
 
-#: src/draw-chart.c:7263 src/draw-chart.c:7293
+#: src/draw-chart.c:7267 src/draw-chart.c:7297
 msgid "08. Rising, Setting & Culmination Times"
 msgstr "08. Horários de Ascenção, Ocaso & Culminação"
 
-#: src/draw-chart.c:7264 src/draw-chart.c:7294
+#: src/draw-chart.c:7268 src/draw-chart.c:7298
 msgid "09. Houses"
 msgstr "09. Casas"
 
-#: src/draw-chart.c:7265 src/draw-chart.c:7295
+#: src/draw-chart.c:7269 src/draw-chart.c:7299
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr "10. Almuten Figuris & dos Pontos Hylegíacos"
 
-#: src/draw-chart.c:7266
+#: src/draw-chart.c:7270
 msgid "11. Temperament Analysis"
 msgstr "11. Análise do Temperamento"
 
-#: src/draw-chart.c:7267
+#: src/draw-chart.c:7271
 msgid "12. Annual Profections"
 msgstr "12. Profecções Anuais"
 
-#: src/draw-chart.c:7268
+#: src/draw-chart.c:7272
 msgid "13. Firdaria"
 msgstr "13. Firdária"
 
-#: src/draw-chart.c:7269
+#: src/draw-chart.c:7273
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr "14. Cronocratas Vitais: Doadores de Vida"
 
-#: src/draw-chart.c:7270
+#: src/draw-chart.c:7274
 msgid "15. Vital Threats: The Anareta"
 msgstr "15. Ameaças Vitais: O Anareta"
 
-#: src/draw-chart.c:7271
+#: src/draw-chart.c:7275
 msgid "16. Primary Directions"
 msgstr "16. Direções Primárias"
 
-#: src/draw-chart.c:7272
+#: src/draw-chart.c:7276
 msgid "17. Prymary Directions to Arabic Parts"
 msgstr "17. Direções Primárias às Partes Árabes"
 
-#: src/draw-chart.c:7273
+#: src/draw-chart.c:7277
 msgid "18. Arabic Parts"
 msgstr "18. Partes Árabes"
 
-#: src/draw-chart.c:7274
+#: src/draw-chart.c:7278
 msgid "19. Mind Analysis"
 msgstr "19. Análise da Mente"
 
-#: src/draw-chart.c:7275
+#: src/draw-chart.c:7279
 msgid "20. Solar Revolution"
 msgstr "20. Revolução Solar"
 
-#: src/draw-chart.c:7276
+#: src/draw-chart.c:7280
 msgid "21. Planetary Energy Profile"
 msgstr "21. Perfil de Energia Planetária "
 
-#: src/draw-chart.c:7277
+#: src/draw-chart.c:7281
 msgid "22. Primary Motivation"
 msgstr "22. Motivação Primária"
 
-#: src/draw-chart.c:7278
+#: src/draw-chart.c:7282
 msgid "23. Aspects by Sign"
 msgstr "23. Aspectos por Signo"
 
-#: src/draw-chart.c:7279
+#: src/draw-chart.c:7283
 msgid "24. Aspects to Antissia & Contrantissia"
 msgstr "24. Aspects para Antissia & Contrantissia"
 
-#: src/draw-chart.c:7296
+#: src/draw-chart.c:7300
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr "12. Confrontação Radix e Retorno Solar"
 
-#: src/draw-chart.c:7297
+#: src/draw-chart.c:7301
 msgid "12. Annual Transits & Radical Projections"
 msgstr "12. Trânsitos do Ano & Projeções Radicais"
 
-#: src/draw-chart.c:7298
+#: src/draw-chart.c:7302
 msgid "13. Arabic Parts"
 msgstr "13. Partes Árabes"
 
-#: src/draw-chart.c:7299
+#: src/draw-chart.c:7303
 msgid "14. Planetary Energy Profile"
 msgstr "14. Perfil de Energia Planetária"
 
-#: src/draw-chart.c:7300
+#: src/draw-chart.c:7304
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr "15. Partes Árabes - Confrontação Rev. Solar/Radix"
 
-#: src/draw-chart.c:7301
+#: src/draw-chart.c:7305
 msgid "16. Aspects by Sign"
 msgstr "16. Aspectos por Signo"
 
-#: src/draw-chart.c:7302
+#: src/draw-chart.c:7306
 msgid "17. Aspects to Antissia & Contrantissia"
 msgstr "17. Aspectos para Antissia & Contrantissia"
 
@@ -5519,135 +5519,353 @@ msgstr " 2. DINÂMICA DO TEMPERAMENTO ESTRUTURAL\n"
 
 #: src/temperament.c:840
 msgid ""
-"SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
+"SANGUINE-PHLEGMATIC MIX (The Moist Overload / Balanced Temperature)\n"
 "\n"
 msgstr ""
-"SANGUÍNEO-FLEUMÁTICO MIX (Temp. Balanceada.)\n"
+"SANGUÍNEO-FLEUMÁTICO MIX (Umidade Excessiva / Temperatura Balanceada)\n"
 "\n"
 
 #: src/temperament.c:844
 msgid ""
 "Your vital energy functions in perfect thermal equilibrium, blending Air and "
-"Water. This grants a deeply flexible, empathetic, and highly social persona. "
+"Water.\n"
+"This grants a deeply flexible, empathetic, and highly social persona.\n"
 "The talkative mind flows smoothly with natural emotional sensitivity, "
 "offering extreme social adaptability but risking mild emotional scattering.\n"
 "\n"
 "\n"
 msgstr ""
 "Sua energia vital opera em perfeito equilíbrio térmico, combinando Ar e "
-"Água. Isso confere uma personalidade profundamente flexível, empática e "
-"altamente sociável. A mente comunicativa flui com natural sensibilidade "
-"emocional, proporcionando extrema adaptabilidade social, mas com o risco de "
-"uma \n"
-"leve dispersão emocional.\n"
+"Água.\n"
+"Isso confere uma personalidade profundamente flexível, empática e altamente "
+"sociável.\n"
+"A mente comunicativa flui com natural sensibilidade emocional, "
+"proporcionando extrema adaptabilidade social, mas com o risco de uma leve "
+"dispersão emocional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:852
+#: src/temperament.c:852 src/temperament.c:879 src/temperament.c:905
+#: src/temperament.c:936 src/temperament.c:964 src/temperament.c:994
+#: src/temperament.c:1021 src/temperament.c:1047 src/temperament.c:1073
 msgid ""
-"CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
+"Characteristics:)\n"
 "\n"
 msgstr ""
-"COLÉRICO-MELANCÓLICO MIX (Temp. Balanceada)\n"
+"Características:\n"
 "\n"
 
-#: src/temperament.c:856
+#: src/temperament.c:857
+msgid ""
+" •   Highly Adaptable and Empathetic.\n"
+"Plastic, receptive, and relationally oriented. Dominated by moisture, which "
+"smooths out sharp edges, creating an extremely diplomatic, gentle, and "
+"community-focused nature.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Naturally fluid body with an adaptable, though occasionally sluggish, "
+"metabolism. Sensitive to environmental moisture and highly responsive to "
+"emotional comfort.\n"
+"\n"
+" •   Psychological Profile:\n"
+"An excellent peacekeeper who blends Sanguine optimism with Phlegmatic "
+"listening skills. They flow easily with life's changes, but because they "
+"lack dryness (structure/focus), they may find it difficult to set firm "
+"personal boundaries, make harsh choices, or sustain independent focus.\n"
+"\n"
+"\n"
+msgstr ""
+" •   Altamente adaptável e empático.\n"
+"Flexível, receptivo e voltado para os relacionamentos. Dominado pela "
+"umidade, que suaviza arestas, criando uma natureza extremamente diplomática, "
+"gentil e voltada para a comunidade.\n"
+"\n"
+" •   Constituição física:\n"
+"Corpo naturalmente fluido, com um metabolismo adaptável, embora "
+"ocasionalmente lento. Sensível à umidade do ambiente e altamente responsivo "
+"ao conforto emocional.\n"
+"\n"
+" •   Perfil psicológico:\n"
+"Um excelente pacificador que combina o otimismo do temperamento sanguíneo "
+"com a capacidade de escuta do fleumático. Flui facilmente com as mudanças da "
+"vida, mas, por lhe faltar secura (estrutura/foco), pode ter dificuldade em "
+"estabelecer limites pessoais firmes, fazer escolhas difíceis ou manter o "
+"foco de forma independente.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:867
+msgid ""
+"CHOLERIC-MELANCHOLIC MIX (The Dry Overload / Balanced Temperature)\n"
+"\n"
+msgstr ""
+"COLÉRICO-MELANCÓLICO MIX (Secura Excessiva / Temperatura Balanceada)\n"
+"\n"
+
+#: src/temperament.c:871
 msgid ""
 "Your active forces exist in a state of controlled thermal poise, blending "
-"Fire and Earth. This creates an unstoppable achiever rooted in deep "
-"structural efficiency and discipline. You possess immense willpower, though "
-"you must guard against chronic internal stress, rigid perfectionism, and "
-"deep stubbornness.\n"
+"Fire and Earth.\n"
+"This creates an unstoppable achiever rooted in deep structural efficiency "
+"and discipline.\n"
+"You possess immense willpower, though you must guard against chronic "
+"internal stress, rigid perfectionism, and deep stubbornness.\n"
 "\n"
 "\n"
 msgstr ""
 "Suas forças ativas existem em um estado de equilíbrio térmico controlado, "
-"combinando Fogo e Terra. Isso cria uma pessoa de realizações imparáveis, "
-"alicerçada em uma profunda eficiência estrutural e disciplina. Você possui "
-"imensa força de vontade, embora precise se precaver contra o estresse "
-"interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
+"combinando Fogo e Terra.\n"
+"Isso cria uma pessoa de realizações imparáveis, alicerçada em uma profunda "
+"eficiência estrutural e disciplina.\n"
+"Você possui imensa força de vontade, embora precise se precaver contra o "
+"estresse interno crônico, o perfeccionismo rígido e a obstinação profunda.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:864
+#: src/temperament.c:884
 msgid ""
-"ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
+" •   Intensely Focused and Rigid.\n"
+"Decisive, highly structured, and uncompromising. Dominated by dryness, which "
+"creates sharp boundaries, extreme willpower, and an unyielding commitment to "
+"objective results.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Tense, rigid tissue structure with a dense physical build. Prone to quick "
+"digestion but vulnerable to chronic inflammation, joint tension, or physical "
+"burnout from overworking.\n"
+"\n"
+" •   Psychological Profile:\n"
+"The ultimate producer. They combine Choleric executive drive with "
+"Melancholic analytical depth and discipline. Extremely reliable and highly "
+"efficient, but when out of balance, the total lack of moisture makes them "
+"stubborn, hyper-critical, and prone to severe emotional rigidity.\n"
+"\n"
 "\n"
 msgstr ""
-"EQUILÍBRIO ABSOLUTO (Quadrapartite)\n"
+" •   Intensamente Focado e Rígido.\n"
+"Decisivo, altamente estruturado e inflexível. Dominado pela secura, que gera "
+"limites nítidos, força de vontade extrema e um compromisso inabalável com "
+"resultados objetivos.\n"
+"\n"
+" •   Constituição Física:\n"
+"Estrutura de tecidos tensa e rígida, com porte físico denso. Propensão a uma "
+"digestão rápida, porém vulnerável a inflamações crônicas, tensão nas "
+"articulações ou esgotamento físico por excesso de trabalho.\n"
+"\n"
+" •   Perfil Psicológico:\n"
+"O realizador por excelência. Combina o ímpeto executivo do temperamento "
+"Colérico com a profundidade analítica e a disciplina do Melancólico. "
+"Extremamente confiável e altamente eficiente; contudo, quando em "
+"desequilíbrio, a total falta de umidade torna o indivíduo teimoso, "
+"hipercrítico e propenso a uma rigidez emocional severa.\n"
+"\n"
 "\n"
 
-#: src/temperament.c:868
+#: src/temperament.c:893
 msgid ""
-"Your chart reflects the rare, ideal geometric balance of all four humors. "
-"Fire, Water, Air, and Earth converge into perfect cosmic proportion. You "
-"possess the courage of the Choleric, the social grace of the Sanguine, the "
-"empathy of the Phlegmatic, and the objective realism of the Melancholic, "
+"ABSOLUTE BALANCE (Quadripartite Temperament)\n"
+"\n"
+msgstr ""
+"EQUILÍBRIO ABSOLUTO (Temperamento Quadripartite)\n"
+"\n"
+
+#: src/temperament.c:897
+msgid ""
+"Your chart reflects the rare, ideal geometric balance of all four humors.\n"
+"Fire, Water, Air, and Earth converge into perfect cosmic proportion.\n"
+"You possess the courage of the Choleric, the social grace of the Sanguine, "
+"the empathy of the Phlegmatic, and the objective realism of the Melancholic, "
 "activated exactly when needed.\n"
 "\n"
 "\n"
 msgstr ""
 "Seu mapa reflete o raro e ideal equilíbrio geométrico de todos os quatro "
-"humores. Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica. "
+"humores.\n"
+"Fogo, Água, Ar e Terra convergem em perfeita proporção cósmica.\n"
 "Você possui a coragem do Colérico, a desenvoltura social do Sanguíneo, a "
 "empatia do Fleumático e o realismo objetivo do Melancólico, ativados "
 "exatamente quando necessário.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:880
+#: src/temperament.c:910
 msgid ""
-"SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
+" •   Centered and Universally Poised.\n"
+"An exceptionally rare configuration where Hot, Cold, Moist, and Dry hold "
+"equal weight. No single element dominates, creating a highly centered, "
+"balanced baseline response to life.\n"
+"\n"
+" •   Physical Constitution:\n"
+"An inherently balanced homeostasis. The metabolism, circulation, and nervous "
+"system operate in an active state of equilibrium, shifting smoothly to meet "
+"external demands.\n"
+"\n"
+" •   Psychological Profile:\n"
+"The individual is a true chameleon of behavior, capable of drawing upon "
+"Sanguine charm, Choleric focus, Phlegmatic patience, or Melancholic "
+"structure exactly when the situation requires it. Because no single "
+"archetype takes over, they rarely suffer from extreme emotional imbalances, "
+"though they may occasionally look detached or hard to define.\n"
+"\n"
 "\n"
 msgstr ""
-"SANGUÍNEO-COLÉRICO MIX (Quente / Umidade balanceada)\n"
+" •   Centrado e Universalmente Equilibrado.\n"
+"Uma configuração excepcionalmente rara, na qual as qualidades de Quente, "
+"Frio, Úmido e Seco possuem peso igual. Nenhum elemento isolado predomina, "
+"criando uma resposta básica à vida altamente centrada e equilibrada.\n"
+"\n"
+" •   Constituição Física:\n"
+"Uma homeostase inerentemente equilibrada. O metabolismo, a circulação e o "
+"sistema nervoso operam em um estado de equilíbrio ativo, ajustando-se "
+"suavemente para atender às demandas externas.\n"
+"\n"
+" •   Perfil Psicológico:\n"
+"O indivíduo é um verdadeiro camaleão comportamental, capaz de recorrer ao "
+"charme do Sanguíneo, ao foco do Colérico, à paciência do Fleumático ou à "
+"estrutura do Melancólico exatamente quando a situação exige. Como nenhum "
+"arquétipo único assume o controle, raramente sofrem de desequilíbrios "
+"emocionais extremos, embora possam, ocasionalmente, parecer distantes ou "
+"difíceis de definir.\n"
+"\n"
 "\n"
 
-#: src/temperament.c:884
+#: src/temperament.c:923
+msgid ""
+"SANGUINE-CHOLERIC MIX (The Hot Overload / Balanced Moisture)\n"
+"\n"
+msgstr ""
+"SANGUÍNEO-COLÉRICO MIX (Calor Excessivo / Umidade Balanceada)\n"
+"\n"
+
+#: src/temperament.c:927
 msgid ""
 "An expressive, warm, and highly action-oriented signature blending Air and "
-"Fire. Your dynamic energy acts as a strong catalyst in social or "
-"professional domains. The intellectual curiosity of Air merges with the raw "
-"ambition of Fire, fueling powerful leadership qualities, with a risk of "
-"occasional impatience.\n"
+"Fire.\n"
+"Your dynamic energy acts as a strong catalyst in social or professional "
+"domains.\n"
+"The intellectual curiosity of Air merges with the raw ambition of Fire, "
+"fueling powerful leadership qualities, with a risk of occasional "
+"impatience.\n"
 "\n"
 "\n"
 msgstr ""
 "Uma assinatura expressiva, calorosa e fortemente orientada para a ação, que "
-"combina Ar e Fogo. Sua energia dinâmica atua como um poderoso catalisador "
-"nas esferas social ou profissional. A curiosidade intelectual do Ar funde-se "
-"com a ambição intensa do Fogo, impulsionando fortes qualidades de liderança, "
-"embora com o risco de impaciência ocasional.\n"
+"combina Ar e Fogo.\n"
+"Sua energia dinâmica atua como um poderoso catalisador nas esferas social ou "
+"profissional.\n"
+"A curiosidade intelectual do Ar funde-se com a ambição intensa do Fogo, "
+"impulsionando fortes qualidades de liderança, embora com o risco de "
+"impaciência ocasional.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:893
+#: src/temperament.c:941
 msgid ""
-"PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
+" •   Dynamic and High-Velocity.\n"
+"Intensely active, highly communicative, and quick-witted. Driven by a "
+"massive surge of heat, leading to rapid outward expression, sociability, and "
+"immediate initiative.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Highly responsive and accelerated metabolism. Strong blood circulation "
+"paired with sharp heat, making the native prone to sudden energy spikes or "
+"temporary exhaustion.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A natural catalyst who combines Sanguine social charm with Choleric "
+"leadership. They are inspirational and highly ambitious, but because both "
+"elements lack moisture or grounding, they can easily burn out, act "
+"impulsively, or struggle to find a pause button.\n"
+"\n"
 "\n"
 msgstr ""
-"FLEUMÁTICO-MELANCÓLICO MIX (Frio / Umidade balanceada)\n"
+" •   Dinâmico e de ritmo acelerado.\n"
+"Intensamente ativo, altamente comunicativo e de raciocínio rápido. "
+"Impulsionado por uma intensa onda de calor, o que leva a uma rápida "
+"expressão externa, sociabilidade e iniciativa imediata.\n"
+"\n"
+" •   Constituição física:\n"
+"Metabolismo altamente responsivo e acelerado. Circulação sanguínea vigorosa "
+"aliada a um calor intenso, tornando o indivíduo propenso a picos repentinos "
+"de energia ou a uma exaustão temporária.\n"
+"\n"
+" •   Perfil psicológico:\n"
+"Um catalisador natural que combina o charme social do temperamento sanguíneo "
+"com a liderança do colérico. São pessoas inspiradoras e altamente "
+"ambiciosas; no entanto, como ambos os elementos carecem de umidade ou de um "
+"fator de ancoragem, podem facilmente sofrer esgotamento, agir por impulso ou "
+"ter dificuldade em desacelerar.\n"
+"\n"
 "\n"
 
-#: src/temperament.c:897
+#: src/temperament.c:951
+msgid ""
+"PHLEGMATIC-MELANCHOLIC MIX (The Cold Overload / Balanced Moisture)\n"
+"\n"
+msgstr ""
+"FLEUMÁTICO-MELANCÓLICO MIX (Frio Excessivo / Umidade Balanceada)\n"
+"\n"
+
+#: src/temperament.c:955
 msgid ""
 "A calm, deeply introspective, and self-protective constitution blending "
-"Water and Earth.Your operating engine is deliberate, highly structured, and "
-"cautious. The emotional depths of Water anchor onto the realistic stability "
-"of Earth, yielding an exceptionally reliable, analytical individual who "
-"moves at a careful pace.\n"
+"Water and Earth.\n"
+"Your operating engine is deliberate, highly structured, and cautious.\n"
+"The emotional depths of Water anchor onto the realistic stability of Earth, "
+"yielding an exceptionally reliable, analytical individual who moves at a "
+"careful pace.\n"
 "\n"
 "\n"
 msgstr ""
 "Uma natureza calma, profundamente introspectiva e que busca se proteger, "
-"combinando Água e Terra. Seu modo de agir é ponderado, altamente estruturado "
-"e cauteloso. A profundidade emocional da Água ancora-se na estabilidade "
-"realista da Terra, resultando em um indivíduo excepcionalmente confiável e "
-"analítico, que avança em um ritmo cuidadoso.\n"
+"combinando Água e Terra.\n"
+"Seu modo de agir é ponderado, altamente estruturado e cauteloso.\n"
+"A profundidade emocional da Água ancora-se na estabilidade realista da "
+"Terra, resultando em um indivíduo excepcionalmente confiável e analítico, "
+"que avança em um ritmo cuidadoso.\n"
 "\n"
 "\n"
 
-#: src/temperament.c:910
+#: src/temperament.c:969
+msgid ""
+" •   Reserved and Introspective.\n"
+"Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
+"the energy inward, fostering exceptional endurance, careful planning, and a "
+"calm, low-profile lifestyle.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower, highly efficient metabolism focused on conservation. Prone to "
+"internal stiffness, fluid accumulation, or lower bodily temperature, "
+"requiring active movement to stay balanced.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A stabilizing presence who merges Melancholic discipline with Phlegmatic "
+"patience. They excel at independent, long-term tasks and possess deep "
+"empathy, but the lack of heat can trap them in long cycles of "
+"procrastination, risk-aversion, or low physical momentum.\n"
+"\n"
+"\n"
+msgstr ""
+" •   Versátil e adaptável.\n"
+"Profundamente reflexivo, reservado e ponderado. Dominado pela frieza, que "
+"atrai a energia para o interior, promovendo resistência excepcional, "
+"planejamento cuidadoso e um estilo de vida calmo e discreto.\n"
+"\n"
+" •   Constituição Física:\n"
+"Metabolismo mais lento e altamente eficiente, voltado para a conservação. "
+"Tendência à rigidez interna, retenção de líquidos ou temperatura corporal "
+"mais baixa, exigindo movimento ativo para manter o equilíbrio.\n"
+"\n"
+" •   Perfil Psicológico:\n"
+"Uma presença estabilizadora que une a disciplina do temperamento melancólico "
+"à paciência do fleumático. Destaca-se em tarefas independentes de longo "
+"prazo e possui profunda empatia; no entanto, a falta de calor pode aprisioná-"
+"lo em longos ciclos de procrastinação, aversão ao risco ou baixa disposição "
+"física.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:983
 msgid ""
 "SANGUINE (Hot & Wet - Air Element)\n"
 "\n"
@@ -5655,7 +5873,7 @@ msgstr ""
 "SANGUÍNEO (Quente & Úmido - Elemento 🜁 Ar)\n"
 "\n"
 
-#: src/temperament.c:914
+#: src/temperament.c:987
 msgid ""
 "Your psychological engine revolves around communication, expansion, and "
 "mental fluidity. You absorb external impressions instantly and possess an "
@@ -5671,7 +5889,46 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:921
+#: src/temperament.c:999
+msgid ""
+" •   Versatile and adaptable.\n"
+"Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
+"the energy inward, fostering exceptional endurance, careful planning, and a "
+"calm, low-profile lifestyle.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower, highly efficient metabolism focused on conservation. Prone to "
+"internal stiffness, fluid accumulation, or lower bodily temperature, "
+"requiring active movement to stay balanced.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A stabilizing presence who merges Melancholic discipline with Phlegmatic "
+"patience. They excel at independent, long-term tasks and possess deep "
+"empathy, but the lack of heat can trap them in long cycles of "
+"procrastination, risk-aversion, or low physical momentum.\n"
+"\n"
+"\n"
+msgstr ""
+" •   Versátil e adaptável.\n"
+"Profundamente reflexivo, reservado e ponderado. Dominado pela frieza, que "
+"atrai a energia para o interior, promovendo resistência excepcional, "
+"planejamento cuidadoso e um estilo de vida calmo e discreto.\n"
+"\n"
+" •   Constituição Física:\n"
+"Metabolismo mais lento e altamente eficiente, voltado para a conservação. "
+"Tendência à rigidez interna, retenção de líquidos ou temperatura corporal "
+"mais baixa, exigindo movimento ativo para manter o equilíbrio.\n"
+"\n"
+" •   Perfil Psicológico:\n"
+"Uma presença estabilizadora que une a disciplina do temperamento melancólico "
+"à paciência do fleumático. Destaca-se em tarefas independentes de longo "
+"prazo e possui profunda empatia; no entanto, a falta de calor pode aprisioná-"
+"lo em longos ciclos de procrastinação, aversão ao risco ou baixa disposição "
+"física.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:1010
 msgid ""
 "CHOLERIC (Hot & Dry - Fire Element)\n"
 "\n"
@@ -5679,7 +5936,7 @@ msgstr ""
 "COLÉRICO (Quente & Seco - Elemento 🜂 Fogo)\n"
 "\n"
 
-#: src/temperament.c:925
+#: src/temperament.c:1014
 msgid ""
 "Your core essence is driven by swift, active, and result-oriented single-"
 "minded impulses. You possess an innate leadership spark, extreme courage "
@@ -5696,7 +5953,37 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:932
+#: src/temperament.c:1026
+msgid ""
+" •   Enthusiasm, energy, and quick action.\n"
+"Rigid, insensitive, impatient.\n"
+"\n"
+" •   Physical Constitution:\n"
+"High metabolic rate, prone to acute inflammation, sharp digestion, and high "
+"physical stamina driven by tension.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Born leaders, ambitious, highly focused, and intensely driven. Cholerics are "
+"quick to act and highly efficient, but when out of balance, they easily slip "
+"into impatience, irritability, and anger.\n"
+"\n"
+"\n"
+msgstr ""
+" • Entusiasmo, energia e ação rápida.\n"
+"Rígido, insensível, impaciente.\n"
+"\n"
+" • Constituição Física:\n"
+"Alta taxa metabólica, propenso à inflamação aguda, digestão apurada e alta "
+"resistência física impulsionada por tensão.\n"
+"\n"
+" • Perfil Psicológico:\n"
+"Líderes natos, ambiciosos, altamente focados e intensamente motivados. Os "
+"coléricos agem rápido e são eficientes, mas quando desequilibrados, "
+"facilmente deslizam para a impaciência, irritabilidade e raiva.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:1036
 msgid ""
 "PHLEGMATIC (Cold & Wet - Water Element)\n"
 "\n"
@@ -5704,7 +5991,7 @@ msgstr ""
 "FLEUMÁTICO (Frio & Úmido - Elemento 🜄 Água)\n"
 "\n"
 
-#: src/temperament.c:936
+#: src/temperament.c:1040
 msgid ""
 "You embody a stable, welcoming, and peacekeeping emotional constitution. You "
 "operate through deep empathy, automatic diplomatic mediation, and a steady, "
@@ -5720,7 +6007,40 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:943
+#: src/temperament.c:1052
+msgid ""
+" •   Sensitive, reserved, introverted.\n"
+"Plasticity and adaptability. Emotional motivation, subjective and volatile. "
+"Sensitive, empathetic, but not very expressive. Patience.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower metabolism, prone to fluid retention, efficient energy storage, cool "
+"skin, and a calm, resting pulse.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Peaceful, deeply receptive, empathetic, and patient. Phlegmatics are "
+"excellent listeners and maintain emotional stability under pressure, but "
+"they can struggle with procrastination, lethargy, and a lack of drive.\n"
+"\n"
+"\n"
+msgstr ""
+" • Sensível, reservado, introvertido.\n"
+"Plasticidade e adaptabilidade. Motivação emocional, subjetiva e volátil. "
+"Sensível, empático, mas não muito expressivo. Paciente.\n"
+"\n"
+" • Constituição Física:\n"
+"Metabolismo mais lento, propenso à retenção de fluidos, armazenamento "
+"eficiente de energia, pele fria e pulso calmo.\n"
+"\n"
+" • Perfil Psicológico:\n"
+"Pacífico, profundamente receptivo, empático e paciente. Os fleumáticos são "
+"excelentes ouvintes e mantêm estabilidade emocional sob pressão, mas podem "
+"ter dificuldades para lutar contra a procrastinação, letargia e falta de "
+"impulso.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:1062
 msgid ""
 "MELANCHOLIC (Cold & Dry - Earth Element)\n"
 "\n"
@@ -5728,7 +6048,7 @@ msgstr ""
 "MELANCÓLICO (Frio & Seco - Elemento 🜃 Terra)\n"
 "\n"
 
-#: src/temperament.c:947
+#: src/temperament.c:1066
 msgid ""
 "Your nature is built on structural caution, real-world pragmatism, and "
 "profound reflection. An exceptional asset for deep analysis, long-term "
@@ -5745,7 +6065,41 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/temperament.c:977
+#: src/temperament.c:1078
+msgid ""
+" •   Reflection, concentration. \n"
+"Reserved and moderate in their outward expression. Not very exuberant in "
+"their speech, but decisive in their actions. Susceptibility, sadness, "
+"pessimism, depression.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Rigid tissue structure, slower but highly persistent physical stamina, and a "
+"tendency towards dryness or stiffness in the joints.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Analytical, highly organized, disciplined, and deeply reflective. "
+"Melancholics possess unparalleled focus and a strong sense of duty, but they "
+"are prone to overthinking, chronic worry, and skepticism.\n"
+"\n"
+"\n"
+msgstr ""
+" • Reflexão, concentração.\n"
+"Reservado e moderado em sua expressão externa. Não muito exuberante em sua "
+"fala, mas decisivo em suas ações. Susceptibilidade, tristeza, pessimismo, "
+"depressão.\n"
+"\n"
+" • Constituição Física:\n"
+"Estrutura tecidual rígida, resistência física mais lenta, mas altamente "
+"persistente, e tendência à secura ou rigidez nas articulações.\n"
+"\n"
+" • Perfil Psicológico:\n"
+"Analítico, altamente organizado, disciplinado e profundamente reflexivo. Os "
+"melancólicos possuem foco incomparável e um forte senso de dever, mas são "
+"propensos a pensar demais, preocupação crônica e ceticismo.\n"
+"\n"
+"\n"
+
+#: src/temperament.c:1112
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
@@ -5753,7 +6107,7 @@ msgstr ""
 "INFLUÊNCIAS SECUNDÁRIAS E NUANCES\n"
 "\n"
 
-#: src/temperament.c:981
+#: src/temperament.c:1116
 msgid ""
 "Although your core template is defined above, your psychiatric map shows "
 "other active forces adding layers to your behavior:\n"
@@ -5763,7 +6117,7 @@ msgstr ""
 "mostra outras forças ativas que acrescentam camadas ao seu comportamento:\n"
 "\n"
 
-#: src/temperament.c:990
+#: src/temperament.c:1125
 msgid ""
 " ✦ Sanguine Influence: \n"
 "\n"
@@ -5771,7 +6125,7 @@ msgstr ""
 " ✦ Influência Sanguínea: \n"
 "\n"
 
-#: src/temperament.c:992
+#: src/temperament.c:1127
 msgid ""
 "Adds an overlay of communicative ease, adaptability, and cognitive "
 "curiosity. This softens any rigid boundaries or stagnation imposed by your "
@@ -5783,7 +6137,7 @@ msgstr ""
 "impostos pelo seu temperamento dominante.\n"
 "\n"
 
-#: src/temperament.c:999
+#: src/temperament.c:1134
 msgid ""
 " ✦ Choleric Influence: \n"
 "\n"
@@ -5791,7 +6145,7 @@ msgstr ""
 " ✦ Influência Colérica: \n"
 "\n"
 
-#: src/temperament.c:1001
+#: src/temperament.c:1136
 msgid ""
 "Injects raw drive, sharp focus on execution, and a natural urgency to fix "
 "problems. It sharpens a passive baseline into a highly proactive mindset.\n"
@@ -5802,27 +6156,27 @@ msgstr ""
 "uma mentalidade altamente proativa.\n"
 "\n"
 
-#: src/temperament.c:1008
+#: src/temperament.c:1143
 msgid ""
 " ✦ Phlegmatic Influence: \n"
 "\n"
 msgstr ""
-" ✦ Influência Colérica: \n"
+" ✦ Influência Fleumática: \n"
 "\n"
 
-#: src/temperament.c:1010
+#: src/temperament.c:1145
 msgid ""
 "Acts as a natural thermal and emotional ballast, introducing diplomatic "
 "mediation, structural patience, and a steady pace that protects you from "
 "chronic stress.\n"
 "\n"
 msgstr ""
-"Injeta uma determinação genuína, um foco aguçado na execução e uma urgência "
-"natural para resolver problemas. Transforma uma postura inicial passiva em "
-"uma mentalidade altamente proativa.\n"
+"Atua como um lastro térmico e emocional natural, introduzindo mediação "
+"diplomática, paciência estrutural e um ritmo constante que protege você do "
+"estresse crônico.\n"
 "\n"
 
-#: src/temperament.c:1017
+#: src/temperament.c:1152
 msgid ""
 " ✦ Melancholic Influence: \n"
 "\n"
@@ -5830,7 +6184,7 @@ msgstr ""
 " ✦ Influência Melancólica: \n"
 "\n"
 
-#: src/temperament.c:1019
+#: src/temperament.c:1154
 msgid ""
 "Confers analytical depth, long-term organization skills, and a realistic "
 "sense of caution. It ensures your impulses are grounded in real-world "
@@ -5842,18 +6196,88 @@ msgstr ""
 "na viabilidade no mundo real.\n"
 "\n"
 
-#: src/temperament.c:1034
+#: src/temperament.c:1169
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr "   3. DADOS DE DISTRIBUIÇÃO ORDENADA\n"
 
-#: src/temperament.c:1042
+#: src/temperament.c:1177
 msgid "Rank"
 msgstr "Classificação"
 
-#: src/temperament.c:1052
+#: src/temperament.c:1187
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid ""
+#~ " •   Reserved and Introspective.\n"
+#~ "Intensely active, highly communicative, and quick-witted. Driven by a "
+#~ "massive surge of heat, leading to rapid outward expression, sociability, "
+#~ "and immediate initiative.\n"
+#~ "\n"
+#~ " •   Physical Constitution:\n"
+#~ "Highly responsive and accelerated metabolism. Strong blood circulation "
+#~ "paired with sharp heat, making the native prone to sudden energy spikes "
+#~ "or temporary exhaustion.\n"
+#~ "\n"
+#~ " •   Psychological Profile:\n"
+#~ "A natural catalyst who combines Sanguine social charm with Choleric "
+#~ "leadership. They are inspirational and highly ambitious, but because both "
+#~ "elements lack moisture or grounding, they can easily burn out, act "
+#~ "impulsively, or struggle to find a pause button.\n"
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ " •   Reservado e introspectivo.\n"
+#~ "Intensamente ativo, altamente comunicativo e de raciocínio rápido. "
+#~ "Impulsionado por uma intensa onda de calor, o que leva a uma rápida "
+#~ "expressão externa, sociabilidade e iniciativa imediata.\n"
+#~ "\n"
+#~ " •   Constituição física:\n"
+#~ "Metabolismo altamente responsivo e acelerado. Circulação sanguínea "
+#~ "vigorosa aliada a um calor intenso, tornando o indivíduo propenso a picos "
+#~ "repentinos de energia ou a uma exaustão temporária.\n"
+#~ "\n"
+#~ " •   Perfil psicológico:\n"
+#~ "Um catalisador natural que combina o charme social do temperamento "
+#~ "sanguíneo com a liderança do colérico. São pessoas inspiradoras e "
+#~ "altamente ambiciosas; no entanto, como ambos os elementos carecem de "
+#~ "umidade ou de um fator de ancoragem, podem facilmente sofrer esgotamento, "
+#~ "agir de forma impulsiva ou ter dificuldade em desacelerar.\n"
+#~ "\n"
+#~ "\n"
+
+#~ msgid ""
+#~ " •   Versatile and adaptable.\n"
+#~ "Lively, spontaneous, and enthusiastic. Communicative and sociable. "
+#~ "Sensitive, cheerful, and affable.\n"
+#~ "\n"
+#~ " •   Physical Constitution:\n"
+#~ "Good blood circulation, responsive nervous system, warm skin, and a "
+#~ "naturally balanced, adaptable metabolism.\n"
+#~ "\n"
+#~ " •   Psychological Profile:\n"
+#~ "Outgoing, optimistic, socially skilled, and highly expressive. Sanguine "
+#~ "individuals learn quickly and adapt to new situations easily, but they "
+#~ "may struggle with consistency, routines, and a short attention span.\n"
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ " • Versátil e adaptável.\n"
+#~ "Vivo, espontâneo e entusiástico. Comunicativo e sociável. Sensível, "
+#~ "alegre e afável.\n"
+#~ "\n"
+#~ " • Constituição Física:\n"
+#~ "Boa circulação sanguínea, sistema nervoso responsivo, pele quente e um "
+#~ "metabolismo naturalmente equilibrado e adaptável.\n"
+#~ "\n"
+#~ " • Perfil Psicológico:\n"
+#~ "Extrovertido, otimista, socialmente hábil e altamente expressivo. Os "
+#~ "sanguíneos aprendem rapidamente e se adaptam a novas situações "
+#~ "facilmente, mas podem ter dificuldades em relação à consistência, rotinas "
+#~ "e atenção breve.\n"
+#~ "\n"
+#~ "\n"
 
 #~ msgid "Structural Efficiency Verdict:\n"
 #~ msgstr ""

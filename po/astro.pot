@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 14:09-0300\n"
+"POT-Creation-Date: 2026-09-09 18:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4655,95 +4655,214 @@ msgstr ""
 
 #: src/temperament.c:840
 msgid ""
-"SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n"
+"SANGUINE-PHLEGMATIC MIX (The Moist Overload / Balanced Temperature)\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:844
 msgid ""
 "Your vital energy functions in perfect thermal equilibrium, blending Air and "
-"Water. This grants a deeply flexible, empathetic, and highly social persona. "
+"Water.\n"
+"This grants a deeply flexible, empathetic, and highly social persona.\n"
 "The talkative mind flows smoothly with natural emotional sensitivity, "
 "offering extreme social adaptability but risking mild emotional scattering.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:852
+#: src/temperament.c:852 src/temperament.c:879 src/temperament.c:905
+#: src/temperament.c:936 src/temperament.c:964 src/temperament.c:994
+#: src/temperament.c:1021 src/temperament.c:1047 src/temperament.c:1073
 msgid ""
-"CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n"
+"Characteristics:)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:856
+#: src/temperament.c:857
+msgid ""
+" •   Highly Adaptable and Empathetic.\n"
+"Plastic, receptive, and relationally oriented. Dominated by moisture, which "
+"smooths out sharp edges, creating an extremely diplomatic, gentle, and "
+"community-focused nature.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Naturally fluid body with an adaptable, though occasionally sluggish, "
+"metabolism. Sensitive to environmental moisture and highly responsive to "
+"emotional comfort.\n"
+"\n"
+" •   Psychological Profile:\n"
+"An excellent peacekeeper who blends Sanguine optimism with Phlegmatic "
+"listening skills. They flow easily with life's changes, but because they "
+"lack dryness (structure/focus), they may find it difficult to set firm "
+"personal boundaries, make harsh choices, or sustain independent focus.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:867
+msgid ""
+"CHOLERIC-MELANCHOLIC MIX (The Dry Overload / Balanced Temperature)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:871
 msgid ""
 "Your active forces exist in a state of controlled thermal poise, blending "
-"Fire and Earth. This creates an unstoppable achiever rooted in deep "
-"structural efficiency and discipline. You possess immense willpower, though "
-"you must guard against chronic internal stress, rigid perfectionism, and "
-"deep stubbornness.\n"
+"Fire and Earth.\n"
+"This creates an unstoppable achiever rooted in deep structural efficiency "
+"and discipline.\n"
+"You possess immense willpower, though you must guard against chronic "
+"internal stress, rigid perfectionism, and deep stubbornness.\n"
 "\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:864
-msgid ""
-"ABSOLUTE BALANCE (Quadrapartite Temperament)\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:868
-msgid ""
-"Your chart reflects the rare, ideal geometric balance of all four humors. "
-"Fire, Water, Air, and Earth converge into perfect cosmic proportion. You "
-"possess the courage of the Choleric, the social grace of the Sanguine, the "
-"empathy of the Phlegmatic, and the objective realism of the Melancholic, "
-"activated exactly when needed.\n"
-"\n"
-"\n"
-msgstr ""
-
-#: src/temperament.c:880
-msgid ""
-"SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:884
 msgid ""
-"An expressive, warm, and highly action-oriented signature blending Air and "
-"Fire. Your dynamic energy acts as a strong catalyst in social or "
-"professional domains. The intellectual curiosity of Air merges with the raw "
-"ambition of Fire, fueling powerful leadership qualities, with a risk of "
-"occasional impatience.\n"
+" •   Intensely Focused and Rigid.\n"
+"Decisive, highly structured, and uncompromising. Dominated by dryness, which "
+"creates sharp boundaries, extreme willpower, and an unyielding commitment to "
+"objective results.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Tense, rigid tissue structure with a dense physical build. Prone to quick "
+"digestion but vulnerable to chronic inflammation, joint tension, or physical "
+"burnout from overworking.\n"
+"\n"
+" •   Psychological Profile:\n"
+"The ultimate producer. They combine Choleric executive drive with "
+"Melancholic analytical depth and discipline. Extremely reliable and highly "
+"efficient, but when out of balance, the total lack of moisture makes them "
+"stubborn, hyper-critical, and prone to severe emotional rigidity.\n"
 "\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:893
 msgid ""
-"PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n"
+"ABSOLUTE BALANCE (Quadripartite Temperament)\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:897
 msgid ""
-"A calm, deeply introspective, and self-protective constitution blending "
-"Water and Earth.Your operating engine is deliberate, highly structured, and "
-"cautious. The emotional depths of Water anchor onto the realistic stability "
-"of Earth, yielding an exceptionally reliable, analytical individual who "
-"moves at a careful pace.\n"
+"Your chart reflects the rare, ideal geometric balance of all four humors.\n"
+"Fire, Water, Air, and Earth converge into perfect cosmic proportion.\n"
+"You possess the courage of the Choleric, the social grace of the Sanguine, "
+"the empathy of the Phlegmatic, and the objective realism of the Melancholic, "
+"activated exactly when needed.\n"
 "\n"
 "\n"
 msgstr ""
 
 #: src/temperament.c:910
 msgid ""
-"SANGUINE (Hot & Wet - Air Element)\n"
+" •   Centered and Universally Poised.\n"
+"An exceptionally rare configuration where Hot, Cold, Moist, and Dry hold "
+"equal weight. No single element dominates, creating a highly centered, "
+"balanced baseline response to life.\n"
+"\n"
+" •   Physical Constitution:\n"
+"An inherently balanced homeostasis. The metabolism, circulation, and nervous "
+"system operate in an active state of equilibrium, shifting smoothly to meet "
+"external demands.\n"
+"\n"
+" •   Psychological Profile:\n"
+"The individual is a true chameleon of behavior, capable of drawing upon "
+"Sanguine charm, Choleric focus, Phlegmatic patience, or Melancholic "
+"structure exactly when the situation requires it. Because no single "
+"archetype takes over, they rarely suffer from extreme emotional imbalances, "
+"though they may occasionally look detached or hard to define.\n"
+"\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:914
+#: src/temperament.c:923
+msgid ""
+"SANGUINE-CHOLERIC MIX (The Hot Overload / Balanced Moisture)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:927
+msgid ""
+"An expressive, warm, and highly action-oriented signature blending Air and "
+"Fire.\n"
+"Your dynamic energy acts as a strong catalyst in social or professional "
+"domains.\n"
+"The intellectual curiosity of Air merges with the raw ambition of Fire, "
+"fueling powerful leadership qualities, with a risk of occasional "
+"impatience.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:941
+msgid ""
+" •   Dynamic and High-Velocity.\n"
+"Intensely active, highly communicative, and quick-witted. Driven by a "
+"massive surge of heat, leading to rapid outward expression, sociability, and "
+"immediate initiative.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Highly responsive and accelerated metabolism. Strong blood circulation "
+"paired with sharp heat, making the native prone to sudden energy spikes or "
+"temporary exhaustion.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A natural catalyst who combines Sanguine social charm with Choleric "
+"leadership. They are inspirational and highly ambitious, but because both "
+"elements lack moisture or grounding, they can easily burn out, act "
+"impulsively, or struggle to find a pause button.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:951
+msgid ""
+"PHLEGMATIC-MELANCHOLIC MIX (The Cold Overload / Balanced Moisture)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:955
+msgid ""
+"A calm, deeply introspective, and self-protective constitution blending "
+"Water and Earth.\n"
+"Your operating engine is deliberate, highly structured, and cautious.\n"
+"The emotional depths of Water anchor onto the realistic stability of Earth, "
+"yielding an exceptionally reliable, analytical individual who moves at a "
+"careful pace.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:969
+msgid ""
+" •   Reserved and Introspective.\n"
+"Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
+"the energy inward, fostering exceptional endurance, careful planning, and a "
+"calm, low-profile lifestyle.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower, highly efficient metabolism focused on conservation. Prone to "
+"internal stiffness, fluid accumulation, or lower bodily temperature, "
+"requiring active movement to stay balanced.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A stabilizing presence who merges Melancholic discipline with Phlegmatic "
+"patience. They excel at independent, long-term tasks and possess deep "
+"empathy, but the lack of heat can trap them in long cycles of "
+"procrastination, risk-aversion, or low physical momentum.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:983
+msgid ""
+"SANGUINE (Hot & Wet - Air 🜁 Element)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:987
 msgid ""
 "Your psychological engine revolves around communication, expansion, and "
 "mental fluidity. You absorb external impressions instantly and possess an "
@@ -4753,13 +4872,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:921
+#: src/temperament.c:999
 msgid ""
-"CHOLERIC (Hot & Dry - Fire Element)\n"
+" •   Versatile and adaptable.\n"
+"Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
+"the energy inward, fostering exceptional endurance, careful planning, and a "
+"calm, low-profile lifestyle.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower, highly efficient metabolism focused on conservation. Prone to "
+"internal stiffness, fluid accumulation, or lower bodily temperature, "
+"requiring active movement to stay balanced.\n"
+"\n"
+" •   Psychological Profile:\n"
+"A stabilizing presence who merges Melancholic discipline with Phlegmatic "
+"patience. They excel at independent, long-term tasks and possess deep "
+"empathy, but the lack of heat can trap them in long cycles of "
+"procrastination, risk-aversion, or low physical momentum.\n"
+"\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:925
+#: src/temperament.c:1010
+msgid ""
+"CHOLERIC (Hot & Dry - Fire 🜂 Element)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1014
 msgid ""
 "Your core essence is driven by swift, active, and result-oriented single-"
 "minded impulses. You possess an innate leadership spark, extreme courage "
@@ -4769,13 +4909,30 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:932
+#: src/temperament.c:1026
 msgid ""
-"PHLEGMATIC (Cold & Wet - Water Element)\n"
+" •   Enthusiasm, energy, and quick action.\n"
+"Rigid, insensitive, impatient.\n"
+"\n"
+" •   Physical Constitution:\n"
+"High metabolic rate, prone to acute inflammation, sharp digestion, and high "
+"physical stamina driven by tension.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Born leaders, ambitious, highly focused, and intensely driven. Cholerics are "
+"quick to act and highly efficient, but when out of balance, they easily slip "
+"into impatience, irritability, and anger.\n"
+"\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:936
+#: src/temperament.c:1036
+msgid ""
+"PHLEGMATIC (Cold & Wet - Water 🜄 Element)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1040
 msgid ""
 "You embody a stable, welcoming, and peacekeeping emotional constitution. You "
 "operate through deep empathy, automatic diplomatic mediation, and a steady, "
@@ -4785,13 +4942,31 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:943
+#: src/temperament.c:1052
 msgid ""
-"MELANCHOLIC (Cold & Dry - Earth Element)\n"
+" •   Sensitive, reserved, introverted.\n"
+"Plasticity and adaptability. Emotional motivation, subjective and volatile. "
+"Sensitive, empathetic, but not very expressive. Patience.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Slower metabolism, prone to fluid retention, efficient energy storage, cool "
+"skin, and a calm, resting pulse.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Peaceful, deeply receptive, empathetic, and patient. Phlegmatics are "
+"excellent listeners and maintain emotional stability under pressure, but "
+"they can struggle with procrastination, lethargy, and a lack of drive.\n"
+"\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:947
+#: src/temperament.c:1062
+msgid ""
+"MELANCHOLIC (Cold & Dry - Earth 🜃 Element)\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1066
 msgid ""
 "Your nature is built on structural caution, real-world pragmatism, and "
 "profound reflection. An exceptional asset for deep analysis, long-term "
@@ -4801,26 +4976,45 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:977
+#: src/temperament.c:1078
+msgid ""
+" •   Reflection, concentration. \n"
+"Reserved and moderate in their outward expression. Not very exuberant in "
+"their speech, but decisive in their actions. Susceptibility, sadness, "
+"pessimism, depression.\n"
+"\n"
+" •   Physical Constitution:\n"
+"Rigid tissue structure, slower but highly persistent physical stamina, and a "
+"tendency towards dryness or stiffness in the joints.\n"
+"\n"
+" •   Psychological Profile:\n"
+"Analytical, highly organized, disciplined, and deeply reflective. "
+"Melancholics possess unparalleled focus and a strong sense of duty, but they "
+"are prone to overthinking, chronic worry, and skepticism.\n"
+"\n"
+"\n"
+msgstr ""
+
+#: src/temperament.c:1112
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:981
+#: src/temperament.c:1116
 msgid ""
 "Although your core template is defined above, your psychiatric map shows "
 "other active forces adding layers to your behavior:\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:990
+#: src/temperament.c:1125
 msgid ""
 " ✦ Sanguine Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:992
+#: src/temperament.c:1127
 msgid ""
 "Adds an overlay of communicative ease, adaptability, and cognitive "
 "curiosity. This softens any rigid boundaries or stagnation imposed by your "
@@ -4828,26 +5022,26 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:999
+#: src/temperament.c:1134
 msgid ""
 " ✦ Choleric Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1001
+#: src/temperament.c:1136
 msgid ""
 "Injects raw drive, sharp focus on execution, and a natural urgency to fix "
 "problems. It sharpens a passive baseline into a highly proactive mindset.\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1008
+#: src/temperament.c:1143
 msgid ""
 " ✦ Phlegmatic Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1010
+#: src/temperament.c:1145
 msgid ""
 "Acts as a natural thermal and emotional ballast, introducing diplomatic "
 "mediation, structural patience, and a steady pace that protects you from "
@@ -4855,13 +5049,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1017
+#: src/temperament.c:1152
 msgid ""
 " ✦ Melancholic Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1019
+#: src/temperament.c:1154
 msgid ""
 "Confers analytical depth, long-term organization skills, and a realistic "
 "sense of caution. It ensures your impulses are grounded in real-world "
@@ -4869,14 +5063,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1034
+#: src/temperament.c:1169
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr ""
 
-#: src/temperament.c:1042
+#: src/temperament.c:1177
 msgid "Rank"
 msgstr ""
 
-#: src/temperament.c:1052
+#: src/temperament.c:1187
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""

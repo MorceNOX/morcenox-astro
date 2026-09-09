@@ -837,77 +837,150 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     if (eixo_calor == 0) {
         if (eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-            wprintw(pad, _("SANGUINE-PHLEGMATIC MIX (Balanced Temp)\n\n"));
+            wprintw(pad, _("SANGUINE-PHLEGMATIC MIX (The Moist Overload / Balanced Temperature)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
             line_count += print_split_lines(pad, _("Your vital energy functions in perfect thermal equilibrium, blending "
-                         "Air and Water. "
-                         "This grants a deeply flexible, empathetic, and highly social persona. "
+                         "Air and Water.\n"
+                         "This grants a deeply flexible, empathetic, and highly social persona.\n"
                          "The talkative mind flows smoothly with natural emotional sensitivity, "
                          "offering extreme social adaptability but risking mild emotional "
                          "scattering.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Highly Adaptable and Empathetic.\n" 
+                "Plastic, receptive, and relationally oriented. Dominated by moisture, which smooths out sharp edges, creating an extremely diplomatic, gentle, and community-focused nature.\n\n"
+                " •   Physical Constitution:\n" 
+                "Naturally fluid body with an adaptable, though occasionally sluggish, metabolism. Sensitive to environmental moisture and highly responsive to emotional comfort.\n\n"
+                " •   Psychological Profile:\n" 
+                "An excellent peacekeeper who blends Sanguine optimism with Phlegmatic listening skills. They flow easily with life's changes, but because they lack dryness (structure/focus), they may find it difficult to set firm personal boundaries, make harsh choices, or sustain independent focus.\n\n\n"),
+                MAX_LINE_WIDTH);
+             
         } else if (eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(21));
-            wprintw(pad, _("CHOLERIC-MELANCHOLIC MIX (Balanced Temp)\n\n"));
+            wprintw(pad, _("CHOLERIC-MELANCHOLIC MIX (The Dry Overload / Balanced Temperature)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(21));
             line_count += print_split_lines(pad, _("Your active forces exist in a state of controlled thermal poise, "
-                         "blending Fire and Earth. "
+                         "blending Fire and Earth.\n"
                          "This creates an unstoppable achiever rooted in deep structural "
-                         "efficiency and discipline. "
+                         "efficiency and discipline.\n"
                          "You possess immense willpower, though you must guard against chronic "
                          "internal stress, rigid perfectionism, and deep stubbornness.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Intensely Focused and Rigid.\n" 
+                "Decisive, highly structured, and uncompromising. Dominated by dryness, which creates sharp boundaries, extreme willpower, and an unyielding commitment to objective results.\n\n"
+                " •   Physical Constitution:\n" 
+                "Tense, rigid tissue structure with a dense physical build. Prone to quick digestion but vulnerable to chronic inflammation, joint tension, or physical burnout from overworking.\n\n"
+                " •   Psychological Profile:\n" 
+                "The ultimate producer. They combine Choleric executive drive with Melancholic analytical depth and discipline. Extremely reliable and highly efficient, but when out of balance, the total lack of moisture makes them stubborn, hyper-critical, and prone to severe emotional rigidity.\n\n\n"),
+                MAX_LINE_WIDTH);
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(13));
-            wprintw(pad, _("ABSOLUTE BALANCE (Quadrapartite Temperament)\n\n"));
+            wprintw(pad, _("ABSOLUTE BALANCE (Quadripartite Temperament)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(13));
             line_count += print_split_lines(pad, _("Your chart reflects the rare, ideal geometric balance of all four "
-                         "humors. "
-                         "Fire, Water, Air, and Earth converge into perfect cosmic proportion. "
+                         "humors.\n"
+                         "Fire, Water, Air, and Earth converge into perfect cosmic proportion.\n"
                          "You possess the courage of the Choleric, the social grace of the Sanguine, "
                          "the empathy of the Phlegmatic, and the objective realism of the Melancholic, "
                          "activated exactly when needed.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Centered and Universally Poised.\n" 
+                "An exceptionally rare configuration where Hot, Cold, Moist, and Dry hold equal weight. No single element dominates, creating a highly centered, balanced baseline response to life.\n\n"
+                " •   Physical Constitution:\n" 
+                "An inherently balanced homeostasis. The metabolism, circulation, and nervous system operate in an active state of equilibrium, shifting smoothly to meet external demands.\n\n"
+                " •   Psychological Profile:\n" 
+                "The individual is a true chameleon of behavior, capable of drawing upon Sanguine charm, Choleric focus, Phlegmatic patience, or Melancholic structure exactly when the situation requires it. Because no single archetype takes over, they rarely suffer from extreme emotional imbalances, though they may occasionally look detached or hard to define.\n\n\n"),
+                MAX_LINE_WIDTH);
         }
     }
     // 2. CASO DE EMPATE NA UMIDADE (Eixo Umidade == 0)
     else if (eixo_umidade == 0) {
         if (eixo_calor > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
-            wprintw(pad, _("SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)\n\n"));
+            wprintw(pad, _("SANGUINE-CHOLERIC MIX (The Hot Overload / Balanced Moisture)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
             line_count += print_split_lines(pad, _("An expressive, warm, and highly action-oriented signature blending "
-                         "Air and Fire. "
+                         "Air and Fire.\n"
                          "Your dynamic energy acts as a strong catalyst in social or "
-                         "professional domains. "
+                         "professional domains.\n"
                          "The intellectual curiosity of Air merges with the raw ambition "
                          "of Fire, fueling powerful leadership qualities, with a risk of occasional "
                          "impatience.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Dynamic and High-Velocity.\n" 
+                "Intensely active, highly communicative, and quick-witted. Driven by a massive surge of heat, leading to rapid outward expression, sociability, and immediate initiative.\n\n"
+                " •   Physical Constitution:\n" 
+                "Highly responsive and accelerated metabolism. Strong blood circulation paired with sharp heat, making the native prone to sudden energy spikes or temporary exhaustion.\n\n"
+                " •   Psychological Profile:\n" 
+                "A natural catalyst who combines Sanguine social charm with Choleric leadership. They are inspirational and highly ambitious, but because both elements lack moisture or grounding, they can easily burn out, act impulsively, or struggle to find a pause button.\n\n\n"),
+                MAX_LINE_WIDTH);
+             
         } else {
             wattron(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
-            wprintw(pad, _("PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)\n\n"));
+            wprintw(pad, _("PHLEGMATIC-MELANCHOLIC MIX (The Cold Overload / Balanced Moisture)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(30) | A_REVERSE);
             line_count += print_split_lines(pad, _("A calm, deeply introspective, and self-protective constitution "
-                         "blending Water and Earth."
+                         "blending Water and Earth.\n"
                          "Your operating engine is deliberate, highly structured, and "
-                         "cautious. "
+                         "cautious.\n"
                          "The emotional depths of Water anchor onto the realistic stability "
                          "of Earth, yielding an exceptionally reliable, analytical individual "
                          "who moves at a careful pace.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Reserved and Introspective.\n" 
+                "Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls the energy inward, fostering exceptional endurance, careful planning, and a calm, low-profile lifestyle.\n\n"
+                " •   Physical Constitution:\n" 
+                "Slower, highly efficient metabolism focused on conservation. Prone to internal stiffness, fluid accumulation, or lower bodily temperature, requiring active movement to stay balanced.\n\n"
+                " •   Psychological Profile:\n" 
+                "A stabilizing presence who merges Melancholic discipline with Phlegmatic patience. They excel at independent, long-term tasks and possess deep empathy, but the lack of heat can trap them in long cycles of procrastination, risk-aversion, or low physical momentum.\n\n\n"),
+                MAX_LINE_WIDTH);
+
         }
     }
     // 3. CASOS PURA E ESTREITAMENTE CONFIGURADOS (Sem empates nos eixos)
     else {
         if (eixo_calor > 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
-            wprintw(pad, _("SANGUINE (Hot & Wet - Air Element)\n\n"));
+            wprintw(pad, _("SANGUINE (Hot & Wet - Air 🜁 Element)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
@@ -916,9 +989,25 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "You absorb external impressions instantly and possess an adaptable, "
                          "expressive mind that thrives on curiosity and social exchange. Guard "
                          "against scattering focus.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+    
+            line_count += print_split_lines(pad, 
+                _(" •   Versatile and adaptable.\n" 
+                "Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls the energy inward, fostering exceptional endurance, careful planning, and a calm, low-profile lifestyle.\n\n"
+                " •   Physical Constitution:\n" 
+                "Slower, highly efficient metabolism focused on conservation. Prone to internal stiffness, fluid accumulation, or lower bodily temperature, requiring active movement to stay balanced.\n\n"
+                " •   Psychological Profile:\n" 
+                "A stabilizing presence who merges Melancholic discipline with Phlegmatic patience. They excel at independent, long-term tasks and possess deep empathy, but the lack of heat can trap them in long cycles of procrastination, risk-aversion, or low physical momentum.\n\n\n"),
+                MAX_LINE_WIDTH);
+
+
         } else if (eixo_calor > 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(11));
-            wprintw(pad, _("CHOLERIC (Hot & Dry - Fire Element)\n\n"));
+            wprintw(pad, _("CHOLERIC (Hot & Dry - Fire 🜂 Element)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(11));
@@ -927,9 +1016,24 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "You possess an innate leadership spark, extreme courage when "
                          "confronting adversity, and unyielding passion. Your chief challenge "
                          "is mastering reactive impatience.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+
+            line_count += print_split_lines(pad, 
+                _(" •   Enthusiasm, energy, and quick action.\n"
+                "Rigid, insensitive, impatient.\n\n"   
+                " •   Physical Constitution:\n"
+                "High metabolic rate, prone to acute inflammation, sharp digestion, and high physical stamina driven by tension.\n\n"            
+                " •   Psychological Profile:\n"
+                "Born leaders, ambitious, highly focused, and intensely driven. Cholerics are quick to act and highly efficient, but when out of balance, they easily slip into impatience, irritability, and anger.\n\n\n"),
+                MAX_LINE_WIDTH);
+
         } else if (eixo_calor < 0 && eixo_umidade > 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(8));
-            wprintw(pad, _("PHLEGMATIC (Cold & Wet - Water Element)\n\n"));
+            wprintw(pad, _("PHLEGMATIC (Cold & Wet - Water 🜄 Element)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(8));
@@ -938,9 +1042,24 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "You operate through deep empathy, automatic diplomatic mediation, "
                          "and a steady, reliable operational rhythm. Watch out for behavioral "
                          "inertia or stagnation.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+
+            line_count += print_split_lines(pad, 
+                _(" •   Sensitive, reserved, introverted.\n"
+                "Plasticity and adaptability. Emotional motivation, subjective and volatile. Sensitive, empathetic, but not very expressive. Patience.\n\n"   
+                " •   Physical Constitution:\n"
+                "Slower metabolism, prone to fluid retention, efficient energy storage, cool skin, and a calm, resting pulse.\n\n"            
+                " •   Psychological Profile:\n"
+                "Peaceful, deeply receptive, empathetic, and patient. Phlegmatics are excellent listeners and maintain emotional stability under pressure, but they can struggle with procrastination, lethargy, and a lack of drive.\n\n\n"),
+                MAX_LINE_WIDTH);
+
         } else if (eixo_calor < 0 && eixo_umidade < 0) {
             wattron(pad, A_BOLD | COLOR_PAIR(30));
-            wprintw(pad, _("MELANCHOLIC (Cold & Dry - Earth Element)\n\n"));
+            wprintw(pad, _("MELANCHOLIC (Cold & Dry - Earth 🜃 Element)\n\n"));
             line_count += 2;
 
             wattroff(pad, A_BOLD | COLOR_PAIR(30));
@@ -949,6 +1068,22 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "An exceptional asset for deep analysis, long-term organization, and "
                          "concrete security  building. Beware a natural tendency toward brooding "
                          "or social withdrawal.\n\n\n"), MAX_LINE_WIDTH);
+
+            wattron(pad, A_BOLD);
+            wprintw(pad, _("Characteristics:)\n\n"));
+            wattroff(pad, A_BOLD);
+            line_count += 2;
+
+            line_count += print_split_lines(pad, 
+                _(" •   Reflection, concentration. \n"
+                "Reserved and moderate in their outward expression. Not very exuberant in their speech, but decisive in their actions. Susceptibility, sadness, pessimism, depression.\n\n"   
+                " •   Physical Constitution:\n"
+                "Rigid tissue structure, slower but highly persistent physical stamina, and a tendency towards dryness or stiffness in the joints.\n\n"            
+                " •   Psychological Profile:\n"
+                "Analytical, highly organized, disciplined, and deeply reflective. Melancholics possess unparalleled focus and a strong sense of duty, but they are prone to overthinking, chronic worry, and skepticism.\n\n\n"),
+                MAX_LINE_WIDTH);
+
+             
         }
     }
 
