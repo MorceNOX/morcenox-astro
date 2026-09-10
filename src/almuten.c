@@ -539,10 +539,12 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     double lons_pontos[5] = {pontos.sol_lon, pontos.lua_lon, pontos.asc_lon, pontos.fortuna_lon, pontos.sizigia_lon};
 
     for (int i = 0; i < 5; i++) {
-        wattron(table_win, COLOR_PAIR(10) | A_DIM);
+        if (i == 0) wattron(table_win, COLOR_PAIR(6));
+        else wattron(table_win, COLOR_PAIR(10) | A_DIM);
         wmove(table_win, row, 2);
         whline(table_win, ACS_HLINE, table_width - 4);
-        wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+        if (i == 0) wattroff(table_win, COLOR_PAIR(6));
+        else wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         // Processa graus e minutos da longitude do ponto hylegíaco
         double sign_remainder = fmod(lons_pontos[i], 30.0);
