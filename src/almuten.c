@@ -666,7 +666,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
             
             touchwin(stdscr);
-            refresh();
+            wnoutrefresh(stdscr);
             touchwin(shadow_win);
             wnoutrefresh(shadow_win);
             touchwin(table_win);

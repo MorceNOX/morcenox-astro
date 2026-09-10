@@ -608,14 +608,17 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
             for (int i = 0; i < qtd_direcoes; i++) {
                 LinhaDirecao *d = &cronograma[i];
 
+                bool eh_termo = d->promissor_type == PROM_TERM;
+
                 char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
+                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s → %s ", 
+                         eh_termo ? _("Term") : "",
+                         eh_termo ? " " : "",
                          d->promissor_glifo, // d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                         d->significador_glifo, 
-                         d->significador_name);
+                         d->significador_glifo);
 
-                bool eh_termo = d->promissor_type == PROM_TERM;
+                
 
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
@@ -661,9 +664,9 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                     atributo_extra = A_BOLD;
                 }
 
-                if (eh_termo) {
-                    atributo_extra |= (A_UNDERLINE | A_DIM);
-                }
+                //if (eh_termo) {
+                //    atributo_extra |= (A_UNDERLINE | A_DIM);
+                //}
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
@@ -1073,14 +1076,17 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             for (int i = 0; i < qtd_direcoes; i++) {
                 LinhaDirecao *d = &cronograma[i];
 
+                bool eh_termo = d->promissor_type == PROM_TERM;
+
                 char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
+                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s → %s ", 
+                         eh_termo ? _("Term") : "",
+                         eh_termo ? " " : "",
                          d->promissor_glifo, // d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                         d->significador_glifo, 
-                         d->significador_name);
+                         d->significador_glifo);
 
-                bool eh_termo = d->promissor_type == PROM_TERM;
+
                 // --- MOTOR DE DECISÃO DE CORES POR STRINGS (TRADICIONAL) ---
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
@@ -1135,9 +1141,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     atributo_extra = A_BOLD;
                 }
 
-                if (eh_termo) {
-                    atributo_extra |= (A_UNDERLINE | A_DIM);
-                }
+                // if (eh_termo) {
+                //     atributo_extra |= (A_UNDERLINE | A_DIM);
+                // }
                 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 

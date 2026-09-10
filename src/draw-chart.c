@@ -3317,8 +3317,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 53, _("Dignity"));
     mvwprintw(table_win, 2, 77, _("Gen/Sect/Quad"));
     mvwprintw(table_win, 2, 92, _("Orient"));
-    mvwprintw(table_win, 2, 100, _("Dec"));
-    mvwprintw(table_win, 2, 104, _("Term"));
+    mvwprintw(table_win, 2, 99, _("Dec"));
+    mvwprintw(table_win, 2, 103, _("Term"));
     mvwprintw(table_win, 2, 109, _("Trip"));
     mvwprintw(table_win, 2, 116, _("Dom/Ex"));
     mvwprintw(table_win, 2, 123, _("Mut.Rec"));
@@ -3415,10 +3415,22 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         }
 
         // 9. Sub-Regências
+        wattron(scroll_pad, COLOR_PAIR(4) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_dec_t + 1, "%s", data.decan);
+        wattroff(scroll_pad, COLOR_PAIR(4) | A_DIM);
+
+        wattron(scroll_pad, COLOR_PAIR(3) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_trm + 2, "%s", data.term);
+        wattroff(scroll_pad, COLOR_PAIR(3) | A_DIM);
+
+        wattron(scroll_pad, COLOR_PAIR(7) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_tri + 2, "%s", data.tri);
+        wattroff(scroll_pad, COLOR_PAIR(7) | A_DIM);
+
+        wattron(scroll_pad, COLOR_PAIR(8) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_rul + 2, "%s", data.rulers_str);
+        wattroff(scroll_pad, COLOR_PAIR(8) | A_DIM);
+
         mvwprintw(scroll_pad, row_pad, c_mut + 1, "%s", data.mutual_reception);
         
         row_pad += 2;

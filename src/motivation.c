@@ -96,8 +96,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
     
-    int table_width = term_w - 10;
-    int table_height = 29;
+    int table_width = term_w - 50;
+    int table_height = 24;
     int start_x = (term_w - table_width) / 2;
     int start_y = (term_h - table_height) / 2;
 
@@ -121,8 +121,12 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 
-    int max_linhas_dados = table_height - 6;
-    WINDOW *pad = newpad(100, table_width - 4);
+    //int max_linhas_dados = table_height - 6;
+    WINDOW *pad = newpad(120, table_width - 4);
+
+    idlok(pad, TRUE);
+    scrollok(pad, TRUE);
+
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
    
@@ -134,7 +138,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     row_pad++;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(pad, 2, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wmove(pad, 2, 4);
+    whline(pad, ACS_HLINE, table_width - 6);
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
     row_pad++;
@@ -151,7 +156,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(pad, row_pad + 1, 6, _("The Core Motivation:"));
     wattroff(pad, COLOR_PAIR(22) | A_BOLD);
 
-    row_pad += 1;
+    row_pad += 2;
 
     wattron(pad, A_ITALIC);
     mvwprintw(pad, row_pad + 1, 8, "%s", motivation);
@@ -165,13 +170,14 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(pad, row_pad + 2, 4, "• %s: %s (%s) ", _("Ruler of The Ascendant"), obter_glifo_planeta_por_id(ruler), obter_nome_planeta_por_id(ruler));
     wattroff(pad, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
 
-    row_pad += 2;
+    row_pad += 3;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wmove(pad, row_pad + 1, 4);
+    whline(pad, ACS_HLINE, table_width - 6);    
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    row_pad++;
+    row_pad += 2;
 
     const char *planet_modifier = get_planet_motivation_modifier(ruler - 1);
 
@@ -183,7 +189,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     int lines = print_text_multiline(pad, row_pad + 2, 6, 80, planet_modifier);
 
 
-    row_pad += lines + 2;
+    row_pad += lines;
+    row_pad += 2;
 
 
         
@@ -193,10 +200,11 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(pad, row_pad + 2, 4, "• %s: %s (%s) %s  ", _("Sign of the Ruler"), plots[ruler - 1].sign, get_sign_name((int)plots[ruler - 1].longitude / 30), get_sign_element((int)plots[ruler - 1].longitude / 30));
     wattroff(pad, COLOR_PAIR(21) | A_BOLD);
 
-    row_pad += 2;
+    row_pad += 3;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wmove(pad, row_pad + 1, 4);
+    whline(pad, ACS_HLINE, table_width - 6);
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
     
     row_pad += 2;
@@ -234,7 +242,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     row_pad += 3;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(pad, row_pad + 1, 4, "───────────────────────────────────────────────────────────────────────────────────");
+    wmove(pad, row_pad + 1, 4);
+    whline(pad, ACS_HLINE, table_width - 6);
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
    
     row_pad += 2;
@@ -243,7 +252,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(pad, row_pad + 1, 6, _("Areas of life where the Primary Motivation is applied or directed:"));
     wattroff(pad, COLOR_PAIR(22) | A_BOLD);
 
-    row_pad++;
+    row_pad += 2;
 
     int house_pos = romanToInt(plots[ruler - 1].house);
     const char *area_foco = get_house_modifier(house_pos);
@@ -282,8 +291,9 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     }
 
     wattron(pad, A_ITALIC);
-    lines = print_text_multiline(pad, row_pad + 2, 6, 85, influence);
-    row_pad += lines + 1;
+    lines = print_text_multiline(pad, row_pad + 2, 6, 80, influence);
+    row_pad += lines;
+    row_pad++;
     wattroff(pad, A_ITALIC);
 
     
@@ -292,32 +302,61 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
 
     doupdate();
 
-    int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
-    if (max_scroll_y < 0) max_scroll_y = 0;
-
-    // Vincula o teclado à PAD virtual
-    keypad(pad, TRUE);
-    nodelay(pad, FALSE);
-
-    // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+    // 6. LOOP DE INTERAÇÃO E SCROLL DA PAD
+    int pad_line_pos = 0;
+    //int max_scroll_y = (qtd_vencedores > 1) ? 90 : 45; // Adapta a profundidade de scroll
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {        
+    
+    row_pad += 5;
+   
+    // Altura visível real onde o texto do pad aparece na tela
+    int visible_height = (start_y + table_height - 2) - (start_y + 1) + 1;
+    
+    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
+    int scrollbar_height = table_height - 2; 
+
+    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
+    keypad(table_win, TRUE);
+
+    while (1) {
+        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
+        if (row_pad > visible_height) {
+            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+            // sobre o total que pode ser rolado (line_count - visible_height)
+            int max_scroll = row_pad - visible_height;
+            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+            
+            for (int i = 0; i < scrollbar_height; i++) {
+                if (i == scrollbar_pos) {
+                    mvwaddch(table_win, 1 + i, table_width - 2, ACS_BLOCK); // Indicador
+                } else {
+                    mvwaddch(table_win, 1 + i, table_width - 2, ACS_VLINE); // Linha guia de fundo
+                }
+            }
+        }
+
+        // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
+        wnoutrefresh(table_win); 
+        // prefresh envia os dados do pad diretamente para a tela virtual
+        prefresh(pad, pad_line_pos, 0, start_y + 1, start_x + 3, start_y + table_height - 3, start_x + table_width - 4);
+        doupdate(); // Executa a pintura unificada na tela física
+
+        // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---
+        ch = wgetch(table_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        // --- 4. TRATAMENTO DA ROLAGEM ---
         switch (ch) {
-            case KEY_UP: 
-            case 'k': 
-            case 'K':
-                if (offset_y > 0) offset_y -= 2;
+            case KEY_UP: case 'k': case 'K': 
+                if (pad_line_pos > 0) pad_line_pos--; 
                 break;
-                
-            case KEY_DOWN: 
-            case 'j': 
-            case 'J':
-                if (offset_y < max_scroll_y) offset_y += 2;
+            case KEY_DOWN: case 'j': case 'J': 
+                // Não permite rolar além da última página de texto visível
+                if (pad_line_pos < (row_pad - visible_height)) pad_line_pos++; 
                 break;
         }
-        prefresh(pad, offset_y + 1, 0, start_y + 3, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);        
     }
     
     // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
