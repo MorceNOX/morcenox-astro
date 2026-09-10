@@ -89,7 +89,8 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
 
     int almuten_fig = 0;    
     int res_figuris[12] = {0};
-    int qtd = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris);
+    int res_scores_figuris[12] = {0};
+    int qtd = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris, res_scores_figuris);
     
     int id_candidato = -1;
     int casa_almuten = 0;   
@@ -391,8 +392,9 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
         if (tipo_hileg == H_SOL || tipo_hileg == H_LUNA) {
             idx_vencedor_grid = idx_hileg_grid;
         } else {
-            int res_figuris[12] = {0}; 
-            int qtd_alm = calcular_almuten_figuris(pontos, plots, matrix, regente_dia, regente_hora, res_figuris);
+            int res_figuris[12] = {0};
+            int res_scores_figuris[12] = {0};
+            int qtd_alm = calcular_almuten_figuris(pontos, plots, matrix, regente_dia, regente_hora, res_figuris, res_scores_figuris);
             for (int j = 0; j < qtd_alm; j++) {
                 for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
                     if ((plots[i].id + 1) == res_figuris[j]) {

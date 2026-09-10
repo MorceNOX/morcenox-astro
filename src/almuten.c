@@ -363,7 +363,7 @@ int obter_pontos_por_casa(int casa) {
 
 
 
-int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int regente_dia, int regente_hora, int *resultado_figuris) {
+int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int regente_dia, int regente_hora, int *resultado_figuris, int *scores) {
     // Tabela global do Almuten Figuris (índices de 1 a 12 de forma segura)
     int tabela_figuris[13] = {0};
 
@@ -425,7 +425,13 @@ int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectM
     // Se não houver empate, temos o Almuten Figuris definitivo de forma direta
     if (qtd_candidatos == 1) {
         resultado_figuris[0] = candidatos[0];
+        scores[0] = max_pontos;
         return 1;
+    }
+    else {
+        for (int i = 0; i < qtd_candidatos; i++) {
+            scores[i] = max_pontos;
+        }
     }
 
     // --- CASCATA DE DESEMPATE DO PONTO ATUALIZADA (VERSÃO COMPLETA CLÁSSICA) ---
@@ -485,6 +491,8 @@ int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectM
             
             
             resultado_figuris[0] = id_planeta;
+            scores[0] = scores[0] + 1;
+
             qtd_vencedores = 1;
         } else if (empatar) {
             resultado_figuris[qtd_vencedores] = id_planeta;
@@ -598,8 +606,9 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     row++;
 
     int res_figuris[12];
+    int res_figuris_scores[12];
     
-    int qtd_figuris = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris);
+    int qtd_figuris = calcular_almuten_figuris(pontos, plots, aspecto_matriz, regente_dia, regente_hora, res_figuris, res_figuris_scores);
 
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, row + 6, 5, _("ALMUTEN FIGURIS (Lord of the Chart): "));
@@ -641,6 +650,10 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         //mvwprintw(table_win, 8, 90, "%s & %s", obter_nome_planeta_por_id(res_figuris[0]), obter_nome_planeta_por_id(res_figuris[1]));
     }
     wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, table_height - 4, 5, _("Score:  %d"), res_figuris_scores[0]);
+    wattroff(table_win, A_BOLD);
 
     // Instruções de encerramento da janela
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart - [i] to open interpretation window"));

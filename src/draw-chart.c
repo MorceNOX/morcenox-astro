@@ -6811,13 +6811,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // Almuten da revolução
         int almuten_rev[12] = {0};
+        int almuten_score_rev[12] = {0};
         int qtd_almuten_rev = 0;
         double almuten_lon = 0.0;
         int dig_almuten_natal = 0;
         double almuten_lat = 0.0;
         
         if (mapa_retorno) {
-            qtd_almuten_rev = calcular_almuten_figuris(pontos_calculados, plots, &matrix, regente_dia, regente_hora, almuten_rev);
+            qtd_almuten_rev = calcular_almuten_figuris(pontos_calculados, plots, &matrix, regente_dia, regente_hora, almuten_rev, almuten_score_rev);
             if (qtd_almuten_rev > 0) {
                 almuten_lon = plots[almuten_rev[0] - 1].longitude;
                 almuten_lat = planet_latitudes[almuten_rev[0] - 1];

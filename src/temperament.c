@@ -171,7 +171,8 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     //int qtd_alm_lua = get_almuten(lua_lon, res_almuten_lua, aspecto_matrix, pontos_hyl, plots);
 
     int res_figuris[12] = {0};
-    int qtd_alm_fig = calcular_almuten_figuris(pontos_hyl, plots, aspecto_matrix, converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), res_figuris);
+    int res_scores_figuris[12] = {0};
+    int qtd_alm_fig = calcular_almuten_figuris(pontos_hyl, plots, aspecto_matrix, converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)), converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1)), res_figuris, res_scores_figuris);
 
     // 3. PROCESSAMENTO DOS SCORES DO TEMPERAMENTO VIA SQLITE
     ScoreTemperament score = {0, 0, 0, 0};
