@@ -356,9 +356,9 @@ const char *caput_draconis_ascii[] = {
 
 const char *fortuna_ascii[] = {
     "       ",
-    " ▞▛▀▛▖ ",
-    "▐ ▝▞ ▐ ",
-    "▝▖▞▝▖▞ ",
+    " ▟▀▀▀▄ ",
+    "▐ ▀▄▀ ▌",
+    "▝▄▀ ▀▄▘",
     " ▝▀▀▀  ",
     "       "
 };
