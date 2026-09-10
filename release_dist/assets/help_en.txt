@@ -651,7 +651,7 @@ Type [H] to show the houses boundaries in the chart.
 
 You can activate animation mode by pressing [A]. Use ] and [ to adjust the animation pace in 60-second increments. A positive pace shows future events; a negative pace simulates traveling back in time.
 
-The program was developed using the "Adwaita Mono" font for the terminal, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio.
+The wheel's aspect ratio will update automatically when the terminal is resized. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", and "Monospace" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio.
 
 
 • The Colors:

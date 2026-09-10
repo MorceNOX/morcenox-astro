@@ -638,7 +638,7 @@ Digite [H] para mostrar os limites das casas no mapa.
 
 Você pode ativar o modo de animação pressionando [A]. Use ] e [ para ajustar a velocidade da animação em incrementos de 60 segundos. Valores positivos mostra eventos futuros; valores negativos simulam viajar de volta no tempo.
 
-O programa foi desenvolvido usando a fonte "Adwaita Mono" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer um pouco alongados, em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
+O aspecto da roda será atualizado automaticamente ao redimensionar o terminal. O programa foi testado com as fontes "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono" e "Monospace" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
 
 • As Cores:
