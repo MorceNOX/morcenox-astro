@@ -487,7 +487,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 24; // Altura compacta perfeita para o bloco cronocrático
+    int table_height = 26; // Altura compacta perfeita para o bloco cronocrático
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
@@ -510,7 +510,8 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 
-    
+    int line_count = 0;
+
     int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
     int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
@@ -554,13 +555,19 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     }
     wattroff(table_win, A_BOLD);
 
+    line_count += 2;
+
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 4, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 40);
+    //mvwprintw(table_win, 4, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+
+    line_count += 2;
 
     // Linha 2: Exibição do Hileg Eleito
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 5, 4, _("HYLEG (Giver of Life): "));
+    mvwprintw(table_win, 4, 4, _("HYLEG (Giver of Life): "));
     wattron(table_win, COLOR_PAIR(8) | A_BOLD);
     
     if (tipo_h == H_SOL) {
@@ -579,19 +586,32 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
         wprintw(table_win, " ASC ");
     }
     wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+
+    mvwprintw(table_win, line_count + 1, 2, "\n");
+    line_count += 2;
     
     wattron(table_win, A_DIM);
-    wprintw(table_win, " -> %s: %s", _("Selected via"), obter_descricao_hileg(tipo_h));
+
+    char str[256] = "";
+    snprintf(str, 256, " → %s: %s", _("Selected via"), obter_descricao_hileg(tipo_h));
+    line_count += print_text_multiline(table_win, line_count, 4, MAX_LINE_WIDTH, str);
+    
     wattroff(table_win, A_DIM);
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 7, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, line_count + 1, 2);
+    whline(table_win, ACS_HLINE, table_width - 40);
+    //mvwprintw(table_win, 7, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+
+    line_count++;
 
     // Linha 3: Exibição do Alcochoden e dos Anos Resultantes na sua Janela
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 8, 4, _("ALCOCHODEN (Giver of Years): "));
+    mvwprintw(table_win, line_count + 1, 4, _("ALCOCHODEN (Giver of Years): "));
     wattroff(table_win, A_BOLD);
+
+    line_count++;
     
     if (strcmp(alco.object_name, _("None")) != 0) {
         wattron(table_win, COLOR_PAIR(17) | A_BOLD);
@@ -603,22 +623,31 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
 
         // Dentro da sua display_life_givers, onde exibe o resultado final de anos:
         wattron(table_win, A_BOLD);
-        mvwprintw(table_win, 10, 4, _("Calculated Lifespan Measure: "));
+        mvwprintw(table_win, line_count + 2, 4, _("Calculated Lifespan Measure: "));
         wattron(table_win, COLOR_PAIR(15) | A_BOLD | A_UNDERLINE);
         wprintw(table_win, "%d %s", alco.anos_concedidos, _("Years"));
         wattroff(table_win, COLOR_PAIR(15) | A_BOLD | A_UNDERLINE);
+
+        line_count += 2;
     
+        // CORREÇÃO: Consome a casa real do Alcochoden direto da struct de retorno
+        wattron(table_win, A_DIM);
+        wprintw(table_win, " %s.\n", alco.tipo_anos);
+
+        line_count++;
+
         // Se o valor estiver travado em 8 por falta de aspectos, avisa o usuário!
         if (alco.anos_concedidos == 8 && strcmp(alco.tipo_anos, _("Lesser (Proxy Rule)")) == 0) {
             wattron(table_win, COLOR_PAIR(11) | A_BOLD);
             wprintw(table_win, _(" [FERAL/UNASPECTED PLANET]"));
             wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
+
+            line_count++;
         }
-    
-        // CORREÇÃO: Consome a casa real do Alcochoden direto da struct de retorno
-        wattron(table_win, A_DIM);
-        wprintw(table_win, " %s.\n", alco.tipo_anos);
-        mvwprintw(table_win, 12, 4, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
+
+        snprintf(str, 256, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
+        line_count += print_text_multiline(table_win, line_count, 4, MAX_LINE_WIDTH, str);
+        //mvwprintw(table_win, 12, 4, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
         wattroff(table_win, A_DIM);
 
         char planet_hyleg[30];
@@ -679,7 +708,9 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, table_height - 8, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, table_height - 8, 2);
+    whline(table_win, ACS_HLINE, table_width - 40);
+    //mvwprintw(table_win, table_height - 8, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     // Rodapé de Notas Astrológicas Tradicionais
