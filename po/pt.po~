@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 02:17-0300\n"
+"POT-Creation-Date: 2026-09-10 02:25-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -30,17 +30,17 @@ msgid "Sol "
 msgstr "Sol "
 
 #: src/almuten.c:538 src/draw-chart.c:394 src/draw-chart.c:601
-#: src/draw-chart.c:5611 src/draw-chart.c:5633 src/hyleg.c:337
+#: src/draw-chart.c:5612 src/draw-chart.c:5634 src/hyleg.c:337
 msgid "Luna"
 msgstr "Lua"
 
-#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5624
-#: src/draw-chart.c:5643
+#: src/almuten.c:538 src/draw-chart.c:1525 src/draw-chart.c:5625
+#: src/draw-chart.c:5644
 msgid "Ascendant"
 msgstr "Ascendente"
 
 #: src/almuten.c:538 src/directions.c:452 src/draw-chart.c:427
-#: src/draw-chart.c:1529 src/draw-chart.c:5622 src/draw-chart.c:5641
+#: src/draw-chart.c:1529 src/draw-chart.c:5623 src/draw-chart.c:5642
 msgid "Part of Fortune"
 msgstr "Parte da Fortuna"
 
@@ -1113,32 +1113,32 @@ msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
 #: src/directions.c:623 src/directions.c:1089 src/draw-chart.c:403
-#: src/draw-chart.c:604 src/draw-chart.c:4803 src/draw-chart.c:5614
-#: src/draw-chart.c:5636 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
+#: src/draw-chart.c:604 src/draw-chart.c:4804 src/draw-chart.c:5615
+#: src/draw-chart.c:5637 src/firdaria.c:101 src/hyleg.c:340 src/hyleg.c:468
 #: src/profections.c:48 src/solar_return.c:1139 src/solar_return.c:1289
 #: src/solar_return.c:1348 src/solar_return.c:1504
 msgid "Mars"
 msgstr "Marte"
 
 #: src/directions.c:624 src/directions.c:1090 src/draw-chart.c:409
-#: src/draw-chart.c:606 src/draw-chart.c:4801 src/draw-chart.c:5616
-#: src/draw-chart.c:5638 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
+#: src/draw-chart.c:606 src/draw-chart.c:4802 src/draw-chart.c:5617
+#: src/draw-chart.c:5639 src/firdaria.c:103 src/hyleg.c:342 src/hyleg.c:468
 #: src/profections.c:54 src/solar_return.c:1139 src/solar_return.c:1289
 #: src/solar_return.c:1348 src/solar_return.c:1504
 msgid "Saturn"
 msgstr "Saturno"
 
 #: src/directions.c:631 src/directions.c:1099 src/draw-chart.c:406
-#: src/draw-chart.c:605 src/draw-chart.c:4802 src/draw-chart.c:5615
-#: src/draw-chart.c:5637 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
+#: src/draw-chart.c:605 src/draw-chart.c:4803 src/draw-chart.c:5616
+#: src/draw-chart.c:5638 src/firdaria.c:102 src/hyleg.c:341 src/hyleg.c:465
 #: src/profections.c:53 src/solar_return.c:1139 src/solar_return.c:1289
 #: src/solar_return.c:1351 src/solar_return.c:1507
 msgid "Jupiter"
 msgstr "Júpiter"
 
 #: src/directions.c:632 src/directions.c:1100 src/draw-chart.c:400
-#: src/draw-chart.c:603 src/draw-chart.c:4798 src/draw-chart.c:5613
-#: src/draw-chart.c:5635 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
+#: src/draw-chart.c:603 src/draw-chart.c:4799 src/draw-chart.c:5614
+#: src/draw-chart.c:5636 src/firdaria.c:100 src/hyleg.c:339 src/hyleg.c:465
 #: src/profections.c:49 src/solar_return.c:1139 src/solar_return.c:1289
 #: src/solar_return.c:1351 src/solar_return.c:1507
 msgid "Venus"
@@ -1202,45 +1202,45 @@ msgstr ""
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
-#: src/draw-chart.c:391 src/draw-chart.c:4797 src/firdaria.c:97 src/hyleg.c:336
+#: src/draw-chart.c:391 src/draw-chart.c:4798 src/firdaria.c:97 src/hyleg.c:336
 #: src/profections.c:52 src/solar_return.c:1139 src/solar_return.c:1289
 msgid "Sun"
 msgstr "Sol"
 
-#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5610
-#: src/draw-chart.c:5632 src/hyleg.c:336
+#: src/draw-chart.c:391 src/draw-chart.c:600 src/draw-chart.c:5611
+#: src/draw-chart.c:5633 src/hyleg.c:336
 msgid "Sol"
 msgstr "Sol"
 
-#: src/draw-chart.c:394 src/draw-chart.c:4800 src/firdaria.c:98 src/hyleg.c:337
+#: src/draw-chart.c:394 src/draw-chart.c:4801 src/firdaria.c:98 src/hyleg.c:337
 #: src/profections.c:51 src/solar_return.c:1139 src/solar_return.c:1289
 msgid "Moon"
 msgstr "Lua"
 
-#: src/draw-chart.c:397 src/draw-chart.c:602 src/draw-chart.c:4799
-#: src/draw-chart.c:5612 src/draw-chart.c:5634 src/firdaria.c:99
+#: src/draw-chart.c:397 src/draw-chart.c:602 src/draw-chart.c:4800
+#: src/draw-chart.c:5613 src/draw-chart.c:5635 src/firdaria.c:99
 #: src/hyleg.c:338 src/profections.c:50 src/solar_return.c:1139
 #: src/solar_return.c:1289
 msgid "Mercury"
 msgstr "Mercúrio"
 
 #: src/draw-chart.c:412 src/draw-chart.c:607 src/draw-chart.c:1537
-#: src/draw-chart.c:5617 src/solar_return.c:1289
+#: src/draw-chart.c:5618 src/solar_return.c:1289
 msgid "Uranus"
 msgstr "Urano"
 
 #: src/draw-chart.c:415 src/draw-chart.c:608 src/draw-chart.c:1536
-#: src/draw-chart.c:5618 src/solar_return.c:1289
+#: src/draw-chart.c:5619 src/solar_return.c:1289
 msgid "Neptune"
 msgstr "Netuno"
 
 #: src/draw-chart.c:418 src/draw-chart.c:609 src/draw-chart.c:1538
-#: src/draw-chart.c:5619 src/solar_return.c:1289
+#: src/draw-chart.c:5620 src/solar_return.c:1289
 msgid "Pluto"
 msgstr "Plutão"
 
 #: src/draw-chart.c:421 src/draw-chart.c:610 src/draw-chart.c:1533
-#: src/draw-chart.c:5620 src/draw-chart.c:5639 src/firdaria.c:104
+#: src/draw-chart.c:5621 src/draw-chart.c:5640 src/firdaria.c:104
 #: src/solar_return.c:1289 src/solar_return.c:1351 src/solar_return.c:1507
 msgid "North Node"
 msgstr "Nodo Norte"
@@ -1250,7 +1250,7 @@ msgid "Caput Draconis"
 msgstr "Cabeça do Dragão"
 
 #: src/draw-chart.c:424 src/draw-chart.c:611 src/draw-chart.c:1531
-#: src/draw-chart.c:5621 src/draw-chart.c:5640 src/firdaria.c:105
+#: src/draw-chart.c:5622 src/draw-chart.c:5641 src/firdaria.c:105
 #: src/solar_return.c:1289 src/solar_return.c:1348 src/solar_return.c:1504
 msgid "South Node"
 msgstr "Nodo Sul"
@@ -1295,23 +1295,23 @@ msgstr "🌓 Quarto Minguante"
 msgid "🌒 Waning Crescent"
 msgstr "🌒 Minguante Côncava"
 
-#: src/draw-chart.c:1526 src/draw-chart.c:5625 src/draw-chart.c:5644
+#: src/draw-chart.c:1526 src/draw-chart.c:5626 src/draw-chart.c:5645
 msgid "Midheaven"
 msgstr "Meio-do-Céu"
 
-#: src/draw-chart.c:1527 src/draw-chart.c:5627 src/draw-chart.c:5646
+#: src/draw-chart.c:1527 src/draw-chart.c:5628 src/draw-chart.c:5647
 msgid "Nadir"
 msgstr "Fundo-do-Céu"
 
-#: src/draw-chart.c:1528 src/draw-chart.c:5626 src/draw-chart.c:5645
+#: src/draw-chart.c:1528 src/draw-chart.c:5627 src/draw-chart.c:5646
 msgid "Descendant"
 msgstr "Descendente"
 
-#: src/draw-chart.c:1530 src/draw-chart.c:5623 src/draw-chart.c:5642
+#: src/draw-chart.c:1530 src/draw-chart.c:5624 src/draw-chart.c:5643
 msgid "SAN"
 msgstr "SAN"
 
-#: src/draw-chart.c:1532 src/draw-chart.c:5628 src/draw-chart.c:5647
+#: src/draw-chart.c:1532 src/draw-chart.c:5629 src/draw-chart.c:5648
 msgid "Vertex"
 msgstr "Vértex"
 
@@ -1682,7 +1682,7 @@ msgstr "Dignidade"
 msgid "Gen/Sect/Quad"
 msgstr "Gên/Seita/Quad"
 
-#: src/draw-chart.c:3277 src/draw-chart.c:6396
+#: src/draw-chart.c:3277 src/draw-chart.c:6397
 msgid "Orient"
 msgstr "Orient"
 
@@ -2492,195 +2492,195 @@ msgstr ""
 "       Ascenção                  Ocaso                     "
 "Culminação                   Fuso Horário: Local"
 
-#: src/draw-chart.c:6066
+#: src/draw-chart.c:6067
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:6082
+#: src/draw-chart.c:6083
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:6098
+#: src/draw-chart.c:6099
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:6112
+#: src/draw-chart.c:6113
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:6126
+#: src/draw-chart.c:6127
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:6142
+#: src/draw-chart.c:6143
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:6154
+#: src/draw-chart.c:6155
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:6174
+#: src/draw-chart.c:6175
 msgid "pilgrim "
 msgstr "peregrino "
 
-#: src/draw-chart.c:6400
+#: src/draw-chart.c:6401
 msgid "Occid"
 msgstr "Ocid"
 
-#: src/draw-chart.c:6454
+#: src/draw-chart.c:6455
 msgid "Spring"
 msgstr "Primavera"
 
-#: src/draw-chart.c:6454 src/draw-chart.c:6475
+#: src/draw-chart.c:6455 src/draw-chart.c:6476
 msgid "Sanguine"
 msgstr "Sanguíneo"
 
-#: src/draw-chart.c:6457
+#: src/draw-chart.c:6458
 msgid "Summer"
 msgstr "Verão"
 
-#: src/draw-chart.c:6457 src/draw-chart.c:6479
+#: src/draw-chart.c:6458 src/draw-chart.c:6480
 msgid "Choleric"
 msgstr "Colérico"
 
-#: src/draw-chart.c:6460
+#: src/draw-chart.c:6461
 msgid "Autumn"
 msgstr "Outono"
 
-#: src/draw-chart.c:6460 src/draw-chart.c:6483
+#: src/draw-chart.c:6461 src/draw-chart.c:6484
 msgid "Melancholic"
 msgstr "Melancólico"
 
-#: src/draw-chart.c:6463
+#: src/draw-chart.c:6464
 msgid "Winter"
 msgstr "Inverno"
 
-#: src/draw-chart.c:6463 src/draw-chart.c:6487
+#: src/draw-chart.c:6464 src/draw-chart.c:6488
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
-#: src/draw-chart.c:7269 src/draw-chart.c:7299
+#: src/draw-chart.c:7270 src/draw-chart.c:7300
 msgid "01. Chart Data Panel"
 msgstr "01. Dados do Mapa"
 
-#: src/draw-chart.c:7270 src/draw-chart.c:7300
+#: src/draw-chart.c:7271 src/draw-chart.c:7301
 msgid "02. Positions, Dignities & Rulerships"
 msgstr "02. Posições, Dignidades & Regentes"
 
-#: src/draw-chart.c:7271 src/draw-chart.c:7301
+#: src/draw-chart.c:7272 src/draw-chart.c:7302
 msgid "03. Accidental Dignities"
 msgstr "03. Dignidades Acidentais"
 
-#: src/draw-chart.c:7272 src/draw-chart.c:7302
+#: src/draw-chart.c:7273 src/draw-chart.c:7303
 msgid "04. Strength of the Planets"
 msgstr "04. Força dos Planetas"
 
-#: src/draw-chart.c:7273 src/draw-chart.c:7303
+#: src/draw-chart.c:7274 src/draw-chart.c:7304
 msgid "05. Aspects"
 msgstr "05. Aspectos"
 
-#: src/draw-chart.c:7274 src/draw-chart.c:7304
+#: src/draw-chart.c:7275 src/draw-chart.c:7305
 msgid "06. Declination Aspects"
 msgstr "06. Aspectos de Declinação"
 
-#: src/draw-chart.c:7275 src/draw-chart.c:7305
+#: src/draw-chart.c:7276 src/draw-chart.c:7306
 msgid "07. Planetary Hours"
 msgstr "07. Horas Planetárias"
 
-#: src/draw-chart.c:7276 src/draw-chart.c:7306
+#: src/draw-chart.c:7277 src/draw-chart.c:7307
 msgid "08. Rising, Setting & Culmination Times"
 msgstr "08. Horários de Ascenção, Ocaso & Culminação"
 
-#: src/draw-chart.c:7277 src/draw-chart.c:7307
+#: src/draw-chart.c:7278 src/draw-chart.c:7308
 msgid "09. Houses"
 msgstr "09. Casas"
 
-#: src/draw-chart.c:7278 src/draw-chart.c:7308
+#: src/draw-chart.c:7279 src/draw-chart.c:7309
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr "10. Almuten Figuris & dos Pontos Hylegíacos"
 
-#: src/draw-chart.c:7279
+#: src/draw-chart.c:7280
 msgid "11. Temperament Analysis"
 msgstr "11. Análise do Temperamento"
 
-#: src/draw-chart.c:7280
+#: src/draw-chart.c:7281
 msgid "12. Annual Profections"
 msgstr "12. Profecções Anuais"
 
-#: src/draw-chart.c:7281
+#: src/draw-chart.c:7282
 msgid "13. Firdaria"
 msgstr "13. Firdária"
 
-#: src/draw-chart.c:7282
+#: src/draw-chart.c:7283
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr "14. Cronocratas Vitais: Doadores de Vida"
 
-#: src/draw-chart.c:7283
+#: src/draw-chart.c:7284
 msgid "15. Vital Threats: The Anareta"
 msgstr "15. Ameaças Vitais: O Anareta"
 
-#: src/draw-chart.c:7284
+#: src/draw-chart.c:7285
 msgid "16. Primary Directions"
 msgstr "16. Direções Primárias"
 
-#: src/draw-chart.c:7285
+#: src/draw-chart.c:7286
 msgid "17. Prymary Directions to Arabic Parts"
 msgstr "17. Direções Primárias às Partes Árabes"
 
-#: src/draw-chart.c:7286
+#: src/draw-chart.c:7287
 msgid "18. Arabic Parts"
 msgstr "18. Partes Árabes"
 
-#: src/draw-chart.c:7287
+#: src/draw-chart.c:7288
 msgid "19. Mind Analysis"
 msgstr "19. Análise da Mente"
 
-#: src/draw-chart.c:7288
+#: src/draw-chart.c:7289
 msgid "20. Solar Revolution"
 msgstr "20. Revolução Solar"
 
-#: src/draw-chart.c:7289
+#: src/draw-chart.c:7290
 msgid "21. Planetary Energy Profile"
 msgstr "21. Perfil de Energia Planetária "
 
-#: src/draw-chart.c:7290
+#: src/draw-chart.c:7291
 msgid "22. Primary Motivation"
 msgstr "22. Motivação Primária"
 
-#: src/draw-chart.c:7291
+#: src/draw-chart.c:7292
 msgid "23. Aspects by Sign"
 msgstr "23. Aspectos por Signo"
 
-#: src/draw-chart.c:7292
+#: src/draw-chart.c:7293
 msgid "24. Aspects to Antissia & Contrantissia"
 msgstr "24. Aspects para Antissia & Contrantissia"
 
-#: src/draw-chart.c:7309
+#: src/draw-chart.c:7310
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr "12. Confrontação Radix e Retorno Solar"
 
-#: src/draw-chart.c:7310
+#: src/draw-chart.c:7311
 msgid "12. Annual Transits & Radical Projections"
 msgstr "12. Trânsitos do Ano & Projeções Radicais"
 
-#: src/draw-chart.c:7311
+#: src/draw-chart.c:7312
 msgid "13. Arabic Parts"
 msgstr "13. Partes Árabes"
 
-#: src/draw-chart.c:7312
+#: src/draw-chart.c:7313
 msgid "14. Planetary Energy Profile"
 msgstr "14. Perfil de Energia Planetária"
 
-#: src/draw-chart.c:7313
+#: src/draw-chart.c:7314
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr "15. Partes Árabes - Confrontação Rev. Solar/Radix"
 
-#: src/draw-chart.c:7314
+#: src/draw-chart.c:7315
 msgid "16. Aspects by Sign"
 msgstr "16. Aspectos por Signo"
 
-#: src/draw-chart.c:7315
+#: src/draw-chart.c:7316
 msgid "17. Aspects to Antissia & Contrantissia"
 msgstr "17. Aspectos para Antissia & Contrantissia"
 

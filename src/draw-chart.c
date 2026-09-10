@@ -4664,8 +4664,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool dark_mode = (darkmode)?true:false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
-    
-    float aspect_ratio = get_exact_aspect_ratio_ncurses();
+
+    float aspect_ratio = get_exact_aspect_ratio_ncurses(0);
 
     // // DEBUG: Aspect Ratio verification
     // char c_asp[10] = "";
@@ -4928,10 +4928,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool running = true;
 
     bool backup_mapa_diurno = false;
+
+    int TIMEOUT = 985;
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
-    timeout(985); // This will make getch() wait for 1 second max
+    timeout(TIMEOUT); // This will make getch() wait for 1 second max
     
     while (running) {
         
@@ -7221,7 +7223,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 running = false;
                 break;
             case KEY_RESIZE:
-                aspect_ratio = get_exact_aspect_ratio_ncurses();
+                aspect_ratio = get_exact_aspect_ratio_ncurses(TIMEOUT);
                 break;
             case ERR: // No key pressed within timeout (1 second)
                 // Do nothing - just continue the loop

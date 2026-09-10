@@ -28,7 +28,7 @@ typedef struct {
     int type;
 } AuxOrdenacao;
 
-double get_exact_aspect_ratio_ncurses();
+double get_exact_aspect_ratio_ncurses(int curr_timeout);
 double get_exact_aspect_ratio();
 double get_terminal_font_aspect_ratio();
 const char *str_dow(int dow);

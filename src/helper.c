@@ -41,7 +41,7 @@
 
 
 
-double get_exact_aspect_ratio_ncurses() {
+double get_exact_aspect_ratio_ncurses(int curr_timeout) {
     // Atualiza as variáveis internas de tamanho do ncurses
     // (Importante para quando a função é chamada após um redimensionamento)
     refresh(); 
@@ -75,7 +75,7 @@ double get_exact_aspect_ratio_ncurses() {
     buffer[idx] = '\0';
 
     // Desativa o timeout para voltar ao modo padrão (bloqueante)
-    timeout(-1); 
+    timeout(curr_timeout); 
 
     int pixel_width = 0, pixel_height = 0;
     
