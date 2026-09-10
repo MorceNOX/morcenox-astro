@@ -170,14 +170,14 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     mvwprintw(pad, row_pad + 2, 4, "• %s: %s (%s) ", _("Ruler of The Ascendant"), obter_glifo_planeta_por_id(ruler), obter_nome_planeta_por_id(ruler));
     wattroff(pad, COLOR_PAIR(28) | A_BOLD | A_REVERSE);
 
-    row_pad += 3;
+    row_pad += 2;
 
     wattron(pad, COLOR_PAIR(10) | A_DIM);
     wmove(pad, row_pad + 1, 4);
     whline(pad, ACS_HLINE, table_width - 6);    
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    row_pad += 2;
+    row_pad += 1;
 
     const char *planet_modifier = get_planet_motivation_modifier(ruler - 1);
 

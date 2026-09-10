@@ -3317,10 +3317,23 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 53, _("Dignity"));
     mvwprintw(table_win, 2, 77, _("Gen/Sect/Quad"));
     mvwprintw(table_win, 2, 92, _("Orient"));
+
+    wattron(table_win, COLOR_PAIR(4) | A_DIM);
     mvwprintw(table_win, 2, 99, _("Dec"));
+    wattroff(table_win, COLOR_PAIR(4) | A_DIM);
+
+    wattron(table_win, COLOR_PAIR(3) | A_DIM);
     mvwprintw(table_win, 2, 103, _("Term"));
+    wattroff(table_win, COLOR_PAIR(3) | A_DIM);
+
+    wattron(table_win, COLOR_PAIR(7) | A_DIM);
     mvwprintw(table_win, 2, 109, _("Trip"));
+    wattroff(table_win, COLOR_PAIR(7) | A_DIM);
+
+    wattron(table_win, COLOR_PAIR(8) | A_DIM);        
     mvwprintw(table_win, 2, 116, _("Dom/Ex"));
+    wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
+
     mvwprintw(table_win, 2, 123, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
