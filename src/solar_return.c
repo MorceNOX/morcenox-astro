@@ -696,7 +696,7 @@ void abrir_janela_confronto_natal_revolucao(
         snprintf(str_text, 512, _("The cosmic current vitalizes your sectors of creative self-expression, romance, "
                      "joy, and children. A highly fertile period to pursue personal pleasures, hobbies, "
                      "and things that fuel your heart's passions.\n\n\n"));
-        } else if (casa_natal_transitada == 6) {
+    } else if (casa_natal_transitada == 6) {
         snprintf(str_text, 512, _("The planet activates the house of bodily challenges and daily labors. "
                      "Focus shifts toward physical health maintenance, managing somatic stress, acute adjustments, "
                      "and the routines required to keep your life functioning.\n\n\n"));
@@ -809,12 +809,14 @@ void abrir_janela_confronto_natal_revolucao(
     
     wprintw(pad, _("Interpretation:\n\n"));
 
-    line_count += 6;
+    line_count += 8;
 
     wattroff(pad, A_BOLD );
     if (id_almuten_rev == id_senhor_firdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(12)); 
         snprintf(str_text, 512, _("MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+
         wattroff(pad, A_BOLD | COLOR_PAIR(12));
         snprintf(str_text, 512, _("The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
                      "In traditional astrology, this means the planet has total systemic harmony. The events "
@@ -824,6 +826,8 @@ void abrir_janela_confronto_natal_revolucao(
     else if (id_almuten_rev == id_senhor_subfirdaria) {
         wattron(pad, A_BOLD | COLOR_PAIR(1)); 
         snprintf(str_text, 512, _("SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+
         wattroff(pad, A_BOLD | COLOR_PAIR(1));
         snprintf(str_text, 512, _("The Lord of the Year coordinates directly with your current Firdaria sub-period. "
                      "This indicates that the events of the next 12 months will act as the perfect trigger "
@@ -863,7 +867,7 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD );
 
-    line_count += 4;
+    line_count += 5;
     
     if (casa_natal_do_asc == 1) {
         snprintf(str_text, 512, _("A year of absolute self-empowerment. Your personal choices, physical vitality, "
@@ -906,7 +910,7 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, _("Interpretation:\n\n"));
     wattroff(pad, A_BOLD);
 
-    line_count += 4;
+    line_count += 5;
 
     if (casa_rev_do_asc_natal == 1) {
         snprintf(str_text, 512, _("Total alignment. Your core identity acts with absolute clarity and autonomy."
@@ -987,13 +991,13 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    line_count++;
+    line_count += 2;
 
     wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
     wprintw(pad, _("  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n\n"));
     wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
 
-    line_count += 2;
+    line_count += 3;
 
     // Validação de segurança para os índices do vetor (evita falha de segmentação)
     if (casa_natal_do_asc >= 1 && casa_natal_do_asc <= 12 && 
@@ -1002,7 +1006,7 @@ void abrir_janela_confronto_natal_revolucao(
         wattron(pad, A_BOLD);
         wprintw(pad, _("Astrological Synthesis for your Year:\n\n"));
 
-        line_count += 2;
+        line_count += 3;
 
         wattroff(pad, A_BOLD);
 

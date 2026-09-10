@@ -540,7 +540,8 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
 
     for (int i = 0; i < 5; i++) {
         wattron(table_win, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(table_win, row, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+        wmove(table_win, row, 2);
+        whline(table_win, ACS_HLINE, table_width - 4);
         wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         // Processa graus e minutos da longitude do ponto hylegíaco
@@ -572,7 +573,8 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         row += 2;
     }
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, row, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, row, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, A_BOLD);
@@ -587,7 +589,8 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     // SEÇÃO INFERIOR: Exibição Destacada do Almuten Figuris
     // ────────────────────────────────────────────────────────────────────────────────
     wattron(table_win, COLOR_PAIR(6));
-    mvwprintw(table_win, row + 4, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, row + 4, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
     wattroff(table_win, COLOR_PAIR(6));
 
     row++;

@@ -2110,7 +2110,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
         attroff(A_BOLD);
 
         int add_n = 0;
-        if (mapa_retorno) add_n = 1;
+        if (mapa_retorno) add_n = 0;
 
         for (int i = 0; i < 6; i++) {
             if (MAPA_DIURNO) {
@@ -2219,7 +2219,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
         
 
         if (mapa_retorno) {
-            mvprintw(LINES - 6, 1, _("Divisions = Zodiac Signs"));
+            mvprintw(LINES - 5, 1, _("Divisions = Zodiac Signs"));
             mvprintw(LINES - 4, 1, _("Radix Confrontation: C | Annual Transits: T "));
             mvprintw(LINES - 3, 1, _("Anim: A | Parts Radix Confrontation: P ")); 
         }
@@ -3483,10 +3483,10 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 30;
-    int table_width = max_x - 5;
+    int table_height = 31;
+    int table_width = max_x - 60;
     int start_y = (max_y - table_height) / 2;
-    int start_x = 2;
+    int start_x = (max_x - table_width) / 2;
     
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
@@ -3504,15 +3504,15 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     const char *title = _("Houses Table");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
-    mvwprintw(table_win, 1, 2, _("   House    Cusp         Rulers(Dom/Exalt)  Objects in the House                                House System:"));
-    wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 2, 98, "%s", house_system);
-
-    int row = 3;
+    mvwprintw(table_win, 2, 2, _("   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "));
+    
+    int row = 4;
     for (int i = 1; i <= 12; i++) {
 
         wattron(table_win, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+        wmove(table_win, row - 1, 2);
+        whline(table_win, ACS_HLINE, table_width - 4);
+        //mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         char house_num[4];
@@ -3554,6 +3554,16 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
         row += 2;
 
     }
+    //mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, row - 1, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, table_height - 3, table_width - 45, _("House System: "));
+    wattroff(table_win, A_BOLD);
+
+    wprintw(table_win, "%s", house_system);
+
 
     // Add instructions
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
@@ -4653,6 +4663,33 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     
     bool dark_mode = (darkmode)?true:false;
 
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    // Defined aspect ratio based on characters mono dimensions
+    float aspect_ratio = ((float)max_x / (float)max_y);
+
+    // // DEBUG: Aspect Ratio verification
+    // char c_asp[10] = "";
+    // snprintf(c_asp, 10, "%7.4f", aspect_ratio);
+    // show_alert_popup(_("Aspect Ratio:"), c_asp);
+
+    if (aspect_ratio >= 4.0237) {
+        aspect_ratio = aspect_ratio / 2.0119;
+    }
+    else if (aspect_ratio >= 4.000) {
+        aspect_ratio = aspect_ratio / 2.0;
+    }
+    else if (aspect_ratio >= 3.7249) {
+        aspect_ratio = aspect_ratio / 1.8625;
+    }
+    else if (aspect_ratio >= 3.56) {
+        aspect_ratio = aspect_ratio / 1.8659 + 0.0523;
+    }
+    else {
+        aspect_ratio = aspect_ratio / 1.7 + 0.0523;
+    }
+
 
     if (dark_mode) {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -4893,9 +4930,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     erase();
 
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);
-
+    
     // Zoom factor - start with 1.0 (normal size)
     float zoom_factor = 1.0;
                 
@@ -4903,14 +4938,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     float pan_x = 1.0;
     float pan_y = 0.0;
 
-    // Defined aspect ratio based on characters mono dimensions
-    float aspect_ratio = ((float)max_x / (float)max_y);
-    if (aspect_ratio >= 3.56) {
-        aspect_ratio = aspect_ratio / 1.8659 + 0.0523;
-    }
-    else {
-        aspect_ratio = aspect_ratio / 1.7 + 0.0523;
-    }
+    
        
     // Main loop for handling input and redrawing
     int ch;

@@ -195,7 +195,8 @@ void display_natal_mind_analysis(
     wattroff(table_win, A_BOLD);
     
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 3, 4, "────────────────────────────────────────────────────────────────────");
+    wmove(table_win, 3, 4);
+    whline(table_win, ACS_HLINE, table_width - 6);
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     // Mercúrio (Índice 2 fixo no array plots)
@@ -222,7 +223,8 @@ void display_natal_mind_analysis(
     wattroff(table_win, A_BOLD);
     
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 12, 4, "────────────────────────────────────────────────────────────────────");
+    wmove(table_win, 12, 4);
+    whline(table_win, ACS_HLINE, table_width - 6);
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, A_BOLD);
@@ -306,8 +308,8 @@ void display_natal_mind_analysis(
 
 
     wattron(table_win, COLOR_PAIR(13));
-    mvwprintw(table_win, 23, 4, "────────────────────────────────────────────────────────────────────");
-    wattroff(table_win, COLOR_PAIR(13));
+    wmove(table_win, 23, 4);
+    whline(table_win, ACS_HLINE, table_width - 6);    wattroff(table_win, COLOR_PAIR(13));
 
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     wnoutrefresh(table_win);
