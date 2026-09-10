@@ -2040,6 +2040,10 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
     float max_r_x = (max_x / 2.0) / aspect_ratio;
     
     float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
+
+    // char c_asp[10] = "";
+    // snprintf(c_asp, 10, "%7.4f", base_radius);
+    // show_alert_popup(_("base_radius:"), c_asp);
     
     //Radius 20 as the reference for scaling
     float scale = base_radius / 20.0;
@@ -4915,7 +4919,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     float zoom_factor = 1.0;
                 
     // Panning offsets - start at center
-    float pan_x = 1.0;
+    float pan_x = 4.0;
     float pan_y = 0.0;
 
     
@@ -6904,19 +6908,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 zoom_factor = 1.0;
                 break;
             case KEY_UP:
-                pan_y -= 2.0; // Move up
+                pan_y -= 1.0; // Move up
                 if (pan_y < -max_y) pan_y = -max_y;
                 break;
             case KEY_DOWN:
-                pan_y += 2.0; // Move down
+                pan_y += 1.0; // Move down
                 if (pan_y > max_y) pan_y = max_y;
                 break;
             case KEY_LEFT:
-                pan_x -= 2.0; // Move left
+                pan_x -= 1.0; // Move left
                 if (pan_x < -max_x) pan_x = -max_x;
                 break;
             case KEY_RIGHT:
-                pan_x += 2.0; // Move right
+                pan_x += 1.0; // Move right
                 if (pan_x > max_x) pan_x = max_x;
                 break;
             case '[':

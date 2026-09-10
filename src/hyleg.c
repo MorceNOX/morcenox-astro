@@ -560,7 +560,6 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
     wmove(table_win, 3, 2);
     whline(table_win, ACS_HLINE, table_width - 40);
-    //mvwprintw(table_win, 4, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     line_count += 2;
@@ -601,7 +600,6 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
     wmove(table_win, line_count + 1, 2);
     whline(table_win, ACS_HLINE, table_width - 40);
-    //mvwprintw(table_win, 7, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     line_count++;
@@ -647,7 +645,6 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
 
         snprintf(str, 256, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
         line_count += print_text_multiline(table_win, line_count, 4, MAX_LINE_WIDTH, str);
-        //mvwprintw(table_win, 12, 4, "%s %d.", _("Years distributed via physical Position in House"), alco.casa_alcochoden);
         wattroff(table_win, A_DIM);
 
         char planet_hyleg[30];
@@ -710,7 +707,6 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
     wmove(table_win, table_height - 8, 2);
     whline(table_win, ACS_HLINE, table_width - 40);
-    //mvwprintw(table_win, table_height - 8, 2, "───────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     // Rodapé de Notas Astrológicas Tradicionais
