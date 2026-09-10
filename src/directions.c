@@ -610,10 +610,12 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
-                d->promissor_glifo, // d->promissor_name,
-                (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                d->significador_glifo, 
-                d->significador_name);
+                         d->promissor_glifo, // d->promissor_name,
+                         (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
+                         d->significador_glifo, 
+                         d->significador_name);
+
+                bool eh_termo = d->promissor_type == PROM_TERM;
 
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
@@ -657,6 +659,10 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
                     atributo_extra = A_BOLD;
+                }
+
+                if (eh_termo) {
+                    atributo_extra |= (A_UNDERLINE | A_DIM);
                 }
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
@@ -1069,12 +1075,12 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), "%s %s → %s %s", 
-                d->promissor_glifo, // d->promissor_name,
-                (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                d->significador_glifo, 
-                d->significador_name);
+                         d->promissor_glifo, // d->promissor_name,
+                         (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
+                         d->significador_glifo, 
+                         d->significador_name);
 
-
+                bool eh_termo = d->promissor_type == PROM_TERM;
                 // --- MOTOR DE DECISÃO DE CORES POR STRINGS (TRADICIONAL) ---
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
@@ -1127,6 +1133,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     /* Conjunções comuns normais */
                     par_cor_ativo = COLOR_PAIR(7);
                     atributo_extra = A_BOLD;
+                }
+
+                if (eh_termo) {
+                    atributo_extra |= (A_UNDERLINE | A_DIM);
                 }
                 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
