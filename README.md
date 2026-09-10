@@ -1,6 +1,5 @@
 # MorceNOX™ ASTRO
-<img width="2526" height="1469" alt="logo-ascii-art" src="https://github.com/user-attachments/assets/525ce8f4-966a-4a8a-9a39-c1bf1e6ecb97" />
-
+<img width="2026" height="2026" alt="logo-ascii-art" src="https://github.com/user-attachments/assets/fdc82baf-771f-4adf-8689-a2c46b00f3e7" />
 **Your advanced, terminal-based astrological companion.**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
