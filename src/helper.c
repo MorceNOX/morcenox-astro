@@ -32,12 +32,140 @@
 #include <sys/stat.h>
 #include <menu.h>
 #include <ctype.h>
+#include <sys/ioctl.h>
+#include <termios.h>
 #include "var.h"
 #include "helper.h"
 #include "planet_table.h"
 #include "directions.h"
 
 
+
+double get_exact_aspect_ratio_ncurses() {
+    // Atualiza as variáveis internas de tamanho do ncurses
+    // (Importante para quando a função é chamada após um redimensionamento)
+    refresh(); 
+    
+    int rows = LINES;
+    int cols = COLS;
+
+    if (rows <= 0 || cols <= 0) return 2.0;
+
+    // Limpa lixos pendentes no buffer de entrada
+    flushinp();
+
+    // Envia a sequência ANSI nativa requisitando os pixels (\e[14t)
+    printf("\e[14t");
+    fflush(stdout);
+
+    // Configura um timeout curto para não travar se o terminal não responder
+    timeout(100); 
+
+    char buffer[64];
+    int idx = 0;
+    int ch;
+
+    // Captura a resposta caractere por caractere
+    while (idx < 63) {
+        ch = getch();
+        if (ch == ERR) break; 
+        buffer[idx++] = (char)ch;
+        if (ch == 't') break; 
+    }
+    buffer[idx] = '\0';
+
+    // Desativa o timeout para voltar ao modo padrão (bloqueante)
+    timeout(-1); 
+
+    int pixel_width = 0, pixel_height = 0;
+    
+    // Tenta parsear os formatos comuns de resposta do terminal
+    if (sscanf(buffer, "%*[^4]4;%d;%d", &pixel_height, &pixel_width) == 2 ||
+        sscanf(buffer, "\e[4;%d;%d", &pixel_height, &pixel_width) == 2) {
+        
+        if (pixel_width > 0 && pixel_height > 0) {
+            double cell_width = (double)pixel_width / cols;
+            double cell_height = (double)pixel_height / rows;
+            return cell_height / cell_width;
+        }
+    }
+
+    return 2.0; // Fallback se o terminal falhar
+}
+
+
+
+
+double get_exact_aspect_ratio() {
+    struct winsize w;
+    int rows = 0, cols = 0;
+    int pixel_width = 0, pixel_height = 0;
+
+    // 1. Pegar a quantidade de linhas e colunas (isso o ioctl sempre sabe)
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) != -1) {
+        rows = w.ws_row;
+        cols = w.ws_col;
+    }
+    
+    // Se o ncurses já estiver rodando, podemos usar as variáveis globais dele
+    if (rows == 0) rows = LINES;
+    if (cols == 0) cols = COLS;
+
+    // 2. Fallback de segurança caso a janela seja inválida
+    if (rows <= 0 || cols <= 0) return 2.0;
+
+    // 3. O TRUQUE: Perguntar a resolução em pixels via sequência ANSI \e[14t
+    // Desativamos temporariamente o eco no terminal para a resposta não "sujar" a tela
+    struct termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    // Envia o comando pedindo o tamanho em pixels
+    printf("\e[14t");
+    fflush(stdout);
+
+    // O terminal responde no formato: \e[4;<height>;<width>t
+    // Exemplo de resposta capturada no stdin: ^[[4;1080;1920t
+    if (scanf("\e[4;%d;%d;t", &pixel_height, &pixel_width) != 2) {
+        // Se falhar a leitura (raro), tenta o formato alternativo sem o 't' final
+        scanf("%*[^t]t"); 
+    }
+
+    // Restaura as configurações originais do terminal
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+    // 4. Se conseguimos os pixels, calculamos a proporção exata da fonte atual
+    if (pixel_width > 0 && pixel_height > 0) {
+        double cell_width = (double)pixel_width / cols;
+        double cell_height = (double)pixel_height / rows;
+        return cell_height / cell_width;
+    }
+
+    // Se tudo falhar (ex: rodando via SSH muito antigo), mantemos o 2.0
+    return 2.0;
+}
+
+
+double get_terminal_font_aspect_ratio() {
+    struct winsize w;
+    
+    // Query the terminal driver for window sizes
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == -1) {
+        return 2.0; // Fail-safe default (most monospace fonts are roughly 2:1)
+    }
+
+    // Some terminals or multiplexers (like tmux/screen) report 0 pixels
+    if (w.ws_xpixel == 0 || w.ws_ypixel == 0 || w.ws_row == 0 || w.ws_col == 0) {
+        return 2.0; // Fallback rule-of-thumb metric
+    }
+
+    double cell_width = (double)w.ws_xpixel / w.ws_col;
+    double cell_height = (double)w.ws_ypixel / w.ws_row;
+
+    return cell_height / cell_width;
+}
 
 const char *str_dow(int dow) {
     switch(dow) {

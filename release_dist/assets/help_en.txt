@@ -1554,6 +1554,8 @@ directions and a period of alert.
     
     • Other aspects (black).
     
+    • When the promissor is a term, the direction is displayed underlined and dimmed.
+    
 The same color coding is applied to both, Direct and Converse 
 directions.
      

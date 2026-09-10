@@ -1485,6 +1485,8 @@ A codificação por cores indica direções destruidoras potenciais, direções 
 
 • Outros aspectos (preto).
 
+• Quando o promissor é um termo a direção é exibida com sublinhado e cor esmaecida.
+
 O mesmo código de cores é aplicado a ambas as direções — direta e conversa.
 
 Use [↓↑] para deslizar a tabela.

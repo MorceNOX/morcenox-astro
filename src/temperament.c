@@ -1092,9 +1092,9 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
        NOVO: IDENTIFICAÇÃO DINÂMICA DE INFLUENCIAS SECUNDÁRIAS (70% do Líder)
        ========================================================================= */
     
-    float proporcao_minima = TEMPERAMENT_RANK_PROPORTION;
+    double proporcao_minima = TEMPERAMENT_RANK_PROPORTION;
     // O corte é calculado com base no primeiro colocado da lista (o de maior porcentagem)
-    float corte_significativo = lista[0].porcentagem * proporcao_minima;
+    double corte_significativo = lista[0].porcentagem * proporcao_minima;
     
     int exibiu_conector = 0;
 

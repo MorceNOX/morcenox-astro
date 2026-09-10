@@ -78,6 +78,8 @@ extern const int MAX_LINE_WIDTH;
 
 extern const double ASP_MAJOR_EXACT;
 
+extern const double TEMPERAMENT_RANK_PROPORTION;
+
 void update_interface_language();
 
 #endif

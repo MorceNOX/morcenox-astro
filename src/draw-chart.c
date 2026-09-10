@@ -4663,33 +4663,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     
     bool dark_mode = (darkmode)?true:false;
 
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);
-
-    // Defined aspect ratio based on characters mono dimensions
-    float aspect_ratio = ((float)max_x / (float)max_y);
+    keypad(stdscr, TRUE); // Enable keypad for special keys
+    
+    float aspect_ratio = get_exact_aspect_ratio_ncurses();
 
     // // DEBUG: Aspect Ratio verification
     // char c_asp[10] = "";
     // snprintf(c_asp, 10, "%7.4f", aspect_ratio);
     // show_alert_popup(_("Aspect Ratio:"), c_asp);
-
-    if (aspect_ratio >= 4.0237) {
-        aspect_ratio = aspect_ratio / 2.0119;
-    }
-    else if (aspect_ratio >= 4.000) {
-        aspect_ratio = aspect_ratio / 2.0;
-    }
-    else if (aspect_ratio >= 3.7249) {
-        aspect_ratio = aspect_ratio / 1.8625;
-    }
-    else if (aspect_ratio >= 3.56) {
-        aspect_ratio = aspect_ratio / 1.8659 + 0.0523;
-    }
-    else {
-        aspect_ratio = aspect_ratio / 1.7 + 0.0523;
-    }
-
 
     if (dark_mode) {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -4790,8 +4771,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     //cbreak();
     //noecho();
     //curs_set(0); 
-    keypad(stdscr, TRUE); // Enable keypad for special keys
-
+    
   
     char err[256];
     char serr[256];
@@ -6899,7 +6879,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case '/':
                 aspect_ratio -= 0.1;
-                if (zoom_factor < 0.3) zoom_factor = 0.3; // Cap at 0.3x zoom
                 break;
             case '+':
             case '=':
@@ -7240,6 +7219,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case 27:
                 running = false;
+                break;
+            case KEY_RESIZE:
+                aspect_ratio = get_exact_aspect_ratio_ncurses();
                 break;
             case ERR: // No key pressed within timeout (1 second)
                 // Do nothing - just continue the loop

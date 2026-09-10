@@ -73,6 +73,8 @@ const int MAX_LINE_WIDTH = 80;
 
 const double ASP_MAJOR_EXACT = 1.0;
 
+const double TEMPERAMENT_RANK_PROPORTION = 0.6666;
+
 
 // void update_interface_language() {
 //     setenv("LANGUAGE", LANGUAGE, 1);
