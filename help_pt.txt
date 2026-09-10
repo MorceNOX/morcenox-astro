@@ -628,11 +628,13 @@ Você também pode ver a tabela de posições das cúspides de cada casa no lado
 
 Logo abaixo das cúspides você verá desenhado, em ASCII-Art, o símbolo do Sol ( ☉ ) se o mapa for diurno, ou o símbolo da Lua (☽ ) se o mapa for noturno.
 
-Ao aplicar zoom no mapa, todas as informações ao lado da roda são ocultadas se o segundo nível de zoom estiver ativo, exceto as tabelas de planetas e casas, que desaparecem no terceiro nível de zoom.
+Ao aplicar zoom no mapa, todas as informações ao lado da roda são ocultadas se o quinto nível de zoom estiver ativo.
 
 Você pode ampliar/reduzir e mover a roda do mapa.
 Use [+] ou [-] para ampliar e as teclas de seta para mover.
 A tecla [R] reseta a roda do mapa para seu tamanho e posição originais.
+
+Use as teclas de seta ou clique e arraste sobre a roda para movê-la.
 
 Digite [H] para mostrar os limites das casas no mapa.
 

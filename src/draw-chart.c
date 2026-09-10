@@ -1487,6 +1487,37 @@ int get_house(double longitude, double *cusps) {
 }
 
 
+void safe_mvprintw_clip(int y, int x, const char *str) {
+    // 1. Se a linha estiver totalmente fora da tela, ignora
+    if (y < 0 || y >= LINES) return;
+
+    int len = strlen(str);
+
+    // 2. CORTE PELA ESQUERDA (Se x for negativo)
+    if (x < 0) {
+        int invisivel = -x; // Quantos caracteres já saíram pela esquerda
+        if (invisivel >= len) return; // A string inteira saiu da tela
+
+        // Movemos o ponteiro da string para frente e ajustamos o X para 0
+        str += invisivel;
+        len -= invisivel;
+        x = 0;
+    }
+
+    // 3. CORTE PELA DIREITA (Se a string estourar o COLS)
+    if (x + len > COLS) {
+        len = COLS - x; // Limita o tamanho ao espaço que sobra na tela
+    }
+
+    // Se após os cortes ainda sobrar algo para desenhar
+    if (len > 0) {
+        // mvaddnstr(y, x, string, max_caracteres)
+        // Imprime apenas a quantidade 'len' de caracteres, cortando o resto de forma limpa
+        mvaddnstr(y, x, str, len);
+    }
+}
+
+
 // Helper function to draw objects at specific radius
 void draw_objects_at_radius(int radius_multiplier, int object_count, 
                            PlotObject *plots, int n, 
@@ -1560,7 +1591,8 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                     }
                     
                     if (text_to_draw) {
-                        mvaddstr(y, x , text_to_draw);
+                        //mvaddstr(y, x , text_to_draw);
+                        safe_mvprintw_clip(y, x, text_to_draw);
                     }
                     
                     attroff(COLOR_PAIR(16) | A_BOLD);
@@ -1613,7 +1645,8 @@ void draw_cusps(int radius_multiplier, int object_count,
                     snprintf(text_to_draw, 12, "%d", j);
                     
                     //if (text_to_draw) {
-                        mvaddstr(y, x, text_to_draw);
+                        //mvaddstr(y, x, text_to_draw);
+                        safe_mvprintw_clip(y, x, text_to_draw);
                     //}
                 }
             }
@@ -1661,33 +1694,33 @@ void draw_cusps_div(int object_count,
                         // Draw the appropriate text
                         if (j != 1 && j != 4 && j != 7 && j != 10) {
                             if (angle <= -1.79) {
-                                mvaddstr(y, x, "▚");  // casa 11
+                                safe_mvprintw_clip(y, x, "🙽");  // casa 11
                             } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                                mvaddstr(y, x, "▍"); // casa 10
+                                safe_mvprintw_clip(y, x, "▍"); // casa 10
                             } else if (angle <= -0.8 || angle >= 4.93) {
-                                mvaddstr(y, x, "▞");  // casa 9 
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 9 
                             } else if (angle <= -0.2) {
-                                mvaddstr(y, x, "🙼");  // casa 8
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 8
                             } else if (angle <= 0.2) {
-                                mvaddstr(y-1, x, "▁▁");
-                                mvaddstr(y,   x, "▔▔");  // casa 7
+                                safe_mvprintw_clip(y-1, x, "▁▁");
+                                safe_mvprintw_clip(y,   x, "▔▔");  // casa 7
                             } else if (angle <= 0.95) {
-                                mvaddstr(y, x, "🙽");  // casa 6
+                                safe_mvprintw_clip(y, x, "🙽");  // casa 6
                             } else if (angle < 1.35) {
-                                mvaddstr(y, x, "▚"); // casa 5
+                                safe_mvprintw_clip(y, x, "🙽"); // casa 5
                             } else if (angle < 1.79) {
-                                mvaddstr(y, x, "▐");  // casa 4
+                                safe_mvprintw_clip(y, x, "▐");  // casa 4
                             } else if (angle < 2.26) {
-                                mvaddstr(y, x, "▞");  // casa 3
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 3
                             } else if (angle < 2.99) {
-                                mvaddstr(y, x, "🙼");  // casa 2
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 2
                             } else if (angle <= 3.25) {
-                                mvaddstr(y,   x, "▁▁"); // casa 1
-                                mvaddstr(y+1, x, "▔▔");
+                                safe_mvprintw_clip(y,   x, "▁▁"); // casa 1
+                                safe_mvprintw_clip(y+1, x, "▔▔");
                             } else if (angle <= 4.1) {
-                                mvaddstr(y, x, "🙽");  // casa 12
+                                safe_mvprintw_clip(y, x, "🙽");  // casa 12
                             } else {
-                                mvaddstr(y, x, "▚"); // casa 11
+                                safe_mvprintw_clip(y, x, "🙽"); // casa 11
                             }
                         }
                     //mvprintw(y, x, "%.2f ", angle);
@@ -1736,38 +1769,38 @@ void draw_cusps_div_axis(int object_count,
                         // Draw the appropriate text
                         if (j == 1 || j == 4 || j == 7 || j == 10) {            
                             if (angle <= -1.79) {
-                                mvaddstr(y, x, "⧹");  // casa 11 // ⧹⧸
+                                safe_mvprintw_clip(y, x, "⧹");  // casa 11 // ⧹⧸
                             } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
                                 //mvaddstr(y, x, "▎"); // casa 10
-                                mvaddstr(y, x-1, "▕▎");                            
+                                safe_mvprintw_clip(y, x-1, "▕▎");                            
                             } else if (angle <= -0.8 || angle >= 4.93) {
-                                mvaddstr(y, x, "⧸");  // casa 9
+                                safe_mvprintw_clip(y, x, "⧸");  // casa 9
                             } else if (angle <= -0.2) {
-                                mvaddstr(y, x, "🙼");  // casa 8
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 8
                             } else if (angle <= 0.2) {
                                 //mvaddstr(y, x, "▔");  // casa 7
-                                mvaddstr(y-1, x, "▁▁");
-                                mvaddstr(y,   x, "▔▔");
+                                safe_mvprintw_clip(y-1, x, "▁▁");
+                                safe_mvprintw_clip(y,   x, "▔▔");
                             } else if (angle <= 0.95) {
-                                mvaddstr(y, x, "🙽");  // casa 6
+                                safe_mvprintw_clip(y, x, "🙽");  // casa 6
                             } else if (angle < 1.35) {
-                                mvaddstr(y, x, "⧹"); // casa 5
+                                safe_mvprintw_clip(y, x, "⧹"); // casa 5
                             } else if (angle < 1.79) {
                                 //mvaddstr(y, x, "▕");  // casa 4
-                                mvaddstr(y, x, "▕▎");                            
+                                safe_mvprintw_clip(y, x, "▕▎");                            
                             } else if (angle < 2.26) {
-                                mvaddstr(y, x, "⧸");  // casa 3
+                                safe_mvprintw_clip(y, x, "⧸");  // casa 3
                             } else if (angle < 2.99) {
-                                mvaddstr(y, x, "🙼");  // casa 2
+                                safe_mvprintw_clip(y, x, "🙼");  // casa 2
                             } else if (angle <= 3.25) {
                                 //mvaddstr(y, x, "▁");  // casa 1
-                                mvaddstr(y,   x, "▁▁");
-                                mvaddstr(y+1, x, "▔▔");
+                                safe_mvprintw_clip(y,   x, "▁▁");
+                                safe_mvprintw_clip(y+1, x, "▔▔");
 
                             } else if (angle <= 4.1) {
-                                mvaddstr(y, x, "🙽");  // casa 12
+                                safe_mvprintw_clip(y, x, "🙽");  // casa 12
                             } else {
-                                mvaddstr(y, x, "⧹"); // casa 11
+                                safe_mvprintw_clip(y, x, "⧹"); // casa 11
                             }
                         }
                     }                
@@ -1795,48 +1828,50 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
 
         attron(COLOR_PAIR(19) | A_DIM);
         for (int j = 0; j < 6; j++) {
-            if (day_regent == PH_SOL) {
-                mvaddstr(y + j, x + 2, sol_ascii[j]);
-            }
-            else if (day_regent == PH_LUNA) {
-                mvaddstr(y + j, x + 2, lua_ascii[j]);
-            }
-            else if (day_regent == PH_MERCURY) {
-                mvaddstr(y + j, x + 2, mercury_ascii[j]);
-            }
-            else if (day_regent == PH_VENUS) {
-                mvaddstr(y + j, x + 2, venus_ascii[j]);
-            }
-            else if (day_regent == PH_MARS) {
-                mvaddstr(y + j, x + 2, marte_ascii[j]);
-            }
-            else if (day_regent == PH_JUPITER) {
-                mvaddstr(y + j, x + 2, jupiter_ascii[j]);
-            }
-            else if (day_regent == PH_SATURN) {
-                mvaddstr(y + j, x + 2, saturno_ascii[j]);
-            }
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {   
+                if (day_regent == PH_SOL) {
+                    safe_mvprintw_clip(y + j, x + 2, sol_ascii[j]);
+                }
+                else if (day_regent == PH_LUNA) {
+                    safe_mvprintw_clip(y + j, x + 2, lua_ascii[j]);
+                }
+                else if (day_regent == PH_MERCURY) {
+                    safe_mvprintw_clip(y + j, x + 2, mercury_ascii[j]);
+                }
+                else if (day_regent == PH_VENUS) {
+                    safe_mvprintw_clip(y + j, x + 2, venus_ascii[j]);
+                }
+                else if (day_regent == PH_MARS) {
+                    safe_mvprintw_clip(y + j, x + 2, marte_ascii[j]);
+                }
+                else if (day_regent == PH_JUPITER) {
+                    safe_mvprintw_clip(y + j, x + 2, jupiter_ascii[j]);
+                }
+                else if (day_regent == PH_SATURN) {
+                    safe_mvprintw_clip(y + j, x + 2, saturno_ascii[j]);
+                }
 
-            if (hour_regent == PH_SOL) {
-                mvaddstr(y + j, x + 8, sol_ascii[j]);
-            }
-            else if (hour_regent == PH_LUNA) {
-                mvaddstr(y + j, x + 8, lua_ascii[j]);
-            }
-            else if (hour_regent == PH_MERCURY) {
-                mvaddstr(y + j, x + 8, mercury_ascii[j]);
-            }
-            else if (hour_regent == PH_VENUS) {
-                mvaddstr(y + j, x + 8, venus_ascii[j]);
-            }
-            else if (hour_regent == PH_MARS) {
-                mvaddstr(y + j, x + 8, marte_ascii[j]);
-            }
-            else if (hour_regent == PH_JUPITER) {
-                mvaddstr(y + j, x + 8, jupiter_ascii[j]);
-            }
-            else if (hour_regent == PH_SATURN) {
-                mvaddstr(y + j, x + 8, saturno_ascii[j]);
+                if (hour_regent == PH_SOL) {
+                    safe_mvprintw_clip(y + j, x + 8, sol_ascii[j]);
+                }
+                else if (hour_regent == PH_LUNA) {
+                    safe_mvprintw_clip(y + j, x + 8, lua_ascii[j]);
+                }
+                else if (hour_regent == PH_MERCURY) {
+                    safe_mvprintw_clip(y + j, x + 8, mercury_ascii[j]);
+                }
+                else if (hour_regent == PH_VENUS) {
+                    safe_mvprintw_clip(y + j, x + 8, venus_ascii[j]);
+                }
+                else if (hour_regent == PH_MARS) {
+                    safe_mvprintw_clip(y + j, x + 8, marte_ascii[j]);
+                }
+                else if (hour_regent == PH_JUPITER) {
+                    safe_mvprintw_clip(y + j, x + 8, jupiter_ascii[j]);
+                }
+                else if (hour_regent == PH_SATURN) {
+                    safe_mvprintw_clip(y + j, x + 8, saturno_ascii[j]);
+                }
             }
         }
         attroff(COLOR_PAIR(19) | A_DIM);
@@ -1864,7 +1899,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(4) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, libra[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, libra[j]);
                     attroff(COLOR_PAIR(4) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 1 ) {
@@ -1872,12 +1907,12 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(3) | A_DIM);
-                    mvaddstr(y - 2 + j, x - 2, virgo[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, virgo[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
                 else if ( (k + offset) % 12 == 2 ) {
                     attron(COLOR_PAIR(2) | A_BOLD);
-                    mvaddstr(y - 2 + j, x - 2, leo[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, leo[j]);
                     attroff(COLOR_PAIR(2) | A_BOLD);
                 }
                 else if ( (k + offset) % 12 == 3 ) {
@@ -1885,17 +1920,17 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(5) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, cancer[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, cancer[j]);
                     attroff(COLOR_PAIR(5) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 4 ) {
                     attron(COLOR_PAIR(4) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, gemini[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, gemini[j]);
                     attroff(COLOR_PAIR(4) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 5 ) {
                     attron(COLOR_PAIR(3) | A_DIM);
-                    mvaddstr(y - 2 + j, x - 2, taurus[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, taurus[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
                 else if ( (k + offset) % 12 == 6 ) {
@@ -1903,12 +1938,12 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(2) | A_BOLD);
-                    mvaddstr(y - 2 + j, x - 2, aries[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, aries[j]);
                     attroff(COLOR_PAIR(2) | A_BOLD);
                 }
                 else if ( (k + offset) % 12 == 7 ) {
                     attron(COLOR_PAIR(5) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, pisces[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, pisces[j]);
                     attroff(COLOR_PAIR(5) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 8 ) {
@@ -1916,7 +1951,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(4) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, aquarius[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, aquarius[j]);
                     attroff(COLOR_PAIR(4) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 9 ) {
@@ -1924,12 +1959,12 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(3) | A_DIM);
-                    mvaddstr(y - 2 + j, x - 2, capricorn[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, capricorn[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
                 else if ( (k + offset) % 12 == 10 ) {
                     attron(COLOR_PAIR(2) | A_BOLD);
-                    mvaddstr(y - 2 + j, x - 2, sagittarius[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, sagittarius[j]);
                     attroff(COLOR_PAIR(2) | A_BOLD);
                 }
                 else if ( (k + offset) % 12 == 11 ) {
@@ -1937,7 +1972,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     if (j == 0) continue;
 
                     attron(COLOR_PAIR(5) | A_NORMAL);
-                    mvaddstr(y - 2 + j, x - 2, scorpio[j]);
+                    safe_mvprintw_clip(y - 2 + j, x - 2, scorpio[j]);
                     attroff(COLOR_PAIR(5) | A_NORMAL);
                 }
             }
@@ -1958,7 +1993,7 @@ void draw_decans(int display_center_y, int display_center_x,
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
                 
         if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
-            mvaddstr(y, x, planet_regent_symbols[decans_to_print[(k) % 36]]);
+            safe_mvprintw_clip(y, x, planet_regent_symbols[decans_to_print[(k) % 36]]);
         }        
     }
 }
@@ -1997,7 +2032,7 @@ void draw_terms(int radius_multiplier, int object_count,
                     i == (180 - (longitudes[j] - asc) % 360) + 360|| 
                     i == (180 - (longitudes[j] - asc) % 360) - 360) {
                     
-                    mvaddstr(y, x , text[j]);
+                    safe_mvprintw_clip(y, x , text[j]);
                                     
                 }
             }
@@ -2007,7 +2042,7 @@ void draw_terms(int radius_multiplier, int object_count,
 
 
 
-void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y, 
+void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_ratio, float zoom_factor, float pan_x, float pan_y, 
                 int n, struct tm *local_time, double lat, double lon, double elev, double tz_offset,
                 PlotObject *plots, double *cusps, int sanYear, int sanMon, int sanDay, double sanHour, 
                 char *sunrise_time, char *sunset_time, char *city, char *country, 
@@ -2029,11 +2064,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
 
 
     
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);
     
-    int center_y = max_y / 2;
-    int center_x = max_x / 2;
         
     // Determine the maximum possible radius that fits in the terminal
     float max_r_y = (max_y / 2.0) - 0.0;
@@ -2054,131 +2085,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
     // Apply panning to center coordinates
     int display_center_y = center_y + (int)(pan_y * current_scale);
     int display_center_x = center_x + (int)(pan_x * current_scale);
-    
-    // Draw the outer circle filled
-    attron(COLOR_PAIR(19) | FLAGS);
-    draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
-    attroff(COLOR_PAIR(19) | FLAGS);
-    
-    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
-    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
-    draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
-    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS);
 
-
-    //Draw the outer boundary using a light shade block
-    int asc = (int)cusps[1];
-    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(34) | A_DIM | FLAGS);
-    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += current_scale) {
-        for (int i = -60 + asc; i < 300 + asc; i += 30) {
-            float angle = i * PI / 180.0;
-            int y = (int)(display_center_y + r * sin(angle));
-            int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
-            
-            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {                
-                mvaddwstr(y, x, L"░");
-            }
-        }
-    }
-    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS); else attroff(COLOR_PAIR(34) | A_DIM | FLAGS);
-    
-    if (dark_mode) attron(COLOR_PAIR(10) | A_DIM); else attron(COLOR_PAIR(1));    
-    draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    if (dark_mode) attroff(COLOR_PAIR(10) | A_DIM); else attroff(COLOR_PAIR(1));
-    
-
-    if (house_div) {
-        if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attron(COLOR_PAIR(19) | A_DIM);
-
-        draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-        
-        if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attroff(COLOR_PAIR(19) | A_DIM);
-    }
-
-    // Draw house numbers
-    draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    
-    if (zoom_factor <= 1.3) {
-        attron(A_BOLD);
-        for (int j = 1; j <= 12; j++) {
-            int sign = (int)(cusps[j] / 30);
-            int degree = (int)cusps[j] % 30 ;
-            int min = (int)((cusps[j] - (int)cusps[j]) * 60);
-
-            const char *sign_str = get_sign(sign);
-
-            mvprintw(13 + j, 2, "%s %2d: %2d°%s%02d'", _("House"), j, degree, sign_str, min);
-        }
-
-        attroff(A_BOLD);
-
-        int add_n = 0;
-        if (mapa_retorno) add_n = 0;
-
-        for (int i = 0; i < 6; i++) {
-            if (MAPA_DIURNO) {
-                mvprintw(LINES - (10 + add_n) + i, 7, "%s", sol_ascii[i]);
-            } else {
-                mvprintw(LINES - (10 + add_n) + i, 7, "%s", lua_ascii[i]);
-            }
-        }
-        
-    }
-
-    // Draw zodiac signs
-    draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
-    
-    if (show_dec) {
-        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
-        draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
-        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
-    }
-
-    if (show_terms) {
-        Termo t[12][5];
-        get_terms_longitude_to_print(terms, t);
-        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
-        draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
-    }
-
-    if (zoom_factor <= 1.3) {
-        attron(A_BOLD);
-        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-            int sign = (int)(plots[i].longitude / 30);
-            int degree = (int)plots[i].longitude % 30 ;
-            int min = (int)((plots[i].longitude - (int)plots[i].longitude) * 60);
-
-            const char *sign_str = get_sign(sign);
-            
-            if (get_visual_width(plots[i].object) == 1) {
-                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
-            }
-            else if (get_visual_width(plots[i].object) == 2) {
-                mvprintw(12 + i, COLS - 22, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
-            }
-            else {
-                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
-            }
-        }
-        attroff(A_BOLD);
-    }
-
-    draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
-    //refresh();
-    
-    // Draw all objects at different radii
-    draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    if (zoom_factor >= 1.4) {
-        draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    }
-    draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    //draw_objects_at_radius(9, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    draw_objects_at_radius(8, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    
-    
     char *house_system_name;    
     get_house_system_name(house_system, &house_system_name);
 
@@ -2193,7 +2100,7 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
 
     
     
-    if (zoom_factor <= 1.2) {
+    if (zoom_factor <= 1.5) {
         attron(A_BOLD);
         mvprintw(1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("Local"), str_dow(local_time->tm_wday));
         attroff(A_BOLD);
@@ -2248,13 +2155,144 @@ void draw_chart(float aspect_ratio, float zoom_factor, float pan_x, float pan_y,
     }
     else {
         attron(A_BOLD);
-        mvprintw(LINES - 1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("TZ"), str_dow(local_time->tm_wday));
+        mvprintw(LINES - 1, 1, "%s: %d/%d/%d %02d:%02d:%02d %s, %s", _("Time"), local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, _("Local"), str_dow(local_time->tm_wday));
         attroff(A_BOLD);
     }
     mvprintw(LINES - 1, max_x - 25, "%s: %5d s", _("Speed Animation"), anim_interval);
 
-    refresh();
+    if (zoom_factor <= 1.5) {
+        attron(A_BOLD);
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+            int sign = (int)(plots[i].longitude / 30);
+            int degree = (int)plots[i].longitude % 30 ;
+            int min = (int)((plots[i].longitude - (int)plots[i].longitude) * 60);
+
+            const char *sign_str = get_sign(sign);
+            
+            if (get_visual_width(plots[i].object) == 1) {
+                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
+            }
+            else if (get_visual_width(plots[i].object) == 2) {
+                mvprintw(12 + i, COLS - 22, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
+            }
+            else {
+                mvprintw(12 + i, COLS - 21, "%2s → %2d°%s%02d' %1s %s", plots[i].object, degree, sign_str, min, plots[i].retrograde, plots[i].house);
+            }
+        }
+        attroff(A_BOLD);
+    }
+
+    if (zoom_factor <= 1.5) {
+        attron(A_BOLD);
+        for (int j = 1; j <= 12; j++) {
+            int sign = (int)(cusps[j] / 30);
+            int degree = (int)cusps[j] % 30 ;
+            int min = (int)((cusps[j] - (int)cusps[j]) * 60);
+
+            const char *sign_str = get_sign(sign);
+
+            mvprintw(13 + j, 2, "%s %2d: %2d°%s%02d'", _("House"), j, degree, sign_str, min);
+        }
+
+        attroff(A_BOLD);
+
+        int add_n = 0;
+        if (mapa_retorno) add_n = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (MAPA_DIURNO) {
+                mvprintw(LINES - (10 + add_n) + i, 7, "%s", sol_ascii[i]);
+            } else {
+                mvprintw(LINES - (10 + add_n) + i, 7, "%s", lua_ascii[i]);
+            }
+        }
+        
+    }
+    wnoutrefresh(stdscr);
+    
+    // Draw the outer circle filled
+    attron(COLOR_PAIR(19) | FLAGS);
+    draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
+    attroff(COLOR_PAIR(19) | FLAGS);
+    
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
+    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
+    draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS);
+
+
+    //Draw the outer boundary using a light shade block
+    int asc = (int)cusps[1];
+    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(34) | A_DIM | FLAGS);
+    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += current_scale) {
+        for (int i = -60 + asc; i < 300 + asc; i += 30) {
+            float angle = i * PI / 180.0;
+            int y = (int)(display_center_y + r * sin(angle));
+            int x = (int)(display_center_x + aspect_ratio * r * cos(angle));
+            
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {                
+                mvaddwstr(y, x, L"░");
+            }
+        }
+    }
+    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS); else attroff(COLOR_PAIR(34) | A_DIM | FLAGS);
+    
+    if (dark_mode) attron(COLOR_PAIR(10) | A_DIM); else attron(COLOR_PAIR(1));    
+    draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    if (dark_mode) attroff(COLOR_PAIR(10) | A_DIM); else attroff(COLOR_PAIR(1));
+    
+
+    if (house_div) {
+        if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attron(COLOR_PAIR(19) | A_DIM);
+
+        draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+        
+        if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attroff(COLOR_PAIR(19) | A_DIM);
+    }
+
+    // Draw house numbers
+    draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    
+    
+
+    // Draw zodiac signs
+    draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
+    
+    if (show_dec) {
+        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
+        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+    }
+
+    if (show_terms) {
+        Termo t[12][5];
+        get_terms_longitude_to_print(terms, t);
+        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+    }
+
+    
+
+    draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
+    //refresh();
+    
+    // Draw all objects at different radii
+    draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    if (zoom_factor >= 1.4) {
+        draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    }
+    draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    //draw_objects_at_radius(9, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    draw_objects_at_radius(8, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
+    
     free(house_system_name);
+    
+    wnoutrefresh(stdscr);
+    doupdate();
+    
 }
 
 
@@ -3145,7 +3183,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 14, 2, _("Time: "));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 14, 15, "%d/%d/%d %02d:%02d:%02d TZ, %s", local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, str_dow(local_time->tm_wday));
+    mvwprintw(table_win, 14, 15, "%d/%d/%d %02d:%02d:%02d %s, %s", local_time->tm_year + 1900, local_time->tm_mon + 1, local_time->tm_mday, (local_time->tm_hour), local_time->tm_min, local_time->tm_sec, "Local", str_dow(local_time->tm_wday));
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 15, 2, _("Julian Day: "));
     wattroff(table_win, A_BOLD);
@@ -4668,8 +4706,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool dark_mode = (darkmode)?true:false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
-
-    float aspect_ratio = get_exact_aspect_ratio_ncurses(0);
+    
+    float aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, 0);
 
     // // DEBUG: Aspect Ratio verification
     // char c_asp[10] = "";
@@ -4916,12 +4954,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     
     // Zoom factor - start with 1.0 (normal size)
-    float zoom_factor = 1.0;
+    float zoom_factor = 1.0f;
                 
     // Panning offsets - start at center
-    float pan_x = 4.0;
-    float pan_y = 0.0;
+    float pan_x = 4.0f;
+    float pan_y = 0.0f;
 
+    int start_mouse_x = 0;
+    int start_mouse_y = 0;
+    int start_pan_x = 0;
+    int start_pan_y = 0;
     
        
     // Main loop for handling input and redrawing
@@ -4933,6 +4975,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     bool backup_mapa_diurno = false;
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | REPORT_MOUSE_POSITION, NULL);
+    printf("\e[?1002h"); 
+    fflush(stdout);
+    int is_dragging = 0;
+    MEVENT mouse_event; 
+
     int TIMEOUT = 985;
     
     // Set a timeout for getch() - this adds the pause functionality
@@ -4940,6 +4988,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     timeout(TIMEOUT); // This will make getch() wait for 1 second max
     
     while (running) {
+        int max_y, max_x;
+        getmaxyx(stdscr, max_y, max_x);
+        
+        int center_y = max_y / 2;
+        int center_x = max_x / 2;
         
         // =========================================================================
         // PREPARAÇÃO: CONVERSÃO SEGURA PARA UTC
@@ -6863,7 +6916,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
              
         
         // Draw the chart
-        draw_chart(aspect_ratio, zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
+        draw_chart(center_y, center_x, max_y, max_x, aspect_ratio, zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
                    sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 
                    daytime_hour, nighttime_hour, week_day + 1, planetary_hour + 1, phase, 
                    dark_mode, animated, anim_interval, mapa_retorno, chart_name, house_system, gender_id, 
@@ -6872,19 +6925,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         bool saiu_retorno = false;
 
-        // Handle input with timeout
         
-        int max_y, max_x;
-        getmaxyx(stdscr, max_y, max_x);
 
+        // Handle input with timeout
         ch = getch();
         
         switch (ch) {
             case '*':
                 aspect_ratio += 0.1;
+                if (aspect_ratio > 4.0) aspect_ratio = 4.0;
                 break;
             case '/':
                 aspect_ratio -= 0.1;
+                if (aspect_ratio < 0.5) aspect_ratio = 0.5;
                 break;
             case '+':
             case '=':
@@ -6906,6 +6959,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 pan_x = 0.0;
                 pan_y = 0.0;
                 zoom_factor = 1.0;
+                start_mouse_x = 0;
+                start_mouse_y = 0;
+                start_pan_x = 0;
+                start_pan_y = 0;
+                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, TIMEOUT);
                 break;
             case KEY_UP:
                 pan_y -= 1.0; // Move up
@@ -7108,8 +7166,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 open_menu_tables(&ctx);
 
                 touchwin(stdscr);
-                refresh();
-
+                wnoutrefresh(stdscr);
+                doupdate();
                 break;
             case 'p':
             case 'P':
@@ -7227,11 +7285,59 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 running = false;
                 break;
             case KEY_RESIZE:
-                aspect_ratio = get_exact_aspect_ratio_ncurses(TIMEOUT);
+                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, TIMEOUT);
+
                 break;
+            case 10:
             case ERR: // No key pressed within timeout (1 second)
                 // Do nothing - just continue the loop
+                if (animated) {
+                    local_time->tm_sec += anim_interval;
+                    timegm(local_time);
+                }
                 break;
+            case KEY_MOUSE:
+                if (getmouse(&mouse_event) == OK) {
+                    float max_r_y = (max_y / 2.0) - 0.0;
+                    float max_r_x = (max_x / 2.0) / aspect_ratio;
+                    
+                    float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
+                    
+                    // 2. DETECTAR O INÍCIO DO ARRASTE (Clique do Botão 1)
+                    if (mouse_event.bstate & BUTTON1_PRESSED) {
+                        // Calcula a distância matemática de onde o usuário clicou até o centro (incluindo o pan atual)
+                        double dx = (mouse_event.x - (center_x + pan_x)) / aspect_ratio;
+                        double dy = mouse_event.y - (center_y + pan_y);
+                        double distance = sqrt(dx*dx + dy*dy);
+            
+                        // Se o clique foi dentro da área do círculo
+                        if (distance <= base_radius + 1) {
+                            is_dragging = 1; // Ativa o modo de arraste
+                            
+                            // SALVA A ANCORA: Onde o mouse clicou e qual era o PAN naquele momento
+                            start_mouse_x = mouse_event.x;
+                            start_mouse_y = mouse_event.y;
+                            start_pan_x = pan_x;
+                            start_pan_y = pan_y;
+                        }
+                    }
+                    
+                    // 3. DETECTAR O MOVIMENTO (Ocorre enquanto o botão estiver pressionado)
+                    else if (mouse_event.bstate & REPORT_MOUSE_POSITION) {
+                        if (is_dragging) {
+                            // O novo pan é o pan inicial MAIS a distância que o mouse viajou
+                            pan_y = start_pan_y + (mouse_event.y - start_mouse_y);
+                            pan_x = start_pan_x + (mouse_event.x - start_mouse_x);
+                        }
+                    }
+                    
+                    // 4. DETECTAR O FIM DO ARRASTE (Soltura do Botão 1)
+                    else if (mouse_event.bstate & BUTTON1_RELEASED) {
+                        is_dragging = 0; // Desativa o modo de arraste (Drop)
+                    }
+                }
+                break;
+            
         }
         
         if (saiu_retorno) {
@@ -7245,10 +7351,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         }
 
-        if (animated) {
-            local_time->tm_sec += anim_interval;
-            timegm(local_time);
-        }
+        
 
         
         
@@ -7261,6 +7364,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     }
 
     MAPA_DIURNO = backup_mapa_diurno;
+
+    printf("\e[?1002l"); 
+    fflush(stdout);
 
     swe_close();
     //endwin();

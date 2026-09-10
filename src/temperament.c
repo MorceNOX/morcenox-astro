@@ -849,7 +849,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "scattering.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -876,7 +876,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "internal stress, rigid perfectionism, and deep stubbornness.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -902,7 +902,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "activated exactly when needed.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -933,7 +933,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "impatience.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -961,7 +961,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "who moves at a careful pace.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -991,7 +991,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "against scattering focus.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
     
@@ -1018,7 +1018,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "is mastering reactive impatience.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
 
@@ -1044,7 +1044,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "inertia or stagnation.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
 
@@ -1070,7 +1070,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                          "or social withdrawal.\n\n\n"), MAX_LINE_WIDTH);
 
             wattron(pad, A_BOLD);
-            wprintw(pad, _("Characteristics:)\n\n"));
+            wprintw(pad, _("Characteristics:\n\n"));
             wattroff(pad, A_BOLD);
             line_count += 2;
 

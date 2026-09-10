@@ -41,10 +41,11 @@
 
 
 
-double get_exact_aspect_ratio_ncurses(int curr_timeout) {
+double get_exact_aspect_ratio_ncurses(WINDOW *win, int curr_timeout) {
     // Atualiza as variáveis internas de tamanho do ncurses
     // (Importante para quando a função é chamada após um redimensionamento)
-    refresh(); 
+    wnoutrefresh(win); 
+    doupdate();
     
     int rows = LINES;
     int cols = COLS;

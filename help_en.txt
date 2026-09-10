@@ -641,11 +641,13 @@ You can also see the table of house cusp positions on the left side of the scree
 
 Under the house cusps table is drawn, in ASCII-Art, the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol (☽ ) if the chart is nocturnal.
 
-When zooming in on the chart, all information next to the wheel is hidden if the second zoom level is active, except for the planet and house tables, which disappear at the third zoom level.
+When zooming in on the chart, all information next to the wheel is hidden if the fifth zoom level is active.
 
 You can zoom in/out and pan the chart.
 Use [+] or [-] to zoom and the arrow keys to pan.
 The [R] key resets the chart wheel to its original size and position.
+
+Use the arrow keys or drag and drop with the mouse over the wheel to move it.
 
 Type [H] to show the houses boundaries in the chart.
 

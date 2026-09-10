@@ -704,10 +704,10 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     }
     
 
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
+    wattron(table_win, COLOR_PAIR(6));
     wmove(table_win, table_height - 8, 2);
     whline(table_win, ACS_HLINE, table_width - 40);
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    wattroff(table_win, COLOR_PAIR(6));
 
     // Rodapé de Notas Astrológicas Tradicionais
     wattron(table_win, A_DIM);
@@ -966,7 +966,8 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattroff(table_win, A_BOLD | COLOR_PAIR(21));
 
     wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 5, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, 5, 2);
+    whline(table_win, ACS_HLINE, table_width - 40);
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     // 3. EXIBIÇÃO DO VEREDITO DO PLANETA DESTRUIDOR (THE CHOSEN ANARETA)
@@ -1023,14 +1024,15 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
         mvwprintw(table_win, 11, 6, _("No severe planetary afflictions targeting the vital points."));
     }
 
-    wattron(table_win, COLOR_PAIR(10) | A_DIM);
-    mvwprintw(table_win, 13, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
-    wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+    wattron(table_win, COLOR_PAIR(6));
+    wmove(table_win, table_height - 5, 2);
+    whline(table_win, ACS_HLINE, table_width - 40);
+    wattroff(table_win, COLOR_PAIR(6)); 
 
     // Notas de Literatura Astrológica Tradicional (Lilly / Ptolomeu)
     wattron(table_win, A_DIM);
-    mvwprintw(table_win, 15, 4, _("Note: The Anareta represents the geometric source of physical or metabolic risk."));
-    mvwprintw(table_win, 16, 4, _("Its activation requires explicit conjunctions or hostile primary directions."));
+    mvwprintw(table_win, table_height - 4, 4, _("Note: The Anareta represents the geometric source of physical or metabolic risk."));
+    mvwprintw(table_win, table_height - 3, 4, _("Its activation requires explicit conjunctions or hostile primary directions."));
     wattroff(table_win, A_DIM);
 
     // Comando de encerramento da Janela Pop-up
