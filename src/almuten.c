@@ -567,7 +567,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         if (qtd == 1) {
             snprintf(almuten_str, sizeof(almuten_str), "%s", obter_glifo_planeta_por_id(res_almuten[0]));
         } else {
-            snprintf(almuten_str, sizeof(almuten_str), "%s/%s (%s)", 
+            snprintf(almuten_str, sizeof(almuten_str), "%s / %s (%s)", 
                      obter_glifo_planeta_por_id(res_almuten[0]), obter_glifo_planeta_por_id(res_almuten[1]), _("Tie"));
         }
     
