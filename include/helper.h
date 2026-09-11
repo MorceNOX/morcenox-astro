@@ -28,6 +28,10 @@ typedef struct {
     int type;
 } AuxOrdenacao;
 
+void ativar_arrasto_e_scroll_mouse();
+void desativar_mouse();
+void desativar_arrasto_mouse();
+void ativar_arrasto_mouse();
 double get_exact_aspect_ratio_ncurses(WINDOW *win, int curr_timeout);
 double get_exact_aspect_ratio();
 double get_terminal_font_aspect_ratio();

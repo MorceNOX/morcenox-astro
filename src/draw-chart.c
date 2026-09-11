@@ -2483,31 +2483,6 @@ void calcular_forca_planetas(PlanetDignities *dig, int *resultado_strength, bool
 
 
 
-// void calcular_forca_planetas(PlanetDignities *dig, int *resultado_strength, bool com_modernos) {
-//     int object_diff = com_modernos ? 0 : 3;
-
-//     /* RECALIBRADO PARA A REALIDADE PRÁTICA DO CÉU (Fim do esmagamento de notas) */
-//     double min_value = -4.0;
-//     double max_value = 10.0;
-
-//     double weights[50];
-//     get_weights(weights, com_modernos);
-
-//     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-//         if ((com_modernos && (i >= 14 && i <= 17)) || 
-//             (!com_modernos && (i >= 13 && i <= 14))) {
-//             resultado_strength[i] = 0; 
-//             continue;
-//         }
-
-//         double total_normalized = get_total_normalized(dig[i].essential, dig[i].accidental, min_value, max_value);
-//         double score_planet = get_planet_force(i, total_normalized, weights) / 10.0;
-        
-//         resultado_strength[i] = (int)ceil(score_planet);
-//     }
-// }
-
-
 
 
 void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) {
@@ -3318,13 +3293,13 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 77, _("Gen/Sect/Quad"));
     mvwprintw(table_win, 2, 92, _("Orient"));
 
-    wattron(table_win, COLOR_PAIR(4) | A_DIM);
+    wattron(table_win, COLOR_PAIR(40) | A_DIM);
     mvwprintw(table_win, 2, 99, _("Dec"));
-    wattroff(table_win, COLOR_PAIR(4) | A_DIM);
+    wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
-    wattron(table_win, COLOR_PAIR(3) | A_DIM);
+    wattron(table_win, COLOR_PAIR(39) | A_DIM);
     mvwprintw(table_win, 2, 103, _("Term"));
-    wattroff(table_win, COLOR_PAIR(3) | A_DIM);
+    wattroff(table_win, COLOR_PAIR(39) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
     mvwprintw(table_win, 2, 109, _("Trip"));
@@ -3428,13 +3403,13 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         }
 
         // 9. Sub-Regências
-        wattron(scroll_pad, COLOR_PAIR(4) | A_DIM);
+        wattron(scroll_pad, COLOR_PAIR(40) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_dec_t + 1, "%s", data.decan);
-        wattroff(scroll_pad, COLOR_PAIR(4) | A_DIM);
+        wattroff(scroll_pad, COLOR_PAIR(40) | A_DIM);
 
-        wattron(scroll_pad, COLOR_PAIR(3) | A_DIM);
+        wattron(scroll_pad, COLOR_PAIR(39) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_trm + 2, "%s", data.term);
-        wattroff(scroll_pad, COLOR_PAIR(3) | A_DIM);
+        wattroff(scroll_pad, COLOR_PAIR(39) | A_DIM);
 
         wattron(scroll_pad, COLOR_PAIR(7) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_tri + 2, "%s", data.tri);
@@ -3576,11 +3551,11 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     int row = 4;
     for (int i = 1; i <= 12; i++) {
 
-        wattron(table_win, COLOR_PAIR(10) | A_DIM);
+        if (i > 1) wattron(table_win, COLOR_PAIR(10) | A_DIM);
         wmove(table_win, row - 1, 2);
         whline(table_win, ACS_HLINE, table_width - 4);
         //mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
-        wattroff(table_win, COLOR_PAIR(10) | A_DIM);
+        if (i > 1) wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         char house_num[4];
         snprintf(house_num, sizeof(house_num), "%02d", i);
@@ -4731,6 +4706,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool dark_mode = (darkmode)?true:false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
+
+    ativar_arrasto_mouse();
+    flushinp();
+
+    int is_dragging = 0;
+    MEVENT mouse_event;
     
     float aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, 0);
 
@@ -4738,6 +4719,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     // char c_asp[10] = "";
     // snprintf(c_asp, 10, "%7.4f", aspect_ratio);
     // show_alert_popup(_("Aspect Ratio:"), c_asp);
+
+    use_default_colors();
 
     if (dark_mode) {
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
@@ -4760,7 +4743,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(16, COLOR_BLACK, COLOR_WHITE);
         init_pair(17, COLOR_BLACK, COLOR_MAGENTA);
         init_pair(18, COLOR_BLACK, COLOR_BLUE);
-        init_pair(19, COLOR_BLACK, COLOR_BLACK);
+        init_pair(19, COLOR_BLACK, 236);
         init_pair(20, COLOR_BLACK, COLOR_CYAN);
 
         init_pair(21, COLOR_YELLOW, COLOR_BLUE);
@@ -4782,29 +4765,31 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(38, COLOR_BLUE, COLOR_WHITE);
+        init_pair(39, COLOR_GREEN, COLOR_WHITE);
+        init_pair(40, COLOR_YELLOW, COLOR_WHITE);
     } 
     else {
-        init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(2, COLOR_RED, COLOR_WHITE);
-        init_pair(3, COLOR_GREEN, COLOR_WHITE);
-        init_pair(4, COLOR_YELLOW, COLOR_WHITE);
-        init_pair(5, COLOR_BLUE, COLOR_WHITE);
-        init_pair(6, COLOR_BLACK, COLOR_WHITE);
-        init_pair(7, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(8, COLOR_BLUE, COLOR_WHITE);
+        init_pair(1, COLOR_BLACK, 159);
+        init_pair(2, COLOR_RED, 159);
+        init_pair(3, COLOR_GREEN, 159);
+        init_pair(4, 221, 159); // amarelo
+        init_pair(5, COLOR_BLUE, 159);
+        init_pair(6, COLOR_BLACK, 223);
+        init_pair(7, 199, 223); // magenta
+        init_pair(8, 21, 223); // azul
         init_pair(9, COLOR_BLACK, COLOR_BLACK);
-        init_pair(10, COLOR_WHITE, COLOR_WHITE);
+        init_pair(10, 223, 223);
 
-        init_pair(11, COLOR_RED, COLOR_WHITE);
-        init_pair(12, COLOR_GREEN, COLOR_MAGENTA);
-        init_pair(13, COLOR_BLACK, COLOR_WHITE);
+        init_pair(11, COLOR_RED, 223);
+        init_pair(12, COLOR_GREEN, 90); // magenta / grená
+        init_pair(13, COLOR_BLACK, 223);
         
         init_pair(14, COLOR_WHITE, COLOR_BLACK);
-        init_pair(15, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(16, COLOR_BLACK, COLOR_WHITE);
-        init_pair(17, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(18, COLOR_BLUE, COLOR_WHITE);
-        init_pair(19, COLOR_WHITE, COLOR_WHITE);
+        init_pair(15, COLOR_YELLOW, 57); // azul
+        init_pair(16, COLOR_BLACK, 159);
+        init_pair(17, 199, 159); // magenta
+        init_pair(18, 21, 159); // azul
+        init_pair(19, 159, 159); // branco/cinza claro
         init_pair(20, COLOR_WHITE, COLOR_BLUE);
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
@@ -4821,11 +4806,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_WHITE, COLOR_BLUE);
-        init_pair(34, COLOR_CYAN, COLOR_WHITE);
+        init_pair(34, 123, 123);
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(38, COLOR_BLUE, COLOR_WHITE);
+        init_pair(39, 28, 223); // verde
+        init_pair(40, COLOR_YELLOW, 223);
+
     }
     
     FLAGS = 0;
@@ -4972,7 +4960,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
     }
     else {
-        bkgd(COLOR_PAIR(15) | FLAGS);
+        bkgd(COLOR_PAIR(15) | FLAGS | ' ');
     }
 
     erase();
@@ -5000,11 +4988,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     bool backup_mapa_diurno = false;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | REPORT_MOUSE_POSITION, NULL);
-    printf("\e[?1002h"); 
-    fflush(stdout);
-    int is_dragging = 0;
-    MEVENT mouse_event; 
+     
 
     int TIMEOUT = 985;
     
@@ -7034,7 +7018,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     break;
             case 'c':
             case 'C':
-                if (mapa_retorno) {                        
+                if (mapa_retorno) {
+                    desativar_arrasto_mouse();                      
                     processar_confronto_natal_revolucao(
                         almuten_rev[0],
                         almuten_lon,
@@ -7055,6 +7040,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         cusps,
                         cusps_natal
                     );
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case 'd':
@@ -7189,7 +7176,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.obj_natal = obj_natal;
                 ctx.total_obj_natal = total_obj_natal;
             
+                desativar_arrasto_mouse();                      
                 open_menu_tables(&ctx);
+                ativar_arrasto_mouse();
+                flushinp();
 
                 touchwin(stdscr);
                 wnoutrefresh(stdscr);
@@ -7198,88 +7188,139 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'p':
             case 'P':
                 if (mapa_retorno) {
+                    desativar_arrasto_mouse();                      
                     display_arabic_parts_solar_natal_confrontation(obj, cusps, total_objects, cusps_natal, obj_natal);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;                
             case 't':
             case 'T':
                 if (mapa_retorno) {
+                    desativar_arrasto_mouse();                      
                     process_revolution_transits(jd_natal, planet_longitudes, planet_latitudes, armc_natal, lat_natal, house_system, tipo_h_natal, idx_hyleg_natal, longitudes_natal, cusps_natal, obj_natal, total_obj_natal);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case KEY_F(1):
+                desativar_arrasto_mouse();
                 display_table_data(
                     mapa_retorno, julian_day, local_time, lat, lon, elev, plots, season_fmt,
                     sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, next_sunrise_time, city, country, 
                     phase, moon_temperament, last_hr, last_min, last_sec, chart_name, gender_id
                 );
-                
+                ativar_arrasto_mouse();
+                flushinp();         
                 break;
             case KEY_F(2):
+                desativar_arrasto_mouse();
                 display_table(plots, &planet_matrix, dig, strength_planets);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;    
             case 'x':
             case KEY_F(3):
+                desativar_arrasto_mouse();
                 display_aspects(plots, &matrix, &matrix_decl, ants, 14);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case KEY_F(4):
+                desativar_arrasto_mouse();
                 display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, strength_planets, dig);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case KEY_F(5):
+                desativar_arrasto_mouse();
                 display_rising_times(plots, tz_offset);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case KEY_F(6):
+                desativar_arrasto_mouse();
                 display_houses(cusps, pHouse, house_ruler_str, house_system_str);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case KEY_F(7):
+                desativar_arrasto_mouse();
                 display_almutens(pontos_calculados, plots, &matrix, week_day + 1, planetary_hour + 1, mapa_retorno);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case KEY_F(8):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_temperament(plots, &matrix, phase_id, season_id, week_day + 1, planetary_hour + 1);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case KEY_F(9):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_profections(plots, alco.anos_concedidos);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case KEY_F(12):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_firdaria(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, regente_dia, regente_hora, tipo_san);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }                
                 break;
             case '1':
             case KEY_F(13):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_life_givers(pontos_calculados, dig, plots, &matrix, week_day + 1, planetary_hour + 1, tipo_san);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;            
             case '2':
             case KEY_F(14):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_anareta(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, week_day + 1, planetary_hour + 1, tipo_san);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case '3':
             case KEY_F(15):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, planet_latitudes, tipo_san, dig, armc, lat, prom);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case '4':
             case KEY_F(16):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_primary_directions_parts(prom, nome_anareta, nome_senhor_da_casa8, obj, total_objects, cusps, julian_day, planet_latitudes, armc, lat);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case '5':
             case KEY_F(17):
+                desativar_arrasto_mouse();
                 display_arabic_parts(obj, cusps, total_objects);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case '6':                   
             case KEY_F(18):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_natal_mind_analysis(
                         mercurio,
                         lua,
@@ -7289,22 +7330,33 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         pontos_calculados,
                         plots
                     );
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case '7':
             case KEY_F(19):
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects);
+                    ativar_arrasto_mouse();
+                    flushinp();
                     saiu_retorno = true;
                 }                                
                 break; 
             case '8':
             case KEY_F(20):
+                desativar_arrasto_mouse();
                 display_planetary_energy_profile(plots, strength_planets);
+                ativar_arrasto_mouse();
+                flushinp();
                 break;
             case '0':
                 if (!mapa_retorno) {
+                    desativar_arrasto_mouse();
                     display_motivation(plots, house_rulers);
+                    ativar_arrasto_mouse();
+                    flushinp();
                 }
                 break;
             case 27:
@@ -7312,7 +7364,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case KEY_RESIZE:
                 aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, TIMEOUT);
-
                 break;
             case 10:
             case ERR: // No key pressed within timeout (1 second)
@@ -7377,22 +7428,18 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         }
 
-        
-
-        
-        
         for (int k = 1; k < 13; k++) {
             free(house_ruler_str[k]);
         }
         free(house_ruler_str);
         //free(moon_temperament);
 
+
     }
 
     MAPA_DIURNO = backup_mapa_diurno;
 
-    printf("\e[?1002l"); 
-    fflush(stdout);
+    desativar_arrasto_mouse();
 
     swe_close();
     //endwin();

@@ -1988,7 +1988,7 @@ int main() {
         init_pair(7, COLOR_YELLOW, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
-        init_pair(10, COLOR_BLACK, COLOR_CYAN);
+        init_pair(10, COLOR_BLACK, 44); // verde água
         init_pair(11, COLOR_CYAN, COLOR_BLUE);
         init_pair(12, COLOR_WHITE, COLOR_BLUE);
         init_pair(13, COLOR_GREEN, COLOR_BLUE);

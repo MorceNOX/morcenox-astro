@@ -40,6 +40,40 @@
 #include "directions.h"
 
 
+void ativar_arrasto_e_scroll_mouse() {
+    // Adicionamos BUTTON4 e os eventos gerais de modificação para capturar o scroll
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON4_PRESSED | BUTTON5_PRESSED | REPORT_MOUSE_POSITION, NULL);
+    
+    printf("\e[?1003h"); 
+    fflush(stdout);
+}
+
+void desativar_mouse() {
+    // Desativa o rastreamento total
+    printf("\e[?1003l"); 
+    fflush(stdout);
+    mousemask(0, NULL); 
+}
+
+void desativar_arrasto_mouse() {
+    // Desativa o envio de movimentos do mouse no terminal
+    printf("\e[?1002l"); 
+    fflush(stdout);
+    
+    // Configura o ncurses para ignorar eventos complexos de mouse por enquanto
+    mousemask(0, NULL); 
+}
+
+void ativar_arrasto_mouse() {
+    // Reativa as máscaras do ncurses
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | REPORT_MOUSE_POSITION, NULL);
+    
+    // Reativa o envio de movimentos do mouse no terminal
+    printf("\e[?1002h"); 
+    fflush(stdout);
+
+}
+
 
 double get_exact_aspect_ratio_ncurses(WINDOW *win, int curr_timeout) {
     // Atualiza as variáveis internas de tamanho do ncurses
