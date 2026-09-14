@@ -388,6 +388,8 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
     int idx_vencedor_grid = -1;
     bool regra_tutor_medieval = false;
 
+    bool ha_candidatos = false;
+
     if (qtd_candidatos == 0) {
         if (tipo_hileg == H_SOL || tipo_hileg == H_LUNA) {
             idx_vencedor_grid = idx_hileg_grid;
@@ -407,6 +409,7 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
         }
     } 
     else {
+        
         int max_dig = -999;
         for (int k = 0; k < qtd_candidatos; k++) {
             int idx_cand = candidatos[k];
@@ -422,10 +425,26 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
                 max_dig = dig[idx_matriz].essential + dig[idx_matriz].accidental;
                 
                 idx_vencedor_grid = idx_cand;
+                ha_candidatos = true;
                 
             }
         }
     }
+
+    if (!ha_candidatos) {        
+        int res_figuris[12] = {0};
+        int res_scores_figuris[12] = {0};
+        int qtd_alm = calcular_almuten_figuris(pontos, plots, matrix, regente_dia, regente_hora, res_figuris, res_scores_figuris);
+        for (int j = 0; j < qtd_alm; j++) {
+            for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+                if ((plots[i].id + 1) == res_figuris[j]) {
+                    idx_vencedor_grid = i;
+                    break;
+                }
+            }
+        }
+        regra_tutor_medieval = true;        
+    } 
 
     if (idx_vencedor_grid == -1 || idx_vencedor_grid >= NUM_OBJECTS) return resultado;
 
@@ -639,7 +658,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
         // Se o valor estiver travado em 8 por falta de aspectos, avisa o usuário!
         if (alco.anos_concedidos == 8 && strcmp(alco.tipo_anos, _("Lesser (Proxy Rule)")) == 0) {
             wattron(table_win, COLOR_PAIR(11) | A_BOLD);
-            wprintw(table_win, _(" [FERAL/UNASPECTED PLANET]"));
+            mvwprintw(table_win, line_count + 1, 4, _(" [FERAL/UNASPECTED PLANET]"));
             wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
 
             line_count++;

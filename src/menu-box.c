@@ -1184,7 +1184,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(31));
         }    
         
-        draw_circle_points_delay(center_y, center_x, 24, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
+        draw_circle_points_delay(center_y, center_x, 24, 2.8, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
             attroff(COLOR_PAIR(25));
@@ -1195,7 +1195,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(9) | A_DIM);
         }
         
-        draw_circle_points_delay(center_y, center_x, 26, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
+        draw_circle_points_delay(center_y, center_x, 26, 2.8, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7) | COLOR_PAIR(9) | A_DIM);
@@ -1203,6 +1203,59 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         else {
             attroff(COLOR_PAIR(31) | COLOR_PAIR(9) | A_BOLD | A_DIM);
         }
+
+
+        // 5. Decorations
+        wattron(stdscr, COLOR_PAIR(33) | A_DIM);
+        for (int i = 0; i < 6; i++) {
+            mvwprintw(stdscr, 1+i, 2, jupiter_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier * 1.5);
+        }
+        
+        for (int i = 0; i < 6; i++) {
+            mvwprintw(stdscr, 3+i, 8, saturno_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
+        
+        for (int i = 0; i < 5; i++) {
+            mvwprintw(stdscr, 2+i, 12, sol_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            mvwprintw(stdscr, 1+i, term_w - 5, mercury_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
+        
+        for (int i = 0; i < 6; i++) {
+            mvwprintw(stdscr, 3+i, term_w - 10, venus_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            mvwprintw(stdscr, 1+i, term_w - 15, marte_7lines[i]);
+        }
+        if (*delay > 0) {
+            refresh();
+            napms(*delay * multiplier);
+        }
+        wattroff(stdscr, COLOR_PAIR(33) | A_DIM);
+
         
         // Version
         char version_str[30];
