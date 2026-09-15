@@ -1006,7 +1006,7 @@ A tabela mostra a distância em graus, permitindo que você meça a força de ca
 
 Uma letra 'a' ou 's' é mostrada no lado direito do símbolo do aspecto, indicando se o aspecto é aplicativo ou separativo. Se o aspecto é exato (partil) nenhuma letra é exibida e o símbolo do aspecto aparece destacado.
 
-A codificação por cores indica a qualidade do aspecto: Azul (favorável: trígono e sextil), vermelho (desfavorável: oposição e quadratura) ou magenta (fatores específicos: conjunção).
+A codificação por cores indica a qualidade do aspecto: Verde (favorável: trígono, sextil e conjunção com benéficos), vermelho (desfavorável: oposição, quadratura e conjunção com benéficos) ou magenta (fatores específicos: conjunção).
 
 Nota 1: Você pode controlar o orbe planetário no menu "Configurações".
 
@@ -1485,7 +1485,9 @@ A codificação por cores indica direções destruidoras potenciais, direções 
 
 • Aspectos ruins direcionados por não-maléfico e os seus termos (amarelo) indicam um alerta.
 
-• Aspectos bons direcionados por benéficos (azul) e os termos desses planetas são direções potencialmente boas.
+• Aspectos bons direcionados por benéficos (verde) e os termos desses planetas são direções muito boas.
+
+• Aspectos bons direcionados por outros planetas (azul) e os termos desses planetas são direções potencialmente boas.
 
 • Conjunções (magenta) exigem alguma análise.
 

@@ -1377,10 +1377,9 @@ void calcular_aspectos_partes(ChartObject *obj, int num_objects, ArabicPartCalcu
                         cell->is_reverse = false;
                     }
                     
-                    // Acopla a paleta de cores padronizada da sua aplicação
                     if (a == 2 || a == 4) cell->color_pair = 11;      // Vermelho para □ e ☍
                     else if (a == 0)      cell->color_pair = 7;       // Magenta para Conjunção
-                    else                  cell->color_pair = 8;       // Azul para △ e ⚹
+                    else                  cell->color_pair = 12;       // Azul para △ e ⚹
                     break; 
                 }
             }
@@ -1632,7 +1631,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                 if (cell.has_aspect) {
                     if (cell.is_reverse) {
                         wattron(aspects_win, A_REVERSE);
-                        if (DARK_MODE) {
+                        //if (DARK_MODE) {
                             if (strcmp(cell.symbol, "☌") == 0) {
                                 wattron(aspects_win, COLOR_PAIR(37));
                             }
@@ -1642,15 +1641,15 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                             else {
                                 wattron(aspects_win, COLOR_PAIR(38));
                             }
-                        }
+                        //}
                     }
 
-                    if (!DARK_MODE || !cell.is_reverse) {
+                    if (!cell.is_reverse) {
                         wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
                     }
                     mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "  %s  ", cell.symbol);
                     
-                    if (!DARK_MODE || !cell.is_reverse) {
+                    if (!cell.is_reverse) {
                         wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
                     }
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
@@ -1680,7 +1679,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
                     if (cell.is_reverse) {
                         wattroff(aspects_win, A_REVERSE);
-                        if (DARK_MODE) {
+                        //if (DARK_MODE) {
                             if (strcmp(cell.symbol, "☌") == 0) {
                                 wattroff(aspects_win, COLOR_PAIR(37));
                             }
@@ -1691,7 +1690,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                                 wattroff(aspects_win, COLOR_PAIR(38));
                             }
                             wattroff(aspects_win, COLOR_PAIR(35));
-                        }
+                        //}
                     }
                 } else {
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);

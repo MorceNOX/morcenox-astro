@@ -640,7 +640,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
-                        par_cor_ativo = COLOR_PAIR(11);
+                        par_cor_ativo = COLOR_PAIR(23);
                         atributo_extra = A_BOLD | A_REVERSE;
                     } else {
                         par_cor_ativo = COLOR_PAIR(11); 
@@ -656,12 +656,16 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                     atributo_extra = A_ITALIC | A_REVERSE;
                 }
                 else if (eh_benefico_essencial) {
-                    par_cor_ativo = COLOR_PAIR(8);
+                    par_cor_ativo = COLOR_PAIR(12);
                     atributo_extra = A_ITALIC | A_BOLD;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
                     atributo_extra = A_BOLD;
+                }
+                else if (!eh_aspecto_tenso) {
+                    par_cor_ativo = COLOR_PAIR(8);
+                    atributo_extra = A_NORMAL;
                 }
 
                 //if (eh_termo) {
@@ -1111,34 +1115,32 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
-                        /* CRITICAL ALARM: O cortador da vida ou Senhor da 8 atuando por aspecto tenso ou conjunção */
-                        par_cor_ativo = COLOR_PAIR(11);    // Vermelho de Alerta
-                        atributo_extra = A_BOLD | A_REVERSE; // Destaca em negrito e pisca na tela
+                        par_cor_ativo = COLOR_PAIR(23);
+                        atributo_extra = A_BOLD | A_REVERSE;
                     } else {
-                        /* Aspecto harmônico (trígono/sextil) do Anareta: Desafios pesados, mas com proteção */
                         par_cor_ativo = COLOR_PAIR(11); 
                         atributo_extra = A_BOLD;
                     }
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
-                    /* Maléfico essencial comum em aspecto tenso: Dificuldade operacional drástica no período */
                     par_cor_ativo = COLOR_PAIR(11); 
                     atributo_extra = A_NORMAL;
                 }
                 else if (!eh_malefico_essencial && eh_aspecto_tenso) {
-                    /* Benéfico (Júpiter/Vênus) ou Mercúrio em quadratura: Desafio produtivo, NÃO perigo fatal */
-                    par_cor_ativo = COLOR_PAIR(25); // Par de cor 14 (Amarelo/Aviso)
-                    atributo_extra = A_ITALIC | A_REVERSE;      // Distingue visualmente das crises físicas
+                    par_cor_ativo = COLOR_PAIR(25);
+                    atributo_extra = A_ITALIC | A_REVERSE;
                 }
                 else if (eh_benefico_essencial) {
-                    /* Benéfico (Júpiter/Vênus) */
-                    par_cor_ativo = COLOR_PAIR(8); // Par de cor 8 (Azul/Bom)
-                    atributo_extra = A_ITALIC | A_BOLD;      // Distingue visualmente das crises físicas
+                    par_cor_ativo = COLOR_PAIR(12);
+                    atributo_extra = A_ITALIC | A_BOLD;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
-                    /* Conjunções comuns normais */
                     par_cor_ativo = COLOR_PAIR(7);
                     atributo_extra = A_BOLD;
+                }
+                else if (!eh_aspecto_tenso) {
+                    par_cor_ativo = COLOR_PAIR(8);
+                    atributo_extra = A_NORMAL;
                 }
 
                 // if (eh_termo) {

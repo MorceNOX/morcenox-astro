@@ -224,7 +224,8 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     /* Corrigido para 'else if' para otimizar o fluxo de execução */
     else if (strcmp(get_sign_element_name(ruler_sign), _("Air")) == 0) {
         mvwprintw(pad, row_pad + 1, 6, _("This drive is channeled into intellectual versatility, logical synthesis,"));
-        mvwprintw(pad, row_pad + 2, 6, _("and social exchange, occasionally spreading the core motivation across varied interests."));
+        mvwprintw(pad, row_pad + 2, 6, _("and social exchange, occasionally spreading the core motivation across "));
+        mvwprintw(pad, row_pad + 3, 6, _("varied interests."));
     }
     else if (strcmp(get_sign_element_name(ruler_sign), _("Water")) == 0) {
         mvwprintw(pad, row_pad + 1, 6, _("This drive is shaped by emotional fluidity, intuition, and psychological depth,"));

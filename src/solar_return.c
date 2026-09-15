@@ -1515,42 +1515,38 @@ void abrir_janela_transitos_revolucao(
                 wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32) | COLOR_PAIR(25) | A_REVERSE);
 
                 if (p == 6) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(11));
                     snprintf(str, 256, _("[CRITICAL] Saturn brings a strict reality check, heavy boundaries, obstacles, "
                                          "or long-term structuring tasks to the affairs of your natal %s.\n\n"), nomes[n]);
 
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 5) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(12));
                     snprintf(str, 256, _("[BENEFIC] Jupiter injects providential protection, sudden opportunities, expansion, "
                                          "and luck into the baseline promises of your natal %s.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 4) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(11));
                     snprintf(str, 256, _("[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high physical "
                                          "vitality expenditures upon your natal %s.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 3) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(12));
                     snprintf(str, 256, _("[BENEFIC] Venus injects harmony, personal magnetism, ease, pleasure, "
                                          "and social or financial alignment into the baseline promises of your natal %s.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 }  else if (p == 10) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(12));
                     snprintf(str, 256, _("[BENEFIC] The North Node injects a powerful drive for growth, intense amplification, "
                         "destined advancements, and new evolutionary opportunities into your natal %s.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else if (p == 11 ) {
-                    char str[256];
+                    wattron(pad, COLOR_PAIR(11));
                     snprintf(str, 256, _("[CRITICAL] The South Node triggers energy drainage, necessary releases, karmic closures, "
                         "or a pull toward past familiar patterns regarding your natal %s.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 } else {
-                    char str[256];
                     snprintf(str, 256,  _("This conjunction wakes up the natal potential of your %s, making its themes "
                                           "highly prominent on a day-to-day level throughout this annual cycle.\n\n"), nomes[n]);
-                    line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
                 }
+
+                line_count += print_split_lines(pad, (const char *)str, MAX_LINE_WIDTH);
+
+                wattroff(pad, COLOR_PAIR(11) | COLOR_PAIR(12));
             }
         }
         if (!encontrou_conjuncao) {

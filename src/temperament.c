@@ -125,7 +125,7 @@ void desenhar_barra_temperamento(WINDOW *win, int row, int col, int valor, int t
         wprintw(win, "█");
     }
     // Fundo da barra
-    wattroff(win, COLOR_PAIR(cor_par) | A_DIM | FLAGS);
+    wattroff(win, COLOR_PAIR(cor_par) | FLAGS);
     wattron(win, COLOR_PAIR(10) | A_DIM | FLAGS);
     for (int i = num_blocos; i < max_barra_width; i++) {
         wprintw(win, "░");
@@ -532,7 +532,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     desenhar_barra_temperamento(table_win, 9, col_bars, score.total_umido, total_eixo_moist, 12);  // Ciano/Verde
 
     mvwprintw(table_win, 11, 4, _("Dry:  "));
-    desenhar_barra_temperamento(table_win, 11, col_bars, score.total_seco, total_eixo_moist, 25);  // Amarelo
+    desenhar_barra_temperamento(table_win, 11, col_bars, score.total_seco, total_eixo_moist, 40);  // Amarelo
 
     wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 13, 4, "────────────────────────────────────────────────────────────────────────────────────");

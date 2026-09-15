@@ -130,9 +130,8 @@ void display_profections(PlotObject *plots, int anos_alcochoden) {
     // Exibe a Casa e o Signo Natal Ativados
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 5, 4, _("ACTIVATED NATAL HOUSE: "));
-    wattron(table_win, A_BOLD | COLOR_PAIR(1));
     wprintw(table_win, "%s %d", _("House"), prof.casa_ativada);
-    wattroff(table_win, A_BOLD | COLOR_PAIR(1));
+    wattroff(table_win, A_BOLD);
     wprintw(table_win, _(" (Focusing your natal experiences into this specific area of life)"));
 
     wattron(table_win, A_BOLD);

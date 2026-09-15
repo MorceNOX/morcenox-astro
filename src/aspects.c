@@ -318,8 +318,14 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
                         matrix.grid[i][j].color_pair = 11;
                         matrix.grid[i][j].is_bold = true;
                     } else if (strcmp(aspects_defs[closest].name, "Trine") == 0 || strcmp(aspects_defs[closest].name, "Sextile") == 0) {
-                        matrix.grid[i][j].color_pair = 8;
+                        matrix.grid[i][j].color_pair = 12;
                         matrix.grid[i][j].is_bold = false;
+                    } else if (i == P_MARS || i == P_SATURN || i == P_SOUTH_NODE - object_diff || j == P_MARS || j == P_SATURN || j == P_SOUTH_NODE - object_diff) {
+                        matrix.grid[i][j].color_pair = 11;
+                        matrix.grid[i][j].is_bold = true;
+                    } else if (i == P_JUPITER || i == P_VENUS || i == P_NORTH_NODE - object_diff || j == P_JUPITER || j == P_VENUS || j == P_NORTH_NODE - object_diff) {
+                        matrix.grid[i][j].color_pair = 12;
+                        matrix.grid[i][j].is_bold = true;
                     } else {
                         matrix.grid[i][j].color_pair = 7;
                         matrix.grid[i][j].is_bold = true;
@@ -353,7 +359,7 @@ DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis) {
                 matrix_decl.grid[i][j].has_aspect = true;
                 strncpy(matrix_decl.grid[i][j].symbol, "∥", 4);
                 matrix_decl.grid[i][j].diff = diff_parallel;
-                matrix_decl.grid[i][j].color_pair = 8; // Verde para Paralelo
+                matrix_decl.grid[i][j].color_pair = 12; // Verde para Paralelo
             } 
             else if (diff_contra <= decl_orbis && !mesmo_sinal) {
                 matrix_decl.grid[i][j].has_aspect = true;
@@ -842,8 +848,14 @@ AspectMatrix calculate_aspects_by_sign(PlotObject *plots) {
                     matrix.grid[i][j].color_pair = 11;
                     matrix.grid[i][j].is_bold = true;
                 } else if (strcmp(aspects_defs[aspect].name, "Trine") == 0 || strcmp(aspects_defs[aspect].name, "Sextile") == 0) {
-                    matrix.grid[i][j].color_pair = 8;
+                    matrix.grid[i][j].color_pair = 12;
                     matrix.grid[i][j].is_bold = false;
+                } else if (i == P_MARS || i == P_SATURN || i == P_SOUTH_NODE - object_diff || j == P_MARS || j == P_SATURN || j == P_SOUTH_NODE - object_diff) {
+                    matrix.grid[i][j].color_pair = 11;
+                    matrix.grid[i][j].is_bold = true;
+                } else if (i == P_JUPITER || i == P_VENUS || i == P_NORTH_NODE - object_diff || j == P_JUPITER || j == P_VENUS || j == P_NORTH_NODE - object_diff) {
+                    matrix.grid[i][j].color_pair = 12;
+                    matrix.grid[i][j].is_bold = true;
                 } else {
                     matrix.grid[i][j].color_pair = 7;
                     matrix.grid[i][j].is_bold = true;
@@ -1066,7 +1078,7 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
                     matrix.grid[i][j].color_pair = 11;
                     matrix.grid[i][j].is_bold = true;
                 } else if (strcmp(aspects_defs[closest].name, "Trine") == 0 || strcmp(aspects_defs[closest].name, "Sextile") == 0) {
-                    matrix.grid[i][j].color_pair = 8;
+                    matrix.grid[i][j].color_pair = 12;
                     matrix.grid[i][j].is_bold = false;
                 } else {
                     matrix.grid[i][j].color_pair = 7;

@@ -173,13 +173,13 @@ int show_confirm_delete_popup(const char *name) {
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
         // Botão CONFIRM
-        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(3);
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(pop_win, attr_confirm);
         mvwprintw(pop_win, 5, 8, _("  CONFIRM  "));
         wattroff(pop_win, attr_confirm);
 
         // Botão CANCEL
-        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(3);
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(pop_win, attr_cancel);
         mvwprintw(pop_win, 5, 32, _("  CANCEL  "));
         wattroff(pop_win, attr_cancel);
@@ -556,14 +556,14 @@ OptionsEdition select_options() {
 
 
     werase(shadow);
-    wattron(shadow, COLOR_PAIR(4));
+    wattron(shadow, COLOR_PAIR(24));
     box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(4));
+    wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
     werase(win);
-    wattron(win, COLOR_PAIR(2));
-    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+    wattron(win, COLOR_PAIR(22));
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
     box(win, 0, 0);
     
     wattron(win, A_BOLD);
@@ -586,12 +586,12 @@ OptionsEdition select_options() {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD); 
         mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
-        wattroff(win, COLOR_PAIR(2));     
+        wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
         for (int i = 0; i < 21; i++) {
-            if (i == campo_atual) wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
-            else wattron(win, COLOR_PAIR(2));
+            if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
+            else wattron(win, COLOR_PAIR(22));
             
             if (i == 0) {
                 // Show the char id and the name of the house system
@@ -749,8 +749,8 @@ OptionsEdition select_options() {
                 mvwprintw(win, 26, 5, "%s: %s ", dark_mode_text, dark_mode_str);
             }
 
-            if (i == campo_atual) wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
-            else wattroff(win, COLOR_PAIR(2));
+            if (i == campo_atual) wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
+            else wattroff(win, COLOR_PAIR(22));
         }
 
         wnoutrefresh(win);
@@ -1160,12 +1160,12 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
     werase(shadow);
-    wattron(shadow, COLOR_PAIR(9)); 
+    wattron(shadow, COLOR_PAIR(24)); 
     box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(9));
+    wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(13) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
     keypad(win, TRUE);
     nodelay(win, FALSE);
@@ -1176,11 +1176,11 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
-        wattron(win, COLOR_PAIR(13));
+        wattron(win, COLOR_PAIR(22));
         box(win, 0, 0);
         
     
-        wbkgd(win, COLOR_PAIR(13) | FLAGS);
+        wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
         wattron(win, A_BOLD);
 
@@ -1191,7 +1191,7 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
 
         mvwprintw(win, 4, 3, _("Use [↑/↓] [PgUp/PgDn] to adjust."));
         mvwprintw(win, 5, 3, _("[Enter] confirm | [ESC] cancel."));
-        wattroff(win, COLOR_PAIR(13));
+        wattroff(win, COLOR_PAIR(22));
 
         /* Renderiza o campo de idade destacado com uma casa decimal (%.1f) */
         wattron(win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
@@ -1273,12 +1273,12 @@ int selecionar_idade_visual(int idade_inicial) {
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
     werase(shadow);
-    wattron(shadow, COLOR_PAIR(9)); 
+    wattron(shadow, COLOR_PAIR(24)); 
     box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(9));
+    wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(13) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
     keypad(win, TRUE);
     nodelay(win, FALSE);
@@ -1289,10 +1289,10 @@ int selecionar_idade_visual(int idade_inicial) {
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
-        wattron(win, COLOR_PAIR(13));
+        wattron(win, COLOR_PAIR(22));
         box(win, 0, 0);
     
-        wbkgd(win, COLOR_PAIR(13) | FLAGS);
+        wbkgd(win, COLOR_PAIR(22) | FLAGS);
     
         wattron(win, A_BOLD);
         const char *title = _(" Target Age Selection ");
@@ -1302,7 +1302,7 @@ int selecionar_idade_visual(int idade_inicial) {
         
         mvwprintw(win, 4, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
         mvwprintw(win, 5, 3, _("[ESC] to cancel."));
-        wattroff(win, COLOR_PAIR(13));
+        wattroff(win, COLOR_PAIR(22));
 
         // Renderiza o campo de idade destacado (Pares de cor 3 ou 8)
         wattron(win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
@@ -1376,15 +1376,15 @@ int select_gender() {
     while (!confirmado) {
         // Renderiza sombra (Usando seu par de cor 4 ou 9 dependendo do seu setup)
         werase(shadow);
-        wattron(shadow, COLOR_PAIR(4)); 
+        wattron(shadow, COLOR_PAIR(24)); 
         box(shadow, 0, 0);
-        wattroff(shadow, COLOR_PAIR(4));
+        wattroff(shadow, COLOR_PAIR(24));
         wnoutrefresh(shadow);
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
         werase(win);
-        wattron(win, COLOR_PAIR(2));
-        wbkgd(win, COLOR_PAIR(2) | FLAGS);
+        wattron(win, COLOR_PAIR(22));
+        wbkgd(win, COLOR_PAIR(22) | FLAGS);
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1394,14 +1394,14 @@ int select_gender() {
         
         mvwprintw(win, w_height - 3, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
         mvwprintw(win, w_height - 2, 3, _("[ESC] to cancel."));
-        wattroff(win, COLOR_PAIR(2));
+        wattroff(win, COLOR_PAIR(22));
 
         // Renderiza o campo gênero destacado (Pares de cor 3 ou 8)
-        wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
+        wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
 
         const char *gen_text = _("Gender");
         mvwprintw(win, 2, 14, "  %s: %3s  ", gen_text, (gender_id == 1)?_("Masculine"):((gender_id == 2)?_("Feminine"):_("Neuter")));
-        wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
+        wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
 
         wnoutrefresh(win);
 
@@ -1456,12 +1456,12 @@ DateEdition selecionar_data() {
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
 
     werase(shadow);
-    wattron(shadow, COLOR_PAIR(4));
+    wattron(shadow, COLOR_PAIR(24));
     box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(4));
+    wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
     keypad(win, TRUE);
     nodelay(win, FALSE);
@@ -1473,7 +1473,7 @@ DateEdition selecionar_data() {
     while (!data_confirmada) {
         
         werase(win);
-        wattron(win, COLOR_PAIR(2));
+        wattron(win, COLOR_PAIR(22));
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1483,7 +1483,7 @@ DateEdition selecionar_data() {
         
         mvwprintw(win, 5, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
         mvwprintw(win, 6, 2, _("[ESC] Cancel."));
-        wattroff(win, COLOR_PAIR(2));
+        wattroff(win, COLOR_PAIR(22));
 
         // Validação simples de ano bissexto para o mês de Fevereiro
         if ((dt.ano % 4 == 0 && dt.ano % 100 != 0) || (dt.ano % 400 == 0)) {
@@ -1495,8 +1495,8 @@ DateEdition selecionar_data() {
 
         // Renderização dos campos com destaque no selecionado
         for (int i = 0; i < 3; i++) {
-            if (i == campo_atual) wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
-            else wattron(win, COLOR_PAIR(2));
+            if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
+            else wattron(win, COLOR_PAIR(22));
 
             const char *yt = _("Year");
             const char *mt = _("Month");
@@ -1506,8 +1506,8 @@ DateEdition selecionar_data() {
             if (i == 1) mvwprintw(win, 2, 18, " %s: %02d ", mt, dt.mes);
             if (i == 2) mvwprintw(win, 2, 29, " %s: %02d ", dayt, dt.dia);
 
-            if (i == campo_atual) wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
-            else wattroff(win, COLOR_PAIR(2));
+            if (i == campo_atual) wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
+            else wattroff(win, COLOR_PAIR(22));
         }
 
         wnoutrefresh(win);
@@ -1573,12 +1573,12 @@ HoraEdition selecionar_hora() {
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
 
     werase(shadow);
-    wattron(shadow, COLOR_PAIR(4));
+    wattron(shadow, COLOR_PAIR(24));
     box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(4));
+    wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
     nodelay(win, FALSE);
     keypad(win, TRUE);
@@ -1587,7 +1587,7 @@ HoraEdition selecionar_hora() {
     while (!horario_confirmado) {
         
         werase(win);
-        wattron(win, COLOR_PAIR(2));
+        wattron(win, COLOR_PAIR(22));
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
@@ -1597,14 +1597,14 @@ HoraEdition selecionar_hora() {
         
         mvwprintw(win, 5, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
         mvwprintw(win, 6, 2, _("[ESC] Cancel."));
-        wattroff(win, COLOR_PAIR(2));
+        wattroff(win, COLOR_PAIR(22));
 
         // Renderização dos campos com destaque reverso no ativo
         for (int i = 0; i < 3; i++) {
             if (i == campo_atual) {
-                wattron(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
+                wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             } else {
-                wattron(win, COLOR_PAIR(2));
+                wattron(win, COLOR_PAIR(22));
             }
 
             const char *ht = _("Hour");
@@ -1615,9 +1615,9 @@ HoraEdition selecionar_hora() {
             if (i == 2) mvwprintw(win, 2, 29, " %s: %02d ", st, hn.sec);
 
             if (i == campo_atual) {
-                wattroff(win, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
+                wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             } else {
-                wattroff(win, COLOR_PAIR(2));
+                wattroff(win, COLOR_PAIR(22));
             }
         }
 
@@ -1702,9 +1702,9 @@ int set_tz() {
     WINDOW *tz_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
     
     werase(tz_shadow);
-    wattron(tz_shadow, COLOR_PAIR(4));
+    wattron(tz_shadow, COLOR_PAIR(24));
     box(tz_shadow, 0, 0);
-    wattroff(tz_shadow, COLOR_PAIR(4));
+    wattroff(tz_shadow, COLOR_PAIR(24));
     wnoutrefresh(tz_shadow);
 
     // Inicializa o ncurses para este menu
@@ -1712,14 +1712,15 @@ int set_tz() {
     keypad(tz_win, TRUE);
     curs_set(1);
 
-    wbkgd(tz_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(tz_win, COLOR_PAIR(22) | FLAGS);
     
     while (!tz_selected) {
         
         // Limpa e desenha a janela principal
         werase(tz_win);
-        wattron(tz_win, COLOR_PAIR(2) | A_DIM);
+        wattron(tz_win, COLOR_PAIR(22) | A_DIM);
         box(tz_win, 0, 0);
+        wattroff(tz_win, A_DIM);
         
         wattron(tz_win, A_BOLD);
 
@@ -1729,9 +1730,9 @@ int set_tz() {
                 
         // Desenha as instruções ou mensagem de erro
         if (show_error) {
-            wattron(tz_win, COLOR_PAIR(3) | A_BOLD | A_BLINK); 
+            wattron(tz_win, COLOR_PAIR(23) | A_BOLD | A_BLINK); 
             mvwprintw(tz_win, 3, 1, _("Error: Max -12 to +14"));
-            wattroff(tz_win, COLOR_PAIR(3) | A_BOLD | A_BLINK);
+            wattroff(tz_win, COLOR_PAIR(23) | A_BOLD | A_BLINK);
             mvwprintw(tz_win, 4, 1, _("Press [Enter] to save"));
         } else {
             mvwprintw(tz_win, 4, 1, _("Press [Enter] to save"));
@@ -1739,12 +1740,12 @@ int set_tz() {
         
         mvwprintw(tz_win, 5, 1, _("Press [ESC] to cancel"));
         mvwprintw(tz_win, 2, 1, _("Value: "));
-        wattroff(tz_win, COLOR_PAIR(2) | A_DIM);
+        wattroff(tz_win, COLOR_PAIR(22) | A_DIM);
 
         // Exibe o texto digitado
-        wattron(tz_win, COLOR_PAIR(3) | A_BOLD);
+        wattron(tz_win, COLOR_PAIR(23) | A_BOLD);
         mvwprintw(tz_win, 2, 8, "%s", input);
-        wattroff(tz_win, COLOR_PAIR(3) | A_BOLD);
+        wattroff(tz_win, COLOR_PAIR(23) | A_BOLD);
       
         // Move o cursor físico para a posição exata da edição gráfica
         wmove(tz_win, 2, 8 + input_pos);
@@ -1880,9 +1881,9 @@ int set_dst() {
     int max_display_items = menu_height - 2;  // Adjust for title and borders
 
     werase(dst_shadow);
-    wattron(dst_shadow, COLOR_PAIR(4));
+    wattron(dst_shadow, COLOR_PAIR(24));
     box(dst_shadow, 0, 0);
-    wattroff(dst_shadow, COLOR_PAIR(4));
+    wattroff(dst_shadow, COLOR_PAIR(24));
     wnoutrefresh(dst_shadow);
     
     // Initialize ncurses for this menu
@@ -1890,7 +1891,7 @@ int set_dst() {
     keypad(dst_win, TRUE);
     //curs_set(0);
 
-    wbkgd(dst_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(dst_win, COLOR_PAIR(22) | FLAGS);
     
     int dst_selected = 0;
     int key;
@@ -1899,19 +1900,19 @@ int set_dst() {
         
         // Clear and redraw main menu
         werase(dst_win);
-        wattron(dst_win, COLOR_PAIR(2) | A_DIM);
+        wattron(dst_win, COLOR_PAIR(22) | A_DIM);
         box(dst_win, 0, 0);        
-        wattroff(dst_win, COLOR_PAIR(2) | A_DIM);
+        wattroff(dst_win, COLOR_PAIR(22) | A_DIM);
 
-        wattron(dst_win, COLOR_PAIR(2) | A_BOLD);
+        wattron(dst_win, COLOR_PAIR(22) | A_BOLD);
         const char *title = _(" Select DST ");
         mvwprintw(dst_win, 0, (menu_width - get_visual_width(title)) / 2, title);
-        wattroff(dst_win, COLOR_PAIR(2) | A_BOLD);
+        wattroff(dst_win, COLOR_PAIR(22) | A_BOLD);
 
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + dst_scroll_offset;
             if (item_index < dst_count) {
-                int attr = (item_index == selected_dst_index) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(2);
+                int attr = (item_index == selected_dst_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
                 wattron(dst_win, attr);
                 mvwprintw(dst_win, i + 2, 0 + (menu_width - get_visual_width(dsts[item_index]) - 2) / 2, " %s ", dsts[item_index]);
                 wattroff(dst_win, attr);
@@ -2011,9 +2012,9 @@ void set_chart_name(char *chart_name, size_t max_length) {
     
     // Desenha a sombra
     werase(dialog_shadow);
-    wattron(dialog_shadow, COLOR_PAIR(4));
+    wattron(dialog_shadow, COLOR_PAIR(24));
     box(dialog_shadow, 0, 0);
-    wattroff(dialog_shadow, COLOR_PAIR(4));
+    wattroff(dialog_shadow, COLOR_PAIR(24));
     wnoutrefresh(dialog_shadow);
     
     // Cria um buffer interno de caracteres largos (wchar_t) para evitar quebra de UTF-8
@@ -2035,15 +2036,15 @@ void set_chart_name(char *chart_name, size_t max_length) {
     wint_t key; // Variável correta para wget_wch (suporta códigos especiais e wchar_t)
     int key_type;
 
-    wbkgd(dialog_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(dialog_win, COLOR_PAIR(22) | FLAGS);
     
     while (!done) {
         // Renderiza e limpa a janela com segurança
         werase(dialog_win);
         
-        wattron(dialog_win, COLOR_PAIR(2) | A_DIM);
+        wattron(dialog_win, COLOR_PAIR(22) | A_DIM);
         box(dialog_win, 0, 0);
-        wattroff(dialog_win, COLOR_PAIR(2) | A_DIM);
+        wattroff(dialog_win, COLOR_PAIR(22) | A_DIM);
         
         wattron(dialog_win, A_BOLD);
         const char *title = _(" Chart's Name ");
@@ -2051,13 +2052,13 @@ void set_chart_name(char *chart_name, size_t max_length) {
         mvwprintw(dialog_win, 0, (dialog_width - get_visual_width(title)) / 2, title);
         wattroff(dialog_win, A_BOLD);
 
-        wattron(dialog_win, COLOR_PAIR(2));
+        wattron(dialog_win, COLOR_PAIR(22));
 
         const char *str1 = _("Enter a name for your chart (max");
         const char *str2 = _("characters)");
 
         mvwprintw(dialog_win, 3, 1, "%s %zu %s:", str1, max_length - 1, str2);
-        wattroff(dialog_win, COLOR_PAIR(2));
+        wattroff(dialog_win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
         wattron(dialog_win, COLOR_PAIR(28) | A_REVERSE);
@@ -2364,21 +2365,21 @@ int select_topic(char *file, int max_width) {
 
     // Clear and draw shadow
     //werase(shadow);
-    wattron(shadow, COLOR_PAIR(4));
+    //wattron(shadow, COLOR_PAIR(24));
     //box(shadow, 0, 0);
-    wattroff(shadow, COLOR_PAIR(4));
+    wbkgd(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
         
     while (!topic_selected) {
 
         // Clear and redraw main menu
         werase(win);
-        wattron(win, COLOR_PAIR(2) | A_DIM);
+        wattron(win, COLOR_PAIR(22) | A_DIM);
         box(win, 0, 0);        
         
-        wattroff(win, COLOR_PAIR(2) | A_DIM);
+        wattroff(win, COLOR_PAIR(22) | A_DIM);
         //wrefresh(win);
         
         wattron(win, A_BOLD);

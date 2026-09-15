@@ -1870,7 +1870,6 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
         int day_regent = get_hour_regent(week_day, (MAPA_DIURNO)?0:12);
         int hour_regent = get_hour_regent(week_day, planetary_hour);
 
-        attron(COLOR_PAIR(19) | A_DIM);
         for (int j = 0; j < 6; j++) {
             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {   
                 if (day_regent == PH_SOL) {
@@ -1918,7 +1917,6 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
                 }
             }
         }
-        attroff(COLOR_PAIR(19) | A_DIM);
     }
 }
 
@@ -2351,9 +2349,9 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     }
 
     
-
+    attron(COLOR_PAIR(53));
     draw_day_hour_regents(week_day - 1, planetary_hour - 1, display_center_y, display_center_x, current_scale, aspect_ratio);
-    //refresh();
+    attroff(COLOR_PAIR(53));
     
     // Draw all objects at different radii
     draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
@@ -2620,7 +2618,6 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
             row_pad++;
         }
 
-        // --- DENTRO DO LOOP FOR DA SUA FUNÇÃO DE BARRAS ---
         int aproveitamento_puro = strength_planets[i]; // Agora isso é a porcentagem pura (ex: 84)
 
         // 1. Definição de cores justa e democratizada (Mercúrio fica verde!)
@@ -2628,9 +2625,9 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         else if (aproveitamento_puro >= 35) wattron(pad, COLOR_PAIR(8) | A_BOLD);  // Azul
         else                                wattron(pad, COLOR_PAIR(11) | A_BOLD); // Vermelho
 
-        if (aproveitamento_puro >= 65)      wattron(pad, COLOR_PAIR(12) | A_REVERSE);
+        //if (aproveitamento_puro >= 65)      wattron(pad, COLOR_PAIR(12) | A_REVERSE);
         mvwprintw(pad, row_pad, 2, "  %s %-14s", plots[i].object, plots[i].object_name);
-        if (aproveitamento_puro >= 65)      wattroff(pad, A_REVERSE);
+        //if (aproveitamento_puro >= 65)      wattroff(pad, A_REVERSE);
 
         // 2. O tamanho da barra continua respeitando o peso arquetípico do planeta!
         double weights[100];
@@ -2755,7 +2752,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
 
         /* CORREÇÃO 2: Aplica os mesmos filtros de cores tripartidos das barras (65% e 35%) */
         if (aproveitamento_puro >= 65) {
-            wattron(pad, COLOR_PAIR(12) | A_BOLD | A_REVERSE);  // VERDE: Excelente! (Mercúrio brilha aqui)
+            wattron(pad, COLOR_PAIR(12) | A_BOLD);  // VERDE: Excelente! (Mercúrio brilha aqui)
         } else if (aproveitamento_puro >= 35) {
             wattron(pad, COLOR_PAIR(8) | A_BOLD);   // AZUL: Moderado
         } else {
@@ -3779,9 +3776,9 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         format_hour(p_hour4, sizeof(p_hour4), hours[i+18]);
     
         int flag_mod = A_REVERSE;
-        int night_color_pair = 12;
+        int night_color_pair = 54;
         int highlight_day_color = 15;
-        int highlight_night_color = 12;
+        int highlight_night_color = 54;
 
         if (DARK_MODE) {
             flag_mod |= A_NORMAL;
@@ -4012,9 +4009,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     line_count += 3;
 
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wattron(pad, A_BOLD | COLOR_PAIR(12));
+    wattron(pad, A_BOLD | COLOR_PAIR(54));
     wprintw(pad, _("  2. REGENT OF THE HOUR: %s  \n"), regent_hour_str);
-    wattroff(pad, A_BOLD | COLOR_PAIR(12));
+    wattroff(pad, A_BOLD | COLOR_PAIR(54));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
     line_count += 4;
@@ -4251,9 +4248,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (strength_reg_day >= 65) {
-        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
+        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(54)); // Excelente / Verde
         wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
-        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
+        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(54));
 
         line_count += 2;
 
@@ -4314,9 +4311,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
     // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
     if (strength_reg_hour >= 65) {
-        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
+        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(54)); // Excelente / Verde
         wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
-        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
+        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(54));
 
         line_count += 2;
 
@@ -4775,6 +4772,8 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
+#define COLOR_BACK_1 225 //195 //230 // 194 //159
+#define COLOR_BACK_2 224 //194 //229 // 193 //123
 
 
 int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal) {
@@ -4800,122 +4799,125 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     use_default_colors();
 
     if (dark_mode) {
-        init_pair(1, 238, COLOR_WHITE);
-        init_pair(46, COLOR_BLACK, COLOR_WHITE);
+        init_pair(1, COLOR_WHITE, 236);
+        init_pair(46, COLOR_WHITE, 235);
 
-        init_pair(2, 238, COLOR_RED);
-        init_pair(42, COLOR_BLACK, COLOR_RED);
+        init_pair(2, COLOR_RED, 236);
+        init_pair(42, COLOR_RED, 235);
 
-        init_pair(3, 238, COLOR_GREEN);
-        init_pair(43, COLOR_BLACK, COLOR_GREEN);
+        init_pair(3, COLOR_GREEN, 236);
+        init_pair(43, COLOR_GREEN, 235);
 
-        init_pair(4, 238, COLOR_YELLOW);
-        init_pair(44, COLOR_BLACK, COLOR_YELLOW);
+        init_pair(4, COLOR_YELLOW, 236);
+        init_pair(44, COLOR_YELLOW, 235);
 
-        init_pair(5, 238, COLOR_BLUE);
-        init_pair(45, COLOR_BLACK, COLOR_BLUE);
+        init_pair(5, 33, 236);
+        init_pair(45, 33, 235);
 
-        init_pair(6, COLOR_BLACK, COLOR_WHITE);
-        init_pair(7, COLOR_BLACK, COLOR_MAGENTA);
-        init_pair(8, COLOR_BLACK, COLOR_CYAN);
-        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+        init_pair(8, 33, COLOR_BLACK); // blue
+        init_pair(9, 232, 232);
 
-        init_pair(10, 238, COLOR_WHITE);
-        init_pair(50, COLOR_BLACK, COLOR_WHITE);
+        init_pair(10, 247, COLOR_BLACK);
+        init_pair(50, COLOR_WHITE, 235);
 
-        init_pair(11, COLOR_BLACK, COLOR_RED);
-        init_pair(12, COLOR_BLACK, COLOR_GREEN);
-        init_pair(13, COLOR_BLACK, COLOR_WHITE);
+        init_pair(11, COLOR_RED, COLOR_BLACK);
+        init_pair(12, 82, COLOR_BLACK);
+        init_pair(13, COLOR_WHITE, COLOR_BLACK);
 
-        init_pair(14, COLOR_BLACK, COLOR_CYAN);
-        init_pair(15, COLOR_BLUE, COLOR_YELLOW);
+        init_pair(14, COLOR_BLUE, COLOR_BLACK);
+        init_pair(15, 226, 18); // yellow, blue
 
-        init_pair(16, 238, COLOR_WHITE);
-        init_pair(47, COLOR_BLACK, COLOR_WHITE);
+        init_pair(16, COLOR_WHITE, 236);
+        init_pair(47, COLOR_WHITE, 235);
 
-        init_pair(17, 238, COLOR_MAGENTA);
-        init_pair(48, COLOR_BLACK, COLOR_MAGENTA);
+        init_pair(17, COLOR_MAGENTA, 236);
+        init_pair(48, COLOR_MAGENTA, 235);
 
-        init_pair(18, 238, COLOR_BLUE);
-        init_pair(49, COLOR_BLACK, COLOR_BLUE);
+        init_pair(18, 39, 236); // blue
+        init_pair(49, 39, 235); // blue
 
-        init_pair(19, 238, 238);
-        init_pair(20, COLOR_BLACK, COLOR_CYAN);
+        init_pair(19, 236, 236);
+        init_pair(20, COLOR_BLUE, 235);
 
-        init_pair(21, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(23, COLOR_WHITE, COLOR_RED);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-        init_pair(26, COLOR_BLACK, COLOR_WHITE);
-        init_pair(27, COLOR_BLACK, COLOR_RED);
-        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(21, COLOR_BLUE, COLOR_YELLOW);
+        init_pair(22, COLOR_WHITE, COLOR_BLACK);
+        init_pair(23, COLOR_RED, COLOR_WHITE);
+        init_pair(24, 232, 232);
+        init_pair(25, 226, COLOR_BLACK); //yellow
+        init_pair(26, COLOR_WHITE, COLOR_BLACK);
+        init_pair(27, COLOR_RED, COLOR_BLACK);
+        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
-        init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+        init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
         
-        init_pair(31, COLOR_GREEN, COLOR_RED);
-        init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
-        init_pair(33, COLOR_BLACK, COLOR_BLUE);
-        init_pair(34, COLOR_BLACK, COLOR_CYAN);
+        init_pair(31, COLOR_RED, COLOR_GREEN);
+        init_pair(32, COLOR_GREEN, 54); // magenta
+        init_pair(33, COLOR_BLUE, COLOR_BLACK);
+        init_pair(34, COLOR_BLUE, COLOR_BLACK);
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(38, COLOR_BLUE, COLOR_WHITE);
-        init_pair(39, COLOR_GREEN, COLOR_WHITE);
-        init_pair(40, COLOR_YELLOW, COLOR_WHITE);
+        init_pair(38, 18, COLOR_WHITE); // blue
+        init_pair(39, COLOR_GREEN, COLOR_BLACK);
+        init_pair(40, COLOR_YELLOW, COLOR_BLACK);
         init_pair(41, 235, 235); // branco
 
-        init_pair(51, 238, 244);
-        init_pair(52, COLOR_BLACK, 244);
+        init_pair(51, 244, 236);
+        init_pair(52, 244, 235);
+        init_pair(53, 67, 236);
+        init_pair(54, COLOR_GREEN, 91); // green, magenta
+
     } 
     else {
-        init_pair(1, COLOR_BLACK, 159);
-        init_pair(46, COLOR_BLACK, 123);
+        init_pair(1, COLOR_BLACK, COLOR_BACK_1);
+        init_pair(46, COLOR_BLACK, COLOR_BACK_2);
 
-        init_pair(2, COLOR_RED, 159);
-        init_pair(42, COLOR_RED, 123);
+        init_pair(2, COLOR_RED, COLOR_BACK_1);
+        init_pair(42, COLOR_RED, COLOR_BACK_2);
 
-        init_pair(3, 46, 159); // verde
-        init_pair(43, 46, 123); // verde
+        init_pair(3, 46, COLOR_BACK_1); // verde
+        init_pair(43, 46, COLOR_BACK_2); // verde
 
-        init_pair(4, 3, 159); // amarelo
-        init_pair(44, 3, 123); // amarelo
+        init_pair(4, 136, COLOR_BACK_1); // amarelo
+        init_pair(44, 136, COLOR_BACK_2); // amarelo
 
-        init_pair(5, 21, 159); // azul
-        init_pair(45, 21, 123); // azul
+        init_pair(5, 21, COLOR_BACK_1); // azul
+        init_pair(45, 21, COLOR_BACK_2); // azul
 
         init_pair(6, COLOR_BLACK, 223);
         init_pair(7, 199, 223); // magenta
         init_pair(8, 21, 223); // azul
-        init_pair(9, COLOR_BLACK, COLOR_BLACK);
+        init_pair(9, 232, 232);
         
         init_pair(10, 223, 223);
-        init_pair(50, 223, 123);
+        init_pair(50, 223, COLOR_BACK_2);
 
         init_pair(11, COLOR_RED, 223);
-        init_pair(12, COLOR_GREEN, 90); // magenta / grená
+        init_pair(12, 28, 223); // green
         init_pair(13, COLOR_BLACK, 223);
         
         init_pair(14, COLOR_WHITE, COLOR_BLACK);
         init_pair(15, COLOR_YELLOW, 25); // azul
 
-        init_pair(16, COLOR_BLACK, 159);
-        init_pair(47, COLOR_BLACK, 123);
+        init_pair(16, COLOR_BLACK, COLOR_BACK_1);
+        init_pair(47, COLOR_BLACK, COLOR_BACK_2);
 
-        init_pair(17, 199, 159); // magenta
-        init_pair(48, 199, 123); // magenta
+        init_pair(17, 199, COLOR_BACK_1); // magenta
+        init_pair(48, 199, COLOR_BACK_2); // magenta
 
-        init_pair(18, 21, 159); // azul
-        init_pair(49, 21, 123); // azul
+        init_pair(18, 21, COLOR_BACK_1); // azul
+        init_pair(49, 21, COLOR_BACK_2); // azul
 
-        init_pair(19, 159, 159); // branco/cinza claro
+        init_pair(19, COLOR_BACK_1, COLOR_BACK_1); // branco/cinza claro
         init_pair(20, COLOR_WHITE, COLOR_BLUE);
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
         init_pair(22, COLOR_BLACK, COLOR_WHITE);
-        init_pair(23, COLOR_RED, COLOR_WHITE);
-        init_pair(24, COLOR_BLACK, COLOR_BLACK);
-        init_pair(25, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(23, COLOR_RED, 223);
+        init_pair(24, 232, 232);
+        init_pair(25, 226, COLOR_BLACK); // yellow
         init_pair(26, COLOR_BLACK, COLOR_CYAN);
         init_pair(27, COLOR_RED, COLOR_CYAN);
         init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
@@ -4925,22 +4927,26 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(31, COLOR_GREEN, COLOR_RED);
         init_pair(32, COLOR_MAGENTA, COLOR_GREEN);
         init_pair(33, COLOR_WHITE, COLOR_BLUE);
-        init_pair(34, 123, 123);
+        init_pair(34, COLOR_BACK_2, COLOR_BACK_2);
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(38, COLOR_BLUE, COLOR_WHITE);
+        init_pair(38, 18, COLOR_WHITE);
         init_pair(39, 28, 223); // verde
         init_pair(40, COLOR_YELLOW, 223);
-        init_pair(41, 87, 123); // verde bem clarinho
+        init_pair(41, 87, COLOR_BACK_2); // verde bem clarinho
 
-        init_pair(51, 159, 159);
-        init_pair(52, 123, 123);
+        init_pair(51, COLOR_BACK_1, COLOR_BACK_1);
+        init_pair(52, COLOR_BACK_2, COLOR_BACK_2);
+        init_pair(53, 67, COLOR_BACK_1);
+        init_pair(54, COLOR_GREEN, 91); // green, magenta
+
+
     }
     
     FLAGS = 0;
     if (dark_mode) {
-        FLAGS |= A_DIM | A_REVERSE;
+        FLAGS |= 0; //A_DIM; // | A_REVERSE;
     }
 
     
@@ -5075,7 +5081,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     if (mapa_retorno) {
         if (!dark_mode) {
-            bkgd(COLOR_PAIR(12) | FLAGS);
+            bkgd(COLOR_PAIR(54) | FLAGS);
         }
         else {
             bkgd(COLOR_PAIR(32) | FLAGS); 

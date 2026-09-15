@@ -1032,7 +1032,7 @@ The table shows the distance in degrees, allowing you to measure the strength of
 
 An 'a' or 's' is displayed to the right of the aspect symbol, indicating whether the aspect is applying or separating. If the aspect is exact (partile), no letter is displayed, and the aspect symbol appears highlighted.
 
-Color coding indicates the quality of the aspect: Blue (favorable: trine and sextile), red (unfavorable: opposition and square), or magenta (specific factors: conjunction).
+Color coding indicates the quality of the aspect: Green (favorable: trine, sextile and conjunction with benefics), red (unfavorable: opposition, square and conjunction with malefics), or magenta (specific factors: conjunction).
 
 Note 1: You can control the planetary orb in the "Settings" menu.
 
@@ -1554,7 +1554,9 @@ directions and a period of alert.
     
     • Bad aspects directed by no malefics and their terms (yellow) indicate an alert. 
     
-    • Good aspects directed by benefics and the terms of these planets (blue) are potencialy good directions. 
+    • Good aspects directed by benefics and the terms of these planets (green) are very good directions.
+    
+    • Good aspects directed by other planets and the terms of these planets (blue) are potencialy good directions. 
       
     • Conjunctions (magenta) demand some analysis.
     

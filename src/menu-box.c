@@ -863,21 +863,21 @@ void load_chart() {
     
     // Clear and redraw shadow
     werase(chart_shadow);
-    wattron(chart_shadow, COLOR_PAIR(4));
+    wattron(chart_shadow, COLOR_PAIR(24));
     box(chart_shadow, 0, 0);
-    wattroff(chart_shadow, COLOR_PAIR(4));
+    wattroff(chart_shadow, COLOR_PAIR(24));
     wnoutrefresh(chart_shadow);
 
-    wbkgd(chart_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(chart_win, COLOR_PAIR(22) | FLAGS);
 
     while (!chart_selected) {
                 
         // Clear and redraw main menu
         werase(chart_win);
-        wattron(chart_win, COLOR_PAIR(2) | A_DIM);
+        wattron(chart_win, COLOR_PAIR(22) | A_DIM);
         box(chart_win, 0, 0);
         
-        wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
+        wattroff(chart_win, COLOR_PAIR(22) | A_DIM);
         //wrefresh(chart_win);
 
         wattron(chart_win, A_BOLD);
@@ -892,7 +892,7 @@ void load_chart() {
         for (int i = 0; i < display_count; i++) {
             int item_index = i + chart_scroll_offset;
             if (item_index < row_count) {
-                int attr = (item_index == selected_chart_index) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(2);
+                int attr = (item_index == selected_chart_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
                 wattron(chart_win, attr);
                 mvwprintw(chart_win, i + 1, 1, " %s%*s ", chart_names[item_index], menu_width - 4 - get_visual_width(chart_names[item_index]), "");
                 wattroff(chart_win, attr);
@@ -1143,7 +1143,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             napms(*delay * multiplier);
         }
         
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             mvwprintw(stdscr, 2+i, 12, sol_7lines[i]);
         }
         if (*delay > 0) {
@@ -1184,10 +1184,10 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(31));
         }    
         
-        draw_circle_points_delay(center_y, center_x, 24, 2.8, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
+        draw_circle_points_delay(center_y - 2, center_x, 25, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
-            attroff(COLOR_PAIR(25));
+            attroff(COLOR_PAIR(25) | A_DIM);
             attron(COLOR_PAIR(9) | A_DIM);
         }
         else {
@@ -1195,7 +1195,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attron(COLOR_PAIR(9) | A_DIM);
         }
         
-        draw_circle_points_delay(center_y, center_x, 26, 2.8, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
+        draw_circle_points_delay(center_y - 2, center_x, 27, 2.0, 1.0, L"░▒▓█▓▒░", *delay, clockwise);
         
         if (DARK_MODE) {
             attroff(COLOR_PAIR(7) | COLOR_PAIR(9) | A_DIM);
@@ -1204,59 +1204,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             attroff(COLOR_PAIR(31) | COLOR_PAIR(9) | A_BOLD | A_DIM);
         }
 
-
-        // 5. Decorations
-        wattron(stdscr, COLOR_PAIR(33) | A_DIM);
-        for (int i = 0; i < 6; i++) {
-            mvwprintw(stdscr, 1+i, 2, jupiter_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier * 1.5);
-        }
-        
-        for (int i = 0; i < 6; i++) {
-            mvwprintw(stdscr, 3+i, 8, saturno_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
-        }
-        
-        for (int i = 0; i < 5; i++) {
-            mvwprintw(stdscr, 2+i, 12, sol_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
-        }
-
-        for (int i = 0; i < 6; i++) {
-            mvwprintw(stdscr, 1+i, term_w - 5, mercury_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
-        }
-        
-        for (int i = 0; i < 6; i++) {
-            mvwprintw(stdscr, 3+i, term_w - 10, venus_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
-        }
-
-        for (int i = 0; i < 6; i++) {
-            mvwprintw(stdscr, 1+i, term_w - 15, marte_7lines[i]);
-        }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
-        }
-        wattroff(stdscr, COLOR_PAIR(33) | A_DIM);
-
-        
+       
         // Version
         char version_str[30];
         snprintf(version_str, 30, "v%s", VERSION);
@@ -1302,8 +1250,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         wborder_set(bar_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
 
-        wattron(shadow_bar, COLOR_PAIR(4));
-        wattroff(shadow_bar, COLOR_PAIR(4));
+        wbkgd(shadow_bar, COLOR_PAIR(24));
         wnoutrefresh(shadow_bar);
         
         wattron(bar_win, COLOR_PAIR(11));
@@ -1680,7 +1627,7 @@ void load_default_values() {
         }
 
         if (DARK_MODE) {
-            FLAGS |= A_DIM | A_REVERSE;
+            FLAGS |= 0; //A_DIM | A_REVERSE;
         }
         else {
             FLAGS = 0;
@@ -1794,13 +1741,13 @@ void show_text_file(const char* filename, const char* title, int from_line) {
 
        
     // Draw shadow
-    //wbkgd(shadow_win, COLOR_PAIR(4));
+    wbkgd(shadow_win, COLOR_PAIR(24));
     //box(shadow_win, 0, 0);
     wnoutrefresh(shadow_win);
     
     // Draw main window with border
-    wbkgd(help_win, COLOR_PAIR(2) | FLAGS);
-    wbkgd(txt_win, COLOR_PAIR(2) | FLAGS);
+    wbkgd(help_win, COLOR_PAIR(22) | FLAGS);
+    wbkgd(txt_win, COLOR_PAIR(22) | FLAGS);
 
     box(help_win, 0, 0);
     wattron(help_win, A_BOLD);
@@ -1964,7 +1911,7 @@ void set_options() {
     DARK_MODE = ed.options.dark_mode;
 
     if (DARK_MODE) {
-        FLAGS |= A_DIM | A_REVERSE;
+        FLAGS |= 0; //A_DIM | A_REVERSE;
     }
     else {
         FLAGS = 0;
@@ -2035,7 +1982,7 @@ int main() {
         init_pair(1, COLOR_GREEN, COLOR_BLUE);
         init_pair(2, COLOR_BLACK, COLOR_WHITE);
         init_pair(3, COLOR_RED, COLOR_WHITE);
-        init_pair(4, COLOR_BLACK, COLOR_BLACK);
+        init_pair(4, 232, 232);
         init_pair(5, COLOR_CYAN, COLOR_BLUE);
         init_pair(6, COLOR_YELLOW, COLOR_BLACK);
         init_pair(7, COLOR_YELLOW, COLOR_BLUE);
@@ -2048,22 +1995,22 @@ int main() {
         init_pair(14, COLOR_RED, COLOR_BLUE);
             
         if (DARK_MODE) {
-            init_pair(21, COLOR_YELLOW, COLOR_BLUE);
-            init_pair(22, COLOR_BLACK, COLOR_WHITE);
-            init_pair(23, COLOR_WHITE, COLOR_RED);
-            init_pair(24, COLOR_BLACK, COLOR_BLACK);
+            init_pair(21, COLOR_BLUE, COLOR_YELLOW);
+            init_pair(22, COLOR_WHITE, COLOR_BLACK);
+            init_pair(23, COLOR_RED, COLOR_WHITE);
+            init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-            init_pair(26, COLOR_BLACK, COLOR_WHITE);
-            init_pair(27, COLOR_BLACK, COLOR_RED);
-            init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
-            init_pair(29, COLOR_BLACK, COLOR_BLACK);
-            init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
+            init_pair(26, COLOR_WHITE, COLOR_BLACK);
+            init_pair(27, COLOR_RED, COLOR_BLACK);
+            init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
+            init_pair(29, COLOR_WHITE, COLOR_BLACK);
+            init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         }
         else {
+            init_pair(21, COLOR_BLUE, COLOR_YELLOW);
             init_pair(22, COLOR_BLACK, COLOR_WHITE);
-            init_pair(24, COLOR_BLACK, COLOR_BLACK);
             init_pair(23, COLOR_RED, COLOR_WHITE);
-            init_pair(24, COLOR_BLACK, COLOR_BLACK);
+            init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_YELLOW, COLOR_BLACK);
             init_pair(26, COLOR_BLACK, COLOR_CYAN);
             init_pair(27, COLOR_RED, COLOR_CYAN);
