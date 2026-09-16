@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 13:57-0300\n"
+"POT-Creation-Date: 2026-09-16 14:46-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3516,40 +3516,40 @@ msgstr ""
 msgid "Unnamed Chart"
 msgstr ""
 
-#: src/selections.c:2386
+#: src/selections.c:2388
 msgid " Select a Topic "
 msgstr ""
 
-#: src/selections.c:2549
+#: src/selections.c:2586
 msgid "Select Country"
 msgstr ""
 
-#: src/selections.c:2551
+#: src/selections.c:2588
 msgid "Country"
 msgstr ""
 
-#: src/selections.c:2803
+#: src/selections.c:2840
 msgid "Select City in"
 msgstr ""
 
-#: src/selections.c:2805
+#: src/selections.c:2842
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 
-#: src/selections.c:3032
+#: src/selections.c:3069
 msgid "Failed to prepare statement:"
 msgstr ""
 
-#: src/selections.c:3080
+#: src/selections.c:3117
 msgid "Warning: City not found in database."
 msgstr ""
 
-#: src/selections.c:3115
+#: src/selections.c:3152
 msgid "Default city has not changed"
 msgstr ""
 
-#: src/selections.c:3177
+#: src/selections.c:3214
 msgid "Default city has changed"
 msgstr ""
 

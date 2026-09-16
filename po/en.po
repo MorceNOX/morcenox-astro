@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 13:57-0300\n"
+"POT-Creation-Date: 2026-09-16 14:46-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -3589,41 +3589,41 @@ msgstr "characters)"
 msgid "Unnamed Chart"
 msgstr "Unnamed Chart"
 
-#: src/selections.c:2386
+#: src/selections.c:2388
 msgid " Select a Topic "
 msgstr " Select a Topic "
 
-#: src/selections.c:2549
+#: src/selections.c:2586
 msgid "Select Country"
 msgstr "Select Country"
 
-#: src/selections.c:2551
+#: src/selections.c:2588
 msgid "Country"
 msgstr "Country"
 
-#: src/selections.c:2803
+#: src/selections.c:2840
 msgid "Select City in"
 msgstr "Select City in"
 
-#: src/selections.c:2805
+#: src/selections.c:2842
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/selections.c:3032
+#: src/selections.c:3069
 msgid "Failed to prepare statement:"
 msgstr "Failed to prepare statement:"
 
-#: src/selections.c:3080
+#: src/selections.c:3117
 msgid "Warning: City not found in database."
 msgstr "Warning: City not found in database."
 
-#: src/selections.c:3115
+#: src/selections.c:3152
 msgid "Default city has not changed"
 msgstr "Default city has not changed"
 
-#: src/selections.c:3177
+#: src/selections.c:3214
 msgid "Default city has changed"
 msgstr "Default city has changed"
 

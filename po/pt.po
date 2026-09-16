@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 13:57-0300\n"
+"POT-Creation-Date: 2026-09-16 14:46-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -3969,41 +3969,41 @@ msgstr "caraacteres)"
 msgid "Unnamed Chart"
 msgstr "Mapa Sem Nome"
 
-#: src/selections.c:2386
+#: src/selections.c:2388
 msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
-#: src/selections.c:2549
+#: src/selections.c:2586
 msgid "Select Country"
 msgstr "Selecionar País"
 
-#: src/selections.c:2551
+#: src/selections.c:2588
 msgid "Country"
 msgstr "País"
 
-#: src/selections.c:2803
+#: src/selections.c:2840
 msgid "Select City in"
 msgstr "Selecione uma Cidade em"
 
-#: src/selections.c:2805
+#: src/selections.c:2842
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "Cidade                                        Estado/Condado/Região/Província"
 
-#: src/selections.c:3032
+#: src/selections.c:3069
 msgid "Failed to prepare statement:"
 msgstr "Falha ao preparar statement"
 
-#: src/selections.c:3080
+#: src/selections.c:3117
 msgid "Warning: City not found in database."
 msgstr "Aviso: Cidade não encontrada no banco de dados."
 
-#: src/selections.c:3115
+#: src/selections.c:3152
 msgid "Default city has not changed"
 msgstr "Cidade padrão não alterada"
 
-#: src/selections.c:3177
+#: src/selections.c:3214
 msgid "Default city has changed"
 msgstr "Cidade padrão alterada"
 

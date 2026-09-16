@@ -2371,6 +2371,8 @@ int select_topic(char *file, int max_width) {
     wnoutrefresh(shadow);
 
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
         
     while (!topic_selected) {
 
@@ -2441,6 +2443,41 @@ int select_topic(char *file, int max_width) {
             case 10: // Enter
                 topic_selected = 1;
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    int start_x_absoluto = getbegx(win);
+                    int end_x_absoluto = start_x_absoluto + getmaxx(win);
+                    
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 1. Verifica se o clique ocorreu dentro dos limites horizontais do menu
+                    if (event.x >= start_x_absoluto && event.x < end_x_absoluto) {
+                        
+                        // 2. CORREÇÃO: Verifica se a linha clicada está dentro da área VISÍVEL da tela
+                        if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                            
+                            // 3. CORREÇÃO: O índice real é a linha da tela + o deslocamento do scroll
+                            int indice_clicado = topic_scroll_offset + linha_clique_dados;
+
+                            // Garante que o usuário não clicou em uma linha em branco no fim da lista
+                            if (indice_clicado < topic_count) {
+                                selected_topic_index = indice_clicado;
+
+                                // 4. Verifica se foi um DUPLO CLIQUE para disparar a ação
+                                if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                    topic_selected = 1;
+                                    break; 
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
             case 27: // ESC
                 // Cleanup and return
                 if (topic_count > 0) {
