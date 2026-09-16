@@ -60,7 +60,7 @@ void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int lin
     // Desenha o fundo da barra e o indicador
     for (int i = 0; i < altura_barra; i++) {
         if (i == posicao_slider) {
-            mvwaddch(win, offset_y + i + 1, col_scrollbar, ACS_BLOCK | A_REVERSE); 
+            mvwaddch(win, offset_y + i + 1, col_scrollbar, ACS_BLOCK | A_REVERSE | A_DIM); 
         } else {
             // Fundo da calha da scrollbar
             //mvwaddch(win, offset_y + i, col_scrollbar, ACS_VLINE | A_DIM);

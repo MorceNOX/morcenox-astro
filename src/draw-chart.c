@@ -2668,9 +2668,13 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         if (num_blocos < 1 && strength_pontos > 0) num_blocos = 1;
 
         wmove(pad, row_pad, 23);
+        wattron(pad, A_UNDERLINE);
         for (int b = 0; b < num_blocos; b++) wprintw(pad, "█");
-
         wattroff(pad, COLOR_PAIR(12) | COLOR_PAIR(8) | COLOR_PAIR(11) | A_BOLD);
+
+        wattron(pad, COLOR_PAIR(10) | A_DIM);
+        for (int c = 0; c < 40 - num_blocos; c++) wprintw(pad, "░");
+        wattroff(pad, COLOR_PAIR(10) | A_UNDERLINE | A_DIM);
         
         // Exibe os pontos ponderados reais na direita (Sol/Lua chegam a 50+, Mercúrio a 34)
         mvwprintw(pad, row_pad, 68, "[ %3d pts ]", strength_pontos);
@@ -3964,8 +3968,10 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
                                              dig_reg_hour);
             
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
+            touchwin(stdscr);
             touchwin(shadow_win);
             touchwin(table_win);
+            wnoutrefresh(stdscr);
             wnoutrefresh(shadow_win);
             wnoutrefresh(table_win);
             doupdate();
@@ -4438,8 +4444,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
     while (1) {
         
+        wattron(border_win, COLOR_PAIR(28));
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
-
+        wattroff(border_win, COLOR_PAIR(28));
         
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
@@ -4941,7 +4948,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(23, COLOR_RED, 230);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); //yellow
-        init_pair(26, 230, COLOR_BLACK);
+        init_pair(26, 230, 24); // Teal
         init_pair(27, COLOR_RED, COLOR_BLACK);
         init_pair(28, 230, COLOR_MAGENTA);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
@@ -5013,9 +5020,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(23, COLOR_RED, 223);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); // yellow
-        init_pair(26, COLOR_BLACK, COLOR_CYAN);
-        init_pair(27, COLOR_RED, COLOR_CYAN);
-        init_pair(28, COLOR_MAGENTA, 230);
+        init_pair(26, COLOR_BLACK, 37); // Verde quase ciano
+        init_pair(27, COLOR_RED, 37);
+        init_pair(28, COLOR_MAGENTA, 249);
         init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
 
@@ -7895,6 +7902,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         }
     }
 
+    desativar_arrasto_mouse();
+
     switch(selected_index) {
         case 0:
             display_table_data(
@@ -8044,6 +8053,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         default:
             break;
     }
+
+    ativar_arrasto_mouse();
 
     if (saiu_retorno) {
         *ctx->local_time = julian_day_para_struct_tm(ctx->julian_day);

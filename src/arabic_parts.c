@@ -386,8 +386,9 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
+        wattron(table_win, COLOR_PAIR(28));
         desenhar_scrollbar(table_win, scroll_offset, row_pad, max_linhas_exibicao, 6);
-        
+        wattroff(table_win, COLOR_PAIR(28));
         
         wnoutrefresh(table_win);
 
@@ -709,7 +710,9 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
+        wattron(table_win, COLOR_PAIR(28));
         desenhar_scrollbar(table_win, scroll_offset, total_linhas_virtuais_pad, max_linhas_exibicao, 6);
+        wattroff(table_win, COLOR_PAIR(28));
 
         wnoutrefresh(table_win);
 
@@ -1152,6 +1155,10 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     wattroff(shadow, COLOR_PAIR(9)); 
     wnoutrefresh(shadow);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
+    bool salvar = false;
+
     while (loop) {        
         werase(win); wbkgd(win, COLOR_PAIR(13) | FLAGS); box(win, 0, 0);
 
@@ -1326,6 +1333,39 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     sub_campo = (sub_campo + 1) % 3;
                 }
                 break;
+
+            case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                        int linha_clique_janela = event.y - getbegy(win);
+                        int col_clique_janela = event.x - getbegx(win);
+                        
+                        // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                        int linha_botao = 19;
+                        int col_inicio_botao_ok = (w_width - 16) / 2;
+                        int col_fim_botao_ok = col_inicio_botao_ok + 19;
+                                                
+                        // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                        if (linha_clique_janela == linha_botao) {
+                            
+                            // 🌟 CASO 1: Clicou exatamente no YES
+                            if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                                if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+
+                                    loop = 0;
+                                    salvar = true;
+
+                                    break; 
+                                }
+                            }
+                            
+                            // Se clicar na linha 5 mas no espaço vazio, o código ignora e não fecha o pop-up!
+                        }
+                    }                
+                }
+                break;
+
             case 10: // ENTER
                 if (campo_atual == 0) { // Campo Part Name: mvwprintw na coordenada (2, 17)
                     // Passamos x = 17 exatamente para sincronizar com mvwprintw(win, 2, 17, ...)
@@ -1336,73 +1376,8 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     campo_texto_amigavel_avancado(win, 16, 4, f_desc, 512);
                 }
                 if (campo_atual == 7) { // SAVE FORMULA (Sua rotina SQLite global idêntica...)
-
-                    sqlite3_stmt *stmt = NULL;
-                    const char *sql_query = NULL;
-
-                    // 1. Definimos a estrutura da query com os marcadores '?' no lugar dos valores
-                    if (part_id_edicao > 0) {
-                        sql_query = "UPDATE arabic_parts SET name=?, gender_id=?, "
-                                    "diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, "
-                                    "nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, "
-                                    "description=?, link=?, link2=? WHERE id=?;";
-                    } else {
-                        sql_query = "INSERT INTO arabic_parts (name, gender_id, diurnal_personal_point, "
-                                    "diurnal_significator, diurnal_trigger, nocturnal_personal_point, "
-                                    "nocturnal_significator, nocturnal_trigger, description, link, link2) "
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                    }
-
-                    // 2. Compila a query no SQLite
-                    int rc = sqlite3_prepare_v2(global_db, sql_query, -1, &stmt, NULL);
-                    
-                    if (rc == SQLITE_OK) {
-                        // 3. Vincula os parâmetros (a contagem dos índices começa em 1)
-                        
-                        // TEXTOS: SQLITE_TRANSIENT faz o SQLite criar uma cópia interna segura da string
-                        sqlite3_bind_text(stmt, 1, f_name, -1, SQLITE_TRANSIENT);
-                        
-                        // INTEIROS
-                        sqlite3_bind_int(stmt, 2, f_gender);
-                        sqlite3_bind_int(stmt, 3, f_d_personal);
-                        sqlite3_bind_int(stmt, 4, f_d_sig);
-                        sqlite3_bind_int(stmt, 5, f_d_trigger);
-                        sqlite3_bind_int(stmt, 6, f_n_personal);
-                        sqlite3_bind_int(stmt, 7, f_n_sig);
-                        sqlite3_bind_int(stmt, 8, f_n_trigger);
-                        
-                        // TEXTOS
-                        sqlite3_bind_text(stmt, 9, f_desc, -1, SQLITE_TRANSIENT);
-                        sqlite3_bind_text(stmt, 10, f_link, -1, SQLITE_TRANSIENT);
-                        sqlite3_bind_text(stmt, 11, f_link2, -1, SQLITE_TRANSIENT);
-                        
-                        // Se for UPDATE, vincula o ID no 11º ponto de interrogação
-                        if (part_id_edicao > 0) {
-                            sqlite3_bind_int(stmt, 12, part_id_edicao);
-                        }
-
-                        // 4. Executa a query
-                        rc = sqlite3_step(stmt);
-                        if (rc != SQLITE_DONE) {
-                            // Opcional: Tratar erro de execução aqui se rc não for SQLITE_DONE
-                            fprintf(stderr, "Erro ao executar: %s\n", sqlite3_errmsg(global_db));
-                            sqlite3_finalize(stmt);
-                            delwin(shadow); 
-                            delwin(win);
-                            return;
-                        }
-                    } else {
-                        // Opcional: Tratar erro de compilação da query aqui
-                        fprintf(stderr, "Erro ao preparar: %s\n", sqlite3_errmsg(global_db));
-                        delwin(shadow); 
-                        delwin(win);
-                        return;
-                    }
-
-                    sqlite3_finalize(stmt);
-
                     loop = 0;
- 
+                    salvar = true; 
                 }
                 break;
 
@@ -1410,6 +1385,73 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                 loop = 0;
                 break;
         }
+    }
+
+    if (salvar) {
+        sqlite3_stmt *stmt = NULL;
+        const char *sql_query = NULL;
+
+        // 1. Definimos a estrutura da query com os marcadores '?' no lugar dos valores
+        if (part_id_edicao > 0) {
+            sql_query = "UPDATE arabic_parts SET name=?, gender_id=?, "
+                        "diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, "
+                        "nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, "
+                        "description=?, link=?, link2=? WHERE id=?;";
+        } else {
+            sql_query = "INSERT INTO arabic_parts (name, gender_id, diurnal_personal_point, "
+                        "diurnal_significator, diurnal_trigger, nocturnal_personal_point, "
+                        "nocturnal_significator, nocturnal_trigger, description, link, link2) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        }
+
+        // 2. Compila a query no SQLite
+        int rc = sqlite3_prepare_v2(global_db, sql_query, -1, &stmt, NULL);
+        
+        if (rc == SQLITE_OK) {
+            // 3. Vincula os parâmetros (a contagem dos índices começa em 1)
+            
+            // TEXTOS: SQLITE_TRANSIENT faz o SQLite criar uma cópia interna segura da string
+            sqlite3_bind_text(stmt, 1, f_name, -1, SQLITE_TRANSIENT);
+            
+            // INTEIROS
+            sqlite3_bind_int(stmt, 2, f_gender);
+            sqlite3_bind_int(stmt, 3, f_d_personal);
+            sqlite3_bind_int(stmt, 4, f_d_sig);
+            sqlite3_bind_int(stmt, 5, f_d_trigger);
+            sqlite3_bind_int(stmt, 6, f_n_personal);
+            sqlite3_bind_int(stmt, 7, f_n_sig);
+            sqlite3_bind_int(stmt, 8, f_n_trigger);
+            
+            // TEXTOS
+            sqlite3_bind_text(stmt, 9, f_desc, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(stmt, 10, f_link, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(stmt, 11, f_link2, -1, SQLITE_TRANSIENT);
+            
+            // Se for UPDATE, vincula o ID no 11º ponto de interrogação
+            if (part_id_edicao > 0) {
+                sqlite3_bind_int(stmt, 12, part_id_edicao);
+            }
+
+            // 4. Executa a query
+            rc = sqlite3_step(stmt);
+            if (rc != SQLITE_DONE) {
+                // Opcional: Tratar erro de execução aqui se rc não for SQLITE_DONE
+                fprintf(stderr, "Erro ao executar: %s\n", sqlite3_errmsg(global_db));
+                sqlite3_finalize(stmt);
+                delwin(shadow); 
+                delwin(win);
+                return;
+            }
+        } else {
+            // Opcional: Tratar erro de compilação da query aqui
+            fprintf(stderr, "Erro ao preparar: %s\n", sqlite3_errmsg(global_db));
+            delwin(shadow); 
+            delwin(win);
+            return;
+        }
+
+        sqlite3_finalize(stmt);
+
     }
         
     delwin(shadow); 

@@ -1087,8 +1087,9 @@ void abrir_janela_confronto_natal_revolucao(
     keypad(border_win, TRUE);
 
     while (1) {
-        
+        wattron(border_win, COLOR_PAIR(28));
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
+        wattroff(border_win, COLOR_PAIR(28));
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -1613,8 +1614,9 @@ void abrir_janela_transitos_revolucao(
     keypad(border_win, TRUE);
 
     while (1) {
-        
+        wattron(border_win, COLOR_PAIR(28));
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
+        wattroff(border_win, COLOR_PAIR(28));
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 

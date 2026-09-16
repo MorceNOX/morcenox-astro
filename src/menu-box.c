@@ -651,7 +651,9 @@ void del_chart() {
                 wattroff(chart_win, attr);
             }
         }
+        wattron(chart_win, COLOR_PAIR(28));
         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+        wattroff(chart_win, COLOR_PAIR(28));
 
         wnoutrefresh(chart_win);
 
@@ -793,7 +795,10 @@ void del_chart() {
                                             }
                                         }
 
+                                        wattron(chart_win, COLOR_PAIR(28));
                                         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+                                        wattroff(chart_win, COLOR_PAIR(28));
+        
                                         wnoutrefresh(chart_win);
                                         doupdate(); // Agora o item clicado já brilha na tela física!
 
@@ -1033,8 +1038,10 @@ void load_chart() {
             }
         }
 
+        wattron(chart_win, COLOR_PAIR(28));
         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
-
+        wattroff(chart_win, COLOR_PAIR(28));
+        
         wnoutrefresh(chart_win);
 
         doupdate();
@@ -1174,7 +1181,11 @@ void load_chart() {
                                             }
                                         }
 
+                                        
+                                        wattron(chart_win, COLOR_PAIR(28));
                                         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+                                        wattroff(chart_win, COLOR_PAIR(28));
+        
                                         wnoutrefresh(chart_win);
                                         doupdate(); // Agora o item clicado já brilha na tela física!
 
@@ -2090,8 +2101,10 @@ void show_text_file(const char* filename, const char* title, int from_line) {
             //     }
             // }
         //}
+        wattron(help_win, COLOR_PAIR(28));
         desenhar_scrollbar(help_win, start_line, line_count, scrollbar_height, 1);
-
+        wattroff(help_win, COLOR_PAIR(28));
+        
         //wnoutrefresh(shadow_win);
         wnoutrefresh(help_win);
         wnoutrefresh(txt_win);
@@ -2321,7 +2334,7 @@ int main() {
         init_pair(7, COLOR_YELLOW, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
-        init_pair(10, COLOR_BLACK, 49); // verde água
+        init_pair(10, 232, 37); // verde água
         init_pair(11, COLOR_CYAN, 27);
         init_pair(12, 230, 27);
         init_pair(13, COLOR_GREEN, COLOR_BLUE);
@@ -2335,7 +2348,7 @@ int main() {
             init_pair(25, COLOR_BLACK, COLOR_YELLOW);
             init_pair(26, 230, COLOR_BLACK);
             init_pair(27, COLOR_RED, COLOR_BLACK);
-            init_pair(28, COLOR_MAGENTA, 230);
+            init_pair(28, COLOR_MAGENTA, 249);
             init_pair(29, 230, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         }
@@ -2353,7 +2366,7 @@ int main() {
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);
         init_pair(32, COLOR_BLUE, COLOR_GREEN);
-        init_pair(33, COLOR_BLUE, COLOR_CYAN);
+        init_pair(33, COLOR_BLUE, 17);
     
 
         MenuOption options[] = { 

@@ -2712,9 +2712,9 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
             }
         }
 
+        wattron(country_win, COLOR_PAIR(28));
         desenhar_scrollbar(country_win, country_scroll_offset, country_count, max_display_items, 2);
-
-
+        wattroff(country_win, COLOR_PAIR(28));
 
         wnoutrefresh(country_win);
 
@@ -2984,7 +2984,9 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                 wattroff(city_win, attr);
             }
         }
+        wattron(city_win, COLOR_PAIR(28));
         desenhar_scrollbar(city_win, city_scroll_offset, city_count, max_display_items, 2);
+        wattroff(city_win, COLOR_PAIR(28));
 
         wnoutrefresh(city_win);
 
