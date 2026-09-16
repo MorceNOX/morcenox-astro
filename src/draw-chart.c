@@ -2669,21 +2669,23 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
     // Rodapé fixo na janela principal
     mvwprintw(table_win, table_height - 1, 4, _("Press Q or ESC to return - Use [↓↑ / JK] to scroll"));
-    wnoutrefresh(table_win);
-
-    doupdate();
 
     // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
     int max_scroll = row_pad - max_linhas_dados_visiveis;
     if (max_scroll < 0) max_scroll = 0;
 
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+    wnoutrefresh(table_win);
+
+    doupdate();
+
     // Renderiza a primeira foto da PAD na tela
     prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
-    keypad(pad, TRUE);
+    keypad(table_win, TRUE);
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -2698,6 +2700,10 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
                 break;
         }
         // Atualiza a janela de visualização do scroll a cada clique do usuário
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+        wnoutrefresh(table_win);
+
+        doupdate();
         prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
     }
 
@@ -2795,19 +2801,19 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     }
 
     mvwprintw(table_win, table_height - 1, 2, _("Press Q or ESC to return - [↓↑] to scroll"));
-    wnoutrefresh(table_win);
-
-    doupdate();
 
     int offset_y = 0;
     int max_scroll = row_pad - max_linhas_dados;
     if (max_scroll < 0) max_scroll = 0;
 
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
+    wnoutrefresh(table_win);
+    doupdate();
     prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
-    keypad(pad, TRUE);
+    keypad(table_win, TRUE);
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
         switch (ch) {
             case KEY_UP: case 'k': case 'K':
                 if (offset_y > 0) offset_y -= 2;
@@ -2816,6 +2822,9 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
                 if (offset_y < max_scroll) offset_y += 2;
                 break;
         }
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
+        wnoutrefresh(table_win);
+        doupdate();
         prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
     }
     
@@ -3100,25 +3109,29 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     // Add instructions
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
     
-    // Refresh the window
-    wnoutrefresh(table_win);
-
-    doupdate();
-
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
     int max_scroll_y = row - max_linhas_dados_visiveis + 2;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     // Vincula o teclado à PAD virtual
-    keypad(scroll_pad, TRUE);
-    nodelay(scroll_pad, FALSE);
+    keypad(table_win, TRUE);
+    nodelay(table_win, FALSE);
+
+    // Refresh the window
+    desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(scroll_pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+
+        desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
+        wnoutrefresh(table_win);
         
         if (ch == KEY_F(3)) {
             display_force(plots, dig, strength_planets);
@@ -3164,6 +3177,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
+        doupdate();
     }
     
     // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
@@ -3514,9 +3528,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Dignities - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
-    wnoutrefresh(table_win);
-
-    doupdate();
+    
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
@@ -3524,14 +3536,22 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     // Vincula o teclado à PAD virtual
-    keypad(scroll_pad, TRUE);
-    nodelay(scroll_pad, FALSE);
+    keypad(table_win, TRUE);
+    nodelay(table_win, FALSE);
+
+    desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+    wnoutrefresh(table_win);
+
+    doupdate();
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(scroll_pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+
+        desenhar_scrollbar(table_win, offset_y,  row_pad + 2, max_linhas_dados_visiveis, 3);
+        wnoutrefresh(table_win);
         
         if (ch == KEY_F(2)) {
             // Abre sua tela de detalhes das dignidades
@@ -3593,6 +3613,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            doupdate();
         }
     }
     

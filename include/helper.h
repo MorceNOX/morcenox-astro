@@ -29,6 +29,7 @@ typedef struct {
 } AuxOrdenacao;
 
 void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y);
+void desenhar_scrollbar_slim(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y);
 void ativar_arrasto_e_scroll_mouse();
 void desativar_mouse();
 void desativar_arrasto_mouse();
