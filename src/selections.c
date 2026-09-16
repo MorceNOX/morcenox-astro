@@ -179,7 +179,7 @@ int show_confirm_delete_popup(const char *name) {
         wattroff(pop_win, attr_confirm);
 
         // Botão CANCEL
-        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(pop_win, attr_cancel);
         mvwprintw(pop_win, 5, 32, _("  CANCEL  "));
         wattroff(pop_win, attr_cancel);
