@@ -658,7 +658,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     // 2. CASO DE EMPATE NA UMIDADE (Eixo Umidade == 0)
     else if (eixo_umidade == 0) {
         if (eixo_calor > 0) {
-            wattron(table_win, COLOR_PAIR(11)); 
+            wattron(table_win, COLOR_PAIR(31)); 
             wprintw(table_win, _("SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"));
 
             snprintf(element1, 10, _("Air"));
@@ -721,7 +721,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     }
     
     // Desliga todos os atributos e cores de uma só vez de forma segura no ncurses
-    wattroff(table_win, A_BOLD | COLOR_PAIR(32) | COLOR_PAIR(30) | COLOR_PAIR(11) | COLOR_PAIR(8) | COLOR_PAIR(12) | COLOR_PAIR(13) | COLOR_PAIR(21) | A_REVERSE);
+    wattroff(table_win, A_BOLD | COLOR_PAIR(32) | COLOR_PAIR(30) | COLOR_PAIR(31) | COLOR_PAIR(11) | COLOR_PAIR(8) | COLOR_PAIR(12) | COLOR_PAIR(13) | COLOR_PAIR(21) | A_REVERSE);
 
     /* ATUALIZADO: Mensagem amigável avisando da nova funcionalidade */
     mvwprintw(table_win, table_height - 1, 2, _("Press [i] for Full Text Interpretation | ESC/q to Return"));
@@ -920,11 +920,11 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     // 2. CASO DE EMPATE NA UMIDADE (Eixo Umidade == 0)
     else if (eixo_umidade == 0) {
         if (eixo_calor > 0) {
-            wattron(pad, A_BOLD | COLOR_PAIR(11));
+            wattron(pad, A_BOLD | COLOR_PAIR(31));
             wprintw(pad, _("SANGUINE-CHOLERIC MIX (The Hot Overload / Balanced Moisture)\n\n"));
             line_count += 2;
 
-            wattroff(pad, A_BOLD | COLOR_PAIR(11));
+            wattroff(pad, A_BOLD | COLOR_PAIR(31));
             line_count += print_split_lines(pad, _("An expressive, warm, and highly action-oriented signature blending "
                          "Air and Fire.\n"
                          "Your dynamic energy acts as a strong catalyst in social or "

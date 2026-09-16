@@ -1332,6 +1332,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
 
     bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
 
     while(1) {
         erase();
@@ -1614,6 +1615,37 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
                 choice = *highlight;
                 //if (options[choice].command != NULL) options[choice].command();
                 break;
+
+                case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        int start_x_absoluto = getbegx(menu_win);
+                        int end_x_absoluto = start_x_absoluto + getmaxx(menu_win);
+                        
+                        int linha_clique_janela = event.y - getbegy(menu_win);
+                        int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
+                        int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+    
+                        // 1. Verifica se o clique ocorreu dentro dos limites horizontais do menu
+                        if (event.x >= start_x_absoluto && event.x < end_x_absoluto) {
+                            
+                            // 2. Verifica se a linha clicada corresponde a uma opção válida do menu
+                            if (linha_clique_dados >= 0 && linha_clique_dados < n_choices) {
+                                
+                                // CORREÇÃO CRÍTICA: Sem scrollbar, a linha clicada é DIRETAMENTE o índice do item
+                                *highlight = linha_clique_dados;
+    
+                                // 3. Verifica se foi um DUPLO CLIQUE para disparar a ação do ENTER
+                                if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                    choice = *highlight;
+                                    break; 
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+    
             case 27: // ESC
                 choice = n_choices;
                 break;
@@ -2274,7 +2306,7 @@ int main() {
     noecho();
     cbreak();
     set_escdelay(25);
-    desativar_arrasto_mouse();
+    //desativar_arrasto_mouse();
 
     start_color();
     
