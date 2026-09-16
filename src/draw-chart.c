@@ -3166,7 +3166,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, double lat, double lon, double elev, PlotObject *plots, char *season,
     int sanYear, int sanMon, int sanDay, double sanHour, char *sunrise_time, char *sunset_time, char *next_sunrise_time,
     char *city, char *country, const char* phase, char *temperament,
-    int last_hr, int last_min, double last_sec, char *chart_name, int gender_id) {
+    int last_hr, int last_min, double last_sec, char *chart_name, int gender_id, double idade) {
     
         // Create a new window for the table
     int max_y, max_x;
@@ -3217,9 +3217,9 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
 
     if (mapa_retorno) {
-        wattron(table_win, COLOR_PAIR(11));
-        mvwprintw(table_win, 7, 2, _("Solar Revolution Chart"));
-        wattroff(table_win, COLOR_PAIR(11));
+        wattron(table_win, COLOR_PAIR(11) | A_BOLD);
+        mvwprintw(table_win, 7, 2, _("%s (Age: %8.4f)"), _("Solar Revolution Chart"), idade);
+        wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
     }
     else {
         wattroff(table_win, A_BOLD);
@@ -3371,9 +3371,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 99, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
-    wattron(table_win, COLOR_PAIR(39) | A_DIM);
+    wattron(table_win, COLOR_PAIR(12) | A_DIM);
     mvwprintw(table_win, 2, 103, _("Term"));
-    wattroff(table_win, COLOR_PAIR(39) | A_DIM);
+    wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
     mvwprintw(table_win, 2, 109, _("Trip"));
@@ -3481,9 +3481,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_dec_t + 1, "%s", data.decan);
         wattroff(scroll_pad, COLOR_PAIR(40) | A_DIM);
 
-        wattron(scroll_pad, COLOR_PAIR(39) | A_DIM);
+        wattron(scroll_pad, COLOR_PAIR(12) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_trm + 2, "%s", data.term);
-        wattroff(scroll_pad, COLOR_PAIR(39) | A_DIM);
+        wattroff(scroll_pad, COLOR_PAIR(12) | A_DIM);
 
         wattron(scroll_pad, COLOR_PAIR(7) | A_DIM);
         mvwprintw(scroll_pad, row_pad, c_tri + 2, "%s", data.tri);
@@ -4371,27 +4371,28 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
         // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+        // if (line_count > visible_height) {
+        //     // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+        //     // sobre o total que pode ser rolado (line_count - visible_height)
+        //     int max_scroll = line_count - visible_height;
+        //     int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
             
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        //     for (int i = 0; i < scrollbar_height; i++) {
+        //         if (i == scrollbar_pos) {
+        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+        //         } else {
+        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+        //         }
+        //     }
+        // }
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -4772,11 +4773,11 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
-#define COLOR_BACK_1 225 //195 //230 // 194 //159
-#define COLOR_BACK_2 224 //194 //229 // 193 //123
+#define COLOR_BACK_1 218 //225 //195 //230 // 194 //159
+#define COLOR_BACK_2 217 //224 //194 //229 // 193 //123
 
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal) {
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
     int n = 1;
     
     bool dark_mode = (darkmode)?true:false;
@@ -4932,7 +4933,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(38, 18, COLOR_WHITE);
-        init_pair(39, 28, 223); // verde
+        init_pair(39, 28, 211); // verde, magenta
         init_pair(40, COLOR_YELLOW, 223);
         init_pair(41, 87, COLOR_BACK_2); // verde bem clarinho
 
@@ -7303,6 +7304,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
                 ctx.obj_natal = obj_natal;
                 ctx.total_obj_natal = total_obj_natal;
+
+                ctx.idade = idade;
             
                 desativar_arrasto_mouse();                      
                 open_menu_tables(&ctx);
@@ -7336,7 +7339,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 display_table_data(
                     mapa_retorno, julian_day, local_time, lat, lon, elev, plots, season_fmt,
                     sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, next_sunrise_time, city, country, 
-                    phase, moon_temperament, last_hr, last_min, last_sec, chart_name, gender_id
+                    phase, moon_temperament, last_hr, last_min, last_sec, chart_name, gender_id, idade
                 );
                 ativar_arrasto_mouse();
                 flushinp();         
@@ -7763,7 +7766,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_table_data(
                 ctx->mapa_retorno, ctx->julian_day, ctx->local_time, ctx->lat, ctx->lon, ctx->elev, ctx->plots, ctx->season_fmt,
                 ctx->sanYear, ctx->sanMon, ctx->sanDay, ctx->sanHour, ctx->sunrise_time, ctx->sunset_time, ctx->next_sunrise_time, ctx->city, ctx->country, 
-                ctx->phase, ctx->moon_temperament, ctx->last_hr, ctx->last_min, ctx->last_sec, ctx->chart_name, ctx->gender_id
+                ctx->phase, ctx->moon_temperament, ctx->last_hr, ctx->last_min, ctx->last_sec, ctx->chart_name, ctx->gender_id, ctx->idade
             );
             break;
         case 1:

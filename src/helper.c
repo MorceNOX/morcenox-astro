@@ -40,6 +40,36 @@
 #include "directions.h"
 
 
+
+void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y) {
+    int altura_barra = linhas_visiveis;
+    int col_scrollbar = getmaxx(win) - 2; // Última coluna da janela
+
+    // Se tudo couber na tela, não precisa de barra de rolagem
+    if (total_linhas <= linhas_visiveis) {
+        for (int i = 0; i < altura_barra; i++) {
+            mvwaddwstr(win, offset_y + i, col_scrollbar, L" ");
+        }
+        return;
+    }
+
+    // Calcula a posição do slider (indicador)
+    int max_scroll = total_linhas - linhas_visiveis;
+    int posicao_slider = (scroll_atual * (altura_barra - 1)) / max_scroll;
+
+    // Desenha o fundo da barra e o indicador
+    for (int i = 0; i < altura_barra; i++) {
+        if (i == posicao_slider) {
+            mvwaddch(win, offset_y + i + 1, col_scrollbar, ACS_BLOCK | A_REVERSE); 
+        } else {
+            // Fundo da calha da scrollbar
+            //mvwaddch(win, offset_y + i, col_scrollbar, ACS_VLINE | A_DIM);
+            mvwaddwstr(win, offset_y + i + 1, col_scrollbar, L"░");
+        }
+    }
+}
+
+
 void ativar_arrasto_e_scroll_mouse() {
     // Adicionamos BUTTON4 e os eventos gerais de modificação para capturar o scroll
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON4_PRESSED | BUTTON5_PRESSED | REPORT_MOUSE_POSITION, NULL);

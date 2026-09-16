@@ -519,6 +519,11 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
             }
         }
     }
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
 
     mvwprintw(decl_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
     mvwprintw(decl_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
@@ -526,19 +531,20 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
 
     doupdate();
 
-    int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
-    if (max_scroll_y < 0) max_scroll_y = 0;
+    
 
     // Vincula o teclado à PAD virtual
-    keypad(pad, TRUE);
-    nodelay(pad, FALSE);
+    keypad(decl_win, TRUE);
+    nodelay(decl_win, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {        
+    while ((ch = wgetch(decl_win)) != 27 && ch != 'q' && ch != 'Q') {   
+        desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wnoutrefresh(decl_win);
+
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -552,7 +558,9 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
         }
-        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);        
+        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+        doupdate();
+     
     }
     
     // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
@@ -719,6 +727,11 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             // }
         }
     }
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
 
     mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑|JK] Scroll"));
@@ -726,19 +739,20 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
 
     doupdate();
 
-    int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
-    if (max_scroll_y < 0) max_scroll_y = 0;
+    
 
     // Vincula o teclado à PAD virtual
-    keypad(pad, TRUE);
-    nodelay(pad, FALSE);
+    keypad(aspects_win, TRUE);
+    nodelay(aspects_win, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wnoutrefresh(aspects_win);
         
         if (ch == KEY_F(3)) {
             display_declination_aspects(plots, matrix_decl);
@@ -790,6 +804,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+            doupdate();
         }
     }
     
@@ -983,24 +998,29 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
         }
     }
 
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
 
     doupdate();
 
-    int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
-    if (max_scroll_y < 0) max_scroll_y = 0;
-
+    
     // Vincula o teclado à PAD virtual
-    keypad(pad, TRUE);
-    nodelay(pad, FALSE);
+    keypad(aspects_win, TRUE);
+    nodelay(aspects_win, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wnoutrefresh(aspects_win);
                 
         switch (ch) {
             case KEY_UP: 
@@ -1016,7 +1036,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                 break;
         }
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-        
+        doupdate();
     }
     
     delwin(pad);
@@ -1261,25 +1281,29 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
         }
     }
 
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
+
     mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
 
     doupdate();
 
-    int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
-    if (max_scroll_y < 0) max_scroll_y = 0;
-
     // Vincula o teclado à PAD virtual
-    keypad(pad, TRUE);
-    nodelay(pad, FALSE);
+    keypad(aspects_win, TRUE);
+    nodelay(aspects_win, FALSE);
 
     // Renderiza a primeira foto da PAD na tela
     prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(pad)) != 27 && ch != 'q' && ch != 'Q') {
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
+        wnoutrefresh(aspects_win);
                 
         switch (ch) {
             case KEY_UP: 
@@ -1295,7 +1319,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 break;
         }
         prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-        
+        doupdate();
     }
     
     delwin(pad);

@@ -725,7 +725,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
-        
+        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad, max_linhas_exibicao, 6);
+
         wnoutrefresh(table_win);
 
         doupdate();
@@ -964,7 +965,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     // ────────────────────────────────────────────────────────────────────────
     // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
     int max_linhas_exibicao = table_height - 13; // Espaço físico real na janela para os dados
-    WINDOW *scroll_pad = newpad(300, table_width - 8); 
+    WINDOW *scroll_pad = newpad(1200, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
     wattron(shadow_win, COLOR_PAIR(9));
@@ -1201,7 +1202,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
-        
+        desenhar_scrollbar(table_win, scroll_offset, qtd_direcoes * 2, max_linhas_exibicao, 6);
+
         wnoutrefresh(table_win);
 
         doupdate();

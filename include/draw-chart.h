@@ -187,6 +187,8 @@ typedef struct {
     ChartObject *obj_natal;
     int total_obj_natal;
 
+    double idade;
+
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);
@@ -224,7 +226,7 @@ double normalize_angle(double angle);
 double get_sun_moon_diff(double jd);
 double find_last_astrological_event(double start_jd, bool is_opposition);
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal);
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade);
 void draw_circle_points(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
 void draw_circle_points_delay(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character, int delay_ms, bool clockwise);
 void draw_circle_outline(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
@@ -267,7 +269,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, double lat, double lon, double elev, PlotObject *plots, char *season,
     int sanYear, int sanMon, int sanDay, double sanHour, char *sunrise_time, char *sunset_time, char *next_sunrise_time,
     char *city, char *country, const char* phase, char *temperament,
-    int last_hr, int last_min, double last_sec, char *chart_name, int gender_id);
+    int last_hr, int last_min, double last_sec, char *chart_name, int gender_id, double idade);
 
 void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets);
 

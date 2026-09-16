@@ -163,7 +163,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 28;
-    int table_width = max_x - 10;
+    int table_width = max_x - 9;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
     
@@ -384,6 +384,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
+        desenhar_scrollbar(table_win, scroll_offset, total_linhas_virtuais_pad, max_linhas_exibicao, 6);
         wnoutrefresh(table_win);
 
         doupdate();
@@ -649,6 +650,8 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
+        desenhar_scrollbar(table_win, scroll_offset, total_linhas_virtuais_pad, max_linhas_exibicao, 6);
+
         wnoutrefresh(table_win);
 
         doupdate();

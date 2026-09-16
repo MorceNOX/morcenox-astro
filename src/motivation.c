@@ -122,7 +122,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     wattroff(table_win, A_BOLD);
 
     //int max_linhas_dados = table_height - 6;
-    WINDOW *pad = newpad(120, table_width - 4);
+    WINDOW *pad = newpad(120, table_width - 5);
 
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
@@ -314,32 +314,20 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     int visible_height = (start_y + table_height - 2) - (start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = table_height - 2; 
+    //int scrollbar_height = table_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(table_win, TRUE);
 
     while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (row_pad > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = row_pad - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(table_win, 1 + i, table_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(table_win, 1 + i, table_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        
+        desenhar_scrollbar(table_win, pad_line_pos, row_pad, visible_height, 0);
+
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(table_win); 
         // prefresh envia os dados do pad diretamente para a tela virtual
-        prefresh(pad, pad_line_pos, 0, start_y + 1, start_x + 3, start_y + table_height - 3, start_x + table_width - 4);
+        prefresh(pad, pad_line_pos, 0, start_y + 1, start_x + 3, start_y + table_height - 3, start_x + table_width - 5);
         doupdate(); // Executa a pintura unificada na tela física
 
         // --- 3. CAPTURA DE INPUT (Na border_win, não no pad) ---

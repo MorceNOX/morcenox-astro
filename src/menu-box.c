@@ -1469,7 +1469,7 @@ void call_chart_now() {
     //PlanetDignities *dig_natal;
     //double cusps[13] = {0};
 
-    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, _("Here And Now"), HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0);
+    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, _("Here And Now"), HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
 
 
@@ -1558,7 +1558,7 @@ void call_chart() {
 
     tz_offset = tz_offset + dst_offset;
 
-    chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0);
+    chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
 
 
@@ -1790,18 +1790,19 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         }
         
         // Draw scrollbar if needed
-        if (line_count > max_lines) {
+        //if (line_count > max_lines) {
             int scrollbar_height = max_lines;
-            int scrollbar_pos = (start_line * scrollbar_height) / (line_count - max_lines);
+            //int scrollbar_pos = (start_line * scrollbar_height) / (line_count - max_lines);
             
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i >= scrollbar_pos && i < scrollbar_pos + 1) {
-                    mvwaddch(help_win, 2 + i, win_w - 2, ACS_BLOCK);
-                } else {
-                    mvwaddch(help_win, 2 + i, win_w - 2, ACS_VLINE);
-                }
-            }
-        }
+            // for (int i = 0; i < scrollbar_height; i++) {
+            //     if (i >= scrollbar_pos && i < scrollbar_pos + 1) {
+            //         mvwaddch(help_win, 2 + i, win_w - 2, ACS_BLOCK);
+            //     } else {
+            //         mvwaddch(help_win, 2 + i, win_w - 2, ACS_VLINE);
+            //     }
+            // }
+        //}
+        desenhar_scrollbar(help_win, start_line, line_count, scrollbar_height, 1);
 
         //wnoutrefresh(shadow_win);
         wnoutrefresh(help_win);

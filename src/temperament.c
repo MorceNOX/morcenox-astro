@@ -674,7 +674,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     // 3. CASOS PURA E ESTREITAMENTE CONFIGURADOS (Sem empates nos eixos)
     else {
         if (eixo_calor > 0 && eixo_umidade > 0) {
-            wattron(table_win, COLOR_PAIR(12) | A_REVERSE); 
+            wattron(table_win, COLOR_PAIR(12) | A_BOLD); 
             wprintw(table_win, _("SANGUINE (Hot & Wet - 🜁 Air Element)"));
             snprintf(element1, 10, _("Air"));
         } else if (eixo_calor > 0 && eixo_umidade < 0) {
@@ -980,11 +980,11 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     // 3. CASOS PURA E ESTREITAMENTE CONFIGURADOS (Sem empates nos eixos)
     else {
         if (eixo_calor > 0 && eixo_umidade > 0) {
-            wattron(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
+            wattron(pad, A_BOLD | COLOR_PAIR(12) | A_BOLD);
             wprintw(pad, _("SANGUINE (Hot & Wet - Air 🜁 Element)\n\n"));
             line_count += 2;
 
-            wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_REVERSE);
+            wattroff(pad, A_BOLD | COLOR_PAIR(12) | A_BOLD);
             line_count += print_split_lines(pad, _("Your psychological engine revolves around communication, expansion, "
                          "and mental fluidity. "
                          "You absorb external impressions instantly and possess an adaptable, "
@@ -1122,9 +1122,9 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
             // Renderiza o modificador específico baseado no ID de cor do temperamento
             switch (lista[i].id) {
                 case SANGUINEO: // Sanguine
-                    wattron(pad, COLOR_PAIR(12) | A_REVERSE | A_BOLD);
+                    wattron(pad, COLOR_PAIR(12) | A_BOLD);
                     wprintw(pad, _(" ✦ Sanguine Influence: \n\n"));
-                    wattroff(pad, COLOR_PAIR(12) | A_REVERSE | A_BOLD);
+                    wattroff(pad, COLOR_PAIR(12) | A_BOLD);
                     line_count += print_split_lines(pad, _("Adds an overlay of communicative ease, adaptability, "
                                  "and cognitive curiosity. This softens any rigid boundaries or "
                                  "stagnation imposed by your dominant humor.\n\n"), MAX_LINE_WIDTH);
@@ -1198,27 +1198,28 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
         // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
+        // if (line_count > visible_height) {
+        //     // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
+        //     // sobre o total que pode ser rolado (line_count - visible_height)
+        //     int max_scroll = line_count - visible_height;
+        //     int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
             
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        //     for (int i = 0; i < scrollbar_height; i++) {
+        //         if (i == scrollbar_pos) {
+        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
+        //         } else {
+        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
+        //         }
+        //     }
+        // }
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 

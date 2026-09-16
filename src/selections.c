@@ -2503,7 +2503,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     unsigned short term_h = get_terminal_height();
     
     // Calculate window size for country menu
-    int menu_width = 87;
+    int menu_width = 88;
     int menu_height = 20;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;
@@ -2565,6 +2565,11 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                 wattroff(country_win, attr);
             }
         }
+
+        desenhar_scrollbar(country_win, country_scroll_offset, country_count, max_display_items, 2);
+
+
+
         wnoutrefresh(country_win);
 
         doupdate();
@@ -2739,6 +2744,8 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                 wattroff(city_win, attr);
             }
         }
+        desenhar_scrollbar(city_win, city_scroll_offset, city_count, max_display_items, 2);
+
         wnoutrefresh(city_win);
 
         doupdate();

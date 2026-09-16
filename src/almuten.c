@@ -1006,27 +1006,13 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -1314,27 +1300,14 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
         // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 

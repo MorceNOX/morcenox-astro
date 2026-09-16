@@ -491,7 +491,8 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
         cusps_natal[1],
         cusps_natal,
         obj_natal,
-        num_objects
+        num_objects,
+        idade_escolhida
     );
 
 }
@@ -585,9 +586,9 @@ void abrir_janela_confronto_natal_revolucao(
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     
     line_count += 3;
 
@@ -662,9 +663,9 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count++;
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK II] RADIX HOUSE TRANSIT\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada);
     
     line_count += 3;
@@ -744,12 +745,12 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count++;
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK III] THE TIMELORD CO-ALIGNMENT\n\n"));
 
     line_count += 3;
 
-    wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _(" ✦ The current Profection Lord of the Year is: %s.\n"
                  " ✦ The current Solar Return Almuten is: %s.\n\n"), 
             nomes_planetas[id_senhor_profeccao], nomes_planetas[id_almuten_rev]);
@@ -794,12 +795,12 @@ void abrir_janela_confronto_natal_revolucao(
 
     wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n\n"));
     
     line_count++;
 
-    wattroff(pad, COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _(" ✦ Current Firdaria Master Ruler: %s\n"
                  " ✦ Current Firdaria Sub-Ruler: %s\n"
                  " ✦ Solar Return Almuten (Lord of Year): %s\n\n"), 
@@ -855,9 +856,9 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count++;
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     
     line_count++;
 
@@ -898,9 +899,9 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count++;
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     
     line_count += 2;
 
@@ -993,9 +994,9 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count += 2;
 
-    wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
     wprintw(pad, _("  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
 
     line_count += 3;
 
@@ -1078,27 +1079,14 @@ void abrir_janela_confronto_natal_revolucao(
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -1450,9 +1438,9 @@ void abrir_janela_transitos_revolucao(
         }
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-        wattron(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, _("    %s  %s (Solar Return)\n"), glifos[p], nomes[p]);
-        wattroff(pad, A_BOLD | COLOR_PAIR(7) | A_REVERSE);
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
 
         line_count += 4;
@@ -1571,27 +1559,14 @@ void abrir_janela_transitos_revolucao(
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
     // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    int scrollbar_height = i_height - 2; 
+    //int scrollbar_height = i_height - 2; 
 
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        if (line_count > visible_height) {
-            // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-            // sobre o total que pode ser rolado (line_count - visible_height)
-            int max_scroll = line_count - visible_height;
-            int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-            for (int i = 0; i < scrollbar_height; i++) {
-                if (i == scrollbar_pos) {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-                } else {
-                    mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-                }
-            }
-        }
+        
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
