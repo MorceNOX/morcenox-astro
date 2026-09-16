@@ -602,6 +602,7 @@ void del_chart() {
     WINDOW *chart_win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
     WINDOW *chart_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
     
+
     // Chart selection variables
     int selected_chart_index = 0;  // This tracks the actual index in the array
     int chart_scroll_offset = 0;   // This tracks which item is at the top of the visible list
@@ -611,7 +612,9 @@ void del_chart() {
     nodelay(chart_win, FALSE);
     keypad(chart_win, TRUE);
     curs_set(0);
-    
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     int chart_selected = 0;
     int key;
     
@@ -648,6 +651,8 @@ void del_chart() {
                 wattroff(chart_win, attr);
             }
         }
+        desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+
         wnoutrefresh(chart_win);
 
         doupdate();
@@ -688,6 +693,133 @@ void del_chart() {
                     }
                 }
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(chart_win) + (getmaxx(chart_win) - 2);
+                    int linha_clique_janela = event.y - getbegy(chart_win);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    int offset_inicio_dados = 1; 
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_chart_index - chart_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
+                        int linha_clique_janela = event.y - getbegy(chart_win);
+                        
+                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
+                        int offset_inicio_barra = 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o chart_scroll_offset pode atingir
+                            int max_scroll_y = row_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                chart_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_chart_index = chart_scroll_offset + posicao_relativa_tela;
+
+                                if (selected_chart_index >= row_count) {
+                                    selected_chart_index = row_count - 1;
+                                }
+                                if (selected_chart_index < 0) {
+                                    selected_chart_index = 0;
+                                }
+                            }
+                        }
+                    }
+                    // ========================================================
+                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // ========================================================
+                    else {
+                        int start_x_absoluto = getbegx(chart_win);
+                        if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
+                            
+                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                                int indice_clicado = chart_scroll_offset + linha_clique_dados;
+                                
+                                if (indice_clicado < row_count) {
+                                    // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
+                                    selected_chart_index = indice_clicado;
+
+                                    // 2. Verifica se foi um DUPLO CLIQUE
+                                    if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                        
+                                        // 🌟 PRIMEIRO: Forçamos o laço a subir, redesenhar tudo com o novo realce e renderizar na tela física
+                                        werase(chart_win);
+                                        wattron(chart_win, COLOR_PAIR(22) | A_DIM);
+                                        box(chart_win, 0, 0);
+                                        wattroff(chart_win, COLOR_PAIR(22) | A_DIM);
+                                        
+                                        wattron(chart_win, A_BOLD);
+                                        mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
+                                        wattroff(chart_win, A_BOLD);
+
+                                        // Redesenha os itens refletindo o novo "selected_chart_index" imediatamente
+                                        for (int i = 0; i < display_count; i++) {
+                                            int item_index = i + chart_scroll_offset;
+                                            if (item_index < row_count) {
+                                                int attr = (item_index == selected_chart_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
+                                                wattron(chart_win, attr);
+                                                mvwprintw(chart_win, i + 1, 1, " %s%*s ", chart_names[item_index], menu_width - 4 - get_visual_width(chart_names[item_index]), "");
+                                                wattroff(chart_win, attr);
+                                            }
+                                        }
+
+                                        desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+                                        wnoutrefresh(chart_win);
+                                        doupdate(); // Agora o item clicado já brilha na tela física!
+
+                                        // 3. Agora sim, abre o pop-up com o fundo visualmente atualizado
+                                        if (show_confirm_delete_popup(chart_names[selected_chart_index])) {
+                                            chart_selected = 1; // Se confirmou, sai do loop e vai deletar
+                                        } else {
+                                            // Se cancelou, dá um "touch" nas janelas para garantir que o sumiço do pop-up exija repintura
+                                            touchwin(chart_shadow);
+                                            touchwin(chart_win);
+                                            wnoutrefresh(chart_shadow);
+                                            wnoutrefresh(chart_win);
+                                            doupdate();
+                                        }
+                                        
+                                        break; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+                break;
+            }
             case 10: // Enter
                 // INTERCEPTAÇÃO: Mostra o popup antes de fechar o menu
                 if (show_confirm_delete_popup(chart_names[selected_chart_index])) {
@@ -839,7 +971,7 @@ void load_chart() {
     unsigned short term_h = get_terminal_height();
     
     // Calculate window size for chart menu
-    int menu_width = 70;
+    int menu_width = 71;
     int menu_height = 20;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;
@@ -858,6 +990,8 @@ void load_chart() {
     keypad(chart_win, TRUE);
     //curs_set(0);
     
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     int chart_selected = 0;
     int key;
     
@@ -898,6 +1032,9 @@ void load_chart() {
                 wattroff(chart_win, attr);
             }
         }
+
+        desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+
         wnoutrefresh(chart_win);
 
         doupdate();
@@ -938,6 +1075,123 @@ void load_chart() {
                     }
                 }
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(chart_win) + (getmaxx(chart_win) - 2);
+                    int linha_clique_janela = event.y - getbegy(chart_win);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    int offset_inicio_dados = 1; 
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_chart_index - chart_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
+                        int linha_clique_janela = event.y - getbegy(chart_win);
+                        
+                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
+                        int offset_inicio_barra = 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o chart_scroll_offset pode atingir
+                            int max_scroll_y = row_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                chart_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_chart_index = chart_scroll_offset + posicao_relativa_tela;
+
+                                if (selected_chart_index >= row_count) {
+                                    selected_chart_index = row_count - 1;
+                                }
+                                if (selected_chart_index < 0) {
+                                    selected_chart_index = 0;
+                                }
+                            }
+                        }
+                    }
+                    // ========================================================
+                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // ========================================================
+                    else {
+                        int start_x_absoluto = getbegx(chart_win);
+                        if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
+                            
+                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                                int indice_clicado = chart_scroll_offset + linha_clique_dados;
+                                
+                                if (indice_clicado < row_count) {
+                                    // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
+                                    selected_chart_index = indice_clicado;
+
+                                    // 2. Verifica se foi um DUPLO CLIQUE
+                                    if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                        
+                                        // 🌟 PRIMEIRO: Forçamos o laço a subir, redesenhar tudo com o novo realce e renderizar na tela física
+                                        werase(chart_win);
+                                        wattron(chart_win, COLOR_PAIR(22) | A_DIM);
+                                        box(chart_win, 0, 0);
+                                        wattroff(chart_win, COLOR_PAIR(22) | A_DIM);
+                                        
+                                        wattron(chart_win, A_BOLD);
+                                        mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
+                                        wattroff(chart_win, A_BOLD);
+
+                                        // Redesenha os itens refletindo o novo "selected_chart_index" imediatamente
+                                        for (int i = 0; i < display_count; i++) {
+                                            int item_index = i + chart_scroll_offset;
+                                            if (item_index < row_count) {
+                                                int attr = (item_index == selected_chart_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
+                                                wattron(chart_win, attr);
+                                                mvwprintw(chart_win, i + 1, 1, " %s%*s ", chart_names[item_index], menu_width - 4 - get_visual_width(chart_names[item_index]), "");
+                                                wattroff(chart_win, attr);
+                                            }
+                                        }
+
+                                        desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
+                                        wnoutrefresh(chart_win);
+                                        doupdate(); // Agora o item clicado já brilha na tela física!
+
+                                        chart_selected = 1;
+                                        
+                                        break; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                break;
+            }
+
+
             case 10: // Enter
                 chart_selected = 1;
                 break;
@@ -1765,6 +2019,8 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     nodelay(help_win, FALSE);
     keypad(help_win, TRUE);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     //leaveok(stdscr, TRUE);
     //leaveok(shadow_win, TRUE);
     //leaveok(help_win, TRUE);
@@ -1837,6 +2093,51 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                 }
                 if (start_line < 0) start_line = 0;
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    int col_scrollbar_absoluta = getbegx(help_win) + (getmaxx(help_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
+                        int linha_clique_janela = event.y - getbegy(help_win);
+                        
+                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        int offset_inicio_barra = 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_lines) {
+                            
+                            // Calcula o limite máximo que o scroll_offset pode atingir
+                            int max_scroll_y = (line_count) - max_lines;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_lines > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_lines - 1);
+                                
+                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
+                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                //novo_offset = (novo_offset / 2) * 2;
+
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                start_line = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+                
             case 'q':
             case 27: // ESC
                 done = 1;
@@ -1962,9 +2263,6 @@ int main() {
 
     update_interface_language();
 
-   
-    
-    
     //int EXIT_CODE = n_choices - 1;
 
     int highlight = 0;
@@ -1976,47 +2274,49 @@ int main() {
     noecho();
     cbreak();
     set_escdelay(25);
+    desativar_arrasto_mouse();
 
-    start_color();    
+    start_color();
     
     while(1) {
+
         init_pair(1, COLOR_GREEN, COLOR_BLUE);
-        init_pair(2, COLOR_BLACK, COLOR_WHITE);
-        init_pair(3, COLOR_RED, COLOR_WHITE);
+        init_pair(2, COLOR_BLACK, 230);
+        init_pair(3, COLOR_RED, 230);
         init_pair(4, 232, 232);
         init_pair(5, COLOR_CYAN, COLOR_BLUE);
         init_pair(6, COLOR_YELLOW, COLOR_BLACK);
         init_pair(7, COLOR_YELLOW, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
-        init_pair(10, COLOR_BLACK, 44); // verde água
-        init_pair(11, COLOR_CYAN, COLOR_BLUE);
-        init_pair(12, COLOR_WHITE, COLOR_BLUE);
+        init_pair(10, COLOR_BLACK, 49); // verde água
+        init_pair(11, COLOR_CYAN, 27);
+        init_pair(12, 230, 27);
         init_pair(13, COLOR_GREEN, COLOR_BLUE);
         init_pair(14, COLOR_RED, COLOR_BLUE);
             
         if (DARK_MODE) {
             init_pair(21, COLOR_BLUE, COLOR_YELLOW);
-            init_pair(22, COLOR_WHITE, COLOR_BLACK);
-            init_pair(23, COLOR_RED, COLOR_WHITE);
+            init_pair(22, 230, COLOR_BLACK);
+            init_pair(23, COLOR_RED, 230);
             init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-            init_pair(26, COLOR_WHITE, COLOR_BLACK);
+            init_pair(26, 230, COLOR_BLACK);
             init_pair(27, COLOR_RED, COLOR_BLACK);
-            init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-            init_pair(29, COLOR_WHITE, COLOR_BLACK);
+            init_pair(28, COLOR_MAGENTA, 230);
+            init_pair(29, 230, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         }
         else {
             init_pair(21, COLOR_BLUE, COLOR_YELLOW);
-            init_pair(22, COLOR_BLACK, COLOR_WHITE);
-            init_pair(23, COLOR_RED, COLOR_WHITE);
+            init_pair(22, COLOR_BLACK, 230);
+            init_pair(23, COLOR_RED, 230);
             init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_YELLOW, COLOR_BLACK);
             init_pair(26, COLOR_BLACK, COLOR_CYAN);
             init_pair(27, COLOR_RED, COLOR_CYAN);
-            init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-            init_pair(29, COLOR_WHITE, COLOR_WHITE);
+            init_pair(28, COLOR_MAGENTA, 230);
+            init_pair(29, 230, 230);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);

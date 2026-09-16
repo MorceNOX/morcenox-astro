@@ -2522,6 +2522,8 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     keypad(country_win, TRUE);
     //curs_set(0);
     
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     int country_selected = 0;
     int key;
 
@@ -2636,6 +2638,98 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                     }
                 }
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(country_win) + (getmaxx(country_win) - 2);
+                    int linha_clique_janela = event.y - getbegy(country_win);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    int offset_inicio_dados = 2 + 1; 
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_country_index - country_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
+                        int linha_clique_janela = event.y - getbegy(country_win);
+                        
+                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
+                        int offset_inicio_barra = 2 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o country_scroll_offset pode atingir
+                            int max_scroll_y = country_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                country_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_country_index = country_scroll_offset + posicao_relativa_tela;
+
+                                // Garante que o índice selecionado não passe do total de cidades cadastrado
+                                if (selected_country_index >= country_count) {
+                                    selected_country_index = country_count - 1;
+                                }
+                                if (selected_country_index < 0) {
+                                    selected_country_index = 0;
+                                }
+                            }
+                        }
+                    }
+                    // ========================================================
+                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // ========================================================
+                    else {
+                        int start_x_absoluto = getbegx(country_win);
+                        if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
+                            
+                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                                int indice_clicado = country_scroll_offset + linha_clique_dados;
+                                
+                                if (indice_clicado < country_count) {
+                                    // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
+                                    selected_country_index = indice_clicado;
+
+                                    // 2. Verifica se foi um DUPLO CLIQUE
+                                    if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                        country_selected = 1;
+                                        
+                                        break; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        
+    
             case 10: // Enter
                 country_selected = 1;
                 break;
@@ -2685,6 +2779,8 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     keypad(city_win, TRUE);
     //curs_set(0);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     // Clear and draw shadow
     werase(city_shadow);
     wattron(city_shadow, COLOR_PAIR(24));
@@ -2692,7 +2788,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     wattroff(city_shadow, COLOR_PAIR(24));
     wnoutrefresh(city_shadow);
 
-    wbkgd(city_win, COLOR_PAIR(22) | FLAGS);
+    wbkgd(city_win, COLOR_PAIR(22) | FLAGS);    
     
     while (!city_selected) {
                 
@@ -2812,6 +2908,99 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
                     }
                 }
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(city_win) + (getmaxx(city_win) - 2);
+                    int linha_clique_janela = event.y - getbegy(city_win);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    int offset_inicio_dados = 2 + 1; 
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_city_index - city_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
+                        int linha_clique_janela = event.y - getbegy(city_win);
+                        
+                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
+                        int offset_inicio_barra = 2 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o city_scroll_offset pode atingir
+                            int max_scroll_y = city_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                city_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_city_index = city_scroll_offset + posicao_relativa_tela;
+
+                                // Garante que o índice selecionado não passe do total de cidades cadastrado
+                                if (selected_city_index >= city_count) {
+                                    selected_city_index = city_count - 1;
+                                }
+                                if (selected_city_index < 0) {
+                                    selected_city_index = 0;
+                                }
+                            }
+                        }
+                    }
+                    // ========================================================
+                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // ========================================================
+                    else {
+                        int start_x_absoluto = getbegx(city_win);
+                        if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
+                            
+                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                                int indice_clicado = city_scroll_offset + linha_clique_dados;
+                                
+                                if (indice_clicado < city_count) {
+                                    // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
+                                    selected_city_index = indice_clicado;
+
+                                    // 2. Verifica se foi um DUPLO CLIQUE
+                                    if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                        city_selected = 1;
+                                        
+                                        // Se a sua estrutura usar um break externo ou return para sair da janela:
+                                        break; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+    
+
             case 10: // Enter
                 city_selected = 1;
                 break;
@@ -2947,7 +3136,7 @@ void set_default_city() {
         return;
     }
 
-    const char *sql_select_city = "SELECT id FROM cities WHERE country = ? AND state = ? GLOBAL_SEM_ACENTO AND city = ? GLOBAL_SEM_ACENTO;";
+    const char *sql_select_city = "SELECT id FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
     rc = sqlite3_prepare_v2(db, sql_select_city, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));

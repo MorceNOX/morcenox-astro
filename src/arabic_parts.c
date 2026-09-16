@@ -193,6 +193,8 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+
     int loop_interativo = 1;
     while (loop_interativo) {
         werase(table_win);
@@ -372,7 +374,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
             }
         }
 
-        if (scroll_offset > total_linhas_virtuais_pad - max_linhas_exibicao) scroll_offset = total_linhas_virtuais_pad - max_linhas_exibicao;
+        if (scroll_offset > total_linhas_virtuais_pad - max_linhas_exibicao) scroll_offset = row_pad - max_linhas_exibicao;
         if (scroll_offset < 0) scroll_offset = 0;
 
         // Rodapé Fixo
@@ -384,7 +386,9 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
         
-        desenhar_scrollbar(table_win, scroll_offset, total_linhas_virtuais_pad, max_linhas_exibicao, 6);
+        desenhar_scrollbar(table_win, scroll_offset, row_pad, max_linhas_exibicao, 6);
+        
+        
         wnoutrefresh(table_win);
 
         doupdate();
@@ -458,6 +462,59 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                     doupdate();
                 }
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna absoluta da scrollbar
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu na barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // Ajustado para o offset_y 6 enviado na sua chamada de função desenhar_scrollbar
+                        int offset_inicio_barra = 6 + 1; 
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                            
+                            int max_scroll_y = total_linhas_virtuais_pad - max_linhas_exibicao;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                
+                                // Mantém o arredondamento de 2 em 2 linhas que seu layout exige
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // CORREÇÃO 1: Atribui à variável de scroll corretiva
+                                scroll_offset = novo_offset;
+
+                                // CORREÇÃO 2: Sincroniza a seleção para o item visível na região do clique
+                                // Isso evita que o "Scroll Automático" anule a ação do mouse
+                                if (qtd_partes > 0) {
+                                    for (int i = 0; i < qtd_partes; i++) {
+                                        // Busca o registro cujo início em linhas esteja o mais próximo do scroll atual
+                                        if (linha_inicio_registro[i] >= scroll_offset) {
+                                            seletor_linha_atual = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
+
+
             case 27:
             case 'q':
             case 'Q':
@@ -515,6 +572,8 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     wnoutrefresh(shadow_win);
 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -684,6 +743,56 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                     doupdate();
                 }
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna absoluta da scrollbar
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu na barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // Ajustado para o offset_y 6 enviado na sua chamada de função desenhar_scrollbar
+                        int offset_inicio_barra = 6 + 1; 
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                            
+                            int max_scroll_y = total_linhas_virtuais_pad - max_linhas_exibicao;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                
+                                // Mantém o arredondamento de 2 em 2 linhas que seu layout exige
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // CORREÇÃO 1: Atribui à variável de scroll corretiva
+                                scroll_offset = novo_offset;
+
+                                // CORREÇÃO 2: Sincroniza a seleção para o item visível na região do clique
+                                // Isso evita que o "Scroll Automático" anule a ação do mouse
+                                if (qtd_partes > 0) {
+                                    for (int i = 0; i < qtd_partes; i++) {
+                                        // Busca o registro cujo início em linhas esteja o mais próximo do scroll atual
+                                        if (linha_inicio_registro[i] >= scroll_offset) {
+                                            seletor_linha_atual = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
             case 27:
             case 'q':
             case 'Q':

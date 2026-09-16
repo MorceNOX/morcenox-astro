@@ -508,6 +508,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+
     int sentido = 2;
     int tipo = 2;
 
@@ -799,6 +801,51 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                     }
                 }
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        int offset_inicio_barra = 6 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                            
+                            // Calcula o limite máximo que o scroll_offset pode atingir
+                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                
+                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
+                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                scroll_offset = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+    
             case 27:
             case 'q':
             case 'Q':
@@ -978,6 +1025,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
     int sentido = 2;
     int tipo = 2;
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
 
     while (loop_interativo) {
         // Limpa todas as estruturas gráficas antes de recalcular
@@ -1276,6 +1325,51 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     }
                 }
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        int offset_inicio_barra = 6 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                            
+                            // Calcula o limite máximo que o scroll_offset pode atingir
+                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                
+                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
+                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                scroll_offset = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
             case 27:
             case 'q':
             case 'Q':

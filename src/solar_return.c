@@ -545,6 +545,8 @@ void abrir_janela_confronto_natal_revolucao(
 
     doupdate();
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     // 4. PAD INTERNA PARA SCROLL
     int pad_lines = 300; // Aumentado para comportar o texto da Firdária confortavelmente
     int pad_cols = i_width - 6; 
@@ -1109,6 +1111,48 @@ void abrir_janela_confronto_natal_revolucao(
                 // Não permite rolar além da última página de texto visível
                 if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(border_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = line_count - visible_height;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (visible_height > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                pad_line_pos = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -1246,6 +1290,8 @@ void abrir_janela_transitos_revolucao(
     wnoutrefresh(border_win);
 
     doupdate();
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
 
     int pad_lines = 400; 
     int pad_cols = i_width - 6; 
@@ -1438,9 +1484,11 @@ void abrir_janela_transitos_revolucao(
         }
 
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-        wprintw(pad, _("    %s  %s (Solar Return)\n"), glifos[p], nomes[p]);
-        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE | A_BOLD);
+        char str_aux[100];
+        snprintf(str_aux, 100, _("    %s  %s (Solar Return)"), glifos[p], nomes[p]);
+        wprintw(pad, "%s%*.s\n", str_aux, pad_cols - get_visual_width(str_aux) - 1, " ");
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE | A_BOLD);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
 
         line_count += 4;
@@ -1589,6 +1637,50 @@ void abrir_janela_transitos_revolucao(
                 // Não permite rolar além da última página de texto visível
                 if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(border_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = line_count - visible_height;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (visible_height > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                pad_line_pos = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
         }
     }
 

@@ -1684,8 +1684,7 @@ void draw_cusps_div(int object_count,
     int asc = (int)cusps[1];
     (void)n;
     
-    for (int r = 8; r < 20; r++) {    
-        float radius = r * current_scale;
+    for (float radius = 8.0 * current_scale; radius < 20 * current_scale; radius++ ) {   
         
         int imin;
         int imax;
@@ -1774,8 +1773,8 @@ void draw_cusps_div_axis(int object_count,
 
     attron(A_BOLD);
 
-    for (int r = 8; r < 20; r++) {    
-        float radius = r * current_scale;
+    for (float radius = 8.0 * current_scale; radius < 20 * current_scale; radius++ ) {    
+        //float radius = r * current_scale;
         
         int imin;
         int imax;
@@ -2035,7 +2034,15 @@ void draw_decans(int display_center_y, int display_center_x,
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
                 
         if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+            int sign = k / 3;
+
+            if (sign % 2 == 0) attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+            else attron(COLOR_PAIR(48) | FLAGS | A_BOLD);
+            
             safe_mvprintw_clip(y, x, planet_regent_symbols[decans_to_print[(k) % 36]]);
+
+            if (sign % 2 == 0) attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+            else attroff(COLOR_PAIR(48) | FLAGS | A_BOLD);
         }        
     }
 }
@@ -2073,8 +2080,15 @@ void draw_terms(int radius_multiplier, int object_count,
                 if (i == (180 - (longitudes[j] - asc) % 360) || 
                     i == (180 - (longitudes[j] - asc) % 360) + 360|| 
                     i == (180 - (longitudes[j] - asc) % 360) - 360) {
+
+                    int sign = (longitudes[j]) / 30 + 1;
+                    if (sign % 2 == 0) attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+                    else attron(COLOR_PAIR(48) | FLAGS | A_BOLD);
                     
                     safe_mvprintw_clip(y, x , text[j]);
+
+                    if (sign % 2 == 0) attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+                    else attroff(COLOR_PAIR(48) | FLAGS | A_BOLD);
                                     
                 }
             }
@@ -2257,10 +2271,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
     attroff(COLOR_PAIR(19) | FLAGS);
     
-    if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
+    if (dark_mode) attron(COLOR_PAIR(52) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
-    if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | FLAGS);
+    if (dark_mode) attroff(COLOR_PAIR(52) | A_DIM | FLAGS);
 
 
     //Draw the outer boundary using a light shade block
@@ -2285,7 +2299,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 41 : 41; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r++) {
+    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += 0.5) {
         for (int i = -60 + asc; i < 300 + asc; i++) {
             
             int indice_relativo = i - (-60 + asc);
@@ -2335,17 +2349,17 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     draw_zodiac_signs(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
     
     if (show_dec) {
-        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        //attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
         draw_decans(display_center_y, display_center_x, current_scale, aspect_ratio, n, (int)cusps[1]);
-        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        //attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
     }
 
     if (show_terms) {
         Termo t[12][5];
         get_terms_longitude_to_print(terms, t);
-        attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        //attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
         draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
-        attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
+        //attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
     }
 
     
@@ -3965,6 +3979,8 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+
     char str[512];
     char str2[512];
 
@@ -4370,29 +4386,13 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     // Altura visível real onde o texto do pad aparece na tela
     int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
     
-    // A altura física da scrollbar deve bater com o espaço vertical interno da border_win
-    //int scrollbar_height = i_height - 2; 
-
-    // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
     while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        // if (line_count > visible_height) {
-        //     // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-        //     // sobre o total que pode ser rolado (line_count - visible_height)
-        //     int max_scroll = line_count - visible_height;
-        //     int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-        //     for (int i = 0; i < scrollbar_height; i++) {
-        //         if (i == scrollbar_pos) {
-        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-        //         } else {
-        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-        //         }
-        //     }
-        // }
+        
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
+
+        
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -4415,6 +4415,50 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
                 // Não permite rolar além da última página de texto visível
                 if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(border_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = line_count - visible_height;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (visible_height > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                pad_line_pos = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
         }
     }
 
@@ -4773,9 +4817,11 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
-#define COLOR_BACK_1 218 //225 //195 //230 // 194 //159
+#define COLOR_BACK_1 181 //225 //195 //230 // 194 //159
 #define COLOR_BACK_2 217 //224 //194 //229 // 193 //123
 
+#define COLOR_BACK_DARK_1 234
+#define COLOR_BACK_DARK_2 235
 
 int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
     int n = 1;
@@ -4800,20 +4846,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     use_default_colors();
 
     if (dark_mode) {
-        init_pair(1, COLOR_WHITE, 236);
-        init_pair(46, COLOR_WHITE, 235);
+        init_pair(1, COLOR_WHITE, COLOR_BACK_DARK_1);
+        init_pair(46, COLOR_WHITE, COLOR_BACK_DARK_2);
 
-        init_pair(2, COLOR_RED, 236);
-        init_pair(42, COLOR_RED, 235);
+        init_pair(2, COLOR_RED, COLOR_BACK_DARK_1);
+        init_pair(42, COLOR_RED, COLOR_BACK_DARK_2);
 
-        init_pair(3, COLOR_GREEN, 236);
-        init_pair(43, COLOR_GREEN, 235);
+        init_pair(3, COLOR_GREEN, COLOR_BACK_DARK_1);
+        init_pair(43, COLOR_GREEN, COLOR_BACK_DARK_2);
 
-        init_pair(4, COLOR_YELLOW, 236);
-        init_pair(44, COLOR_YELLOW, 235);
+        init_pair(4, COLOR_YELLOW, COLOR_BACK_DARK_1);
+        init_pair(44, COLOR_YELLOW, COLOR_BACK_DARK_2);
 
-        init_pair(5, 33, 236);
-        init_pair(45, 33, 235);
+        init_pair(5, 33, COLOR_BACK_DARK_1);
+        init_pair(45, 33, COLOR_BACK_DARK_2);
 
         init_pair(6, COLOR_WHITE, COLOR_BLACK);
         init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
@@ -4821,35 +4867,35 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(9, 232, 232);
 
         init_pair(10, 247, COLOR_BLACK);
-        init_pair(50, COLOR_WHITE, 235);
+        init_pair(50, COLOR_WHITE, COLOR_BACK_DARK_2);
 
         init_pair(11, COLOR_RED, COLOR_BLACK);
-        init_pair(12, 82, COLOR_BLACK);
+        init_pair(12, 82, COLOR_BLACK); // green
         init_pair(13, COLOR_WHITE, COLOR_BLACK);
 
         init_pair(14, COLOR_BLUE, COLOR_BLACK);
-        init_pair(15, 226, 18); // yellow, blue
+        init_pair(15, COLOR_YELLOW, 18); // yellow, blue
 
-        init_pair(16, COLOR_WHITE, 236);
-        init_pair(47, COLOR_WHITE, 235);
+        init_pair(16, COLOR_WHITE, COLOR_BACK_DARK_1);
+        init_pair(47, COLOR_WHITE, COLOR_BACK_DARK_2);
 
-        init_pair(17, COLOR_MAGENTA, 236);
-        init_pair(48, COLOR_MAGENTA, 235);
+        init_pair(17, COLOR_MAGENTA, COLOR_BACK_DARK_1);
+        init_pair(48, COLOR_MAGENTA, COLOR_BACK_DARK_2);
 
-        init_pair(18, 39, 236); // blue
-        init_pair(49, 39, 235); // blue
+        init_pair(18, 39, COLOR_BACK_DARK_1); // blue
+        init_pair(49, 39, COLOR_BACK_DARK_2); // blue
 
-        init_pair(19, 236, 236);
-        init_pair(20, COLOR_BLUE, 235);
+        init_pair(19, COLOR_BACK_DARK_1, COLOR_BACK_DARK_1);
+        init_pair(20, COLOR_BLUE, COLOR_BACK_DARK_2);
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(22, COLOR_WHITE, COLOR_BLACK);
-        init_pair(23, COLOR_RED, COLOR_WHITE);
+        init_pair(22, 230, COLOR_BLACK);
+        init_pair(23, COLOR_RED, 230);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); //yellow
-        init_pair(26, COLOR_WHITE, COLOR_BLACK);
+        init_pair(26, 230, COLOR_BLACK);
         init_pair(27, COLOR_RED, COLOR_BLACK);
-        init_pair(28, COLOR_WHITE, COLOR_MAGENTA);
+        init_pair(28, 230, COLOR_MAGENTA);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
         
@@ -4860,14 +4906,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, COLOR_RED, COLOR_WHITE);
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(38, 18, COLOR_WHITE); // blue
+        init_pair(38, 28, COLOR_WHITE); // green
         init_pair(39, COLOR_GREEN, COLOR_BLACK);
         init_pair(40, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(41, 235, 235); // branco
+        init_pair(41, COLOR_BACK_DARK_2, COLOR_BACK_DARK_2); // branco
 
-        init_pair(51, 244, 236);
-        init_pair(52, 244, 235);
-        init_pair(53, 67, 236);
+        init_pair(51, 242, COLOR_BACK_DARK_1);
+        init_pair(52, 242, COLOR_BACK_DARK_2);
+        init_pair(53, 67, COLOR_BACK_DARK_1);
         init_pair(54, COLOR_GREEN, 91); // green, magenta
 
     } 
@@ -4915,14 +4961,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(20, COLOR_WHITE, COLOR_BLUE);
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(22, COLOR_BLACK, COLOR_WHITE);
+        init_pair(22, COLOR_BLACK, 230);
         init_pair(23, COLOR_RED, 223);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); // yellow
         init_pair(26, COLOR_BLACK, COLOR_CYAN);
         init_pair(27, COLOR_RED, COLOR_CYAN);
-        init_pair(28, COLOR_MAGENTA, COLOR_WHITE);
-        init_pair(29, COLOR_WHITE, COLOR_WHITE);
+        init_pair(28, COLOR_MAGENTA, 230);
+        init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
 
         init_pair(31, COLOR_GREEN, COLOR_RED);
