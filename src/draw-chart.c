@@ -2584,7 +2584,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     
     int table_height = 26;
     if (table_height > max_y - 2) table_height = max_y - 2; 
-    int table_width = max_x - 40;
+    int table_width = max_x - 40 > 90 ? max_x - 40 : 90;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
 
@@ -2731,7 +2731,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     
     int table_height = 26;
     if (table_height > max_y - 2) table_height = max_y - 2; 
-    int table_width = max_x - 40;
+    int table_width = max_x - 40 > 90 ? max_x - 40 : 90;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
 
@@ -3662,7 +3662,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 31;
-    int table_width = max_x - 60;
+    int table_width = max_x - 60 > 90 ? max_x - 60 : 90;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
     
@@ -4524,9 +4524,9 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 30;
-    int table_width = max_x - 5;
+    int table_width = max_x - 30 > 100 ? max_x - 30 : 100;
     int start_y = (max_y - table_height) / 2;
-    int start_x = 2;
+    int start_x = (max_x- table_width) / 2;
 
     int object_diff = 0;
     if (show_modern_planets) {

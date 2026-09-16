@@ -96,7 +96,7 @@ void display_motivation(PlotObject *plots, int *house_rulers) {
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
     
-    int table_width = term_w - 50;
+    int table_width = term_w - 50 > 90 ? term_w - 50 : 90;
     int table_height = 24;
     int start_x = (term_w - table_width) / 2;
     int start_y = (term_h - table_height) / 2;

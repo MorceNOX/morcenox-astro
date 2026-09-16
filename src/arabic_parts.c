@@ -1906,6 +1906,8 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
 
     wbkgd(conf_win, COLOR_PAIR(26) | FLAGS);
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     while (1) {
         // Redesenha a estrutura fixa da caixinha de alerta a cada ciclo
         werase(conf_win);
@@ -1952,6 +1954,44 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
         else if (ch == 'n' || ch == 'N' || ch == 27) { // Atalhos diretos para cancelar
             confirmado = 0;
             break;
+        }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA pop_win
+                int linha_clique_janela = event.y - getbegy(conf_win);
+                int col_clique_janela = event.x - getbegx(conf_win);
+                
+                // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                int linha_botao = 5;
+                int col_inicio_botao_ok = 10;
+                int col_fim_botao_ok = col_inicio_botao_ok + 10;
+                
+                int col_inicio_botao_cancel = 32;
+                int col_fim_botao_cancel = col_inicio_botao_cancel + 10;
+
+                // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                if (linha_clique_janela == linha_botao) {
+                    
+                    // 🌟 CASO 1: Clicou exatamente no YES
+                    if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                        botao_focado = 0;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 1;
+                            break; 
+                        }
+                    }
+                    // 🌟 CASO 2: Clicou exatamente no NO
+                    else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
+                        botao_focado = 1;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 0;
+                            break; 
+                        }
+                    }
+                    // Se clicar na linha 5 mas no espaço vazio, o código ignora e não fecha o pop-up!
+                }
+            }                
         }
     }
 

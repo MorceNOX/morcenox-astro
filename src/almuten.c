@@ -513,7 +513,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 31; 
-    int table_width = max_x - 60;
+    int table_width = max_x - 60 > 80 ? max_x - 60 : 80;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
     

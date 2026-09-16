@@ -734,7 +734,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
 
     mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
-    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑|JK] Scroll"));
+    mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - F5 Antissia - [↓↑| Scroll"));
     wnoutrefresh(aspects_win);
 
     doupdate();

@@ -84,6 +84,8 @@ int show_confirm_yesno(const char *name, const char *text) {
     int confirmado = 0;
     int ch;
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
         // Botão CONFIRM
@@ -120,6 +122,44 @@ int show_confirm_yesno(const char *name, const char *text) {
         else if (ch == 'y' || ch == 'Y') { // Atalho para confirmar direto
             confirmado = 1;
             break;
+        }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA pop_win
+                int linha_clique_janela = event.y - getbegy(pop_win);
+                int col_clique_janela = event.x - getbegx(pop_win);
+                
+                // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                int linha_botao = 5;
+                int col_inicio_botao_ok = 8;
+                int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                
+                int col_inicio_botao_cancel = 32;
+                int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                if (linha_clique_janela == linha_botao) {
+                    
+                    // 🌟 CASO 1: Clicou exatamente no YES
+                    if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                        botao_focado = 0;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 1;
+                            break; 
+                        }
+                    }
+                    // 🌟 CASO 2: Clicou exatamente no NO
+                    else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
+                        botao_focado = 1;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 0;
+                            break; 
+                        }
+                    }
+                    // Se clicar na linha 5 mas no espaço vazio, o código ignora e não fecha o pop-up!
+                }
+            }                
         }
     }
 
@@ -170,6 +210,8 @@ int show_confirm_delete_popup(const char *name) {
     int confirmado = 0;
     int ch;
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
         // Botão CONFIRM
@@ -206,6 +248,44 @@ int show_confirm_delete_popup(const char *name) {
         else if (ch == 'y' || ch == 'Y') { // Atalho para confirmar direto
             confirmado = 1;
             break;
+        }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA pop_win
+                int linha_clique_janela = event.y - getbegy(pop_win);
+                int col_clique_janela = event.x - getbegx(pop_win);
+                
+                // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                int linha_botao = 5;
+                int col_inicio_botao_ok = 8;
+                int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                
+                int col_inicio_botao_cancel = 32;
+                int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                if (linha_clique_janela == linha_botao) {
+                    
+                    // 🌟 CASO 1: Clicou exatamente no YES
+                    if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                        botao_focado = 0;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 1;
+                            break; 
+                        }
+                    }
+                    // 🌟 CASO 2: Clicou exatamente no NO
+                    else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
+                        botao_focado = 1;
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            confirmado = 0;
+                            break; 
+                        }
+                    }
+                    // Se clicar na linha 5 mas no espaço vazio, o código ignora e não fecha o pop-up!
+                }
+            }                
         }
     }
 
@@ -259,6 +339,8 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
 
     int ch;
 
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+
     while (1) {
         int attr_confirm = (COLOR_PAIR(23) | A_REVERSE | A_BOLD);
         wattron(pop_win, attr_confirm);
@@ -273,7 +355,32 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
 
         if (ch == 10) { // ENTER
             break;
-        } 
+        }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA pop_win
+                int linha_clique_janela = event.y - getbegy(pop_win);
+                int col_clique_janela = event.x - getbegx(pop_win);
+                
+                // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                int linha_botao = 5;
+                int col_inicio_botao = (pop_w - 10) / 2;
+                int col_fim_botao = col_inicio_botao + 10; // largura de "    OK    "
+
+                // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                if (linha_clique_janela == linha_botao) {
+                    if (col_clique_janela >= col_inicio_botao && col_clique_janela < col_fim_botao) {
+                        
+                        // 4. Aceita clique simples (liberado/pressionado) ou duplo clique para fechar
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            break; // Fecha o pop-up imediatamente
+                        }
+                    }
+                }
+            }                
+        }
+
         
     }
 
