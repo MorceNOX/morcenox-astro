@@ -875,6 +875,8 @@ AspectMatrix calculate_aspects_by_sign(PlotObject *plots) {
                     matrix.grid[i][j].color_pair = 7;
                     matrix.grid[i][j].is_bold = true;
                 }
+
+                //matrix.grid[i][j].is_reverse = true;
             }
             
         }
@@ -981,12 +983,47 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                 
                 if (cell.is_bold) wattron(pad, A_BOLD); else wattron(pad, A_DIM);
 
-                // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, cell.symbol);
+                if (cell.is_reverse) {
+                    wattron(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattron(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattron(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattron(pad, COLOR_PAIR(38));
+                        }
+                    }
+
+                    // Desenha o Símbolo Astrológico do Aspecto
+                    mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
+                }
+                else {
+                    mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, " %s ", cell.symbol);
+                }
+
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
                 wattroff(pad, COLOR_PAIR(cell.color_pair));
+
+                if (cell.is_reverse) {
+                    wattroff(pad, A_REVERSE);
+                    if (DARK_MODE) {
+                        if (strcmp(cell.symbol, "☌") == 0) {
+                            wattroff(pad, COLOR_PAIR(37));
+                        }
+                        else if (strcmp(cell.symbol, "□") == 0 || strcmp(cell.symbol, "☍") == 0) {
+                            wattroff(pad, COLOR_PAIR(36));
+                        }
+                        else {
+                            wattroff(pad, COLOR_PAIR(38));
+                        }
+                        wattroff(pad, COLOR_PAIR(35));
+                    }
+                }
                                 
                 row_pad = 2 + 2 * i + 1;
             }

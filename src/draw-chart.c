@@ -1939,7 +1939,8 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     
                     if (j == 0) continue;
 
-                    attron(COLOR_PAIR(44));
+                    attroff(A_DIM);
+                    attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, libra[j]);
                     attroff(COLOR_PAIR(44) | A_DIM);
                 }
@@ -1947,7 +1948,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 
                     if (j == 0) continue;
 
-                    attron(COLOR_PAIR(3) | A_DIM);
+                    attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, virgo[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
@@ -1965,12 +1966,13 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(COLOR_PAIR(5) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 4 ) {
-                    attron(COLOR_PAIR(44));
+                    attroff(A_DIM);
+                    attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, gemini[j]);
                     attroff(COLOR_PAIR(44) | A_DIM);
                 }
                 else if ( (k + offset) % 12 == 5 ) {
-                    attron(COLOR_PAIR(3) | A_DIM);
+                    attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, taurus[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
@@ -1991,7 +1993,8 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 
                     if (j == 0) continue;
 
-                    attron(COLOR_PAIR(44));
+                    attroff(A_DIM);
+                    attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, aquarius[j]);
                     attroff(COLOR_PAIR(44) | A_DIM);
                 }
@@ -1999,7 +2002,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 
                     if (j == 0) continue;
 
-                    attron(COLOR_PAIR(3) | A_DIM);
+                    attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, capricorn[j]);
                     attroff(COLOR_PAIR(3) | A_DIM);
                 }
@@ -2579,9 +2582,9 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 24;
+    int table_height = 26;
     if (table_height > max_y - 2) table_height = max_y - 2; 
-    int table_width = max_x - 5;
+    int table_width = max_x - 40;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
 
@@ -2605,7 +2608,13 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     
     // Colunas reposicionadas: Nome ganhou mais espaço (coluna 4 a 22)
     mvwprintw(table_win, 2, 4, _("Planet               Bar Chart Representation                        Points"));
-    mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    //mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    
+    wattron(table_win, COLOR_PAIR(6));
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 7);
+    wattroff(table_win, COLOR_PAIR(6));
+    
     wattroff(table_win, A_BOLD);
 
     wnoutrefresh(table_win);
@@ -2627,7 +2636,9 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
         if (row_pad > 0) {
             wattron(pad, COLOR_PAIR(10) | A_DIM);
-            mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────"); 
+            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wmove(pad, row_pad, 2);
+            whline(pad, ACS_HLINE, table_width - 10);
             wattroff(pad, COLOR_PAIR(10) | A_DIM);        
             row_pad++;
         }
@@ -2718,9 +2729,9 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 24;
+    int table_height = 26;
     if (table_height > max_y - 2) table_height = max_y - 2; 
-    int table_width = max_x - 5;
+    int table_width = max_x - 40;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
 
@@ -2743,14 +2754,18 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     mvwprintw(table_win, 2, 4, _("Planet    Essential    Accidental        Score          Weight        Strength"));
-    mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    //mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wattron(table_win, COLOR_PAIR(6));
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 7);
+    wattroff(table_win, COLOR_PAIR(6));
     wattroff(table_win, A_BOLD);
 
     double weights[100];
     get_weights(weights, show_modern_planets);
 
     int max_linhas_dados = table_height - 8;
-    WINDOW *pad = newpad(40, table_width - 4);
+    WINDOW *pad = newpad(40, table_width - 5);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
     int row_pad = 0;
@@ -2762,7 +2777,9 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
 
         if (row_pad > 0) {
             wattron(pad, COLOR_PAIR(10) | A_DIM);
-            mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
+            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wmove(pad, row_pad, 2);
+            whline(pad, ACS_HLINE, table_width - 10);
             wattroff(pad, COLOR_PAIR(10) | A_DIM);        
             row_pad++;
         }
@@ -2803,10 +2820,10 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     mvwprintw(table_win, table_height - 1, 2, _("Press Q or ESC to return - [↓↑] to scroll"));
 
     int offset_y = 0;
-    int max_scroll = row_pad - max_linhas_dados;
+    int max_scroll = row_pad - max_linhas_dados + 2;
     if (max_scroll < 0) max_scroll = 0;
 
-    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
+    desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
     wnoutrefresh(table_win);
     doupdate();
     prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -2822,7 +2839,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
                 if (offset_y < max_scroll) offset_y += 2;
                 break;
         }
-        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
+        desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
         wnoutrefresh(table_win);
         doupdate();
         prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3136,9 +3153,11 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         if (ch == KEY_F(3)) {
             display_force(plots, dig, strength_planets);
             
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
             touchwin(shadow_win); 
             wnoutrefresh(shadow_win);
-            touchwin(table_win); 
+            touchwin(table_win);  
             wnoutrefresh(table_win);
 
             doupdate();
@@ -3149,6 +3168,8 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         else if (ch == KEY_F(4)) {
             display_planetary_energy_profile(plots, strength_planets);
 
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
             touchwin(shadow_win); 
             wnoutrefresh(shadow_win);
             touchwin(table_win);  
@@ -3364,7 +3385,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     int table_width = max_x - 5;
 
     int start_y = (max_y - table_height) / 2;
-    int start_x = 2;
+    int start_x = (max_x - table_width) / 2;
 
     int object_diff = show_modern_planets ? 0 : 3;
     
@@ -3558,13 +3579,15 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             display_dignities(plots, dig, strength_planets);
             
             // Restaura as molduras fixas da tabela principal
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
             touchwin(shadow_win); 
             wnoutrefresh(shadow_win);
             touchwin(table_win);  
             wnoutrefresh(table_win);
 
             doupdate();
-            
+
             // REDESENHO CRÍTICO DA PAD: Força o ncurses a recolocar as linhas da tabela na tela
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
@@ -3572,6 +3595,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             // Abre sua tabela de forças limpa (passando as variáveis que vieram por parâmetro)
             display_force(plots, dig, strength_planets);
             
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
             touchwin(shadow_win); 
             wnoutrefresh(shadow_win);
             touchwin(table_win);  
@@ -3586,6 +3611,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             // Abre o novo perfil gráfico com barras horizontais (█)
             display_planetary_energy_profile(plots, strength_planets);
 
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
             touchwin(shadow_win); 
             wnoutrefresh(shadow_win);
             touchwin(table_win);  
@@ -3746,9 +3773,9 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 30;
-    int table_width = max_x - 5;
+    int table_width = 90;
     int start_y = (max_y - table_height) / 2;
-    int start_x = 2;
+    int start_x = (max_x - table_width) / 2;
     
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
@@ -4945,11 +4972,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(2, COLOR_RED, COLOR_BACK_1);
         init_pair(42, COLOR_RED, COLOR_BACK_2);
 
-        init_pair(3, 46, COLOR_BACK_1); // verde
-        init_pair(43, 46, COLOR_BACK_2); // verde
+        init_pair(3, 28, COLOR_BACK_1); // verde
+        init_pair(43, 28, COLOR_BACK_2); // verde
 
-        init_pair(4, 136, COLOR_BACK_1); // amarelo
-        init_pair(44, 136, COLOR_BACK_2); // amarelo
+        init_pair(4, 220, COLOR_BACK_1); // amarelo
+        init_pair(44, 220, COLOR_BACK_2); // amarelo
 
         init_pair(5, 21, COLOR_BACK_1); // azul
         init_pair(45, 21, COLOR_BACK_2); // azul
@@ -7744,6 +7771,8 @@ void open_menu_tables(ContextoMenu *ctx) {
     wnoutrefresh(shadow);
 
     wbkgd(win, COLOR_PAIR(26) | FLAGS);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
       
     bool saiu_retorno = false;
 
@@ -7816,6 +7845,44 @@ void open_menu_tables(ContextoMenu *ctx) {
                     }
                 }
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    int start_x_absoluto = getbegx(win);
+                    int end_x_absoluto = start_x_absoluto + getmaxx(win);
+                    
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 1. Verifica se o clique ocorreu dentro dos limites horizontais do menu
+                    if (event.x >= start_x_absoluto && event.x < end_x_absoluto) {
+                        
+                        // 2. CORREÇÃO: Verifica se a linha clicada está dentro da área VISÍVEL da tela
+                        if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                            
+                            // 3. CORREÇÃO: O índice real é a linha da tela + o deslocamento do scroll
+                            int indice_clicado = scroll_offset + linha_clique_dados;
+
+                            // Garante que o usuário não clicou em uma linha em branco no fim da lista
+                            if (indice_clicado < total_opcoes) {
+                                selected_index = indice_clicado;
+
+                                // 4. Verifica se foi um DUPLO CLIQUE para disparar a ação
+                                if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                    menu_selected = 1;
+                                    break; 
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
+
+
             case 10: // Enter
                 menu_selected = 1;
                 break;
