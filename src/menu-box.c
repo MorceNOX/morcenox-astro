@@ -1579,7 +1579,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         int cor_menu = 10;
         if (DARK_MODE) {
-            cor_menu = 11;
+            cor_menu = 10;
         }
 
         wattron(menu_win, COLOR_PAIR(cor_menu) | A_DIM);
