@@ -1436,11 +1436,87 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         for (int i = 0; i < 6; i++) {
             mvwprintw(stdscr, 1+i, term_w - 15, marte_7lines[i]);
         }
-        if (*delay > 0) {
-            refresh();
-            napms(*delay * multiplier);
+
+
+        int flag = 0;
+        int cor = 15;
+        if (DARK_MODE) { 
+            flag |= A_DIM; cor = 16;
         }
-        wattroff(stdscr, COLOR_PAIR(33) | A_DIM);
+
+
+        wattron(stdscr, COLOR_PAIR(cor) | flag);
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start + (n_choices / 2) + i, term_w / 3 * 2, leo_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start + (n_choices / 2) + i, term_w / 3 - 2, aries_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start + (n_choices) + 4 + i, term_w / 2 - 2, taurus_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start - 1 + i, term_w / 3 - 5, cancer_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start - 1 + i, term_w / 3 * 2 + 6, libra_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+
+        for (int i = 0; i < 5; i++) {
+            mvwprintw(stdscr, menu_y_start - 8 + i, term_w / 3 - 6, sagittarius_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+
+
+        for (int i = 0; i < 4; i++) {
+            mvwprintw(stdscr, menu_y_start - 8 + i, term_w / 3 * 2 + 7, capricorn_[i]);
+        
+            if (*delay > 0) {
+                refresh();
+                napms(*delay * multiplier);
+            }
+        }
+        wattroff(stdscr, COLOR_PAIR(cor) | flag);
+
+
+
+
 
  
         if (DARK_MODE) {
@@ -1494,13 +1570,18 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         // 5. Apply the rounded border to the window
         wborder_set(menu_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
 
-        wattron(menu_win, COLOR_PAIR(10) | A_DIM);
-        wbkgd(menu_win, COLOR_PAIR(10));
-        wattroff(menu_win, COLOR_PAIR(10) | A_DIM);
+        int cor_menu = 10;
+        if (DARK_MODE) {
+            cor_menu = 11;
+        }
+
+        wattron(menu_win, COLOR_PAIR(cor_menu) | A_DIM);
+        wbkgd(menu_win, COLOR_PAIR(cor_menu));
+        wattroff(menu_win, COLOR_PAIR(cor_menu) | A_DIM);
         
         // 3. Draw Menu Options
         for(int i = 0; i < n_choices; i++) {
-            int attr = (i == *highlight) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(10);
+            int attr = (i == *highlight) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(cor_menu);
             
             // The usable width inside the box is box_width - 2 (to account for borders)
             draw_centered_text(menu_win, i + 1, 1, box_width - 2, options[i].option, attr);
@@ -1568,7 +1649,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         mvwprintw(bar_win, 1, 11 + city_width + 2 + 13 + 2 + 18 + 7 + 5 + 7 + 2, "┃");        
         wattroff(bar_win, COLOR_PAIR(11) | A_BOLD);
 
-        wattron(bar_win, COLOR_PAIR(12) | A_BOLD);
+        wattron(bar_win, COLOR_PAIR(12));
         if (strcmp(MESSAGE, "") != 0) {
             wattron(bar_win, A_BLINK);
         }
@@ -1580,7 +1661,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         if (espaco_remanescente < 0) espaco_remanescente = 0;
 
-        wattron(bar_win, COLOR_PAIR(12) | A_BOLD);
+        wattron(bar_win, COLOR_PAIR(12));
         if (strcmp(MESSAGE, "") != 0) {
             wattron(bar_win, A_BLINK);
         }
@@ -2330,8 +2411,8 @@ int main() {
         init_pair(3, COLOR_RED, 230);
         init_pair(4, 232, 232);
         init_pair(5, COLOR_CYAN, COLOR_BLUE);
-        init_pair(6, COLOR_YELLOW, COLOR_BLACK);
-        init_pair(7, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(6, 190, COLOR_BLACK);
+        init_pair(7, 220, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
         init_pair(10, 232, 37); // verde água
@@ -2339,6 +2420,8 @@ int main() {
         init_pair(12, 230, 27);
         init_pair(13, COLOR_GREEN, COLOR_BLUE);
         init_pair(14, COLOR_RED, COLOR_BLUE);
+        init_pair(15, COLOR_BLUE, 208); // orange
+        init_pair(16, COLOR_BLUE, 95);
             
         if (DARK_MODE) {
             init_pair(21, COLOR_BLUE, COLOR_YELLOW);

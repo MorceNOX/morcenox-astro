@@ -1360,7 +1360,6 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                                 }
                             }
                             
-                            // Se clicar na linha 5 mas no espaço vazio, o código ignora e não fecha o pop-up!
                         }
                     }                
                 }
