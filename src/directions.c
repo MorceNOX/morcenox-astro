@@ -727,9 +727,11 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
-        wattron(table_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad, max_linhas_exibicao, 6);
-        wattroff(table_win, COLOR_PAIR(28));
+        wattroff(table_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(table_win);
 
@@ -1253,9 +1255,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
 
-        wattron(table_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, scroll_offset, qtd_direcoes * 2, max_linhas_exibicao, 6);
-        wattroff(table_win, COLOR_PAIR(28));
+        wattroff(table_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(table_win);
 

@@ -4443,10 +4443,11 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     keypad(border_win, TRUE);
 
     while (1) {
-        
-        wattron(border_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(border_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
-        wattroff(border_win, COLOR_PAIR(28));
+        wattroff(border_win, COLOR_PAIR(28) | flag);
         
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
@@ -4950,7 +4951,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(25, 226, COLOR_BLACK); //yellow
         init_pair(26, 230, 24); // Teal
         init_pair(27, COLOR_RED, COLOR_BLACK);
-        init_pair(28, 230, COLOR_MAGENTA);
+        init_pair(28, COLOR_BLACK, COLOR_MAGENTA);
         init_pair(29, COLOR_BLACK, COLOR_BLACK);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
         

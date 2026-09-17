@@ -651,9 +651,11 @@ void del_chart() {
                 wattroff(chart_win, attr);
             }
         }
-        wattron(chart_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(chart_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
-        wattroff(chart_win, COLOR_PAIR(28));
+        wattroff(chart_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(chart_win);
 
@@ -795,9 +797,11 @@ void del_chart() {
                                             }
                                         }
 
-                                        wattron(chart_win, COLOR_PAIR(28));
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(chart_win, COLOR_PAIR(28) | flag);
                                         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
-                                        wattroff(chart_win, COLOR_PAIR(28));
+                                        wattroff(chart_win, COLOR_PAIR(28) | flag);
         
                                         wnoutrefresh(chart_win);
                                         doupdate(); // Agora o item clicado já brilha na tela física!
@@ -1038,9 +1042,11 @@ void load_chart() {
             }
         }
 
-        wattron(chart_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(chart_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
-        wattroff(chart_win, COLOR_PAIR(28));
+        wattroff(chart_win, COLOR_PAIR(28) | flag);
         
         wnoutrefresh(chart_win);
 
@@ -1181,10 +1187,11 @@ void load_chart() {
                                             }
                                         }
 
-                                        
-                                        wattron(chart_win, COLOR_PAIR(28));
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(chart_win, COLOR_PAIR(28) | flag);
                                         desenhar_scrollbar(chart_win, chart_scroll_offset, row_count, max_display_items, 0);
-                                        wattroff(chart_win, COLOR_PAIR(28));
+                                        wattroff(chart_win, COLOR_PAIR(28) | flag);
         
                                         wnoutrefresh(chart_win);
                                         doupdate(); // Agora o item clicado já brilha na tela física!
@@ -2182,9 +2189,11 @@ void show_text_file(const char* filename, const char* title, int from_line) {
             //     }
             // }
         //}
-        wattron(help_win, COLOR_PAIR(28));
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(help_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(help_win, start_line, line_count, scrollbar_height, 1);
-        wattroff(help_win, COLOR_PAIR(28));
+        wattroff(help_win, COLOR_PAIR(28) | flag);
         
         //wnoutrefresh(shadow_win);
         wnoutrefresh(help_win);
