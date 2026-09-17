@@ -643,10 +643,10 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
                         par_cor_ativo = COLOR_PAIR(23);
-                        atributo_extra = A_BOLD | A_REVERSE;
+                        atributo_extra = A_REVERSE;
                     } else {
                         par_cor_ativo = COLOR_PAIR(11); 
-                        atributo_extra = A_BOLD;
+                        //atributo_extra = A_BOLD;
                     }
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
@@ -659,11 +659,11 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 }
                 else if (eh_benefico_essencial) {
                     par_cor_ativo = COLOR_PAIR(12);
-                    atributo_extra = A_ITALIC | A_BOLD;      
+                    atributo_extra = A_ITALIC;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
-                    atributo_extra = A_BOLD;
+                    //atributo_extra = A_BOLD;
                 }
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
@@ -1170,10 +1170,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
                         par_cor_ativo = COLOR_PAIR(23);
-                        atributo_extra = A_BOLD | A_REVERSE;
+                        atributo_extra = A_REVERSE;
                     } else {
                         par_cor_ativo = COLOR_PAIR(11); 
-                        atributo_extra = A_BOLD;
+                        //atributo_extra = A_BOLD;
                     }
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
@@ -1186,11 +1186,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 }
                 else if (eh_benefico_essencial) {
                     par_cor_ativo = COLOR_PAIR(12);
-                    atributo_extra = A_ITALIC | A_BOLD;      
+                    atributo_extra = A_ITALIC;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
-                    atributo_extra = A_BOLD;
+                    //atributo_extra = A_BOLD;
                 }
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
