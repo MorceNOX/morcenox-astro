@@ -627,7 +627,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
                 bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
                 bool eh_saturno = (strcmp(d->promissor_name, _("Saturn")) == 0);
-                bool eh_malefico_essencial = (eh_marte || eh_saturno);
+                bool eh_nodo_sul = (strcmp(d->promissor_name, _("South Node")) == 0);
+                bool eh_malefico_essencial = (eh_marte || eh_saturno || eh_nodo_sul);
                 
                 bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
@@ -635,7 +636,9 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
-                bool eh_benefico_essencial = (eh_jupiter || eh_venus);
+                bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
+
+                bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
 
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
@@ -879,7 +882,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
-    for (int p = 0; p < 7; p++) {
+    for (int p = 0; p < 83; p++) {
         for (int s = 0; s < 2; s++) {
             for (int a = 0; a < 5; a++) {
                 
@@ -1145,26 +1148,25 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                          d->significador_glifo);
 
 
-                // --- MOTOR DE DECISÃO DE CORES POR STRINGS (TRADICIONAL) ---
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
 
-                // Checagem dos Maléficos Essenciais por nome textual completo
                 bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
                 bool eh_saturno = (strcmp(d->promissor_name, _("Saturn")) == 0);
-                bool eh_malefico_essencial = (eh_marte || eh_saturno);
+                bool eh_nodo_sul = (strcmp(d->promissor_name, _("South Node")) == 0);
+                bool eh_malefico_essencial = (eh_marte || eh_saturno || eh_nodo_sul);
                 
-                // Checagem funcional dinâmica do Anareta e do Senhor da Casa 8 por texto
                 bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
                 bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
 
-                // Checagem dos Benéficos Essenciais por nome textual completo
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
-                bool eh_benefico_essencial = (eh_jupiter || eh_venus);
+                bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
 
-                int par_cor_ativo = COLOR_PAIR(13); // Cor neutra padrão (Ciano/Verde)
+                bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
+
+                int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
 
                 if (eh_anareta_ou_mortis) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 06:12-0300\n"
+"POT-Creation-Date: 2026-09-17 06:50-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1052,8 +1052,9 @@ msgid "Pluto"
 msgstr "Pluto orb"
 
 #: src/draw-chart.c:421 src/draw-chart.c:610 src/draw-chart.c:1564
-#: src/draw-chart.c:5927 src/draw-chart.c:5946 src/firdaria.c:104
-#: src/solar_return.c:1326 src/solar_return.c:1388 src/solar_return.c:1546
+#: src/draw-chart.c:5927 src/draw-chart.c:5946 src/draw-chart.c:7161
+#: src/firdaria.c:104 src/solar_return.c:1326 src/solar_return.c:1388
+#: src/solar_return.c:1546
 msgid "North Node"
 msgstr ""
 
@@ -1062,8 +1063,9 @@ msgid "Caput Draconis"
 msgstr ""
 
 #: src/draw-chart.c:424 src/draw-chart.c:611 src/draw-chart.c:1562
-#: src/draw-chart.c:5928 src/draw-chart.c:5947 src/firdaria.c:105
-#: src/solar_return.c:1326 src/solar_return.c:1385 src/solar_return.c:1543
+#: src/draw-chart.c:5928 src/draw-chart.c:5947 src/draw-chart.c:7161
+#: src/firdaria.c:105 src/solar_return.c:1326 src/solar_return.c:1385
+#: src/solar_return.c:1543
 msgid "South Node"
 msgstr ""
 
@@ -2238,133 +2240,133 @@ msgstr ""
 msgid "Phlegmatic"
 msgstr ""
 
-#: src/draw-chart.c:7695 src/draw-chart.c:7725
+#: src/draw-chart.c:7708 src/draw-chart.c:7738
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:7696 src/draw-chart.c:7726
+#: src/draw-chart.c:7709 src/draw-chart.c:7739
 msgid "02. Positions, Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:7697 src/draw-chart.c:7727
+#: src/draw-chart.c:7710 src/draw-chart.c:7740
 msgid "03. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:7698 src/draw-chart.c:7728
+#: src/draw-chart.c:7711 src/draw-chart.c:7741
 msgid "04. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:7699 src/draw-chart.c:7729
+#: src/draw-chart.c:7712 src/draw-chart.c:7742
 msgid "05. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7700 src/draw-chart.c:7730
+#: src/draw-chart.c:7713 src/draw-chart.c:7743
 msgid "06. Declination Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7701 src/draw-chart.c:7731
+#: src/draw-chart.c:7714 src/draw-chart.c:7744
 msgid "07. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:7702 src/draw-chart.c:7732
+#: src/draw-chart.c:7715 src/draw-chart.c:7745
 msgid "08. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:7703 src/draw-chart.c:7733
+#: src/draw-chart.c:7716 src/draw-chart.c:7746
 #, fuzzy
 msgid "09. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:7704 src/draw-chart.c:7734
+#: src/draw-chart.c:7717 src/draw-chart.c:7747
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:7705
+#: src/draw-chart.c:7718
 msgid "11. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:7706
+#: src/draw-chart.c:7719
 msgid "12. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:7707
+#: src/draw-chart.c:7720
 msgid "13. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:7708
+#: src/draw-chart.c:7721
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:7709
+#: src/draw-chart.c:7722
 msgid "15. Vital Threats: The Anareta"
 msgstr ""
 
-#: src/draw-chart.c:7710
+#: src/draw-chart.c:7723
 #, fuzzy
 msgid "16. Primary Directions"
 msgstr "Location: "
 
-#: src/draw-chart.c:7711
+#: src/draw-chart.c:7724
 #, fuzzy
 msgid "17. Prymary Directions to Arabic Parts"
 msgstr "Location: "
 
-#: src/draw-chart.c:7712
+#: src/draw-chart.c:7725
 msgid "18. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:7713
+#: src/draw-chart.c:7726
 msgid "19. Mind Analysis"
 msgstr ""
 
-#: src/draw-chart.c:7714
+#: src/draw-chart.c:7727
 #, fuzzy
 msgid "20. Solar Revolution"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:7715
+#: src/draw-chart.c:7728
 msgid "21. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:7716
+#: src/draw-chart.c:7729
 #, fuzzy
 msgid "22. Primary Motivation"
 msgstr "Location: "
 
-#: src/draw-chart.c:7717
+#: src/draw-chart.c:7730
 msgid "23. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:7718
+#: src/draw-chart.c:7731
 msgid "24. Aspects to Antissia & Contrantissia"
 msgstr ""
 
-#: src/draw-chart.c:7735
+#: src/draw-chart.c:7748
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:7736
+#: src/draw-chart.c:7749
 msgid "12. Annual Transits & Radical Projections"
 msgstr ""
 
-#: src/draw-chart.c:7737
+#: src/draw-chart.c:7750
 msgid "13. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:7738
+#: src/draw-chart.c:7751
 msgid "14. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:7739
+#: src/draw-chart.c:7752
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:7740
+#: src/draw-chart.c:7753
 msgid "16. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:7741
+#: src/draw-chart.c:7754
 msgid "17. Aspects to Antissia & Contrantissia"
 msgstr ""
 
