@@ -2268,6 +2268,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         
     }
     wnoutrefresh(stdscr);
+
     
     // Draw the outer circle filled
     attron(COLOR_PAIR(19) | FLAGS);
@@ -2931,7 +2932,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         // 1. Objeto / Planeta
         wattron(scroll_pad, A_BOLD);
         mvwprintw(scroll_pad, row, 2, "%s", plots[i].object);
-        wattroff(scroll_pad, A_BOLD);
+        //wattroff(scroll_pad, A_BOLD);
         
         // 2. Coordenadas Básicas
         if (get_visual_width(plots[i].degree) == 2) {
@@ -3123,6 +3124,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             }
             wattroff(scroll_pad, COLOR_PAIR(8));
         }
+        wattroff(scroll_pad, A_BOLD);
 
         row += 2;
     }
@@ -3472,7 +3474,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         // 1. Objeto / Planeta
         wattron(scroll_pad, A_BOLD);
         mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", plots[i].object);
-        wattroff(scroll_pad, A_BOLD);
+        //wattroff(scroll_pad, A_BOLD);
         
         // 2. Coordenadas Básicas
         if (get_visual_width(plots[i].degree) == 2) {
@@ -3548,6 +3550,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
         mvwprintw(scroll_pad, row_pad, c_mut + 1, "%s", data.mutual_reception);
         
+        wattroff(scroll_pad, A_BOLD);
         row_pad += 2;
     }
 
@@ -4873,8 +4876,8 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
-#define COLOR_BACK_1 181 //182 //181 //225 //195 //230 // 194 //159
-#define COLOR_BACK_2 217 //181 //217 //224 //194 //229 // 193 //123
+#define COLOR_BACK_1 219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
+#define COLOR_BACK_2 218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
 
 #define COLOR_BACK_DARK_1 234
 #define COLOR_BACK_DARK_2 235
@@ -4977,14 +4980,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
         init_pair(46, COLOR_BLACK, COLOR_BACK_2);
 
-        init_pair(2, COLOR_RED, COLOR_BACK_1);
-        init_pair(42, COLOR_RED, COLOR_BACK_2);
+        init_pair(2, 196, COLOR_BACK_1); // red
+        init_pair(42, 196, COLOR_BACK_2); // red
 
         init_pair(3, 28, COLOR_BACK_1); // verde
         init_pair(43, 28, COLOR_BACK_2); // verde
 
-        init_pair(4, 220, COLOR_BACK_1); // amarelo
-        init_pair(44, 220, COLOR_BACK_2); // amarelo
+        init_pair(4, 226, COLOR_BACK_1); // amarelo
+        init_pair(44, 226, COLOR_BACK_2); // amarelo
 
         init_pair(5, 21, COLOR_BACK_1); // azul
         init_pair(45, 21, COLOR_BACK_2); // azul
@@ -4997,7 +5000,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(10, 223, 223);
         init_pair(50, 223, COLOR_BACK_2);
 
-        init_pair(11, COLOR_RED, 223);
+        init_pair(11, COLOR_RED, 223); // red
         init_pair(12, 28, 223); // green
         init_pair(13, COLOR_BLACK, 223);
         
