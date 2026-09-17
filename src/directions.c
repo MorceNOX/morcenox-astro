@@ -189,7 +189,7 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
     //double epsilon = 0.000001;
 
     // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
-    for (int p = 0; p < 81; p++) {
+    for (int p = 0; p < 83; p++) {
         for (int s = 0; s < 2; s++) {
             if (p == idx_alvo) continue; // Um ponto não direciona a si mesmo
             
@@ -311,7 +311,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
     double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
-    for (int p = 0; p < 81; p++) {
+    for (int p = 0; p < 83; p++) {
         //if (p == idx_alvo) continue;
         if (prom[p].type == PROM_TERM) continue;
 
@@ -1415,7 +1415,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
-    for (int p = 0; p < 81; p++) {
+    for (int p = 0; p < 83; p++) {
         //if (p == idx_alvo) continue;
         if (prom[p].type == PROM_TERM) continue;
 

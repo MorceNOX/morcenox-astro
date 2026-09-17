@@ -2269,6 +2269,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     }
     wnoutrefresh(stdscr);
 
+    // attron(COLOR_PAIR(9));
+    // draw_circle_outline(display_center_y, display_center_x + 2, 20, aspect_ratio, current_scale, L"   ");
+    // attroff(COLOR_PAIR(9));
+    
     
     // Draw the outer circle filled
     attron(COLOR_PAIR(19) | FLAGS);
@@ -4986,8 +4990,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(3, 28, COLOR_BACK_1); // verde
         init_pair(43, 28, COLOR_BACK_2); // verde
 
-        init_pair(4, 226, COLOR_BACK_1); // amarelo
-        init_pair(44, 226, COLOR_BACK_2); // amarelo
+        init_pair(4, 136, COLOR_BACK_1); // amarelo
+        init_pair(44, 136, COLOR_BACK_2); // amarelo
 
         init_pair(5, 21, COLOR_BACK_1); // azul
         init_pair(45, 21, COLOR_BACK_2); // azul
@@ -5005,7 +5009,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(13, COLOR_BLACK, 223);
         
         init_pair(14, COLOR_WHITE, COLOR_BLACK);
-        init_pair(15, COLOR_YELLOW, 25); // azul
+        init_pair(15, 226, 25); // amarelo / azul
 
         init_pair(16, COLOR_BLACK, COLOR_BACK_1);
         init_pair(47, COLOR_BLACK, COLOR_BACK_2);
@@ -7152,7 +7156,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(ants[i+7].object_name, 30, "Contrantiscium %s", plots[i].object_name);
         }
 
-
+        // adicionar os nodos
+        for (int i = 7; i < 12; i++) {
+            if (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) {
+                snprintf(prom[i+81-7].object, 10, "%s", plots[i].object);
+                snprintf(prom[i+81-7].object_name, 30, "%s", plots[i].object_name);
+                prom[i+81-7].id = plots[i].id;
+                prom[i+81-7].longitude = plots[i].longitude;
+                prom[i+81-7].latitude = planet_latitudes[10 + i - 7];
+                prom[i+81-7].declination = plots[i].declination;
+                prom[i+81-7].house = get_house(plots[i].longitude, cusps);
+                prom[i+81-7].type = PROM_PLANET;
+            }
+            
+        }
 
         
         // Aries offset to draw the chart
