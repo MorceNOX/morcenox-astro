@@ -4873,8 +4873,8 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
-#define COLOR_BACK_1 181 //225 //195 //230 // 194 //159
-#define COLOR_BACK_2 217 //224 //194 //229 // 193 //123
+#define COLOR_BACK_1 181 //182 //181 //225 //195 //230 // 194 //159
+#define COLOR_BACK_2 217 //181 //217 //224 //194 //229 // 193 //123
 
 #define COLOR_BACK_DARK_1 234
 #define COLOR_BACK_DARK_2 235

@@ -3601,29 +3601,29 @@ msgstr "Select Country"
 msgid "Country"
 msgstr "Country"
 
-#: src/selections.c:2948
+#: src/selections.c:2949
 msgid "Select City in"
 msgstr "Select City in"
 
-#: src/selections.c:2950
+#: src/selections.c:2951
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/selections.c:3180
+#: src/selections.c:3182
 msgid "Failed to prepare statement:"
 msgstr "Failed to prepare statement:"
 
-#: src/selections.c:3228
+#: src/selections.c:3230
 msgid "Warning: City not found in database."
 msgstr "Warning: City not found in database."
 
-#: src/selections.c:3263
+#: src/selections.c:3265
 msgid "Default city has not changed"
 msgstr "Default city has not changed"
 
-#: src/selections.c:3325
+#: src/selections.c:3327
 msgid "Default city has changed"
 msgstr "Default city has changed"
 

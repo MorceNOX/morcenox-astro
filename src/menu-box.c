@@ -1342,7 +1342,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     setcchar(&bl, L"╰", 0, 0, NULL); // Bottom Left Corner
     setcchar(&br, L"╯", 0, 0, NULL); // Bottom Right Corner
 
-    int multiplier = 150;
+    int multiplier = 75;
     bool clockwise = true;
 
 
@@ -1854,7 +1854,9 @@ void call_chart_now() {
     //PlanetDignities *dig_natal;
     //double cusps[13] = {0};
 
-    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, _("Here And Now"), HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
+    snprintf(CHART_NAME, 100, _("Here And Now"));
+
+    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
 
 
