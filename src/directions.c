@@ -190,8 +190,10 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
 
     // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
     for (int p = 0; p < 83; p++) {
+        if (strcmp(prom[p].object_name, "") == 0) continue;
+        if (strcmp(prom[p].object_name, " ") == 0) continue;
         for (int s = 0; s < 2; s++) {
-            if (p == idx_alvo) continue; // Um ponto não direciona a si mesmo
+            if (p == idx_alvo && p < 7) continue; // Um ponto não direciona a si mesmo
             
             for (int a = 0; a < 5; a++) {
 
@@ -314,6 +316,8 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
     for (int p = 0; p < 83; p++) {
         //if (p == idx_alvo) continue;
         if (prom[p].type == PROM_TERM) continue;
+        if (strcmp(prom[p].object_name, "") == 0) continue;
+        if (strcmp(prom[p].object_name, " ") == 0) continue;
 
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = calcular_ra(prom[p].longitude, prom[p].declination, jd);
@@ -613,10 +617,10 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 bool eh_termo = d->promissor_type == PROM_TERM;
 
                 char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s → %s ", 
+                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
                          eh_termo ? _("Term") : "",
                          eh_termo ? " " : "",
-                         d->promissor_glifo, // d->promissor_name,
+                         d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                          d->significador_glifo);
 
@@ -645,8 +649,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
-                        par_cor_ativo = COLOR_PAIR(23);
-                        atributo_extra = A_REVERSE;
+                        par_cor_ativo = COLOR_PAIR(36);
+                        atributo_extra |= (A_REVERSE | A_BOLD);
                     } else {
                         par_cor_ativo = COLOR_PAIR(11); 
                         //atributo_extra = A_BOLD;
@@ -654,28 +658,28 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
                     par_cor_ativo = COLOR_PAIR(11); 
-                    atributo_extra = A_NORMAL;
+                    atributo_extra |= A_BOLD;
                 }
                 else if (!eh_malefico_essencial && eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(25);
-                    atributo_extra = A_ITALIC | A_REVERSE;
+                    atributo_extra |= A_REVERSE;
                 }
                 else if (eh_benefico_essencial) {
                     par_cor_ativo = COLOR_PAIR(12);
-                    atributo_extra = A_ITALIC;      
+                    atributo_extra = A_DIM;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
-                    //atributo_extra = A_BOLD;
+                    atributo_extra |= A_BOLD;
                 }
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
-                    atributo_extra = A_NORMAL;
+                    atributo_extra |= A_NORMAL;
                 }
 
-                //if (eh_termo) {
-                //    atributo_extra |= (A_UNDERLINE | A_DIM);
-                //}
+                // if (eh_termo) {
+                //    atributo_extra |= A_DIM;
+                // }
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
@@ -738,8 +742,6 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
 
         wnoutrefresh(table_win);
 
-        doupdate();
-
         int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
         if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
             fim_y_recorte = start_y + 7 + (linhas_reais_pad - scroll_offset) - 1;
@@ -748,6 +750,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         if (linhas_reais_pad > 0) {
             prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
         }
+        doupdate();
+
         int ch = wgetch(table_win);
         switch (ch) {
             case 'C':
@@ -883,6 +887,8 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
     // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
     for (int p = 0; p < 83; p++) {
+        if (strcmp(prom[p].object_name, "") == 0) continue;
+        if (strcmp(prom[p].object_name, " ") == 0) continue;
         for (int s = 0; s < 2; s++) {
             for (int a = 0; a < 5; a++) {
                 
@@ -1171,8 +1177,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
                 if (eh_anareta_ou_mortis) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
-                        par_cor_ativo = COLOR_PAIR(23);
-                        atributo_extra = A_REVERSE;
+                        par_cor_ativo = COLOR_PAIR(36);
+                        atributo_extra |= (A_REVERSE | A_BOLD);
                     } else {
                         par_cor_ativo = COLOR_PAIR(11); 
                         //atributo_extra = A_BOLD;
@@ -1180,27 +1186,27 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
                     par_cor_ativo = COLOR_PAIR(11); 
-                    atributo_extra = A_NORMAL;
+                    atributo_extra |= A_BOLD;
                 }
                 else if (!eh_malefico_essencial && eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(25);
-                    atributo_extra = A_ITALIC | A_REVERSE;
+                    atributo_extra |= A_REVERSE;
                 }
                 else if (eh_benefico_essencial) {
                     par_cor_ativo = COLOR_PAIR(12);
-                    atributo_extra = A_ITALIC;      
+                    atributo_extra = A_DIM;      
                 }
                 else if (strcmp(d->aspecto_symbol, "☌") == 0) {
                     par_cor_ativo = COLOR_PAIR(7);
-                    //atributo_extra = A_BOLD;
+                    atributo_extra |= A_BOLD;
                 }
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
-                    atributo_extra = A_NORMAL;
+                    atributo_extra |= A_NORMAL;
                 }
 
                 // if (eh_termo) {
-                //     atributo_extra |= (A_UNDERLINE | A_DIM);
+                //    atributo_extra |= A_DIM;
                 // }
                 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
@@ -1265,8 +1271,6 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
         wnoutrefresh(table_win);
 
-        doupdate();
-
         int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
         if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
             fim_y_recorte = start_y + 7 + (linhas_reais_pad - scroll_offset) - 1;
@@ -1275,6 +1279,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         if (linhas_reais_pad > 0) {
             prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
         }
+        doupdate();
+
         int ch = wgetch(table_win);
         switch (ch) {
             case 'C':
@@ -1418,6 +1424,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < 83; p++) {
+        if (strcmp(prom[p].object_name, "") == 0) continue;
+        if (strcmp(prom[p].object_name, " ") == 0) continue;
         //if (p == idx_alvo) continue;
         if (prom[p].type == PROM_TERM) continue;
 

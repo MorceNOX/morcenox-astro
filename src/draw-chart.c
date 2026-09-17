@@ -4997,7 +4997,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(45, 21, COLOR_BACK_2); // azul
 
         init_pair(6, COLOR_BLACK, 223);
-        init_pair(7, 199, 223); // magenta
+        init_pair(7, COLOR_MAGENTA, 223); // magenta
         init_pair(8, 21, 223); // azul
         init_pair(9, 232, 232);
         
@@ -5039,7 +5039,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(33, COLOR_WHITE, COLOR_BLUE);
         init_pair(34, COLOR_BACK_2, COLOR_BACK_2);
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
-        init_pair(36, COLOR_RED, COLOR_WHITE);
+        init_pair(36, 160, COLOR_WHITE); // red
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(38, 18, COLOR_WHITE);
         init_pair(39, 28, 211); // verde, magenta
@@ -7161,7 +7161,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             if (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) {
                 snprintf(prom[i+81-7].object, 10, "%s", plots[i].object);
                 snprintf(prom[i+81-7].object_name, 30, "%s", plots[i].object_name);
-                prom[i+81-7].id = plots[i].id;
+                prom[i+81-7].id = i + 81 - 7;
                 prom[i+81-7].longitude = plots[i].longitude;
                 prom[i+81-7].latitude = planet_latitudes[10 + i - 7];
                 prom[i+81-7].declination = plots[i].declination;
