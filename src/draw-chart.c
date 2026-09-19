@@ -7240,20 +7240,21 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double longitudes_ant[num_ants / 2];
         int sign_ant[num_ants / 2];
 
+        int index_ant = 0;
         for (int i = 0; i < 12; i++) {
             if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
                 show_modern_planets        
             ) {
-                snprintf(prom[prom_id].object, 10, "A%s", plots[i].object);
-                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
+                snprintf(prom[prom_id].object, 10, "A%s", plots[index_ant].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[index_ant].object_name);
                 prom[prom_id].id = prom_id;
 
-                longitudes_ant[i] = get_antiscium_degree(fmod(plots[i].longitude, 30));
-                sign_ant[i] = get_sign_antiscium((int)(plots[i].longitude / 30));
+                longitudes_ant[index_ant] = get_antiscium_degree(fmod(plots[index_ant].longitude, 30));
+                sign_ant[index_ant] = get_sign_antiscium((int)(plots[index_ant].longitude / 30));
 
-                prom[prom_id].longitude = sign_ant[i] * 30.0 + longitudes_ant[i];
+                prom[prom_id].longitude = sign_ant[index_ant] * 30.0 + longitudes_ant[index_ant];
                 
-                prom[prom_id].latitude = plots[i].latitude;
+                prom[prom_id].latitude = plots[index_ant].latitude;
                 
                 double xx_in[3], xx_out[3];
                 xx_in[0] = prom[prom_id].longitude;
@@ -7266,16 +7267,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
                 prom[prom_id].type = PROM_ANTISCIUM;
 
-                ants[i].id = i;
-                ants[i].type = ANTISSIUM;
-                ants[i].longitude = prom[prom_id].longitude;
-                ants[i].latitude = prom[prom_id].latitude;
-                ants[i].declination = prom[prom_id].declination;
-                ants[i].house = prom[prom_id].house;
-                snprintf(ants[i].object, 10, "A%s", plots[i].object);
-                snprintf(ants[i].object_name, 30, "Antiscium %s", plots[i].object_name);
+                ants[index_ant].id = index_ant;
+                ants[index_ant].type = ANTISSIUM;
+                ants[index_ant].longitude = prom[prom_id].longitude;
+                ants[index_ant].latitude = prom[prom_id].latitude;
+                ants[index_ant].declination = prom[prom_id].declination;
+                ants[index_ant].house = prom[prom_id].house;
+                snprintf(ants[index_ant].object, 10, "A%s", plots[i].object);
+                snprintf(ants[index_ant].object_name, 30, "Antiscium %s", plots[i].object_name);
 
                 prom_id++;
+                index_ant++;
             }
             
         }
@@ -7284,20 +7286,21 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double longitudes_cant[num_ants / 2];
         int sign_cant[num_ants / 2];
 
+        int index_cant = 0;
         for (int i = 0; i < 12; i++) {
             if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
                 show_modern_planets        
             ) {
-                snprintf(prom[prom_id].object, 10, "CA%s", plots[i].object);
-                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
+                snprintf(prom[prom_id].object, 10, "CA%s", plots[index_cant].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[index_cant].object_name);
                 prom[prom_id].id = prom_id;
     
-                longitudes_cant[i] = longitudes_ant[i];
-                sign_cant[i] = get_opposite_sign(sign_ant[i]);
+                longitudes_cant[index_cant] = longitudes_ant[index_cant];
+                sign_cant[index_cant] = get_opposite_sign(sign_ant[index_cant]);
     
-                prom[prom_id].longitude = sign_cant[i] * 30.0 + longitudes_cant[i];
+                prom[prom_id].longitude = sign_cant[index_cant] * 30.0 + longitudes_cant[index_cant];
                 
-                prom[prom_id].latitude = -plots[i].latitude;
+                prom[prom_id].latitude = -plots[index_cant].latitude;
                 
                 double xx_in[3], xx_out[3];
                 xx_in[0] = prom[prom_id].longitude;
@@ -7310,16 +7313,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
                 prom[prom_id].type = PROM_CONTRANTISCIUM;
     
-                ants[i+num_ants / 2].id = i;
-                ants[i+num_ants / 2].type = CONTRANTISSIUM;
-                ants[i+num_ants / 2].longitude = prom[prom_id].longitude;
-                ants[i+num_ants / 2].latitude = prom[prom_id].latitude;
-                ants[i+num_ants / 2].declination = prom[prom_id].declination;
-                ants[i+num_ants / 2].house = prom[prom_id].house;
-                snprintf(ants[i+num_ants / 2].object, 10, "CA%s", plots[i].object);
-                snprintf(ants[i+num_ants / 2].object_name, 30, "Contrantiscium %s", plots[i].object_name);
+                ants[index_cant+num_ants / 2].id = index_cant+num_ants / 2;
+                ants[index_cant+num_ants / 2].type = CONTRANTISSIUM;
+                ants[index_cant+num_ants / 2].longitude = prom[prom_id].longitude;
+                ants[index_cant+num_ants / 2].latitude = prom[prom_id].latitude;
+                ants[index_cant+num_ants / 2].declination = prom[prom_id].declination;
+                ants[index_cant+num_ants / 2].house = prom[prom_id].house;
+                snprintf(ants[index_cant+num_ants / 2].object, 10, "CA%s", plots[i].object);
+                snprintf(ants[index_cant+num_ants / 2].object_name, 30, "Contrantiscium %s", plots[i].object_name);
 
                 prom_id++;
+                index_cant++;
             }
             
         }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 11:19-0300\n"
+"POT-Creation-Date: 2026-09-19 11:49-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -825,7 +825,7 @@ msgstr "Chart deleted successfully."
 msgid "Parallel & Contra-Parallel"
 msgstr "Parallel / Contra-parallel orb"
 
-#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1352
+#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1345
 #, fuzzy
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Press [ESC] to cancel"
@@ -835,7 +835,7 @@ msgstr "Press [ESC] to cancel"
 msgid "Aspects Table"
 msgstr "House System"
 
-#: src/aspects.c:736 src/aspects.c:1351
+#: src/aspects.c:736 src/aspects.c:1344
 msgid "(*) Numbers = angular distance in degrees"
 msgstr ""
 
@@ -941,8 +941,8 @@ msgstr "Saturn orb"
 
 #: src/directions.c:876 src/directions.c:1402 src/draw-chart.c:424
 #: src/draw-chart.c:611 src/draw-chart.c:1562 src/draw-chart.c:6031
-#: src/draw-chart.c:6050 src/draw-chart.c:7176 src/draw-chart.c:7244
-#: src/draw-chart.c:7288 src/firdaria.c:105 src/solar_return.c:1258
+#: src/draw-chart.c:6050 src/draw-chart.c:7176 src/draw-chart.c:7245
+#: src/draw-chart.c:7291 src/firdaria.c:105 src/solar_return.c:1258
 #: src/solar_return.c:1317 src/solar_return.c:1475
 msgid "South Node"
 msgstr ""
@@ -967,8 +967,8 @@ msgstr "Venus orb"
 
 #: src/directions.c:885 src/directions.c:1411 src/draw-chart.c:421
 #: src/draw-chart.c:610 src/draw-chart.c:1564 src/draw-chart.c:6030
-#: src/draw-chart.c:6049 src/draw-chart.c:7176 src/draw-chart.c:7244
-#: src/draw-chart.c:7288 src/firdaria.c:104 src/solar_return.c:1258
+#: src/draw-chart.c:6049 src/draw-chart.c:7176 src/draw-chart.c:7245
+#: src/draw-chart.c:7291 src/firdaria.c:104 src/solar_return.c:1258
 #: src/solar_return.c:1320 src/solar_return.c:1478
 msgid "North Node"
 msgstr ""
@@ -2246,141 +2246,141 @@ msgstr ""
 msgid "Phlegmatic"
 msgstr ""
 
-#: src/draw-chart.c:7872 src/draw-chart.c:7903
+#: src/draw-chart.c:7876 src/draw-chart.c:7907
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:7873 src/draw-chart.c:7904
+#: src/draw-chart.c:7877 src/draw-chart.c:7908
 msgid "02. Positions, Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:7874 src/draw-chart.c:7905
+#: src/draw-chart.c:7878 src/draw-chart.c:7909
 msgid "03. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:7875 src/draw-chart.c:7906
+#: src/draw-chart.c:7879 src/draw-chart.c:7910
 msgid "04. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:7876 src/draw-chart.c:7907
+#: src/draw-chart.c:7880 src/draw-chart.c:7911
 msgid "05. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7877 src/draw-chart.c:7908
+#: src/draw-chart.c:7881 src/draw-chart.c:7912
 msgid "06. Declination Aspects"
 msgstr ""
 
-#: src/draw-chart.c:7878 src/draw-chart.c:7909
+#: src/draw-chart.c:7882 src/draw-chart.c:7913
 msgid "07. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:7879 src/draw-chart.c:7910
+#: src/draw-chart.c:7883 src/draw-chart.c:7914
 msgid "08. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:7880 src/draw-chart.c:7911
+#: src/draw-chart.c:7884 src/draw-chart.c:7915
 #, fuzzy
 msgid "09. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:7881 src/draw-chart.c:7912
+#: src/draw-chart.c:7885 src/draw-chart.c:7916
 msgid "10. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:7882
+#: src/draw-chart.c:7886
 msgid "11. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:7883
+#: src/draw-chart.c:7887
 msgid "12. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:7884
+#: src/draw-chart.c:7888
 msgid "13. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:7885
+#: src/draw-chart.c:7889
 msgid "14. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:7886
-msgid "15. Vital Threats: The Anareta"
-msgstr ""
-
-#: src/draw-chart.c:7887
-#, fuzzy
-msgid "16. Primary Directions"
-msgstr "Location: "
-
-#: src/draw-chart.c:7888
-#, fuzzy
-msgid "17. Prymary Directions to Arabic Parts"
-msgstr "Location: "
-
-#: src/draw-chart.c:7889
-msgid "18. Arabic Parts"
-msgstr ""
-
 #: src/draw-chart.c:7890
-msgid "19. Mind Analysis"
+msgid "15. Vital Threats: The Anareta"
 msgstr ""
 
 #: src/draw-chart.c:7891
 #, fuzzy
+msgid "16. Primary Directions"
+msgstr "Location: "
+
+#: src/draw-chart.c:7892
+#, fuzzy
+msgid "17. Prymary Directions to Arabic Parts"
+msgstr "Location: "
+
+#: src/draw-chart.c:7893
+msgid "18. Arabic Parts"
+msgstr ""
+
+#: src/draw-chart.c:7894
+msgid "19. Mind Analysis"
+msgstr ""
+
+#: src/draw-chart.c:7895
+#, fuzzy
 msgid "20. Solar Revolution"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:7892
+#: src/draw-chart.c:7896
 msgid "21. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:7893
+#: src/draw-chart.c:7897
 #, fuzzy
 msgid "22. Primary Motivation"
 msgstr "Location: "
 
-#: src/draw-chart.c:7894
+#: src/draw-chart.c:7898
 msgid "23. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:7895
+#: src/draw-chart.c:7899
 msgid "24. Aspects to Antissia"
 msgstr ""
 
-#: src/draw-chart.c:7896
+#: src/draw-chart.c:7900
 msgid "25. Aspects to Contrantissia"
 msgstr ""
 
-#: src/draw-chart.c:7913
+#: src/draw-chart.c:7917
 msgid "11. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:7914
+#: src/draw-chart.c:7918
 msgid "12. Annual Transits & Radical Projections"
 msgstr ""
 
-#: src/draw-chart.c:7915
+#: src/draw-chart.c:7919
 msgid "13. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:7916
+#: src/draw-chart.c:7920
 msgid "14. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:7917
+#: src/draw-chart.c:7921
 msgid "15. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:7918
+#: src/draw-chart.c:7922
 msgid "16. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:7919
+#: src/draw-chart.c:7923
 msgid "17. Aspects to Antissia"
 msgstr ""
 
-#: src/draw-chart.c:7920
+#: src/draw-chart.c:7924
 msgid "18. Aspects to Contrantissia"
 msgstr ""
 

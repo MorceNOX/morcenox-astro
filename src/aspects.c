@@ -1254,8 +1254,11 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     }
 
     // 5. Renderização dos Dados Pré-Calculados da Matriz
+    
     for (int i = 0; i < 12 - object_diff; i++) {
-        for (int j = 0; j < (num_ants / 2); j++) {
+        int index = 0;
+        for (int j = 0; j < (num_ants); j++) {
+            if (ants[j].type != ant_type) continue;
             
             // Se i >= j, renderiza o bloco nulo/vazio (Triângulo inferior da matriz)
             // if (i >= j) {
@@ -1291,7 +1294,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 }
 
                 // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "  %s  ", cell.symbol);
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * index, "  %s  ", cell.symbol);
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
@@ -1304,7 +1307,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 if (cell.is_reverse && DARK_MODE) {
                     wattron(pad, COLOR_PAIR(35));
                 }
-                mvwprintw(pad, 3 + 2 * i, 3 + 6 * j, ag);
+                mvwprintw(pad, 3 + 2 * i, 3 + 6 * index, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
                 if (cell.is_reverse) {
@@ -1326,11 +1329,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
             }
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "░░░░░"); 
+                mvwprintw(pad, 2 + 2 * i, 3 + 6 * index, "░░░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
 
             row_pad = 2 + 2 * i + 1;
+            index++;
         }
     }
 
