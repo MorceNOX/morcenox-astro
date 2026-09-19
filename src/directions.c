@@ -820,6 +820,32 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         }
         wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
+        wattron(table_win, A_ITALIC);
+        wprintw(table_win, _(" │ Directions: "));
+        wattron(table_win, A_BOLD | COLOR_PAIR(7));
+        if (tipo == 0) {
+            wprintw(table_win, "Zod");            
+        }
+        else if (tipo == 1) {
+            wprintw(table_win, "Mund");            
+        }
+        else if (tipo == 2) {
+            wprintw(table_win, "Zod & Mund");            
+        }
+        wprintw(table_win, " │ ");
+
+        if (sentido == 0) {
+            wprintw(table_win, "Dir");            
+        }
+        else if (sentido == 1) {
+            wprintw(table_win, "Conv");            
+        }
+        else if (sentido == 2) {
+            wprintw(table_win, "Dir & Conv");            
+        }
+        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
+
+
         wattron(table_win, A_DIM);
         mvwprintw(table_win, 2, table_width - 32, _("Use [←/→] Signif. [↑/↓] Scroll"));
         wattroff(table_win, A_DIM);
@@ -948,7 +974,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         mvwprintw(table_win, table_height - 7, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
-        wattron(table_win, A_DIM);
+        wattron(table_win, A_DIM | A_ITALIC);
         mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
         // CORREÇÃO: Legenda dinâmica baseada no tipo ativo
         if (tipo == 0) {
@@ -958,6 +984,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         } else {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
         }
+        wattroff(table_win, A_ITALIC);
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
@@ -967,10 +994,10 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
                 qtd_direcoes,
-                _(") | [←/→] Change Target"),
-                _(" | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
+                _(") │ [←/→] Change Target"),
+                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         } else {
-            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
+            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
         wattroff(table_win, A_DIM);
 
@@ -1345,6 +1372,31 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
+        wattron(table_win, A_ITALIC);
+        wprintw(table_win, _(" │ Directions: "));
+        wattron(table_win, A_BOLD | COLOR_PAIR(7));
+        if (tipo == 0) {
+            wprintw(table_win, "Zod");            
+        }
+        else if (tipo == 1) {
+            wprintw(table_win, "Mund");            
+        }
+        else if (tipo == 2) {
+            wprintw(table_win, "Zod & Mund");            
+        }
+        wprintw(table_win, " │ ");
+
+        if (sentido == 0) {
+            wprintw(table_win, "Dir");            
+        }
+        else if (sentido == 1) {
+            wprintw(table_win, "Conv");            
+        }
+        else if (sentido == 2) {
+            wprintw(table_win, "Dir & Conv");            
+        }
+        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
+
         wattron(table_win, A_DIM);
         mvwprintw(table_win, 2, table_width - 32, _("Use [←/→] Signif. [↑/↓] Scroll"));
         wattroff(table_win, A_DIM);
@@ -1475,7 +1527,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         mvwprintw(table_win, table_height - 7, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
-        wattron(table_win, A_DIM);
+        wattron(table_win, A_DIM | A_ITALIC);
         mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
         // CORREÇÃO: Legenda dinâmica baseada no tipo ativo
         if (tipo == 0) {
@@ -1485,6 +1537,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         } else {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
         }
+        wattroff(table_win, A_ITALIC);
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
@@ -1494,10 +1547,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
                 qtd_direcoes,
-                _(") | [←/→] Change Target"),
-                _(" | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
+                _(") │ [←/→] Change Target"),
+                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         } else {
-            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"));
+            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
         wattroff(table_win, A_DIM);
 

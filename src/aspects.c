@@ -777,9 +777,9 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
         else if (ch == KEY_F(5)) {
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis(), ANTISSIUM);
+            matrix_ants = calculate_aspects_antiscium(plots, &ants[0], num_ants / 2, get_antissia_orbis(), ANTISSIUM);
 
-            display_aspects_antissium(plots, ants, num_ants, &matrix_ants, ANTISSIUM);
+            display_aspects_antissium(plots, &ants[0], num_ants / 2, &matrix_ants, ANTISSIUM);
             
             touchwin(aspects_shadow);
             wrefresh(aspects_shadow);
@@ -789,9 +789,9 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
         else if (ch == KEY_F(6)) {
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis(), CONTRANTISSIUM);
+            matrix_ants = calculate_aspects_antiscium(plots, &ants[num_ants / 2], num_ants / 2, get_antissia_orbis(), CONTRANTISSIUM);
 
-            display_aspects_antissium(plots, ants, num_ants, &matrix_ants, CONTRANTISSIUM);
+            display_aspects_antissium(plots, &ants[num_ants / 2], num_ants / 2, &matrix_ants, CONTRANTISSIUM);
             
             touchwin(aspects_shadow);
             wrefresh(aspects_shadow);
@@ -1235,14 +1235,14 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
     // 4. Desenho das Linhas Verticais
     for (int i = 0; i < ((12 - object_diff) * 2); i++) {
-        for (int j = 0; j < (num_ants / 2) + 1; j++) {
+        for (int j = 0; j < (num_ants) + 1; j++) {
             mvwprintw(pad, 2 + i, 2 + 6 * j, "│");
         }
     }
 
     // 3. Desenho das Linhas do Grid
     for (int i = 0; i < 12 - object_diff + 1; i++) {
-        for (int j = 0; j < (num_ants / 2); j++) {
+        for (int j = 0; j < (num_ants); j++) {
             if (i == 0) {
                 mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");              
             }
