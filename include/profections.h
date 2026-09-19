@@ -28,6 +28,6 @@ typedef struct {
 } DadosProfeccao;
 
 DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual);
-void display_profections(PlotObject *plots, int anos_alcochoden);
+void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects);
 
 #endif

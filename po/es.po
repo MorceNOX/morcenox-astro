@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 14:16-0300\n"
+"POT-Creation-Date: 2026-09-19 17:42-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -695,7 +695,7 @@ msgstr ""
 #: src/arabic_parts.c:387 src/arabic_parts.c:713 src/directions.c:1004
 #: src/directions.c:1557 src/draw-chart.c:3365 src/draw-chart.c:3758
 #: src/draw-chart.c:4640 src/firdaria.c:448 src/hyleg.c:742 src/hyleg.c:1060
-#: src/mind.c:314 src/profections.c:187
+#: src/mind.c:314 src/profections.c:235
 msgid "Press ESC to return to chart"
 msgstr ""
 
@@ -3284,20 +3284,32 @@ msgstr ""
 msgid "NATAL PLANETS WOKEN UP IN THIS HOUSE:"
 msgstr ""
 
-#: src/profections.c:169
+#: src/profections.c:170
 msgid "Planet"
 msgstr ""
 
-#: src/profections.c:173
+#: src/profections.c:178
 msgid "is natally placed here and is now triggered."
 msgstr ""
 
-#: src/profections.c:182
+#: src/profections.c:187
 msgid "No natal planets placed in House"
 msgstr ""
 
-#: src/profections.c:182
+#: src/profections.c:187
 msgid "The Lord of the Year acts alone."
+msgstr ""
+
+#: src/profections.c:200
+msgid "Part"
+msgstr ""
+
+#: src/profections.c:206
+msgid "is placed here in your natal chart and is now triggered."
+msgstr ""
+
+#: src/profections.c:215
+msgid "No natal parts placed in House"
 msgstr ""
 
 #: src/selections.c:75

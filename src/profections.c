@@ -59,7 +59,7 @@ DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual) {
 
 
 
-void display_profections(PlotObject *plots, int anos_alcochoden) {
+void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -75,10 +75,10 @@ void display_profections(PlotObject *plots, int anos_alcochoden) {
     // ────────────────────────────────────────────────────────────────────────
     // JANELA 2: EXIBIÇÃO DO RELATÓRIO DE PROFEÇÃO ANUAL
     // ────────────────────────────────────────────────────────────────────────
-    int table_height = 24;
+    int table_height = 30;
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
-    int start_x = 5;
+    int start_x = (max_x - table_width) / 2;;
     
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
@@ -165,12 +165,17 @@ void display_profections(PlotObject *plots, int anos_alcochoden) {
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // Ignora pontos extras vazios e checa se a casa do planeta bate com a casa acordada
-        if (romanToInt(plots[i].house) == prof.casa_ativada && i < 7) { 
-            mvwprintw(table_win, row_p, 6, "• %s ", _("Planet"));
+        if (romanToInt(plots[i].house) == prof.casa_ativada && i < P_ASC - object_diff) { 
+            if (i < 10 - object_diff) {
+                mvwprintw(table_win, row_p, 6, "• %s ", _("Planet"));
+            }
+            else {
+                mvwprintw(table_win, row_p, 6, "• ");
+            }
             wattron(table_win, COLOR_PAIR(8) | A_BOLD);
-            wprintw(table_win, "%s", plots[i].object); // Imprime o glifo direto (.object)
+            wprintw(table_win, "%s (%s) ", plots[i].object, plots[i].object_name); // Imprime o glifo direto (.object)
             wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
-            wprintw(table_win, " (%s) %s", plots[i].object_name, _("is natally placed here and is now triggered.")); // Imprime o nome (.name)
+            wprintw(table_win, "%s", _("is natally placed here and is now triggered.")); // Imprime o nome (.name)
             
             row_p++;
             planetas_encontrados++;
@@ -182,6 +187,49 @@ void display_profections(PlotObject *plots, int anos_alcochoden) {
         mvwprintw(table_win, 17, 6, "%s %d. %s", _("No natal planets placed in House"), prof.casa_ativada, _("The Lord of the Year acts alone."));
         wattroff(table_win, A_DIM);
     }
+
+    ArabicPartCalculada lista[MAX_PARTS];
+    memset(lista, 0, sizeof(lista));
+
+    int qtd_partes = load_and_calculate_arabic_parts(obj, num_objects, cusps, lista);
+    
+    int partes_encontradas = 0;
+
+    for (int i = 0; i < qtd_partes; i++) {
+        if (romanToInt(lista[i].house) == prof.casa_ativada) { 
+            mvwprintw(table_win, row_p, 6, "• %s ", _("Part"));
+            
+            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+            wprintw(table_win, "%s ", lista[i].name);
+            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+
+            wprintw(table_win, "%s", _("is placed here in your natal chart and is now triggered.")); // Imprime o nome (.name)
+                        
+            row_p++;
+            partes_encontradas++;
+        }
+    }
+
+    if (partes_encontradas == 0) {
+        wattron(table_win, A_DIM);
+        mvwprintw(table_win, row_p, 6, "%s %d.", _("No natal parts placed in House"), prof.casa_ativada);
+        wattroff(table_win, A_DIM);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Rodapé padrão
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
