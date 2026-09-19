@@ -329,12 +329,16 @@ const char *LOGO[] = {
 
 
 void set_data() {
+    desativar_arrasto_mouse();
+
     char chart_name[100];
 
     DataNascimento dt;
     DateEdition ed = selecionar_data();
 
     if (!ed.changed) {
+        ativar_arrasto_mouse();
+        flushinp();
         return;
     }
 
@@ -348,6 +352,8 @@ void set_data() {
     HoraEdition ed_h = selecionar_hora();
 
     if (!ed_h.changed) {
+        ativar_arrasto_mouse();
+        flushinp();
         return;
     }
 
@@ -359,6 +365,8 @@ void set_data() {
 
     int gender_id = select_gender();
     if (!gender_id) {
+        ativar_arrasto_mouse();
+        flushinp();
         return;
     }
 
@@ -383,6 +391,9 @@ void set_data() {
     else {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
     }
+    
+    ativar_arrasto_mouse();
+    flushinp();
 }
 
 
