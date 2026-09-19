@@ -223,7 +223,9 @@ Pressione Q ou ESC para retornar ao menu principal.
     
     - F4 - Aspectos por Signo 
     
-    - F5 - Matriz de Aspectos Antissia & Contrantissia
+    - F5 - Matriz de Aspectos Antissia
+    
+    - F6 - Matriz de Aspectos Contrantissia
     
 * F4 - Horas Planetárias
 
@@ -1057,11 +1059,27 @@ Use [↓↑] para deslizar a tabela.
 
 
 
-• Matriz de Aspectos Antissium & Contrantissium
-  F5 na Tabela de Aspectos
+• Matriz de Aspectos Antissia - F5 na Tabela de Aspectos
 ───────────────────────────────────────────────────────────────────
 
-Exibe aspectos entre os planetas e os Antissia e Contrantissia dos 7 planetas tradicionais.
+Exibe aspectos entre os planetas e seus Antissia.
+
+Aqui também não se usam os orbes dos planetas. Um orbe de 1.5° é considerado para validar o aspecto.
+
+Abaixo do símbolo do aspecto é exibida a distância angular em graus entre os dois objetos.
+
+Para aspectos muito exatos (≤ 10% do orbe para aspectos com antissia e contrantissia) o símbolo do aspecto aparece destacado na tabela.
+
+Esta funcionalidade está disponível como uma opção independente ao selecionar pelo menu de ações.
+
+
+
+
+
+• Matriz de Aspectos Contrantissia - F6 na Tabela de Aspectos
+───────────────────────────────────────────────────────────────────
+
+Exibe aspectos entre os planetas e seus Contrantissia.
 
 Aqui também não se usam os orbes dos planetas. Um orbe de 1.5° é considerado para validar o aspecto.
 

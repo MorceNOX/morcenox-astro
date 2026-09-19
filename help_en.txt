@@ -224,7 +224,9 @@ Press Q or ESC to return to the main menu.
         
         - F4 - Aspects by Sign
         
-        - F5 - Antisia & Contrantissia Aspects Matrix Grid 
+        - F5 - Antisia Aspects Matrix Grid 
+        
+        - F6 - Contrantissia Aspects Matrix Grid 
         
     * F4 - Planetary Hours
     
@@ -1081,11 +1083,11 @@ Use [↓↑] to scroll the table.
 
 
 
-• Antissium & Contrantissium Aspects Matrix Grid
-  F5 na Tabela de Aspectos
+• Antissium Aspects Matrix Grid
+  F5 in the Aspects Table 
 ───────────────────────────────────────────────────────────────────
 
-Displays the aspects between the 7 main planets and their Antissia and Contrantissia.
+Displays the aspects between the planets and their Antissia.
 
 Planetary orbs are not used here either.
 An orb of 1.5° is considered to validate the aspect.
@@ -1095,6 +1097,25 @@ Right under the aspect symbol the angular distance is displayed in degrees.
 For very exact aspects (≤ 10% of the orb for aspects involving antiscion and contra-antiscion), the aspect symbol appears highlighted in the table.
 
 This feature is available as an independent option when selecting by the menu action.
+
+
+
+
+• Contrantissium Aspects Matrix Grid
+  F6 in the Aspects Table 
+───────────────────────────────────────────────────────────────────
+
+Displays the aspects between the planets and their Contrantissia.
+
+Planetary orbs are not used here either.
+An orb of 1.5° is considered to validate the aspect.
+
+Right under the aspect symbol the angular distance is displayed in degrees.
+
+For very exact aspects (≤ 10% of the orb for aspects involving antiscion and contra-antiscion), the aspect symbol appears highlighted in the table.
+
+This feature is available as an independent option when selecting by the menu action.
+
 
 
 
