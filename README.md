@@ -189,7 +189,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Firdaria
 <hr>
-<img width="2560" height="1600" alt="05a-firdaria_table" src="https://github.com/user-attachments/assets/9a85240a-d752-4ebf-b0c3-4487a4cc50f0" />
+<img width="2560" height="1600" alt="12-firdaria" src="https://github.com/user-attachments/assets/a89e23f2-3396-4207-9b32-ee1ce8e49328" />
 <hr>
 
 ### Energy Profile Chart
