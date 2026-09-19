@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 11:53-0300\n"
+"POT-Creation-Date: 2026-09-19 12:19-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -841,8 +841,8 @@ msgstr ""
 
 #: src/aspects.c:737
 msgid ""
-" ESC return to chart - F3 Parallel & Contra-parallel - F4 Aspects by Sign - "
-"F5 Antissia - [↓↑| Scroll"
+" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia "
+"- F6 Contrantissia - [↓↑| Scroll"
 msgstr ""
 
 #: src/aspects.c:932

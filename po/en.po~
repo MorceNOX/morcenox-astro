@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 11:49-0300\n"
+"POT-Creation-Date: 2026-09-19 11:53-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -825,7 +825,7 @@ msgstr "Chart deleted successfully."
 msgid "Parallel & Contra-Parallel"
 msgstr "Parallel / Contra-parallel orb"
 
-#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1345
+#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1348
 #, fuzzy
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Press [ESC] to cancel"
@@ -835,7 +835,7 @@ msgstr "Press [ESC] to cancel"
 msgid "Aspects Table"
 msgstr "House System"
 
-#: src/aspects.c:736 src/aspects.c:1344
+#: src/aspects.c:736 src/aspects.c:1347
 msgid "(*) Numbers = angular distance in degrees"
 msgstr ""
 

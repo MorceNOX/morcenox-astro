@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 11:49-0300\n"
+"POT-Creation-Date: 2026-09-19 11:53-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -811,7 +811,7 @@ msgstr ""
 msgid "Parallel & Contra-Parallel"
 msgstr ""
 
-#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1345
+#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1348
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr ""
 
@@ -819,7 +819,7 @@ msgstr ""
 msgid "Aspects Table"
 msgstr ""
 
-#: src/aspects.c:736 src/aspects.c:1344
+#: src/aspects.c:736 src/aspects.c:1347
 msgid "(*) Numbers = angular distance in degrees"
 msgstr ""
 

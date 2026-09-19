@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 11:49-0300\n"
+"POT-Creation-Date: 2026-09-19 11:53-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1032,7 +1032,7 @@ msgstr "Parte Árabe excluída com sucesso."
 msgid "Parallel & Contra-Parallel"
 msgstr "Paralelo & Contra-Paralelo"
 
-#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1345
+#: src/aspects.c:529 src/aspects.c:1056 src/aspects.c:1348
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
@@ -1040,7 +1040,7 @@ msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 msgid "Aspects Table"
 msgstr "Tabela de Aspectos"
 
-#: src/aspects.c:736 src/aspects.c:1344
+#: src/aspects.c:736 src/aspects.c:1347
 msgid "(*) Numbers = angular distance in degrees"
 msgstr "(*) Numerais = distância angular em graus"
 
