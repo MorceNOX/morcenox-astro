@@ -7267,6 +7267,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].type = PROM_ANTISCIUM;
 
                 ants[i].id = i;
+                ants[i].type = ANTISSIUM;
                 ants[i].longitude = prom[prom_id].longitude;
                 ants[i].latitude = prom[prom_id].latitude;
                 ants[i].declination = prom[prom_id].declination;
@@ -7310,6 +7311,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].type = PROM_CONTRANTISCIUM;
     
                 ants[i+num_ants / 2].id = i;
+                ants[i+num_ants / 2].type = CONTRANTISSIUM;
                 ants[i+num_ants / 2].longitude = prom[prom_id].longitude;
                 ants[i+num_ants / 2].latitude = prom[prom_id].latitude;
                 ants[i+num_ants / 2].declination = prom[prom_id].declination;
@@ -7890,7 +7892,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("21. Planetary Energy Profile"),
         _("22. Primary Motivation"),
         _("23. Aspects by Sign"),
-        _("24. Aspects to Antissia & Contrantissia")
+        _("24. Aspects to Antissia"),
+        _("25. Aspects to Contrantissia")
         
     };
     // Calcula automaticamente o total de opções adicionadas ao array
@@ -7913,7 +7916,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("14. Planetary Energy Profile"),
         _("15. Arabic Parts Solar Return Radix Confrontation"),
         _("16. Aspects by Sign"),
-        _("17. Aspects to Antissia & Contrantissia")
+        _("17. Aspects to Antissia"),
+        _("18. Aspects to Contrantissia")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -8199,12 +8203,19 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             else {
                 AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis());
-                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants);  
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis(), ANTISSIUM);
+                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants, ANTISSIUM);  
             }           
             break;
         case 17:
-            display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
+            if (!ctx->mapa_retorno) {
+                display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
+            }
+            else {
+                AspectMatrix matrix_ants = {0}; 
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis(), CONTRANTISSIUM);
+                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants, CONTRANTISSIUM);  
+            }           
             break;
         case 18:
             display_natal_mind_analysis(ctx->mercurio, ctx->lua, ctx->mercury_retro, ctx->phase_id, &ctx->matrix, ctx->pontos_calculados, ctx->plots);
@@ -8224,14 +8235,25 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             break;
         case 22:
-            AspectMatrix matrix_sign = {0};
-            matrix_sign = calculate_aspects_by_sign(ctx->plots);
-            display_aspects_by_sign(ctx->plots, &matrix_sign);
+            if (!ctx->mapa_retorno) {
+                AspectMatrix matrix_sign = {0};
+                matrix_sign = calculate_aspects_by_sign(ctx->plots);
+                display_aspects_by_sign(ctx->plots, &matrix_sign);
+            }
             break;
         case 23:
-            AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis());
-            display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants);
+            if (!ctx->mapa_retorno) {
+                AspectMatrix matrix_ants = {0}; 
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis(), ANTISSIUM);
+                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants, ANTISSIUM);
+            }
+            break;
+        case 24:
+            if (!ctx->mapa_retorno) {
+                AspectMatrix matrix_ants = {0}; 
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis(), CONTRANTISSIUM);
+                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants, CONTRANTISSIUM);
+            }
             break;
         default:
             break;

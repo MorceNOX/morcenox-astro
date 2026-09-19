@@ -27,6 +27,9 @@
 #define Z_HOUSE_CUSP 2
 #define Z_PLANET 3
 
+#define ANTISSIUM 0
+#define CONTRANTISSIUM 1
+
 typedef struct {
     int longitude;
     int type;
@@ -34,6 +37,7 @@ typedef struct {
 
 typedef struct {
     int id;
+    int type;
     char object[10];
     char object_name[30];
     double longitude;

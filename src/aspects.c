@@ -777,9 +777,21 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
         }
         else if (ch == KEY_F(5)) {
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis());
+            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis(), ANTISSIUM);
 
-            display_aspects_antissium(plots, ants, num_ants, &matrix_ants);
+            display_aspects_antissium(plots, ants, num_ants, &matrix_ants, ANTISSIUM);
+            
+            touchwin(aspects_shadow);
+            wrefresh(aspects_shadow);
+            touchwin(aspects_win);
+            wrefresh(aspects_win);
+            prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+        }
+        else if (ch == KEY_F(6)) {
+            AspectMatrix matrix_ants = {0}; 
+            matrix_ants = calculate_aspects_antiscium(plots, ants, num_ants, get_antissia_orbis(), CONTRANTISSIUM);
+
+            display_aspects_antissium(plots, ants, num_ants, &matrix_ants, CONTRANTISSIUM);
             
             touchwin(aspects_shadow);
             wrefresh(aspects_shadow);
@@ -1085,7 +1097,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
 
 
 
-AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_ants, double antissia_orb) {
+AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_ants, double antissia_orb, int ant_type) {
    
     AspectMatrix matrix = {0};
 
@@ -1103,7 +1115,7 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
     for (int i = 0; i < 12 - object_diff; i++) {
         
         for (int j = 0; j < num_ants; j++) {
-            if (i >= j) continue;
+            if (ants[j].type != ant_type) continue;
 
             // returns the angle between -180 and 180 degrees
             double angle = normalize_angle(plots[i].longitude - ants[j].longitude);
@@ -1160,7 +1172,7 @@ AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int
 
 
 
-void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix) {
+void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix, int ant_type) {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
@@ -1183,7 +1195,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
-    const char *title = _(" Antissia & Contrantissia Aspect Matrix Grid ");
+    const char *title = (ant_type == ANTISSIUM)?_(" Antissia Aspect Matrix Grid "):_(" Contrantissia Aspect Matrix Grid ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
@@ -1194,8 +1206,10 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
     int row_pad = 0;
     
+    int index = 0;
     // 1. Cabeçalhos Superiores (Símbolos dos Planetas)
     for (int i = 0; i < num_ants; i++) {
+        if (ants[i].type != ant_type) continue;
 
         int degree = (int)fmod(ants[i].longitude, 30);
         const char *sign_str = get_sign((int)(ants[i].longitude / 30));
@@ -1203,9 +1217,11 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
         snprintf(text, 10, "%d%s", degree, sign_str); 
 
         wattron(aspects_win, A_BOLD);
-        mvwprintw(aspects_win, 2, 6 + 6 * i, ants[i].object);
+        mvwprintw(aspects_win, 2, 6 + 6 * index, ants[i].object);
         wattroff(aspects_win, A_BOLD);
-        mvwprintw(aspects_win, 3, 6 + 6 * i, text);
+        mvwprintw(aspects_win, 3, 6 + 6 * index, text);
+
+        index++;
     }
 
     // 2. Cabeçalhos Laterais (Símbolos dos Planetas)
@@ -1219,29 +1235,19 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
     // 4. Desenho das Linhas Verticais
     for (int i = 0; i < ((12 - object_diff) * 2); i++) {
-        for (int j = 0; j < num_ants + 1; j++) {
+        for (int j = 0; j < (num_ants / 2) + 1; j++) {
             mvwprintw(pad, 2 + i, 2 + 6 * j, "│");
         }
     }
 
     // 3. Desenho das Linhas do Grid
     for (int i = 0; i < 12 - object_diff + 1; i++) {
-        for (int j = 0; j < num_ants; j++) {
+        for (int j = 0; j < (num_ants / 2); j++) {
             if (i == 0) {
-                if (!show_modern_planets) {
-                    mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");
-                }
-                else {
-                    mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────");
-                }                
+                mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");              
             }
             else {
-                if (!show_modern_planets) {
-                    mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
-                }
-                else {
-                    mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────");
-                }
+                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
             }
             
         }
@@ -1249,16 +1255,16 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
     // 5. Renderização dos Dados Pré-Calculados da Matriz
     for (int i = 0; i < 12 - object_diff; i++) {
-        for (int j = 0; j < num_ants; j++) {
+        for (int j = 0; j < (num_ants / 2); j++) {
             
             // Se i >= j, renderiza o bloco nulo/vazio (Triângulo inferior da matriz)
-            if (i >= j) {
-                wattron(pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
-                wattroff(pad, COLOR_PAIR(10) | A_DIM);
-                row_pad = 2 + 2 * i + 1;
-                continue;
-            }
+            // if (i >= j) {
+            //     wattron(pad, COLOR_PAIR(10) | A_DIM);
+            //     mvwprintw(pad, 2 + 2 * i, 3 + 6 * j, "▓▓▓▓▓");
+            //     wattroff(pad, COLOR_PAIR(10) | A_DIM);
+            //     row_pad = 2 + 2 * i + 1;
+            //     continue;
+            // }
 
             // Pega a célula correspondente
             AspectCell cell = matrix->grid[i][j];
