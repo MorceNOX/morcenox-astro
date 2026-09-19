@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 04:47-0300\n"
+"POT-Creation-Date: 2026-09-19 05:10-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "Ascendant"
 msgstr ""
 
-#: src/almuten.c:546 src/directions.c:676 src/draw-chart.c:427
+#: src/almuten.c:546 src/directions.c:698 src/draw-chart.c:427
 #: src/draw-chart.c:1560 src/draw-chart.c:6032 src/draw-chart.c:6051
 msgid "Part of Fortune"
 msgstr ""
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Planetary"
 msgstr ""
 
-#: src/almuten.c:591 src/directions.c:815 src/directions.c:1341
+#: src/almuten.c:591 src/directions.c:837 src/directions.c:1363
 #: src/draw-chart.c:2186 src/draw-chart.c:3904 src/selections.c:1610
 msgid "Day"
 msgstr ""
@@ -692,8 +692,8 @@ msgstr ""
 msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects."
 msgstr ""
 
-#: src/arabic_parts.c:387 src/arabic_parts.c:713 src/directions.c:955
-#: src/directions.c:1482 src/draw-chart.c:3365 src/draw-chart.c:3758
+#: src/arabic_parts.c:387 src/arabic_parts.c:713 src/directions.c:977
+#: src/directions.c:1504 src/draw-chart.c:3365 src/draw-chart.c:3758
 #: src/draw-chart.c:4640 src/firdaria.c:448 src/hyleg.c:742 src/hyleg.c:1060
 #: src/mind.c:314 src/profections.c:187
 msgid "Press ESC to return to chart"
@@ -837,68 +837,68 @@ msgstr ""
 msgid " Antissia & Contrantissia Aspect Matrix Grid "
 msgstr ""
 
-#: src/directions.c:613 src/directions.c:1766
+#: src/directions.c:635 src/directions.c:1809
 msgid "Mundane"
 msgstr ""
 
-#: src/directions.c:746
+#: src/directions.c:768
 msgid " Primary Directions "
 msgstr ""
 
-#: src/directions.c:791 src/directions.c:1312
+#: src/directions.c:813 src/directions.c:1334
 msgid "Active Significator Target: "
 msgstr ""
 
-#: src/directions.c:795
+#: src/directions.c:817
 msgid " [EMPHASIZED HYLEG]"
 msgstr ""
 
-#: src/directions.c:797 src/directions.c:1322
+#: src/directions.c:819 src/directions.c:1344
 msgid "Point not calculated in this chart"
 msgstr ""
 
-#: src/directions.c:802 src/directions.c:1327
+#: src/directions.c:824 src/directions.c:1349
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr ""
 
-#: src/directions.c:812 src/directions.c:1338 src/selections.c:1306
+#: src/directions.c:834 src/directions.c:1360 src/selections.c:1306
 #: src/selections.c:1416
 msgid "Age"
 msgstr ""
 
-#: src/directions.c:813 src/directions.c:1339 src/selections.c:1608
+#: src/directions.c:835 src/directions.c:1361 src/selections.c:1608
 msgid "Year"
 msgstr ""
 
-#: src/directions.c:814 src/directions.c:1340
+#: src/directions.c:836 src/directions.c:1362
 msgid " Mo"
 msgstr ""
 
-#: src/directions.c:816 src/directions.c:1342
+#: src/directions.c:838 src/directions.c:1364
 msgid "Directional Event"
 msgstr ""
 
-#: src/directions.c:817 src/directions.c:1343
+#: src/directions.c:839 src/directions.c:1365
 msgid "Arc (Equat.)"
 msgstr ""
 
-#: src/directions.c:818 src/directions.c:1344
+#: src/directions.c:840 src/directions.c:1366
 msgid "Method"
 msgstr ""
 
-#: src/directions.c:819 src/directions.c:1345
+#: src/directions.c:841 src/directions.c:1367
 msgid "Direction"
 msgstr ""
 
-#: src/directions.c:831 src/directions.c:1358
+#: src/directions.c:853 src/directions.c:1380
 msgid "No directional contacts available for this specific point."
 msgstr ""
 
-#: src/directions.c:841 src/directions.c:1368 src/draw-chart.c:3434
+#: src/directions.c:863 src/directions.c:1390 src/draw-chart.c:3434
 msgid "Term"
 msgstr ""
 
-#: src/directions.c:852 src/directions.c:1378 src/draw-chart.c:403
+#: src/directions.c:874 src/directions.c:1400 src/draw-chart.c:403
 #: src/draw-chart.c:604 src/draw-chart.c:5099 src/draw-chart.c:6024
 #: src/draw-chart.c:6046 src/firdaria.c:101 src/hyleg.c:341 src/hyleg.c:489
 #: src/profections.c:48 src/solar_return.c:1174 src/solar_return.c:1326
@@ -906,7 +906,7 @@ msgstr ""
 msgid "Mars"
 msgstr ""
 
-#: src/directions.c:853 src/directions.c:1379 src/draw-chart.c:409
+#: src/directions.c:875 src/directions.c:1401 src/draw-chart.c:409
 #: src/draw-chart.c:606 src/draw-chart.c:5097 src/draw-chart.c:6026
 #: src/draw-chart.c:6048 src/firdaria.c:103 src/hyleg.c:343 src/hyleg.c:489
 #: src/profections.c:54 src/solar_return.c:1174 src/solar_return.c:1326
@@ -914,14 +914,14 @@ msgstr ""
 msgid "Saturn"
 msgstr ""
 
-#: src/directions.c:854 src/directions.c:1380 src/draw-chart.c:424
+#: src/directions.c:876 src/directions.c:1402 src/draw-chart.c:424
 #: src/draw-chart.c:611 src/draw-chart.c:1562 src/draw-chart.c:6031
 #: src/draw-chart.c:6050 src/draw-chart.c:7176 src/firdaria.c:105
 #: src/solar_return.c:1326 src/solar_return.c:1385 src/solar_return.c:1543
 msgid "South Node"
 msgstr ""
 
-#: src/directions.c:861 src/directions.c:1387 src/draw-chart.c:406
+#: src/directions.c:883 src/directions.c:1409 src/draw-chart.c:406
 #: src/draw-chart.c:605 src/draw-chart.c:5098 src/draw-chart.c:6025
 #: src/draw-chart.c:6047 src/firdaria.c:102 src/hyleg.c:342 src/hyleg.c:486
 #: src/profections.c:53 src/solar_return.c:1174 src/solar_return.c:1326
@@ -929,7 +929,7 @@ msgstr ""
 msgid "Jupiter"
 msgstr ""
 
-#: src/directions.c:862 src/directions.c:1388 src/draw-chart.c:400
+#: src/directions.c:884 src/directions.c:1410 src/draw-chart.c:400
 #: src/draw-chart.c:603 src/draw-chart.c:5094 src/draw-chart.c:6023
 #: src/draw-chart.c:6045 src/firdaria.c:100 src/hyleg.c:340 src/hyleg.c:486
 #: src/profections.c:49 src/solar_return.c:1174 src/solar_return.c:1326
@@ -937,63 +937,63 @@ msgstr ""
 msgid "Venus"
 msgstr ""
 
-#: src/directions.c:863 src/directions.c:1389 src/draw-chart.c:421
+#: src/directions.c:885 src/directions.c:1411 src/draw-chart.c:421
 #: src/draw-chart.c:610 src/draw-chart.c:1564 src/draw-chart.c:6030
 #: src/draw-chart.c:6049 src/draw-chart.c:7176 src/firdaria.c:104
 #: src/solar_return.c:1326 src/solar_return.c:1388 src/solar_return.c:1546
 msgid "North Node"
 msgstr ""
 
-#: src/directions.c:913 src/directions.c:1439
+#: src/directions.c:935 src/directions.c:1461
 msgid "Direct"
 msgstr ""
 
-#: src/directions.c:913 src/directions.c:1439
+#: src/directions.c:935 src/directions.c:1461
 msgid "Converse"
 msgstr ""
 
-#: src/directions.c:930 src/directions.c:1457
+#: src/directions.c:952 src/directions.c:1479
 msgid ""
 "Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."
 msgstr ""
 
-#: src/directions.c:933 src/directions.c:1460
+#: src/directions.c:955 src/directions.c:1482
 msgid "Aspects: Zodiacal with Real Latitude (Method Placidus)."
 msgstr ""
 
-#: src/directions.c:935 src/directions.c:1462
+#: src/directions.c:957 src/directions.c:1484
 msgid "Aspects: Mundane proportional to Semi-Arcs."
 msgstr ""
 
-#: src/directions.c:937 src/directions.c:1464
+#: src/directions.c:959 src/directions.c:1486
 msgid ""
 "Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-"
 "Arcs)."
 msgstr ""
 
-#: src/directions.c:943 src/directions.c:1470
+#: src/directions.c:965 src/directions.c:1492
 msgid "[↑/↓] [PgUp/PgDn] Scroll (Showing"
 msgstr ""
 
-#: src/directions.c:946 src/directions.c:1473
+#: src/directions.c:968 src/directions.c:1495
 msgid "of"
 msgstr ""
 
-#: src/directions.c:948 src/directions.c:1475
+#: src/directions.c:970 src/directions.c:1497
 msgid ") | [←/→] Change Target"
 msgstr ""
 
-#: src/directions.c:949 src/directions.c:1476
+#: src/directions.c:971 src/directions.c:1498
 msgid " | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] Both"
 msgstr ""
 
-#: src/directions.c:951 src/directions.c:1478
+#: src/directions.c:973 src/directions.c:1500
 msgid ""
 "Use [←/→] Change Target | [C] Conv [D] Dir [A] All | [Z] Zod [M] Mund [B] "
 "Both"
 msgstr ""
 
-#: src/directions.c:1270
+#: src/directions.c:1292
 msgid " Primary Directions to Arabic Parts "
 msgstr ""
 

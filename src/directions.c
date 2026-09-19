@@ -541,7 +541,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
 
                 // Correção de rotação circular esférica
                 if (arco < 0) arco += 360.0; 
-
+                //if (arco > 180.0) arco = 360.0 - arco;
 
                 // double arco = 0.0;
                 // double cota_mundana_prom = md_prom / sa_prom;
@@ -919,9 +919,9 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                     atributo_extra |= A_NORMAL;
                 }
 
-                // if (eh_termo) {
-                //    atributo_extra |= A_DIM;
-                // }
+                if (eh_termo) {
+                   atributo_extra |= A_UNDERLINE;
+                }
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
@@ -1445,9 +1445,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     atributo_extra |= A_NORMAL;
                 }
 
-                // if (eh_termo) {
-                //    atributo_extra |= A_DIM;
-                // }
+                if (eh_termo) {
+                   atributo_extra |= A_UNDERLINE;
+                }
                 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
