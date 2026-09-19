@@ -181,6 +181,7 @@ typedef struct {
     Promissor *prom;
 
     AntObject *ants;
+    int num_ants;
 
     int *house_rulers;
 

@@ -1228,10 +1228,20 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < num_ants; j++) {
             if (i == 0) {
-                mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");
+                if (!show_modern_planets) {
+                    mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");
+                }
+                else {
+                    mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────");
+                }                
             }
             else {
-                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
+                if (!show_modern_planets) {
+                    mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
+                }
+                else {
+                    mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────");
+                }
             }
             
         }

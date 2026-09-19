@@ -7233,79 +7233,93 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[prom_id].type = PROM_TERM;
         }
 
+        int num_ants = 24 - (object_diff * 2);
+        AntObject ants[num_ants];
         
-        AntObject ants[14] = {0};
         
-        
-        double longitudes_ant[7] = {0};
-        int sign_ant[7] = {0};
+        double longitudes_ant[num_ants / 2];
+        int sign_ant[num_ants / 2];
 
-        for (int i = 0; i < 7; i++, prom_id++) {
-            snprintf(prom[prom_id].object, 10, "A%s", plots[i].object);
-            snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
-            prom[prom_id].id = prom_id;
+        for (int i = 0; i < 12; i++) {
+            if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
+                show_modern_planets        
+            ) {
+                snprintf(prom[prom_id].object, 10, "A%s", plots[i].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
+                prom[prom_id].id = prom_id;
 
-            longitudes_ant[i] = get_antiscium_degree(fmod(plots[i].longitude, 30));
-            sign_ant[i] = get_sign_antiscium((int)(plots[i].longitude / 30));
+                longitudes_ant[i] = get_antiscium_degree(fmod(plots[i].longitude, 30));
+                sign_ant[i] = get_sign_antiscium((int)(plots[i].longitude / 30));
 
-            prom[prom_id].longitude = sign_ant[i] * 30.0 + longitudes_ant[i];
+                prom[prom_id].longitude = sign_ant[i] * 30.0 + longitudes_ant[i];
+                
+                prom[prom_id].latitude = plots[i].latitude;
+                
+                double xx_in[3], xx_out[3];
+                xx_in[0] = prom[prom_id].longitude;
+                xx_in[1] = prom[prom_id].latitude;
+                xx_in[2] = 1.0;
+                swe_cotrans(xx_in, xx_out, -true_obliquity);
+                prom[prom_id].declination = xx_out[1];
+                prom[prom_id].ra = xx_out[0];
+                
+                prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
+                prom[prom_id].type = PROM_ANTISCIUM;
+
+                ants[i].id = i;
+                ants[i].longitude = prom[prom_id].longitude;
+                ants[i].latitude = prom[prom_id].latitude;
+                ants[i].declination = prom[prom_id].declination;
+                ants[i].house = prom[prom_id].house;
+                snprintf(ants[i].object, 10, "A%s", plots[i].object);
+                snprintf(ants[i].object_name, 30, "Antiscium %s", plots[i].object_name);
+
+                prom_id++;
+            }
             
-            prom[prom_id].latitude = plots[i].latitude;
-            
-            double xx_in[3], xx_out[3];
-            xx_in[0] = prom[prom_id].longitude;
-            xx_in[1] = prom[prom_id].latitude;
-            xx_in[2] = 1.0;
-            swe_cotrans(xx_in, xx_out, -true_obliquity);
-            prom[prom_id].declination = xx_out[1];
-            prom[prom_id].ra = xx_out[0];
-            
-            prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
-            prom[prom_id].type = PROM_ANTISCIUM;
-
-            ants[i].id = i;
-            ants[i].longitude = prom[prom_id].longitude;
-            ants[i].latitude = prom[prom_id].latitude;
-            ants[i].declination = prom[prom_id].declination;
-            ants[i].house = prom[prom_id].house;
-            snprintf(ants[i].object, 10, "A%s", plots[i].object);
-            snprintf(ants[i].object_name, 30, "Antiscium %s", plots[i].object_name);
         }
 
 
-        double longitudes_cant[7] = {0};
-        int sign_cant[7] = {0};
+        double longitudes_cant[num_ants / 2];
+        int sign_cant[num_ants / 2];
 
-        for (int i = 0; i < 7; i++, prom_id++) {
-            snprintf(prom[prom_id].object, 10, "CA%s", plots[i].object);
-            snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
-            prom[prom_id].id = prom_id;
+        for (int i = 0; i < 12; i++) {
+            if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
+                show_modern_planets        
+            ) {
+                snprintf(prom[prom_id].object, 10, "CA%s", plots[i].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
+                prom[prom_id].id = prom_id;
+    
+                longitudes_cant[i] = longitudes_ant[i];
+                sign_cant[i] = get_opposite_sign(sign_ant[i]);
+    
+                prom[prom_id].longitude = sign_cant[i] * 30.0 + longitudes_cant[i];
+                
+                prom[prom_id].latitude = -plots[i].latitude;
+                
+                double xx_in[3], xx_out[3];
+                xx_in[0] = prom[prom_id].longitude;
+                xx_in[1] = prom[prom_id].latitude;
+                xx_in[2] = 1.0;
+                swe_cotrans(xx_in, xx_out, -true_obliquity);
+                prom[prom_id].declination = xx_out[1];
+                prom[prom_id].ra = xx_out[0];
+                
+                prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
+                prom[prom_id].type = PROM_CONTRANTISCIUM;
+    
+                ants[i+num_ants / 2].id = i;
+                ants[i+num_ants / 2].longitude = prom[prom_id].longitude;
+                ants[i+num_ants / 2].latitude = prom[prom_id].latitude;
+                ants[i+num_ants / 2].declination = prom[prom_id].declination;
+                ants[i+num_ants / 2].house = prom[prom_id].house;
+                snprintf(ants[i+num_ants / 2].object, 10, "CA%s", plots[i].object);
+                snprintf(ants[i+num_ants / 2].object_name, 30, "Contrantiscium %s", plots[i].object_name);
 
-            longitudes_cant[i] = longitudes_ant[i];
-            sign_cant[i] = get_opposite_sign(sign_ant[i]);
-
-            prom[prom_id].longitude = sign_cant[i] * 30.0 + longitudes_cant[i];
+                prom_id++;
+            }
             
-            prom[prom_id].latitude = -plots[i].latitude;
-            
-            double xx_in[3], xx_out[3];
-            xx_in[0] = prom[prom_id].longitude;
-            xx_in[1] = prom[prom_id].latitude;
-            xx_in[2] = 1.0;
-            swe_cotrans(xx_in, xx_out, -true_obliquity);
-            prom[prom_id].declination = xx_out[1];
-            prom[prom_id].ra = xx_out[0];
-            
-            prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
-            prom[prom_id].type = PROM_CONTRANTISCIUM;
-
-            ants[i+7].id = i;
-            ants[i+7].longitude = prom[prom_id].longitude;
-            ants[i+7].latitude = prom[prom_id].latitude;
-            ants[i+7].declination = prom[prom_id].declination;
-            ants[i+7].house = prom[prom_id].house;
-            snprintf(ants[i+7].object, 10, "CA%s", plots[i].object);
-            snprintf(ants[i+7].object_name, 30, "Contrantiscium %s", plots[i].object_name);
         }
 
         // DEBUG
@@ -7568,6 +7582,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ctx.prom = prom;
 
                 ctx.ants = ants;
+                ctx.num_ants = num_ants;
 
                 ctx.house_rulers = house_rulers;
 
@@ -7622,7 +7637,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'x':
             case KEY_F(3):
                 desativar_arrasto_mouse();
-                display_aspects(plots, &matrix, &matrix_decl, ants, 14);
+                display_aspects(plots, &matrix, &matrix_decl, ants, num_ants);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
@@ -8090,7 +8105,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_force(ctx->plots, ctx->dig, ctx->strength_planets);
             break;
         case 4:
-            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, 14);
+            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, ctx->num_ants);
             break;
         case 5:
             display_declination_aspects(ctx->plots, &ctx->matrix_decl);
@@ -8184,8 +8199,8 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             else {
                 AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14, get_antissia_orbis());
-                display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);  
+                matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis());
+                display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants);  
             }           
             break;
         case 17:
@@ -8215,8 +8230,8 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 23:
             AspectMatrix matrix_ants = {0}; 
-            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, 14, get_antissia_orbis());
-            display_aspects_antissium(ctx->plots, ctx->ants, 14, &matrix_ants);
+            matrix_ants = calculate_aspects_antiscium(ctx->plots, ctx->ants, ctx->num_ants, get_antissia_orbis());
+            display_aspects_antissium(ctx->plots, ctx->ants, ctx->num_ants, &matrix_ants);
             break;
         default:
             break;
