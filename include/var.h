@@ -80,6 +80,8 @@ extern const double ASP_MAJOR_EXACT;
 
 extern const double TEMPERAMENT_RANK_PROPORTION;
 
+extern int prom_id;
+
 void update_interface_language();
 
 #endif

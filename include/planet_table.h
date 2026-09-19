@@ -38,6 +38,7 @@ typedef struct {
     char object_name[30];
     double longitude;
     double latitude;
+    double ra;
     double declination;
     int house;
 } AntObject;
@@ -58,6 +59,8 @@ typedef struct {
     double setting_time;
     double mid_time;
     double declination;
+    double latitude;
+    double ra;
 } PlotObject;
 
 typedef struct {
