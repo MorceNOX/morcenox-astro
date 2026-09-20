@@ -391,7 +391,7 @@ void set_data() {
     else {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
     }
-    
+
     ativar_arrasto_mouse();
     flushinp();
 }
@@ -1361,7 +1361,8 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
 
     bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
 
     while(1) {
         erase();
@@ -2163,7 +2164,8 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     nodelay(help_win, FALSE);
     keypad(help_win, TRUE);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
 
     //leaveok(stdscr, TRUE);
     //leaveok(shadow_win, TRUE);
@@ -2422,6 +2424,10 @@ int main() {
     noecho();
     cbreak();
     set_escdelay(25);
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
+
     //desativar_arrasto_mouse();
 
     start_color();

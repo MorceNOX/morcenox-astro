@@ -29,6 +29,16 @@
 #define PROM_CONTRANTISCIUM 5
 
 typedef struct {
+    double ra;       // Ascensão Reta (Graus)
+    double dec;      // Declinação (Graus)
+    double md;       // Distância Meridiana (Graus)
+    double ad;       // Diferença Ascensional (Graus)
+    double sa;       // Arco Semicircular (Diurno se acima do horizonte, Noturno se abaixo)
+    double pm;       // Posição Mundana Proporcional (0 a 90 por quadrante ou Razão Placidiana)
+} SpeculumPlaneta;
+
+
+typedef struct {
     int id;
     char object[10];
     char object_name[30];
@@ -56,8 +66,8 @@ typedef struct {
     int sentido;        // 0 = Direct; 1 = Converse
 } LinhaDirecao;
 
-double calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);
-double calcular_distancia_meridiana(double ra, double ramc, int acima_do_horizonte);
+double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);
+double _calcular_distancia_meridiana(double ra, double ramc, int acima_do_horizonte);
 double calcular_ra(double longitude, double declinacao, double jd);
 int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom);
 void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom);

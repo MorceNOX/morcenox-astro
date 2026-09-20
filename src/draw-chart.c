@@ -2199,6 +2199,11 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         }
         mvprintw(LINES - 2, 1,       "Zoom: + -  | Pan: ←↓→↑  | Reset: R ");
         mvprintw(LINES - 1, 1, _("Aspect: / *| Speed: ]/[ | Quit: Q "));
+        
+        attron(COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+        mvprintw(LINES - 6, max_x - 17, _("[    MENU    ]"));
+        attroff(COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
@@ -4041,6 +4046,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     scrollok(pad, TRUE);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(200);
 
     char str[512];
     char str2[512];
@@ -4893,12 +4899,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
 
-    ativar_arrasto_mouse();
-    flushinp();
+    
 
     int is_dragging = 0;
     MEVENT mouse_event;
     
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(125);
+    ativar_arrasto_mouse();
+    flushinp();
+
     float aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, 0);
 
     // // DEBUG: Aspect Ratio verification
@@ -7324,9 +7334,22 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
                 prom_id++;
                 index_cant++;
-            }
-            
+            }            
         }
+
+        snprintf(prom[prom_id].object, 10, "%s", plots[P_FORTUNA - object_diff].object);
+        snprintf(prom[prom_id].object_name, 30, "%s", plots[P_FORTUNA - object_diff].object_name);
+        prom[prom_id].id = prom_id;
+        prom[prom_id].longitude = plots[P_FORTUNA - object_diff].longitude;
+        prom[prom_id].latitude = plots[P_FORTUNA - object_diff].latitude;
+        prom[prom_id].declination = plots[P_FORTUNA - object_diff].declination;
+        prom[prom_id].ra = plots[P_FORTUNA - object_diff].ra;
+        prom[prom_id].house = get_house(plots[P_FORTUNA - object_diff].longitude, cusps);
+        prom[prom_id].type = PROM_POINT;
+
+        prom_id++;
+
+
 
         // DEBUG
         // terminate_database();
@@ -7352,6 +7375,129 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                    (terms_system == 1) ? tabela_termos_egipcios : tabela_termos_ptolomeu, show_terms);
         
         bool saiu_retorno = false;
+
+
+        ContextoMenu ctx;
+
+        ctx.julian_day = julian_day;
+        ctx.local_time = local_time;
+        ctx.lat = lat;
+        ctx.lon = lon;
+        ctx.elev = elev;
+        ctx.plots = plots;
+        ctx.season_fmt = season_fmt;
+        ctx.sanYear = sanYear;
+        ctx.sanMon = sanMon;
+        ctx.sanDay = sanDay;
+        ctx.sanHour = sanHour;
+        ctx.sunrise_time = sunrise_time;
+        ctx.sunset_time = sunset_time;
+        ctx.next_sunrise_time = next_sunrise_time;
+        ctx.city = city;
+        ctx.country = country;
+        ctx.phase = phase;
+        ctx.moon_temperament = moon_temperament;
+        ctx.dark_mode = dark_mode;
+        ctx.last_hr = last_hr;
+        ctx.last_min = last_min;
+        ctx.last_sec = last_sec;
+        ctx.chart_name = chart_name;
+        ctx.gender_id = gender_id;
+        
+        ctx.planet_matrix = planet_matrix;
+        ctx.dig = dig;
+        
+        ctx.matrix = matrix;
+        ctx.matrix_decl = matrix_decl;
+        
+        ctx.week_day = week_day;
+        ctx.hours = hours;
+        ctx.planetary_hour = planetary_hour;
+        ctx.daytime_hour = daytime_hour;
+        ctx.nighttime_hour = nighttime_hour;
+
+        ctx.cusps = cusps;
+        ctx.pHouse = (char **)pHouse;
+        ctx.house_ruler_str = (char **)house_ruler_str;
+        ctx.house_system_str = house_system_str;
+
+        ctx.pontos_calculados = pontos_calculados;
+
+        ctx.phase_id = phase_id;
+        ctx.season_id = season_id;
+        
+        ctx.anos_alcochoden = alco.anos_concedidos;
+
+        ctx.signo_da_casa_8 = signo_da_casa_8;
+        ctx.regente_dia = regente_dia;
+        ctx.regente_hora = regente_hora;
+
+        ctx.obj = obj;
+        ctx.total_objects = total_objects;
+
+        ctx.animated = animated;
+        ctx.anim_interval = anim_interval;
+
+        ctx.mercurio = mercurio;
+        ctx.lua = lua;
+        ctx.mercury_retro = retro[P_MERCURY];
+
+        ctx.zoom_factor = zoom_factor;
+        ctx.pan_x = pan_x;
+        ctx.pan_y = pan_y;
+        ctx.n = n;
+        ctx.tz_offset = tz_offset;
+        ctx.house_div = house_div;
+        ctx.house_system = house_system;
+
+        ctx.mapa_retorno = mapa_retorno;
+        ctx.qtd_almuten_rev = qtd_almuten_rev;
+        ctx.almuten_rev = almuten_rev;
+
+        ctx.almuten_lon = almuten_lon;
+        ctx.almuten_lat = almuten_lat;
+        ctx.armc = armc;
+        ctx.dig_almuten_natal = dig_almuten_natal;
+        ctx.ascendant = ascendant;
+        ctx.lat_natal = lat_natal;
+        ctx.senhor_da_profeccao = senhor_da_profeccao;
+        ctx.id_senhor_firdaria = id_senhor_firdaria;
+        ctx.id_senhor_subfirdaria = id_senhor_subfirdaria;
+        ctx.armc_natal = armc_natal;
+
+        ctx.nome_anareta = nome_anareta;
+        ctx.nome_senhor_da_casa8 = nome_senhor_da_casa8;
+        ctx.tipo_h = tipo_h;
+        ctx.idx_objeto_h = idx_objeto_h;
+        ctx.planet_longitudes = planet_longitudes;
+        ctx.jd_natal = jd_natal;
+        ctx.planet_latitudes = planet_latitudes;
+
+        ctx.strength_planets = strength_planets;
+
+        ctx.strength_natal = strength_natal;
+
+        ctx.longitudes_natal = longitudes_natal;
+        ctx.tipo_h_natal = tipo_h_natal;
+        ctx.idx_hyleg_natal = idx_hyleg_natal;
+
+        ctx.asc_natal = asc_natal;
+
+        ctx.cusps_natal = cusps_natal;
+
+        ctx.tipo_san = tipo_san;
+
+        ctx.prom = prom;
+
+        ctx.ants = ants;
+        ctx.num_ants = num_ants;
+
+        ctx.house_rulers = house_rulers;
+
+        ctx.obj_natal = obj_natal;
+        ctx.total_obj_natal = total_obj_natal;
+
+        ctx.idade = idade;
 
         
 
@@ -7474,129 +7620,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     house_div = !house_div;
                     break;
             case 'm':
-            case 'M':
-                ContextoMenu ctx;
-
-                ctx.julian_day = julian_day;
-                ctx.local_time = local_time;
-                ctx.lat = lat;
-                ctx.lon = lon;
-                ctx.elev = elev;
-                ctx.plots = plots;
-                ctx.season_fmt = season_fmt;
-                ctx.sanYear = sanYear;
-                ctx.sanMon = sanMon;
-                ctx.sanDay = sanDay;
-                ctx.sanHour = sanHour;
-                ctx.sunrise_time = sunrise_time;
-                ctx.sunset_time = sunset_time;
-                ctx.next_sunrise_time = next_sunrise_time;
-                ctx.city = city;
-                ctx.country = country;
-                ctx.phase = phase;
-                ctx.moon_temperament = moon_temperament;
-                ctx.dark_mode = dark_mode;
-                ctx.last_hr = last_hr;
-                ctx.last_min = last_min;
-                ctx.last_sec = last_sec;
-                ctx.chart_name = chart_name;
-                ctx.gender_id = gender_id;
-                
-                ctx.planet_matrix = planet_matrix;
-                ctx.dig = dig;
-                
-                ctx.matrix = matrix;
-                ctx.matrix_decl = matrix_decl;
-                
-                ctx.week_day = week_day;
-                ctx.hours = hours;
-                ctx.planetary_hour = planetary_hour;
-                ctx.daytime_hour = daytime_hour;
-                ctx.nighttime_hour = nighttime_hour;
-
-                ctx.cusps = cusps;
-                ctx.pHouse = (char **)pHouse;
-                ctx.house_ruler_str = (char **)house_ruler_str;
-                ctx.house_system_str = house_system_str;
-
-                ctx.pontos_calculados = pontos_calculados;
-
-                ctx.phase_id = phase_id;
-                ctx.season_id = season_id;
-                
-                ctx.anos_alcochoden = alco.anos_concedidos;
-
-                ctx.signo_da_casa_8 = signo_da_casa_8;
-                ctx.regente_dia = regente_dia;
-                ctx.regente_hora = regente_hora;
-
-                ctx.obj = obj;
-                ctx.total_objects = total_objects;
-
-                ctx.animated = animated;
-                ctx.anim_interval = anim_interval;
-
-                ctx.mercurio = mercurio;
-                ctx.lua = lua;
-                ctx.mercury_retro = retro[P_MERCURY];
-
-                ctx.zoom_factor = zoom_factor;
-                ctx.pan_x = pan_x;
-                ctx.pan_y = pan_y;
-                ctx.n = n;
-                ctx.tz_offset = tz_offset;
-                ctx.house_div = house_div;
-                ctx.house_system = house_system;
-
-                ctx.mapa_retorno = mapa_retorno;
-                ctx.qtd_almuten_rev = qtd_almuten_rev;
-                ctx.almuten_rev = almuten_rev;
-
-                ctx.almuten_lon = almuten_lon;
-                ctx.almuten_lat = almuten_lat;
-                ctx.armc = armc;
-                ctx.dig_almuten_natal = dig_almuten_natal;
-                ctx.ascendant = ascendant;
-                ctx.lat_natal = lat_natal;
-                ctx.senhor_da_profeccao = senhor_da_profeccao;
-                ctx.id_senhor_firdaria = id_senhor_firdaria;
-                ctx.id_senhor_subfirdaria = id_senhor_subfirdaria;
-                ctx.armc_natal = armc_natal;
-
-                ctx.nome_anareta = nome_anareta;
-                ctx.nome_senhor_da_casa8 = nome_senhor_da_casa8;
-                ctx.tipo_h = tipo_h;
-                ctx.idx_objeto_h = idx_objeto_h;
-                ctx.planet_longitudes = planet_longitudes;
-                ctx.jd_natal = jd_natal;
-                ctx.planet_latitudes = planet_latitudes;
-
-                ctx.strength_planets = strength_planets;
-
-                ctx.strength_natal = strength_natal;
-
-                ctx.longitudes_natal = longitudes_natal;
-                ctx.tipo_h_natal = tipo_h_natal;
-                ctx.idx_hyleg_natal = idx_hyleg_natal;
-
-                ctx.asc_natal = asc_natal;
-
-                ctx.cusps_natal = cusps_natal;
-
-                ctx.tipo_san = tipo_san;
-
-                ctx.prom = prom;
-
-                ctx.ants = ants;
-                ctx.num_ants = num_ants;
-
-                ctx.house_rulers = house_rulers;
-
-                ctx.obj_natal = obj_natal;
-                ctx.total_obj_natal = total_obj_natal;
-
-                ctx.idade = idade;
-            
+            case 'M':            
                 desativar_arrasto_mouse();                      
                 open_menu_tables(&ctx);
                 ativar_arrasto_mouse();
@@ -7801,8 +7825,36 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     
                     float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
                     
+                    // Coordenadas do clique
+                    int linha_clique = mouse_event.y;
+                    int col_clique = mouse_event.x;
+                    
+                    // Coordenadas geométricas do Botão Fixo OK
+                    int linha_botao = LINES - 6;
+                    int col_inicio_botao = max_x - 17;
+                    int col_fim_botao = col_inicio_botao + 16;
+
+                    // ========================================================
+                    // ROTEAMENTO 1: O clique acertou o BOTÃO OK?
+                    // ========================================================
+                    if (linha_clique == linha_botao && col_clique >= col_inicio_botao && col_clique < col_fim_botao) {
+                        
+                        // Para o botão, aceitamos qualquer interação de clique (Apertou ou Soltou)
+                        if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            desativar_arrasto_mouse();                      
+                            open_menu_tables(&ctx);
+                            ativar_arrasto_mouse();
+                            flushinp();
+
+                            clear(); 
+                            touchwin(stdscr);
+                            wnoutrefresh(stdscr);
+                            doupdate();
+                            break; // Sai do switch principal
+                        }
+                    }
                     // 2. DETECTAR O INÍCIO DO ARRASTE (Clique do Botão 1)
-                    if (mouse_event.bstate & BUTTON1_PRESSED) {
+                    else if (mouse_event.bstate & BUTTON1_PRESSED) {
                         // Calcula a distância matemática de onde o usuário clicou até o centro (incluindo o pan atual)
                         double dx = (mouse_event.x - (center_x + pan_x)) / aspect_ratio;
                         double dy = mouse_event.y - (center_y + pan_y);
@@ -7833,6 +7885,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     else if (mouse_event.bstate & BUTTON1_RELEASED) {
                         is_dragging = 0; // Desativa o modo de arraste (Drop)
                     }
+                    
                 }
                 break;
             
@@ -7941,7 +7994,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
     
-    int menu_width = 54;
+    int menu_width = 55;
     int menu_height = 15;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;
@@ -7970,7 +8023,8 @@ void open_menu_tables(ContextoMenu *ctx) {
 
     wbkgd(win, COLOR_PAIR(26) | FLAGS);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
       
     bool saiu_retorno = false;
 
@@ -7994,10 +8048,17 @@ void open_menu_tables(ContextoMenu *ctx) {
             if (item_index < total_opcoes) {
                 int attr = (item_index == selected_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(26);
                 wattron(win, attr);
-                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], (menu_width - 4) - get_visual_width(opcoes[item_index]), " ");
+                mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], (menu_width - 1 - 4) - get_visual_width(opcoes[item_index]), " ");
                 wattroff(win, attr);
             }
         }
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(win, scroll_offset, total_opcoes, max_display_items, 0);
+        wattroff(win, COLOR_PAIR(28) | flag);
+
         wnoutrefresh(win);
         
         doupdate();
@@ -8048,26 +8109,74 @@ void open_menu_tables(ContextoMenu *ctx) {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
                     int start_x_absoluto = getbegx(win);
-                    int end_x_absoluto = start_x_absoluto + getmaxx(win);
+                    //int end_x_absoluto = start_x_absoluto + getmaxx(win);
                     
                     int linha_clique_janela = event.y - getbegy(win);
-                    int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
+                    int offset_inicio_dados = 1; // Devido à borda superior
                     int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
 
-                    // 1. Verifica se o clique ocorreu dentro dos limites horizontais do menu
-                    if (event.x >= start_x_absoluto && event.x < end_x_absoluto) {
+                    // Coluna exata da scrollbar
+                    int col_scrollbar_absoluta = getbegx(win) + (getmaxx(win) - 2);
+
+                    // ========================================================
+                    // PRIORIDADE 1: O clique ocorreu EXATAMENTE na barra?
+                    // ========================================================
+                    if (event.x == col_scrollbar_absoluta) {
                         
-                        // 2. CORREÇÃO: Verifica se a linha clicada está dentro da área VISÍVEL da tela
-                        if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                        // Guardamos a posição relativa atual do item selecionado na tela antes do clique
+                        int posicao_relativa_tela = selected_index - scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback de segurança
+                        }
+
+                        int offset_inicio_barra = 1; 
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
                             
-                            // 3. CORREÇÃO: O índice real é a linha da tela + o deslocamento do scroll
+                            int max_scroll_y = total_opcoes - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // 1. Atualiza o offset de rolagem da janela
+                                scroll_offset = novo_offset;
+
+                                // 2. CORREÇÃO: Atualiza a seleção acompanhando a nova página
+                                selected_index = scroll_offset + posicao_relativa_tela;
+
+                                // 3. Proteções para não estourar os limites do vetor de opções
+                                if (selected_index >= total_opcoes) {
+                                    selected_index = total_opcoes - 1;
+                                    
+                                    // Se o ajuste forçado jogar a seleção para fora da tela, recalcula o scroll
+                                    if (selected_index < scroll_offset) {
+                                        scroll_offset = selected_index - max_display_items + 1;
+                                        if (scroll_offset < 0) scroll_offset = 0;
+                                    }
+                                }
+                                if (selected_index < 0) {
+                                    selected_index = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    // ========================================================
+                    // PRIORIDADE 2: Se não foi na barra, verifica se foi no texto
+                    // ========================================================
+                    else if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) { // Protegido para não invadir a barra
+                        
+                        if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
                             int indice_clicado = scroll_offset + linha_clique_dados;
 
-                            // Garante que o usuário não clicou em uma linha em branco no fim da lista
                             if (indice_clicado < total_opcoes) {
                                 selected_index = indice_clicado;
 
-                                // 4. Verifica se foi um DUPLO CLIQUE para disparar a ação
                                 if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
                                     menu_selected = 1;
                                     break; 
@@ -8078,6 +8187,7 @@ void open_menu_tables(ContextoMenu *ctx) {
                 }
                 break;
             }
+    
 
 
 

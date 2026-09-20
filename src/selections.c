@@ -2479,7 +2479,8 @@ int select_topic(char *file, int max_width) {
 
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
         
     while (!topic_selected) {
 
@@ -2666,7 +2667,8 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     keypad(country_win, TRUE);
     //curs_set(0);
     
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
 
     int country_selected = 0;
     int key;
@@ -2925,7 +2927,8 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     keypad(city_win, TRUE);
     //curs_set(0);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
 
     // Clear and draw shadow
     werase(city_shadow);
