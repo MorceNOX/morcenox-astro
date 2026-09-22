@@ -433,8 +433,6 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
 
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_TERM) continue;
-        //if (prom[p].type == PROM_ANTISCIUM) continue;
-        //if (prom[p].type == PROM_CONTRANTISCIUM) continue;
         
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
@@ -1620,11 +1618,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
 
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_TERM) continue;
-        if (prom[p].type == PROM_ANTISCIUM) continue;
-        if (prom[p].type == PROM_CONTRANTISCIUM) continue;
-        // if (strcmp(prom[p].object_name, "") == 0) continue;
-        // if (strcmp(prom[p].object_name, " ") == 0) continue;
-
+        
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
         double dec_prom_rad = para_radianos(prom[p].declination);

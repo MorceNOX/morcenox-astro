@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-21 21:02-0300\n"
+"POT-Creation-Date: 2026-09-21 21:04-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1064,7 +1064,7 @@ msgstr " Matriz de Aspectos Antissia "
 msgid " Contrantissia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos Contrantissia "
 
-#: src/directions.c:536 src/directions.c:1745
+#: src/directions.c:536 src/directions.c:1729
 msgid "Mundane"
 msgstr "Mundana"
 
