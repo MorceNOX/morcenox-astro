@@ -2478,6 +2478,32 @@ char *get_sign_name(int n) {
 }
 
 
+// [CORRIGIDO] Calcula a Antíssia na Eclíptica (Eixo dos Solstícios)
+double calcular_antiscia(double longitude_natal) {
+    // A regra universal correta é 180 - Longitude Natal
+    double antiscia = 180.0 - longitude_natal;
+    
+    // Normalização estrita para o círculo de 0 a 360 graus
+    while (antiscia < 0.0)   antiscia += 360.0;
+    while (antiscia >= 360.0) antiscia -= 360.0;
+    
+    return antiscia;
+}
+
+// [CORRIGIDO] Calcula a Contra-Antíssia na Eclíptica (Oposição da Antíssia)
+double calcular_contra_antiscia(double longitude_natal) {
+    // Como a Contra-Antíssia é a oposição (Antíssia + 180°), 
+    // a fórmula direta simplificada é: 180 - Longitude + 180 = 360 - Longitude
+    double contra_antiscia = 360.0 - longitude_natal;
+    
+    while (contra_antiscia < 0.0)   contra_antiscia += 360.0;
+    while (contra_antiscia >= 360.0) contra_antiscia -= 360.0;
+    
+    return contra_antiscia;
+}
+
+
+
 char *get_sign_element(int n) {
     switch(n) {
         case 0: return "🜂";
@@ -7246,25 +7272,25 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int num_ants = 24 - (object_diff * 2);
         AntObject ants[num_ants];
         
-        
         double longitudes_ant[num_ants / 2];
-        int sign_ant[num_ants / 2];
+        //int sign_ant[num_ants / 2];
 
         int index_ant = 0;
         for (int i = 0; i < 12; i++) {
+            // Filtragem correta dos planetas tradicionais / modernos / nodos
             if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
                 show_modern_planets        
             ) {
-                snprintf(prom[prom_id].object, 10, "A%s", plots[index_ant].object);
-                snprintf(prom[prom_id].object_name, 30, "%s", plots[index_ant].object_name);
+                // CORREÇÃO: Lemos plots[i] em vez de plots[index_ant] para garantir o alinhamento com o loop
+                snprintf(prom[prom_id].object, 10, "A%s", plots[i].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
                 prom[prom_id].id = prom_id;
 
-                longitudes_ant[index_ant] = get_antiscium_degree(fmod(plots[index_ant].longitude, 30));
-                sign_ant[index_ant] = get_sign_antiscium((int)(plots[index_ant].longitude / 30));
+                longitudes_ant[index_ant] = calcular_antiscia(plots[i].longitude);
+                //sign_ant[index_ant] = (int)(longitudes_ant[index_ant] / 30.0);
 
-                prom[prom_id].longitude = sign_ant[index_ant] * 30.0 + longitudes_ant[index_ant];
-                
-                prom[prom_id].latitude = plots[index_ant].latitude;
+                prom[prom_id].longitude = longitudes_ant[index_ant];            
+                prom[prom_id].latitude = 0.0; // Rigorosamente 0.0 na eclíptica
                 
                 double xx_in[3], xx_out[3];
                 xx_in[0] = prom[prom_id].longitude;
@@ -7277,6 +7303,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
                 prom[prom_id].type = PROM_ANTISCIUM;
 
+                // Preenchimento do speculum local 'ants'
                 ants[index_ant].id = index_ant;
                 ants[index_ant].type = ANTISSIUM;
                 ants[index_ant].longitude = prom[prom_id].longitude;
@@ -7289,28 +7316,29 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom_id++;
                 index_ant++;
             }
-            
         }
 
-
         double longitudes_cant[num_ants / 2];
-        int sign_cant[num_ants / 2];
+        //int sign_cant[num_ants / 2];
 
         int index_cant = 0;
+        int metade_ants = num_ants / 2; // Guardamos o deslocamento para evitar divisões repetidas no índice
+        
         for (int i = 0; i < 12; i++) {
             if (i < 7 || (strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
                 show_modern_planets        
             ) {
-                snprintf(prom[prom_id].object, 10, "CA%s", plots[index_cant].object);
-                snprintf(prom[prom_id].object_name, 30, "%s", plots[index_cant].object_name);
+                // CORREÇÃO: Lemos plots[i] para manter a identidade estável do planeta
+                snprintf(prom[prom_id].object, 10, "CA%s", plots[i].object);
+                snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
                 prom[prom_id].id = prom_id;
     
-                longitudes_cant[index_cant] = longitudes_ant[index_cant];
-                sign_cant[index_cant] = get_opposite_sign(sign_ant[index_cant]);
+                longitudes_cant[index_cant] = calcular_contra_antiscia(plots[i].longitude);
+                // CORREÇÃO: Corrigido o nome do array de longitudes_ant para longitudes_cant e adicionado ponto e vírgula na linha abaixo
+                //sign_cant[index_cant] = (int)(longitudes_cant[index_cant] / 30.0);
     
-                prom[prom_id].longitude = sign_cant[index_cant] * 30.0 + longitudes_cant[index_cant];
-                
-                prom[prom_id].latitude = -plots[index_cant].latitude;
+                prom[prom_id].longitude = longitudes_cant[index_cant];
+                prom[prom_id].latitude = 0.0;
                 
                 double xx_in[3], xx_out[3];
                 xx_in[0] = prom[prom_id].longitude;
@@ -7323,19 +7351,22 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
                 prom[prom_id].type = PROM_CONTRANTISCIUM;
     
-                ants[index_cant+num_ants / 2].id = index_cant+num_ants / 2;
-                ants[index_cant+num_ants / 2].type = CONTRANTISSIUM;
-                ants[index_cant+num_ants / 2].longitude = prom[prom_id].longitude;
-                ants[index_cant+num_ants / 2].latitude = prom[prom_id].latitude;
-                ants[index_cant+num_ants / 2].declination = prom[prom_id].declination;
-                ants[index_cant+num_ants / 2].house = prom[prom_id].house;
-                snprintf(ants[index_cant+num_ants / 2].object, 10, "CA%s", plots[i].object);
-                snprintf(ants[index_cant+num_ants / 2].object_name, 30, "Contrantiscium %s", plots[i].object_name);
+                // Preenchimento do speculum de contra-antíssias deslocado na metade superior do array
+                int target_idx = index_cant + metade_ants;
+                ants[target_idx].id = target_idx;
+                ants[target_idx].type = CONTRANTISSIUM;
+                ants[target_idx].longitude = prom[prom_id].longitude;
+                ants[target_idx].latitude = prom[prom_id].latitude;
+                ants[target_idx].declination = prom[prom_id].declination;
+                ants[target_idx].house = prom[prom_id].house;
+                snprintf(ants[target_idx].object, 10, "CA%s", plots[i].object);
+                snprintf(ants[target_idx].object_name, 30, "Contrantiscium %s", plots[i].object_name);
 
                 prom_id++;
                 index_cant++;
             }            
         }
+
 
         snprintf(prom[prom_id].object, 10, "%s", plots[P_FORTUNA - object_diff].object);
         snprintf(prom[prom_id].object_name, 30, "%s", plots[P_FORTUNA - object_diff].object_name);

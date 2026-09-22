@@ -423,11 +423,12 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
     int sig_acima = verificar_se_acima_horizonte(ra_sig, dec_sig_rad, ramc, lat_geo_rad); 
     
     double sa_sig = __calcular_semi_arco(dec_sig_rad, lat_geo_rad, sig_acima);
-    double md_sig = __calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
-    double cota_mundana_sig = md_sig / sa_sig;
+    //double md_sig = __calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
+    //double cota_mundana_sig = md_sig / sa_sig;
 
     // Multiplicadores para os aspectos mundanos
     //double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
+    double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0}; 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
@@ -443,7 +444,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
         int prom_acima = verificar_se_acima_horizonte(ra_prom, dec_prom_rad, ramc, lat_geo_rad);
 
         double sa_prom = __calcular_semi_arco(dec_prom_rad, lat_geo_rad, prom_acima);
-        double md_prom = __calcular_distancia_meridiana(ra_prom, ramc, prom_acima);
+        //double md_prom = __calcular_distancia_meridiana(ra_prom, ramc, prom_acima);
 
         for (int s = 0; s < 2; s++) { // 0 = Direta, 1 = Conversa
             
@@ -453,48 +454,52 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
 
             // Multiplicador de distância em CASAS MUNDANAS completas
             // Conjunção=0, Sextil=2, Quadratura=3, Trígono=4, Oposição=6 casas de distância espacial
-            //double casas_aspecto[] = {0.0, 2.0, 3.0, 4.0, 6.0}; 
+            //double casas_aspecto[] = {0.0, 2.0, 3.0, 4.0, 6.0};
+            // Conjunção=0, Sextil=0.6666, Quadratura=1.0, Trígono=1.3333, Oposição=2.0
             //char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
             for (int a = 0; a < 5; a++) {
+
                 double arco = 0.0;
+                            
+                // 1. Ângulos Horários com Sinal (Leste Negativo / Oeste Positivo)
+                double md_sig_com_sinal = ra_sig - ramc;
+                if (md_sig_com_sinal > 180.0)  md_sig_com_sinal -= 360.0;
+                if (md_sig_com_sinal < -180.0) md_sig_com_sinal += 360.0;
+                double cota_sig_orientada = md_sig_com_sinal / sa_sig;
+            
+                double md_prom_com_sinal = ra_prom - ramc;
+                if (md_prom_com_sinal > 180.0)  md_prom_com_sinal -= 360.0;
+                if (md_prom_com_sinal < -180.0) md_prom_com_sinal += 360.0;
+            
+                // 2. Mapeamento Real do Aspecto Mundano na Esfera (Avanço no sentido horário)
+                // O aspecto desloca a posição do promissor somando frações do seu semi-arco
+                double md_aspecto_prom = md_prom_com_sinal + (proporcao_aspecto[a] * sa_prom);
                 
-                // Na astrologia racional/Placidus, as distâncias em aspectos mundanos
-                // baseiam-se em frações do Semi-Arco. Multiplicador de Aspecto em frações de quadrante (0 a 2.0)
-                // Conjunção = 0, Sextil = 2/3 (0.6666), Quadratura = 1.0, Trígono = 4/3 (1.3333), Oposição = 2.0
-                double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0}; 
-
+                // Normalização estrita do ângulo horário do aspecto (-180 a +180)
+                if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
+                if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
+            
+                // =========================================================================
+                // 3. CÁLCULO DOS ARCOS DE DIREÇÃO MUNDANA
+                // =========================================================================
                 if (s == 0) { // === DIREÇÃO DIRETA ===
-                    // O Promissor (ou seu aspecto mundano) move-se para a cota mundana do Significador.
-                    // Cota Mundana do aspecto do promissor deslocada pelo aspecto:
-                    double cota_aspecto_prom = cota_mundana_sig + proporcao_aspecto[a];
-                    
-                    // Se passar de 2.0 (Oposição), normaliza para o semicírculo oposto
-                    if (cota_aspecto_prom > 2.0) cota_aspecto_prom -= 2.0;
-
-                    // Distância meridiana que o Promissor precisa alcançar
-                    double md_destino = sa_prom * cota_aspecto_prom;
-                    
-                    // O Arco Mundano clássico é a diferença entre a Ascensão Reta (RA) dos corpos,
-                    // ajustada pela diferença de suas projeções meridianas.
-                    // Fórmula de Placidus: Arco = (RA_Prom - RA_Sig) - (MD_Prom - MD_Destino)
-                    // Nota: O cálculo exato do arco depende se os planetas cruzam o meridiano.
-                    // Abordagem padrão por distâncias meridianas puras:
-                    arco = fabs(md_prom - md_destino);
+                    double md_destino = sa_prom * cota_sig_orientada;
+                    arco = md_aspecto_prom - md_destino;
                 } 
                 else if (s == 1) { // === DIREÇÃO CONVERSA ===
-                    // O Significador move-se para interceptar o aspecto mundano do Promissor.
-                    double cota_aspecto_sig = cota_mundana_sig - proporcao_aspecto[a];
-                    if (cota_aspecto_sig < 0.0) cota_aspecto_sig += 2.0;
-
-                    double md_destino = sa_sig * cota_aspecto_sig;
-                    arco = fabs(md_destino - md_prom);
+                    // Na conversa, a cota proporcional do aspecto do promissor puxa o significador
+                    double cota_aspecto_prom = md_aspecto_prom / sa_prom;
+                    double md_destino = sa_sig * cota_aspecto_prom;
+                    arco = md_destino - md_sig_com_sinal;
                 }
-
-                // Normalização estrita do arco esférico equatorial
+            
+                // =========================================================================
+                // 4. NORMALIZAÇÃO FINAL DO MOVIMENTO PRIMÁRIO (0 a 360)
+                // =========================================================================
                 if (arco < 0.0) arco += 360.0;
-                if (arco > 180.0) arco = 360.0 - arco;
-
+                arco = fmod(arco, 360.0);
+            
                 // Filtra arcos de idade humana viável (0 a 150 anos)
                 if (arco > 0.001 && arco <= MAX_AGE * 1.05) { // tolerânciazinha de borda
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
@@ -533,77 +538,9 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo;
                 }
-            }
-           
-            
-            // for (int a = 0; a < 5; a++) {
-
-            //     double md_destino = 0.0;
-            //     double arco = 0.0;
-                
-            //     // Calcula a distância meridiana onde o aspecto do promissor se projeta no espaço
-            //     double md_prom_aspecto = md_prom + (sa_prom * mult_aspectos[a]);
-                
-            //     if (s == 0) { // Direta
-            //         // O aspecto do Promissor se move até a cota proporcional do Significador
-            //         md_destino = sa_prom * cota_mundana_sig;
-            //         arco = md_prom_aspecto - md_destino;   
-            //     }
-            //     else if (s == 1) { // Conversa
-            //         // O Significador se move até a cota proporcional do aspecto do Promissor
-            //         md_destino = sa_sig * (md_prom_aspecto / sa_prom);
-            //         arco = md_destino - md_sig;                               
-            //     }
-
-            //     // Correção de rotação circular esférica
-            //     if (arco < 0) arco += 360.0; 
-            //     if (arco > 180.0) arco = 360.0 - arco;
-
-                
-            //     // Filtra arcos de idade humana viável (0 a 150 anos)
-            //     if (arco > 0.0 && arco <= MAX_AGE) {
-            //         LinhaDirecao *d = &lista_resultado[qtd_direcoes];
-
-            //         d->sentido = s; // Salva 0 para direta ou 1 para conversa
-                    
-            //         strcpy(d->promissor_name, prom[p].object_name);
-            //         strcpy(d->promissor_glifo, prom[p].object);
-            //         strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
-                    
-            //         strcpy(d->significador_name, plots[idx_alvo].object_name);
-            //         strcpy(d->significador_glifo, plots[idx_alvo].object);
-
-            //         d->promissor_type = prom[p].type;
-                    
-            //         // 1. Calcula o arco e a idade do evento normalmente
-            //         d->arco_graus = arco;
-            //         d->idade_evento = arco / NAIBOD_KEY; 
-
-            //         // 2. Transforma a idade em dias exatos
-            //         double dias_decorridos = d->idade_evento * 365.242199;
-
-            //         // 3. Calcula o Dia Juliano do evento
-            //         double jd_evento = jd + dias_decorridos;
-
-            //         // 4. Converte o Dia Juliano para data do calendário (Gregoriano/Juliano automático)
-            //         int ano_c, mes_c, dia_c, hora_c, min_c;
-            //         double sec_c;
-            //         swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
-
-            //         // 5. Alimenta a estrutura com as datas
-            //         d->ano_calendario = ano_c;
-            //         d->mes_calendario = mes_c;
-            //         d->dia_calendario = dia_c;
-                                    
-            //         strcpy(d->tipo_direcao, _("Mundane")); // CORREÇÃO: Identifica corretamente como Mundana
-
-            //         qtd_direcoes++;
-            //         if (qtd_direcoes >= 300) goto fim_calculo; // Sai de forma limpa se estourar o limite
-            //     }
-            // }
-            
+            } 
         }
-    }
+    }                    
 
 fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
@@ -1673,11 +1610,12 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     int sig_acima = verificar_se_acima_horizonte(ra_sig, dec_sig_rad, ramc, lat_geo_rad); 
     
     double sa_sig = __calcular_semi_arco(dec_sig_rad, lat_geo_rad, sig_acima);
-    double md_sig = __calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
-    double cota_mundana_sig = md_sig / sa_sig;
+    //double md_sig = __calcular_distancia_meridiana(ra_sig, ramc, sig_acima);
+    //double cota_mundana_sig = md_sig / sa_sig;
 
     // Multiplicadores para os aspectos mundanos
     //double mult_aspectos[] = {0.0, 0.333333, 0.5, 0.666667, 1.0}; // Conjunção, Sextil, Quadratura, Trígono, Oposição
+    double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0}; 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
@@ -1695,7 +1633,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
         int prom_acima = verificar_se_acima_horizonte(ra_prom, dec_prom_rad, ramc, lat_geo_rad);
 
         double sa_prom = __calcular_semi_arco(dec_prom_rad, lat_geo_rad, prom_acima);
-        double md_prom = __calcular_distancia_meridiana(ra_prom, ramc, prom_acima);
+        //double md_prom = __calcular_distancia_meridiana(ra_prom, ramc, prom_acima);
         for (int s = 0; s < 2; s++) { // 0 = Direta, 1 = Conversa
             
             // FILTRO CRÍTICO DE SENTIDO: Se o usuário filtrou por um sentido específico, pula o outro
@@ -1705,46 +1643,50 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
             // Multiplicador de distância em CASAS MUNDANAS completas
             // Conjunção=0, Sextil=2, Quadratura=3, Trígono=4, Oposição=6 casas de distância espacial
             //double casas_aspecto[] = {0.0, 2.0, 3.0, 4.0, 6.0}; 
+
             //char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
             for (int a = 0; a < 5; a++) {
+
                 double arco = 0.0;
+                            
+                // 1. Ângulos Horários com Sinal (Leste Negativo / Oeste Positivo)
+                double md_sig_com_sinal = ra_sig - ramc;
+                if (md_sig_com_sinal > 180.0)  md_sig_com_sinal -= 360.0;
+                if (md_sig_com_sinal < -180.0) md_sig_com_sinal += 360.0;
+                double cota_sig_orientada = md_sig_com_sinal / sa_sig;
+            
+                double md_prom_com_sinal = ra_prom - ramc;
+                if (md_prom_com_sinal > 180.0)  md_prom_com_sinal -= 360.0;
+                if (md_prom_com_sinal < -180.0) md_prom_com_sinal += 360.0;
+            
+                // 2. Mapeamento Real do Aspecto Mundano na Esfera (Avanço no sentido horário)
+                // O aspecto desloca a posição do promissor somando frações do seu semi-arco
+                double md_aspecto_prom = md_prom_com_sinal + (proporcao_aspecto[a] * sa_prom);
                 
-                // Na astrologia racional/Placidus, as distâncias em aspectos mundanos
-                // baseiam-se em frações do Semi-Arco. Multiplicador de Aspecto em frações de quadrante (0 a 2.0)
-                // Conjunção = 0, Sextil = 2/3 (0.6666), Quadratura = 1.0, Trígono = 4/3 (1.3333), Oposição = 2.0
-                double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0}; 
-
+                // Normalização estrita do ângulo horário do aspecto (-180 a +180)
+                if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
+                if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
+            
+                // =========================================================================
+                // 3. CÁLCULO DOS ARCOS DE DIREÇÃO MUNDANA
+                // =========================================================================
                 if (s == 0) { // === DIREÇÃO DIRETA ===
-                    // O Promissor (ou seu aspecto mundano) move-se para a cota mundana do Significador.
-                    // Cota Mundana do aspecto do promissor deslocada pelo aspecto:
-                    double cota_aspecto_prom = cota_mundana_sig + proporcao_aspecto[a];
-                    
-                    // Se passar de 2.0 (Oposição), normaliza para o semicírculo oposto
-                    if (cota_aspecto_prom > 2.0) cota_aspecto_prom -= 2.0;
-
-                    // Distância meridiana que o Promissor precisa alcançar
-                    double md_destino = sa_prom * cota_aspecto_prom;
-                    
-                    // O Arco Mundano clássico é a diferença entre a Ascensão Reta (RA) dos corpos,
-                    // ajustada pela diferença de suas projeções meridianas.
-                    // Fórmula de Placidus: Arco = (RA_Prom - RA_Sig) - (MD_Prom - MD_Destino)
-                    // Nota: O cálculo exato do arco depende se os planetas cruzam o meridiano.
-                    // Abordagem padrão por distâncias meridianas puras:
-                    arco = fabs(md_prom - md_destino);
+                    double md_destino = sa_prom * cota_sig_orientada;
+                    arco = md_aspecto_prom - md_destino;
                 } 
                 else if (s == 1) { // === DIREÇÃO CONVERSA ===
-                    // O Significador move-se para interceptar o aspecto mundano do Promissor.
-                    double cota_aspecto_sig = cota_mundana_sig - proporcao_aspecto[a];
-                    if (cota_aspecto_sig < 0.0) cota_aspecto_sig += 2.0;
-
-                    double md_destino = sa_sig * cota_aspecto_sig;
-                    arco = fabs(md_destino - md_prom);
+                    // Na conversa, a cota proporcional do aspecto do promissor puxa o significador
+                    double cota_aspecto_prom = md_aspecto_prom / sa_prom;
+                    double md_destino = sa_sig * cota_aspecto_prom;
+                    arco = md_destino - md_sig_com_sinal;
                 }
-
-                // Normalização estrita do arco esférico equatorial
+            
+                // =========================================================================
+                // 4. NORMALIZAÇÃO FINAL DO MOVIMENTO PRIMÁRIO (0 a 360)
+                // =========================================================================
                 if (arco < 0.0) arco += 360.0;
-                if (arco > 180.0) arco = 360.0 - arco;
+                arco = fmod(arco, 360.0);
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
                 if (arco > 0.001 && arco <= MAX_AGE * 1.05) { // tolerânciazinha de borda
