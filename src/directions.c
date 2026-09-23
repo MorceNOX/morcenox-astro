@@ -220,7 +220,7 @@ double calcular_ra(double longitude, double declinacao, double jd) {
 int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom) {
 
     int qtd_direcoes = 0;
-    //int object_diff = show_modern_planets ? 0 : 3;
+    int object_diff = show_modern_planets ? 0 : 3;
 
     //if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
 
@@ -234,7 +234,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
     for (int p = 0; p < prom_id; p++) {
         for (int s = 0; s < 2; s++) {
-            if (p == idx_alvo && p < 7) continue; // Um ponto não direciona a si mesmo
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - 5) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
             
             for (int a = 0; a < 5; a++) {
 
@@ -442,6 +442,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+
         //if (prom[p].type == PROM_TERM) continue;
         
         // 2. Dados tridimensionais REAIS do Promissor
@@ -599,6 +601,11 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int idx_mars = -1;
     int idx_jupiter = -1;
     int idx_saturn = -1;
+    int idx_uranus = -1;
+    int idx_neptune = -1;
+    int idx_pluto = -1;
+    int idx_north_node = -1;
+    int idx_south_node = -1;
     int idx_dc = -1;
     int idx_ic = -1;
 
@@ -612,6 +619,13 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         if (sig[i].id == P_MARS) idx_mars = i;
         if (sig[i].id == P_JUPITER) idx_jupiter = i;
         if (sig[i].id == P_SATURN) idx_saturn = i;
+        if (show_modern_planets) {
+            if (sig[i].id == P_URANUS) idx_uranus = i;
+            if (sig[i].id == P_NEPTUNE) idx_neptune = i;
+            if (sig[i].id == P_PLUTO) idx_pluto = i;
+        }
+        if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
+        if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
         if (sig[i].id == P_DC - object_diff) idx_dc = i;
         if (sig[i].id == P_IC - object_diff)  idx_ic = i; 
     }
@@ -646,11 +660,25 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     indices_significadores[9] = idx_mars;
     indices_significadores[10] = idx_jupiter;
     indices_significadores[11] = idx_saturn;
-    indices_significadores[12] = idx_dc;
-    indices_significadores[13] = idx_ic;
+    if (show_modern_planets) {
+        indices_significadores[12] = idx_uranus;
+        indices_significadores[13] = idx_neptune;
+        indices_significadores[14] = idx_pluto;
+        indices_significadores[15] = idx_north_node;
+        indices_significadores[16] = idx_south_node;
+        indices_significadores[17] = idx_dc;
+        indices_significadores[18] = idx_ic;
+    } else {
+        indices_significadores[12] = idx_north_node;
+        indices_significadores[13] = idx_south_node;
+        indices_significadores[14] = idx_dc;
+        indices_significadores[15] = idx_ic;
+    }
+    
+
 
     for (int i = 1; i <= 12; i++) {
-        indices_significadores[13 + i] = idx_ic + i;
+        indices_significadores[18 - object_diff + i] = idx_ic + i;
     }
 
 
@@ -985,11 +1013,11 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 tipo = 2;
                 break;
             case KEY_RIGHT:
-                seletor_alvo_atual = (seletor_alvo_atual + 1) % TOTAL_SIGNIFICADORES;
+                seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff);
                 scroll_offset = 0;
                 break;
             case KEY_LEFT:
-                seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES) % TOTAL_SIGNIFICADORES;
+                seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES - object_diff) % (TOTAL_SIGNIFICADORES - object_diff);
                 scroll_offset = 0;
                 break;
             case KEY_DOWN:
@@ -1093,8 +1121,9 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     double angulos_aspectos[] = {0.0, 60.0, 90.0, 120.0, 180.0};
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
-    // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
     for (int p = 0; p < prom_id; p++) {
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+
         for (int s = 0; s < 2; s++) {
             for (int a = 0; a < 5; a++) {
                 
@@ -1696,6 +1725,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+
         //if (prom[p].type == PROM_TERM) continue;
         
         // 2. Dados tridimensionais REAIS do Promissor

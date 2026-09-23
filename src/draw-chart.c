@@ -7226,8 +7226,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
             if (i < 12 - object_diff) {
                 sig[i].type = PROM_PLANET;
-            } else if (strcmp(sig[i].object_name, "SAN") == 0 || strcmp(sig[i].object_name, _("Part of Fortune")) == 0) {
+            } else if (strcmp(sig[i].object_name, "SAN") == 0) {
                 sig[i].type = PROM_POINT;
+            } else if (strcmp(sig[i].object_name, _("Part of Fortune")) == 0) {
+                sig[i].type = PROM_PART;
             } else {
                 sig[i].type = PROM_ANGLE;
             }
@@ -7267,41 +7269,59 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         Promissor prom[100] = {0};
         prom_id = 0;
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < NUM_OBJECTS - object_diff - 5; i++) {
             snprintf(prom[i].object, 10, "%s", plots[i].object);
             snprintf(prom[i].object_name, 30, "%s", plots[i].object_name);
-            prom[i].id = prom_id;
+            prom[i].id = plots[i].id;
             prom[i].longitude = plots[i].longitude;
             prom[i].latitude = plots[i].latitude;
             prom[i].declination = plots[i].declination;
             prom[i].ra = plots[i].ra;
             prom[i].house = get_house(plots[i].longitude, cusps);
-            prom[i].type = PROM_PLANET;
+            if (i < 12 - object_diff) {
+                prom[i].type = PROM_PLANET;
+            } else if (strcmp(prom[i].object_name, "SAN") == 0) {
+                prom[i].type = PROM_POINT;
+            } else if (strcmp(prom[i].object_name, _("Part of Fortune")) == 0) {
+                prom[i].type = PROM_PART;
+            }
 
             prom_id++;
         }
 
         // adicionar os nodos
-        for (int i = 7; i < 12; i++) {
-            if ((strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
-                show_modern_planets        
-        ) {
+        // for (int i = 7; i < 12; i++) {
+        //     if ((strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
+        //         show_modern_planets        
+        // ) {
                 
-                snprintf(prom[i].object, 10, "%s", plots[i].object);
-                snprintf(prom[i].object_name, 30, "%s", plots[i].object_name);
+        //         snprintf(prom[i].object, 10, "%s", plots[i].object);
+        //         snprintf(prom[i].object_name, 30, "%s", plots[i].object_name);
 
-                prom[i].id = prom_id;
-                prom[i].longitude = plots[i].longitude;
-                prom[i].latitude = plots[i].latitude;
-                prom[i].declination = plots[i].declination;
-                prom[i].ra = plots[i].ra;
-                prom[i].house = get_house(plots[i].longitude, cusps);
-                prom[i].type = PROM_PLANET;
+        //         prom[i].id = prom_id;
+        //         prom[i].longitude = plots[i].longitude;
+        //         prom[i].latitude = plots[i].latitude;
+        //         prom[i].declination = plots[i].declination;
+        //         prom[i].ra = plots[i].ra;
+        //         prom[i].house = get_house(plots[i].longitude, cusps);
+        //         prom[i].type = PROM_PLANET;
 
-                prom_id++;
-            }
+        //         prom_id++;
+        //     }
             
-        }
+        // }
+
+        // snprintf(prom[prom_id].object, 10, "%s", plots[P_FORTUNA - object_diff].object);
+        // snprintf(prom[prom_id].object_name, 30, "%s", plots[P_FORTUNA - object_diff].object_name);
+        // prom[prom_id].id = prom_id;
+        // prom[prom_id].longitude = plots[P_FORTUNA - object_diff].longitude;
+        // prom[prom_id].latitude = plots[P_FORTUNA - object_diff].latitude;
+        // prom[prom_id].declination = plots[P_FORTUNA - object_diff].declination;
+        // prom[prom_id].ra = plots[P_FORTUNA - object_diff].ra;
+        // prom[prom_id].house = get_house(plots[P_FORTUNA - object_diff].longitude, cusps);
+        // prom[prom_id].type = PROM_POINT;
+
+        // prom_id++;
 
         double longitudes_termos[60] = {0};
         double ra_termos[60] = {0};
@@ -7452,20 +7472,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 index_cant++;
             }            
         }
-
-
-        snprintf(prom[prom_id].object, 10, "%s", plots[P_FORTUNA - object_diff].object);
-        snprintf(prom[prom_id].object_name, 30, "%s", plots[P_FORTUNA - object_diff].object_name);
-        prom[prom_id].id = prom_id;
-        prom[prom_id].longitude = plots[P_FORTUNA - object_diff].longitude;
-        prom[prom_id].latitude = plots[P_FORTUNA - object_diff].latitude;
-        prom[prom_id].declination = plots[P_FORTUNA - object_diff].declination;
-        prom[prom_id].ra = plots[P_FORTUNA - object_diff].ra;
-        prom[prom_id].house = get_house(plots[P_FORTUNA - object_diff].longitude, cusps);
-        prom[prom_id].type = PROM_POINT;
-
-        prom_id++;
-
 
 
         // DEBUG

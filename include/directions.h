@@ -29,12 +29,13 @@
 #define PROM_CONTRANTISCIUM 5
 #define PROM_CUSP 6
 #define PROM_ANGLE 7
+#define PROM_PART 8
 
 
 #define DIRECT 0
 #define CONVERSE 1
 
-#define TOTAL_SIGNIFICADORES 26
+#define TOTAL_SIGNIFICADORES 31
 
 typedef enum {
     DIRECAO_ZODIACAL = 0,
