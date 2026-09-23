@@ -41,10 +41,6 @@
 #define OBLIQUIDADE 23.439291 // Obliqüidade média da Eclíptica em graus
 #define NAIBOD_KEY  1.014646  // Chave de Naibod: graus equatoriais por ano de vida
 
-#define DIRECT 0
-#define CONVERSE 1
-
-
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -54,7 +50,7 @@ static double para_radianos(double graus) { return graus * M_PI / 180.0; }
 static double para_graus(double radianos) { return radianos * 180.0 / M_PI; }
 
 
-static double get_obliquidade(double jd) {
+double get_obliquidade(double jd) {
     char serr[256];
     double xx[6];
     double eps;
@@ -221,15 +217,15 @@ double calcular_ra(double longitude, double declinacao, double jd) {
 
 
 // Calcula o cronograma de direções zodiacais para QUALQUER ponto escolhido
-int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom) {
+int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom) {
 
     int qtd_direcoes = 0;
     //int object_diff = show_modern_planets ? 0 : 3;
 
-    if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
+    //if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
 
     // Calcula a Ascensão Reta baseada na coordenada do ponto alvo escolhido
-    double ra_significador = plots[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
+    double ra_significador = sig[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
 
     double angulos_aspectos[] = {0.0, 60.0, 90.0, 120.0, 180.0};
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
@@ -237,8 +233,6 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
     //double epsilon = 0.000001;
 
     for (int p = 0; p < prom_id; p++) {
-        // if (strcmp(prom[p].object_name, "") == 0) continue;
-        // if (strcmp(prom[p].object_name, " ") == 0) continue;
         for (int s = 0; s < 2; s++) {
             if (p == idx_alvo && p < 7) continue; // Um ponto não direciona a si mesmo
             
@@ -246,7 +240,22 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
-                double lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                double lon_aspecto; // = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                
+                if (s == 0) {
+                    lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                } 
+                else if (prom[p].type == PROM_TERM && s == 1) {
+                    lon_aspecto = fmod(prom[p].longitude_fim - angulos_aspectos[a], 360.0);
+                }
+                else {
+                    lon_aspecto = fmod(prom[p].longitude - angulos_aspectos[a], 360.0);
+                }
+
+                // Normalização estrita da longitude alvo (0 a 360)
+                lon_aspecto = fmod(lon_aspecto, 360.0);
+                if (lon_aspecto < 0.0) lon_aspecto += 360.0;
+
                 double lat_calculada = calcular_latitude_dinamica_bianchini(jd, prom[p].object, lon_aspecto);
 
                 double xx[3];
@@ -288,8 +297,8 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
                     
                     // Salva o nome e glifo do Significador Alvo atual
-                    strcpy(d->significador_name, plots[idx_alvo].object_name);
-                    strcpy(d->significador_glifo, plots[idx_alvo].object);
+                    strcpy(d->significador_name, sig[idx_alvo].object_name);
+                    strcpy(d->significador_glifo, sig[idx_alvo].object);
                     
                     d->promissor_type = prom[p].type;
 
@@ -320,6 +329,7 @@ int calcular_direcoes_zodiacais_geral(PlotObject *plots, int idx_alvo, LinhaDire
 
                                     
                     strcpy(d->tipo_direcao, "Zodiacal");
+                    d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo;
@@ -409,15 +419,15 @@ double __calcular_distancia_meridiana(double ra_planeta, double ramc, int esta_a
 
 
 
-int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
+int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
     int qtd_direcoes = 0;
     double lat_geo_rad = para_radianos(lat_geografica);
 
-    if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
+    //if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
 
     // 1. Dados tridimensionais REAIS do Significador (Alvo)
-    double ra_sig = plots[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
-    double dec_sig_rad = para_radianos(plots[idx_alvo].declination);
+    double ra_sig = sig[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
+    double dec_sig_rad = para_radianos(sig[idx_alvo].declination);
     
     // Determinar se o significador está acima/abaixo do horizonte natal
     int sig_acima = verificar_se_acima_horizonte(ra_sig, dec_sig_rad, ramc, lat_geo_rad); 
@@ -432,7 +442,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_TERM) continue;
+        //if (prom[p].type == PROM_TERM) continue;
         
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
@@ -457,6 +467,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
             //char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
             for (int a = 0; a < 5; a++) {
+                if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double arco = 0.0;
                             
@@ -506,8 +517,8 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
-                    strcpy(d->significador_name, plots[idx_alvo].object_name);
-                    strcpy(d->significador_glifo, plots[idx_alvo].object);
+                    strcpy(d->significador_name, sig[idx_alvo].object_name);
+                    strcpy(d->significador_glifo, sig[idx_alvo].object);
                     d->promissor_type = prom[p].type;
                     
                     // 1. Calcula o arco e a idade do evento usando a SUA chave equatorial
@@ -532,6 +543,7 @@ int calcular_direcoes_mundanas_geral(PlotObject *plots, int idx_alvo, LinhaDirec
                     d->dia_calendario = dia_c;
                                    
                     strcpy(d->tipo_direcao, _("Mundane"));
+                    d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo;
@@ -546,7 +558,7 @@ fim_calculo:
 }
 
 
-void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom) {
+void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom) {
        
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -591,17 +603,17 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     int idx_ic = -1;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-        if (plots[i].id == P_ASC - object_diff) idx_asc = i;
-        if (plots[i].id == P_MC - object_diff)  idx_mc = i; 
-        if (strcmp(plots[i].object_name, "SAN") == 0) idx_san = i; 
-        if (strcmp(plots[i].object_name, _("Part of Fortune")) == 0) idx_fortuna = i; 
-        if (plots[i].id == P_MERCURY) idx_mercury = i;
-        if (plots[i].id == P_VENUS) idx_venus = i;
-        if (plots[i].id == P_MARS) idx_mars = i;
-        if (plots[i].id == P_JUPITER) idx_jupiter = i;
-        if (plots[i].id == P_SATURN) idx_saturn = i;
-        if (plots[i].id == P_DC - object_diff) idx_dc = i;
-        if (plots[i].id == P_IC - object_diff)  idx_ic = i; 
+        if (sig[i].id == P_ASC - object_diff) idx_asc = i;
+        if (sig[i].id == P_MC - object_diff)  idx_mc = i; 
+        if (strcmp(sig[i].object_name, "SAN") == 0) idx_san = i; 
+        if (strcmp(sig[i].object_name, _("Part of Fortune")) == 0) idx_fortuna = i; 
+        if (sig[i].id == P_MERCURY) idx_mercury = i;
+        if (sig[i].id == P_VENUS) idx_venus = i;
+        if (sig[i].id == P_MARS) idx_mars = i;
+        if (sig[i].id == P_JUPITER) idx_jupiter = i;
+        if (sig[i].id == P_SATURN) idx_saturn = i;
+        if (sig[i].id == P_DC - object_diff) idx_dc = i;
+        if (sig[i].id == P_IC - object_diff)  idx_ic = i; 
     }
 
     if (!mapa_retorno) {
@@ -612,8 +624,8 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         else if (tipo_h == H_ALMUTEN_HYL) idx_hileg = id_almuten_ref - 1;
         else {
             for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-                if (tipo_h == H_ASC && plots[i].id == P_ASC - object_diff) { idx_hileg = i; break; }
-                if (tipo_h == H_FORTUNA && plots[i].id == P_FORTUNA - object_diff) { idx_hileg = i; break; }
+                if (tipo_h == H_ASC && sig[i].id == P_ASC - object_diff) { idx_hileg = i; break; }
+                if (tipo_h == H_FORTUNA && sig[i].id == P_FORTUNA - object_diff) { idx_hileg = i; break; }
             }
         }
     }
@@ -621,7 +633,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         idx_hileg = idx_hyleg_natal;
     }
 
-    int indices_significadores[14];
+    int indices_significadores[TOTAL_SIGNIFICADORES];
     indices_significadores[0] = idx_hileg;
     indices_significadores[1] = idx_sol;
     indices_significadores[2] = idx_lua;
@@ -636,6 +648,12 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
     indices_significadores[11] = idx_saturn;
     indices_significadores[12] = idx_dc;
     indices_significadores[13] = idx_ic;
+
+    for (int i = 1; i <= 12; i++) {
+        indices_significadores[13 + i] = idx_ic + i;
+    }
+
+
 
     int seletor_alvo_atual = 0; 
     int scroll_offset = 0;
@@ -678,11 +696,11 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         
         if (tipo != 1) {
             memset(cronograma_z, 0, sizeof(cronograma_z));
-            qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(plots, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+            qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom);
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));
-            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(plots, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
         }
         int qtd_direcoes = qtd_direcoes_zod + qtd_direcoes_mun;
 
@@ -698,10 +716,28 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
             cronograma[index] = cronograma_m[i];
             index++;
         }
-        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
 
+        // obter glifo e nome do regente do termo natal do significador
+        int regente_do_termo = get_term_ruler(sig[idx_atual_calculo].longitude);            
+        char glifo_atual[10];
+        char divisor_atual[30];
+        snprintf(glifo_atual, sizeof(glifo_atual), "%s", planet_regent_symbols[regente_do_termo]);
+        snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
 
+        for (int i = 0; i < qtd_direcoes; i++) {
+            if (cronograma[i].promissor_type == PROM_TERM && 
+                cronograma[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
+                cronograma[i].sentido == DIRECT
+            ) {
+                strcpy(divisor_atual, cronograma[i].promissor_name);
+                int id_planeta = obter_id_planeta_por_nome(divisor_atual);
+                strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
+            }
 
+            strcpy(cronograma[i].divisor_name, divisor_atual);
+            strcpy(cronograma[i].divisor_gliph, glifo_atual);
+        }
 
 
         if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
@@ -712,7 +748,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         mvwprintw(table_win, 2, 4, _("Active Significator Target: "));
         wattron(table_win, A_BOLD | COLOR_PAIR(8));
         if (idx_atual_calculo != -1) {
-            wprintw(table_win, "%s %s", plots[idx_atual_calculo].object, plots[idx_atual_calculo].object_name);
+            wprintw(table_win, "%s %s", sig[idx_atual_calculo].object, sig[idx_atual_calculo].object_name);
             if (seletor_alvo_atual == 0) wprintw(table_win, _(" [EMPHASIZED HYLEG]"));
         } else {
             wprintw(table_win, _("Point not calculated in this chart"));
@@ -750,10 +786,10 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         wattroff(table_win, A_DIM);
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 4, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, 4, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
-        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91;
+        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91, col_div = 102;
 
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_idade + 4, _("Age")); 
@@ -764,10 +800,11 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
         mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
         mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
+        mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 6, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, 6, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         int row_pad = 0;
@@ -858,11 +895,12 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
                 mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
                 mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
+                mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
 
                 wattroff(scroll_pad, par_cor_ativo | atributo_extra);
 
                 wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(scroll_pad, row_pad + 1, 0, "────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+                mvwprintw(scroll_pad, row_pad + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
                 wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
                 row_pad += 2;            
@@ -870,7 +908,7 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
         }
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, table_height - 7, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
@@ -947,11 +985,11 @@ void display_primary_directions(PlotObject *plots, AspectMatrix *matrix, PontosH
                 tipo = 2;
                 break;
             case KEY_RIGHT:
-                seletor_alvo_atual = (seletor_alvo_atual + 1) % 14;
+                seletor_alvo_atual = (seletor_alvo_atual + 1) % TOTAL_SIGNIFICADORES;
                 scroll_offset = 0;
                 break;
             case KEY_LEFT:
-                seletor_alvo_atual = (seletor_alvo_atual - 1 + 14) % 14;
+                seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES) % TOTAL_SIGNIFICADORES;
                 scroll_offset = 0;
                 break;
             case KEY_DOWN:
@@ -1047,22 +1085,36 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     if (idx_alvo < 0 || idx_alvo >= qtd_partes) return 0;
 
     // Calcula a Ascensão Reta baseada na coordenada do ponto alvo escolhido
-    double ra_significador = calcular_ra(parts[idx_alvo].longitude, NAN, jd);
+
+    double dec_out, ra_out;
+    calc_declination_ra_point(jd, parts[idx_alvo].longitude, &ra_out, &dec_out);
+    double ra_significador = ra_out; //calcular_ra(parts[idx_alvo].longitude, NAN, jd);
 
     double angulos_aspectos[] = {0.0, 60.0, 90.0, 120.0, 180.0};
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     // Varre os 7 planetas tradicionais como Promissores (agentes de movimento)
     for (int p = 0; p < prom_id; p++) {
-        // if (strcmp(prom[p].object_name, "") == 0) continue;
-        // if (strcmp(prom[p].object_name, " ") == 0) continue;
         for (int s = 0; s < 2; s++) {
             for (int a = 0; a < 5; a++) {
                 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
-                // Dentro do loop de aspectos: for (int a = 0; a < 5; a++)
-                double lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                double lon_aspecto;
+                
+                if (s == 0) {
+                    lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                } 
+                else if (prom[p].type == PROM_TERM && s == 1) {
+                    lon_aspecto = fmod(prom[p].longitude_fim - angulos_aspectos[a], 360.0);
+                }
+                else {
+                    lon_aspecto = fmod(prom[p].longitude - angulos_aspectos[a], 360.0);
+                }
+
+                // Normalização estrita da longitude alvo (0 a 360)
+                lon_aspecto = fmod(lon_aspecto, 360.0);
+                if (lon_aspecto < 0.0) lon_aspecto += 360.0;
 
                 // Calcula a latitude dinâmica passando diretamente a string com o nome do objeto
                 double lat_calculada = calcular_latitude_dinamica_bianchini(jd, prom[p].object, lon_aspecto);
@@ -1141,6 +1193,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
                     
                     strcpy(d->tipo_direcao, "Zodiacal");
+                    d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) return qtd_direcoes;
@@ -1248,8 +1301,28 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             cronograma[index] = cronograma_m[i];
             index++;
         }
-        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
 
+        // obter glifo e nome do regente do termo natal do significador
+        int regente_do_termo = get_term_ruler(lista_partes[idx_atual_calculo].longitude);            
+        char glifo_atual[10];
+        char divisor_atual[30];
+        snprintf(glifo_atual, sizeof(glifo_atual), "%s", planet_regent_symbols[regente_do_termo]);
+        snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
+
+        for (int i = 0; i < qtd_direcoes; i++) {
+            if (cronograma[i].promissor_type == PROM_TERM && 
+                cronograma[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
+                cronograma[i].sentido == DIRECT
+            ) {
+                strcpy(divisor_atual, cronograma[i].promissor_name);
+                int id_planeta = obter_id_planeta_por_nome(divisor_atual);
+                strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
+            }
+
+            strcpy(cronograma[i].divisor_name, divisor_atual);
+            strcpy(cronograma[i].divisor_gliph, glifo_atual);
+        }
         // Garante que o scroll não vá para o vazio se trocarmos para um planeta com menos direções
         if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
             scroll_offset = qtd_direcoes * 2 - max_linhas_exibicao;
@@ -1301,11 +1374,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattroff(table_win, A_DIM);
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 4, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, 4, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         // Colunas Alinhadas Fixas (Mapeadas a partir de 0 para casar com as coordenadas do Pad)
-        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91;
+        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91, col_div = 102;
 
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_idade + 4, _("Age")); 
@@ -1316,10 +1389,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
         mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
         mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
+        mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 6, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, 6, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         // --- RENDERIZAÇÃO DAS LINHAS DENTRO DO PAD VIRTUAL ---
@@ -1410,11 +1484,12 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
                 mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
                 mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
+                mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
 
                 wattroff(scroll_pad, par_cor_ativo | atributo_extra);
 
                 wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(scroll_pad, row_pad + 1, 0, "────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+                mvwprintw(scroll_pad, row_pad + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
                 wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
 
@@ -1423,7 +1498,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, table_height - 7, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
@@ -1601,8 +1676,12 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
 
     // 1. Dados tridimensionais REAIS do Significador (Alvo)
-    double ra_sig = calcular_ra(parts[idx_alvo].longitude, NAN, jd);
-    double dec_sig_rad = para_radianos(calc_declination_mathematical_point(jd, parts[idx_alvo].longitude));
+    double dec_out, ra_out;
+    calc_declination_ra_point(jd, parts[idx_alvo].longitude, &ra_out, &dec_out);
+    double ra_sig = ra_out;
+
+    //double ra_sig = calcular_ra(parts[idx_alvo].longitude, NAN, jd);
+    double dec_sig_rad = para_radianos(dec_out); //para_radianos(calc_declination_mathematical_point(jd, parts[idx_alvo].longitude));
     
     // Determinar se o significador está acima/abaixo do horizonte natal
     int sig_acima = verificar_se_acima_horizonte(ra_sig, dec_sig_rad, ramc, lat_geo_rad); 
@@ -1617,7 +1696,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_TERM) continue;
+        //if (prom[p].type == PROM_TERM) continue;
         
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
@@ -1641,6 +1720,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
             //char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
             for (int a = 0; a < 5; a++) {
+                if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double arco = 0.0;
                             
@@ -1721,6 +1801,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     d->dia_calendario = dia_c;
                                    
                     strcpy(d->tipo_direcao, _("Mundane"));
+                    d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
                     if (qtd_direcoes >= 300) goto fim_calculo;

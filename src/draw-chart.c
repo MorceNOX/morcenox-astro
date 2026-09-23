@@ -595,6 +595,23 @@ const char* obter_glifo_planeta_por_id(int id_planeta) {
     }
 }
 
+
+int obter_id_planeta_por_nome(const char *nome_planeta) {
+    if (strcmp(nome_planeta, _("Sol")) == 0) return 1;
+    else if (strcmp(nome_planeta, _("Luna")) == 0) return 2;
+    else if (strcmp(nome_planeta, _("Mercury")) == 0) return 3;
+    else if (strcmp(nome_planeta, _("Venus")) == 0) return 4;
+    else if (strcmp(nome_planeta, _("Mars")) == 0) return 5;
+    else if (strcmp(nome_planeta, _("Jupiter")) == 0) return 6;
+    else if (strcmp(nome_planeta, _("Saturn")) == 0) return 7;
+    else if (strcmp(nome_planeta, _("Uranus")) == 0) return 8;
+    else if (strcmp(nome_planeta, _("Neptune")) == 0) return 9;
+    else if (strcmp(nome_planeta, _("Pluto")) == 0) return 10;
+    else if (strcmp(nome_planeta, _("North Node")) == 0) return 11;
+    else if (strcmp(nome_planeta, _("South Node")) == 0) return 12;
+    else return -1;
+}
+
 const char* obter_nome_planeta_por_id(int id_planeta) {
     switch (id_planeta) {
         case 1:  return _("Sol");
@@ -625,32 +642,6 @@ int converter_codigo_planeta(int codigo_antigo) {
         default:        return -1; // Código inválido ou não mapeado
     }
 }
-
-// const char* get_house_roman(double longitude, double *cusps) {
-//     // Array of Roman numerals mapped to house indices (0 to 11 maps to I to XII)
-//     static const char* roman_houses[] = {
-//         "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
-//     };
-
-//     for (int i = 1; i <= 12; i++) {
-//         double current_cusp = cusps[i];
-//         // The next cusp wraps around from 12 back to 1
-//         double next_cusp = (i == 12) ? cusps[1] : cusps[i + 1];
-
-//         if (current_cusp < next_cusp) {
-//             // Normal case: house stays within the 0-360 boundaries
-//             if (longitude >= current_cusp && longitude < next_cusp) {
-//                 return roman_houses[i - 1];
-//             }
-//         } else {
-//             // Wraparound case: house crosses over 360° / 0° Aries
-//             if (longitude >= current_cusp || longitude < next_cusp) {
-//                 return roman_houses[i - 1];
-//             }
-//         }
-//     }
-//     return "I"; // Fallback safety default
-// }
 
 
 const char* get_house_roman(double longitude, double *cusps) {
@@ -4850,6 +4841,34 @@ struct tm julian_day_para_struct_tm(double jd_retorno) {
     return t_retorno;
 }
 
+int calc_declination_ra_point(double jd, double longitude, double *ra_out, double *dec_out) {
+    double xpin[3], xpout[3];
+    double x_nut[6];
+    char serr[256];
+    
+    // Calcular a Obliqüidade da Eclíptica para este momento (SE_ECL_NUT)
+    if (swe_calc_ut(jd, SE_ECL_NUT, 0, x_nut, serr) < 0) {
+        printf("Erro ao calcular obliqüidade: %s\n", serr);
+        return 0;
+    }
+    
+    // x_nut[0] contém a obliqüidade verdadeira da eclíptica (true obliquity)
+    double eps = x_nut[0];
+    
+    // Preparar o vetor de entrada (Coordenadas Eclípticas)
+    xpin[0] = longitude; 
+    xpin[1] = 0.0;        // Latitude zero (ponto matemático na eclíptica)
+    xpin[2] = 1.0;        // Distância arbitrária
+    
+    // Executar a transformação para Coordenadas Equatoriais
+    // O sinal negativo (-eps) converte de ECLÍPTICA para EQUATORIAL
+    swe_cotrans(xpin, xpout, -eps);
+    
+    *ra_out = xpout[0];
+    *dec_out = xpout[1];
+    
+    return 1;
+}
 
 double calc_declination_mathematical_point(double jd, double longitude) {
     double xpin[3], xpout[3];
@@ -4903,6 +4922,10 @@ int obter_coordenadas_termo(double longitude_termo, double jd_natal, double *ra_
     return 1;
 }
 
+
+double get_longitude_fim_term(int sign, int index, Termo tabela[12][5]) {
+    return sign * 30.0 + tabela[sign][index].grau_limite;
+}
 
 double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     if (index == 0) {
@@ -7188,8 +7211,59 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
 
-        // criar Promissor objects array com as coordenadas dos 7 planetas, antissia, contrantissia e termos
+        // Array de Significadores
+        Promissor sig[50] = {0};
+        int sig_id = 0;
+        for (int i = 0; i < NUM_OBJECTS - object_diff - 1; i++) {
+            strcpy(sig[i].object, plots[i].object);
+            strcpy(sig[i].object_name, plots[i].object_name);
+            sig[i].id = plots[i].id;
+            sig[i].longitude = plots[i].longitude;
+            sig[i].latitude = plots[i].latitude;
+            sig[i].declination = plots[i].declination;
+            sig[i].ra = plots[i].ra;
+            sig[i].house = get_house(plots[i].longitude, cusps);
+            
+            if (i < 12 - object_diff) {
+                sig[i].type = PROM_PLANET;
+            } else if (strcmp(sig[i].object_name, "SAN") == 0 || strcmp(sig[i].object_name, _("Part of Fortune")) == 0) {
+                sig[i].type = PROM_POINT;
+            } else {
+                sig[i].type = PROM_ANGLE;
+            }
+            sig_id++;
+        }
 
+        char *hc;
+        for (int i = 1; i <= 12; i++) {
+            hc = intToRoman(i);
+            snprintf(sig[sig_id].object, 10, "%s", hc);
+            snprintf(sig[sig_id].object_name, 30, _("Cusp %d"), i);
+
+            sig[sig_id].id = plots[P_IC - object_diff].id + i;
+            sig[sig_id].longitude = cusps[i];
+            sig[sig_id].latitude = 0.0;
+
+            double xx[3];
+            double xequat[3];
+            xx[0] = cusps[i];   
+            xx[1] = 0.0; // Latitude 0.0
+            xx[2] = 1.0;
+
+            swe_cotrans(xx, xequat, -get_obliquidade(julian_day));
+
+            sig[sig_id].declination = xequat[1];
+            sig[sig_id].ra = xequat[0];
+            sig[sig_id].house = i;
+            sig[sig_id].type = PROM_CUSP;
+
+            sig_id++;
+        }
+        free(hc);
+
+
+        // criar Promissor objects array com as coordenadas dos 7 planetas, antiscia, contrantiscia e termos
+        // Array de Promissores
         Promissor prom[100] = {0};
         prom_id = 0;
 
@@ -7233,6 +7307,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double ra_termos[60] = {0};
         double decl_termos[60] = {0};
 
+        double longitudes_fim[60] = {0};
+        //double ra_fim[60] = {0};
+        //double decl_fim[60] = {0};
+
         char termos_regentes[60][10];
         //char regents_names[60][30];
         
@@ -7242,11 +7320,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             for (int j = 0; j < 5; j++, index++) {
                 if (terms_system == 1) {
                     longitudes_termos[index] = get_longitude_term(i, j, tabela_termos_egipcios);
+                    longitudes_fim[index] = get_longitude_fim_term(i, j, tabela_termos_egipcios);
                     snprintf(termos_regentes[index], 10, "%s%s", get_sign(i), planet_regent_symbols[tabela_termos_egipcios[i][j].regente]);
                     snprintf(prom[prom_id + index].object_name, 30, "%s", planet_regent_names[tabela_termos_egipcios[i][j].regente]);
                 } 
                 else {
                     longitudes_termos[index] = get_longitude_term(i, j, tabela_termos_ptolomeu);
+                    longitudes_fim[index] = get_longitude_fim_term(i, j, tabela_termos_ptolomeu);
                     snprintf(termos_regentes[index], 10, "%s%s", get_sign(i), planet_regent_symbols[tabela_termos_ptolomeu[i][j].regente]);
                     snprintf(prom[prom_id + index].object_name, 30, "%s", planet_regent_names[tabela_termos_ptolomeu[i][j].regente]);          
                 }
@@ -7257,8 +7337,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         for (int i = 0; i < 60; i++, prom_id++) {
             obter_coordenadas_termo(longitudes_termos[i], julian_day, &ra_termos[i], &decl_termos[i]);
+            //obter_coordenadas_termo(longitudes_fim[i], julian_day, &ra_fim[i], &decl_fim[i]);
             snprintf(prom[prom_id].object, 10, "%s", termos_regentes[i]);            
-            //snprintf(prom[prom_id].object_name, 30, "%s", planet_regent_names[termos_regentes[i]]);       
 
             prom[prom_id].id = prom_id;  
             prom[prom_id].longitude = longitudes_termos[i];
@@ -7266,6 +7346,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[prom_id].declination = decl_termos[i];
             prom[prom_id].ra = ra_termos[i];
             prom[prom_id].house = get_house(longitudes_termos[i], cusps);
+
+            prom[prom_id].longitude_fim = longitudes_fim[i];
+            //prom[prom_id].dec_fim = decl_fim[i];
+            //prom[prom_id].ra_fim = ra_fim[i];
+            //prom[prom_id].house_fim = get_house(longitudes_fim[i], cusps);
+
             prom[prom_id].type = PROM_TERM;
         }
 
@@ -7519,6 +7605,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ctx.tipo_san = tipo_san;
 
         ctx.prom = prom;
+        ctx.sig = sig;
 
         ctx.ants = ants;
         ctx.num_ants = num_ants;
@@ -7772,7 +7859,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(15):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
-                    display_primary_directions(plots, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, tipo_san, dig, armc, lat, prom);
+                    display_primary_directions(plots, sig, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, tipo_san, dig, armc, lat, prom);
                     ativar_arrasto_mouse();
                     flushinp();
                 }
@@ -8333,7 +8420,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 15:
             if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom);
+                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom);
             }
             else {
                 AspectMatrix matrix_sign = {0};

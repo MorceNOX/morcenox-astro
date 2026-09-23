@@ -342,6 +342,40 @@ int comparar_directions_por_idade(const void *a, const void *b) {
 }
 
 
+int comparar_directions_por_idade_tipo_termo(const void *a, const void *b) {
+    const LinhaDirecao *objA = (const LinhaDirecao *)a;
+    const LinhaDirecao *objB = (const LinhaDirecao *)b;
+
+    // 1. Prioridade Máxima: Idade Cronológica
+    if (objA->idade_evento < objB->idade_evento) return -1;
+    if (objA->idade_evento > objB->idade_evento) return 1;
+
+    // 2. CRUCIAL PARA O TIME-LORD: Se acontecerem na mesmíssima idade,
+    // a mudança de termo que gera o NOVO DIVISOR (Zodiacal Direta) DEVE vir primeiro que tudo!
+    int eh_divisorA = (objA->promissor_type == PROM_TERM && objA->tipo_direcao_id == DIRECAO_ZODIACAL && objA->sentido == 0);
+    int eh_divisorB = (objB->promissor_type == PROM_TERM && objB->tipo_direcao_id == DIRECAO_ZODIACAL && objB->sentido == 0);
+    
+    if (eh_divisorA && !eh_divisorB) return -1;
+    if (!eh_divisorA && eh_divisorB) return 1;
+
+    // 3. Terceiro desempate: Tipo de Direção usando inteiros (Zodiacal [0] vem ANTES de Mundana)
+    if (objA->tipo_direcao_id < objB->tipo_direcao_id) return -1;
+    if (objA->tipo_direcao_id > objB->tipo_direcao_id) return 1;
+
+    // 4. Quarto desempate: Sentido (Direta [0] antes de Conversa)
+    if (objA->sentido < objB->sentido) return -1;
+    if (objA->sentido > objB->sentido) return 1;
+
+    // 5. Quinto desempate: Outros Termos (ex: mundanos ou conversos) vêm antes de aspectos planetários normais
+    if (objA->promissor_type == PROM_TERM && objB->promissor_type != PROM_TERM) return -1;
+    if (objA->promissor_type != PROM_TERM && objB->promissor_type == PROM_TERM) return 1;
+    
+    return 0; 
+}
+
+
+
+
 int comparar_plots_por_id(const void *a, const void *b) {
     // 1. Converte os ponteiros void para ponteiros da sua struct
     const PlotObject *objA = (const PlotObject *)a;

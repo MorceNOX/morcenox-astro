@@ -179,6 +179,7 @@ typedef struct {
     int tipo_san;
 
     Promissor *prom;
+    Promissor *sig;
 
     AntObject *ants;
     int num_ants;
@@ -204,6 +205,7 @@ int obter_idade_padrao_mapa();
 double obter_idade_padrao_mapa_double();
 const char* obter_glifo_planeta_por_id(int id_planeta);
 const char* obter_nome_planeta_por_id(int id_planeta);
+int obter_id_planeta_por_nome(const char *nome_planeta);
 int converter_codigo_planeta(int codigo_antigo);
 int get_planetary_joy(int id_planet);
 int get_sign_joy(int id_planet);
@@ -286,5 +288,5 @@ void format_event_time(double jd, double offset, char *dest, size_t size_of_dest
 double calc_solar_time(double julian_day, double ut_hours, double lon);
 struct tm julian_day_para_struct_tm(double jd_retorno);
 double calc_declination_mathematical_point(double jd, double longitude);
-
+int calc_declination_ra_point(double jd, double longitude, double *ra_out, double *dec_out);
 #endif
