@@ -776,7 +776,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         memset(cronograma, 0, sizeof(cronograma));
 
         index = 0;
-        if (tipo == 1 && sentido != 1) {
+        if (tipo == 1 && sentido == 2) {
             for (int i = 0; i < qtd_direcoes; i++) {
                 if (cronograma_a[i].tipo_direcao_id == 0) {
                     continue;
@@ -785,6 +785,16 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 index++;
             }
             qtd_direcoes = qtd_direcoes - qtd_direcoes_zod;
+        }
+        else if (tipo == 1 && sentido == 0) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
         }
         else if (tipo == 1 && sentido == 1) {
             for (int i = 0; i < qtd_direcoes; i++) {
@@ -807,12 +817,21 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             }
             qtd_direcoes = index;
         }
+        else if (sentido == 0) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].sentido == 1) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
         else {
             for (int i = 0; i < qtd_direcoes; i++) {
                 cronograma[i] = cronograma_a[i];
             }
         }
-
 
         if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
             scroll_offset = qtd_direcoes * 2 - max_linhas_exibicao;
@@ -1402,7 +1421,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         memset(cronograma, 0, sizeof(cronograma));
 
         index = 0;
-        if (tipo == 1 && sentido != 1) {
+        if (tipo == 1 && sentido == 2) {
             for (int i = 0; i < qtd_direcoes; i++) {
                 if (cronograma_a[i].tipo_direcao_id == 0) {
                     continue;
@@ -1411,6 +1430,16 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 index++;
             }
             qtd_direcoes = qtd_direcoes - qtd_direcoes_zod;
+        }
+        else if (tipo == 1 && sentido == 0) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
         }
         else if (tipo == 1 && sentido == 1) {
             for (int i = 0; i < qtd_direcoes; i++) {
@@ -1426,6 +1455,16 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         else if (sentido == 1) {
             for (int i = 0; i < qtd_direcoes; i++) {
                 if (cronograma_a[i].sentido == 0) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
+        else if (sentido == 0) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].sentido == 1) {
                     continue;
                 }
                 cronograma[index] = cronograma_a[i];
