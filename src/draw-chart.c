@@ -1731,7 +1731,7 @@ void draw_cusps_div(int object_count,
                                 safe_mvprintw_clip(y, x, "▚"); // casa 5
                             } else if (angle < 1.79) {
                                 safe_mvprintw_clip(y, x, "▐");  // casa 4
-                            } else if (angle < 2.26) {
+                            } else if (angle < 2.30) {
                                 safe_mvprintw_clip(y, x, "▞");  // casa 3
                             } else if (angle < 2.99) {
                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 2
@@ -1820,7 +1820,7 @@ void draw_cusps_div_axis(int object_count,
                             } else if (angle < 1.79) {
                                 //mvaddstr(y, x, "▕");  // casa 4
                                 safe_mvprintw_clip(y, x, "▕▎");                            
-                            } else if (angle < 2.26) {
+                            } else if (angle < 2.30) {
                                 safe_mvprintw_clip(y, x, "⧸");  // casa 3
                             } else if (angle < 2.99) {
                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 2
