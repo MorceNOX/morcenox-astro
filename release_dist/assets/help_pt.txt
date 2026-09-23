@@ -1481,9 +1481,11 @@ Press Q or ESC to return to the main menu.
 • Direções Primárias (F15 ou 3)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-As opções incluem ver as direções primárias para os pontos mais relevantes (o Sol, a Lua, a Parte da Fortuna, a Sizígia Pré-Natal - SAN, o Ascendente, o Meio do Céu, o Hyleg, o Descendente e o IC) e os 7 planetas tradicionais.
+As opções incluem ver as direções primárias para os seguintes pontos, os chamados Significadores: o Hyleg, o Sol, a Lua, a Parte da Fortuna, a Sizígia Pré-Natal - SAN, o Ascendente, o Meio do Céu, os planetas Mercúrio, Vênus, Marte, Júpiter e Saturno, o Descendente, o IC, os Nodos Lunares Norte e Sul, os planetas modernos, caso estejam sendo usados e as cúspides das 12 casas.
 
 Use setas para direita e esquerda para mudar o significador e deslize pela tabela para ver todas as direções para o ponto selecionado.
+
+Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas e dos nodos lunares.
 
 Por padrão, a tabela exibe ambas as direções: Diretas e Conversas. Você pode filtrar os resultados pressionando [C] para ver apenas as direções Conversas, [D] para as Diretas e [A] para ver todas as direções na tabela.
 
@@ -1491,7 +1493,7 @@ Todas as direções exibidas são zodiacais, com latitude real, calculadas utili
 
 A tabela também exibe, por padrão, direções zodiacais e mundanas em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] e pelas mundanas pressionando [M].
 
-Os promissores são os aspectos dos 7 planetas, seus Antissia e Contrantissia, e os termos dos signos.
+Os promissores são os aspectos dos 7 planetas, seus Antiscia e Contrantiscia, e os termos dos signos.
 
 As primeiras colunas mostram a idade e a data provável do evento.
 
@@ -1514,6 +1516,10 @@ A codificação por cores indica direções destruidoras potenciais, direções 
 • Quando o promissor é um termo a direção é exibida com sublinhado e cor esmaecida.
 
 O mesmo código de cores é aplicado a ambas as direções — direta e conversa.
+
+A última coluna exibe o Divisor que rege a data da respectiva direção. 
+
+Os Divisores são os regentes dos termos das direções zodiacais diretas, que ficam em vigência até que novo termo encoste no significador selecionado.
 
 Use [↓↑] para deslizar a tabela.
 Use [←/→] para mudar o Significador.

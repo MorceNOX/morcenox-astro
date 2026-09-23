@@ -1539,14 +1539,11 @@ Press Q or ESC to return to the main menu.
 • Primary Directions (F15) (Shift+F3) or 3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The options include seeing the primary directions for the most 
-relevant points (the Sun, the Moon, the Part of Fortune,
-the Syzygy Ante Nativitatem, the Ascendant, the Midheaven, 
-the Hyleg, the Descendant and the IC) and the 7 traditional 
-planets.
+Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, modern planets if they are being used and the 12 house cusps.
 
-Use right and left arrows to change the significator and scroll 
-through the table to see all directions to that selected point.
+Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
+
+The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contra-antiscia of the planets and lunar nodes.
 
 By default, the table displays both, Direct and Converse
 directions. You can filter the results by pressing [C] to see 
@@ -1560,9 +1557,6 @@ Mundane proportional to Semi-Arcs (Method Placidus in mundo).
 The table also displays, by default, Zodiacal and Mundane
 directions altogether. You can filter by Zodiacal by 
 pressing [Z] and Mundane only by pressing [M].
-
-Promissors are the aspects of the 7 planets, their Antissia
-and Contrantissia, and the terms (bounds) of the signs.
 
 The first columns shows the age and the date of the event.
 
@@ -1587,7 +1581,10 @@ directions and a period of alert.
     
 The same color coding is applied to both, Direct and Converse 
 directions.
-     
+
+The last column displays the Divider governing the date of the respective direction.
+
+The Dividers are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator.     
 
 Use [↓↑] to scroll the table.
 Use [←/→] to change the Significator.

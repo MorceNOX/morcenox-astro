@@ -442,10 +442,12 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
-
-        //if (prom[p].type == PROM_TERM) continue;
-        
+        if (prom[p].type == PROM_POINT || 
+            prom[p].type == PROM_ANGLE || 
+            prom[p].type == PROM_PART || 
+            prom[p].type == PROM_TERM
+        ) continue;
+       
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
         double dec_prom_rad = para_radianos(prom[p].declination);
@@ -726,29 +728,28 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         LinhaDirecao cronograma_z[300];
         LinhaDirecao cronograma_m[300];
         
-        if (tipo != 1) {
-            memset(cronograma_z, 0, sizeof(cronograma_z));
-            qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom);
-        }
+        memset(cronograma_z, 0, sizeof(cronograma_z));
+        qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, 2, prom);
+
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));
-            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, 2, prom);
         }
         int qtd_direcoes = qtd_direcoes_zod + qtd_direcoes_mun;
 
-        LinhaDirecao cronograma[qtd_direcoes];
-        memset(cronograma, 0, sizeof(cronograma));
+        LinhaDirecao cronograma_a[qtd_direcoes];
+        memset(cronograma_a, 0, sizeof(cronograma_a));
 
         int index = 0;
         for (int i = 0; i < qtd_direcoes_zod; i++) {
-            cronograma[index] = cronograma_z[i];
+            cronograma_a[index] = cronograma_z[i];
             index++;
         }
         for (int i = 0; i < qtd_direcoes_mun; i++) {
-            cronograma[index] = cronograma_m[i];
+            cronograma_a[index] = cronograma_m[i];
             index++;
         }
-        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
+        qsort(cronograma_a, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
 
         // obter glifo e nome do regente do termo natal do significador
         int regente_do_termo = get_term_ruler(sig[idx_atual_calculo].longitude);            
@@ -758,17 +759,58 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
 
         for (int i = 0; i < qtd_direcoes; i++) {
-            if (cronograma[i].promissor_type == PROM_TERM && 
-                cronograma[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
-                cronograma[i].sentido == DIRECT
+            if (cronograma_a[i].promissor_type == PROM_TERM && 
+                cronograma_a[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
+                cronograma_a[i].sentido == DIRECT
             ) {
-                strcpy(divisor_atual, cronograma[i].promissor_name);
+                strcpy(divisor_atual, cronograma_a[i].promissor_name);
                 int id_planeta = obter_id_planeta_por_nome(divisor_atual);
                 strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
             }
 
-            strcpy(cronograma[i].divisor_name, divisor_atual);
-            strcpy(cronograma[i].divisor_gliph, glifo_atual);
+            strcpy(cronograma_a[i].divisor_name, divisor_atual);
+            strcpy(cronograma_a[i].divisor_gliph, glifo_atual);
+        }
+
+        LinhaDirecao cronograma[qtd_direcoes];
+        memset(cronograma, 0, sizeof(cronograma));
+
+        index = 0;
+        if (tipo == 1 && sentido != 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = qtd_direcoes - qtd_direcoes_zod;
+        }
+        else if (tipo == 1 && sentido == 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
+                    continue;
+                }
+                
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
+        else if (sentido == 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].sentido == 0) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
+        else {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                cronograma[i] = cronograma_a[i];
+            }
         }
 
 
@@ -1311,29 +1353,28 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         LinhaDirecao cronograma_z[300];
         LinhaDirecao cronograma_m[300];
         
-        if (tipo != 1) {
-            memset(cronograma_z, 0, sizeof(cronograma_z));
-            qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, sentido, prom);
-        }
+        memset(cronograma_z, 0, sizeof(cronograma_z));
+        qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, 2, prom);
+        
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));
-            qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+            qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, 2, prom);
         }
         int qtd_direcoes = qtd_direcoes_zod + qtd_direcoes_mun;
 
-        LinhaDirecao cronograma[qtd_direcoes];
-        memset(cronograma, 0, sizeof(cronograma));
+        LinhaDirecao cronograma_a[qtd_direcoes];
+        memset(cronograma_a, 0, sizeof(cronograma_a));
 
         int index = 0;
         for (int i = 0; i < qtd_direcoes_zod; i++) {
-            cronograma[index] = cronograma_z[i];
+            cronograma_a[index] = cronograma_z[i];
             index++;
         }
         for (int i = 0; i < qtd_direcoes_mun; i++) {
-            cronograma[index] = cronograma_m[i];
+            cronograma_a[index] = cronograma_m[i];
             index++;
         }
-        qsort(cronograma, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
+        qsort(cronograma_a, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
 
         // obter glifo e nome do regente do termo natal do significador
         int regente_do_termo = get_term_ruler(lista_partes[idx_atual_calculo].longitude);            
@@ -1343,18 +1384,61 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
 
         for (int i = 0; i < qtd_direcoes; i++) {
-            if (cronograma[i].promissor_type == PROM_TERM && 
-                cronograma[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
-                cronograma[i].sentido == DIRECT
+            if (cronograma_a[i].promissor_type == PROM_TERM && 
+                cronograma_a[i].tipo_direcao_id == DIRECAO_ZODIACAL &&
+                cronograma_a[i].sentido == DIRECT
             ) {
-                strcpy(divisor_atual, cronograma[i].promissor_name);
+                strcpy(divisor_atual, cronograma_a[i].promissor_name);
                 int id_planeta = obter_id_planeta_por_nome(divisor_atual);
                 strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
             }
 
-            strcpy(cronograma[i].divisor_name, divisor_atual);
-            strcpy(cronograma[i].divisor_gliph, glifo_atual);
+            strcpy(cronograma_a[i].divisor_name, divisor_atual);
+            strcpy(cronograma_a[i].divisor_gliph, glifo_atual);
         }
+
+        
+        LinhaDirecao cronograma[qtd_direcoes];
+        memset(cronograma, 0, sizeof(cronograma));
+
+        index = 0;
+        if (tipo == 1 && sentido != 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = qtd_direcoes - qtd_direcoes_zod;
+        }
+        else if (tipo == 1 && sentido == 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
+                    continue;
+                }
+                
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
+        else if (sentido == 1) {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].sentido == 0) {
+                    continue;
+                }
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+            qtd_direcoes = index;
+        }
+        else {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                cronograma[i] = cronograma_a[i];
+            }
+        }
+
         // Garante que o scroll não vá para o vazio se trocarmos para um planeta com menos direções
         if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
             scroll_offset = qtd_direcoes * 2 - max_linhas_exibicao;
@@ -1727,10 +1811,12 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
+        if (prom[p].type == PROM_POINT || 
+            prom[p].type == PROM_ANGLE || 
+            prom[p].type == PROM_PART || 
+            prom[p].type == PROM_TERM
+        ) continue;
 
-        //if (prom[p].type == PROM_TERM) continue;
-        
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
         double dec_prom_rad = para_radianos(prom[p].declination);
