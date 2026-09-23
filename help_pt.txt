@@ -1481,7 +1481,7 @@ Press Q or ESC to return to the main menu.
 • Direções Primárias (F15 ou 3)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-As opções incluem ver as direções primárias para os seguintes pontos, os chamados Significadores: o Hyleg, o Sol, a Lua, a Parte da Fortuna, a Sizígia Pré-Natal - SAN, o Ascendente, o Meio do Céu, os planetas Mercúrio, Vênus, Marte, Júpiter e Saturno, o Descendente, o IC, os Nodos Lunares Norte e Sul e os planetas modernos caso estejam sendo usados.
+As opções incluem ver as direções primárias para os seguintes pontos, os chamados Significadores: o Hyleg, o Sol, a Lua, a Parte da Fortuna, a Sizígia Pré-Natal - SAN, o Ascendente, o Meio do Céu, os planetas Mercúrio, Vênus, Marte, Júpiter e Saturno, o Descendente, o IC, os Nodos Lunares Norte e Sul, os planetas modernos, caso estejam sendo usados e as cúspides das 12 casas.
 
 Use setas para direita e esquerda para mudar o significador e deslize pela tabela para ver todas as direções para o ponto selecionado.
 

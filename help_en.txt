@@ -1539,7 +1539,7 @@ Press Q or ESC to return to the main menu.
 • Primary Directions (F15) (Shift+F3) or 3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, and modern planets if they are being used.
+Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, modern planets if they are being used and the 12 house cusps.
 
 Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
 
