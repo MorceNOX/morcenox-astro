@@ -37,6 +37,9 @@
 
 #define TOTAL_SIGNIFICADORES 31
 
+//#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
+#define NAIBOD_KEY  0.985647334798
+
 typedef enum {
     DIRECAO_ZODIACAL = 0,
     DIRECAO_MUNDANA  = 1

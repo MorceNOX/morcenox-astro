@@ -39,7 +39,6 @@
 #endif
 
 #define OBLIQUIDADE 23.439291 // Obliqüidade média da Eclíptica em graus
-#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -151,10 +150,10 @@ double calcular_latitude_dinamica_bianchini(double jd, const char *object, doubl
     
     // O sinalizador de flags e o método precisam ser int32
     int32 flags_nodos = SEFLG_TOPOCTR;
-    int32 método_nodo = SE_NODBIT_MEAN; // SE_NODBIT_MEAN = 1 (Nodos Médios, padrão astrológico)
+    int32 metodo_nodo = SE_NODBIT_MEAN; // SE_NODBIT_MEAN = 1 (Nodos Médios, padrão astrológico)
 
     // Chamada oficial da Swiss Ephemeris com os 9 argumentos corretos e os tipos alinhados
-    if (swe_nod_aps_ut(jd, se_id, flags_nodos, método_nodo, xnasc, xndsc, xperi, xaphel, serr) < 0) {
+    if (swe_nod_aps_ut(jd, se_id, flags_nodos, metodo_nodo, xnasc, xndsc, xperi, xaphel, serr) < 0) {
         return 0.0; // Fallback caso ocorra algum erro interno na biblioteca
     }
 
