@@ -82,6 +82,8 @@ extern const double TEMPERAMENT_RANK_PROPORTION;
 
 extern int prom_id;
 
+extern int NUM_OBJECTS;
+
 void update_interface_language();
 
 #endif

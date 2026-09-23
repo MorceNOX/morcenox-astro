@@ -42,7 +42,7 @@ typedef struct {
 
 // A matriz completa que será enviada para a função de desenho
 typedef struct {
-    AspectCell grid[NUM_OBJECTS][NUM_OBJECTS];
+    AspectCell grid[30][150];
 } AspectMatrix;
 
 typedef struct {
@@ -54,7 +54,7 @@ typedef struct {
 } DeclCell;
 
 typedef struct {
-    DeclCell grid[NUM_OBJECTS][NUM_OBJECTS];
+    DeclCell grid[30][30];
 } DeclMatrix;
 
 double ASP_ANTISSIA_EXACT();

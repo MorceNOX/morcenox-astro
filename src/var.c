@@ -77,6 +77,8 @@ const double TEMPERAMENT_RANK_PROPORTION = 0.6666;
 
 int prom_id = 0;
 
+int NUM_OBJECTS = 19;
+
 
 // void update_interface_language() {
 //     setenv("LANGUAGE", LANGUAGE, 1);

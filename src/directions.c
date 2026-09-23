@@ -442,7 +442,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
 
         //if (prom[p].type == PROM_TERM) continue;
         
@@ -940,8 +940,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
-        // CORREÇÃO: Legenda dinâmica baseada no tipo ativo
+        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1 Year = 1.0146° of Equatorial Rotation). ε: Dynamic."));
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
@@ -1531,8 +1530,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
-        // CORREÇÃO: Legenda dinâmica baseada no tipo ativo
+        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1 Year = 1.0146° of Equatorial Rotation). ε: Dynamic."));
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
@@ -1725,7 +1723,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
 
         //if (prom[p].type == PROM_TERM) continue;
         

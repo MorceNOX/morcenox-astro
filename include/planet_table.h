@@ -19,7 +19,7 @@
 #ifndef PLANET_TABLE_H
 #define PLANET_TABLE_H
 
-#define NUM_OBJECTS 19
+//#define NUM_OBJECTS 19
 #define NUM_OBJECTS_EXT 38
 
 #define Z_ANGLE 0
@@ -97,7 +97,7 @@ typedef struct {
 } PlanetRowData;
 
 typedef struct {
-    PlanetRowData rows[NUM_OBJECTS];
+    PlanetRowData rows[30];
 } PlanetTableMatrix;
 
 

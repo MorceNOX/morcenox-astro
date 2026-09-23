@@ -5089,7 +5089,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(25, 226, COLOR_BLACK); // yellow
         init_pair(26, COLOR_BLACK, 37); // Verde quase ciano
         init_pair(27, COLOR_RED, 37);
-        init_pair(28, COLOR_MAGENTA, 249);
+        init_pair(28, COLOR_MAGENTA, 15);
         init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
 
@@ -5099,7 +5099,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(34, COLOR_BACK_2, COLOR_BACK_2);
         init_pair(35, COLOR_WHITE, COLOR_BLACK);
         init_pair(36, 160, COLOR_WHITE); // red
-        init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
+        init_pair(37, COLOR_MAGENTA, 15);
         init_pair(38, 18, COLOR_WHITE);
         init_pair(39, 28, 211); // verde, magenta
         init_pair(40, COLOR_YELLOW, 223);
@@ -5180,9 +5180,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     int object_diff = 0;
     if (show_modern_planets) {
         object_diff = 0;
+        NUM_OBJECTS = 19;
     }
     else {
         object_diff = 3;
+        NUM_OBJECTS = 18; // excluding Vertex
     }
 
 
@@ -5230,7 +5232,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         close_database(db1);
     }
 
-    
 
 
     // Carrega dados do banco - get_default_terms_system

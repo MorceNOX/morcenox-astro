@@ -268,12 +268,16 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                 bool is_linha_focada = (i == seletor_linha_atual);
                 bool is_major_lot = (strcmp(p->name, "Part of Fortune") == 0 || 
                                      strcmp(p->name, "Part of Spirit") == 0 || 
+                                     strcmp(p->name, "Spirit") == 0 ||
+                                     strcmp(p->name, "Espírito") == 0 ||
                                      strcmp(p->name, "Parte do Espírito") == 0 || 
                                      strcmp(p->name, "Parte da Fortuna") == 0 ||
                                      strcmp(p->name, "Lot of Fortune") == 0 || 
                                      strcmp(p->name, "Lot of Spirit") == 0 || 
                                      strcmp(p->name, "Lot do Espírito") == 0 || 
-                                     strcmp(p->name, "Lot da Fortuna") == 0);
+                                     strcmp(p->name, "Lot da Fortuna") == 0 ||
+                                     strcmp(p->name, "Fortuna") == 0 ||
+                                     strcmp(p->name, "Fortune") == 0);
 
                 if (is_linha_focada) {
                     wattron(table_win, A_BOLD);
@@ -647,12 +651,16 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
                 bool is_linha_focada = (i == seletor_linha_atual);
                 bool is_major_lot = (strcmp(p->name, "Part of Fortune") == 0 || 
                                      strcmp(p->name, "Part of Spirit") == 0 || 
+                                     strcmp(p->name, "Spirit") == 0 ||
+                                     strcmp(p->name, "Espírito") == 0 ||
                                      strcmp(p->name, "Parte do Espírito") == 0 || 
                                      strcmp(p->name, "Parte da Fortuna") == 0 ||
                                      strcmp(p->name, "Lot of Fortune") == 0 || 
                                      strcmp(p->name, "Lot of Spirit") == 0 || 
                                      strcmp(p->name, "Lot do Espírito") == 0 || 
-                                     strcmp(p->name, "Lot da Fortuna") == 0);
+                                     strcmp(p->name, "Lot da Fortuna") == 0 ||
+                                     strcmp(p->name, "Fortuna") == 0 ||
+                                     strcmp(p->name, "Fortune") == 0);
 
                 if (is_linha_focada) {
                     wattron(table_win, A_BOLD);
