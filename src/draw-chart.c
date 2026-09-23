@@ -4944,6 +4944,12 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
 int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
     int n = 1;
     
+    // Adicione essas duas variáveis como STATIC no início da sua FUNÇÃO (ou globais) 
+    // para que elas mantenham o valor guardado entre as iterações do loop:
+    static clock_t ultimo_clique_tempo = 0;
+    static int ultimo_clique_x = 0;
+    static int ultimo_clique_y = 0;
+    
     bool dark_mode = (darkmode)?true:false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
@@ -4953,7 +4959,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     int is_dragging = 0;
     MEVENT mouse_event;
     
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(125);
     ativar_arrasto_mouse();
     flushinp();
@@ -7953,18 +7959,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     timegm(local_time);
                 }
                 break;
+                #include <time.h> // 🌟 Certifique-se de ter este include no topo do arquivo
+
+                
+                
             case KEY_MOUSE:
                 if (getmouse(&mouse_event) == OK) {
                     float max_r_y = (max_y / 2.0) - 0.0;
                     float max_r_x = (max_x / 2.0) / aspect_ratio;
-                    
                     float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
                     
-                    // Coordenadas do clique
                     int linha_clique = mouse_event.y;
                     int col_clique = mouse_event.x;
                     
-                    // Coordenadas geométricas do Botão Fixo OK
                     int linha_botao = LINES - 6;
                     int col_inicio_botao = max_x - 17;
                     int col_fim_botao = col_inicio_botao + 16;
@@ -7973,8 +7980,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     // ROTEAMENTO 1: O clique acertou o BOTÃO OK?
                     // ========================================================
                     if (linha_clique == linha_botao && col_clique >= col_inicio_botao && col_clique < col_fim_botao) {
-                        
-                        // Para o botão, aceitamos qualquer interação de clique (Apertou ou Soltou)
                         if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             desativar_arrasto_mouse();                      
                             open_menu_tables(&ctx);
@@ -7985,44 +7990,74 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             touchwin(stdscr);
                             wnoutrefresh(stdscr);
                             doupdate();
-                            break; // Sai do switch principal
+                            break; 
                         }
                     }
-                    // 2. DETECTAR O INÍCIO DO ARRASTE (Clique do Botão 1)
-                    else if (mouse_event.bstate & BUTTON1_PRESSED) {
-                        // Calcula a distância matemática de onde o usuário clicou até o centro (incluindo o pan atual)
+
+                    // ========================================================
+                    // ROTEAMENTO 2: LÓGICA DE ARRASTO E DUPLO CLIQUE MANUAL
+                    // ========================================================
+                    
+                    // 2.1. DETECTAR O CLIQUE (PRESS) -> Aqui calculamos o duplo clique real
+                    if (mouse_event.bstate & BUTTON1_PRESSED) {
                         double dx = (mouse_event.x - (center_x + pan_x)) / aspect_ratio;
                         double dy = mouse_event.y - (center_y + pan_y);
                         double distance = sqrt(dx*dx + dy*dy);
             
-                        // Se o clique foi dentro da área do círculo
                         if (distance <= base_radius + 1) {
-                            is_dragging = 1; // Ativa o modo de arraste
                             
-                            // SALVA A ANCORA: Onde o mouse clicou e qual era o PAN naquele momento
-                            start_mouse_x = mouse_event.x;
-                            start_mouse_y = mouse_event.y;
-                            start_pan_x = pan_x;
-                            start_pan_y = pan_y;
+                            // 🌟 ALGORITMO DO DUPLO CLIQUE MANUAL:
+                            clock_t tempo_atual = clock();
+                            // Converte a diferença de tempo para milissegundos
+                            double milissegundos_passados = ((double)(tempo_atual - ultimo_clique_tempo) / CLOCKS_PER_SEC) * 1000.0;
+
+                            // Se o clique foi rápido (menos de 250ms) e na mesma região (tolerância de 1 caractere)
+                            if (milissegundos_passados < 250.0 && 
+                                abs(mouse_event.x - ultimo_clique_x) <= 1 && 
+                                abs(mouse_event.y - ultimo_clique_y) <= 1) 
+                            {
+                                // 🔍 EXECUTAR AÇÃO DE ZOOM:
+                                if (zoom_factor > 1.0) {
+                                    zoom_factor = 1.0;
+                                } else {
+                                    zoom_factor += 0.3;
+                                    if (zoom_factor > 4.0) zoom_factor = 4.0; // Limite de 4x zoom
+                                }
+                                                               
+                                is_dragging = 0; // Cancela o arrasto para o zoom não dar trancos
+                                ultimo_clique_tempo = 0; // Reseta para evitar um "triplo" clique acidental
+                            } 
+                            else {
+                                // Se passou do tempo, foi apenas o primeiro clique de um arrasto comum
+                                is_dragging = 1; 
+                                start_mouse_x = mouse_event.x;
+                                start_mouse_y = mouse_event.y;
+                                start_pan_x = pan_x;
+                                start_pan_y = pan_y;
+                                
+                                // Guarda a posição e o tempo deste clique para avaliar o próximo
+                                ultimo_clique_tempo = tempo_atual;
+                                ultimo_clique_x = mouse_event.x;
+                                ultimo_clique_y = mouse_event.y;
+                            }
                         }
                     }
                     
-                    // 3. DETECTAR O MOVIMENTO (Ocorre enquanto o botão estiver pressionado)
-                    else if (mouse_event.bstate & REPORT_MOUSE_POSITION) {
+                    // 2.2. DETECTAR O MOVIMENTO (Permanece idêntico)
+                    if (mouse_event.bstate & REPORT_MOUSE_POSITION) {
                         if (is_dragging) {
-                            // O novo pan é o pan inicial MAIS a distância que o mouse viajou
                             pan_y = start_pan_y + (mouse_event.y - start_mouse_y);
                             pan_x = start_pan_x + (mouse_event.x - start_mouse_x);
                         }
                     }
                     
-                    // 4. DETECTAR O FIM DO ARRASTE (Soltura do Botão 1)
-                    else if (mouse_event.bstate & BUTTON1_RELEASED) {
-                        is_dragging = 0; // Desativa o modo de arraste (Drop)
+                    // 2.3. DETECTAR O FIM DO ARRASTE (Permanece idêntico)
+                    if (mouse_event.bstate & BUTTON1_RELEASED) {
+                        is_dragging = 0; 
                     }
-                    
                 }
                 break;
+                
             
         }
         

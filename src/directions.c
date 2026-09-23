@@ -39,7 +39,7 @@
 #endif
 
 #define OBLIQUIDADE 23.439291 // Obliqüidade média da Eclíptica em graus
-#define NAIBOD_KEY  1.014646  // Chave de Naibod: graus equatoriais por ano de vida
+#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -944,7 +944,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1 Year = 1.0146° of Equatorial Rotation). ε: Dynamic."));
+        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
@@ -1534,7 +1534,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1 Year = 1.0146° of Equatorial Rotation). ε: Dynamic."));
+        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
