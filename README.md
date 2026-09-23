@@ -184,7 +184,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/42048ac9-b94a-4a3f-9060-9fb6ecdc4c09" />
+<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/64151893-800f-4597-912c-6ab37e3d3b1f" />
 <hr>
 
 ### Firdaria
