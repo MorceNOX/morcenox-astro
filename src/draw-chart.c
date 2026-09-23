@@ -7215,7 +7215,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // Array de Significadores
         Promissor sig[50] = {0};
         int sig_id = 0;
-        for (int i = 0; i < NUM_OBJECTS - object_diff - 1; i++) {
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             strcpy(sig[i].object, plots[i].object);
             strcpy(sig[i].object_name, plots[i].object_name);
             sig[i].id = plots[i].id;
@@ -7263,6 +7263,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             sig_id++;
         }
         free(hc);
+
+        // DEBUG
+        // terminate_database();
+        // swe_close();
+
+        // endwin();
+        // for (int i = 0; i < sig_id; i++) {
+        //      fprintf(stderr, "%d %f %s %s %d\n", sig[i].id, sig[i].longitude, sig[i].object, sig[i].object_name, sig[i].type);
+        // }        
+        // exit(1);
 
 
         // criar Promissor objects array com as coordenadas dos 7 planetas, antiscia, contrantiscia e termos

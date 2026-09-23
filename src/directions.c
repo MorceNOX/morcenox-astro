@@ -234,7 +234,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
     for (int p = 0; p < prom_id; p++) {
         for (int s = 0; s < 2; s++) {
-            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - 5) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - ((show_modern_planets)?5:4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
             
             for (int a = 0; a < 5; a++) {
 
@@ -627,7 +627,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
         if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
         if (sig[i].id == P_DC - object_diff) idx_dc = i;
-        if (sig[i].id == P_IC - object_diff)  idx_ic = i; 
+        if (sig[i].id == P_IC - object_diff) idx_ic = i; 
     }
 
     if (!mapa_retorno) {
@@ -678,7 +678,11 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
 
     for (int i = 1; i <= 12; i++) {
-        indices_significadores[18 - object_diff + i] = idx_ic + i;
+        if (show_modern_planets) {
+            indices_significadores[18 + i] = idx_ic + i;
+        } else {
+            indices_significadores[15 + i] = idx_ic + i;
+        }
     }
 
 
@@ -1121,7 +1125,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍"};
 
     for (int p = 0; p < prom_id; p++) {
-        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
 
         for (int s = 0; s < 2; s++) {
             for (int a = 0; a < 5; a++) {
