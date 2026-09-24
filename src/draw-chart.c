@@ -5632,7 +5632,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(25, 226, COLOR_BLACK); // yellow
         init_pair(26, COLOR_BLACK, 37); // Verde quase ciano
         init_pair(27, COLOR_RED, 37);
-        init_pair(28, COLOR_MAGENTA, 15);
+        init_pair(28, COLOR_MAGENTA, 57);
         init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
 
