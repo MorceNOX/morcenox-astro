@@ -7979,7 +7979,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(ants[index_ant].object, 10, "A-%s", plots[i].object);
             snprintf(ants[index_ant].object_name, 30, "Antiscium %s", plots[i].object_name);
 
-            prom_id++;
+            if (strcmp(plots[i].object_name, _("Ascendant")) == 0 || strcmp(plots[i].object_name, _("Descendant")) == 0 ||
+                strcmp(plots[i].object_name, _("Midheaven")) == 0 || strcmp(plots[i].object_name, _("Nadir")) == 0
+            ) {
+
+            } else {
+                prom_id++;
+            }                          
+            
             index_ant++;
         
         }
@@ -8029,7 +8036,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(ants[target_idx].object, 10, "CA-%s", plots[i].object);
             snprintf(ants[target_idx].object_name, 30, "Contrantiscium %s", plots[i].object_name);
 
-            prom_id++;
+            if (strcmp(plots[i].object_name, _("Ascendant")) == 0 || strcmp(plots[i].object_name, _("Descendant")) == 0 ||
+                strcmp(plots[i].object_name, _("Midheaven")) == 0 || strcmp(plots[i].object_name, _("Nadir")) == 0
+            ) {
+                // does nothing, just ignore 
+            } else {
+                prom_id++;
+            }                          
+            
             index_cant++;
                     
         }
