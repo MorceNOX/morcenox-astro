@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 02:25-0300\n"
+"POT-Creation-Date: 2026-09-24 03:55-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -781,7 +781,7 @@ msgstr ""
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:2025 src/aspects.c:559
+#: src/arabic_parts.c:2025 src/aspects.c:562
 msgid "(*) Numbers = angular difference in degrees"
 msgstr ""
 
@@ -793,53 +793,53 @@ msgstr ""
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:2141 src/selections.c:202
+#: src/arabic_parts.c:2184 src/selections.c:202
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:2145 src/selections.c:206
+#: src/arabic_parts.c:2188 src/selections.c:206
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:2245 src/arabic_parts.c:2259
+#: src/arabic_parts.c:2288 src/arabic_parts.c:2302
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:2264
+#: src/arabic_parts.c:2307
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
-#: src/aspects.c:424
+#: src/aspects.c:427
 msgid "Parallel & Contra-Parallel"
 msgstr ""
 
-#: src/aspects.c:560 src/aspects.c:1256 src/aspects.c:1633
+#: src/aspects.c:563 src/aspects.c:1259 src/aspects.c:1636
 msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr ""
 
-#: src/aspects.c:701
+#: src/aspects.c:704
 msgid "Aspects Table"
 msgstr ""
 
-#: src/aspects.c:852 src/aspects.c:1632
+#: src/aspects.c:855 src/aspects.c:1635
 msgid "(*) Numbers = angular distance in degrees"
 msgstr ""
 
-#: src/aspects.c:853
+#: src/aspects.c:856
 msgid ""
 " ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia "
 "- F6 Contrantissia - [↓↑| Scroll"
 msgstr ""
 
-#: src/aspects.c:1112
+#: src/aspects.c:1115
 msgid "Aspects by Sign Table"
 msgstr ""
 
-#: src/aspects.c:1462
+#: src/aspects.c:1465
 msgid " Antissia Aspect Matrix Grid "
 msgstr ""
 
-#: src/aspects.c:1462
+#: src/aspects.c:1465
 msgid " Contrantissia Aspect Matrix Grid "
 msgstr ""
 

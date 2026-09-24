@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 03:13-0300\n"
+"POT-Creation-Date: 2026-09-24 04:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -793,19 +793,19 @@ msgstr ""
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:2141 src/selections.c:202
+#: src/arabic_parts.c:2183 src/selections.c:202
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:2145 src/selections.c:206
+#: src/arabic_parts.c:2187 src/selections.c:206
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:2245 src/arabic_parts.c:2259
+#: src/arabic_parts.c:2287 src/arabic_parts.c:2301
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:2264
+#: src/arabic_parts.c:2306
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 

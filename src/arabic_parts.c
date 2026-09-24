@@ -2028,6 +2028,13 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
             _("ESC: Exit - [ ←/→ ] Parts"), pagina_offset + 1, ate_qual, qtd_partes, _("Scroll Planets"), row_offset + linhas_nesta_tela, total_planetas_validos);
 
 
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(aspects_win, row_offset, total_planetas_validos, linhas_nesta_tela, 3);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
         wnoutrefresh(aspects_win);
         doupdate();
 
@@ -2091,7 +2098,42 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                         break; // Sai do switch do mouse e fecha a janela
                     }
                 }
-              
+                // 1. Descobre a coluna onde a barra é desenhada
+                int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
+
+                // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                if (event.x == col_scrollbar_absoluta) {
+                    
+                    // 3. Descobre a linha clicada em relação ao início da janela
+                    int linha_clique_janela = event.y - getbegy(aspects_win);
+                    
+                    // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                    int offset_inicio_barra = 3; 
+                    
+                    // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
+                    int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                    // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_tela) {
+                        
+                        // Calcula o limite máximo que o pad_line_pos pode atingir
+                        int max_scroll_y = total_planetas_validos - max_linhas_tela;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
+
+                        // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                        if (max_linhas_tela > 1 && max_scroll_y > 0) {
+                            // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                            int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_tela - 1);
+                            
+                            // Garante que o valor respeite as barreiras de limite
+                            if (novo_offset < 0) novo_offset = 0;
+                            if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                            // Atualiza a posição de rolagem do PAD
+                            row_offset = novo_offset;
+                        }
+                    }
+                }
             }
         }
     }
