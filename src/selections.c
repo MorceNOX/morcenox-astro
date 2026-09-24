@@ -84,7 +84,8 @@ int show_confirm_yesno(const char *name, const char *text) {
     int confirmado = 0;
     int ch;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
@@ -144,7 +145,7 @@ int show_confirm_yesno(const char *name, const char *text) {
                     // 🌟 CASO 1: Clicou exatamente no YES
                     if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                         botao_focado = 0;
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             confirmado = 1;
                             break; 
                         }
@@ -152,7 +153,7 @@ int show_confirm_yesno(const char *name, const char *text) {
                     // 🌟 CASO 2: Clicou exatamente no NO
                     else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
                         botao_focado = 1;
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             confirmado = 0;
                             break; 
                         }
@@ -210,7 +211,8 @@ int show_confirm_delete_popup(const char *name) {
     int confirmado = 0;
     int ch;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     while (1) {
         // Redesenha os botões dinamicamente com base no foco
@@ -270,7 +272,7 @@ int show_confirm_delete_popup(const char *name) {
                     // 🌟 CASO 1: Clicou exatamente no YES
                     if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                         botao_focado = 0;
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             confirmado = 1;
                             break; 
                         }
@@ -278,7 +280,7 @@ int show_confirm_delete_popup(const char *name) {
                     // 🌟 CASO 2: Clicou exatamente no NO
                     else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
                         botao_focado = 1;
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             confirmado = 0;
                             break; 
                         }
@@ -339,7 +341,8 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
 
     int ch;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     while (1) {
         int attr_confirm = (COLOR_PAIR(23) | A_REVERSE | A_BOLD);
@@ -373,7 +376,7 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
                     if (col_clique_janela >= col_inicio_botao && col_clique_janela < col_fim_botao) {
                         
                         // 4. Aceita clique simples (liberado/pressionado) ou duplo clique para fechar
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             break; // Fecha o pop-up imediatamente
                         }
                     }
@@ -679,9 +682,26 @@ OptionsEdition select_options() {
     mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
 
     wattroff(win, A_BOLD);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(win, 0, col_fechar, "[");
+    mvwprintw(win, 0, col_fechar + 2, "]");
+
+    wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(win, 0, col_fechar + 1, "X");
+    wattroff(win, A_BOLD);
     
     mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
     wattroff(win, COLOR_PAIR(2));
+    wnoutrefresh(win);
+
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
+    int botao_focado = 0; // 0 = Confirmar, 1 = Cancelar
 
     while (!options_confirmed) {
         
@@ -692,6 +712,28 @@ OptionsEdition select_options() {
         const char *title =  _(" Settings ");
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD); 
+
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "X");
+        wattroff(win, A_BOLD);
+
+
+        // Botão CONFIRM
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+        wattron(win, attr_confirm);
+        mvwprintw(win, w_height - 2, w_width - 27, _("[ CONFIRM  ]"));
+        wattroff(win, attr_confirm);
+
+        // Botão CANCEL
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+        wattron(win, attr_cancel);
+        mvwprintw(win, w_height - 2, w_width - 14, _("[  CANCEL  ]"));
+        wattroff(win, attr_cancel);
+
+
         mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
         wattroff(win, COLOR_PAIR(22));     
 
@@ -1154,6 +1196,183 @@ OptionsEdition select_options() {
                 ed.options = options;
                 ed.changed = 1;
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = w_height - 2;
+                    int col_inicio_botao_ok = w_width - 27;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 12;
+                    
+                    int col_inicio_botao_cancel = w_width - 14;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 12;
+
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            // Cleanup allocated memory
+                            if (house_systems) {
+                                for (int i = 0; i < house_system_count; i++) {
+                                    free(house_systems[i]);
+                                }
+                                free(house_systems);
+                            }
+                            if (house_system_names) {
+                                for (int i = 0; i < house_system_count; i++) {
+                                    free(house_system_names[i]);
+                                }
+                                free(house_system_names);
+                            }
+                            if (triplicity_ids) {
+                                free(triplicity_ids);
+                            }
+                            if (triplicity_names) {
+                                for (int i = 0; i < triplicity_count; i++) {
+                                    free(triplicity_names[i]);
+                                }
+                                free(triplicity_names);
+                            }
+                            if (terms_ids) {
+                                free(terms_ids);
+                            }
+                            if (terms_names) {
+                                for (int i = 0; i < terms_count; i++) {
+                                    free(terms_names[i]);
+                                }
+                                free(terms_names);
+                            }
+                            if (lang_names) {
+                                for (int i = 0; i < lang_count; i++) {
+                                    free(lang_names[i]);
+                                }
+                                free(lang_names);
+                            }
+                            if (lang_cods) {
+                                for (int i = 0; i < lang_count; i++) {
+                                    free(lang_cods[i]);
+                                }
+                                free(lang_cods);
+                            }
+                            delwin(win);
+                            ed.changed = 0;
+                            return ed;
+                        }
+                    }
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    else if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                // Update the database with new planet orbis values
+                                db = open_database();
+                                if (db) {
+                                    for (int i = 0; i < 12; i++) {
+                                        
+                                        // for south node
+                                        if (i == 11) planet_orbis[i] = planet_orbis[i - 1];
+                                        
+                                        const char *sql_update = "UPDATE planets SET orbis = ? WHERE id = ?";
+                                        rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, NULL);
+                                        if (rc == SQLITE_OK) {
+                                            sqlite3_bind_double(stmt, 1, planet_orbis[i]);
+                                            sqlite3_bind_int(stmt, 2, i + 1);
+                                            sqlite3_step(stmt);
+                                            sqlite3_finalize(stmt);
+                                        }
+                                    }
+
+                                    const char *sql_update2 = "UPDATE profiles SET parallel_orbis = ? WHERE profile = 'default'";
+                                    rc = sqlite3_prepare_v2(db, sql_update2, -1, &stmt, NULL);
+                                    if (rc == SQLITE_OK) {
+                                        sqlite3_bind_double(stmt, 1, parallel_orbis);
+                                        sqlite3_step(stmt);
+                                        sqlite3_finalize(stmt);
+                                    }
+
+                                    const char *sql_update3 = "UPDATE profiles SET antissia_orb = ? WHERE profile = 'default'";
+                                    rc = sqlite3_prepare_v2(db, sql_update3, -1, &stmt, NULL);
+                                    if (rc == SQLITE_OK) {
+                                        sqlite3_bind_double(stmt, 1, antissia_orbis);
+                                        sqlite3_step(stmt);
+                                        sqlite3_finalize(stmt);
+                                    }
+
+                                    close_database(db);
+                                }
+                                options_confirmed = 1;
+                                ed.options = options;
+                                ed.changed = 1;
+                                break;
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
+                            botao_focado = 1;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                // Cleanup allocated memory
+                            if (house_systems) {
+                                for (int i = 0; i < house_system_count; i++) {
+                                    free(house_systems[i]);
+                                }
+                                free(house_systems);
+                            }
+                            if (house_system_names) {
+                                for (int i = 0; i < house_system_count; i++) {
+                                    free(house_system_names[i]);
+                                }
+                                free(house_system_names);
+                            }
+                            if (triplicity_ids) {
+                                free(triplicity_ids);
+                            }
+                            if (triplicity_names) {
+                                for (int i = 0; i < triplicity_count; i++) {
+                                    free(triplicity_names[i]);
+                                }
+                                free(triplicity_names);
+                            }
+                            if (terms_ids) {
+                                free(terms_ids);
+                            }
+                            if (terms_names) {
+                                for (int i = 0; i < terms_count; i++) {
+                                    free(terms_names[i]);
+                                }
+                                free(terms_names);
+                            }
+                            if (lang_names) {
+                                for (int i = 0; i < lang_count; i++) {
+                                    free(lang_names[i]);
+                                }
+                                free(lang_names);
+                            }
+                            if (lang_cods) {
+                                for (int i = 0; i < lang_count; i++) {
+                                    free(lang_cods[i]);
+                                }
+                                free(lang_cods);
+                            }
+                            delwin(win);
+                            ed.changed = 0;
+                            return ed;                            
+                        }                    
+                    }
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    
+                }
+                break;
+            }
             case 27: // ESC
                 // Cleanup allocated memory
                 if (house_systems) {
@@ -1201,6 +1420,7 @@ OptionsEdition select_options() {
                 delwin(win);
                 ed.changed = 0;
                 return ed;
+            }
         }
     }
 
@@ -2448,7 +2668,7 @@ int select_topic(char *file, int max_width) {
     unsigned short term_h = get_terminal_height();
     
     // Calculate window size for country menu
-    int menu_width = 64;
+    int menu_width = 65;
     int menu_height = 15;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;
@@ -2479,8 +2699,18 @@ int select_topic(char *file, int max_width) {
 
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(win, 0, col_fechar, "[");
+    mvwprintw(win, 0, col_fechar + 2, "]");
+
+    wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(win, 0, col_fechar + 1, "X");
+    wattroff(win, A_BOLD);
+
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(100);
+    mouseinterval(175);
         
     while (!topic_selected) {
 
@@ -2497,6 +2727,12 @@ int select_topic(char *file, int max_width) {
         mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "X");
+        wattroff(win, A_BOLD);
         
         // Draw topic items with proper scrolling
         for (int i = 0; i < max_display_items; i++) {
@@ -2504,10 +2740,17 @@ int select_topic(char *file, int max_width) {
             if (item_index < topic_count) {
                 int attr = (item_index == selected_topic_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
                 wattron(win, attr);
-                mvwprintw(win, i + 1, 1, " %s%*s ", topics[item_index], (menu_width - 4) - get_visual_width(topics[item_index]), " ");
+                mvwprintw(win, i + 1, 1, " %s%*s ", topics[item_index], (menu_width - 6) - get_visual_width(topics[item_index]), " ");
                 wattroff(win, attr);
             }
         }
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(win, topic_scroll_offset, topic_count, max_display_items, 0);
+        wattroff(win, COLOR_PAIR(28) | flag);
+
         wnoutrefresh(win);
 
         doupdate();
@@ -2559,17 +2802,99 @@ int select_topic(char *file, int max_width) {
                     int end_x_absoluto = start_x_absoluto + getmaxx(win);
                     
                     int linha_clique_janela = event.y - getbegy(win);
-                    int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
+                    int offset_inicio_dados = 0; // As opções começam na linha 1 devido à borda superior
                     int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (topic_count > 0) {
+                            for (int i = 0; i < topic_count; i++) {
+                                free(topics[i]);
+                            }
+                            free(topics);                    
+                            free(indices);
+                        }
+                        
+                        delwin(win);
+                        delwin(shadow);
+                        return 0;
+                    }
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(win) + (getmaxx(win) - 2);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    offset_inicio_dados = 0; 
+                    linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_topic_index - topic_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'win'
+                        int linha_clique_janela = event.y - getbegy(win);
+                        
+                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o city_scroll_offset pode atingir
+                            int max_scroll_y = topic_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                topic_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_topic_index = topic_scroll_offset + posicao_relativa_tela;
+
+                                // Garante que o índice selecionado não passe do total de cidades cadastrado
+                                if (selected_topic_index >= topic_count) {
+                                    selected_topic_index = topic_count - 1;
+                                }
+                                if (selected_topic_index < 0) {
+                                    selected_topic_index = 0;
+                                }
+                            }
+                        }
+                    }
+
 
                     // 1. Verifica se o clique ocorreu dentro dos limites horizontais do menu
                     if (event.x >= start_x_absoluto && event.x < end_x_absoluto) {
                         
                         // 2. CORREÇÃO: Verifica se a linha clicada está dentro da área VISÍVEL da tela
-                        if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                        if (linha_clique_dados >= 0 && linha_clique_dados <= max_display_items) {
                             
                             // 3. CORREÇÃO: O índice real é a linha da tela + o deslocamento do scroll
-                            int indice_clicado = topic_scroll_offset + linha_clique_dados;
+                            int indice_clicado = topic_scroll_offset + linha_clique_dados - 1;
 
                             // Garante que o usuário não clicou em uma linha em branco no fim da lista
                             if (indice_clicado < topic_count) {

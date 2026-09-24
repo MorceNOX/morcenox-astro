@@ -609,12 +609,13 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            break; // Sai do switch do mouse e fecha a janela
+                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
+                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -624,32 +625,28 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela
-                        int linha_clique_janela = event.y - getbegy(decl_win);
-                        
-                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
                         int offset_inicio_barra = 0; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
                         if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
                             
-                            // Calcula o limite máximo que o pad_line_pos pode atingir
                             int max_scroll_y = row_pad - max_linhas_dados;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                             if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
                                 
-                                // Garante que o valor respeite as barreiras de limite
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                 offset_y = novo_offset;
                             }
                         }
@@ -948,12 +945,13 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                         int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
     
                         // ========================================================
-                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ROTEAMENTO: O clique acertou o botão [X]?
                         // ========================================================
                         if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                             if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                                 running = 0;
-                                break; // Sai do switch do mouse e fecha a janela
+                                // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
+                                return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                             }
                         }
     
@@ -963,32 +961,28 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                         // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                         if (event.x == col_scrollbar_absoluta) {
                             
-                            // 3. Descobre a linha clicada em relação ao início da janela
-                            int linha_clique_janela = event.y - getbegy(aspects_win);
-                            
-                            // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                            // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
                             int offset_inicio_barra = 0; 
-                            
-                            // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
                             int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
     
                             // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
                             if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
                                 
-                                // Calcula o limite máximo que o pad_line_pos pode atingir
                                 int max_scroll_y = row_pad - max_linhas_dados;
                                 if (max_scroll_y < 0) max_scroll_y = 0;
     
-                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                                 if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                    // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                    float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
+                                    int novo_offset = (int)(proporcao * max_scroll_y);
                                     
-                                    // Garante que o valor respeite as barreiras de limite
+                                    // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                    novo_offset = (novo_offset / 2) * 2;
+    
                                     if (novo_offset < 0) novo_offset = 0;
                                     if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
     
-                                    // Atualiza a posição de rolagem do PAD
+                                    // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                     offset_y = novo_offset;
                                 }
                             }
@@ -996,6 +990,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                     }
                     break;
                 }
+        
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
@@ -1302,12 +1297,13 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            break; // Sai do switch do mouse e fecha a janela
+                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
+                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -1317,32 +1313,28 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela
-                        int linha_clique_janela = event.y - getbegy(aspects_win);
-                        
-                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
                         int offset_inicio_barra = 0; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
                         if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
                             
-                            // Calcula o limite máximo que o pad_line_pos pode atingir
                             int max_scroll_y = row_pad - max_linhas_dados;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                             if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
                                 
-                                // Garante que o valor respeite as barreiras de limite
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                 offset_y = novo_offset;
                             }
                         }
@@ -1679,12 +1671,13 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            break; // Sai do switch do mouse e fecha a janela
+                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
+                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -1694,32 +1687,28 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela
-                        int linha_clique_janela = event.y - getbegy(aspects_win);
-                        
-                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
                         int offset_inicio_barra = 0; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
                         if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
                             
-                            // Calcula o limite máximo que o pad_line_pos pode atingir
                             int max_scroll_y = row_pad - max_linhas_dados;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                             if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
                                 
-                                // Garante que o valor respeite as barreiras de limite
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                 offset_y = novo_offset;
                             }
                         }

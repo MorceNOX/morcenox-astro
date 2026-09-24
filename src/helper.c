@@ -48,7 +48,7 @@ void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int lin
     // Se tudo couber na tela, não precisa de barra de rolagem
     if (total_linhas <= linhas_visiveis) {
         for (int i = 0; i < altura_barra; i++) {
-            mvwaddwstr(win, offset_y + i, col_scrollbar, L"");
+            mvwaddwstr(win, offset_y + i, col_scrollbar, L" ");
         }
         return;
     }
@@ -69,32 +69,41 @@ void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int lin
     }
 }
 
-void desenhar_scrollbar_slim(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y) {
+void desenhar_scrollbar2(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y) {
     int altura_barra = linhas_visiveis;
-    int col_scrollbar = getmaxx(win) - 2; // Última coluna da janela
+    int col_scrollbar = getmaxx(win) - 2; 
 
-    // Se tudo couber na tela, não precisa de barra de rolagem
-    if (total_linhas <= linhas_visiveis) {
+    // 🌟 CORREÇÃO 1: Convertemos o total de planetas lógicos para o total de linhas físicas reais (x2)
+    int total_linhas_fisicas = total_linhas * 2;
+
+    // Se as linhas físicas dos planetas couberem na tela, limpa o canal e sai
+    if (total_linhas_fisicas <= linhas_visiveis) {
         for (int i = 0; i < altura_barra; i++) {
-            mvwaddwstr(win, offset_y + i, col_scrollbar, L" ");
+            mvwaddwstr(win, offset_y + i, col_scrollbar, L" "); 
         }
         return;
     }
 
-    // Calcula a posição do slider (indicador)
-    int max_scroll = total_linhas - linhas_visiveis;
-    int posicao_slider = (scroll_atual * (altura_barra - 1)) / max_scroll;
+    // 🌟 CORREÇÃO 2: Convertemos os limites lógicos do scroll para escala física também
+    int max_scroll_fisico = total_linhas_fisicas - linhas_visiveis;
+    int scroll_atual_fisico = scroll_atual * 2;
 
-    // Desenha o fundo da barra e o indicador
+    int posicao_slider = (scroll_atual_fisico * (altura_barra - 1)) / max_scroll_fisico;
+
+    // Garante que o slider não estoure as pontas da barra
+    if (posicao_slider < 0) posicao_slider = 0;
+    if (posicao_slider >= altura_barra) posicao_slider = altura_barra - 1;
+
+    // Desenha a barra e a calha de forma proporcional
     for (int i = 0; i < altura_barra; i++) {
         if (i == posicao_slider) {
-            mvwaddch(win, offset_y + i + 1, col_scrollbar, ACS_BLOCK | A_REVERSE); 
+            mvwaddch(win, offset_y + i + 1, col_scrollbar, ACS_BLOCK | A_REVERSE | A_DIM); 
         } else {
-            // Fundo da calha da scrollbar
-            mvwaddch(win, offset_y + i, col_scrollbar, ACS_VLINE | A_DIM);
+            mvwaddwstr(win, offset_y + i + 1, col_scrollbar, L"░");
         }
     }
 }
+
 
 
 void ativar_arrasto_e_scroll_mouse() {

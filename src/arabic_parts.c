@@ -2029,11 +2029,22 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
 
 
+        // int flag = 0;
+        // if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        // wattron(aspects_win, COLOR_PAIR(28) | flag);
+        // desenhar_scrollbar(aspects_win, row_offset, total_planetas_validos, max_linhas_tela, 3);
+        // wattroff(aspects_win, COLOR_PAIR(28) | flag);
+        // Cada planeta ocupa 2 linhas físicas, então a área útil ocupada é max_linhas_tela * 2
+        int altura_fisica_barra = max_linhas_tela * 2; 
+        
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, row_offset, total_planetas_validos, linhas_nesta_tela, 3);
+        
+        // Chamada limpa: a função agora sabe que total_planetas_validos deve ser multiplicado por 2 internamente
+        desenhar_scrollbar2(aspects_win, row_offset, total_planetas_validos, altura_fisica_barra, 3);        
         wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
 
         wnoutrefresh(aspects_win);
         doupdate();

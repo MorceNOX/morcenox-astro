@@ -2806,16 +2806,18 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
                             int max_scroll_y = row_pad - max_linhas_dados_visiveis;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                             if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados_visiveis - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
                                 
-                                // Garante que o valor respeite as barreiras de limite
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                 offset_y = novo_offset;
                             }
                         }
@@ -3020,16 +3022,18 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
                             int max_scroll_y = row_pad - max_linhas_dados;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                             if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
                                 
-                                // Garante que o valor respeite as barreiras de limite
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                 offset_y = novo_offset;
                             }
                         }
@@ -3467,16 +3471,18 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
                                 int max_scroll_y = row - max_linhas_dados_visiveis;
                                 if (max_scroll_y < 0) max_scroll_y = 0;
     
-                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                                 if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
-                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                    // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                    float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados_visiveis - 1);
+                                    int novo_offset = (int)(proporcao * max_scroll_y);
                                     
-                                    // Garante que o valor respeite as barreiras de limite
+                                    // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                    novo_offset = (novo_offset / 2) * 2;
+    
                                     if (novo_offset < 0) novo_offset = 0;
                                     if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
     
-                                    // Atualiza a posição de rolagem do PAD
+                                    // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                     offset_y = novo_offset;
                                 }
                             }
@@ -4037,16 +4043,18 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
                                 int max_scroll_y = row_pad - max_linhas_dados_visiveis;
                                 if (max_scroll_y < 0) max_scroll_y = 0;
     
-                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                                 if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
-                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                    // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                    float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados_visiveis - 1);
+                                    int novo_offset = (int)(proporcao * max_scroll_y);
                                     
-                                    // Garante que o valor respeite as barreiras de limite
+                                    // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                    novo_offset = (novo_offset / 2) * 2;
+    
                                     if (novo_offset < 0) novo_offset = 0;
                                     if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
     
-                                    // Atualiza a posição de rolagem do PAD
+                                    // Atualiza a posição de rolagem do PAD de forma segura e alinhada
                                     offset_y = novo_offset;
                                 }
                             }
@@ -8765,7 +8773,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     wnoutrefresh(win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(188);
 
       
@@ -8875,7 +8883,7 @@ void open_menu_tables(ContextoMenu *ctx) {
                     // NOVO ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             delwin(win);
                             delwin(shadow);
                             return;

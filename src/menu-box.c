@@ -624,7 +624,18 @@ void del_chart() {
     keypad(chart_win, TRUE);
     curs_set(0);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(chart_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(chart_win, 0, col_fechar, "[");
+    mvwprintw(chart_win, 0, col_fechar + 2, "]");
+
+    wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(chart_win, 0, col_fechar + 1, "X");
+    wattroff(chart_win, A_BOLD);
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
 
     int chart_selected = 0;
     int key;
@@ -649,7 +660,13 @@ void del_chart() {
 
         mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
-        //wrefresh(chart_win);
+
+        mvwprintw(chart_win, 0, col_fechar, "[");
+        mvwprintw(chart_win, 0, col_fechar + 2, "]");
+    
+        wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(chart_win, 0, col_fechar + 1, "X");
+        wattroff(chart_win, A_BOLD);
         
         // Draw chart items with proper scrolling
         int display_count = (row_count < max_display_items) ? row_count : max_display_items;
@@ -712,13 +729,33 @@ void del_chart() {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    int linha_clique_janela = event.y - getbegy(chart_win);
+                    int offset_inicio_dados = 0; // As opções começam na linha 1 devido à borda superior
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    int col_clique_janela = event.x - getbegx(chart_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(chart_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        // Cleanup and return
+                        for (int i = 0; i < row_count; i++) {
+                            free(chart_names[i]);
+                        }
+                        free(chart_names);
+                        delwin(chart_win);
+                        delwin(chart_shadow);
+                        close_database(db);
+                        return;
+                    }
                     // 1. Descobre os limites da barra de rolagem
                     int col_scrollbar_absoluta = getbegx(chart_win) + (getmaxx(chart_win) - 2);
-                    int linha_clique_janela = event.y - getbegy(chart_win);
                     
-                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
-                    int offset_inicio_dados = 1; 
-                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
 
                     // 2. Verifica se o clique ocorreu exatamente na coluna da barra
                     if (event.x == col_scrollbar_absoluta) {
@@ -734,7 +771,7 @@ void del_chart() {
                         int linha_clique_janela = event.y - getbegy(chart_win);
                         
                         // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
-                        int offset_inicio_barra = 1; 
+                        int offset_inicio_barra = 0; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -777,8 +814,8 @@ void del_chart() {
                         int start_x_absoluto = getbegx(chart_win);
                         if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
                             
-                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
-                                int indice_clicado = chart_scroll_offset + linha_clique_dados;
+                            if (linha_clique_dados >= 0 && linha_clique_dados <= max_display_items) {
+                                int indice_clicado = chart_scroll_offset + linha_clique_dados - 1;
                                 
                                 if (indice_clicado < row_count) {
                                     // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
@@ -1010,7 +1047,18 @@ void load_chart() {
     keypad(chart_win, TRUE);
     //curs_set(0);
     
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(chart_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(chart_win, 0, col_fechar, "[");
+    mvwprintw(chart_win, 0, col_fechar + 2, "]");
+
+    wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(chart_win, 0, col_fechar + 1, "X");
+    wattroff(chart_win, A_BOLD);
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
 
     int chart_selected = 0;
     int key;
@@ -1038,6 +1086,13 @@ void load_chart() {
         const char *title = _("Select Chart to Load");
         
         mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
+        wattroff(chart_win, A_BOLD);
+
+        mvwprintw(chart_win, 0, col_fechar, "[");
+        mvwprintw(chart_win, 0, col_fechar + 2, "]");
+    
+        wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(chart_win, 0, col_fechar + 1, "X");
         wattroff(chart_win, A_BOLD);
 
         
@@ -1102,13 +1157,35 @@ void load_chart() {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                   
+                    int linha_clique_janela = event.y - getbegy(chart_win);
+                    int offset_inicio_dados = 0; // As opções começam na linha 1 devido à borda superior
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+                    int col_clique_janela = event.x - getbegx(chart_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(chart_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        // Cleanup and return
+                        for (int i = 0; i < row_count; i++) {
+                            free(chart_names[i]);
+                        }
+                        free(chart_names);
+                        delwin(chart_win);
+                        delwin(chart_shadow);
+                        close_database(db);
+                        return;
+                    }
                     // 1. Descobre os limites da barra de rolagem
                     int col_scrollbar_absoluta = getbegx(chart_win) + (getmaxx(chart_win) - 2);
-                    int linha_clique_janela = event.y - getbegy(chart_win);
                     
                     // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
-                    int offset_inicio_dados = 1; 
-                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
 
                     // 2. Verifica se o clique ocorreu exatamente na coluna da barra
                     if (event.x == col_scrollbar_absoluta) {
@@ -1161,14 +1238,14 @@ void load_chart() {
                         }
                     }
                     // ========================================================
-                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // CASO B: O clique ocorreu no TEXTO
                     // ========================================================
                     else {
                         int start_x_absoluto = getbegx(chart_win);
                         if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
                             
                             if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
-                                int indice_clicado = chart_scroll_offset + linha_clique_dados;
+                                int indice_clicado = chart_scroll_offset + linha_clique_dados - 1;
                                 
                                 if (indice_clicado < row_count) {
                                     // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
@@ -1362,7 +1439,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
     bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(100);
+    mouseinterval(125);
 
     while(1) {
         erase();
@@ -2153,6 +2230,9 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
     wattroff(help_win, A_BOLD);
     //wnoutrefresh(help_win);
+
+
+
     
     // Calculate how many lines we can display
     int max_lines = win_h - 4;  // Leave space for border and title
@@ -2163,6 +2243,16 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     curs_set(0);
     nodelay(help_win, FALSE);
     keypad(help_win, TRUE);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(help_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(help_win, 0, col_fechar, "[");
+    mvwprintw(help_win, 0, col_fechar + 2, "]");
+
+    wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(help_win, 0, col_fechar + 1, "X");
+    wattroff(help_win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(100);
@@ -2176,9 +2266,12 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         // Clear the text area
         werase(txt_win);
         
-        // Redraw borders
-        //box(help_win, 0, 0);
-        //mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
+        mvwprintw(help_win, 0, col_fechar, "[");
+        mvwprintw(help_win, 0, col_fechar + 2, "]");
+    
+        wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(help_win, 0, col_fechar + 1, "X");
+        wattroff(help_win, A_BOLD);
         
         // Draw text content
         int display_lines = 0;
@@ -2246,6 +2339,24 @@ void show_text_file(const char* filename, const char* title, int from_line) {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    int col_clique_janela = event.x - getbegx(help_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(help_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                    
+                                      
+                    int linha_clique_janela = event.y - getbegy(help_win);
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            done = 1;
+                            break;
+                        }
+                    }
                     // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
                     int col_scrollbar_absoluta = getbegx(help_win) + (getmaxx(help_win) - 2);
 
@@ -2253,10 +2364,10 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                     if (event.x == col_scrollbar_absoluta) {
                         
                         // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
-                        int linha_clique_janela = event.y - getbegy(help_win);
+                        linha_clique_janela = event.y - getbegy(help_win);
                         
                         // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
-                        int offset_inicio_barra = 1; 
+                        int offset_inicio_barra = 0; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -2463,6 +2574,8 @@ int main() {
             init_pair(28, COLOR_MAGENTA, 249);
             init_pair(29, 230, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+            init_pair(36, COLOR_RED, COLOR_WHITE);
+
         }
         else {
             init_pair(13, COLOR_BLACK, COLOR_WHITE);
@@ -2476,6 +2589,8 @@ int main() {
             init_pair(28, COLOR_MAGENTA, 230);
             init_pair(29, 230, 230);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
+            init_pair(36, 160, COLOR_WHITE); // red
+
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);
         init_pair(32, COLOR_BLUE, COLOR_GREEN);
