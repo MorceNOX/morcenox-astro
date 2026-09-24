@@ -631,7 +631,7 @@ void del_chart() {
     mvwprintw(chart_win, 0, col_fechar + 2, "]");
 
     wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(chart_win, 0, col_fechar + 1, "X");
+    mvwprintw(chart_win, 0, col_fechar + 1, "✖");
     wattroff(chart_win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -665,7 +665,7 @@ void del_chart() {
         mvwprintw(chart_win, 0, col_fechar + 2, "]");
     
         wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(chart_win, 0, col_fechar + 1, "X");
+        mvwprintw(chart_win, 0, col_fechar + 1, "✖");
         wattroff(chart_win, A_BOLD);
         
         // Draw chart items with proper scrolling
@@ -1054,7 +1054,7 @@ void load_chart() {
     mvwprintw(chart_win, 0, col_fechar + 2, "]");
 
     wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(chart_win, 0, col_fechar + 1, "X");
+    mvwprintw(chart_win, 0, col_fechar + 1, "✖");
     wattroff(chart_win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -1092,7 +1092,7 @@ void load_chart() {
         mvwprintw(chart_win, 0, col_fechar + 2, "]");
     
         wattron(chart_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(chart_win, 0, col_fechar + 1, "X");
+        mvwprintw(chart_win, 0, col_fechar + 1, "✖");
         wattroff(chart_win, A_BOLD);
 
         
@@ -2251,7 +2251,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     mvwprintw(help_win, 0, col_fechar + 2, "]");
 
     wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(help_win, 0, col_fechar + 1, "X");
+    mvwprintw(help_win, 0, col_fechar + 1, "✖");
     wattroff(help_win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -2270,7 +2270,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         mvwprintw(help_win, 0, col_fechar + 2, "]");
     
         wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(help_win, 0, col_fechar + 1, "X");
+        mvwprintw(help_win, 0, col_fechar + 1, "✖");
         wattroff(help_win, A_BOLD);
         
         // Draw text content

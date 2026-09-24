@@ -646,7 +646,7 @@ int converter_codigo_planeta(int codigo_antigo) {
 
 const char* get_house_roman(double longitude, double *cusps) {
     static const char* roman_houses[] = {
-        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
+        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "✖", "XI", "XII"
     };
 
     // Uma tolerância infinitesimal para engolir imprecisões do double (1e-9 graus)
@@ -2148,7 +2148,14 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(A_REVERSE);
 
-    
+    int col_fechar = getmaxx(stdscr) - 3; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    mvwprintw(stdscr, 0, col_fechar, "[");
+    mvwprintw(stdscr, 0, col_fechar + 2, "]");
+
+    wattron(stdscr, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(stdscr, 0, col_fechar + 1, "✖");
+    wattroff(stdscr, A_BOLD);
     
     if (zoom_factor <= 1.5) {
         attron(A_BOLD);
@@ -2172,11 +2179,11 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
         Hora hs = get_fmt_hour(sanHour);
         
-        mvprintw(0, max_x - 39, "%s %s: %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
-        mvprintw(1, max_x - 40, "%s: %s", _("Current Moon Phase"), phase);
-        mvprintw(3, max_x - 36, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
+        mvprintw(2, max_x - 39, "%s %s: %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
+        mvprintw(3, max_x - 35, "%s: %s", _("Moon Phase"), phase);
+        mvprintw(5, max_x - 35, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
         
-        mvprintw(5, max_x - 22, "%s: %02d:%02d:%02.0f", _("Sun Clock"), last_hr, last_min, last_sec);
+        mvprintw(7, max_x - 24, "%s: %02d:%02d:%02.0f", _("Sun Clock"), last_hr, last_min, last_sec);
         
 
         if (mapa_retorno) {
@@ -2188,12 +2195,12 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
             mvprintw(LINES - 5, 1, _("Divisions = Zodiac Signs"));
             mvprintw(LINES - 3, 1, _("Anim: A    | Menu: M "));
         }
-        mvprintw(LINES - 2, 1,       "Zoom: + -  | Pan: ←↓→↑  | Reset: R ");
+        mvprintw(LINES - 2, 1,       "Zoom: + -  | Pan: ←↓→↑ 🖰| Reset: R ");
         mvprintw(LINES - 1, 1, _("Aspect: / *| Speed: ]/[ | Quit: Q "));
         
-        attron(COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+        attron(COLOR_PAIR(26) | A_BOLD);
         mvprintw(LINES - 6, max_x - 17, _("[    MENU    ]"));
-        attroff(COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+        attroff(COLOR_PAIR(26) | A_BOLD);
 
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
@@ -2644,7 +2651,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -2882,7 +2889,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -3104,7 +3111,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -3206,7 +3213,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             wattron(scroll_pad, COLOR_PAIR(11));            
         }
         else if (strcmp(plots[i].house, "I") == 0 || strcmp(plots[i].house, "II") == 0 || strcmp(plots[i].house, "III") == 0 || 
-                strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "X") == 0 || strcmp(plots[i].house, "XI") == 0) {
+                strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "✖") == 0 || strcmp(plots[i].house, "XI") == 0) {
                     wattron(scroll_pad, COLOR_PAIR(8));
         }
         else if (strcmp(plots[i].house, "IV") == 0 || strcmp(plots[i].house, "VII") == 0) {
@@ -3562,7 +3569,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -3753,7 +3760,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -4117,7 +4124,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -4268,7 +4275,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -4527,7 +4534,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     wattroff(border_win, COLOR_PAIR(13));
 
     wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    mvwprintw(border_win, 0, col_fechar + 1, "✖");
     wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -5109,7 +5116,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -7037,7 +7044,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 
             }
             else if (strcmp(plots[i].house, "I") == 0 || strcmp(plots[i].house, "II") == 0 || strcmp(plots[i].house, "III") == 0 || 
-                    strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "X") == 0 || strcmp(plots[i].house, "XI") == 0) {
+                    strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "✖") == 0 || strcmp(plots[i].house, "XI") == 0) {
                 row->house_color_pair = 8;
             }
             else if (strcmp(plots[i].house, "IV") == 0 || strcmp(plots[i].house, "VII") == 0) {
@@ -8524,10 +8531,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     local_time->tm_sec += anim_interval;
                     timegm(local_time);
                 }
-                break;
-                #include <time.h> // 🌟 Certifique-se de ter este include no topo do arquivo
-
-                
+                break;              
                 
             case KEY_MOUSE:
                 if (getmouse(&mouse_event) == OK) {
@@ -8541,6 +8545,22 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     int linha_botao = LINES - 6;
                     int col_inicio_botao = max_x - 17;
                     int col_fim_botao = col_inicio_botao + 16;
+
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(stdscr) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique == 0 && col_clique >= col_inicio_fechar && col_clique < col_fim_fechar) {
+                        if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = false;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
+
 
                     // ========================================================
                     // ROTEAMENTO 1: O clique acertou o BOTÃO OK?
@@ -8768,7 +8788,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     wattroff(win, COLOR_PAIR(26));
 
     wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(win, 0, col_fechar + 1, "X");
+    mvwprintw(win, 0, col_fechar + 1, "✖");
     wattroff(win, COLOR_PAIR(26) | A_BOLD);
     wnoutrefresh(win);
 
@@ -8797,7 +8817,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         wattroff(win, COLOR_PAIR(26));
 
         wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(win, 0, col_fechar + 1, "X");
+        mvwprintw(win, 0, col_fechar + 1, "✖");
         wattroff(win, COLOR_PAIR(26) | A_BOLD);
         
         // Draw options items with proper scrolling (idêntico ao seu loop do chart)

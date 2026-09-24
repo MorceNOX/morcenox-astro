@@ -525,7 +525,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -836,7 +836,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattroff(border_win, COLOR_PAIR(13));
 
     wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    mvwprintw(border_win, 0, col_fechar + 1, "✖");
     wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);

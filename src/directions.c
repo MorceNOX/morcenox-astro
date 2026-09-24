@@ -713,7 +713,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
@@ -739,7 +739,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
         int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
@@ -1401,7 +1401,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
@@ -1426,7 +1426,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
         int idx_atual_calculo = indices_significadores[seletor_alvo_atual];

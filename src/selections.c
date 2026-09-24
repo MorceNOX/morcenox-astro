@@ -476,7 +476,7 @@ OptionsEdition select_options() {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w); // Captura o tamanho do terminal atual
     
-    int w_width = 80, w_height = 30;
+    int w_width = 80, w_height = 33;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     keypad(win, TRUE);
@@ -690,10 +690,10 @@ OptionsEdition select_options() {
     mvwprintw(win, 0, col_fechar + 2, "]");
 
     wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(win, 0, col_fechar + 1, "X");
+    mvwprintw(win, 0, col_fechar + 1, "✖");
     wattroff(win, A_BOLD);
     
-    mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
+    mvwprintw(win, w_height - 1, 2, _("[↓↑] Select. [← →] Adjust. [Enter] Confirm. [ESC] Cancel."));
     wattroff(win, COLOR_PAIR(2));
     wnoutrefresh(win);
 
@@ -717,24 +717,24 @@ OptionsEdition select_options() {
         mvwprintw(win, 0, col_fechar + 2, "]");
     
         wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(win, 0, col_fechar + 1, "X");
+        mvwprintw(win, 0, col_fechar + 1, "✖");
         wattroff(win, A_BOLD);
 
 
         // Botão CONFIRM
         int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
         wattron(win, attr_confirm);
-        mvwprintw(win, w_height - 2, w_width - 27, _("[ CONFIRM  ]"));
+        mvwprintw(win, w_height - 3, w_width - 27, _("[ CONFIRM  ]"));
         wattroff(win, attr_confirm);
 
         // Botão CANCEL
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
         wattron(win, attr_cancel);
-        mvwprintw(win, w_height - 2, w_width - 14, _("[  CANCEL  ]"));
+        mvwprintw(win, w_height - 3, w_width - 14, _("[  CANCEL  ]"));
         wattroff(win, attr_cancel);
 
 
-        mvwprintw(win, w_height - 1, 2, _("Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."));
+        mvwprintw(win, w_height - 1, 2, _("[↓↑] Select. [← →] Adjust. [Enter] Confirm. [ESC] Cancel."));
         wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
@@ -1208,13 +1208,16 @@ OptionsEdition select_options() {
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
-                    int linha_botao = w_height - 2;
+                    int linha_botao = w_height - 3;
                     int col_inicio_botao_ok = w_width - 27;
                     int col_fim_botao_ok = col_inicio_botao_ok + 12;
                     
                     int col_inicio_botao_cancel = w_width - 14;
                     int col_fim_botao_cancel = col_inicio_botao_cancel + 12;
 
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
                             // Cleanup allocated memory
@@ -1365,11 +1368,7 @@ OptionsEdition select_options() {
                             ed.changed = 0;
                             return ed;                            
                         }                    
-                    }
-                    // ========================================================
-                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
-                    // ========================================================
-                    
+                    }                    
                 }
                 break;
             }
@@ -2706,7 +2705,7 @@ int select_topic(char *file, int max_width) {
     mvwprintw(win, 0, col_fechar + 2, "]");
 
     wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(win, 0, col_fechar + 1, "X");
+    mvwprintw(win, 0, col_fechar + 1, "✖");
     wattroff(win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -2731,7 +2730,7 @@ int select_topic(char *file, int max_width) {
         mvwprintw(win, 0, col_fechar + 2, "]");
     
         wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(win, 0, col_fechar + 1, "X");
+        mvwprintw(win, 0, col_fechar + 1, "✖");
         wattroff(win, A_BOLD);
         
         // Draw topic items with proper scrolling
@@ -3001,7 +3000,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     wattroff(country_win, COLOR_PAIR(22));
 
     wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(country_win, 0, col_fechar + 1, "X");
+    mvwprintw(country_win, 0, col_fechar + 1, "✖");
     wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
     
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -3040,7 +3039,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         wattroff(country_win, COLOR_PAIR(22));
 
         wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(country_win, 0, col_fechar + 1, "X");
+        mvwprintw(country_win, 0, col_fechar + 1, "✖");
         wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
 
         wattron(country_win, COLOR_PAIR(29) | A_DIM);
@@ -3303,7 +3302,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     //wattroff(city_win, COLOR_PAIR(22));
 
     //wattron(city_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(city_win, 0, col_fechar + 1, "X");
+    mvwprintw(city_win, 0, col_fechar + 1, "✖");
     //wattroff(city_win, COLOR_PAIR(22) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -3339,7 +3338,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         wattroff(city_win, COLOR_PAIR(22));
 
         wattron(city_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(city_win, 0, col_fechar + 1, "X");
+        mvwprintw(city_win, 0, col_fechar + 1, "✖");
         wattroff(city_win, COLOR_PAIR(22) | A_BOLD);
         
         wattron(city_win, COLOR_PAIR(29) | A_DIM);

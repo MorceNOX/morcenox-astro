@@ -436,7 +436,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     wattroff(decl_win, COLOR_PAIR(13));
 
     wattron(decl_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(decl_win, 0, col_fechar + 1, "X");
+    mvwprintw(decl_win, 0, col_fechar + 1, "✖");
     wattroff(decl_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(decl_win);
 
@@ -710,7 +710,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     wattroff(aspects_win, COLOR_PAIR(13));
 
     wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
     wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(aspects_win);
 
@@ -1119,7 +1119,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     wattroff(aspects_win, COLOR_PAIR(13));
 
     wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
     wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(aspects_win);
 
@@ -1467,7 +1467,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     wattroff(aspects_win, COLOR_PAIR(13));
 
     wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
     wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(aspects_win);
 

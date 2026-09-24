@@ -540,7 +540,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
@@ -753,6 +753,23 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     mvwprintw(table_win, table_height - 3, 4, _("Traditional doctrine shifts these into major 10-year cycles if the native survives infancy."));
     wattroff(table_win, A_DIM);
 
+    
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+
+    // Título Centralizado da Interface
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+    wattroff(table_win, A_BOLD);
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     // Instruções de Encerramento Padrão
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     wnoutrefresh(table_win);
@@ -944,7 +961,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);

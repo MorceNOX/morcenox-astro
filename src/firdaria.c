@@ -254,7 +254,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);

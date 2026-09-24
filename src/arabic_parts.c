@@ -202,7 +202,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
@@ -228,7 +228,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
         
         // Cabeçalho de Status Fixo
@@ -631,7 +631,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
     wattroff(table_win, COLOR_PAIR(13));
 
     wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
@@ -657,7 +657,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
         
         // Cabeçalho de Status Fixo
@@ -1259,7 +1259,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     wattroff(win, COLOR_PAIR(13));
 
     wattron(win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(win, 0, col_fechar + 1, "X");
+    mvwprintw(win, 0, col_fechar + 1, "✖");
     wattroff(win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(win);
 
@@ -1281,7 +1281,7 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         wattroff(win, COLOR_PAIR(13));
 
         wattron(win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(win, 0, col_fechar + 1, "X");
+        mvwprintw(win, 0, col_fechar + 1, "✖");
         wattroff(win, COLOR_PAIR(13) | A_BOLD);
 
 
@@ -1809,7 +1809,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     wattroff(aspects_win, COLOR_PAIR(13));
 
     wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
     wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(aspects_win);
 
@@ -1860,7 +1860,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         wattroff(aspects_win, COLOR_PAIR(13));
 
         wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+        mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
         wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
 
         wattron(aspects_win, A_DIM);

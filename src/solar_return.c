@@ -481,7 +481,7 @@ void abrir_janela_confronto_natal_revolucao(
     wattroff(border_win, COLOR_PAIR(13));
 
     wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    mvwprintw(border_win, 0, col_fechar + 1, "✖");
     wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -1263,7 +1263,7 @@ void abrir_janela_transitos_revolucao(
     wattroff(border_win, COLOR_PAIR(13));
 
     wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    mvwprintw(border_win, 0, col_fechar + 1, "✖");
     wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
