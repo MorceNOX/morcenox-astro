@@ -472,12 +472,26 @@ void abrir_janela_confronto_natal_revolucao(
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
     wattroff(border_win, A_BOLD);
     
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(border_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(border_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(border_win, 0, col_fechar, "[");
+    mvwprintw(border_win, 0, col_fechar + 2, "]");
+    wattroff(border_win, COLOR_PAIR(13));
+
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+    
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
     wnoutrefresh(border_win);
 
     doupdate();
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
 
     // 4. PAD INTERNA PARA SCROLL
     int pad_lines = 300; // Aumentado para comportar o texto da Firdária confortavelmente
@@ -1018,7 +1032,8 @@ void abrir_janela_confronto_natal_revolucao(
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
-    while (1) {
+    int running = 1;
+    while (running) {
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(border_win, COLOR_PAIR(28) | flag);
@@ -1049,6 +1064,23 @@ void abrir_janela_confronto_natal_revolucao(
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(border_win);
+                    int col_clique_janela = event.x - getbegx(border_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(border_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
                     // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
 
@@ -1221,12 +1253,27 @@ void abrir_janela_transitos_revolucao(
     const char *title = _(" Annual Transits & Radical Projections ");
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
     wattroff(border_win, A_BOLD);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(border_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(border_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(border_win, 0, col_fechar, "[");
+    mvwprintw(border_win, 0, col_fechar + 2, "]");
+    wattroff(border_win, COLOR_PAIR(13));
+
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
     wnoutrefresh(border_win);
 
     doupdate();
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
 
     int pad_lines = 400; 
     int pad_cols = i_width - 6; 
@@ -1547,7 +1594,8 @@ void abrir_janela_transitos_revolucao(
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
-    while (1) {
+    int running = 1;
+    while (running) {
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(border_win, COLOR_PAIR(28) | flag);
@@ -1579,6 +1627,23 @@ void abrir_janela_transitos_revolucao(
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(border_win);
+                    int col_clique_janela = event.x - getbegx(border_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(border_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
                     // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
 

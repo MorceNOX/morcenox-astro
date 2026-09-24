@@ -516,6 +516,21 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     // DESENHO DAS BARRAS GRÁFICAS
     int col_bars = 16;
     mvwprintw(table_win, 3, 4, _("Hot:"));
@@ -748,6 +763,27 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
             doupdate();
         }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+        }
 
     } while (ch != 27 && ch != 'q' && ch != 'Q');
     
@@ -790,6 +826,23 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
     wattroff(border_win, A_BOLD);
     
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(border_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(border_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(border_win, 0, col_fechar, "[");
+    mvwprintw(border_win, 0, col_fechar + 2, "]");
+    wattroff(border_win, COLOR_PAIR(13));
+
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+    
+
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
     wnoutrefresh(border_win);
 
@@ -1203,23 +1256,13 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     // Habilita as setas do teclado na janela de borda para o wgetch capturar corretamente
     keypad(border_win, TRUE);
 
-    while (1) {
-        // --- 1. CÁLCULO E DESENHO DA SCROLLBAR ---
-        // if (line_count > visible_height) {
-        //     // Posição proporcional baseada em qual linha estamos (pad_line_pos) 
-        //     // sobre o total que pode ser rolado (line_count - visible_height)
-        //     int max_scroll = line_count - visible_height;
-        //     int scrollbar_pos = (pad_line_pos * (scrollbar_height - 1)) / max_scroll;
-            
-        //     for (int i = 0; i < scrollbar_height; i++) {
-        //         if (i == scrollbar_pos) {
-        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_BLOCK); // Indicador
-        //         } else {
-        //             mvwaddch(border_win, 1 + i, i_width - 2, ACS_VLINE); // Linha guia de fundo
-        //         }
-        //     }
-        // }
+    int running = 1;
+    while (running) {
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(border_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
+        wattroff(border_win, COLOR_PAIR(28) | flag);
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -1242,6 +1285,66 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                 // Não permite rolar além da última página de texto visível
                 if (pad_line_pos < (line_count - visible_height)) pad_line_pos++; 
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(border_win);
+                    int col_clique_janela = event.x - getbegx(border_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(border_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(border_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = line_count - visible_height;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (visible_height > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                pad_line_pos = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 

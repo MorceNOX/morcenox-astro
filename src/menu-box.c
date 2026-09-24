@@ -1362,7 +1362,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
     bkgd(COLOR_PAIR(9) | A_DIM | A_REVERSE);
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mouseinterval(100);
 
     while(1) {
         erase();
@@ -2165,7 +2165,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     keypad(help_win, TRUE);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mouseinterval(100);
 
     //leaveok(stdscr, TRUE);
     //leaveok(shadow_win, TRUE);
@@ -2426,7 +2426,7 @@ int main() {
     set_escdelay(25);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mouseinterval(100);
 
     //desativar_arrasto_mouse();
 
@@ -2446,12 +2446,13 @@ int main() {
         init_pair(10, 232, 37); // verde água
         init_pair(11, COLOR_CYAN, 27);
         init_pair(12, 230, 27);
-        init_pair(13, COLOR_GREEN, COLOR_BLUE);
+        //init_pair(13, COLOR_GREEN, COLOR_BLUE);
         init_pair(14, COLOR_RED, COLOR_BLUE);
         init_pair(15, COLOR_BLUE, 208); // orange
         init_pair(16, COLOR_BLUE, 95);
             
         if (DARK_MODE) {
+            init_pair(13, COLOR_WHITE, COLOR_BLACK);
             init_pair(21, COLOR_BLUE, COLOR_YELLOW);
             init_pair(22, 230, COLOR_BLACK);
             init_pair(23, COLOR_RED, 230);
@@ -2464,6 +2465,7 @@ int main() {
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
         }
         else {
+            init_pair(13, COLOR_BLACK, COLOR_WHITE);
             init_pair(21, COLOR_BLUE, COLOR_YELLOW);
             init_pair(22, COLOR_BLACK, 230);
             init_pair(23, COLOR_RED, 230);

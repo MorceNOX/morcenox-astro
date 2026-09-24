@@ -2480,7 +2480,7 @@ int select_topic(char *file, int max_width) {
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mouseinterval(100);
         
     while (!topic_selected) {
 
@@ -2666,9 +2666,21 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     nodelay(country_win, FALSE);
     keypad(country_win, TRUE);
     //curs_set(0);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(country_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(country_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+    mvwprintw(country_win, 0, col_fechar, "[");
+    mvwprintw(country_win, 0, col_fechar + 2, "]");
+    wattroff(country_win, COLOR_PAIR(22));
+
+    wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(country_win, 0, col_fechar + 1, "X");
+    wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
     
-    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
 
     int country_selected = 0;
     int key;
@@ -2696,6 +2708,15 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         mvwprintw(country_win, 0, (menu_width - get_visual_width(title1)) / 2, title1);
         mvwprintw(country_win, 1, 2, _("Country"));
         wattroff(country_win, A_BOLD);
+
+        wattron(country_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+        mvwprintw(country_win, 0, col_fechar, "[");
+        mvwprintw(country_win, 0, col_fechar + 2, "]");
+        wattroff(country_win, COLOR_PAIR(22));
+
+        wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(country_win, 0, col_fechar + 1, "X");
+        wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
 
         wattron(country_win, COLOR_PAIR(29) | A_DIM);
         mvwprintw(country_win, 2, 2, "────────────────────────────────────────────────────────────────────────────────────");
@@ -2789,9 +2810,30 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(country_win);
+                    int col_clique_janela = event.x - getbegx(country_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(country_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            free_string_array(countries, country_count);
+                            delwin(country_win);
+                            delwin(country_shadow);
+                            close_database(db);
+                            return 0;
+                        }
+                        break;
+
+                    }
                     // 1. Descobre os limites da barra de rolagem
                     int col_scrollbar_absoluta = getbegx(country_win) + (getmaxx(country_win) - 2);
-                    int linha_clique_janela = event.y - getbegy(country_win);
                     
                     // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
                     int offset_inicio_dados = 2 + 1; 
@@ -2927,8 +2969,20 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     keypad(city_win, TRUE);
     //curs_set(0);
 
-    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    // 2. Desenha o botão [X] no canto superior direito
+    col_fechar = getmaxx(city_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    //wattron(city_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+    mvwprintw(city_win, 0, col_fechar, "[");
+    mvwprintw(city_win, 0, col_fechar + 2, "]");
+    //wattroff(city_win, COLOR_PAIR(22));
+
+    //wattron(city_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(city_win, 0, col_fechar + 1, "X");
+    //wattroff(city_win, COLOR_PAIR(22) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
 
     // Clear and draw shadow
     werase(city_shadow);
@@ -2953,6 +3007,15 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         mvwprintw(city_win, 0, (menu_width - get_visual_width(title2) - get_visual_width(selected_country_name)) / 2, "%s %s", title2, selected_country_name);
         mvwprintw(city_win, 1, 2, _("City                                          State/County/Region/Province"));
         wattroff(city_win, A_BOLD);
+
+        wattron(city_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+        mvwprintw(city_win, 0, col_fechar, "[");
+        mvwprintw(city_win, 0, col_fechar + 2, "]");
+        wattroff(city_win, COLOR_PAIR(22));
+
+        wattron(city_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(city_win, 0, col_fechar + 1, "X");
+        wattroff(city_win, COLOR_PAIR(22) | A_BOLD);
         
         wattron(city_win, COLOR_PAIR(29) | A_DIM);
         mvwprintw(city_win, 2, 2, "────────────────────────────────────────────────────────────────────────────────────");
@@ -3065,9 +3128,34 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(city_win);
+                    int col_clique_janela = event.x - getbegx(city_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(city_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            free_string_array(countries, country_count);
+                            free_string_array(cities, city_count);
+                            free_string_array(states, city_count);
+                            delwin(country_win);
+                            delwin(country_shadow);
+                            delwin(city_win);
+                            delwin(city_shadow);
+                            close_database(db);
+                            return 0;
+                        }
+                        break;
+
+                    }
                     // 1. Descobre os limites da barra de rolagem
                     int col_scrollbar_absoluta = getbegx(city_win) + (getmaxx(city_win) - 2);
-                    int linha_clique_janela = event.y - getbegy(city_win);
                     
                     // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
                     int offset_inicio_dados = 2 + 1; 

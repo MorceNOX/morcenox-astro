@@ -531,6 +531,21 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     int line_count = 0;
 
     int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
@@ -750,6 +765,28 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     int ch;
     do {
         ch = wgetch(table_win);
+        if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
     } while (ch != 27 && ch != 'q');
     
     // Descarte seguro limpando memória da janela e tocando o stdscr para restaurar o fundo
@@ -897,6 +934,21 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattron(table_win, A_BOLD);
     const char *title = _(" Vital Threats: The Anareta ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
 
 
     int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
@@ -1067,6 +1119,28 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     int ch;
     do {
         ch = wgetch(table_win);
+        if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
     } while (ch != 27 && ch != 'q');
     
     // Destruição das janelas da memória e restauração do mapa de fundo

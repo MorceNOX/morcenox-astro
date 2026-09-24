@@ -193,7 +193,22 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -206,6 +221,15 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         const char *title = _(" Arabic Parts & Hermetic Lots ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(table_win, A_BOLD);
+
+        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(table_win, 0, col_fechar, "[");
+        mvwprintw(table_win, 0, col_fechar + 2, "]");
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
         
         // Cabeçalho de Status Fixo
         mvwprintw(table_win, 2, 4, _("Current Chart Parameters: "));
@@ -472,6 +496,24 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            loop_interativo = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
                     // 1. Descobre a coluna absoluta da scrollbar
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 
@@ -580,7 +622,22 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     int loop_interativo = 1;
     while (loop_interativo) {
@@ -593,6 +650,15 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         const char *title = _(" Arabic Parts of Solar Revolution / Radix Confrontation ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(table_win, A_BOLD);
+
+        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(table_win, 0, col_fechar, "[");
+        mvwprintw(table_win, 0, col_fechar + 2, "]");
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
         
         // Cabeçalho de Status Fixo
         mvwprintw(table_win, 2, 4, _("Current Chart Parameters: "));
@@ -761,6 +827,23 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            loop_interativo = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
                     // 1. Descobre a coluna absoluta da scrollbar
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 
@@ -1167,7 +1250,22 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     wattroff(shadow, COLOR_PAIR(9)); 
     wnoutrefresh(shadow);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(win, 0, col_fechar, "[");
+    mvwprintw(win, 0, col_fechar + 2, "]");
+    wattroff(win, COLOR_PAIR(13));
+
+    wattron(win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(win, 0, col_fechar + 1, "X");
+    wattroff(win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(win);
+
+
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     bool salvar = false;
 
@@ -1176,6 +1274,16 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
 
         wattron(win, A_BOLD);
         mvwprintw(win, 0, (w_width - 28) / 2, part_id_edicao > 0 ? _(" Edit Arabic Part Formula ") : _(" New Arabic Part Formula "));
+
+        wattron(win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+        wattroff(win, COLOR_PAIR(13));
+
+        wattron(win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "X");
+        wattroff(win, COLOR_PAIR(13) | A_BOLD);
+
 
         // 1. Part Name
         wattron(win, A_BOLD);
@@ -1348,10 +1456,24 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
 
             case KEY_MOUSE: {
                     MEVENT event;
-                    if (getmouse(&event) == OK) {
+                    if (getmouse(&event) == OK) {                        
                         // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
                         int linha_clique_janela = event.y - getbegy(win);
                         int col_clique_janela = event.x - getbegx(win);
+
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                loop = 0;
+                                break; // Sai do switch do mouse e fecha a janela
+                            }
+                        }
                         
                         // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
                         int linha_botao = 19;
@@ -1489,7 +1611,6 @@ void calcular_aspectos_partes(ChartObject *obj, int num_objects, ArabicPartCalcu
         }
     }
 
-    // Dispara a sua função nativa para povoar o vetor planet_orbis com os valores do sistema
     get_planet_orbis(planet_ids, planet_orbis, planet_symbols, total_ids_mapeados);
 
     // Definição dos ângulos geométricos maiores
@@ -1678,7 +1799,23 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(aspects_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(aspects_win, 0, col_fechar, "[");
+    mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+    wattroff(aspects_win, COLOR_PAIR(13));
+
+    wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(aspects_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     doupdate();
 
@@ -1699,7 +1836,8 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
     mvwprintw(aspects_win, 2, table_width - 35, _("[←/→] More Parts [↑/↓] Scroll"));
     wattroff(aspects_win, A_DIM);
 
-    while (1) {
+    int running = 1;
+    while (running) {
         werase(aspects_win);
         box(aspects_win, 0, 0);
         
@@ -1714,6 +1852,16 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         }
         mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
         wattroff(aspects_win, A_BOLD);
+
+
+        wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(aspects_win, 0, col_fechar, "[");
+        mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+        wattroff(aspects_win, COLOR_PAIR(13));
+
+        wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+        wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
 
         wattron(aspects_win, A_DIM);
         mvwprintw(aspects_win, 2, table_width - 35, _("[←/→] More Parts [↑/↓] Scroll"));
@@ -1879,6 +2027,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
             "%s (%d-%d/%d) - [ ↑/↓ ] %s (%d/%d)", 
             _("ESC: Exit - [ ←/→ ] Parts"), pagina_offset + 1, ate_qual, qtd_partes, _("Scroll Planets"), row_offset + linhas_nesta_tela, total_planetas_validos);
 
+
         wnoutrefresh(aspects_win);
         doupdate();
 
@@ -1921,6 +2070,29 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
         else if (qtd_partes <= max_partes_tela && total_planetas_validos <= max_linhas_tela) {
             // Se tudo couber perfeitamente na tela atual, qualquer outra tecla fecha a janela
             break;
+        }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(aspects_win);
+                int col_clique_janela = event.x - getbegx(aspects_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(aspects_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        running = 0;
+                        break; // Sai do switch do mouse e fecha a janela
+                    }
+                }
+              
+            }
         }
     }
     

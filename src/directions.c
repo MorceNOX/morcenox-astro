@@ -704,7 +704,22 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     int sentido = 2;
     int tipo = 2;
@@ -717,6 +732,15 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(table_win, 0, col_fechar, "[");
+        mvwprintw(table_win, 0, col_fechar + 2, "]");
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
         int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
 
@@ -1112,6 +1136,24 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            loop_interativo = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }           
+                    
                     // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 
@@ -1350,7 +1392,22 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     int sentido = 2;
     int tipo = 2;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     while (loop_interativo) {
         // Limpa todas as estruturas gráficas antes de recalcular
@@ -1362,6 +1419,15 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattron(table_win, A_BOLD);
         const char *title = _(" Primary Directions to Arabic Parts ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(table_win, 0, col_fechar, "[");
+        mvwprintw(table_win, 0, col_fechar + 2, "]");
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(table_win, 0, col_fechar + 1, "X");
+        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
         int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
 
@@ -1765,6 +1831,24 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            loop_interativo = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }  
+
                     // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 

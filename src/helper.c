@@ -48,7 +48,7 @@ void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int lin
     // Se tudo couber na tela, não precisa de barra de rolagem
     if (total_linhas <= linhas_visiveis) {
         for (int i = 0; i < altura_barra; i++) {
-            mvwaddwstr(win, offset_y + i, col_scrollbar, L" ");
+            mvwaddwstr(win, offset_y + i, col_scrollbar, L"");
         }
         return;
     }

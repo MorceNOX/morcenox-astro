@@ -2632,6 +2632,24 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     wattron(table_win, A_BOLD);
     const char *title = _(" Planetary Energy Profile ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     
     // Colunas reposicionadas: Nome ganhou mais espaço (coluna 4 a 22)
     mvwprintw(table_win, 2, 4, _("Planet               Bar Chart Representation                        Points"));
@@ -2717,7 +2735,11 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
     int max_scroll = row_pad - max_linhas_dados_visiveis;
     if (max_scroll < 0) max_scroll = 0;
 
-    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(table_win, COLOR_PAIR(28) | flag);
+    desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+    wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
     doupdate();
@@ -2727,7 +2749,8 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
     keypad(table_win, TRUE);
     int ch;
-    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -2740,9 +2763,73 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
             case 'J':
                 if (offset_y < max_scroll) offset_y += 2;
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+            }
+            break;
         }
         // Atualiza a janela de visualização do scroll a cada clique do usuário
-        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
 
         doupdate();
@@ -2783,6 +2870,21 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     const char *title = _(" Planetary Strength ");
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
 
     mvwprintw(table_win, 2, 4, _("Planet    Essential    Accidental        Score          Weight        Strength"));
     //mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────"); 
@@ -2847,6 +2949,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
         wattroff(pad, COLOR_PAIR(12) | COLOR_PAIR(8) | COLOR_PAIR(11) | A_BOLD | A_DIM | A_REVERSE);
         row_pad++;
     }
+    row_pad += 2;
 
     mvwprintw(table_win, table_height - 1, 2, _("Press Q or ESC to return - [↓↑] to scroll"));
 
@@ -2854,14 +2957,19 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     int max_scroll = row_pad - max_linhas_dados + 2;
     if (max_scroll < 0) max_scroll = 0;
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(table_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
+    wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
     doupdate();
     prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     keypad(table_win, TRUE);
     int ch;
-    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
         switch (ch) {
             case KEY_UP: case 'k': case 'K':
                 if (offset_y > 0) offset_y -= 2;
@@ -2869,8 +2977,72 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
             case KEY_DOWN: case 'j': case 'J':
                 if (offset_y < max_scroll) offset_y += 2;
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+            }
+            break;
         }
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
         doupdate();
         prefresh(pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -2917,6 +3089,24 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wattron(table_win, A_BOLD);
     const char *title = _("Accidental Dignities");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
+
     
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
@@ -3167,8 +3357,11 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
 
-    // Refresh the window
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(table_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
+    wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
     doupdate();
@@ -3177,9 +3370,14 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
 
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
         
         if (ch == KEY_F(3)) {
@@ -3226,6 +3424,66 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
                 case 'J':
                     if (offset_y < max_scroll_y) offset_y += 2;
                     break;
+
+                case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // Coordenadas do clique convertidas para o plano local da janela
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        int col_clique_janela = event.x - getbegx(table_win);
+                        
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(table_win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+    
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                running = 0;
+                                break; // Sai do switch do mouse e fecha a janela
+                            }
+                        }
+                        // 1. Descobre a coluna onde a barra é desenhada
+                        int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+    
+                        // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                        if (event.x == col_scrollbar_absoluta) {
+                            
+                            // 3. Descobre a linha clicada em relação ao início da janela
+                            int linha_clique_janela = event.y - getbegy(table_win);
+                            
+                            // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                            int offset_inicio_barra = 0; 
+                            
+                            // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                            int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+    
+                            // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                            if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                
+                                // Calcula o limite máximo que o pad_line_pos pode atingir
+                                int max_scroll_y = row - max_linhas_dados_visiveis;
+                                if (max_scroll_y < 0) max_scroll_y = 0;
+    
+                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                                if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
+                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                    
+                                    // Garante que o valor respeite as barreiras de limite
+                                    if (novo_offset < 0) novo_offset = 0;
+                                    if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+    
+                                    // Atualiza a posição de rolagem do PAD
+                                    offset_y = novo_offset;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3287,6 +3545,24 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
     const char *title = _("Chart Data");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
+
 
     mvwprintw(table_win, 5, 2, "%s", chart_name); 
     wattroff(table_win, A_BOLD);
@@ -3396,6 +3672,30 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     int ch;
     do {
         ch = wgetch(table_win);
+
+        if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
+
     } while (ch != 27 && ch != 'q');
     
     delwin(shadow_win);
@@ -3437,6 +3737,22 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, A_BOLD);
     const char *title = _("Positions, Dignities & Rulership Table");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
@@ -3593,7 +3909,11 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(table_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+    wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
     doupdate();
@@ -3602,9 +3922,13 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
 
-        desenhar_scrollbar(table_win, offset_y,  row_pad + 2, max_linhas_dados_visiveis, 3);
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
         
         if (ch == KEY_F(2)) {
@@ -3670,6 +3994,66 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
                 case 'J':
                     if (offset_y < max_scroll_y) offset_y += 2;
                     break;
+
+                case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // Coordenadas do clique convertidas para o plano local da janela
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        int col_clique_janela = event.x - getbegx(table_win);
+                        
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(table_win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+    
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                running = 0;
+                                break; // Sai do switch do mouse e fecha a janela
+                            }
+                        }
+                        // 1. Descobre a coluna onde a barra é desenhada
+                        int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+    
+                        // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                        if (event.x == col_scrollbar_absoluta) {
+                            
+                            // 3. Descobre a linha clicada em relação ao início da janela
+                            int linha_clique_janela = event.y - getbegy(table_win);
+                            
+                            // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                            int offset_inicio_barra = 0; 
+                            
+                            // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                            int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+    
+                            // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                            if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                
+                                // Calcula o limite máximo que o pad_line_pos pode atingir
+                                int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                                if (max_scroll_y < 0) max_scroll_y = 0;
+    
+                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                                if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
+                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (table_height - 1);
+                                    
+                                    // Garante que o valor respeite as barreiras de limite
+                                    if (novo_offset < 0) novo_offset = 0;
+                                    if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+    
+                                    // Atualiza a posição de rolagem do PAD
+                                    offset_y = novo_offset;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
@@ -3714,6 +4098,23 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     wattron(table_win, A_BOLD);
     const char *title = _("Houses Table");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
 
     mvwprintw(table_win, 2, 2, _("   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "));
     
@@ -3791,6 +4192,30 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     int ch;
     do {
         ch = wgetch(table_win);
+
+        if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
+
     } while (ch != 27 && ch != 'q');
     
     // Clean up
@@ -3825,7 +4250,22 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     wattron(table_win, A_BOLD);
     const char *title = _("Planetary Hours");
     mvwprintw(table_win, 0, (table_width - 17) / 2, title);
-    
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     int row = 4;
     
     mvwprintw(table_win, 2, 4, _("Day:"));
@@ -4005,6 +4445,28 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
             wnoutrefresh(table_win);
             doupdate();
         }
+        else if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
 
     } while (ch != 27 && ch != 'q' && ch != 'Q');
     
@@ -4047,6 +4509,21 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     const char *title = _(" Planetary Hours Analysis ");
     mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, title);
     wattroff(border_win, A_BOLD);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(border_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(border_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(border_win, 0, col_fechar, "[");
+    mvwprintw(border_win, 0, col_fechar + 2, "]");
+    wattroff(border_win, COLOR_PAIR(13));
+
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(border_win, 0, col_fechar + 1, "X");
+    wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
     
     mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
     wnoutrefresh(border_win);
@@ -4063,7 +4540,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     scrollok(pad, TRUE);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
-    mouseinterval(200);
+    mouseinterval(100);
 
     char str[512];
     char str2[512];
@@ -4472,7 +4949,9 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     
     keypad(border_win, TRUE);
 
-    while (1) {
+    int running = 1;
+
+    while (running) {
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(border_win, COLOR_PAIR(28) | flag);
@@ -4505,6 +4984,24 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(border_win);
+                    int col_clique_janela = event.x - getbegx(border_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(border_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
                     // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
 
@@ -4594,6 +5091,22 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "X");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
     
     int row = 4;
     for (int i = 0; i < 12 - object_diff; i++) {
@@ -4672,6 +5185,30 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     int ch;
     do {
         ch = wgetch(table_win);
+
+        if (ch == KEY_MOUSE) {
+            MEVENT event;
+            if (getmouse(&event) == OK) {
+                // Coordenadas do clique convertidas para o plano local da janela
+                int linha_clique_janela = event.y - getbegy(table_win);
+                int col_clique_janela = event.x - getbegx(table_win);
+                
+                // Define matematicamente a caixa de clique do botão fechar
+                int col_inicio_fechar = getmaxx(table_win) - 4;
+                int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                // ========================================================
+                // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                // ========================================================
+                if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                    if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                        break;
+                    }
+                }                                
+            }
+
+        }
+
     } while (ch != 27 && ch != 'q');
     
     delwin(shadow_win);
@@ -6353,6 +6890,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // 17. Declination Aspects
 
         DeclMatrix matrix_decl = {0}; // Inicializa toda a estrutura com falsos/zeros
+        for (int i = 0; i < 30; i++) {
+            memset(matrix_decl.grid[i], 0, sizeof(DeclCell));
+        }
+        
+
         matrix_decl = calculate_declination_aspects(plots, decl_orbis);
 
         
@@ -8195,8 +8737,23 @@ void open_menu_tables(ContextoMenu *ctx) {
 
     wbkgd(win, COLOR_PAIR(26) | FLAGS);
 
-    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(win, COLOR_PAIR(26)); // Cor padrão para os colchetes
+    mvwprintw(win, 0, col_fechar, "[");
+    mvwprintw(win, 0, col_fechar + 2, "]");
+    wattroff(win, COLOR_PAIR(26));
+
+    wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(win, 0, col_fechar + 1, "X");
+    wattroff(win, COLOR_PAIR(26) | A_BOLD);
+    wnoutrefresh(win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(188);
+
       
     bool saiu_retorno = false;
 
@@ -8210,9 +8767,16 @@ void open_menu_tables(ContextoMenu *ctx) {
         wattron(win, A_BOLD);
         mvwprintw(win, 0, (menu_width - 17) / 2, " Select a Module ");
         wattroff(win, A_BOLD);
-
-        
         wattroff(win, COLOR_PAIR(26) | A_DIM);
+
+        wattron(win, COLOR_PAIR(26)); // Cor padrão para os colchetes
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+        wattroff(win, COLOR_PAIR(26));
+
+        wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "X");
+        wattroff(win, COLOR_PAIR(26) | A_BOLD);
         
         // Draw options items with proper scrolling (idêntico ao seu loop do chart)
         for (int i = 0; i < max_display_items; i++) {
@@ -8280,6 +8844,12 @@ void open_menu_tables(ContextoMenu *ctx) {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                    
                     int start_x_absoluto = getbegx(win);
                     //int end_x_absoluto = start_x_absoluto + getmaxx(win);
                     
@@ -8287,6 +8857,17 @@ void open_menu_tables(ContextoMenu *ctx) {
                     int offset_inicio_dados = 1; // Devido à borda superior
                     int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
 
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            delwin(win);
+                            delwin(shadow);
+                            return;
+                        }
+                        break;
+                    }
                     // Coluna exata da scrollbar
                     int col_scrollbar_absoluta = getbegx(win) + (getmaxx(win) - 2);
 

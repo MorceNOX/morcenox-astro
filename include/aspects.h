@@ -54,7 +54,7 @@ typedef struct {
 } DeclCell;
 
 typedef struct {
-    DeclCell grid[30][30];
+    DeclCell grid[30][150];
 } DeclMatrix;
 
 double ASP_ANTISSIA_EXACT();

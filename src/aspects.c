@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <locale.h>
 #include <ncursesw/curses.h>
 #include <float.h>
 #include "var.h"
@@ -341,10 +342,13 @@ AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDi
 
 
 DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis) {
+    setlocale(LC_ALL, "");
     int object_diff = show_modern_planets ? 0 : 3;
     DeclMatrix matrix_decl = {0};
 
-    for (int i = 0; i < 14 - object_diff; i++) {
+    for (int i = 0; i < 12 - object_diff; i++) {
+        memset(matrix_decl.grid[i], 0, sizeof(DeclCell));
+
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (i >= j) continue;
 
@@ -357,21 +361,26 @@ DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis) {
 
             if (diff_parallel <= decl_orbis && mesmo_sinal) {
                 matrix_decl.grid[i][j].has_aspect = true;
-                strncpy(matrix_decl.grid[i][j].symbol, "∥", 4);
+                //strncpy(matrix_decl.grid[i][j].symbol, "∥", 4);
+                snprintf(matrix_decl.grid[i][j].symbol, 10, "%s", "∥");
                 matrix_decl.grid[i][j].diff = diff_parallel;
                 matrix_decl.grid[i][j].color_pair = 12; // Verde para Paralelo
             } 
             else if (diff_contra <= decl_orbis && !mesmo_sinal) {
                 matrix_decl.grid[i][j].has_aspect = true;
-                strncpy(matrix_decl.grid[i][j].symbol, "∦", 4);
+                //strncpy(matrix_decl.grid[i][j].symbol, "∦", 4);
+                snprintf(matrix_decl.grid[i][j].symbol, 10, "%s", "∦");
                 matrix_decl.grid[i][j].diff = diff_contra;
                 matrix_decl.grid[i][j].color_pair = 11; // Vermelho para Contra-Paralelo
+            }
+            else {
+                matrix_decl.grid[i][j].has_aspect = false;
             }
 
             if (matrix_decl.grid[i][j].has_aspect && matrix_decl.grid[i][j].diff < ASP_PARALLEL_EXACT() + DBL_EPSILON) {
                 matrix_decl.grid[i][j].is_reverse = true;
             }
-            else {
+            else if (matrix_decl.grid[i][j].has_aspect) {
                 matrix_decl.grid[i][j].is_reverse = false;
             }
         }            
@@ -385,6 +394,7 @@ DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis) {
 
 
 void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
+    setlocale(LC_ALL, "");
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
@@ -416,6 +426,23 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     wattron(decl_win, A_BOLD);
     const char *title = _("Parallel & Contra-Parallel");
     mvwprintw(decl_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(decl_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(decl_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(decl_win, 0, col_fechar, "[");
+    mvwprintw(decl_win, 0, col_fechar + 2, "]");
+    wattroff(decl_win, COLOR_PAIR(13));
+
+    wattron(decl_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(decl_win, 0, col_fechar + 1, "X");
+    wattroff(decl_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(decl_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
     
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
@@ -457,6 +484,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
         }
     }
 
+
     // 5. Renderização dos Dados Pré-Calculados da Matriz
     for (int i = 0; i < 12 - object_diff; i++) {
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
@@ -468,9 +496,11 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
                 continue;
             }
-
-
             DeclCell cell = matrix->grid[i][j];
+            //if (i == 0) {mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, "%s", cell.has_aspect ? "Y" : "N"); } //"▓▓▓");
+
+
+            
 
             if (cell.has_aspect) {
                 // Exibe o símbolo do aspecto injetado
@@ -523,7 +553,11 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     int max_scroll_y = row_pad - max_linhas_dados + 2;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(decl_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    wattroff(decl_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(decl_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
     mvwprintw(decl_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
@@ -541,8 +575,13 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(decl_win)) != 27 && ch != 'q' && ch != 'Q') {   
+    int running = 1;
+    while ((ch = wgetch(decl_win)) != 27 && ch != 'q' && ch != 'Q' && running) {   
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(decl_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wattroff(decl_win, COLOR_PAIR(28) | flag);
+
         wnoutrefresh(decl_win);
 
         switch (ch) {
@@ -557,6 +596,67 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
             case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(decl_win);
+                    int col_clique_janela = event.x - getbegx(decl_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(decl_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(decl_win) + (getmaxx(decl_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(decl_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
@@ -604,7 +704,22 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     const char *title = _("Aspects Table");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(aspects_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
 
+    wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(aspects_win, 0, col_fechar, "[");
+    mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+    wattroff(aspects_win, COLOR_PAIR(13));
+
+    wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(aspects_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     int max_linhas_dados = table_height - 6;
     WINDOW *pad = newpad(40, table_width - 4);
@@ -731,7 +846,11 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     int max_scroll_y = row_pad - max_linhas_dados + 2;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(aspects_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    wattroff(aspects_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia - F6 Contrantissia - [↓↑| Scroll"));
@@ -749,9 +868,13 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
 
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(aspects_win);
         
         if (ch == KEY_F(3)) {
@@ -813,6 +936,66 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 case 'J':
                     if (offset_y < max_scroll_y) offset_y += 2;
                     break;
+                case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // Coordenadas do clique convertidas para o plano local da janela
+                        int linha_clique_janela = event.y - getbegy(aspects_win);
+                        int col_clique_janela = event.x - getbegx(aspects_win);
+                        
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(aspects_win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+    
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                running = 0;
+                                break; // Sai do switch do mouse e fecha a janela
+                            }
+                        }
+    
+                        // 1. Descobre a coluna onde a barra é desenhada
+                        int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
+    
+                        // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                        if (event.x == col_scrollbar_absoluta) {
+                            
+                            // 3. Descobre a linha clicada em relação ao início da janela
+                            int linha_clique_janela = event.y - getbegy(aspects_win);
+                            
+                            // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                            int offset_inicio_barra = 0; 
+                            
+                            // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
+                            int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+    
+                            // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                            if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
+                                
+                                // Calcula o limite máximo que o pad_line_pos pode atingir
+                                int max_scroll_y = row_pad - max_linhas_dados;
+                                if (max_scroll_y < 0) max_scroll_y = 0;
+    
+                                // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                                if (max_linhas_dados > 1 && max_scroll_y > 0) {
+                                    // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                    int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                    
+                                    // Garante que o valor respeite as barreiras de limite
+                                    if (novo_offset < 0) novo_offset = 0;
+                                    if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+    
+                                    // Atualiza a posição de rolagem do PAD
+                                    offset_y = novo_offset;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
             }
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
@@ -932,6 +1115,22 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     const char *title = _("Aspects by Sign Table");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(aspects_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(aspects_win, 0, col_fechar, "[");
+    mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+    wattroff(aspects_win, COLOR_PAIR(13));
+
+    wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(aspects_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
 
     int max_linhas_dados = table_height - 6;
@@ -1051,7 +1250,11 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     int max_scroll_y = row_pad - max_linhas_dados + 2;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(aspects_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    wattroff(aspects_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
@@ -1067,8 +1270,12 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(aspects_win);
                 
         switch (ch) {
@@ -1083,6 +1290,66 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
             case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(aspects_win);
+                    int col_clique_janela = event.x - getbegx(aspects_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(aspects_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(aspects_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
@@ -1199,6 +1466,22 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(aspects_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(aspects_win, 0, col_fechar, "[");
+    mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+    wattroff(aspects_win, COLOR_PAIR(13));
+
+    wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(aspects_win, 0, col_fechar + 1, "X");
+    wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(aspects_win);
+
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     int max_linhas_dados = table_height - 7;
     WINDOW *pad = newpad(40, table_width - 4);
@@ -1342,7 +1625,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     int max_scroll_y = row_pad - max_linhas_dados + 2;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(aspects_win, COLOR_PAIR(28) | flag);
     desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
+    wattroff(aspects_win, COLOR_PAIR(28) | flag);
+    wnoutrefresh(aspects_win);
 
     mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
@@ -1358,9 +1646,14 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     int ch;
-    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q') {
+    int running = 1;
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(aspects_win);
+
                 
         switch (ch) {
             case KEY_UP: 
@@ -1374,6 +1667,66 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
             case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(aspects_win);
+                    int col_clique_janela = event.x - getbegx(aspects_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(aspects_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(aspects_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 0; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
+                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
         prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
