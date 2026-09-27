@@ -342,6 +342,25 @@ void set_data() {
         return;
     }
 
+    char city_bkp[100];
+    char country_bkp[100];
+    char state_bkp[100];
+    char tz_iana_bkp[100];
+    double tz_offset_bkp = TZ_OFFSET;
+    strncpy(city_bkp, CITY, 100);
+    strncpy(country_bkp, COUNTRY, 100);
+    strncpy(state_bkp, STATE, 100);
+    strncpy(tz_iana_bkp, TZ_IANA, 100);
+    int yy_bkp = YY;
+    int mm_bkp = MM;
+    int dd_bkp = DD;
+    int hh_bkp = HH;
+    int min_bkp = MIN;
+    int sec_bkp = SEC;
+    int gender_bkp = GENDER;
+
+
+
     dt = ed.date;
 
     YY = dt.ano;
@@ -386,9 +405,53 @@ void set_data() {
                 
                 snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been set.")); 
             }
+            else {
+                strncpy(CITY, city_bkp, 100);
+                strncpy(COUNTRY, country_bkp, 100);
+                strncpy(STATE, state_bkp, 100);
+                strncpy(TZ_IANA, tz_iana_bkp, 100);
+                TZ_OFFSET = tz_offset_bkp;
+                YY = yy_bkp;
+                MM = mm_bkp;
+                DD = dd_bkp;
+                HH = hh_bkp;
+                MIN = min_bkp;
+                SEC = sec_bkp;
+                GENDER = gender_bkp;
+                snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
+
+            }
+        }
+        else {
+            strncpy(CITY, city_bkp, 100);
+            strncpy(COUNTRY, country_bkp, 100);
+            strncpy(STATE, state_bkp, 100);
+            strncpy(TZ_IANA, tz_iana_bkp, 100);
+            TZ_OFFSET = tz_offset_bkp;
+            YY = yy_bkp;
+            MM = mm_bkp;
+            DD = dd_bkp;
+            HH = hh_bkp;
+            MIN = min_bkp;
+            SEC = sec_bkp;
+            GENDER = gender_bkp;
+            snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
+
         }
     }
     else {
+        strncpy(CITY, city_bkp, 100);
+        strncpy(COUNTRY, country_bkp, 100);
+        strncpy(STATE, state_bkp, 100);
+        strncpy(TZ_IANA, tz_iana_bkp, 100);
+        TZ_OFFSET = tz_offset_bkp;
+        YY = yy_bkp;
+        MM = mm_bkp;
+        DD = dd_bkp;
+        HH = hh_bkp;
+        MIN = min_bkp;
+        SEC = sec_bkp;
+        GENDER = gender_bkp;
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
     }
 

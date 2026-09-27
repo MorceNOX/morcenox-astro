@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 14:07-0300\n"
+"POT-Creation-Date: 2026-09-27 15:18-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2677,190 +2677,190 @@ msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
 
-#: src/menu-box.c:387
+#: src/menu-box.c:397
 msgid "Chart data have been set."
 msgstr ""
 
-#: src/menu-box.c:392
+#: src/menu-box.c:409
 msgid "Data have not been changed."
 msgstr ""
 
-#: src/menu-box.c:414
+#: src/menu-box.c:431
 msgid "Are you sure you want to SAVE the chart"
 msgstr ""
 
-#: src/menu-box.c:417 src/menu-box.c:450 src/menu-box.c:479 src/menu-box.c:496
-#: src/menu-box.c:520
+#: src/menu-box.c:434 src/menu-box.c:467 src/menu-box.c:496 src/menu-box.c:513
+#: src/menu-box.c:537
 #, c-format
 msgid "Chart not saved!"
 msgstr ""
 
-#: src/menu-box.c:528
+#: src/menu-box.c:545
 msgid "Failed saving chart!"
 msgstr ""
 
-#: src/menu-box.c:533
+#: src/menu-box.c:550
 msgid "Chart saved!"
 msgstr ""
 
-#: src/menu-box.c:579 src/menu-box.c:1004
+#: src/menu-box.c:596 src/menu-box.c:1021
 msgid "No charts available."
 msgstr ""
 
-#: src/menu-box.c:659
+#: src/menu-box.c:676
 msgid "Select Chart to Delete"
 msgstr ""
 
-#: src/menu-box.c:935
+#: src/menu-box.c:952
 msgid "Error deleting chart."
 msgstr ""
 
-#: src/menu-box.c:947
+#: src/menu-box.c:964
 msgid "Chart deleted successfully."
 msgstr ""
 
-#: src/menu-box.c:1087
+#: src/menu-box.c:1104
 msgid "Select Chart to Load"
 msgstr ""
 
-#: src/menu-box.c:1393
+#: src/menu-box.c:1410
 msgid "Chart not found!"
 msgstr ""
 
-#: src/menu-box.c:1713
+#: src/menu-box.c:1730
 msgid "Location: "
 msgstr ""
 
-#: src/menu-box.c:1721
+#: src/menu-box.c:1738
 msgid "┃ Date/Time: "
 msgstr ""
 
-#: src/menu-box.c:1729
+#: src/menu-box.c:1746
 msgid "┃ Dst: "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3053 src/selections.c:3166
+#: src/menu-box.c:1750 src/selections.c:3091 src/selections.c:3241
 msgid "Yes "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3052 src/selections.c:3169
+#: src/menu-box.c:1750 src/selections.c:3090 src/selections.c:3244
 msgid "No  "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3051
+#: src/menu-box.c:1750 src/selections.c:3089
 msgid "Auto"
 msgstr ""
 
-#: src/menu-box.c:1737
+#: src/menu-box.c:1754
 msgid "┃ Gen: "
 msgstr ""
 
-#: src/menu-box.c:1946
+#: src/menu-box.c:1963
 #, c-format
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:2433
+#: src/menu-box.c:2450
 msgid "Help file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:2437 src/menu-box.c:2614
+#: src/menu-box.c:2454 src/menu-box.c:2631
 msgid "Help"
 msgstr ""
 
-#: src/menu-box.c:2455
+#: src/menu-box.c:2472
 msgid "Topics file could not be loaded!"
 msgstr ""
 
-#: src/menu-box.c:2459 src/menu-box.c:2615
+#: src/menu-box.c:2476 src/menu-box.c:2632
 msgid "Technical Topics"
 msgstr ""
 
-#: src/menu-box.c:2470
+#: src/menu-box.c:2487
 msgid "Settings unchanged!"
 msgstr ""
 
-#: src/menu-box.c:2500
+#: src/menu-box.c:2517
 msgid "Settings updated!"
 msgstr ""
 
-#: src/menu-box.c:2606
+#: src/menu-box.c:2623
 msgid "Quick Chart"
 msgstr ""
 
-#: src/menu-box.c:2606
+#: src/menu-box.c:2623
 msgid "View the chart for the current moment in the default city."
 msgstr ""
 
-#: src/menu-box.c:2607
+#: src/menu-box.c:2624
 msgid "New Chart"
 msgstr ""
 
-#: src/menu-box.c:2607
+#: src/menu-box.c:2624
 msgid "Set the data to load a new chart."
 msgstr ""
 
-#: src/menu-box.c:2608
+#: src/menu-box.c:2625
 msgid "Load Chart"
 msgstr ""
 
-#: src/menu-box.c:2608
+#: src/menu-box.c:2625
 msgid "Load a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:2609
+#: src/menu-box.c:2626
 msgid "Save the Chart"
 msgstr ""
 
-#: src/menu-box.c:2609
+#: src/menu-box.c:2626
 msgid "Save the current chart."
 msgstr ""
 
-#: src/menu-box.c:2610
+#: src/menu-box.c:2627
 msgid "Delete Chart"
 msgstr ""
 
-#: src/menu-box.c:2610
+#: src/menu-box.c:2627
 msgid "Delete a previously saved chart."
 msgstr ""
 
-#: src/menu-box.c:2611
+#: src/menu-box.c:2628
 msgid "Display Chart"
 msgstr ""
 
-#: src/menu-box.c:2611
+#: src/menu-box.c:2628
 msgid "Display the current chart."
 msgstr ""
 
-#: src/menu-box.c:2612
+#: src/menu-box.c:2629
 msgid "Change the Default Location"
 msgstr ""
 
-#: src/menu-box.c:2612
+#: src/menu-box.c:2629
 msgid "Select a new city as default for the Quick Chart."
 msgstr ""
 
-#: src/menu-box.c:2613
+#: src/menu-box.c:2630
 msgid "Settings"
 msgstr ""
 
-#: src/menu-box.c:2613
+#: src/menu-box.c:2630
 msgid "Modify the default settings."
 msgstr ""
 
-#: src/menu-box.c:2614
+#: src/menu-box.c:2631
 msgid "See the help window for this application."
 msgstr ""
 
-#: src/menu-box.c:2615
+#: src/menu-box.c:2632
 msgid "Technical topics used in this program."
 msgstr ""
 
-#: src/menu-box.c:2616
+#: src/menu-box.c:2633
 msgid "Exit"
 msgstr ""
 
-#: src/menu-box.c:2616
+#: src/menu-box.c:2633
 msgid "Exit the program."
 msgstr ""
 
@@ -3453,7 +3453,7 @@ msgid "Parallel / Contra-parallel orb"
 msgstr ""
 
 #: src/selections.c:1033
-msgid "Antissia / Contrantissia orb"
+msgid "Antiscia / Contrantiscia orb"
 msgstr ""
 
 #: src/selections.c:1039 src/selections.c:1046 src/selections.c:1077
@@ -3554,80 +3554,80 @@ msgstr ""
 msgid "Sec"
 msgstr ""
 
-#: src/selections.c:2917
+#: src/selections.c:2923
 msgid " Enter TZ Offset "
 msgstr ""
 
-#: src/selections.c:2924
+#: src/selections.c:2937
 msgid "Error: Max -12 to +14"
 msgstr ""
 
-#: src/selections.c:2926 src/selections.c:2928
+#: src/selections.c:2939 src/selections.c:2941
 msgid "Press [Enter] to save"
 msgstr ""
 
-#: src/selections.c:2931
+#: src/selections.c:2944
 msgid "Press [ESC] to cancel"
 msgstr ""
 
-#: src/selections.c:2932
+#: src/selections.c:2945
 msgid "Value: "
 msgstr ""
 
-#: src/selections.c:3098
+#: src/selections.c:3142
 msgid " Select DST "
 msgstr ""
 
-#: src/selections.c:3240
+#: src/selections.c:3315
 msgid " Chart's Name "
 msgstr ""
 
-#: src/selections.c:3247
+#: src/selections.c:3322
 msgid "Enter a name for your chart (max"
 msgstr ""
 
-#: src/selections.c:3248
+#: src/selections.c:3323
 msgid "characters)"
 msgstr ""
 
-#: src/selections.c:3346
+#: src/selections.c:3421
 msgid "Unnamed Chart"
 msgstr ""
 
-#: src/selections.c:3589
+#: src/selections.c:3664
 msgid " Select a Topic "
 msgstr ""
 
-#: src/selections.c:3895
+#: src/selections.c:3970
 msgid "Select Country"
 msgstr ""
 
-#: src/selections.c:3897
+#: src/selections.c:3972
 msgid "Country"
 msgstr ""
 
-#: src/selections.c:4194
+#: src/selections.c:4269
 msgid "Select City in"
 msgstr ""
 
-#: src/selections.c:4196
+#: src/selections.c:4271
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 
-#: src/selections.c:4461
+#: src/selections.c:4536
 msgid "Failed to prepare statement:"
 msgstr ""
 
-#: src/selections.c:4509
+#: src/selections.c:4584
 msgid "Warning: City not found in database."
 msgstr ""
 
-#: src/selections.c:4544
+#: src/selections.c:4619
 msgid "Default city has not changed"
 msgstr ""
 
-#: src/selections.c:4606
+#: src/selections.c:4681
 msgid "Default city has changed"
 msgstr ""
 

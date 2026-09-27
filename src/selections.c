@@ -2888,7 +2888,7 @@ int set_tz() {
     int menu_start_y = (term_h - menu_height) / 2;
     
     // Cria as janelas
-    WINDOW *tz_win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
+    WINDOW *win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
     WINDOW *tz_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
     
     werase(tz_shadow);
@@ -2898,52 +2898,65 @@ int set_tz() {
     wnoutrefresh(tz_shadow);
 
     // Inicializa o ncurses para este menu
-    nodelay(tz_win, FALSE);
-    keypad(tz_win, TRUE);
+    nodelay(win, FALSE);
+    keypad(win, TRUE);
     curs_set(1);
 
-    wbkgd(tz_win, COLOR_PAIR(22) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
     
     while (!tz_selected) {
         
         // Limpa e desenha a janela principal
-        werase(tz_win);
-        wattron(tz_win, COLOR_PAIR(22) | A_DIM);
-        box(tz_win, 0, 0);
-        wattroff(tz_win, A_DIM);
+        werase(win);
+        wattron(win, COLOR_PAIR(22) | A_DIM);
+        box(win, 0, 0);
+        wattroff(win, A_DIM);
         
-        wattron(tz_win, A_BOLD);
+        wattron(win, A_BOLD);
 
         const char *title = _(" Enter TZ Offset ");
-        mvwprintw(tz_win, 0, (menu_width - get_visual_width(title)) / 2, title);
-        wattroff(tz_win, A_BOLD);
+        mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
+        wattroff(win, A_BOLD);
                 
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "✖");
+        wattroff(win, A_BOLD);
+
         // Desenha as instruções ou mensagem de erro
         if (show_error) {
-            wattron(tz_win, COLOR_PAIR(23) | A_BOLD | A_BLINK); 
-            mvwprintw(tz_win, 3, 1, _("Error: Max -12 to +14"));
-            wattroff(tz_win, COLOR_PAIR(23) | A_BOLD | A_BLINK);
-            mvwprintw(tz_win, 4, 1, _("Press [Enter] to save"));
+            wattron(win, COLOR_PAIR(23) | A_BOLD | A_BLINK); 
+            mvwprintw(win, 3, 1, _("Error: Max -12 to +14"));
+            wattroff(win, COLOR_PAIR(23) | A_BOLD | A_BLINK);
+            mvwprintw(win, 4, 1, _("Press [Enter] to save"));
         } else {
-            mvwprintw(tz_win, 4, 1, _("Press [Enter] to save"));
+            mvwprintw(win, 4, 1, _("Press [Enter] to save"));
         }
         
-        mvwprintw(tz_win, 5, 1, _("Press [ESC] to cancel"));
-        mvwprintw(tz_win, 2, 1, _("Value: "));
-        wattroff(tz_win, COLOR_PAIR(22) | A_DIM);
+        mvwprintw(win, 5, 1, _("Press [ESC] to cancel"));
+        mvwprintw(win, 2, 1, _("Value: "));
+        wattroff(win, COLOR_PAIR(22) | A_DIM);
 
         // Exibe o texto digitado
-        wattron(tz_win, COLOR_PAIR(23) | A_BOLD);
-        mvwprintw(tz_win, 2, 8, "%s", input);
-        wattroff(tz_win, COLOR_PAIR(23) | A_BOLD);
+        wattron(win, COLOR_PAIR(23) | A_BOLD);
+        mvwprintw(win, 2, 8, "%s", input);
+        wattroff(win, COLOR_PAIR(23) | A_BOLD);
       
         // Move o cursor físico para a posição exata da edição gráfica
-        wmove(tz_win, 2, 8 + input_pos);
-        wnoutrefresh(tz_win);
+        wmove(win, 2, 8 + input_pos);
+        wnoutrefresh(win);
 
         doupdate();
         
-        key = wgetch(tz_win);
+        key = wgetch(win);
         
         switch(key) {
             case 10: // Enter (\n)
@@ -2961,7 +2974,7 @@ int set_tz() {
                 break;
                 
             case 27: // ESC
-                delwin(tz_win);
+                delwin(win);
                 delwin(tz_shadow);
 
                 curs_set(0);
@@ -2998,7 +3011,32 @@ int set_tz() {
                     show_error = 0;
                 }
                 break;
-                
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                    
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            delwin(win);
+                            delwin(tz_shadow);
+
+                            curs_set(0);
+
+                            return 0;
+                        }
+                    }
+                }
+                break;
             default:
                 {
                     int is_valid_char = 0;
@@ -3035,7 +3073,7 @@ int set_tz() {
                 break;
         }
     }    
-    delwin(tz_win);
+    delwin(win);
     delwin(tz_shadow);
 
     curs_set(0);
@@ -3063,7 +3101,7 @@ int set_dst() {
     int menu_start_y = (term_h - menu_height) / 2;
     
     // Create windows
-    WINDOW *dst_win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
+    WINDOW *win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
     WINDOW *dst_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
     
     int selected_dst_index = 0;  // This tracks the actual index in the array
@@ -3077,42 +3115,55 @@ int set_dst() {
     wnoutrefresh(dst_shadow);
     
     // Initialize ncurses for this menu
-    nodelay(dst_win, FALSE);
-    keypad(dst_win, TRUE);
+    nodelay(win, FALSE);
+    keypad(win, TRUE);
     //curs_set(0);
 
-    wbkgd(dst_win, COLOR_PAIR(22) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
     
     int dst_selected = 0;
     int key;
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
     
     while (!dst_selected) {
         
         // Clear and redraw main menu
-        werase(dst_win);
-        wattron(dst_win, COLOR_PAIR(22) | A_DIM);
-        box(dst_win, 0, 0);        
-        wattroff(dst_win, COLOR_PAIR(22) | A_DIM);
+        werase(win);
+        wattron(win, COLOR_PAIR(22) | A_DIM);
+        box(win, 0, 0);        
+        wattroff(win, COLOR_PAIR(22) | A_DIM);
 
-        wattron(dst_win, COLOR_PAIR(22) | A_BOLD);
+        wattron(win, COLOR_PAIR(22) | A_BOLD);
         const char *title = _(" Select DST ");
-        mvwprintw(dst_win, 0, (menu_width - get_visual_width(title)) / 2, title);
-        wattroff(dst_win, COLOR_PAIR(22) | A_BOLD);
+        mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
+        wattroff(win, COLOR_PAIR(22) | A_BOLD);
+
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "✖");
+        wattroff(win, A_BOLD);
 
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + dst_scroll_offset;
             if (item_index < dst_count) {
                 int attr = (item_index == selected_dst_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
-                wattron(dst_win, attr);
-                mvwprintw(dst_win, i + 2, 0 + (menu_width - get_visual_width(dsts[item_index]) - 2) / 2, " %s ", dsts[item_index]);
-                wattroff(dst_win, attr);
+                wattron(win, attr);
+                mvwprintw(win, i + 2, 0 + (menu_width - get_visual_width(dsts[item_index]) - 2) / 2, " %s ", dsts[item_index]);
+                wattroff(win, attr);
             }
         }
-        wnoutrefresh(dst_win);
+        wnoutrefresh(win);
 
         doupdate();
         
-        key = wgetch(dst_win);
+        key = wgetch(win);
         
         // Handle letter jumping
         if (isalpha(key)) {
@@ -3154,9 +3205,33 @@ int set_dst() {
             case 27: // ESC
                 // Cleanup and return
                 //free_string_array(dsts, dst_count);
-                delwin(dst_win);
+                delwin(win);
                 delwin(dst_shadow);
                 return 0;
+
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                    
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            delwin(win);
+                            delwin(dst_shadow);
+                            return 0;
+                        }
+                    }
+                }
+                break;
         }
     }
     
@@ -3173,7 +3248,7 @@ int set_dst() {
         DST = -1;
     }
 
-    delwin(dst_win);
+    delwin(win);
     delwin(dst_shadow);
 
     return 1;
