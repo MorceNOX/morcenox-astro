@@ -95,10 +95,10 @@ int show_confirm_yesno(const char *name, const char *text) {
         mvwprintw(pop_win, 5, 8, _("    YES    "));
         wattroff(pop_win, attr_confirm);
 
-        wattron(pop_win, COLOR_PAIR(59));
+        wattron(pop_win, COLOR_PAIR(26));
         mvwprintw(pop_win, 5, 19, "▖");
         mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘");
-        wattroff(pop_win, COLOR_PAIR(59));
+        wattroff(pop_win, COLOR_PAIR(26));
 
         // Botão CANCEL
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
@@ -106,10 +106,10 @@ int show_confirm_yesno(const char *name, const char *text) {
         mvwprintw(pop_win, 5, 32, _("    NO    "));
         wattroff(pop_win, attr_cancel);
 
-        wattron(pop_win, COLOR_PAIR(59));
+        wattron(pop_win, COLOR_PAIR(26));
         mvwprintw(pop_win, 5, 42, "▖");
         mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘");
-        wattroff(pop_win, COLOR_PAIR(59));
+        wattroff(pop_win, COLOR_PAIR(26));
 
         wnoutrefresh(pop_win);
         doupdate();
@@ -171,10 +171,10 @@ int show_confirm_yesno(const char *name, const char *text) {
                             mvwprintw(pop_win, 5, 8, _("    YES    "));
                             wattroff(pop_win, attr_confirm);
                     
-                            wattron(pop_win, COLOR_PAIR(59));
+                            wattron(pop_win, COLOR_PAIR(26));
                             mvwprintw(pop_win, 5, 19, "▖");
                             mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘ ");
-                            wattroff(pop_win, COLOR_PAIR(59));
+                            wattroff(pop_win, COLOR_PAIR(26));
 
                             wnoutrefresh(pop_win);                    
                             doupdate();
@@ -204,10 +204,10 @@ int show_confirm_yesno(const char *name, const char *text) {
                             mvwprintw(pop_win, 5, 32, _("    NO    "));
                             wattroff(pop_win, attr_cancel);
 
-                            wattron(pop_win, COLOR_PAIR(59));
+                            wattron(pop_win, COLOR_PAIR(26));
                             mvwprintw(pop_win, 5, 42, "▖");
                             mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
-                            wattroff(pop_win, COLOR_PAIR(59));
+                            wattroff(pop_win, COLOR_PAIR(26));
                     
                             wnoutrefresh(pop_win);                    
                             doupdate();
@@ -1764,8 +1764,8 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         wattroff(win, attr_confirm);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 21, "▖");
-        mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 5, 20, "▖");
+        mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
 
         // Botão CANCEL
@@ -1775,8 +1775,8 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         wattroff(win, attr_cancel);
     
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 39, "▖");
-        mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 5, 38, "▖");
+        mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
 
         mvwprintw(win, 7, 3, _("Use [↑/↓] [PgUp/PgDn] to adjust."));
@@ -1890,8 +1890,8 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                                 wattroff(win, attr_confirm);
     
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 21, "▖");
-                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 5, 20, "▖");
+                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
     
                                 wnoutrefresh(win);
@@ -1924,8 +1924,8 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                                 wattroff(win, attr_cancel);
                             
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 39, "▖");
-                                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 5, 38, "▖");
+                                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
 
                                 wnoutrefresh(win);  
@@ -2003,8 +2003,8 @@ int selecionar_idade_visual(int idade_inicial) {
         wattroff(win, attr_confirm);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 21, "▖");
-        mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 5, 20, "▖");
+        mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
 
         // Botão CANCEL
@@ -2014,8 +2014,8 @@ int selecionar_idade_visual(int idade_inicial) {
         wattroff(win, attr_cancel);
     
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 39, "▖");
-        mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 5, 38, "▖");
+        mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
         
         mvwprintw(win, 7, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
@@ -2117,8 +2117,8 @@ int selecionar_idade_visual(int idade_inicial) {
                                 wattroff(win, attr_confirm);
     
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 21, "▖");
-                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 5, 20, "▖");
+                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
     
                                 wnoutrefresh(win);  
@@ -2152,8 +2152,8 @@ int selecionar_idade_visual(int idade_inicial) {
                                 wattroff(win, attr_cancel);
                             
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 39, "▖");
-                                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 5, 38, "▖");
+                                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
 
                                 wnoutrefresh(win);  
