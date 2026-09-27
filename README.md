@@ -31,9 +31,10 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Dynamic Interaction:** Zoom in/out, pan the chart, and toggle overlays like Decans, Terms (Bounds), and House Boundaries.
 * **Animation Mode:** Visualize the past and future movement of celestial bodies by adjusting the animation pace.
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
+* **Mouse Support:** Chart Wheel and all windows are clickable. You can pan the chart wheel by dragging and dropping. Double clicking makes the chart zoomed in and out; Every button and scrollbar are clickable, as well as the windows.
 
 ### 🌎 Multilingual Support
-* Currently MorceNOX™ ASTRO is available in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
+* MorceNOX™ ASTRO is available in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
 
 ## 🛠 Technical Stack
 
@@ -100,7 +101,7 @@ sudo make install
 There are two ways to use MorceNOX™ ASTRO.
 
 ### 🌟 Option 1: Portable Release (Recommended)
-**No installation, no compiler, and no dependencies required.** Use this if you just want to run the app immediately.
+**No installation, no compiler, and no dependencies required.** Use this if you just want to run the app immediately (you have to install the SQLite first as demonstrated above).
 
 1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
 2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.tar.gz`.
@@ -154,7 +155,7 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
     * `[D]` - Display Decans.
     * `[B]` - Display Terms (Bounds).
     * `[H]` - Display House Boundaries.
-    * `[←↓↑→]` - Pan.
+    * `[←↓↑→] or drag and drop` - Pan.
     * `[R]` - Reset Zoom and Pan.    
 * **Sub-Modules:** Accessed via Function and Numeric keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria, `3` for Primary Directions).
 
