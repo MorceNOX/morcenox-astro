@@ -383,6 +383,8 @@ const char * const * planet_ascii[] = {
 };
 
 
+bool bButtonPressed = false;
+
 const char **get_planet_ascii(int planet_id) {
     return (const char **)planet_ascii[planet_id - 1];
 }
@@ -2204,6 +2206,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         mvprintw(LINES - 6, max_x - 17, _("[    MENU    ]"));
         attroff(COLOR_PAIR(26) | A_BOLD);
 
+        
         // button shadow
         if (mapa_retorno) attron(COLOR_PAIR(56));
         else attron(COLOR_PAIR(55));
@@ -2211,6 +2214,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         mvprintw(LINES - 5, max_x - 16,    "▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
         if (mapa_retorno) attroff(COLOR_PAIR(56));
         else attroff(COLOR_PAIR(55));
+
 
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
@@ -5522,6 +5526,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     static int ultimo_clique_y = 0;
     
     bool dark_mode = (darkmode)?true:false;
+    //bButtonPressed = false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
 
@@ -5531,7 +5536,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     MEVENT mouse_event;
     
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
-    mouseinterval(125);
+    mouseinterval(50);
     ativar_arrasto_mouse();
     flushinp();
 
@@ -8586,8 +8591,44 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     // ========================================================
                     // ROTEAMENTO 1: O clique acertou o BOTÃO OK?
                     // ========================================================
+                    // ========================================================
+                    // ROTEAMENTO 1: O clique acertou o BOTÃO MENU?
+                    // ========================================================
                     if (linha_clique == linha_botao && col_clique >= col_inicio_botao && col_clique < col_fim_botao) {
+                        
+                        // 1. TRATA O MOMENTO DE PRESSIONAR (Independente)
                         if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            mvprintw(LINES - 6, max_x - 17, _("              "));
+                            attron(COLOR_PAIR(26) | A_BOLD);                            
+                            mvprintw(LINES - 5, max_x - 16, _("[    MENU    ]"));
+                            attroff(COLOR_PAIR(26) | A_BOLD);
+
+                            //bButtonPressed = true;
+
+                            wnoutrefresh(stdscr);
+                            doupdate();
+
+                            napms(125); 
+                                              
+                            attron(COLOR_PAIR(26) | A_BOLD);
+                            mvprintw(LINES - 6, max_x - 17, _("[    MENU    ]"));
+                            attroff(COLOR_PAIR(26) | A_BOLD);
+
+                            if (mapa_retorno) attron(COLOR_PAIR(56));
+                            else attron(COLOR_PAIR(55));
+                            mvprintw(LINES - 6, max_x - 3, "▖");
+                            mvprintw(LINES - 5, max_x - 16,    "▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                            if (mapa_retorno) attroff(COLOR_PAIR(56));
+                            else attroff(COLOR_PAIR(55));
+
+                            wnoutrefresh(stdscr);
+                            doupdate();
+
+                            // Pausa cirúrgica de 40ms apenas se o clique foi ultra rápido.
+                            // Isso garante que o usuário consiga enxergar visualmente a animação do botão voltando
+                            // antes que a nova tela 'open_menu_tables' cubra tudo.
+                            napms(40); 
+
                             desativar_arrasto_mouse();                      
                             open_menu_tables(&ctx);
                             ativar_arrasto_mouse();
@@ -8600,6 +8641,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             break; 
                         }
                     }
+
 
                     // ========================================================
                     // ROTEAMENTO 2: LÓGICA DE ARRASTO E DUPLO CLIQUE MANUAL
