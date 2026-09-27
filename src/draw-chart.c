@@ -1707,10 +1707,10 @@ void draw_cusps_div(int object_count,
 
                         attroff(A_DIM);
                         if (sign % 2 == 1) {
-                            attron(COLOR_PAIR(51) | A_DIM);                            
+                            attron(COLOR_PAIR(51));                            
                         }
                         else {
-                            attron(COLOR_PAIR(52) | A_DIM);                            
+                            attron(COLOR_PAIR(52));                            
                         }
 
                         // Draw the appropriate text
@@ -1748,7 +1748,7 @@ void draw_cusps_div(int object_count,
                                 safe_mvprintw_clip(y, x, "▚"); // casa 11
                             }
                         }
-                        attroff(COLOR_PAIR(51) | COLOR_PAIR(52) | A_DIM);
+                        attroff(COLOR_PAIR(51) | COLOR_PAIR(52));
 
                     //mvprintw(y, x, "%.2f ", angle);
                     }
@@ -5691,8 +5691,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(40, COLOR_YELLOW, 223);
         init_pair(41, 87, COLOR_BACK_2); // verde bem clarinho
 
-        init_pair(51, COLOR_BACK_1, COLOR_BACK_1);
-        init_pair(52, COLOR_BACK_2, COLOR_BACK_2);
+        init_pair(51, 176, COLOR_BACK_1);
+        init_pair(52, 176, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 25); // dark / azul

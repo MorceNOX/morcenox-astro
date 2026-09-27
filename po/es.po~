@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 13:03-0300\n"
+"POT-Creation-Date: 2026-09-27 14:07-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -59,7 +59,7 @@ msgid "Planetary"
 msgstr ""
 
 #: src/almuten.c:609 src/directions.c:914 src/directions.c:1607
-#: src/draw-chart.c:2188 src/draw-chart.c:4404 src/selections.c:2432
+#: src/draw-chart.c:2188 src/draw-chart.c:4404 src/selections.c:2457
 msgid "Day"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Night"
 msgstr ""
 
 #: src/almuten.c:609 src/draw-chart.c:2188 src/draw-chart.c:4404
-#: src/draw-chart.c:4432 src/selections.c:2658
+#: src/draw-chart.c:4432 src/selections.c:2683
 msgid "Hour"
 msgstr ""
 
@@ -625,56 +625,56 @@ msgstr ""
 msgid " Arabic Parts & Hermetic Lots "
 msgstr ""
 
-#: src/arabic_parts.c:235 src/arabic_parts.c:664
+#: src/arabic_parts.c:235 src/arabic_parts.c:666
 msgid "Current Chart Parameters: "
 msgstr ""
 
-#: src/arabic_parts.c:237 src/arabic_parts.c:666
+#: src/arabic_parts.c:237 src/arabic_parts.c:668
 msgid "Diurnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:237 src/arabic_parts.c:666
+#: src/arabic_parts.c:237 src/arabic_parts.c:668
 msgid "Nocturnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:238 src/arabic_parts.c:667 src/selections.c:2227
+#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/selections.c:2252
 msgid "Gender"
 msgstr ""
 
-#: src/arabic_parts.c:238 src/arabic_parts.c:667 src/arabic_parts.c:1303
-#: src/draw-chart.c:2151 src/selections.c:2228
+#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/arabic_parts.c:1305
+#: src/draw-chart.c:2151 src/selections.c:2253
 msgid "Masculine"
 msgstr ""
 
-#: src/arabic_parts.c:238 src/arabic_parts.c:667 src/arabic_parts.c:1303
-#: src/draw-chart.c:2151 src/selections.c:2228
+#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/arabic_parts.c:1305
+#: src/draw-chart.c:2151 src/selections.c:2253
 msgid "Feminine"
 msgstr ""
 
-#: src/arabic_parts.c:238 src/arabic_parts.c:667 src/draw-chart.c:2151
-#: src/selections.c:1028 src/selections.c:2228
+#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/draw-chart.c:2151
+#: src/selections.c:1053 src/selections.c:2253
 msgid "Neuter"
 msgstr ""
 
-#: src/arabic_parts.c:248 src/arabic_parts.c:677
+#: src/arabic_parts.c:248 src/arabic_parts.c:679
 msgid "Part Name"
 msgstr ""
 
-#: src/arabic_parts.c:249 src/arabic_parts.c:678 src/draw-chart.c:3146
+#: src/arabic_parts.c:249 src/arabic_parts.c:680 src/draw-chart.c:3146
 #: src/draw-chart.c:3794
 msgid "Position"
 msgstr ""
 
-#: src/arabic_parts.c:250 src/arabic_parts.c:679 src/draw-chart.c:2270
+#: src/arabic_parts.c:250 src/arabic_parts.c:681 src/draw-chart.c:2270
 #: src/draw-chart.c:3151 src/draw-chart.c:3797 src/profections.c:149
 msgid "House"
 msgstr ""
 
-#: src/arabic_parts.c:251 src/arabic_parts.c:680
+#: src/arabic_parts.c:251 src/arabic_parts.c:682
 msgid "Lords"
 msgstr ""
 
-#: src/arabic_parts.c:252 src/arabic_parts.c:681
+#: src/arabic_parts.c:252 src/arabic_parts.c:683
 msgid "Link"
 msgstr ""
 
@@ -682,11 +682,11 @@ msgstr ""
 msgid "Core Traditional Governance"
 msgstr ""
 
-#: src/arabic_parts.c:274 src/arabic_parts.c:698
+#: src/arabic_parts.c:274 src/arabic_parts.c:700
 msgid "No Arabic Parts available for this chart configuration."
 msgstr ""
 
-#: src/arabic_parts.c:308 src/arabic_parts.c:733
+#: src/arabic_parts.c:308 src/arabic_parts.c:735
 msgid "|  Formula: "
 msgstr ""
 
@@ -694,129 +694,130 @@ msgstr ""
 msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects."
 msgstr ""
 
-#: src/arabic_parts.c:415 src/arabic_parts.c:787 src/directions.c:1056
+#: src/arabic_parts.c:415 src/arabic_parts.c:789 src/directions.c:1056
 #: src/directions.c:1750 src/draw-chart.c:3699 src/draw-chart.c:4219
 #: src/draw-chart.c:5214 src/firdaria.c:464 src/hyleg.c:774 src/hyleg.c:1129
 #: src/mind.c:331 src/profections.c:236
 msgid "Press ESC to return to chart"
 msgstr ""
 
-#: src/arabic_parts.c:650
+#: src/arabic_parts.c:652
 msgid " Arabic Parts of Solar Revolution / Radix Confrontation "
 msgstr ""
 
-#: src/arabic_parts.c:682
+#: src/arabic_parts.c:684
 msgid "Radical House"
 msgstr ""
 
-#: src/arabic_parts.c:784
+#: src/arabic_parts.c:786
 msgid ""
 "Use [↑/↓] Select | [x] or [F3] Aspects between Solar Return Parts and "
 "Radical Planets."
 msgstr ""
 
-#: src/arabic_parts.c:1194
+#: src/arabic_parts.c:1196
 msgid "New Custom Part"
 msgstr ""
 
-#: src/arabic_parts.c:1201
+#: src/arabic_parts.c:1203
 msgid "User defined hermetic lot formula."
 msgstr ""
 
-#: src/arabic_parts.c:1276
+#: src/arabic_parts.c:1278
 msgid " Edit Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:1276
+#: src/arabic_parts.c:1278
 msgid " New Arabic Part Formula "
 msgstr ""
 
-#: src/arabic_parts.c:1290
+#: src/arabic_parts.c:1292
 msgid "Part Name: "
 msgstr ""
 
-#: src/arabic_parts.c:1299
+#: src/arabic_parts.c:1301
 msgid "Gender Scope: "
 msgstr ""
 
-#: src/arabic_parts.c:1303
+#: src/arabic_parts.c:1305
 msgid "Neuter/Universal"
 msgstr ""
 
-#: src/arabic_parts.c:1308
+#: src/arabic_parts.c:1310
 msgid "Diurnal Formula (Personal Point + Significator - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:1323
+#: src/arabic_parts.c:1325
 msgid "Nocturnal Formula (Personal Point + Significatpr - Trigger):"
 msgstr ""
 
-#: src/arabic_parts.c:1338
+#: src/arabic_parts.c:1340
 msgid "Traditional Links: "
 msgstr ""
 
-#: src/arabic_parts.c:1351
+#: src/arabic_parts.c:1353
 msgid "Description: "
 msgstr ""
 
-#: src/arabic_parts.c:1387 src/arabic_parts.c:1497 src/arabic_parts.c:1505
+#: src/arabic_parts.c:1389 src/arabic_parts.c:1499 src/arabic_parts.c:1507
+#: src/arabic_parts.c:1544 src/arabic_parts.c:1552
 msgid "[ SAVE FORMULA ]"
 msgstr ""
 
-#: src/arabic_parts.c:1396
+#: src/arabic_parts.c:1398
 msgid ""
 "Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | "
 "[ENTER] Edit Text / Save"
 msgstr ""
 
-#: src/arabic_parts.c:1863 src/arabic_parts.c:1894
+#: src/arabic_parts.c:1888 src/arabic_parts.c:1919
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr ""
 
-#: src/arabic_parts.c:1875
+#: src/arabic_parts.c:1900
 msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
 msgstr ""
 
-#: src/arabic_parts.c:1878
+#: src/arabic_parts.c:1903
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:2052 src/aspects.c:562
+#: src/arabic_parts.c:2077 src/aspects.c:562
 msgid "(*) Numbers = angular difference in degrees"
 msgstr ""
 
-#: src/arabic_parts.c:2055
+#: src/arabic_parts.c:2080
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr ""
 
-#: src/arabic_parts.c:2055
+#: src/arabic_parts.c:2080
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:2221 src/selections.c:262
+#: src/arabic_parts.c:2246 src/selections.c:262
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:2225 src/selections.c:266
+#: src/arabic_parts.c:2250 src/selections.c:266
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:2231 src/arabic_parts.c:2298 src/arabic_parts.c:2307
+#: src/arabic_parts.c:2256 src/arabic_parts.c:2323 src/arabic_parts.c:2332
 msgid "   YES   "
 msgstr ""
 
-#: src/arabic_parts.c:2242 src/arabic_parts.c:2331 src/arabic_parts.c:2340
+#: src/arabic_parts.c:2267 src/arabic_parts.c:2356 src/arabic_parts.c:2365
 #: src/selections.c:292 src/selections.c:381 src/selections.c:390
-#: src/selections.c:1749 src/selections.c:1887 src/selections.c:1898
-#: src/selections.c:1988 src/selections.c:2115 src/selections.c:2126
+#: src/selections.c:1774 src/selections.c:1912 src/selections.c:1923
+#: src/selections.c:2013 src/selections.c:2140 src/selections.c:2151
 msgid "  CANCEL  "
 msgstr ""
 
-#: src/arabic_parts.c:2384 src/arabic_parts.c:2398
+#: src/arabic_parts.c:2409 src/arabic_parts.c:2423
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:2403
+#: src/arabic_parts.c:2428
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 
@@ -882,12 +883,12 @@ msgstr ""
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr ""
 
-#: src/directions.c:911 src/directions.c:1604 src/selections.c:1764
-#: src/selections.c:2002
+#: src/directions.c:911 src/directions.c:1604 src/selections.c:1789
+#: src/selections.c:2027
 msgid "Age"
 msgstr ""
 
-#: src/directions.c:912 src/directions.c:1605 src/selections.c:2430
+#: src/directions.c:912 src/directions.c:1605 src/selections.c:2455
 msgid "Year"
 msgstr ""
 
@@ -2738,15 +2739,15 @@ msgstr ""
 msgid "┃ Dst: "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3028 src/selections.c:3141
+#: src/menu-box.c:1733 src/selections.c:3053 src/selections.c:3166
 msgid "Yes "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3027 src/selections.c:3144
+#: src/menu-box.c:1733 src/selections.c:3052 src/selections.c:3169
 msgid "No  "
 msgstr ""
 
-#: src/menu-box.c:1733 src/selections.c:3026
+#: src/menu-box.c:1733 src/selections.c:3051
 msgid "Auto"
 msgstr ""
 
@@ -3353,8 +3354,8 @@ msgid "    NO    "
 msgstr ""
 
 #: src/selections.c:281 src/selections.c:348 src/selections.c:357
-#: src/selections.c:1738 src/selections.c:1855 src/selections.c:1864
-#: src/selections.c:1977 src/selections.c:2081 src/selections.c:2091
+#: src/selections.c:1763 src/selections.c:1880 src/selections.c:1889
+#: src/selections.c:2002 src/selections.c:2106 src/selections.c:2116
 msgid "  CONFIRM  "
 msgstr ""
 
@@ -3362,270 +3363,271 @@ msgstr ""
 msgid " ALERT "
 msgstr ""
 
-#: src/selections.c:468 src/selections.c:506 src/selections.c:515
+#: src/selections.c:468 src/selections.c:486 src/selections.c:495
+#: src/selections.c:531 src/selections.c:540
 msgid "    OK    "
 msgstr ""
 
-#: src/selections.c:827 src/selections.c:859
+#: src/selections.c:852 src/selections.c:884
 msgid " Settings "
 msgstr ""
 
-#: src/selections.c:843 src/selections.c:894
+#: src/selections.c:868 src/selections.c:919
 msgid "[↓↑] Select. [← →] Adjust. [Enter] Confirm. [ESC] Cancel."
 msgstr ""
 
-#: src/selections.c:874 src/selections.c:1439 src/selections.c:1448
+#: src/selections.c:899 src/selections.c:1464 src/selections.c:1473
 msgid "[ CONFIRM  ]"
 msgstr ""
 
-#: src/selections.c:885 src/selections.c:1514 src/selections.c:1525
-#: src/selections.c:2211 src/selections.c:2322 src/selections.c:2332
-#: src/selections.c:2454 src/selections.c:2556 src/selections.c:2566
-#: src/selections.c:2684 src/selections.c:2798 src/selections.c:2808
+#: src/selections.c:910 src/selections.c:1539 src/selections.c:1550
+#: src/selections.c:2236 src/selections.c:2347 src/selections.c:2357
+#: src/selections.c:2479 src/selections.c:2581 src/selections.c:2591
+#: src/selections.c:2709 src/selections.c:2823 src/selections.c:2833
 msgid "[  CANCEL  ]"
 msgstr ""
 
-#: src/selections.c:905 src/selections.c:922 src/selections.c:940
-#: src/selections.c:1036
+#: src/selections.c:930 src/selections.c:947 src/selections.c:965
+#: src/selections.c:1061
 msgid "Unknown"
 msgstr ""
 
-#: src/selections.c:916
+#: src/selections.c:941
 msgid "House System"
 msgstr ""
 
-#: src/selections.c:933
+#: src/selections.c:958
 msgid "Triplicity System"
 msgstr ""
 
-#: src/selections.c:952
+#: src/selections.c:977
 msgid "Terms (bounds) System"
 msgstr ""
 
-#: src/selections.c:958
+#: src/selections.c:983
 msgid "Sun orb"
 msgstr ""
 
-#: src/selections.c:962
+#: src/selections.c:987
 msgid "Moon orb"
 msgstr ""
 
-#: src/selections.c:966
+#: src/selections.c:991
 msgid "Mercury orb"
 msgstr ""
 
-#: src/selections.c:970
+#: src/selections.c:995
 msgid "Venus orb"
 msgstr ""
 
-#: src/selections.c:974
+#: src/selections.c:999
 msgid "Mars orb"
 msgstr ""
 
-#: src/selections.c:978
+#: src/selections.c:1003
 msgid "Jupiter orb"
 msgstr ""
 
-#: src/selections.c:982
+#: src/selections.c:1007
 msgid "Saturn orb"
 msgstr ""
 
-#: src/selections.c:986
+#: src/selections.c:1011
 msgid "Uranus orb"
 msgstr ""
 
-#: src/selections.c:990
+#: src/selections.c:1015
 msgid "Neptune orb"
 msgstr ""
 
-#: src/selections.c:994
+#: src/selections.c:1019
 msgid "Pluto orb"
 msgstr ""
 
-#: src/selections.c:998
+#: src/selections.c:1023
 msgid "Lunar Nodes orb"
 msgstr ""
 
-#: src/selections.c:1003
+#: src/selections.c:1028
 msgid "Parallel / Contra-parallel orb"
 msgstr ""
 
-#: src/selections.c:1008
+#: src/selections.c:1033
 msgid "Antissia / Contrantissia orb"
 msgstr ""
 
-#: src/selections.c:1014 src/selections.c:1021 src/selections.c:1052
+#: src/selections.c:1039 src/selections.c:1046 src/selections.c:1077
 msgid "yes"
 msgstr ""
 
-#: src/selections.c:1014 src/selections.c:1021 src/selections.c:1052
+#: src/selections.c:1039 src/selections.c:1046 src/selections.c:1077
 msgid "no"
 msgstr ""
 
-#: src/selections.c:1015
+#: src/selections.c:1040
 msgid "Consider Modern Planets Rulling by Exaltation?"
 msgstr ""
 
-#: src/selections.c:1022
+#: src/selections.c:1047
 msgid "Use Modern Planets?"
 msgstr ""
 
-#: src/selections.c:1028
+#: src/selections.c:1053
 msgid "Male"
 msgstr ""
 
-#: src/selections.c:1028
+#: src/selections.c:1053
 msgid "Female"
 msgstr ""
 
-#: src/selections.c:1029
+#: src/selections.c:1054
 msgid "Default Gender"
 msgstr ""
 
-#: src/selections.c:1046
+#: src/selections.c:1071
 msgid "Interface Language"
 msgstr ""
 
-#: src/selections.c:1054
+#: src/selections.c:1079
 msgid "Dark Mode"
 msgstr ""
 
-#: src/selections.c:1731 src/selections.c:1970
+#: src/selections.c:1756 src/selections.c:1995
 msgid " Target Age Selection "
 msgstr ""
 
-#: src/selections.c:1757
+#: src/selections.c:1782
 msgid "Use [↑/↓] [PgUp/PgDn] to adjust."
 msgstr ""
 
-#: src/selections.c:1758
+#: src/selections.c:1783
 msgid "[Enter] confirm | [ESC] cancel."
 msgstr ""
 
-#: src/selections.c:1765 src/selections.c:2003
+#: src/selections.c:1790 src/selections.c:2028
 msgid "years"
 msgstr ""
 
-#: src/selections.c:1996 src/selections.c:2220
+#: src/selections.c:2021 src/selections.c:2245
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr ""
 
-#: src/selections.c:1997 src/selections.c:2221
+#: src/selections.c:2022 src/selections.c:2246
 msgid "[ESC] to cancel."
 msgstr ""
 
-#: src/selections.c:2194
+#: src/selections.c:2219
 msgid " Gender Selection "
 msgstr ""
 
-#: src/selections.c:2200 src/selections.c:2289 src/selections.c:2298
-#: src/selections.c:2443 src/selections.c:2522 src/selections.c:2531
-#: src/selections.c:2673 src/selections.c:2764 src/selections.c:2773
+#: src/selections.c:2225 src/selections.c:2314 src/selections.c:2323
+#: src/selections.c:2468 src/selections.c:2547 src/selections.c:2556
+#: src/selections.c:2698 src/selections.c:2789 src/selections.c:2798
 msgid "[  CONFIRM  ]"
 msgstr ""
 
-#: src/selections.c:2409
+#: src/selections.c:2434
 msgid " Date "
 msgstr ""
 
-#: src/selections.c:2413 src/selections.c:2646
+#: src/selections.c:2438 src/selections.c:2671
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr ""
 
-#: src/selections.c:2414 src/selections.c:2647
+#: src/selections.c:2439 src/selections.c:2672
 msgid "[ESC] Cancel."
 msgstr ""
 
-#: src/selections.c:2431
+#: src/selections.c:2456
 msgid "Month"
 msgstr ""
 
-#: src/selections.c:2642
+#: src/selections.c:2667
 msgid " Time "
 msgstr ""
 
-#: src/selections.c:2659
+#: src/selections.c:2684
 msgid "Min"
 msgstr ""
 
-#: src/selections.c:2660
+#: src/selections.c:2685
 msgid "Sec"
 msgstr ""
 
-#: src/selections.c:2892
+#: src/selections.c:2917
 msgid " Enter TZ Offset "
 msgstr ""
 
-#: src/selections.c:2899
+#: src/selections.c:2924
 msgid "Error: Max -12 to +14"
 msgstr ""
 
-#: src/selections.c:2901 src/selections.c:2903
+#: src/selections.c:2926 src/selections.c:2928
 msgid "Press [Enter] to save"
 msgstr ""
 
-#: src/selections.c:2906
+#: src/selections.c:2931
 msgid "Press [ESC] to cancel"
 msgstr ""
 
-#: src/selections.c:2907
+#: src/selections.c:2932
 msgid "Value: "
 msgstr ""
 
-#: src/selections.c:3073
+#: src/selections.c:3098
 msgid " Select DST "
 msgstr ""
 
-#: src/selections.c:3215
+#: src/selections.c:3240
 msgid " Chart's Name "
 msgstr ""
 
-#: src/selections.c:3222
+#: src/selections.c:3247
 msgid "Enter a name for your chart (max"
 msgstr ""
 
-#: src/selections.c:3223
+#: src/selections.c:3248
 msgid "characters)"
 msgstr ""
 
-#: src/selections.c:3321
+#: src/selections.c:3346
 msgid "Unnamed Chart"
 msgstr ""
 
-#: src/selections.c:3564
+#: src/selections.c:3589
 msgid " Select a Topic "
 msgstr ""
 
-#: src/selections.c:3870
+#: src/selections.c:3895
 msgid "Select Country"
 msgstr ""
 
-#: src/selections.c:3872
+#: src/selections.c:3897
 msgid "Country"
 msgstr ""
 
-#: src/selections.c:4169
+#: src/selections.c:4194
 msgid "Select City in"
 msgstr ""
 
-#: src/selections.c:4171
+#: src/selections.c:4196
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 
-#: src/selections.c:4436
+#: src/selections.c:4461
 msgid "Failed to prepare statement:"
 msgstr ""
 
-#: src/selections.c:4484
+#: src/selections.c:4509
 msgid "Warning: City not found in database."
 msgstr ""
 
-#: src/selections.c:4519
+#: src/selections.c:4544
 msgid "Default city has not changed"
 msgstr ""
 
-#: src/selections.c:4581
+#: src/selections.c:4606
 msgid "Default city has changed"
 msgstr ""
 

@@ -1030,7 +1030,7 @@ OptionsEdition select_options() {
             }
 
             else if (i == 15) {
-                const char *orb13 = _("Antissia / Contrantissia orb");
+                const char *orb13 = _("Antiscia / Contrantiscia orb");
                 mvwprintw(win, 18, 5, "%s: %.1f ", orb13, antissia_orbis);
             }
 
