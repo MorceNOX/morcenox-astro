@@ -2682,6 +2682,8 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
     
     // Colunas reposicionadas: Nome ganhou mais espaço (coluna 4 a 22)
+    wattron(table_win, A_BOLD);
+
     mvwprintw(table_win, 2, 4, _("Planet               Bar Chart Representation                        Points"));
     //mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
     
@@ -2918,6 +2920,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
     mouseinterval(100);
 
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 4, _("Planet    Essential    Accidental        Score          Weight        Strength"));
     //mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattron(table_win, COLOR_PAIR(6));
@@ -3141,7 +3144,8 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     mouseinterval(100);
 
 
-    
+    wattron(table_win, A_BOLD);
+
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
     mvwprintw(table_win, 2, 26, _("Ess"));
@@ -3789,7 +3793,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
     mouseinterval(100);
 
-    
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
     mvwprintw(table_win, 2, 24, _("Decl"));
