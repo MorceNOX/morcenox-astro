@@ -169,11 +169,11 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/53166ca7-7b90-4807-add9-30dbabf44d3d" />
----
-<img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/8c70cddc-fb14-47dc-9b50-331634a35f31" />
----
-<img width="2560" height="1600" alt="02b-chart_wheel_city_selection_rs" src="https://github.com/user-attachments/assets/0dee28f4-7e4b-4bed-bcb1-60e15b448dad" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/a23e1cd4-d8e4-4c19-ac8f-46d8ed26e81c" />
+<img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/1351ff44-3f31-4bc2-b045-e07ef6e516fc" />
+<img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/f212e5d2-2c94-4d60-8c77-340e657f6c67" />
+<img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/8b15035b-45da-4850-9c3b-d68b49ddef8b" />
+<img width="2560" height="1600" alt="02b-chart_wheel_city_selection_rs" src="https://github.com/user-attachments/assets/08abfa61-e6a8-4dc8-a50a-aad6c8754d62" />
 <hr>
 
 ### Aspects Tables
@@ -184,7 +184,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/64151893-800f-4597-912c-6ab37e3d3b1f" />
+<img width="2560" height="1600" alt="04a-primary_directions_table" src="https://github.com/user-attachments/assets/c60dba11-7f41-4e88-99d8-d5e03bc13016" />
 <hr>
 
 ### Firdaria
@@ -206,6 +206,11 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### Temperament Interpretation
 <hr>
 <img width="2560" height="1600" alt="09a-temperament_interpretation" src="https://github.com/user-attachments/assets/77cf7624-9b49-479c-8e13-5b5d76488193" />
+<hr>
+
+### Solar Return Chart
+<hr>
+<img width="2560" height="1600" alt="06-solar_return_chart" src="https://github.com/user-attachments/assets/e67bb184-fc01-498c-8165-6ea6f243c76a" />
 <hr>
 
 ### Solar Return Radix Confrontation
