@@ -2360,17 +2360,12 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
-    //if (dark_mode) attron(COLOR_PAIR(10) | A_DIM); else attron(COLOR_PAIR(1));    
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    //if (dark_mode) attroff(COLOR_PAIR(10) | A_DIM); else attroff(COLOR_PAIR(1));
-    
+   
 
     if (house_div) {
-        //if (dark_mode) attron(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attron(COLOR_PAIR(19) | A_DIM);
-
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
         
-        //if (dark_mode) attroff(COLOR_PAIR(19) | A_DIM | A_REVERSE); else attroff(COLOR_PAIR(19) | A_DIM);
     }
 
     // Draw house numbers

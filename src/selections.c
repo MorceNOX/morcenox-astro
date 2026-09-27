@@ -2222,23 +2222,23 @@ int select_gender() {
 
         int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(win, attr_confirm);
-        mvwprintw(win, 5, 9, _("[  CONFIRM  ]"));
+        mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
         wattroff(win, attr_confirm);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 22, "▖");
-        mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 6, 22, "▖");
+        mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
 
         // Botão CANCEL
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(win, attr_cancel);
-        mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+        mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
         wattroff(win, attr_cancel);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 5, 40, "▖");
-        mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 6, 40, "▖");
+        mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
         
         
@@ -2294,7 +2294,7 @@ int select_gender() {
                     int col_clique_janela = event.x - getbegx(win);
                     
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
-                    int linha_botao = 5;
+                    int linha_botao = 6;
                     int col_inicio_botao_ok = 9;
                     int col_fim_botao_ok = col_inicio_botao_ok + 13;
                     
@@ -2308,10 +2308,10 @@ int select_gender() {
                         if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                             botao_focado = 0;
                             if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                                mvwprintw(win, 5, 9, "              ");
+                                mvwprintw(win, 6, 9, "              ");
                                 int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_confirm);
-                                mvwprintw(win, 6, 10, _("[  CONFIRM  ]"));
+                                mvwprintw(win, 7, 10, _("[  CONFIRM  ]"));
                                 wattroff(win, attr_confirm);
 
                                 wnoutrefresh(win);
@@ -2320,12 +2320,12 @@ int select_gender() {
 
                                 attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_confirm);
-                                mvwprintw(win, 5, 9, _("[  CONFIRM  ]"));
+                                mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
                                 wattroff(win, attr_confirm);
                     
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 22, "▖");
-                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 6, 22, "▖");
+                                mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
 
                                 wnoutrefresh(win);
@@ -2340,11 +2340,11 @@ int select_gender() {
                         // 🌟 CASO 2: Clicou exatamente no NO
                         else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
                             if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) { 
-                                mvwprintw(win, 5, 28, "             ");
+                                mvwprintw(win, 6, 28, "             ");
                                 
                                 int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_cancel);
-                                mvwprintw(win, 6, 29, _("[  CANCEL  ]"));
+                                mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
                                 wattroff(win, attr_cancel);
 
                                 wnoutrefresh(win);
@@ -2354,12 +2354,12 @@ int select_gender() {
 
                                 attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_cancel);
-                                mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+                                mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
                                 wattroff(win, attr_cancel);
                     
                                 wattron(win, COLOR_PAIR(57));
-                                mvwprintw(win, 5, 40, "▖");
-                                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 6, 40, "▖");
+                                mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
 
                                 wnoutrefresh(win);
@@ -3268,11 +3268,11 @@ void set_chart_name(char *chart_name, size_t max_length) {
     int dialog_start_x = (term_w - dialog_width) / 2;
     int dialog_start_y = (term_h - dialog_height) / 2;
     
-    WINDOW *dialog_win = newwin(dialog_height, dialog_width, dialog_start_y, dialog_start_x);
+    WINDOW *win = newwin(dialog_height, dialog_width, dialog_start_y, dialog_start_x);
     WINDOW *dialog_shadow = newwin(dialog_height, dialog_width, dialog_start_y + 1, dialog_start_x + 1);
     
-    nodelay(dialog_win, FALSE);
-    keypad(dialog_win, TRUE);
+    nodelay(win, FALSE);
+    keypad(win, TRUE);
     curs_set(1); 
     
     // Desenha a sombra
@@ -3301,44 +3301,57 @@ void set_chart_name(char *chart_name, size_t max_length) {
     wint_t key; // Variável correta para wget_wch (suporta códigos especiais e wchar_t)
     int key_type;
 
-    wbkgd(dialog_win, COLOR_PAIR(22) | FLAGS);
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
     
     while (!done) {
         // Renderiza e limpa a janela com segurança
-        werase(dialog_win);
+        werase(win);
         
-        wattron(dialog_win, COLOR_PAIR(22) | A_DIM);
-        box(dialog_win, 0, 0);
-        wattroff(dialog_win, COLOR_PAIR(22) | A_DIM);
+        wattron(win, COLOR_PAIR(22) | A_DIM);
+        box(win, 0, 0);
+        wattroff(win, COLOR_PAIR(22) | A_DIM);
         
-        wattron(dialog_win, A_BOLD);
+        wattron(win, A_BOLD);
         const char *title = _(" Chart's Name ");
 
-        mvwprintw(dialog_win, 0, (dialog_width - get_visual_width(title)) / 2, title);
-        wattroff(dialog_win, A_BOLD);
+        mvwprintw(win, 0, (dialog_width - get_visual_width(title)) / 2, title);
+        wattroff(win, A_BOLD);
 
-        wattron(dialog_win, COLOR_PAIR(22));
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "✖");
+        wattroff(win, A_BOLD);
+
+        wattron(win, COLOR_PAIR(22));
 
         const char *str1 = _("Enter a name for your chart (max");
         const char *str2 = _("characters)");
 
-        mvwprintw(dialog_win, 3, 1, "%s %zu %s:", str1, max_length - 1, str2);
-        wattroff(dialog_win, COLOR_PAIR(22));
+        mvwprintw(win, 3, 1, "%s %zu %s:", str1, max_length - 1, str2);
+        wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
-        wattron(dialog_win, COLOR_PAIR(28) | A_REVERSE);
-        mvwprintw(dialog_win, 5, 2, ">                                                  ");
-        mvwaddwstr(dialog_win, 5, 4, w_buffer);
-        wattroff(dialog_win, COLOR_PAIR(28) | A_REVERSE);
+        wattron(win, COLOR_PAIR(28) | A_REVERSE);
+        mvwprintw(win, 5, 2, ">                                                  ");
+        mvwaddwstr(win, 5, 4, w_buffer);
+        wattroff(win, COLOR_PAIR(28) | A_REVERSE);
         
         // Move o cursor físico para a posição baseada no número de caracteres (e não de bytes)
-        wmove(dialog_win, 5, 4 + input_pos);
-        wnoutrefresh(dialog_win);
+        wmove(win, 5, 4 + input_pos);
+        wnoutrefresh(win);
 
         doupdate();
         
         // wget_wch retorna se é uma tecla especial (KEY_CODE_YES) ou um caractere comum
-        key_type = wget_wch(dialog_win, &key);
+        key_type = wget_wch(win, &key);
         
         if (key_type == KEY_CODE_YES) {
             // Tratamento de teclas especiais mapeadas pelo ncurses
@@ -3367,6 +3380,29 @@ void set_chart_name(char *chart_name, size_t max_length) {
                             w_buffer[i] = w_buffer[i + 1];
                         }
                         w_len--;
+                    }
+                    break;
+                case KEY_MOUSE:
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // Coordenadas do clique convertidas para o plano local da janela
+                        int linha_clique_janela = event.y - getbegy(win);
+                        int col_clique_janela = event.x - getbegx(win);
+                        
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                        
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                w_buffer[0] = L'\0';
+                                w_len = 0;
+                                done = 1;
+                            }
+                        }
                     }
                     break;
             }
@@ -3412,7 +3448,7 @@ void set_chart_name(char *chart_name, size_t max_length) {
     }
     
     curs_set(0);
-    delwin(dialog_win);
+    delwin(win);
     delwin(dialog_shadow);
     
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
