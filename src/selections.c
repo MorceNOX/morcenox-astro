@@ -1828,6 +1828,11 @@ int select_gender() {
     keypad(win, TRUE);
     curs_set(0); // Oculta o cursor piscante
 
+    int botao_focado = 0;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
     while (!confirmado) {
         // Renderiza sombra (Usando seu par de cor 4 ou 9 dependendo do seu setup)
         werase(shadow);
@@ -1846,9 +1851,21 @@ int select_gender() {
         const char *title = _(" Gender Selection ");
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
+
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_confirm);
+        mvwprintw(win, 5, 9, _("  CONFIRM  "));
+        wattroff(win, attr_confirm);
+
+        // Botão CANCEL
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_cancel);
+        mvwprintw(win, 5, 28, _("  CANCEL  "));
+        wattroff(win, attr_cancel);
         
-        mvwprintw(win, w_height - 3, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
-        mvwprintw(win, w_height - 2, 3, _("[ESC] to cancel."));
+        
+        mvwprintw(win, w_height - 2, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
+        mvwprintw(win, w_height - 1, 3, _("[ESC] to cancel."));
         wattroff(win, COLOR_PAIR(22));
 
         // Renderiza o campo gênero destacado (Pares de cor 3 ou 8)
@@ -1865,6 +1882,11 @@ int select_gender() {
         key = wgetch(win);
 
         switch (key) {
+            case KEY_LEFT:
+            case KEY_RIGHT:
+                // Alterna o foco entre os dois botões (0 vira 1, 1 vira 0)
+                botao_focado = 1 - botao_focado;
+                break;
             case KEY_UP:
                 if (gender_id < 4) gender_id++;
                 if (gender_id == 4) gender_id = 1;
@@ -1880,6 +1902,43 @@ int select_gender() {
                 delwin(win);
                 delwin(shadow);
                 return 0;
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = 5;
+                    int col_inicio_botao_ok = 9;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    
+                    int col_inicio_botao_cancel = 28;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                confirmado = 1;
+                                break; 
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
+                                delwin(win);
+                                delwin(shadow);
+                                return 0;
+                            }
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -1921,6 +1980,11 @@ DateEdition selecionar_data() {
     keypad(win, TRUE);
     nodelay(win, FALSE);
 
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
+    int botao_focado = 0;
+
     //curs_set(0); // Oculta o cursor piscante para navegação visual
 
     int max_dias[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -1936,8 +2000,8 @@ DateEdition selecionar_data() {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         
-        mvwprintw(win, 5, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
-        mvwprintw(win, 6, 2, _("[ESC] Cancel."));
+        mvwprintw(win, w_height - 2, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
+        mvwprintw(win, w_height - 1, 2, _("[ESC] Cancel."));
         wattroff(win, COLOR_PAIR(22));
 
         // Validação simples de ano bissexto para o mês de Fevereiro
@@ -1963,6 +2027,18 @@ DateEdition selecionar_data() {
 
             if (i == campo_atual) wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattroff(win, COLOR_PAIR(22));
+
+            int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(win, attr_confirm);
+            mvwprintw(win, 5, 9, _("  CONFIRM  "));
+            wattroff(win, attr_confirm);
+
+            // Botão CANCEL
+            int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(win, attr_cancel);
+            mvwprintw(win, 5, 28, _("  CANCEL  "));
+            wattroff(win, attr_cancel);
+        
         }
 
         wnoutrefresh(win);
@@ -1995,13 +2071,56 @@ DateEdition selecionar_data() {
                 break;
             case 27: // ESC
                 delwin(win);
+                delwin(shadow);
                 ed.changed =0;
                 ed.date = dt_prev;
                 return ed;
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = 5;
+                    int col_inicio_botao_ok = 9;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    
+                    int col_inicio_botao_cancel = 28;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                data_confirmada = 1;
+                                ed.date = dt;
+                                ed.changed = 1;
+                                break;
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
+                                delwin(win);
+                                delwin(shadow);
+                                ed.changed =0;
+                                ed.date = dt_prev;
+                                return ed;
+                            }
+                        }
+                    }
+                }
+                break;
         }
     }
 
     delwin(win);
+    delwin(shadow);
     return ed;
 }
 
@@ -2035,9 +2154,14 @@ HoraEdition selecionar_hora() {
 
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
     nodelay(win, FALSE);
     keypad(win, TRUE);
     //curs_set(0); // Oculta o cursor para navegação puramente visual
+
+    int botao_focado = 0;
 
     while (!horario_confirmado) {
         
@@ -2050,8 +2174,8 @@ HoraEdition selecionar_hora() {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         
-        mvwprintw(win, 5, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
-        mvwprintw(win, 6, 2, _("[ESC] Cancel."));
+        mvwprintw(win, w_height - 2, 2, _("Use [←↓↑→] to ajust. [Enter] confirm."));
+        mvwprintw(win, w_height - 1, 2, _("[ESC] Cancel."));
         wattroff(win, COLOR_PAIR(22));
 
         // Renderização dos campos com destaque reverso no ativo
@@ -2074,6 +2198,18 @@ HoraEdition selecionar_hora() {
             } else {
                 wattroff(win, COLOR_PAIR(22));
             }
+
+            int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(win, attr_confirm);
+            mvwprintw(win, 5, 9, _("  CONFIRM  "));
+            wattroff(win, attr_confirm);
+
+            // Botão CANCEL
+            int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(win, attr_cancel);
+            mvwprintw(win, 5, 28, _("  CANCEL  "));
+            wattroff(win, attr_cancel);
+        
         }
 
         wnoutrefresh(win);
@@ -2117,13 +2253,57 @@ HoraEdition selecionar_hora() {
                 
             case 27: // ESC
                 delwin(win);
+                delwin(shadow);
                 ed.hora = hr_prev;
                 ed.changed = 0;
                 return ed;
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = 5;
+                    int col_inicio_botao_ok = 9;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    
+                    int col_inicio_botao_cancel = 28;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                horario_confirmado = 1;
+                                ed.hora = hn;
+                                ed.changed = 1;
+                                break;
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
+                                delwin(win);
+                                delwin(shadow);
+                                ed.hora = hr_prev;
+                                ed.changed = 0;
+                                return ed;
+                            }
+                        }
+                    }
+                }
+                break;
+        
         }
     }
 
     delwin(win);
+    delwin(shadow);
     return ed;
 }
 
