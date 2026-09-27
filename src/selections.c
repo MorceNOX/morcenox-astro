@@ -1896,7 +1896,13 @@ int select_gender() {
                 if (gender_id == 0) gender_id = 3;
                 break;
             case 10: // ENTER
-                confirmado = 1;
+                if (botao_focado == 0) {
+                    confirmado = 1;
+                } else {
+                    delwin(win);
+                    delwin(shadow);
+                    return 0;
+                }
                 break;
             case 27: // ESC
                 delwin(win);
@@ -2072,7 +2078,7 @@ DateEdition selecionar_data() {
             case 27: // ESC
                 delwin(win);
                 delwin(shadow);
-                ed.changed =0;
+                ed.changed = 0;
                 ed.date = dt_prev;
                 return ed;
             case KEY_MOUSE:
@@ -2108,7 +2114,7 @@ DateEdition selecionar_data() {
                             if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
                                 delwin(win);
                                 delwin(shadow);
-                                ed.changed =0;
+                                ed.changed = 0;
                                 ed.date = dt_prev;
                                 return ed;
                             }
