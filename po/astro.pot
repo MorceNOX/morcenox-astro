@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 07:52-0300\n"
+"POT-Creation-Date: 2026-09-27 08:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -827,8 +827,8 @@ msgstr ""
 
 #: src/aspects.c:853
 msgid ""
-" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia "
-"- F6 Contrantissia - [↓↑| Scroll"
+" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antiscia "
+"- F6 Contrantiscia - [↓↑| Scroll"
 msgstr ""
 
 #: src/aspects.c:1110
@@ -836,11 +836,11 @@ msgid "Aspects by Sign Table"
 msgstr ""
 
 #: src/aspects.c:1457
-msgid " Antissia Aspect Matrix Grid "
+msgid " Antiscia Aspect Matrix Grid "
 msgstr ""
 
 #: src/aspects.c:1457
-msgid " Contrantissia Aspect Matrix Grid "
+msgid " Contrantiscia Aspect Matrix Grid "
 msgstr ""
 
 #: src/directions.c:548 src/directions.c:2044
@@ -2305,11 +2305,11 @@ msgid "23. Aspects by Sign"
 msgstr ""
 
 #: src/draw-chart.c:8729
-msgid "24. Aspects to Antissia"
+msgid "24. Aspects to Antiscia"
 msgstr ""
 
 #: src/draw-chart.c:8730
-msgid "25. Aspects to Contrantissia"
+msgid "25. Aspects to Contrantiscia"
 msgstr ""
 
 #: src/draw-chart.c:8747
@@ -2337,11 +2337,11 @@ msgid "16. Aspects by Sign"
 msgstr ""
 
 #: src/draw-chart.c:8753
-msgid "17. Aspects to Antissia"
+msgid "17. Aspects to Antiscia"
 msgstr ""
 
 #: src/draw-chart.c:8754
-msgid "18. Aspects to Contrantissia"
+msgid "18. Aspects to Contrantiscia"
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:650

@@ -8726,8 +8726,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("21. Planetary Energy Profile"),
         _("22. Primary Motivation"),
         _("23. Aspects by Sign"),
-        _("24. Aspects to Antissia"),
-        _("25. Aspects to Contrantissia")
+        _("24. Aspects to Antiscia"),
+        _("25. Aspects to Contrantiscia")
         
     };
     // Calcula automaticamente o total de opções adicionadas ao array
@@ -8750,8 +8750,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("14. Planetary Energy Profile"),
         _("15. Arabic Parts Solar Return Radix Confrontation"),
         _("16. Aspects by Sign"),
-        _("17. Aspects to Antissia"),
-        _("18. Aspects to Contrantissia")
+        _("17. Aspects to Antiscia"),
+        _("18. Aspects to Contrantiscia")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);

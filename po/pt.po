@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 07:52-0300\n"
+"POT-Creation-Date: 2026-09-27 08:10-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1048,23 +1048,23 @@ msgstr "(*) Numerais = distância angular em graus"
 
 #: src/aspects.c:853
 msgid ""
-" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia "
-"- F6 Contrantissia - [↓↑| Scroll"
+" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antiscia "
+"- F6 Contrantiscia - [↓↑| Scroll"
 msgstr ""
 " ESC Retornar - F3 Paralelo/Contra-Paralelo - F4 Asp. por Signo - F5 "
-"Antissia - F6 Contrantissia - [↓↑] Rolar"
+"Antiscia - F6 Contrantiscia - [↓↑] Rolar"
 
 #: src/aspects.c:1110
 msgid "Aspects by Sign Table"
 msgstr "Tabela de Aspectos por Signo"
 
 #: src/aspects.c:1457
-msgid " Antissia Aspect Matrix Grid "
-msgstr " Matriz de Aspectos Antissia "
+msgid " Antiscia Aspect Matrix Grid "
+msgstr " Matriz de Aspectos com Antiscia "
 
 #: src/aspects.c:1457
-msgid " Contrantissia Aspect Matrix Grid "
-msgstr " Matriz de Aspectos Contrantissia "
+msgid " Contrantiscia Aspect Matrix Grid "
+msgstr " Matriz de Aspectos com Contrantiscia "
 
 #: src/directions.c:548 src/directions.c:2044
 msgid "Mundane"
@@ -2688,12 +2688,12 @@ msgid "23. Aspects by Sign"
 msgstr "23. Aspectos por Signo"
 
 #: src/draw-chart.c:8729
-msgid "24. Aspects to Antissia"
-msgstr "24. Aspects para Antissia"
+msgid "24. Aspects to Antiscia"
+msgstr "24. Aspects para Antiscia"
 
 #: src/draw-chart.c:8730
-msgid "25. Aspects to Contrantissia"
-msgstr "25. Aspects para Contrantissia"
+msgid "25. Aspects to Contrantiscia"
+msgstr "25. Aspects para Contrantiscia"
 
 #: src/draw-chart.c:8747
 msgid "11. Radix Confrontation: Solar Return Integration"
@@ -2720,12 +2720,12 @@ msgid "16. Aspects by Sign"
 msgstr "16. Aspectos por Signo"
 
 #: src/draw-chart.c:8753
-msgid "17. Aspects to Antissia"
-msgstr "17. Aspectos para Antissia"
+msgid "17. Aspects to Antiscia"
+msgstr "17. Aspectos com Antiscia"
 
 #: src/draw-chart.c:8754
-msgid "18. Aspects to Contrantissia"
-msgstr "18. Aspectos para Contrantissia"
+msgid "18. Aspects to Contrantiscia"
+msgstr "18. Aspectos com Contrantiscia"
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:650
 #: src/hyleg.c:819

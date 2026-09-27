@@ -850,7 +850,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
-    mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antissia - F6 Contrantissia - [↓↑| Scroll"));
+    mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antiscia - F6 Contrantiscia - [↓↑| Scroll"));
     wnoutrefresh(aspects_win);
 
     doupdate();
@@ -1454,7 +1454,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
-    const char *title = (ant_type == ANTISSIUM)?_(" Antissia Aspect Matrix Grid "):_(" Contrantissia Aspect Matrix Grid ");
+    const char *title = (ant_type == ANTISSIUM)?_(" Antiscia Aspect Matrix Grid "):_(" Contrantiscia Aspect Matrix Grid ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
