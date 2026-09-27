@@ -1481,7 +1481,7 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
-    int w_width = 45, w_height = 8;
+    int w_width = 45, w_height = 10;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
@@ -1497,6 +1497,10 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
     nodelay(win, FALSE);
 
     //curs_set(0); // Oculta o cursor piscante
+    int botao_focado = 0;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
 
     while (!confirmado) {
 
@@ -1515,8 +1519,19 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
 
-        mvwprintw(win, 4, 3, _("Use [↑/↓] [PgUp/PgDn] to adjust."));
-        mvwprintw(win, 5, 3, _("[Enter] confirm | [ESC] cancel."));
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_confirm);
+        mvwprintw(win, 5, 4, _("  CONFIRM  "));
+        wattroff(win, attr_confirm);
+
+        // Botão CANCEL
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_cancel);
+        mvwprintw(win, 5, 28, _("  CANCEL  "));
+        wattroff(win, attr_cancel);
+
+        mvwprintw(win, 7, 3, _("Use [↑/↓] [PgUp/PgDn] to adjust."));
+        mvwprintw(win, 8, 3, _("[Enter] confirm | [ESC] cancel."));
         wattroff(win, COLOR_PAIR(22));
 
         /* Renderiza o campo de idade destacado com uma casa decimal (%.1f) */
@@ -1533,6 +1548,11 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
         key = wgetch(win);
 
         switch (key) {
+            case KEY_LEFT:
+            case KEY_RIGHT:
+                // Alterna o foco entre os dois botões (0 vira 1, 1 vira 0)
+                botao_focado = 1 - botao_focado;
+                break;
             case KEY_UP:
                 /* Incrementa em frações de 0.1 (uma casa decimal por clique) */
                 if (idade < MAX_AGE - 0.1) {
@@ -1569,12 +1589,56 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                 }
                 break;
             case 10: /* ENTER */
-                confirmado = 1;
+                if (botao_focado == 0) {
+                    confirmado = 1;
+                } else {
+                    delwin(win);
+                    delwin(shadow);
+                    return -1.0;
+                }
                 break;
             case 27: /* ESC */
                 delwin(win);
                 delwin(shadow);
                 return -1.0; /* Retorna flag de cancelado em double */
+                break;
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = 5;
+                    int col_inicio_botao_ok = 4;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    
+                    int col_inicio_botao_cancel = 28;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                confirmado = 1;
+                                break; 
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
+                                delwin(win);
+                                delwin(shadow);
+                                return -1.0;
+                            }
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -1594,7 +1658,7 @@ int selecionar_idade_visual(int idade_inicial) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
-    int w_width = 45, w_height = 8;
+    int w_width = 45, w_height = 10;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
@@ -1611,6 +1675,11 @@ int selecionar_idade_visual(int idade_inicial) {
 
     //curs_set(0); // Oculta o cursor piscante
 
+    int botao_focado = 0;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
     while (!confirmado) {
 
         // Renderiza Janela Principal (Pares de cor 2 ou 13 conforme seu padrão)
@@ -1625,9 +1694,20 @@ int selecionar_idade_visual(int idade_inicial) {
 
         mvwprintw(win, 0, (w_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
+
+        int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_confirm);
+        mvwprintw(win, 5, 4, _("  CONFIRM  "));
+        wattroff(win, attr_confirm);
+
+        // Botão CANCEL
+        int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+        wattron(win, attr_cancel);
+        mvwprintw(win, 5, 28, _("  CANCEL  "));
+        wattroff(win, attr_cancel);
         
-        mvwprintw(win, 4, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
-        mvwprintw(win, 5, 3, _("[ESC] to cancel."));
+        mvwprintw(win, 7, 3, _("Use [↑/↓] to adjust. [Enter] to confirm."));
+        mvwprintw(win, 8, 3, _("[ESC] to cancel."));
         wattroff(win, COLOR_PAIR(22));
 
         // Renderiza o campo de idade destacado (Pares de cor 3 ou 8)
@@ -1643,6 +1723,11 @@ int selecionar_idade_visual(int idade_inicial) {
         key = wgetch(win);
 
         switch (key) {
+            case KEY_LEFT:
+            case KEY_RIGHT:
+                // Alterna o foco entre os dois botões (0 vira 1, 1 vira 0)
+                botao_focado = 1 - botao_focado;
+                break;
             case KEY_UP:
                 if (idade < MAX_AGE) idade++; // Limite humano seguro
                 break;
@@ -1666,12 +1751,56 @@ int selecionar_idade_visual(int idade_inicial) {
                 }
                 break;
             case 10: // ENTER
-                confirmado = 1;
+                if (botao_focado == 0) {
+                    confirmado = 1;
+                } else {
+                    delwin(win);
+                    delwin(shadow);
+                    return -1;
+                }
                 break;
             case 27: // ESC
                 delwin(win);
                 delwin(shadow);
                 return -1; // Retorna flag de cancelado
+                
+            case KEY_MOUSE:
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // 1. Descobre a linha e a coluna onde o mouse clicou EM RELAÇÃO À JANELA win
+                    int linha_clique_janela = event.y - getbegy(win);
+                    int col_clique_janela = event.x - getbegx(win);
+                    
+                    // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
+                    int linha_botao = 5;
+                    int col_inicio_botao_ok = 4;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    
+                    int col_inicio_botao_cancel = 28;
+                    int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
+
+                    // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
+                    if (linha_clique_janela == linha_botao) {
+                        
+                        // 🌟 CASO 1: Clicou exatamente no YES
+                        if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
+                            botao_focado = 0;
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                confirmado = 1;
+                                break; 
+                            }
+                        }
+                        // 🌟 CASO 2: Clicou exatamente no NO
+                        else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {                       
+                                delwin(win);
+                                delwin(shadow);
+                                return -1;
+                            }
+                        }
+                    }
+                }
+                break;
         }
     }
 

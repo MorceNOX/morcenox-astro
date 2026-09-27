@@ -1200,7 +1200,6 @@ void load_chart() {
                         // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
                         int linha_clique_janela = event.y - getbegy(chart_win);
                         
-                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
                         int offset_inicio_barra = 1; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
@@ -1244,7 +1243,7 @@ void load_chart() {
                         int start_x_absoluto = getbegx(chart_win);
                         if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
                             
-                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                            if (linha_clique_dados >= 1 && linha_clique_dados <= max_display_items) {
                                 int indice_clicado = chart_scroll_offset + linha_clique_dados - 1;
                                 
                                 if (indice_clicado < row_count) {

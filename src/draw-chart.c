@@ -61,6 +61,8 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
+#define X_GAP 2
+
 #define PH_SOL 0
 #define PH_VENUS 1
 #define PH_MERCURY 2
@@ -1086,16 +1088,16 @@ void draw_circle_outline(int center_y, int center_x, float radius,
             
             // To prevent gaps, we draw the edge pixel AND the pixel immediately next to it.
             // This ensures that if the x-coordinate jumps by 2, the "thickness" covers the jump.
-            for (int thickness = 0; thickness <= 1; thickness++) {
+            for (int thickness = 0; thickness <= 2; thickness++) {
                 // Check left edge
                 int lx = x_left + thickness;
-                if (lx >= 0 && lx < COLS) {
+                if (lx >= 0 && lx < COLS - X_GAP) {
                     mvaddwstr(y, lx, character);
                 }
                 
                 // Check right edge
                 int rx = x_right - thickness;
-                if (rx >= 0 && rx < COLS) {
+                if (rx >= 0 && rx < COLS - X_GAP) {
                     mvaddwstr(y, rx, character);
                 }
             }
@@ -1115,8 +1117,8 @@ void draw_circle_points(int center_y, int center_x, float radius,
         float angle = i * PI / 180.0;
         int y = (int)(center_y + r * sin(angle));
         int x = (int)(center_x + aspect_ratio * r * cos(angle));
-        
-        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS - X_GAP) {
             mvaddwstr(y, x, character);
         }
     }
@@ -1537,7 +1539,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
-        if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+        if (y >= 0 && y < LINES && x >= 0 && x < COLS - X_GAP) {    
             for (int j = 0; j < object_count; j++) {
                 if (i == (180 - (longitude[j] - asc) % 360) || 
                     i == (180 - (longitude[j] - asc) % 360) + 360|| 
@@ -2202,6 +2204,14 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         mvprintw(LINES - 6, max_x - 17, _("[    MENU    ]"));
         attroff(COLOR_PAIR(26) | A_BOLD);
 
+        // button shadow
+        if (mapa_retorno) attron(COLOR_PAIR(56));
+        else attron(COLOR_PAIR(55));
+        mvprintw(LINES - 6, max_x - 3, "▖");
+        mvprintw(LINES - 5, max_x - 16,    "▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
+        if (mapa_retorno) attroff(COLOR_PAIR(56));
+        else attroff(COLOR_PAIR(55));
+
         mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
@@ -2279,11 +2289,20 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     // Draw the outer circle filled
     attron(COLOR_PAIR(19) | FLAGS);
-    draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
+    draw_circle_filled(display_center_y, display_center_x, 9, aspect_ratio, current_scale, L" ");
     attroff(COLOR_PAIR(19) | FLAGS);
+
+    // shadow
+    if (mapa_retorno) attron(COLOR_PAIR(56));
+    else attron(COLOR_PAIR(55));
+    draw_circle_points(display_center_y + 1, display_center_x + 1, 19, aspect_ratio, current_scale, L"▒▒▒▒");
+    draw_circle_points(display_center_y + 1, display_center_x + 2, 20, aspect_ratio, current_scale, L"▒▒");
+    if (mapa_retorno) attroff(COLOR_PAIR(56));
+    else attroff(COLOR_PAIR(55));
+
     
     if (dark_mode) attron(COLOR_PAIR(52) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
-    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▓");    
+    draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
     if (dark_mode) attroff(COLOR_PAIR(52) | A_DIM | FLAGS);
 
@@ -2310,10 +2329,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 41 : 41; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 8.0 * current_scale; r <= 19.5 * current_scale; r += 0.5) {
-        for (int i = -60 + asc; i < 300 + asc; i++) {
+    for (float r = 8.0 * current_scale; r <= 19.75 * current_scale; r += 0.25) {
+        for (int i = 0 + asc; i < 360 + asc; i++) {
             
-            int indice_relativo = i - (-60 + asc);
+            int indice_relativo = i - (asc);
             int numero_da_fatia = indice_relativo / 30; 
 
             if (numero_da_fatia % 2 == 0) {
@@ -2381,7 +2400,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     // Draw all objects at different radii
     draw_objects_at_radius(14, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     draw_objects_at_radius(12, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
-    if (zoom_factor >= 1.4) {
+    if (zoom_factor > 1.25) {
         draw_objects_at_radius(11, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     }
     draw_objects_at_radius(10, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
@@ -2389,7 +2408,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     draw_objects_at_radius(8, NUM_OBJECTS - object_diff, plots, n, display_center_y, display_center_x, current_scale, aspect_ratio, asc, cusps);
     
     free(house_system_name);
-    
+       
     wnoutrefresh(stdscr);
     doupdate();
     
@@ -2739,7 +2758,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
 
     // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll = row_pad - max_linhas_dados_visiveis;
+    int max_scroll = row_pad - max_linhas_dados_visiveis + 2;
     if (max_scroll < 0) max_scroll = 0;
 
     int flag = 0;
@@ -5595,7 +5614,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(52, 242, COLOR_BACK_DARK_2);
         init_pair(53, 67, COLOR_BACK_DARK_1);
         init_pair(54, COLOR_GREEN, 91); // green, magenta
-
+        init_pair(55, 232, 18); // dark, blue
+        init_pair(56, 232, 54); // dark, magenta
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -5667,7 +5687,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(52, COLOR_BACK_2, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
         init_pair(54, COLOR_GREEN, 91); // green, magenta
-
+        init_pair(55, 232, 25); // dark / azul
+        init_pair(56, 232, 91); // dark, magenta
 
     }
     
@@ -5828,7 +5849,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     float zoom_factor = 1.0f;
                 
     // Panning offsets - start at center
-    float pan_x = 4.0f;
+    float pan_x = 1.0f;
     float pan_y = 0.0f;
 
     int start_mouse_x = 0;
