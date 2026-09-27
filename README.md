@@ -170,7 +170,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/a23e1cd4-d8e4-4c19-ac8f-46d8ed26e81c" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/fee884b5-0279-4029-a379-a3918b0a471b" />
 <img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/1351ff44-3f31-4bc2-b045-e07ef6e516fc" />
 <img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/f212e5d2-2c94-4d60-8c77-340e657f6c67" />
 <img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/8b15035b-45da-4850-9c3b-d68b49ddef8b" />
