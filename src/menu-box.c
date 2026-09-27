@@ -686,7 +686,6 @@ void del_chart() {
         wattroff(chart_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(chart_win);
-
         doupdate();
         
         key = wgetch(chart_win);
@@ -864,6 +863,8 @@ void del_chart() {
                                             wnoutrefresh(chart_shadow);
                                             wnoutrefresh(chart_win);
                                             doupdate();
+
+                                            return;
                                         }
                                         
                                         break; 
@@ -2574,7 +2575,9 @@ int main() {
             init_pair(29, 230, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
             init_pair(36, COLOR_RED, COLOR_WHITE);
-
+            init_pair(57, COLOR_BLACK, 232);
+            init_pair(58, COLOR_WHITE, COLOR_BLACK);
+            init_pair(59, 242, COLOR_BLACK);
         }
         else {
             init_pair(13, COLOR_BLACK, COLOR_WHITE);
@@ -2589,6 +2592,9 @@ int main() {
             init_pair(29, 230, 230);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
             init_pair(36, 160, COLOR_WHITE); // red
+            init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
+            init_pair(58, 242, 230); 
+            init_pair(59, 242, COLOR_CYAN); 
 
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);

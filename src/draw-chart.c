@@ -5621,6 +5621,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 18); // dark, blue
         init_pair(56, 232, 54); // dark, magenta
+        init_pair(57, COLOR_BLACK, 232);
+        init_pair(58, COLOR_WHITE, COLOR_BLACK);
+        init_pair(59, 242, COLOR_BLACK);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -5694,7 +5697,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 25); // dark / azul
         init_pair(56, 232, 91); // dark, magenta
-
+        init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
+        init_pair(58, 242, COLOR_WHITE); 
+        init_pair(59, 242, COLOR_CYAN); 
     }
     
     FLAGS = 0;
@@ -8598,7 +8603,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         
                         // 1. TRATA O MOMENTO DE PRESSIONAR (Independente)
                         if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
-                            mvprintw(LINES - 6, max_x - 17, _("              "));
+                            mvprintw(LINES - 6, max_x - 17, "              ");
                             attron(COLOR_PAIR(26) | A_BOLD);                            
                             mvprintw(LINES - 5, max_x - 16, _("[    MENU    ]"));
                             attroff(COLOR_PAIR(26) | A_BOLD);

@@ -491,6 +491,9 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
                     wnoutrefresh(table_win);
 
                     doupdate();
+
+                    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+                    mouseinterval(100);
                 }
                 break;
             case KEY_MOUSE: {
@@ -1384,8 +1387,13 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
         // 7. Botão de Gravação (Empurrado para a linha 17)
         if (campo_atual == 7) wattron(win, COLOR_PAIR(11) | A_REVERSE);
         else wattron(win, COLOR_PAIR(11));
-        mvwprintw(win, 19, (w_width - 16) / 2, _(" [ SAVE FORMULA ] "));
+        mvwprintw(win, 19, (w_width - 16) / 2, _("[ SAVE FORMULA ]"));
         wattroff(win, COLOR_PAIR(11) | A_REVERSE);
+
+        wattron(win, COLOR_PAIR(13));
+        mvwprintw(win, 19, (w_width - 16) / 2 + 16, "▖");
+        mvwprintw(win, 20, (w_width - 16) / 2 + 1, "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
+        wattroff(win, COLOR_PAIR(13));
 
         wattron(win, A_DIM);
         mvwprintw(win, 21, 2, _("Use [↑/↓] Vertical Fields | [←/→] Adjust Value | [TAB] Horizontal Fields | [ENTER] Edit Text / Save"));
@@ -1486,6 +1494,28 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                             // 🌟 CASO 1: Clicou exatamente no YES
                             if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                                 if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                    mvwprintw(win, 19, (w_width - 16) / 2, "                    ");
+
+                                    wattron(win, COLOR_PAIR(11) | A_REVERSE);
+                                    mvwprintw(win, 20, (w_width - 16) / 2 + 1, _("[ SAVE FORMULA ]"));
+                                    wattroff(win, COLOR_PAIR(11) | A_REVERSE);
+                                    
+                                    wnoutrefresh(win);
+                                    doupdate();
+                                    napms(125);
+                                    
+                                    wattron(win, COLOR_PAIR(11) | A_REVERSE);
+                                    mvwprintw(win, 19, (w_width - 16) / 2, _("[ SAVE FORMULA ]"));
+                                    wattroff(win, COLOR_PAIR(11) | A_REVERSE);
+
+                                    wattron(win, COLOR_PAIR(13));
+                                    mvwprintw(win, 19, (w_width - 16) / 2 + 16, "▖");
+                                    mvwprintw(win, 20, (w_width - 16) / 2 + 1, "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                                    wattroff(win, COLOR_PAIR(13));
+
+                                    wnoutrefresh(win);
+                                    doupdate();
+                                    napms(125);
 
                                     loop = 0;
                                     salvar = true;
@@ -2201,17 +2231,26 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
         // Desenha dinamicamente o Botão YES com base no foco
         int attr_yes = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(conf_win, attr_yes);
-        mvwprintw(conf_win, 5, 10, "   YES   ");
+        mvwprintw(conf_win, 5, 10, _("   YES   "));
         wattroff(conf_win, attr_yes);
+
+        wattron(conf_win, COLOR_PAIR(26));
+        mvwprintw(conf_win, 5, 19, "▖");
+        mvwprintw(conf_win, 6, 11,    "▀▀▀▀▀▀▀▀▘");
+        wattroff(conf_win, COLOR_PAIR(26));
 
         // Desenha dinamicamente o Botão CANCEL com base no foco
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(conf_win, attr_cancel);
-        mvwprintw(conf_win, 5, 32, "  CANCEL  ");
+        mvwprintw(conf_win, 5, 32, _("  CANCEL  "));
         wattroff(conf_win, attr_cancel);
+
+        wattron(conf_win, COLOR_PAIR(26));
+        mvwprintw(conf_win, 5, 42, "▖");
+        mvwprintw(conf_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘");
+        wattroff(conf_win, COLOR_PAIR(26));
         
         wnoutrefresh(conf_win);
-
         doupdate();
 
         ch = wgetch(conf_win);
@@ -2255,6 +2294,31 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
                     if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                         botao_focado = 0;
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            mvwprintw(conf_win, 5, 10, "           ");
+
+                            int attr_yes = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                            wattron(conf_win, attr_yes);
+                            mvwprintw(conf_win, 6, 11, _("   YES   "));
+                            wattroff(conf_win, attr_yes);
+
+                            wnoutrefresh(conf_win);
+                            doupdate();
+                            napms(125);
+
+                            attr_yes = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                            wattron(conf_win, attr_yes);
+                            mvwprintw(conf_win, 5, 10, _("   YES   "));
+                            wattroff(conf_win, attr_yes);
+
+                            wattron(conf_win, COLOR_PAIR(26));
+                            mvwprintw(conf_win, 5, 19, "▖");
+                            mvwprintw(conf_win, 6, 11,    "▀▀▀▀▀▀▀▀▘");
+                            wattroff(conf_win, COLOR_PAIR(26));
+
+                            wnoutrefresh(conf_win);
+                            doupdate();
+                            napms(125);
+
                             confirmado = 1;
                             break; 
                         }
@@ -2263,6 +2327,31 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
                     else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
                         botao_focado = 1;
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            mvwprintw(conf_win, 5, 32, "            ");
+
+                            int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                            wattron(conf_win, attr_cancel);
+                            mvwprintw(conf_win, 6, 33, _("  CANCEL  "));
+                            wattroff(conf_win, attr_cancel);
+
+                            wnoutrefresh(conf_win);
+                            doupdate();
+                            napms(125);
+
+                            attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                            wattron(conf_win, attr_cancel);
+                            mvwprintw(conf_win, 5, 32, _("  CANCEL  "));
+                            wattroff(conf_win, attr_cancel);
+
+                            wattron(conf_win, COLOR_PAIR(26));
+                            mvwprintw(conf_win, 5, 42, "▖");
+                            mvwprintw(conf_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘");
+                            wattroff(conf_win, COLOR_PAIR(26));
+
+                            wnoutrefresh(conf_win);
+                            doupdate();
+                            napms(125);
+
                             confirmado = 0;
                             break; 
                         }
