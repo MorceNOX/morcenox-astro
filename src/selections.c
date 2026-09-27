@@ -479,6 +479,31 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
         ch = wgetch(pop_win);
 
         if (ch == 10) { // ENTER
+            mvwprintw(pop_win, 5, (pop_w - 10) / 2, "            ");
+
+            int attr_confirm = (COLOR_PAIR(23) | A_REVERSE | A_BOLD);
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 6, (pop_w - 10) / 2 + 1, _("    OK    "));
+            wattroff(pop_win, attr_confirm);
+
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+
+            attr_confirm = (COLOR_PAIR(23) | A_REVERSE | A_BOLD);
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 5, (pop_w - 10) / 2, _("    OK    "));
+            wattroff(pop_win, attr_confirm);
+    
+            wattron(pop_win, COLOR_PAIR(26));
+            mvwprintw(pop_win, 5, (pop_w - 10) / 2 + 10, "▖");
+            mvwprintw(pop_win, 6, (pop_w - 10) / 2 + 1,    "▀▀▀▀▀▀▀▀▀▘");
+            wattroff(pop_win, COLOR_PAIR(26));
+    
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+
             break;
         }
         else if (ch == KEY_MOUSE) {

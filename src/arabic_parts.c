@@ -421,7 +421,6 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         wattroff(table_win, COLOR_PAIR(28) | flag);
         
         wnoutrefresh(table_win);
-
         doupdate();
 
         prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, start_y + 7 + max_linhas_exibicao - 2, start_x + table_width - 5);
@@ -1538,7 +1537,30 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
                     // Passamos x = 17 exatamente para sincronizar com mvwprintw(win, 14, 17, ...)
                     campo_texto_amigavel_avancado(win, 16, 4, f_desc, 512);
                 }
-                if (campo_atual == 7) { // SAVE FORMULA (Sua rotina SQLite global idêntica...)
+                if (campo_atual == 7) { // SAVE FORMULA
+                    mvwprintw(win, 19, (w_width - 16) / 2, "                    ");
+
+                    wattron(win, COLOR_PAIR(11) | A_REVERSE);
+                    mvwprintw(win, 20, (w_width - 16) / 2 + 1, _("[ SAVE FORMULA ]"));
+                    wattroff(win, COLOR_PAIR(11) | A_REVERSE);
+                    
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+                    
+                    wattron(win, COLOR_PAIR(11) | A_REVERSE);
+                    mvwprintw(win, 19, (w_width - 16) / 2, _("[ SAVE FORMULA ]"));
+                    wattroff(win, COLOR_PAIR(11) | A_REVERSE);
+
+                    wattron(win, COLOR_PAIR(13));
+                    mvwprintw(win, 19, (w_width - 16) / 2 + 16, "▖");
+                    mvwprintw(win, 20, (w_width - 16) / 2 + 1, "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(13));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
                     loop = 0;
                     salvar = true; 
                 }

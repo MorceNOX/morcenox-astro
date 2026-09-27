@@ -2022,7 +2022,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 void draw_decans(int display_center_y, int display_center_x, 
                  float current_scale, float aspect_ratio, int n, int asc) {
     
-    float radius = 18.0 * current_scale;
+    float radius = 19.0 * current_scale;
     (void)n;    
     
     for (int i = -175 + asc, k = 0; i < 185 + asc; i += 10, k++) {
@@ -2392,7 +2392,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         Termo t[12][5];
         get_terms_longitude_to_print(terms, t);
         //attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
-        draw_terms(18, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
+        draw_terms(19, 60, t, display_center_y, display_center_x, current_scale, aspect_ratio, asc);
         //attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
     }
 
