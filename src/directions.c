@@ -977,7 +977,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
 
             for (int a = 0; a < 7; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
-            
+
                 double arco = 0.0;
                             
                 // 1. Ângulos Horários Iniciais (Cálculos que você já faz)
@@ -1000,19 +1000,48 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
                 if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
             
-                // ====================================================
-                // BIFURCAÇÃO: CÚSPIDES VS PLANETAS
-                // ====================================================
-                if (sig[idx_alvo].type == PROM_CUSP) {
-                    // Se for cúspide, não processamos aspectos intermediários (sextil, quadratura...)
-                    // Processamos apenas a Conjunção (a=0) e os Paralelos/Contraparalelos (a=5 e a=6)
-                    if (a > 0 && a < 5) continue; 
+
+                // --- DENTRO DO LOOP DE ASPECTOS (for a = 0..6) ---
+
+                // Nova variável para identificar se o alvo atual comporta-se como um ângulo fixo no espaço local
+                int eh_angulo_angular = 0;
+                double cota_espacial_fixa = 0.0;
             
-                    int num_casa = sig[idx_alvo].house; 
-                    double cota_casa = obter_cota_fixa_casa_placidus(num_casa);
+                if (sig[idx_alvo].type == PROM_ANGLE) {
+                    if (strcmp(sig[idx_alvo].object, "AC") == 0) {
+                        eh_angulo_angular = 1;
+                        cota_espacial_fixa = -1.0; // Horizonte Leste exato
+                    }
+                    else if (strcmp(sig[idx_alvo].object, "MC") == 0) {
+                        eh_angulo_angular = 1;
+                        cota_espacial_fixa = 0.0;  // Meridiano exato
+                    }
+                    else if (strcmp(sig[idx_alvo].object, "DC") == 0) {
+                        eh_angulo_angular = 1;
+                        cota_espacial_fixa = 1.0;  // Horizonte Oeste exato
+                    }
+                    else if (strcmp(sig[idx_alvo].object, "IC") == 0) {
+                        eh_angulo_angular = 1;
+                        cota_espacial_fixa = 0.0;  // Meridiano exato
+                    }
+                }
+                // Se o significador for a estrutura da Cúspide
+                else if (sig[idx_alvo].type == PROM_CUSP) {
+                    int num_casa = sig[idx_alvo].house;
+                    // Permitimos que as Casas Angulares (1, 4, 7, 10) também entrem no bloco matemático de cotas fixas
+                    if (num_casa == 1 || num_casa == 4 || num_casa == 7 || num_casa == 10) {
+                        eh_angulo_angular = 1;
+                        cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);
+                    }
+                }
             
+                // ====================================================
+                // INJEÇÃO NO MOTOR DE CÁLCULO DO ARCO
+                // ====================================================
+                if (eh_angulo_angular) {
+                    // Ambos agora rodam por aqui! Sem ruídos de ponto flutuante das coordenadas equatoriais natais.
                     if (s == 0) { // === DIREÇÃO DIRETA ===
-                        double md_destino = sa_prom * cota_casa;
+                        double md_destino = sa_prom * cota_espacial_fixa;
                         arco = md_aspecto_prom - md_destino;
                     } 
                     else if (s == 1) { // === DIREÇÃO CONVERSA ===
@@ -1020,9 +1049,27 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                         double md_destino = sa_sig * cota_aspecto_prom; 
                         arco = md_destino - md_sig_com_sinal;
                     }
-                } 
+                }
+                else if (sig[idx_alvo].type == PROM_CUSP) {
+                    // Casas intermediárias (2, 3, 5, 6, 8, 9, 11, 12)
+                    if (a > 0 && a < 5) continue; // Trava os aspectos intermediários longitudinais apenas nelas
+            
+                    int num_casa = sig[idx_alvo].house; 
+                    double cota_casa = obter_cota_fixa_casa_placidus(num_casa);
+            
+                    if (s == 0) { 
+                        double md_destino = sa_prom * cota_casa;
+                        arco = md_aspecto_prom - md_destino;
+                    } 
+                    else if (s == 1) { 
+                        double cota_aspecto_prom = md_aspecto_prom / sa_prom;
+                        double md_destino = sa_sig * cota_aspecto_prom; 
+                        arco = md_destino - md_sig_com_sinal;
+                    }
+                }
                 else {
-                    // === TRATAMENTO PARA PLANETAS (Seu bloco com paralelos e aspectos normais) ===
+                
+                    // === TRATAMENTO PARA PLANETAS (bloco com paralelos e aspectos normais) ===
                     if (a == 5 || a == 6) {
                         double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
             
@@ -1054,7 +1101,6 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (arco < 0.0) arco += 360.0;
                 arco = fmod(arco, 360.0);
             
-                // [O restante do seu bloco de gravação e calendário permanece idêntico]
                 if (arco > 0.001 && arco <= MAX_AGE * 1.05) { 
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                     
