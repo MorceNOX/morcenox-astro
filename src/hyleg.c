@@ -500,6 +500,76 @@ ResultadoAlcochoden calcular_alcochoden(int tipo_hileg, int idx_hileg_objeto, As
 }
 
 
+// retorna o id do planeta ou ponto iniciando em 0
+ResultadoHyleg get_resultado_hyleg(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour, int tipo_san) {
+    
+    ResultadoHyleg h;
+
+    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+    int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
+
+    int id_almuten_ref = 0;
+    int object_diff = show_modern_planets ? 0 : 3;
+    
+    // Recupera o Hileg calculado pelo sistema para passar as coordenadas de aspectos
+    int tipo_h = get_hyleg(pontos, plots, matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
+    int idx_hileg_grid = -1;
+    char glifo[10];
+    char name[30];
+    
+    if (tipo_h == H_SOL) {
+        idx_hileg_grid = 0;
+        snprintf(glifo, 10, "%s", plots[0].object);
+        snprintf(name, 30, "%s", plots[0].object_name);
+    }
+    else if (tipo_h == H_LUNA) {
+        idx_hileg_grid = 1;
+        snprintf(glifo, 10, "%s", plots[1].object);
+        snprintf(name, 30, "%s", plots[1].object_name);
+    }
+    else if (tipo_h == H_SAN) {
+        idx_hileg_grid = P_SAN - object_diff;
+        snprintf(glifo, 10, "%s", plots[P_SAN - object_diff].object);
+        snprintf(name, 30, "%s", plots[P_SAN - object_diff].object_name);
+    }
+    else if (tipo_h == H_ALMUTEN) {
+        idx_hileg_grid = id_almuten_ref - 1;
+        snprintf(glifo, 10, "%s", plots[id_almuten_ref - 1].object);
+        snprintf(name, 30, "%s", plots[id_almuten_ref - 1].object_name);
+    }
+    else if (tipo_h == H_ALMUTEN_HYL) {
+        idx_hileg_grid = id_almuten_ref - 1;
+        snprintf(glifo, 10, "%s", plots[id_almuten_ref - 1].object);
+        snprintf(name, 30, "%s", plots[id_almuten_ref - 1].object_name);
+    }
+    else {
+        for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+            if (tipo_h == H_ASC && plots[i].id == P_ASC - object_diff) { 
+                idx_hileg_grid = i;
+                snprintf(glifo, 10, "%s", plots[i].object);
+                snprintf(name, 30, "%s", plots[i].object_name); 
+                break;
+            }
+            if (tipo_h == H_FORTUNA && plots[i].id == P_FORTUNA - object_diff) { 
+                idx_hileg_grid = i; 
+                snprintf(glifo, 10, "%s", plots[i].object);
+                snprintf(name, 30, "%s", plots[i].object_name); 
+                break;
+            }
+        }
+    }    
+
+    h.id_hyleg = idx_hileg_grid;
+    h.tipo_hyleg = tipo_h;
+    snprintf(h.glifo, 10, "%s", glifo);
+    snprintf(h.name, 30, "%s", name);
+    snprintf(h.descricao_hyleg, 80, obter_descricao_hileg(tipo_h));
+
+    return h;
+}
+
+
+
 
 
 

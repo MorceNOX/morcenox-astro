@@ -39,7 +39,7 @@
 
 //#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
 #define NAIBOD_KEY   0.985647358005769
-#define CARDAN_KEY   0.986666679822222
+#define CARDANO_KEY   0.986666679822222
 #define PTOLEMY_KEY  1.000000000000000
 #define PLACIDUS_KEY 0.986388888888889
                     
@@ -47,6 +47,12 @@ typedef enum {
     DIRECAO_ZODIACAL = 0,
     DIRECAO_MUNDANA  = 1
 } TipoDirecaoEnum;
+
+
+// typedef struct {
+//     int time_key;
+
+// } DirectionsOptions;
 
 
 typedef struct {

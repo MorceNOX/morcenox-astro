@@ -747,7 +747,7 @@ double __calcular_distancia_meridiana(double ra_planeta, double ramc, int esta_a
 double get_time_key(int key, double jd, double arco) {
     switch(key) {
         case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
-        case TIME_KEY_CARDAN:         return CARDAN_KEY;
+        case TIME_KEY_CARDANO:         return CARDANO_KEY;
         case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
         case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
         case TIME_KEY_TRUE_SOLAR_ARC: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
@@ -760,7 +760,7 @@ double get_time_key(int key, double jd, double arco) {
 double get_key(int key) {
     switch(key) {
         case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
-        case TIME_KEY_CARDAN:         return CARDAN_KEY;
+        case TIME_KEY_CARDANO:         return CARDANO_KEY;
         case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
         case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
         case TIME_KEY_TRUE_SOLAR_ARC: return -1.0;           
@@ -773,7 +773,7 @@ double get_key(int key) {
 const char* get_key_name(int key) {
     switch(key) {
         case TIME_KEY_NAIBOD:         return "Naibod";
-        case TIME_KEY_CARDAN:         return _("Cardan");
+        case TIME_KEY_CARDANO:         return _("Cardano");
         case TIME_KEY_PTOLEMY:        return _("Ptolemy");
         case TIME_KEY_PLACIDUS:       return "Placidus";
         case TIME_KEY_TRUE_SOLAR_ARC: return _("True Solar Arc");           

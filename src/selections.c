@@ -124,13 +124,118 @@ int show_confirm_yesno(const char *name, const char *text) {
         else if (ch == 10) { // ENTER
             // Se der Enter no Confirm, retorna 1. Se for no Cancel, retorna 0.
             confirmado = (botao_focado == 0) ? 1 : 0;
+
+            if (confirmado) {
+                mvwprintw(pop_win, 5, 8, "            ");
+                            
+                int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+                wattron(pop_win, attr_confirm);
+                mvwprintw(pop_win, 6, 9, _("    YES    "));
+                wattroff(pop_win, attr_confirm);
+
+                wnoutrefresh(pop_win);                    
+                doupdate();
+                napms(125);
+
+                attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+                wattron(pop_win, attr_confirm);
+                mvwprintw(pop_win, 5, 8, _("    YES    "));
+                wattroff(pop_win, attr_confirm);
+        
+                wattron(pop_win, COLOR_PAIR(26));
+                mvwprintw(pop_win, 5, 19, "▖");
+                mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘ ");
+                wattroff(pop_win, COLOR_PAIR(26));
+
+                wnoutrefresh(pop_win);                    
+                doupdate();
+                napms(125);
+            }
+            else {
+                mvwprintw(pop_win, 5, 32, "           ");
+
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+                wattron(pop_win, attr_cancel);
+                mvwprintw(pop_win, 6, 33, _("    NO    "));
+                wattroff(pop_win, attr_cancel);
+
+                wnoutrefresh(pop_win);                    
+                doupdate();
+                napms(125);
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+                wattron(pop_win, attr_cancel);
+                mvwprintw(pop_win, 5, 32, _("    NO    "));
+                wattroff(pop_win, attr_cancel);
+
+                wattron(pop_win, COLOR_PAIR(26));
+                mvwprintw(pop_win, 5, 42, "▖");
+                mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+                wattroff(pop_win, COLOR_PAIR(26));
+        
+                wnoutrefresh(pop_win);                    
+                doupdate();
+                napms(125);
+
+                
+            }
             break;
         } 
         else if (ch == 'n' || ch == 'N' || ch == 27) { // Atalhos para cancelar direto
+            mvwprintw(pop_win, 5, 32, "           ");
+
+            int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+            wattron(pop_win, attr_cancel);
+            mvwprintw(pop_win, 6, 33, _("    NO    "));
+            wattroff(pop_win, attr_cancel);
+
+            wnoutrefresh(pop_win);                    
+            doupdate();
+            napms(125);
+
+            attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+            wattron(pop_win, attr_cancel);
+            mvwprintw(pop_win, 5, 32, _("    NO    "));
+            wattroff(pop_win, attr_cancel);
+
+            wattron(pop_win, COLOR_PAIR(26));
+            mvwprintw(pop_win, 5, 42, "▖");
+            mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+            wattroff(pop_win, COLOR_PAIR(26));
+    
+            wnoutrefresh(pop_win);                    
+            doupdate();
+            napms(125);
+
             confirmado = 0;
             break;
         }
         else if (ch == 'y' || ch == 'Y') { // Atalho para confirmar direto
+            mvwprintw(pop_win, 5, 8, "            ");
+                            
+            int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 6, 9, _("    YES    "));
+            wattroff(pop_win, attr_confirm);
+
+            wnoutrefresh(pop_win);                    
+            doupdate();
+            napms(125);
+
+            attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 5, 8, _("    YES    "));
+            wattroff(pop_win, attr_confirm);
+    
+            wattron(pop_win, COLOR_PAIR(26));
+            mvwprintw(pop_win, 5, 19, "▖");
+            mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘ ");
+            wattroff(pop_win, COLOR_PAIR(26));
+
+            wnoutrefresh(pop_win);                    
+            doupdate();
+            napms(125);
+
             confirmado = 1;
             break;
         }
@@ -310,13 +415,117 @@ int show_confirm_delete_popup(const char *name) {
         else if (ch == 10) { // ENTER
             // Se der Enter no Confirm, retorna 1. Se for no Cancel, retorna 0.
             confirmado = (botao_focado == 0) ? 1 : 0;
+
+            if (confirmado) {
+                mvwprintw(pop_win, 5, 8, "              ");
+
+                int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(pop_win, attr_confirm);
+                mvwprintw(pop_win, 6, 9, _("  CONFIRM  "));
+                wattroff(pop_win, attr_confirm);
+                
+                wnoutrefresh(pop_win);
+                doupdate();
+                napms(125);
+
+                attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(pop_win, attr_confirm);
+                mvwprintw(pop_win, 5, 8, _("  CONFIRM  "));
+                wattroff(pop_win, attr_confirm);
+
+                wattron(pop_win, COLOR_PAIR(59));
+                mvwprintw(pop_win, 5, 19, "▖");
+                mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘ ");
+                wattroff(pop_win, COLOR_PAIR(59));
+
+                wnoutrefresh(pop_win);
+                doupdate();
+                napms(125);
+            }
+            else {
+                mvwprintw(pop_win, 5, 32, "             ");
+
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(pop_win, attr_cancel);
+                mvwprintw(pop_win, 6, 33, _("  CANCEL  "));
+                wattroff(pop_win, attr_cancel);
+
+                wnoutrefresh(pop_win);
+                doupdate();
+                napms(125);
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(pop_win, attr_cancel);
+                mvwprintw(pop_win, 5, 32, _("  CANCEL  "));
+                wattroff(pop_win, attr_cancel);
+        
+                wattron(pop_win, COLOR_PAIR(59));
+                mvwprintw(pop_win, 5, 42, "▖");
+                mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+                wattroff(pop_win, COLOR_PAIR(59));
+        
+                wnoutrefresh(pop_win);
+                doupdate();
+                napms(125);
+            }
             break;
         } 
         else if (ch == 'n' || ch == 'N' || ch == 27) { // Atalhos para cancelar direto
+
+            mvwprintw(pop_win, 5, 32, "             ");
+
+            int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(pop_win, attr_cancel);
+            mvwprintw(pop_win, 6, 33, _("  CANCEL  "));
+            wattroff(pop_win, attr_cancel);
+
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+
+            attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(pop_win, attr_cancel);
+            mvwprintw(pop_win, 5, 32, _("  CANCEL  "));
+            wattroff(pop_win, attr_cancel);
+    
+            wattron(pop_win, COLOR_PAIR(59));
+            mvwprintw(pop_win, 5, 42, "▖");
+            mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+            wattroff(pop_win, COLOR_PAIR(59));
+    
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+            
             confirmado = 0;
             break;
         }
         else if (ch == 'y' || ch == 'Y') { // Atalho para confirmar direto
+            mvwprintw(pop_win, 5, 8, "              ");
+
+            int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 6, 9, _("  CONFIRM  "));
+            wattroff(pop_win, attr_confirm);
+            
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+
+            attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+            wattron(pop_win, attr_confirm);
+            mvwprintw(pop_win, 5, 8, _("  CONFIRM  "));
+            wattroff(pop_win, attr_confirm);
+
+            wattron(pop_win, COLOR_PAIR(59));
+            mvwprintw(pop_win, 5, 19, "▖");
+            mvwprintw(pop_win, 6, 9,    "▀▀▀▀▀▀▀▀▀▀▘ ");
+            wattroff(pop_win, COLOR_PAIR(59));
+
+            wnoutrefresh(pop_win);
+            doupdate();
+            napms(125);
+
             confirmado = 1;
             break;
         }

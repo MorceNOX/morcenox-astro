@@ -222,14 +222,14 @@ const char *virgo[] = {
     "▘▝ ▜ "
 };
 
-const char *capricorn[] = {
+const char *capricorn__[] = {
     "     ",
     "▚▗▜▞▚",
     " ▘ ▚▞",
     "   ▞ "
 };
 
-const char *capricorn__[] = {
+const char *capricorn[] = {
     "      ",
     "▚▗▜▞▚ ",
     " ▌ ▚▞ ",

@@ -31,6 +31,14 @@
 
 
 typedef struct {
+    int id_hyleg;
+    int tipo_hyleg;
+    char glifo[10];
+    char name[30];
+    char descricao_hyleg[80];
+} ResultadoHyleg;
+
+typedef struct {
     char object_name[30]; // Nome do planeta (ex: "Venus", "Moon")
     char glifo[10];       // Glifo Unicode (ex: "♀", "☽")
     int anos_concedidos;  // Anos totais calculados
@@ -49,6 +57,7 @@ typedef struct {
 
 int obter_regente_tradicional(int id_signo);
 bool is_lugar_hylegiaco(int casa);
+ResultadoHyleg get_resultado_hyleg(PontosHylegiacos pontos, PlanetDignities *dig, PlotObject *plots, AspectMatrix *matrix, int week_day, int planetary_hour, int tipo_san);
 int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int *id_planeta_almuten, int regente_dia, int regente_hora, int tipo_san, PlanetDignities *dig);
 const char* obter_descricao_hileg(int tipo_hileg);
 int obter_anos_menores_por_nome(const char *object_name);
