@@ -30,6 +30,15 @@
 #define _(String) dgettext(LANGUAGE, String)
 
 #define MAX_AGE 150.0
+#define TIME_KEY_NAIBOD         1
+#define TIME_KEY_PTOLEMY        2
+#define TIME_KEY_CARDAN         3
+#define TIME_KEY_PLACIDUS       4
+#define TIME_KEY_TRUE_SOLAR_ARC 5
+#define TIME_KEY_KEPLER         6
+
+
+
 
 extern sqlite3 *global_db;
 
@@ -83,6 +92,8 @@ extern const double TEMPERAMENT_RANK_PROPORTION;
 extern int prom_id;
 
 extern int NUM_OBJECTS;
+
+extern int TIME_KEY;
 
 void update_interface_language();
 

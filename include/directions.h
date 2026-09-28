@@ -38,8 +38,11 @@
 #define TOTAL_SIGNIFICADORES 31
 
 //#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
-#define NAIBOD_KEY  0.985647334798
-
+#define NAIBOD_KEY   0.985647358005769
+#define CARDAN_KEY   0.986666679822222
+#define PTOLEMY_KEY  1.000000000000000
+#define PLACIDUS_KEY 0.986388888888889
+                    
 typedef enum {
     DIRECAO_ZODIACAL = 0,
     DIRECAO_MUNDANA  = 1
@@ -81,9 +84,16 @@ typedef struct {
     char divisor_gliph[10];
 } LinhaDirecao;
 
+double get_time_key(int key, double jd, double arco);
 double get_obliquidade(double jd);
 double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);
 double _calcular_distancia_meridiana(double ra, double ramc, int acima_do_horizonte);
+double descobrir_idade_por_arco_solar(double tjd_ut_natal, double arco_alvo);
+double obter_chave_arco_solar(double tjd_ut_natal, double arco_alvo);
+double obter_chave_arco_solar_ultra_fast(double tjd_ut_natal, double arco_alvo);
+double calcular_arco_kepler_para_idade(double tjd_ut_natal, double idade_anos);
+double descobrir_idade_por_arco_kepler(double tjd_ut_natal, double arco_alvo);
+double obter_chave_kepler(double tjd_ut_natal, double arco_alvo);
 double calcular_ra(double longitude, double declinacao, double jd);
 int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom);
 void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom);

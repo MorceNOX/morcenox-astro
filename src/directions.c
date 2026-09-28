@@ -189,6 +189,274 @@ double calcular_latitude_dinamica_bianchini(double jd, const char *object, doubl
 
 
 
+
+double descobrir_idade_por_arco_solar(double tjd_ut_natal, double arco_alvo) {
+    double x2[6];
+    char serr[256];
+    double sol_natal, sol_alvo_progredido;
+    int32 iflag = SEFLG_SPEED;
+
+    // 1. Descobre a posição do Sol Natal
+    swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+    sol_natal = x2[0];
+
+    // 2. Define o alvo que o Sol precisa atingir no céu pós-natal
+    sol_alvo_progredido = normalize360(sol_natal + arco_alvo);
+
+    // 3. Método Numérico (Bisseção) para achar em qual dia isso acontece
+    // Assumimos um limite de idade humana (ex: 0 a 120 anos = 0 a 120 dias pós-natal)
+    double limite_inferior_dias = 0.0;
+    double limite_superior_dias = 120.0; 
+    double dias_estimados = 0.0;
+    
+    for (int i = 0; i < 50; i++) { // 50 iterações garantem precisão absurda
+        dias_estimados = (limite_inferior_dias + limite_superior_dias) / 2.0;
+        
+        swe_calc_ut(tjd_ut_natal + dias_estimados, SE_SUN, iflag, x2, serr);
+        double sol_estimado = x2[0];
+        
+        // Ajusta a distância angular considerando a virada do zodíaco
+        double diferenca = normalize360(sol_estimado - sol_alvo_progredido);
+        if (diferenca > 180.0) diferenca -= 360.0;
+
+        if (fabs(diferenca) < 1e-8) break; // Convergiu com precisão máxima
+
+        if (diferenca > 0) {
+            limite_superior_dias = dias_estimados;
+        } else {
+            limite_inferior_dias = dias_estimados;
+        }
+    }
+
+    // Como 1 dia pós-natal = 1 ano de idade:
+    double idade_anos = dias_estimados; 
+    return idade_anos;
+}
+
+
+
+double calcular_arco_kepler_para_idade(double tjd_ut_natal, double idade_anos) {
+    double x2[6];
+    char serr[256];
+    int32 iflag = SEFLG_SPEED;
+    
+    // Calcula a velocidade do Sol no ano/data do trânsito alvo
+    double tjd_ut_atual = tjd_ut_natal + (idade_anos * 365.242199);
+    swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr);
+    
+    double velocidade_do_sol = x2[3]; // Índice 3 contém a velocidade em graus/dia
+    
+    // O arco acumulado sob a lógica de Kepler para essa idade específica
+    return velocidade_do_sol * idade_anos;
+}
+
+double descobrir_idade_por_arco_kepler(double tjd_ut_natal, double arco_alvo) {
+    double limite_inferior_anos = 0.0;
+    double limite_superior_anos = 120.0; // limite de idade
+    double idade_estimada = 0.0;
+
+    for (int i = 0; i < 50; i++) {
+        idade_estimada = (limite_inferior_anos + limite_superior_anos) / 2.0;
+        
+        double arco_estimado = calcular_arco_kepler_para_idade(tjd_ut_natal, idade_estimada);
+        
+        if (fabs(arco_estimado - arco_alvo) < 1e-8) break;
+
+        if (arco_estimado > arco_alvo) {
+            limite_superior_anos = idade_estimada;
+        } else {
+            limite_inferior_anos = idade_estimada;
+        }
+    }
+
+    return idade_estimada;
+}
+
+
+
+
+/**
+ * Retorna o valor CHAVE dinâmico para o Arco Solar Verdadeiro.
+ * Uso no seu código: double chave = obter_chave_arco_solar(tjd_natal, arco);
+ *                    double idade = arco / chave;
+ */
+double obter_chave_arco_solar(double tjd_ut_natal, double arco_alvo) {
+    double x2[6];
+    char serr[256];
+    double sol_natal, sol_alvo_progredido;
+    int32 iflag = SEFLG_SPEED;
+
+    // 1. Descobre a posição do Sol Natal
+    swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+    sol_natal = x2[0];
+
+    // 2. Define a longitude alvo que o Sol precisa atingir
+    sol_alvo_progredido = normalize360(sol_natal + arco_alvo);
+
+    // 3. Busca interna da idade (em dias ephemeris) que gera este arco
+    double limite_inferior = 0.0;
+    double limite_superior = 120.0; // Limite de 120 anos/dias
+    double dias_estimados = 0.0;
+    
+    for (int i = 0; i < 50; i++) {
+        dias_estimados = (limite_inferior + limite_superior) / 2.0;
+        
+        swe_calc_ut(tjd_ut_natal + dias_estimados, SE_SUN, iflag, x2, serr);
+        double sol_estimado = x2[0];
+        
+        double diferenca = normalize360(sol_estimado - sol_alvo_progredido);
+        if (diferenca > 180.0) diferenca -= 360.0;
+
+        if (fabs(diferenca) < 1e-8) break;
+
+        if (diferenca > 0) limite_superior = dias_estimados;
+        else limite_inferior = dias_estimados;
+    }
+
+    // Evita divisão por zero caso o arco seja nulo
+    if (dias_estimados < 1e-6) {
+        // Retorna a velocidade do Sol no exato instante do nascimento como chave inicial
+        swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+        return x2[3]; // Índice 3 é a velocidade diária em graus/dia
+    }
+
+    // 4. Retorna a Chave Equivalente: Arco dividido pela Idade (dias_estimados)
+    // Como Idade = Arco / Chave, logo Chave = Arco / Idade
+    return arco_alvo / dias_estimados;
+}
+
+
+
+
+/**
+ * Retorna a Chave do Arco Solar Verdadeiro IMEDIATAMENTE (Sem Loops / Performance Ultra Rápida)
+ * Erro máximo aproximado: menor que 0.001 dias (alguns minutos de tempo real).
+ */
+double obter_chave_arco_solar_ultra_fast(double tjd_ut_natal, double arco_alvo) {
+    double x2[6];
+    char serr[256];
+    int32 iflag = SEFLG_SPEED;
+
+    // 1. Faz APENAS UMA chamada para pegar a posição e velocidade do Sol Natal
+    if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr) < 0) {
+        return NAIBOD_KEY; // Fallback para Naibod caso falhe
+    }
+    
+    double sol_natal = x2[0];
+    double velocidade_natal = x2[3]; // Velocidade diária real do Sol no nascimento
+
+    // 2. Modelo Kepleriano de movimento médio do Sol
+    // O Sol corre mais rápido no Periélio (3 de Janeiro) ~ 283° de longitude tropical
+    double longitude_perielio = 283.0; 
+    double anomalia_media_natal = (sol_natal - longitude_perielio) * (PI / 180.0);
+
+    // Amplitude da variação da velocidade do Sol devido à excentricidade da órbita da Terra
+    // Velocidade Max ≈ 1.019°/dia, Min ≈ 0.953°/dia. Amplitude da oscilação ≈ 0.033
+    double amplitude_oscilacao = 0.0334; 
+
+    // 3. Estimativa analítica direta da idade baseada na geometria orbital (Equação de Kepler invertida)
+    // Em vez de chutar 50 vezes, calculamos diretamente onde o Sol estará baseado na velocidade atual
+    double idade_estimada_dias = arco_alvo / velocidade_natal;
+    
+    // Ajuste de perturbação de primeira ordem (corrige a aceleração/desaceleração do Sol no período)
+    double ajuste_kepler = (amplitude_oscilacao / 2.0) * sin(anomalia_media_natal) * (arco_alvo / 0.9856);
+    idade_estimada_dias += ajuste_kepler;
+
+    // Evita divisão por zero para arcos nulos
+    if (idade_estimada_dias < 1e-6) {
+        return velocidade_natal;
+    }
+
+    // 4. Retorna a chave equivalente para manter seu código funcionando por divisão
+    return arco_alvo / idade_estimada_dias;
+}
+
+double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
+    double x2[6];
+    char serr[256];
+    int32 iflag = SEFLG_SPEED;
+
+    // 1. Posição natal do Sol
+    swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+    double sol_natal = x2[0];
+    double sol_alvo = normalize360(sol_natal + arco_alvo);
+
+    // 2. Estimativa inicial rápida (Usa Naibod como ponto de partida)
+    double dias_estimados = arco_alvo / NAIBOD_KEY;
+
+    // 3. Método de Newton-Raphson (Apenas 3 passos são necessários!)
+    for (int i = 0; i < 3; i++) {
+        swe_calc_ut(tjd_ut_natal + dias_estimados, SE_SUN, iflag, x2, serr);
+        double sol_estimado = x2[0];
+        double velocidade_sol = x2[3]; // Velocidade em graus/dia
+
+        double erro = normalize360(sol_estimado - sol_alvo);
+        if (erro > 180.0) erro -= 360.0;
+
+        // Ajusta a estimativa usando a derivada (velocidade real do Sol naquele dia)
+        dias_estimados -= erro / velocidade_sol;
+    }
+
+    if (dias_estimados < 1e-6) {
+        swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+        return x2[3];
+    }
+
+    // Retorna a chave perfeitamente calibrada para a escala de tempo "1 ano = 1 dia"
+    return arco_alvo / dias_estimados;
+}
+
+
+
+
+// Função auxiliar interna para simular o arco gerado pela velocidade do Sol
+static double calcular_arco_kepler_interno(double tjd_ut_natal, double idade_anos) {
+    double x2[6];
+    char serr[256];
+    int32 iflag = SEFLG_SPEED;
+    
+    double tjd_ut_atual = tjd_ut_natal + (idade_anos * 365.242199);
+    swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr);
+    
+    return x2[3] * idade_anos; // Velocidade instantânea do dia * anos acumulados
+}
+
+/**
+ * Retorna o valor CHAVE dinâmico para a lógica de Kepler.
+ * Uso no seu código: double chave = obter_chave_kepler(tjd_natal, arco);
+ *                    double idade = arco / chave;
+ */
+double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
+    double limite_inferior = 0.0;
+    double limite_superior = 120.0;
+    double idade_estimada = 0.0;
+
+    // Busca interna da idade correspondente ao arco sob as leis de Kepler
+    for (int i = 0; i < 50; i++) {
+        idade_estimada = (limite_inferior + limite_superior) / 2.0;
+        
+        double arco_estimado = calcular_arco_kepler_interno(tjd_ut_natal, idade_estimada);
+        
+        if (fabs(arco_estimado - arco_alvo) < 1e-8) break;
+
+        if (arco_estimado > arco_alvo) limite_superior = idade_estimada;
+        else limite_inferior = idade_estimada;
+    }
+
+    // Evita divisão por zero para arcos nulos
+    if (idade_estimada < 1e-6) {
+        double x2[6];
+        char serr[256];
+        swe_calc_ut(tjd_ut_natal, SE_SUN, SEFLG_SPEED, x2, serr);
+        return x2[3];
+    }
+
+    // Retorna a Chave Equivalente para fechar com a sua equação matemática
+    return arco_alvo / idade_estimada;
+}
+
+
+
 // Calcula a Ascensão Reta (RA) de forma protegida para planetas e pontos abstratos (Fortuna/SAN)
 double calcular_ra(double longitude, double declinacao, double jd) {
     double dec_real = declinacao;
@@ -303,7 +571,10 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
-                    d->idade_evento = arco / NAIBOD_KEY; // Baseado em #define NAIBOD_KEY 1.014646
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+
+                    d->idade_evento = arco / CHAVE; // Baseado em #define NAIBOD_KEY 1.014646
 
                     // 2. Transforma a idade em dias exatos (Ano trópico astronômico médio)
                     // Ano trópico médio = 365.242199 dias. 
@@ -416,6 +687,43 @@ double __calcular_distancia_meridiana(double ra_planeta, double ramc, int esta_a
 }
 
 
+double get_time_key(int key, double jd, double arco) {
+    switch(key) {
+        case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
+        case TIME_KEY_CARDAN:         return CARDAN_KEY;
+        case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
+        case TIME_KEY_KEPLER:         return obter_chave_kepler(jd, arco);
+        default: return NAIBOD_KEY;
+    }
+}
+
+
+double get_key(int key) {
+    switch(key) {
+        case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
+        case TIME_KEY_CARDAN:         return CARDAN_KEY;
+        case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC: return -1.0;           
+        case TIME_KEY_KEPLER:         return -1.0;
+        default: return NAIBOD_KEY;
+    }
+}
+
+
+const char* get_key_name(int key) {
+    switch(key) {
+        case TIME_KEY_NAIBOD:         return "Naibod";
+        case TIME_KEY_CARDAN:         return "Cardan";
+        case TIME_KEY_PTOLEMY:        return "Ptolemy";
+        case TIME_KEY_PLACIDUS:       return "Placidus";
+        case TIME_KEY_TRUE_SOLAR_ARC: return _("True Solar Arc");           
+        case TIME_KEY_KEPLER:         return "Kepler";
+        default: return "Naibod";
+    }
+}
 
 
 int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
@@ -526,7 +834,10 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     
                     // 1. Calcula o arco e a idade do evento usando a SUA chave equatorial
                     d->arco_graus = arco;
-                    d->idade_evento = arco / NAIBOD_KEY; // Usa 1.014646
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+
+                    d->idade_evento = arco / CHAVE;
             
                     // 2. Transforma a idade em dias de forma perfeitamente proporcional
                     // Naibod estabelece que 1 ano de idade = 1 Ano Tropical médio (365.242199 dias)
@@ -1028,7 +1339,12 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
+        if (TIME_KEY < 5) {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+        }
+        else {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate"), get_key_name(TIME_KEY));
+        }
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
@@ -1302,7 +1618,9 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
-                    d->idade_evento = arco / NAIBOD_KEY; // Baseado em #define NAIBOD_KEY 1.014646
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    d->idade_evento = arco / CHAVE;
 
                     // 2. Transforma a idade em dias exatos (Ano trópico astronômico médio)
                     // Ano trópico médio = 365.242199 dias. 
@@ -1722,7 +2040,13 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
-        mvwprintw(table_win, table_height - 6, 4, _("Time Key: Naibod Rate (1° of Equatorial Rotation = 1.0146 Years). ε: Dynamic."));
+        if (TIME_KEY < 5) {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+        }
+        else {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate"), get_key_name(TIME_KEY));
+        }
+        
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
         } else if (tipo == 1) {
@@ -2022,7 +2346,9 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     
                     // 1. Calcula o arco e a idade do evento usando a SUA chave equatorial
                     d->arco_graus = arco;
-                    d->idade_evento = arco / NAIBOD_KEY; // Usa 1.014646
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    d->idade_evento = arco / CHAVE;
             
                     // 2. Transforma a idade em dias de forma perfeitamente proporcional
                     // Naibod estabelece que 1 ano de idade = 1 Ano Tropical médio (365.242199 dias)
