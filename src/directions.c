@@ -1001,8 +1001,6 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
             
 
-                // --- DENTRO DO LOOP DE ASPECTOS (for a = 0..6) ---
-
                 // Nova variável para identificar se o alvo atual comporta-se como um ângulo fixo no espaço local
                 int eh_angulo_angular = 0;
                 double cota_espacial_fixa = 0.0;

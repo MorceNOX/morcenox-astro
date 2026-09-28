@@ -496,7 +496,7 @@ int show_confirm_delete_popup(const char *name) {
             wnoutrefresh(pop_win);
             doupdate();
             napms(125);
-            
+
             confirmado = 0;
             break;
         }
@@ -2277,14 +2277,94 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
                 break;
             case 10: /* ENTER */
                 if (botao_focado == 0) {
+                    mvwprintw(win, 5, 9, "              ");
+                    int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 6, 10, _("  CONFIRM  "));
+                    wattroff(win, attr_confirm);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 5, 9, _("  CONFIRM  "));
+                    wattroff(win, attr_confirm);
+
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 20, "▖");
+                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘ ");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
                     confirmado = 1;
                 } else {
+                    mvwprintw(win, 5, 28, "            ");
+
+                    int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 6, 29, _("  CANCEL  "));
+                    wattroff(win, attr_cancel);
+    
+                    wnoutrefresh(win);  
+                    doupdate();
+    
+                    napms(125);
+    
+                    // Botão CANCEL
+                    attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 5, 28, _("  CANCEL  "));
+                    wattroff(win, attr_cancel);
+                
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 38, "▖");
+                    mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+    
+                    wnoutrefresh(win);  
+                    doupdate();
+    
+                    napms(125);
+
                     delwin(win);
                     delwin(shadow);
                     return -1.0;
                 }
                 break;
             case 27: /* ESC */
+                mvwprintw(win, 5, 28, "            ");
+
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 6, 29, _("  CANCEL  "));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);  
+                doupdate();
+
+                napms(125);
+
+                // Botão CANCEL
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 5, 28, _("  CANCEL  "));
+                wattroff(win, attr_cancel);
+            
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, 5, 38, "▖");
+                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);  
+                doupdate();
+
+                napms(125);
+
                 delwin(win);
                 delwin(shadow);
                 return -1.0; /* Retorna flag de cancelado em double */
@@ -2329,7 +2409,7 @@ double selecionar_idade_visual_fracionada(double idade_inicial) {
     
                                 wattron(win, COLOR_PAIR(57));
                                 mvwprintw(win, 5, 20, "▖");
-                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘ ");
                                 wattroff(win, COLOR_PAIR(57));
     
                                 wnoutrefresh(win);
@@ -2503,13 +2583,98 @@ int selecionar_idade_visual(int idade_inicial) {
             case 10: // ENTER
                 if (botao_focado == 0) {
                     confirmado = 1;
+
+                    mvwprintw(win, 5, 9, "             ");
+
+                    int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 6, 10, _("  CONFIRM  "));
+                    wattroff(win, attr_confirm);
+
+                    wnoutrefresh(win);  
+                    doupdate();
+
+                    napms(125);
+                    
+                    attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 5, 9, _("  CONFIRM  "));
+                    wattroff(win, attr_confirm);
+
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 20, "▖");
+                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);  
+                    doupdate();
+
+                    napms(125);
+
                 } else {
+                    mvwprintw(win, 5, 28, "            ");
+
+                    int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 6, 29, _("  CANCEL  "));
+                    wattroff(win, attr_cancel);
+
+                    wnoutrefresh(win);  
+                    doupdate();
+
+                    napms(125);
+
+                    // Botão CANCEL
+                    attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 5, 28, _("  CANCEL  "));
+                    wattroff(win, attr_cancel);
+                
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 38, "▖");
+                    mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);  
+                    doupdate();
+
+                    napms(125);
+
                     delwin(win);
                     delwin(shadow);
                     return -1;
                 }
                 break;
             case 27: // ESC
+                
+                mvwprintw(win, 5, 28, "            ");
+
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 6, 29, _("  CANCEL  "));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);  
+                doupdate();
+
+                napms(125);
+
+                // Botão CANCEL
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 5, 28, _("  CANCEL  "));
+                wattroff(win, attr_cancel);
+            
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, 5, 38, "▖");
+                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);  
+                doupdate();
+
+                napms(125);
+
                 delwin(win);
                 delwin(shadow);
                 return -1; // Retorna flag de cancelado
