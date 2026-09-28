@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 17:11-0300\n"
+"POT-Creation-Date: 2026-09-28 17:31-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -60,7 +60,7 @@ msgid "Planetary"
 msgstr ""
 
 #: src/almuten.c:610 src/directions.c:1494 src/directions.c:2306
-#: src/draw-chart.c:2188 src/draw-chart.c:4403 src/selections.c:3060
+#: src/draw-chart.c:2188 src/draw-chart.c:4403 src/selections.c:3134
 msgid "Day"
 msgstr "Day"
 
@@ -70,7 +70,7 @@ msgid "Night"
 msgstr ""
 
 #: src/almuten.c:610 src/draw-chart.c:2188 src/draw-chart.c:4403
-#: src/draw-chart.c:4431 src/selections.c:3286
+#: src/draw-chart.c:4431 src/selections.c:3443
 msgid "Hour"
 msgstr "Hour"
 
@@ -927,7 +927,7 @@ msgstr ""
 msgid "Age"
 msgstr "Age"
 
-#: src/directions.c:1492 src/directions.c:2304 src/selections.c:3058
+#: src/directions.c:1492 src/directions.c:2304 src/selections.c:3132
 msgid "Year"
 msgstr "Year"
 
@@ -2838,15 +2838,15 @@ msgstr "┃ Date/Time: "
 msgid "┃ Dst: "
 msgstr "┃ Dst: "
 
-#: src/menu-box.c:1796 src/selections.c:3694 src/selections.c:3844
+#: src/menu-box.c:1796 src/selections.c:3934 src/selections.c:4084
 msgid "Yes "
 msgstr "Yes "
 
-#: src/menu-box.c:1796 src/selections.c:3693 src/selections.c:3847
+#: src/menu-box.c:1796 src/selections.c:3933 src/selections.c:4087
 msgid "No  "
 msgstr "No  "
 
-#: src/menu-box.c:1796 src/selections.c:3692
+#: src/menu-box.c:1796 src/selections.c:3932
 msgid "Auto"
 msgstr "Auto"
 
@@ -3493,9 +3493,13 @@ msgstr "  CONFIRM  "
 
 #: src/selections.c:1162 src/selections.c:1900 src/selections.c:1911
 #: src/selections.c:1999 src/selections.c:2010 src/selections.c:2839
-#: src/selections.c:2950 src/selections.c:2960 src/selections.c:3082
-#: src/selections.c:3184 src/selections.c:3194 src/selections.c:3312
-#: src/selections.c:3426 src/selections.c:3436
+#: src/selections.c:2911 src/selections.c:2920 src/selections.c:2942
+#: src/selections.c:2951 src/selections.c:3024 src/selections.c:3034
+#: src/selections.c:3156 src/selections.c:3223 src/selections.c:3232
+#: src/selections.c:3256 src/selections.c:3265 src/selections.c:3341
+#: src/selections.c:3351 src/selections.c:3469 src/selections.c:3547
+#: src/selections.c:3556 src/selections.c:3581 src/selections.c:3590
+#: src/selections.c:3666 src/selections.c:3676
 #, fuzzy
 msgid "[  CANCEL  ]"
 msgstr "  CANCEL  "
@@ -3644,116 +3648,118 @@ msgstr "[ESC] to cancel."
 msgid " Gender Selection "
 msgstr " Gender Selection "
 
-#: src/selections.c:2828 src/selections.c:2917 src/selections.c:2926
-#: src/selections.c:3071 src/selections.c:3150 src/selections.c:3159
-#: src/selections.c:3301 src/selections.c:3392 src/selections.c:3401
+#: src/selections.c:2828 src/selections.c:2884 src/selections.c:2893
+#: src/selections.c:2991 src/selections.c:3000 src/selections.c:3145
+#: src/selections.c:3193 src/selections.c:3202 src/selections.c:3307
+#: src/selections.c:3316 src/selections.c:3458 src/selections.c:3517
+#: src/selections.c:3526 src/selections.c:3632 src/selections.c:3641
 #, fuzzy
 msgid "[  CONFIRM  ]"
 msgstr "  CONFIRM  "
 
-#: src/selections.c:3037
+#: src/selections.c:3111
 msgid " Date "
 msgstr " Date "
 
-#: src/selections.c:3041 src/selections.c:3274
+#: src/selections.c:3115 src/selections.c:3431
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr "Use [←↓↑→] to ajust. [Enter] confirm."
 
-#: src/selections.c:3042 src/selections.c:3275
+#: src/selections.c:3116 src/selections.c:3432
 msgid "[ESC] Cancel."
 msgstr "[ESC] Cancel."
 
-#: src/selections.c:3059
+#: src/selections.c:3133
 msgid "Month"
 msgstr "Month"
 
-#: src/selections.c:3270
+#: src/selections.c:3427
 msgid " Time "
 msgstr " Time "
 
-#: src/selections.c:3287
+#: src/selections.c:3444
 msgid "Min"
 msgstr "Min"
 
-#: src/selections.c:3288
+#: src/selections.c:3445
 msgid "Sec"
 msgstr "Sec"
 
-#: src/selections.c:3526
+#: src/selections.c:3766
 msgid " Enter TZ Offset "
 msgstr " Enter TZ Offset "
 
-#: src/selections.c:3540
+#: src/selections.c:3780
 msgid "Error: Max -12 to +14"
 msgstr "Error: Max -12 to +14"
 
-#: src/selections.c:3542 src/selections.c:3544
+#: src/selections.c:3782 src/selections.c:3784
 msgid "Press [Enter] to save"
 msgstr "Press [Enter] to save"
 
-#: src/selections.c:3547
+#: src/selections.c:3787
 msgid "Press [ESC] to cancel"
 msgstr "Press [ESC] to cancel"
 
-#: src/selections.c:3548
+#: src/selections.c:3788
 msgid "Value: "
 msgstr "Value: "
 
-#: src/selections.c:3745
+#: src/selections.c:3985
 msgid " Select DST "
 msgstr " Select DST "
 
-#: src/selections.c:3924
+#: src/selections.c:4164
 msgid " Chart's Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:3938
+#: src/selections.c:4178
 msgid "Enter a name for your chart (max"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:3939
+#: src/selections.c:4179
 msgid "characters)"
 msgstr "characters)"
 
-#: src/selections.c:4060
+#: src/selections.c:4300
 msgid "Unnamed Chart"
 msgstr "Unnamed Chart"
 
-#: src/selections.c:4303
+#: src/selections.c:4543
 msgid " Select a Topic "
 msgstr " Select a Topic "
 
-#: src/selections.c:4609
+#: src/selections.c:4849
 msgid "Select Country"
 msgstr "Select Country"
 
-#: src/selections.c:4611
+#: src/selections.c:4851
 msgid "Country"
 msgstr "Country"
 
-#: src/selections.c:4908
+#: src/selections.c:5148
 msgid "Select City in"
 msgstr "Select City in"
 
-#: src/selections.c:4910
+#: src/selections.c:5150
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/selections.c:5175
+#: src/selections.c:5415
 msgid "Failed to prepare statement:"
 msgstr "Failed to prepare statement:"
 
-#: src/selections.c:5223
+#: src/selections.c:5463
 msgid "Warning: City not found in database."
 msgstr "Warning: City not found in database."
 
-#: src/selections.c:5258
+#: src/selections.c:5498
 msgid "Default city has not changed"
 msgstr "Default city has not changed"
 
-#: src/selections.c:5320
+#: src/selections.c:5560
 msgid "Default city has changed"
 msgstr "Default city has changed"
 

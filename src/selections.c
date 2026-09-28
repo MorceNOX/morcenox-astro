@@ -2878,14 +2878,88 @@ int select_gender() {
                 break;
             case 10: // ENTER
                 if (botao_focado == 0) {
+                    mvwprintw(win, 6, 9, "              ");
+                    int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 7, 10, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 6, 22, "▖");
+                    mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
                     confirmado = 1;
                 } else {
+                    mvwprintw(win, 6, 28, "             ");
+                                
+                    int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 6, 40, "▖");
+                    mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
                     delwin(win);
                     delwin(shadow);
                     return 0;
                 }
                 break;
             case 27: // ESC
+                mvwprintw(win, 6, 28, "             ");
+                                    
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, 6, 40, "▖");
+                mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
                 delwin(win);
                 delwin(shadow);
                 return 0;
@@ -3112,11 +3186,94 @@ DateEdition selecionar_data() {
                 if (campo_atual == 2) { dt.dia--; if(dt.dia < 1) dt.dia = max_dias[dt.mes - 1]; }
                 break;
             case 10: // Enter
-                data_confirmada = 1;
-                ed.date = dt;
-                ed.changed = 1;
+                if (botao_focado == 0) {
+                    mvwprintw(win, 5, 9, "              ");
+                    int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 6, 10, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 5, 9, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 22, "▖");
+                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    data_confirmada = 1;
+                    ed.date = dt;
+                    ed.changed = 1;
+                }
+                else {
+                    mvwprintw(win, 5, 28, "             ");
+                                
+                    int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 6, 29, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 40, "▖");
+                    mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    delwin(win);
+                    delwin(shadow);
+                    ed.changed = 0;
+                    ed.date = dt_prev;
+                    return ed;  
+                }
                 break;
             case 27: // ESC
+                mvwprintw(win, 5, 28, "             ");
+                                    
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 6, 29, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, 5, 40, "▖");
+                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
                 delwin(win);
                 delwin(shadow);
                 ed.changed = 0;
@@ -3353,12 +3510,95 @@ HoraEdition selecionar_hora() {
                 break;
                 
             case 10: // Enter
-                horario_confirmado = 1;
-                ed.hora = hn;
-                ed.changed = 1;
+                if (botao_focado == 0) {
+                    mvwprintw(win, 5, 9, "              ");
+                    int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 6, 10, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_confirm);
+                    mvwprintw(win, 5, 9, _("[  CONFIRM  ]"));
+                    wattroff(win, attr_confirm);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 22, "▖");
+                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    horario_confirmado = 1;
+                    ed.hora = hn;
+                    ed.changed = 1;
+                }
+                else {
+                    mvwprintw(win, 5, 28, "             ");
+                                
+                    int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 6, 29, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                    wattron(win, attr_cancel);
+                    mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+                    wattroff(win, attr_cancel);
+        
+                    wattron(win, COLOR_PAIR(57));
+                    mvwprintw(win, 5, 40, "▖");
+                    mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                    wattroff(win, COLOR_PAIR(57));
+
+                    wnoutrefresh(win);
+                    doupdate();
+                    napms(125);
+
+                    delwin(win);
+                    delwin(shadow);
+                    ed.hora = hr_prev;
+                    ed.changed = 0;
+                    return ed;
+                }
                 break;
                 
             case 27: // ESC
+                mvwprintw(win, 5, 28, "             ");
+                                    
+                int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 6, 29, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
+                wattron(win, attr_cancel);
+                mvwprintw(win, 5, 28, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, 5, 40, "▖");
+                mvwprintw(win, 6, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);
+                doupdate();
+                napms(125);
+
                 delwin(win);
                 delwin(shadow);
                 ed.hora = hr_prev;
