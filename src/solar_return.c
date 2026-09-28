@@ -235,10 +235,11 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
 /* Certifique-se de passar jd_natal e jd_revolucao para a assinatura da função */
 void processar_confronto_natal_revolucao(
-    int id_almuten_rev,               
-    double longitude_almuten_rev,     
-    double latitude_almuten_rev,      
-    int dignidade_natal,           
+    int qtd_almuten_rev,
+    int *id_almuten_rev,               
+    double *longitude_almuten_rev,     
+    double *latitude_almuten_rev,      
+    int *dignidade_natal,           
     double lat_natal,                 
     double armc_natal,                
     int id_senhor_profeccao,          
@@ -278,14 +279,29 @@ void processar_confronto_natal_revolucao(
         eps_rev = 23.439291; 
     }
 
-    /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
-    double xpin_almuten[2];
-    xpin_almuten[0] = longitude_almuten_rev;
-    xpin_almuten[1] = latitude_almuten_rev;
 
-    double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
-    int casa_natal_transitada = (int)floor(casa_alm_dec);
-    if (casa_natal_transitada < 1 || casa_natal_transitada > 12) casa_natal_transitada = 1;
+    int pontuacao_dignidade_natal[qtd_almuten_rev];
+    int casa_natal_transitada[qtd_almuten_rev];
+    int aproveitamento_almuten[qtd_almuten_rev];
+
+    for (int i = 0; i < qtd_almuten_rev; i++) {
+        /* 3. PROJEÇÃO DO ALMUTEN NAS CASAS NATAIS */
+        double xpin_almuten[2];
+        xpin_almuten[0] = longitude_almuten_rev[i];
+        xpin_almuten[1] = latitude_almuten_rev[i];
+
+        double casa_alm_dec = swe_house_pos(armc_natal, lat_natal, eps_natal, HOUSE_SYSTEM, xpin_almuten, serr);
+        casa_natal_transitada[i] = (int)floor(casa_alm_dec);
+        if (casa_natal_transitada[i] < 1 || casa_natal_transitada[i] > 12) casa_natal_transitada[i] = 1;
+
+        pontuacao_dignidade_natal[i] = dignidade_natal[i];
+        aproveitamento_almuten[i] = strength_planets[id_almuten_rev[i] - 1];
+    }
+
+
+    
+
+    
 
     /* 4. PROJEÇÃO DO ASCENDENTE DA REVOLUÇÃO NAS CASAS NATAIS
           Agora usando o eps_rev correto e a global HOUSE_SYSTEM */
@@ -307,11 +323,11 @@ void processar_confronto_natal_revolucao(
     int casa_rev_do_asc_natal = (int)floor(casa_rev_asc_dec);    
     if (casa_rev_do_asc_natal < 1 || casa_rev_do_asc_natal > 12) casa_rev_do_asc_natal = 1;
 
-    int pontuacao_dignidade_natal = dignidade_natal;
-    int aproveitamento_almuten = strength_planets[id_almuten_rev - 1];
+    
 
     // DISPARA A JANELA VISUAL COM OS INTEIROS CALCULADOS SOB PRECISÃO MÁXIMA
     abrir_janela_confronto_natal_revolucao(
+        qtd_almuten_rev,
         id_almuten_rev, 
         pontuacao_dignidade_natal, 
         casa_natal_transitada, 
@@ -432,14 +448,15 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
 
 
 void abrir_janela_confronto_natal_revolucao(
-    int id_almuten_rev, 
-    int pontuacao_dignidade_natal, 
-    int casa_natal_transitada, 
+    int qtd_almuten_rev,
+    int *id_almuten_rev, 
+    int *pontuacao_dignidade_natal, 
+    int *casa_natal_transitada, 
     int id_senhor_profeccao, 
     int id_senhor_firdaria, 
     int id_senhor_subfirdaria,
     int casa_natal_do_asc,
-    int aproveitamento_almuten,
+    int *aproveitamento_almuten,
     int casa_rev_do_asc_natal) /* RECEBE O INTEIRO JÁ PRONTO */
 {
     int p_max_y, p_max_x;
@@ -528,272 +545,300 @@ void abrir_janela_confronto_natal_revolucao(
 
     const char *nomes_planetas[] = {"", _("SUN ☉"), _("MOON ☽"), _("MERCURY ☿"), _("VENUS ♀"), _("MARS ♂"), _("JUPITER ♃"), _("SATURN ♄")};
     
-    
-    // --- VERIFICAÇÃO 1: FILTRO DE APROVEITAMENTO UNIVERSAL ESPELHADO ---
-    wattron(pad, COLOR_PAIR(10) | A_DIM);
-    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
-    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _("  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    
-    line_count += 3;
-
-    /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
-    double weights[50];
-    get_weights(weights, show_modern_planets);
-    int pontos_finais_exibicao = (int)ceil(((double)aproveitamento_almuten * weights[id_almuten_rev]) / 10.0);
-
-    snprintf(str_text, 512, _("The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d. "
-                              "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
-                            nomes_planetas[id_almuten_rev], 
-                            pontuacao_dignidade_natal, 
-                            aproveitamento_almuten, 
-                            pontos_finais_exibicao);
-    
-    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
-
-    wattron(pad, A_BOLD);
-    wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
-
-    line_count += 2;
-
-    // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
-    if (aproveitamento_almuten >= 65) {
-        wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
-        wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
-        
-        line_count += 2;
-
-        wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
-        snprintf(str_text, 512, _("This planet commands the year with magnificent backing from your birth chart.\n"
-                        "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
-                        "and powerful executive. The promises of this Solar Return will manifest with clarity, "
-                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), aproveitamento_almuten);
-    } 
-    else if (aproveitamento_almuten >= 35) {
-        wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
-        wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
-        
-        line_count += 2;
-
-        wattroff(pad, A_BOLD | COLOR_PAIR(8));
-        snprintf(str_text, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
-                        "It possesses the standard authority to execute its functions, but will demand steady "
-                        "discipline and continuous focus from you. Events will unfold normally, tracking your "
-                        "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), aproveitamento_almuten);
-    } 
-    else {
-        wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
-        wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
-        
-        line_count += 2;
-
-        wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        snprintf(str_text, 512, _("WARNING: The Lord of the Year operates under extreme systemic debility (%d%%).\n"
-                        "Even though it governs the time stream of this anniversary, it lacks the raw vital "
-                        "resources to fulfill its promises easily. The sectors it triggers this year will demand "
-                        "intense adjustments, manifesting through chronic delays, heavy exhaustion, "
-                        "administrative blocks, or the feeling of working against a locked door.\n\n\n"), aproveitamento_almuten);
-    }
-
-    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
-    wprintw(pad, "\n");
-    wprintw(pad, "\n");
-
-    line_count += 2;
-
-    // --- VERIFICAÇÃO 2: A POSIÇÃO POR CASA RADICAL ---
-    wattron(pad, COLOR_PAIR(10) | A_DIM);
-    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wattroff(pad, COLOR_PAIR(10) | A_DIM);
-
-    line_count++;
-
-    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _("  [CHECK II] RADIX HOUSE TRANSIT\n\n"));
-    wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _("The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada);
-    
-    line_count += 3;
-
-    wattron(pad, A_BOLD );
-    wprintw(pad, _("Interpretation:\n\n"));
-    wattroff(pad, A_BOLD );
-
-    line_count += 3;
-
-    if (casa_natal_transitada == 1) {
-        snprintf(str_text, 512, _("The lens focuses strictly on your physical body, personal vitality, "
-                     "and identity.\n"
-                     "A year to actively reinvent yourself and take direct command of your "
-                     "path.\n\n\n"));
-    } else if (casa_natal_transitada == 2) {
-        snprintf(str_text, 512, _("The core theme will revolve entirely around your personal resources, "
-                     "finances, and material possessions. Events will force a heavy evaluation "
-                     "of security and income.\n\n\n"));
-    } else if (casa_natal_transitada == 3) {
-        snprintf(str_text, 512, _("The activation shifts attention to your immediate environment, daily communications, "
-                     "intellectual pursuits, and short travels. Connections with siblings or neighbors will "
-                     "become prominent catalyst points.\n\n\n"));
-    } else if (casa_natal_transitada == 4) {
-        snprintf(str_text, 512, _("The spotlight falls deeply upon your private life, home environment, family roots, "
-                     "and internal emotional foundation. Matters regarding domestic security or property "
-                     "will demand your focus.\n\n\n"));
-    } else if (casa_natal_transitada == 5) {
-        snprintf(str_text, 512, _("The cosmic current vitalizes your sectors of creative self-expression, romance, "
-                     "joy, and children. A highly fertile period to pursue personal pleasures, hobbies, "
-                     "and things that fuel your heart's passions.\n\n\n"));
-    } else if (casa_natal_transitada == 6) {
-        snprintf(str_text, 512, _("The planet activates the house of bodily challenges and daily labors. "
-                     "Focus shifts toward physical health maintenance, managing somatic stress, acute adjustments, "
-                     "and the routines required to keep your life functioning.\n\n\n"));
-    } else if (casa_natal_transitada == 8) {
-        snprintf(str_text, 512, _("The planet activates the gateway of shared resources and deep transformations. "
-                     "Events will drive you to confront administrative debts, financial obligations, inheritance, "
-                     "or psychological crises and profound internal shedding.\n\n\n"));
-    } else if (casa_natal_transitada == 12) {
-        snprintf(str_text, 512, _("The planet activates the house of the unseen and self-undoing. "
-                     "The cosmic current pulls your attention toward deep spiritual isolation, hidden vulnerabilities, "
-                     "subconscious patterns, and necessary psychological retreats from the outer world.\n\n\n"));
-    } else if (casa_natal_transitada == 7) {
-        snprintf(str_text, 512, _("The mirror of relationship is triggered, bringing your significant partnerships, "
-                     "marriage, business alliances, or open contractual agreements to the forefront. Growth comes "
-                     "directly through the other.\n\n\n"));
-    } else if (casa_natal_transitada == 9) {
-        snprintf(str_text, 512, _("The horizon widens toward higher education, long-distance journeys, legal affairs, "
-                     "and your overarching worldview. Events will challenge and expand your belief systems and "
-                     "philosophical paradigms.\n\n\n"));
-    } else if (casa_natal_transitada == 10) {
-        snprintf(str_text, 512, _("The cosmic spotlight hits your professional destiny, career elevation, "
-                     "and social standing. Major events will directly reshape your public reputation "
-                     "and authority.\n\n\n"));
-    } else if (casa_natal_transitada == 11) {
-        snprintf(str_text, 512, _("The lens energizes your network, long-term aspirations, community involvement, "
-                     "and supportive alliances. Fruitful rewards flow through collaborations, friendships, "
-                     "and group endeavors.\n\n\n"));
-    } else {
-        // Fallback de segurança para valores inesperados fora do intervalo 1-12
-        snprintf(str_text, 512, _("This alignment directly activates the baseline promises of your radix, "
-                     "driving key encounters and environmental shifts over the next 12 months.\n\n\n"));
-    }
-
-
-    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
-    wprintw(pad, "\n");
-    wprintw(pad, "\n");
-
-    line_count += 2;
-
-    // --- VERIFICAÇÃO 3: CONDIÇÃO DO SENHOR DA PROFECÇÃO ---
-    wattron(pad, COLOR_PAIR(10) | A_DIM);
-    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
-    wattroff(pad, COLOR_PAIR(10) | A_DIM);
-
-    line_count++;
-
-    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _("  [CHECK III] THE TIMELORD CO-ALIGNMENT\n\n"));
-
-    line_count += 3;
-
-    wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _(" ✦ The current Profection Lord of the Year is: %s.\n"
-                 " ✦ The current Solar Return Almuten is: %s.\n\n"), 
-            nomes_planetas[id_senhor_profeccao], nomes_planetas[id_almuten_rev]);
-    
-    wprintw(pad, _("Interpretation:\n\n"));
-
-    line_count += 5;
-
-    wattroff(pad, A_BOLD );
-    if (id_almuten_rev == id_senhor_profeccao) {
+    if (qtd_almuten_rev > 1) {
         wattron(pad, A_BOLD | COLOR_PAIR(11));
-        wprintw(pad, _("CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n\n"));
+        wprintw(pad, _("CO-REGENCY DETECTED: Spiritual Conjunction\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(11));
         
         line_count += 2;
-
-        wattroff(pad, A_BOLD | COLOR_PAIR(11));
-        snprintf(str_text, 512, _("The Lord of the Return is the EXACT same planet ruling your profection "
-                     "time stream!\n"
-                     "In traditional astrology, this synchronization indicates a highly "
-                     "turning-point year.\n"
-                     "The planet gains double cosmic authorization. The events scheduled under "
-                     "its watch are unavoidable, highly prominent, and will actively reshape your "
-                     "life history.\n\n\n"));
-    } else {
-        snprintf(str_text, 512, _("Standard Alignment. The Return Lord and the Profection Lord are operating "
-                     "under distinct frequencies. This distributes your energy evenly, allowing you to "
-                     "manage professional matters and internal shifts along separate, parallel tracks "
-                     "without overwhelming intensity.\n\n\n"));
-    }
-
-    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
-    wprintw(pad, "\n");
-    wprintw(pad, "\n");
-
-    line_count += 2;
-
-    // --- VERIFICAÇÃO 4: O ALINHAMENTO CRONOCRÁTICO DAS FIRDÁRIAS ---
-    wattron(pad, COLOR_PAIR(10) | A_DIM);
-    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        
+        snprintf(str_text, 512,  _("Your chart presents a rare cosmic occurrence: a shared throne. Multiple "
+                     "archaic planetary forces balance each other perfectly, demanding that you "
+                     "integrate both streams of consciousness to achieve your destiny.\n\n"));
     
-    line_count++;
-
-    wattroff(pad, COLOR_PAIR(10) | A_DIM);
-
-    wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _("  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n\n"));
-    
-    line_count++;
-
-    wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
-    wprintw(pad, _(" ✦ Current Firdaria Master Ruler: %s\n"
-                 " ✦ Current Firdaria Sub-Ruler: %s\n"
-                 " ✦ Solar Return Almuten (Lord of Year): %s\n\n"), 
-            nomes_planetas[id_senhor_firdaria], 
-            nomes_planetas[id_senhor_subfirdaria],
-            nomes_planetas[id_almuten_rev]);
-    
-    wprintw(pad, _("Interpretation:\n\n"));
-
-    line_count += 8;
-
-    wattroff(pad, A_BOLD );
-    if (id_almuten_rev == id_senhor_firdaria) {
-        wattron(pad, A_BOLD | COLOR_PAIR(12)); 
-        snprintf(str_text, 512, _("MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
         line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
 
-        wattroff(pad, A_BOLD | COLOR_PAIR(12));
-        snprintf(str_text, 512, _("The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
-                     "In traditional astrology, this means the planet has total systemic harmony. The events "
-                     "it promises this year are backed by the macro-cyclical trend of your life, bringing "
-                     "profound, lasting developments that perfectly fulfill your current life chapter.\n\n\n"));
-    } 
-    else if (id_almuten_rev == id_senhor_subfirdaria) {
-        wattron(pad, A_BOLD | COLOR_PAIR(1)); 
-        snprintf(str_text, 512, _("SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
-        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+        snprintf(str_text, 512,  _("Each co-regent have to be analyzed and confronted with the Lords of Profection and Firdaria. "
+            "Below we will examine the Checkpoints I to IV for each co-regent separatelly.\n\n"));
 
-        wattroff(pad, A_BOLD | COLOR_PAIR(1));
-        snprintf(str_text, 512, _("The Lord of the Year coordinates directly with your current Firdaria sub-period. "
-                     "This indicates that the events of the next 12 months will act as the perfect trigger "
-                     "to release the potential promised by the current sub-ruler in your birth chart. "
-                     "Expect a highly focused, active year regarding this planet's themes.\n\n\n"));
-    } 
-    else {
-        snprintf(str_text, 512, _("Parallel Current. The Lord of the Year operates on a distinct energetic line from "
-                     "the active Firdaria rulers. This implies that while the Firdaria manages long-term "
-                     "background developments in your life, the Almuten of the Return will bring immediate, "
-                     "practical tasks and events that keep you busy on a day-to-day level without disrupting "
-                     "the macro-cycle.\n\n\n"));
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
     }
 
-    line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
-    wprintw(pad, "\n");
-    wprintw(pad, "\n");
+    for (int i = 0; i < qtd_almuten_rev; i++) { 
+
+        // --- VERIFICAÇÃO 1: FILTRO DE APROVEITAMENTO UNIVERSAL ESPELHADO ---
+        wattron(pad, COLOR_PAIR(10) | A_DIM);
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _("  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        
+        line_count += 3;
+
+        /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
+        double weights[50];
+        get_weights(weights, show_modern_planets);
+        int pontos_finais_exibicao = (int)ceil(((double)aproveitamento_almuten[i] * weights[id_almuten_rev[i]]) / 10.0);
+
+        snprintf(str_text, 512, _("The Lord of the Year is the %s. In your Natal Chart, its base dignity score is: %d. "
+                                "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
+                                nomes_planetas[id_almuten_rev[i]], 
+                                pontuacao_dignidade_natal[i], 
+                                aproveitamento_almuten[i], 
+                                pontos_finais_exibicao);
+        
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+
+        wattron(pad, A_BOLD);
+        wprintw(pad, _("Structural Efficiency Verdict:\n\n"));
+
+        line_count += 2;
+
+        // Julgamento por porcentagem pura e justa: Mercúrio com 83% fica verde!
+        if (aproveitamento_almuten[i] >= 65) {
+            wattron(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12)); // Excelente / Verde
+            wprintw(pad, _(" • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n\n"));
+            
+            line_count += 2;
+
+            wattroff(pad, A_BOLD | A_REVERSE | COLOR_PAIR(12));
+            snprintf(str_text, 512, _("This planet commands the year with magnificent backing from your birth chart.\n"
+                            "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored "
+                            "and powerful executive. The promises of this Solar Return will manifest with clarity, "
+                            "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), aproveitamento_almuten[i]);
+        } 
+        else if (aproveitamento_almuten[i] >= 35) {
+            wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
+            wprintw(pad, _(" • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n\n"));
+            
+            line_count += 2;
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(8));
+            snprintf(str_text, 512, _("This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
+                            "It possesses the standard authority to execute its functions, but will demand steady "
+                            "discipline and continuous focus from you. Events will unfold normally, tracking your "
+                            "real-world daily effort without extraordinary windfalls or sudden structural collapses.\n\n\n"), aproveitamento_almuten[i]);
+        } 
+        else {
+            wattron(pad, A_BOLD | COLOR_PAIR(11)); // Crítico / Vermelho
+            wprintw(pad, _(" • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n\n"));
+            
+            line_count += 2;
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(11));
+            snprintf(str_text, 512, _("WARNING: The Lord of the Year operates under extreme systemic debility (%d%%).\n"
+                            "Even though it governs the time stream of this anniversary, it lacks the raw vital "
+                            "resources to fulfill its promises easily. The sectors it triggers this year will demand "
+                            "intense adjustments, manifesting through chronic delays, heavy exhaustion, "
+                            "administrative blocks, or the feeling of working against a locked door.\n\n\n"), aproveitamento_almuten[i]);
+        }
+
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+        wprintw(pad, "\n");
+        wprintw(pad, "\n");
+
+        line_count += 2;
+
+        // --- VERIFICAÇÃO 2: A POSIÇÃO POR CASA RADICAL ---
+        wattron(pad, COLOR_PAIR(10) | A_DIM);
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+        line_count++;
+
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _("  [CHECK II] RADIX HOUSE TRANSIT\n\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _("The Solar Return Almuten is currently transiting through your NATAL HOUSE %d.\n\n"), casa_natal_transitada[i]);
+        
+        line_count += 3;
+
+        wattron(pad, A_BOLD );
+        wprintw(pad, _("Interpretation:\n\n"));
+        wattroff(pad, A_BOLD );
+
+        line_count += 3;
+
+        if (casa_natal_transitada[i] == 1) {
+            snprintf(str_text, 512, _("The lens focuses strictly on your physical body, personal vitality, "
+                        "and identity.\n"
+                        "A year to actively reinvent yourself and take direct command of your "
+                        "path.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 2) {
+            snprintf(str_text, 512, _("The core theme will revolve entirely around your personal resources, "
+                        "finances, and material possessions. Events will force a heavy evaluation "
+                        "of security and income.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 3) {
+            snprintf(str_text, 512, _("The activation shifts attention to your immediate environment, daily communications, "
+                        "intellectual pursuits, and short travels. Connections with siblings or neighbors will "
+                        "become prominent catalyst points.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 4) {
+            snprintf(str_text, 512, _("The spotlight falls deeply upon your private life, home environment, family roots, "
+                        "and internal emotional foundation. Matters regarding domestic security or property "
+                        "will demand your focus.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 5) {
+            snprintf(str_text, 512, _("The cosmic current vitalizes your sectors of creative self-expression, romance, "
+                        "joy, and children. A highly fertile period to pursue personal pleasures, hobbies, "
+                        "and things that fuel your heart's passions.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 6) {
+            snprintf(str_text, 512, _("The planet activates the house of bodily challenges and daily labors. "
+                        "Focus shifts toward physical health maintenance, managing somatic stress, acute adjustments, "
+                        "and the routines required to keep your life functioning.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 8) {
+            snprintf(str_text, 512, _("The planet activates the gateway of shared resources and deep transformations. "
+                        "Events will drive you to confront administrative debts, financial obligations, inheritance, "
+                        "or psychological crises and profound internal shedding.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 12) {
+            snprintf(str_text, 512, _("The planet activates the house of the unseen and self-undoing. "
+                        "The cosmic current pulls your attention toward deep spiritual isolation, hidden vulnerabilities, "
+                        "subconscious patterns, and necessary psychological retreats from the outer world.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 7) {
+            snprintf(str_text, 512, _("The mirror of relationship is triggered, bringing your significant partnerships, "
+                        "marriage, business alliances, or open contractual agreements to the forefront. Growth comes "
+                        "directly through the other.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 9) {
+            snprintf(str_text, 512, _("The horizon widens toward higher education, long-distance journeys, legal affairs, "
+                        "and your overarching worldview. Events will challenge and expand your belief systems and "
+                        "philosophical paradigms.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 10) {
+            snprintf(str_text, 512, _("The cosmic spotlight hits your professional destiny, career elevation, "
+                        "and social standing. Major events will directly reshape your public reputation "
+                        "and authority.\n\n\n"));
+        } else if (casa_natal_transitada[i] == 11) {
+            snprintf(str_text, 512, _("The lens energizes your network, long-term aspirations, community involvement, "
+                        "and supportive alliances. Fruitful rewards flow through collaborations, friendships, "
+                        "and group endeavors.\n\n\n"));
+        } else {
+            // Fallback de segurança para valores inesperados fora do intervalo 1-12
+            snprintf(str_text, 512, _("This alignment directly activates the baseline promises of your radix, "
+                        "driving key encounters and environmental shifts over the next 12 months.\n\n\n"));
+        }
+
+
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+        wprintw(pad, "\n");
+        wprintw(pad, "\n");
+
+        line_count += 2;
+
+        // --- VERIFICAÇÃO 3: CONDIÇÃO DO SENHOR DA PROFECÇÃO ---
+        wattron(pad, COLOR_PAIR(10) | A_DIM);
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+        line_count++;
+
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _("  [CHECK III] THE TIMELORD CO-ALIGNMENT\n\n"));
+
+        line_count += 3;
+
+        wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _(" ✦ The current Profection Lord of the Year is: %s.\n"
+                    " ✦ The current Solar Return Almuten is: %s.\n\n"), 
+                nomes_planetas[id_senhor_profeccao], nomes_planetas[id_almuten_rev[i]]);
+        
+        wprintw(pad, _("Interpretation:\n\n"));
+
+        line_count += 5;
+
+        wattroff(pad, A_BOLD );
+        if (id_almuten_rev[i] == id_senhor_profeccao) {
+            wattron(pad, A_BOLD | COLOR_PAIR(11));
+            wprintw(pad, _("CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n\n"));
+            
+            line_count += 2;
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(11));
+            snprintf(str_text, 512, _("The Lord of the Return is the EXACT same planet ruling your profection "
+                        "time stream!\n"
+                        "In traditional astrology, this synchronization indicates a highly "
+                        "turning-point year.\n"
+                        "The planet gains double cosmic authorization. The events scheduled under "
+                        "its watch are unavoidable, highly prominent, and will actively reshape your "
+                        "life history.\n\n\n"));
+        } else {
+            snprintf(str_text, 512, _("Standard Alignment. The Return Lord and the Profection Lord are operating "
+                        "under distinct frequencies. This distributes your energy evenly, allowing you to "
+                        "manage professional matters and internal shifts along separate, parallel tracks "
+                        "without overwhelming intensity.\n\n\n"));
+        }
+
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+        wprintw(pad, "\n");
+        wprintw(pad, "\n");
+
+        line_count += 2;
+
+        // --- VERIFICAÇÃO 4: O ALINHAMENTO CRONOCRÁTICO DAS FIRDÁRIAS ---
+        wattron(pad, COLOR_PAIR(10) | A_DIM);
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        
+        line_count++;
+
+        wattroff(pad, COLOR_PAIR(10) | A_DIM);
+
+        wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _("  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n\n"));
+        
+        line_count++;
+
+        wattroff(pad, COLOR_PAIR(32) | A_REVERSE);
+        wprintw(pad, _(" ✦ Current Firdaria Master Ruler: %s\n"
+                    " ✦ Current Firdaria Sub-Ruler: %s\n"
+                    " ✦ Solar Return Almuten (Lord of Year): %s\n\n"), 
+                nomes_planetas[id_senhor_firdaria], 
+                nomes_planetas[id_senhor_subfirdaria],
+                nomes_planetas[id_almuten_rev[i]]);
+        
+        wprintw(pad, _("Interpretation:\n\n"));
+
+        line_count += 8;
+
+        wattroff(pad, A_BOLD );
+        if (id_almuten_rev[i] == id_senhor_firdaria) {
+            wattron(pad, A_BOLD | COLOR_PAIR(12)); 
+            snprintf(str_text, 512, _("MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n\n"));
+            line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(12));
+            snprintf(str_text, 512, _("The Lord of the Year is also the supreme ruler of your current Firdaria cycle! "
+                        "In traditional astrology, this means the planet has total systemic harmony. The events "
+                        "it promises this year are backed by the macro-cyclical trend of your life, bringing "
+                        "profound, lasting developments that perfectly fulfill your current life chapter.\n\n\n"));
+        } 
+        else if (id_almuten_rev[i] == id_senhor_subfirdaria) {
+            wattron(pad, A_BOLD | COLOR_PAIR(1)); 
+            snprintf(str_text, 512, _("SUB-FIRDARIA ALIGNMENT DETECTED.\n\n"));
+            line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(1));
+            snprintf(str_text, 512, _("The Lord of the Year coordinates directly with your current Firdaria sub-period. "
+                        "This indicates that the events of the next 12 months will act as the perfect trigger "
+                        "to release the potential promised by the current sub-ruler in your birth chart. "
+                        "Expect a highly focused, active year regarding this planet's themes.\n\n\n"));
+        } 
+        else {
+            snprintf(str_text, 512, _("Parallel Current. The Lord of the Year operates on a distinct energetic line from "
+                        "the active Firdaria rulers. This implies that while the Firdaria manages long-term "
+                        "background developments in your life, the Almuten of the Return will bring immediate, "
+                        "practical tasks and events that keep you busy on a day-to-day level without disrupting "
+                        "the macro-cycle.\n\n\n"));
+        }
+
+        line_count += print_split_lines(pad, str_text, MAX_LINE_WIDTH);
+        wprintw(pad, "\n");
+        wprintw(pad, "\n");
+
+    }
+
+
+
+
+
 
     line_count += 2;
 

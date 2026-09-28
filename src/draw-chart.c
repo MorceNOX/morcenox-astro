@@ -7791,16 +7791,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int almuten_rev[12] = {0};
         int almuten_score_rev[12] = {0};
         int qtd_almuten_rev = 0;
-        double almuten_lon = 0.0;
-        int dig_almuten_natal = 0;
-        double almuten_lat = 0.0;
+        
+        double almuten_lon[12] = {0};
+        int dig_almuten_natal[12] = {0};
+        double almuten_lat[12] = {0};
         
         if (mapa_retorno) {
             qtd_almuten_rev = calcular_almuten_figuris(pontos_calculados, plots, &matrix, regente_dia, regente_hora, almuten_rev, almuten_score_rev);
             if (qtd_almuten_rev > 0) {
-                almuten_lon = plots[almuten_rev[0] - 1].longitude;
-                almuten_lat = plots[almuten_rev[0] - 1].latitude;
-                dig_almuten_natal = dig_natal[almuten_rev[0] - 1].essential + dig_natal[almuten_rev[0] - 1].accidental;
+                for (int i = 0; i < qtd_almuten_rev; i++) {
+                    almuten_lon[i] = plots[almuten_rev[i] - 1].longitude;
+                    almuten_lat[i] = plots[almuten_rev[i] - 1].latitude;
+                    dig_almuten_natal[i] = dig_natal[almuten_rev[i] - 1].essential + dig_natal[almuten_rev[i] - 1].accidental;
+                }                
             }
         }
         
@@ -8329,7 +8332,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 if (mapa_retorno) {
                     desativar_arrasto_mouse();                      
                     processar_confronto_natal_revolucao(
-                        almuten_rev[0],
+                        qtd_almuten_rev,
+                        almuten_rev,
                         almuten_lon,
                         almuten_lat,
                         dig_almuten_natal,
@@ -9108,7 +9112,8 @@ void open_menu_tables(ContextoMenu *ctx) {
             }
             else {
                 processar_confronto_natal_revolucao(
-                    ctx->almuten_rev[0],
+                    ctx->qtd_almuten_rev,
+                    ctx->almuten_rev,
                     ctx->almuten_lon,
                     ctx->almuten_lat,
                     ctx->dig_almuten_natal,

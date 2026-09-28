@@ -508,12 +508,6 @@ double obter_chave_kepler_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
 
 
 
-
-
-
-
-
-
 // Calcula a Ascensão Reta (RA) de forma protegida para planetas e pontos abstratos (Fortuna/SAN)
 double calcular_ra(double longitude, double declinacao, double jd) {
     double dec_real = declinacao;

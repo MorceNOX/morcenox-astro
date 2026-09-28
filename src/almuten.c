@@ -650,9 +650,9 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
 
         //mvwprintw(table_win, 8, 92, "%s", obter_nome_planeta_por_id(res_figuris[0]));
     } else {
-        wattron(table_win, COLOR_PAIR(11) | A_BOLD);
-        wprintw(table_win, " %s & %s (Tie) ", obter_glifo_planeta_por_id(res_figuris[0]), obter_glifo_planeta_por_id(res_figuris[1]));
-        wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
+        //wattron(table_win, COLOR_PAIR(11) | A_BOLD);
+        //wprintw(table_win, " %s & %s (Tie) ", obter_glifo_planeta_por_id(res_figuris[0]), obter_glifo_planeta_por_id(res_figuris[1]));
+        //wattroff(table_win, COLOR_PAIR(11) | A_BOLD);
 
         const char **ascii_art1 = get_planet_ascii(res_figuris[0]);
         const char **ascii_art2 = get_planet_ascii(res_figuris[1]);
@@ -690,10 +690,10 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
         /* GATILHO: Se pressionar 'i', abre o relatório corrido */
         if (ch == 'i' || ch == 'I') {
             if (!mapa_retorno) {
-                abrir_janela_interpretacao_almuten(res_figuris,  qtd);
+                abrir_janela_interpretacao_almuten(res_figuris,  qtd_figuris);
             } 
             else {
-                abrir_janela_interpretacao_almuten_revolucao(res_figuris, qtd);
+                abrir_janela_interpretacao_almuten_revolucao(res_figuris, qtd_figuris);
             }
             
             /* Ao fechar o relatório, redesenha a janela do painel para limpar resíduos */
@@ -851,13 +851,13 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         wprintw(pad, " %s  %s ", glifo, _("ARCHETYPAL RULER"));
         
         // Define o título nominal baseado no ID astronômico da Swiss Ephemeris
-        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉)\n"));
-        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽)\n"));
-        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿)\n"));
-        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀)\n"));
-        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂)\n"));
-        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃)\n"));
-        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄)\n"));
+        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉ )\n"));
+        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽ )\n"));
+        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿ )\n"));
+        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀ )\n"));
+        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂ )\n"));
+        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃ )\n"));
+        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄ )\n"));
         wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
 
@@ -1267,13 +1267,13 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         wattron(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);
         wprintw(pad, " %s  %s ", glifo, _(" ANNUAL OPERATIONAL RULER "));
         
-        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉) \n"));
-        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽) \n"));
-        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿) \n"));
-        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀) \n"));
-        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂) \n"));
-        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃) \n"));
-        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄) \n"));
+        if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉ ) \n"));
+        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽ ) \n"));
+        else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿ ) \n"));
+        else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀ ) \n"));
+        else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂ ) \n"));
+        else if (id_planeta == 6) wprintw(pad, _("(JUPITER - ♃ ) \n"));
+        else if (id_planeta == 7) wprintw(pad, _("(SATURN - ♄ ) \n"));
         line_count++;
 
         wattroff(pad, A_BOLD | COLOR_PAIR(32) | A_REVERSE);

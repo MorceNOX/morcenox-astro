@@ -146,9 +146,9 @@ typedef struct {
     int qtd_almuten_rev;
     int *almuten_rev;
 
-    double almuten_lon;
-    int dig_almuten_natal;
-    double almuten_lat;
+    double *almuten_lon;
+    int *dig_almuten_natal;
+    double *almuten_lat;
     double armc;
     double ascendant;
     double lat_natal;
