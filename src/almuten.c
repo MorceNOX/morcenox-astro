@@ -553,6 +553,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     mouseinterval(200);
 
     // Cabeçalho da tabela
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("   Hylegiacal Point       Longitude       Calculated Almuten"));
     wattroff(table_win, A_BOLD);
 
@@ -630,6 +631,8 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
 
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, row + 6, 5, _("ALMUTEN FIGURIS (Lord of the Chart): "));
+    if (qtd_figuris > 1) 
+        mvwprintw(table_win, row + 7, 5, _("(Tie)"));
     wattroff(table_win, A_BOLD);
 
     // Exibe o Glifo Unicode do Almuten Figuris com destaque sublinhado
