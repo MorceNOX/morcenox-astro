@@ -30,9 +30,10 @@
 #define _(String) dgettext(LANGUAGE, String)
 
 #define MAX_AGE 150.0
+
 #define TIME_KEY_NAIBOD         1
-#define TIME_KEY_PTOLEMY        2
-#define TIME_KEY_CARDAN         3
+#define TIME_KEY_CARDAN         2
+#define TIME_KEY_PTOLEMY        3
 #define TIME_KEY_PLACIDUS       4
 #define TIME_KEY_TRUE_SOLAR_ARC 5
 #define TIME_KEY_KEPLER         6

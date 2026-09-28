@@ -47,6 +47,7 @@ typedef struct {
     int show_modern_planets;
     int gender;
     char language[10];
+    int time_key;
 } ChartOptions;
 
 typedef struct {

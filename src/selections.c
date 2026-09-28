@@ -579,6 +579,7 @@ ChartOptions load_default_options() {
     options.modern_planets_rulling = false;
     options.show_modern_planets = false;
     options.gender = GENDER;
+    options.time_key = TIME_KEY;
     snprintf(options.language, 10, "%s", LANGUAGE);
 
     sqlite3 *db;
@@ -591,7 +592,7 @@ ChartOptions load_default_options() {
         return options;
     }
 
-    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language FROM profiles WHERE profile = ?;";
+    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key FROM profiles WHERE profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (load_default_options): %s\n", sqlite3_errmsg(db));
@@ -610,6 +611,7 @@ ChartOptions load_default_options() {
         int show_modern_planets = sqlite3_column_int(stmt, 5);
         int gender_id = sqlite3_column_int(stmt, 6);
         const char *lang_cod = (const char*)sqlite3_column_text(stmt, 7);
+        int key = sqlite3_column_int(stmt, 8);
 
         options.dark_mode = dark_mode;
         options.house_system = house_system[0];
@@ -619,6 +621,7 @@ ChartOptions load_default_options() {
         options.show_modern_planets = show_modern_planets;
         options.gender = gender_id;
         snprintf(options.language, 10, "%s", lang_cod);
+        options.time_key = key;
 
         found = 1;
     }
@@ -748,6 +751,45 @@ OptionsEdition select_options() {
                 strcpy(terms_names[terms_count], name);
                 
                 terms_count++;
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+
+
+    // Load time keys from database
+    int *key_ids = NULL;
+    char **key_names = NULL;
+    int *key_types = NULL;
+    double *key_values = NULL;
+    int key_count = 0;
+
+    db = open_database();
+    if (db) {
+        const char *sql_select_time_keys = "SELECT id, name, type, value FROM time_keys ORDER BY id;";
+        rc = sqlite3_prepare_v2(db, sql_select_time_keys, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                int id = sqlite3_column_int(stmt, 0);
+                const char *name = (const char*)sqlite3_column_text(stmt, 1);
+                int type = sqlite3_column_int(stmt, 2);
+                double key_value = sqlite3_column_double(stmt, 3);
+                
+                // Resize arrays
+                key_ids = realloc(key_ids, (key_count + 1) * sizeof(int));
+                key_names = realloc(key_names, (key_count + 1) * sizeof(char*));
+                key_types = realloc(key_types, (key_count + 1) * sizeof(int));
+                key_values = realloc(key_values, (key_count + 1) * sizeof(double));
+                
+                key_ids[key_count] = id;                
+                key_names[key_count] = malloc(strlen(name) + 1);
+                strcpy(key_names[key_count], name);
+                key_types[key_count] = type;
+                key_values[key_count] = key_value;
+
+                key_count++;
             }
             sqlite3_finalize(stmt);
         }
@@ -920,7 +962,7 @@ OptionsEdition select_options() {
         wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 22; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(22));
             
@@ -1079,6 +1121,33 @@ OptionsEdition select_options() {
                 const char *dark_mode_text = _("Dark Mode");
                 mvwprintw(win, 26, 5, "%s: %s ", dark_mode_text, dark_mode_str);
             }
+            else if (i == 21) {
+                // Show the name of the time key instead of just the number
+                char time_key_name[128];
+                snprintf(time_key_name, 128, "%s", _("Unknown"));
+                if (key_count > 0) {
+                    for (int j = 0; j < key_count; j++) {
+                        if (key_ids[j] == options.time_key) {
+                            if (key_types[j] == 1) {
+                                snprintf(time_key_name, sizeof(time_key_name), "%d - %s (%8.6f°)", 
+                                options.time_key, 
+                                key_names[j], 
+                                key_values[j]);
+                            } else {
+                                snprintf(time_key_name, sizeof(time_key_name), "%d - %s (%s)", 
+                                options.time_key, 
+                                key_names[j], 
+                                _("Dynamic"));
+                            }
+                            break;
+                          
+                        }
+                    }
+                }
+
+                const char *key_text = _("Time Key of Primary Direction");
+                mvwprintw(win, 28, 5, "%s: %s ", key_text, time_key_name);
+            }
 
             if (i == campo_atual) wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattroff(win, COLOR_PAIR(22));
@@ -1092,10 +1161,10 @@ OptionsEdition select_options() {
 
         switch (key) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 21) % 21; // Now 21 fields
+                campo_atual = (campo_atual - 1 + 22) % 22; // Now 22 fields
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 21;
+                campo_atual = (campo_atual + 1) % 22;
                 break;
             case KEY_RIGHT:
                 
@@ -1214,6 +1283,26 @@ OptionsEdition select_options() {
                 else if (campo_atual == 20) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
+                }
+                else if (campo_atual == 21) {
+                    if (key_count > 0) {
+                        int current_pos = -1;
+                        for (int j = 0; j < key_count; j++) {
+                            if (key_ids[j] == options.time_key) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to next system
+                        if (current_pos >= 0) {
+                            int next_pos = (current_pos + 1) % key_count;
+                            options.time_key = key_ids[next_pos];
+                        } else {
+                            // If not found, start with first
+                            options.time_key = key_ids[0];
+                        }
+                    }
                 }
                 break;
 
@@ -1336,6 +1425,28 @@ OptionsEdition select_options() {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
+                else if (campo_atual == 21) {
+                    if (key_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < key_count; j++) {
+                            if (key_ids[j] == options.time_key) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to previous system
+                        if (current_pos >= 0) {
+                            int prev_pos = (current_pos - 1 + key_count) % key_count;
+                            options.time_key = key_ids[prev_pos];
+                        } else {
+                            // If not found, start with first
+                            options.time_key = key_ids[0];
+                        }
+                    }
+
+                }
                 break;
             case 10: // Enter
                 // Update the database with new planet orbis values
@@ -1444,6 +1555,21 @@ OptionsEdition select_options() {
                                     free(lang_cods[i]);
                                 }
                                 free(lang_cods);
+                            }
+                            if (key_ids) {
+                                free(key_ids);
+                            }
+                            if (key_types) {
+                                free(key_types);
+                            }
+                            if (key_values) {
+                                free(key_values);
+                            }
+                            if (key_names) {
+                                for (int i = 0; i < key_count; i++) {
+                                    free(key_names[i]);
+                                }
+                                free(key_names);
                             }
                             delwin(win);
                             ed.changed = 0;
@@ -1603,6 +1729,21 @@ OptionsEdition select_options() {
                                 }
                                 free(lang_cods);
                             }
+                            if (key_ids) {
+                                free(key_ids);
+                            }
+                            if (key_types) {
+                                free(key_types);
+                            }
+                            if (key_values) {
+                                free(key_values);
+                            }
+                            if (key_names) {
+                                for (int i = 0; i < key_count; i++) {
+                                    free(key_names[i]);
+                                }
+                                free(key_names);
+                            }
                             delwin(win);
                             ed.changed = 0;
                             return ed;                            
@@ -1655,6 +1796,21 @@ OptionsEdition select_options() {
                     }
                     free(lang_cods);
                 }
+                if (key_ids) {
+                    free(key_ids);
+                }
+                if (key_types) {
+                    free(key_types);
+                }
+                if (key_values) {
+                    free(key_values);
+                }
+                if (key_names) {
+                    for (int i = 0; i < key_count; i++) {
+                        free(key_names[i]);
+                    }
+                    free(key_names);
+                }
                 delwin(win);
                 ed.changed = 0;
                 return ed;
@@ -1704,6 +1860,21 @@ OptionsEdition select_options() {
             free(lang_cods[i]);
         }
         free(lang_cods);
+    }
+    if (key_ids) {
+        free(key_ids);
+    }
+    if (key_types) {
+        free(key_types);
+    }
+    if (key_values) {
+        free(key_values);
+    }
+    if (key_names) {
+        for (int i = 0; i < key_count; i++) {
+            free(key_names[i]);
+        }
+        free(key_names);
     }
     
     delwin(win);

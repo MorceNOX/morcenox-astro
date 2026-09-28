@@ -2122,7 +2122,7 @@ void load_default_values() {
         return;
     }
 
-    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
+    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select_city, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (main): %s\n", sqlite3_errmsg(db));
@@ -2144,6 +2144,8 @@ void load_default_values() {
         int gender_id = sqlite3_column_int(stmt, 8);
         int show_mod = sqlite3_column_int(stmt, 9);
         const char *def_lang = (const char*)sqlite3_column_text(stmt, 10);
+        int key = sqlite3_column_int(stmt, 11);
+
     
         if (city) snprintf(DEFAULT_CITY, sizeof(DEFAULT_CITY), "%s", city);
         if (country) snprintf(DEFAULT_COUNTRY, sizeof(DEFAULT_COUNTRY), "%s", country);
@@ -2159,6 +2161,9 @@ void load_default_values() {
 
         DST = dst;
         DARK_MODE = dark_mode;
+
+        TIME_KEY = key;
+
         if (db_house_system) {
             char *house_system = strdup(db_house_system);
             HOUSE_SYSTEM = house_system[0];
@@ -2545,6 +2550,7 @@ void set_options() {
 
     HOUSE_SYSTEM = ed.options.house_system;
     GENDER = ed.options.gender;
+    TIME_KEY = ed.options.time_key;
     snprintf(LANGUAGE, 10, "%s", ed.options.language);
 
     update_interface_language();
@@ -2556,6 +2562,7 @@ void set_options() {
     else {
         if (! update_settings(ed.options)) {
             fprintf(stderr, "Failed updating settings!");
+            show_alert_popup("Failed updating settings!", "");
             return;
         }
     }

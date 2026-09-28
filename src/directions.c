@@ -457,6 +457,63 @@ double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
 
 
 
+#include "swephexp.h"
+#include <stdio.h>
+#include <math.h>
+
+/**
+ * Retorna o valor CHAVE dinâmico para a lógica de Kepler com altíssima velocidade.
+ * Uso no seu código: double chave = obter_chave_kepler_ultra_rapida(tjd_natal, arco);
+ *                    double idade = arco / chave;
+ */
+double obter_chave_kepler_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
+    double x2[6];
+    char serr[256];
+    int32 iflag = SEFLG_SPEED;
+
+    // 1. Estimativa inicial rápida usando uma média padrão (ex: Naibod)
+    // Isso nos joga muito perto da idade real antes de começar
+    double idade_estimada = arco_alvo / NAIBOD_KEY;
+
+    // 2. Método de Newton-Raphson (Apenas 3 passos encontram a precisão máxima)
+    for (int i = 0; i < 3; i++) {
+        // Encontra a data do trânsito na idade estimada
+        double tjd_ut_atual = tjd_ut_natal + (idade_estimada * 365.242199);
+        
+        if (swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr) < 0) {
+            // Se falhar, aborta para evitar loop infinito
+            break; 
+        }
+
+        double velocidade_sol = x2[3]; // x2[3] contém a velocidade diária em graus/dia
+        
+        // Na lógica de Kepler: Arco = Velocidade * Idade
+        double arco_estimado = velocidade_sol * idade_estimada;
+        double erro = arco_estimado - arco_alvo;
+
+        // Ajusta a estimativa dividindo o erro pela derivada aproximada (velocidade)
+        idade_estimada -= erro / velocidade_sol;
+    }
+
+    // 3. Proteção contra divisão por zero para arcos nulos ou recém-nascidos
+    if (idade_estimada < 1e-6) {
+        swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
+        return x2[3]; // Retorna a velocidade do dia do nascimento
+    }
+
+    // Retorna a Chave Equivalente exata para fechar com a sua equação matemática:
+    // Idade = Arco / Chave -> Chave = Arco / Idade
+    return arco_alvo / idade_estimada;
+}
+
+
+
+
+
+
+
+
+
 // Calcula a Ascensão Reta (RA) de forma protegida para planetas e pontos abstratos (Fortuna/SAN)
 double calcular_ra(double longitude, double declinacao, double jd) {
     double dec_real = declinacao;
@@ -694,7 +751,7 @@ double get_time_key(int key, double jd, double arco) {
         case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
         case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
         case TIME_KEY_TRUE_SOLAR_ARC: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
-        case TIME_KEY_KEPLER:         return obter_chave_kepler(jd, arco);
+        case TIME_KEY_KEPLER:         return obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
         default: return NAIBOD_KEY;
     }
 }
@@ -1343,7 +1400,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
         }
         else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate"), get_key_name(TIME_KEY));
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
         }
         if (tipo == 0) {
             mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
@@ -2044,7 +2101,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
         }
         else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate"), get_key_name(TIME_KEY));
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
         }
         
         if (tipo == 0) {

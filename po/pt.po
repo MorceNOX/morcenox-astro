@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-27 22:04-0300\n"
+"POT-Creation-Date: 2026-09-28 00:51-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -40,7 +40,7 @@ msgstr "Lua"
 msgid "Ascendant"
 msgstr "Ascendente"
 
-#: src/almuten.c:564 src/directions.c:928 src/draw-chart.c:431
+#: src/almuten.c:564 src/directions.c:985 src/draw-chart.c:431
 #: src/draw-chart.c:1555 src/draw-chart.c:6680 src/draw-chart.c:6699
 #: src/draw-chart.c:7825 src/draw-chart.c:7889
 msgid "Part of Fortune"
@@ -58,8 +58,8 @@ msgstr "Empate"
 msgid "Planetary"
 msgstr "Regente"
 
-#: src/almuten.c:609 src/directions.c:1225 src/directions.c:1925
-#: src/draw-chart.c:2188 src/draw-chart.c:4403 src/selections.c:2457
+#: src/almuten.c:609 src/directions.c:1282 src/directions.c:1982
+#: src/draw-chart.c:2188 src/draw-chart.c:4403 src/selections.c:2628
 msgid "Day"
 msgstr "Dia"
 
@@ -69,7 +69,7 @@ msgid "Night"
 msgstr "Noite"
 
 #: src/almuten.c:609 src/draw-chart.c:2188 src/draw-chart.c:4403
-#: src/draw-chart.c:4431 src/selections.c:2683
+#: src/draw-chart.c:4431 src/selections.c:2854
 msgid "Hour"
 msgstr "Hora"
 
@@ -852,22 +852,22 @@ msgstr "Fórmula Diurna"
 msgid "Nocturnal Formulae"
 msgstr "Fórmula Noturna"
 
-#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/selections.c:2252
+#: src/arabic_parts.c:238 src/arabic_parts.c:669 src/selections.c:2423
 msgid "Gender"
 msgstr "Gênero"
 
 #: src/arabic_parts.c:238 src/arabic_parts.c:669 src/arabic_parts.c:1305
-#: src/draw-chart.c:2151 src/selections.c:2253
+#: src/draw-chart.c:2151 src/selections.c:2424
 msgid "Masculine"
 msgstr "Masculino"
 
 #: src/arabic_parts.c:238 src/arabic_parts.c:669 src/arabic_parts.c:1305
-#: src/draw-chart.c:2151 src/selections.c:2253
+#: src/draw-chart.c:2151 src/selections.c:2424
 msgid "Feminine"
 msgstr "Feminino"
 
 #: src/arabic_parts.c:238 src/arabic_parts.c:669 src/draw-chart.c:2151
-#: src/selections.c:1053 src/selections.c:2253
+#: src/selections.c:1095 src/selections.c:2424
 msgid "Neuter"
 msgstr "Neutro"
 
@@ -910,8 +910,8 @@ msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects.
 msgstr ""
 "Use [↑/↓] Seleciona | [e] Editar | [i] Incluir | [d] Excluir | [x] Aspectos."
 
-#: src/arabic_parts.c:415 src/arabic_parts.c:789 src/directions.c:1372
-#: src/directions.c:2074 src/draw-chart.c:3698 src/draw-chart.c:4218
+#: src/arabic_parts.c:415 src/arabic_parts.c:789 src/directions.c:1429
+#: src/directions.c:2131 src/draw-chart.c:3698 src/draw-chart.c:4218
 #: src/draw-chart.c:5213 src/firdaria.c:464 src/hyleg.c:774 src/hyleg.c:1129
 #: src/mind.c:331 src/profections.c:236
 msgid "Press ESC to return to chart"
@@ -1029,8 +1029,8 @@ msgstr "   SIM   "
 
 #: src/arabic_parts.c:2267 src/arabic_parts.c:2356 src/arabic_parts.c:2365
 #: src/selections.c:292 src/selections.c:381 src/selections.c:390
-#: src/selections.c:1774 src/selections.c:1912 src/selections.c:1923
-#: src/selections.c:2013 src/selections.c:2140 src/selections.c:2151
+#: src/selections.c:1945 src/selections.c:2083 src/selections.c:2094
+#: src/selections.c:2184 src/selections.c:2311 src/selections.c:2322
 msgid "  CANCEL  "
 msgstr "  CANCELA "
 
@@ -1078,80 +1078,80 @@ msgstr " Matriz de Aspectos com Antiscia "
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos com Contrantiscia "
 
-#: src/directions.c:722
+#: src/directions.c:779
 msgid "True Solar Arc"
 msgstr "Arco Solar Verdadeiro"
 
-#: src/directions.c:859 src/directions.c:2370
+#: src/directions.c:916 src/directions.c:2427
 msgid "Mundane"
 msgstr "Mundana"
 
-#: src/directions.c:1044
+#: src/directions.c:1101
 msgid " Primary Directions "
 msgstr " Direções Primárias "
 
-#: src/directions.c:1175 src/directions.c:1871
+#: src/directions.c:1232 src/directions.c:1928
 msgid "Active Significator Target: "
 msgstr "Significador Ativo Alvo: "
 
-#: src/directions.c:1179
+#: src/directions.c:1236
 msgid " [EMPHASIZED HYLEG]"
 msgstr " [HYLEG ENFATIZADO]"
 
-#: src/directions.c:1181 src/directions.c:1881
+#: src/directions.c:1238 src/directions.c:1938
 msgid "Point not calculated in this chart"
 msgstr "Ponto não calculado neste mapa"
 
-#: src/directions.c:1186 src/directions.c:1886
+#: src/directions.c:1243 src/directions.c:1943
 msgid " │ Directions: "
 msgstr " │ Direções: "
 
-#: src/directions.c:1212 src/directions.c:1911
+#: src/directions.c:1269 src/directions.c:1968
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr "Use [←/→] Signif. [↑/↓] Rolagem"
 
-#: src/directions.c:1222 src/directions.c:1922 src/selections.c:1789
-#: src/selections.c:2027
+#: src/directions.c:1279 src/directions.c:1979 src/selections.c:1960
+#: src/selections.c:2198
 msgid "Age"
 msgstr "Idade"
 
-#: src/directions.c:1223 src/directions.c:1923 src/selections.c:2455
+#: src/directions.c:1280 src/directions.c:1980 src/selections.c:2626
 msgid "Year"
 msgstr "Ano"
 
-#: src/directions.c:1224 src/directions.c:1924
+#: src/directions.c:1281 src/directions.c:1981
 msgid " Mo"
 msgstr "Mês"
 
-#: src/directions.c:1226 src/directions.c:1926
+#: src/directions.c:1283 src/directions.c:1983
 msgid "Directional Event"
 msgstr "Evento Direcional"
 
-#: src/directions.c:1227 src/directions.c:1927
+#: src/directions.c:1284 src/directions.c:1984
 msgid "Arc (Equat.)"
 msgstr "Arco (Equat.)"
 
-#: src/directions.c:1228 src/directions.c:1928
+#: src/directions.c:1285 src/directions.c:1985
 msgid "Method"
 msgstr "Método"
 
-#: src/directions.c:1229 src/directions.c:1929
+#: src/directions.c:1286 src/directions.c:1986
 msgid "Direction"
 msgstr "Sentido"
 
-#: src/directions.c:1230 src/directions.c:1930
+#: src/directions.c:1287 src/directions.c:1987
 msgid "Divisor"
 msgstr "Divisor"
 
-#: src/directions.c:1242 src/directions.c:1943
+#: src/directions.c:1299 src/directions.c:2000
 msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
-#: src/directions.c:1252 src/directions.c:1953 src/draw-chart.c:3807
+#: src/directions.c:1309 src/directions.c:2010 src/draw-chart.c:3807
 msgid "Term"
 msgstr "Termo"
 
-#: src/directions.c:1263 src/directions.c:1963 src/draw-chart.c:407
+#: src/directions.c:1320 src/directions.c:2020 src/draw-chart.c:407
 #: src/draw-chart.c:608 src/draw-chart.c:625 src/draw-chart.c:5746
 #: src/draw-chart.c:6672 src/draw-chart.c:6694 src/firdaria.c:101
 #: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:48 src/solar_return.c:1138
@@ -1159,7 +1159,7 @@ msgstr "Termo"
 msgid "Mars"
 msgstr "Marte"
 
-#: src/directions.c:1264 src/directions.c:1964 src/draw-chart.c:413
+#: src/directions.c:1321 src/directions.c:2021 src/draw-chart.c:413
 #: src/draw-chart.c:610 src/draw-chart.c:627 src/draw-chart.c:5744
 #: src/draw-chart.c:6674 src/draw-chart.c:6696 src/firdaria.c:103
 #: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:54 src/solar_return.c:1138
@@ -1167,14 +1167,14 @@ msgstr "Marte"
 msgid "Saturn"
 msgstr "Saturno"
 
-#: src/directions.c:1265 src/directions.c:1965 src/draw-chart.c:428
+#: src/directions.c:1322 src/directions.c:2022 src/draw-chart.c:428
 #: src/draw-chart.c:615 src/draw-chart.c:632 src/draw-chart.c:1557
 #: src/draw-chart.c:6679 src/draw-chart.c:6698 src/firdaria.c:105
 #: src/solar_return.c:1305 src/solar_return.c:1364 src/solar_return.c:1522
 msgid "South Node"
 msgstr "Nodo Sul"
 
-#: src/directions.c:1272 src/directions.c:1972 src/draw-chart.c:410
+#: src/directions.c:1329 src/directions.c:2029 src/draw-chart.c:410
 #: src/draw-chart.c:609 src/draw-chart.c:626 src/draw-chart.c:5745
 #: src/draw-chart.c:6673 src/draw-chart.c:6695 src/firdaria.c:102
 #: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:53 src/solar_return.c:1138
@@ -1182,7 +1182,7 @@ msgstr "Nodo Sul"
 msgid "Jupiter"
 msgstr "Júpiter"
 
-#: src/directions.c:1273 src/directions.c:1973 src/draw-chart.c:404
+#: src/directions.c:1330 src/directions.c:2030 src/draw-chart.c:404
 #: src/draw-chart.c:607 src/draw-chart.c:624 src/draw-chart.c:5741
 #: src/draw-chart.c:6671 src/draw-chart.c:6693 src/firdaria.c:100
 #: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:49 src/solar_return.c:1138
@@ -1190,65 +1190,65 @@ msgstr "Júpiter"
 msgid "Venus"
 msgstr "Vênus"
 
-#: src/directions.c:1274 src/directions.c:1974 src/draw-chart.c:425
+#: src/directions.c:1331 src/directions.c:2031 src/draw-chart.c:425
 #: src/draw-chart.c:614 src/draw-chart.c:631 src/draw-chart.c:1559
 #: src/draw-chart.c:6678 src/draw-chart.c:6697 src/firdaria.c:104
 #: src/solar_return.c:1305 src/solar_return.c:1367 src/solar_return.c:1525
 msgid "North Node"
 msgstr "Nodo Norte"
 
-#: src/directions.c:1324 src/directions.c:2024
+#: src/directions.c:1381 src/directions.c:2081
 msgid "Direct"
 msgstr "Direta"
 
-#: src/directions.c:1324 src/directions.c:2024
+#: src/directions.c:1381 src/directions.c:2081
 msgid "Converse"
 msgstr "Conversa"
 
-#: src/directions.c:1343 src/directions.c:2044
+#: src/directions.c:1400 src/directions.c:2101
 #, c-format
 msgid ""
 "Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."
 msgstr ""
 "Chave de Tempo: %s (1° de Rotação Equatorial = %6.4f Years). ε: Dinâmica."
 
-#: src/directions.c:1346 src/directions.c:2047
+#: src/directions.c:1403 src/directions.c:2104
 #, c-format
-msgid "Time Key: %s Rate"
-msgstr "Chave de Tempo: %s"
+msgid "Time Key: %s Rate (Dynamic). ε: Dynamic."
+msgstr "Chave de Tempo Dinâmica: Proporção de %s. ε: Dinâmica"
 
-#: src/directions.c:1349 src/directions.c:2051
+#: src/directions.c:1406 src/directions.c:2108
 msgid "Aspects: Zodiacal with Real Latitude (Method Placidus)."
 msgstr "Aspectos: Zodiacais com Latitude Real (Método Placidus)."
 
-#: src/directions.c:1351 src/directions.c:2053
+#: src/directions.c:1408 src/directions.c:2110
 msgid "Aspects: Mundane proportional to Semi-Arcs."
 msgstr "Aspectos: Mundanos proporcionais aos Semi-Arcos."
 
-#: src/directions.c:1353 src/directions.c:2055
+#: src/directions.c:1410 src/directions.c:2112
 msgid ""
 "Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-"
 "Arcs)."
 msgstr ""
 "Aspectos: Zodiacais c/ Latitude + Mundanos proporcionais aos Semi-Arcos."
 
-#: src/directions.c:1360 src/directions.c:2062
+#: src/directions.c:1417 src/directions.c:2119
 msgid "[↑/↓] [PgUp/PgDn] Scroll (Showing"
 msgstr "[↑/↓] [PgUp/PgDn] Rolar (Exibindo"
 
-#: src/directions.c:1363 src/directions.c:2065
+#: src/directions.c:1420 src/directions.c:2122
 msgid "of"
 msgstr "de"
 
-#: src/directions.c:1365 src/directions.c:2067
+#: src/directions.c:1422 src/directions.c:2124
 msgid ") │ [←/→] Change Target"
 msgstr ") │ [←/→] Trocar Alvo"
 
-#: src/directions.c:1366 src/directions.c:2068
+#: src/directions.c:1423 src/directions.c:2125
 msgid " │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"
 msgstr " │ [C] Conv [D] Dir [A] Todas │ [Z] Zod [M] Mund [B] Ambas"
 
-#: src/directions.c:1368 src/directions.c:2070
+#: src/directions.c:1425 src/directions.c:2127
 msgid ""
 "Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] "
 "Both"
@@ -1256,7 +1256,7 @@ msgstr ""
 "Use [←/→] Trocar Alvo │ [C] Conv [D] Dir [A] Todas │ [Z] Zod [M] Mund [B] "
 "Ambas"
 
-#: src/directions.c:1738
+#: src/directions.c:1795
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
@@ -3143,15 +3143,15 @@ msgstr "┃ Data/Hora: "
 msgid "┃ Dst: "
 msgstr "┃ HdV: "
 
-#: src/menu-box.c:1796 src/selections.c:3091 src/selections.c:3241
+#: src/menu-box.c:1796 src/selections.c:3262 src/selections.c:3412
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:1796 src/selections.c:3090 src/selections.c:3244
+#: src/menu-box.c:1796 src/selections.c:3261 src/selections.c:3415
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:1796 src/selections.c:3089
+#: src/menu-box.c:1796 src/selections.c:3260
 msgid "Auto"
 msgstr "Auto"
 
@@ -3164,107 +3164,107 @@ msgstr "┃ Gên: "
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:2496
+#: src/menu-box.c:2501
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:2500 src/menu-box.c:2677
+#: src/menu-box.c:2505 src/menu-box.c:2684
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:2518
+#: src/menu-box.c:2523
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:2522 src/menu-box.c:2678
+#: src/menu-box.c:2527 src/menu-box.c:2685
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:2533
+#: src/menu-box.c:2538
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:2563
+#: src/menu-box.c:2570
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:2669
+#: src/menu-box.c:2676
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:2669
+#: src/menu-box.c:2676
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localização padrão."
 
-#: src/menu-box.c:2670
+#: src/menu-box.c:2677
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:2670
+#: src/menu-box.c:2677
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:2671
+#: src/menu-box.c:2678
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:2671
+#: src/menu-box.c:2678
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:2672
+#: src/menu-box.c:2679
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:2672
+#: src/menu-box.c:2679
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:2673
+#: src/menu-box.c:2680
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:2673
+#: src/menu-box.c:2680
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:2674
+#: src/menu-box.c:2681
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:2674
+#: src/menu-box.c:2681
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:2675
+#: src/menu-box.c:2682
 msgid "Change the Default Location"
 msgstr "Mudar a Localização Padrão"
 
-#: src/menu-box.c:2675
+#: src/menu-box.c:2682
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:2676
+#: src/menu-box.c:2683
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:2676
+#: src/menu-box.c:2683
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:2677
+#: src/menu-box.c:2684
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:2678
+#: src/menu-box.c:2685
 msgid "Technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:2679
+#: src/menu-box.c:2686
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:2679
+#: src/menu-box.c:2686
 msgid "Exit the program."
 msgstr "Sair do programa."
 
@@ -3816,8 +3816,8 @@ msgid "    NO    "
 msgstr "    NÃO   "
 
 #: src/selections.c:281 src/selections.c:348 src/selections.c:357
-#: src/selections.c:1763 src/selections.c:1880 src/selections.c:1889
-#: src/selections.c:2002 src/selections.c:2106 src/selections.c:2116
+#: src/selections.c:1934 src/selections.c:2051 src/selections.c:2060
+#: src/selections.c:2173 src/selections.c:2277 src/selections.c:2287
 msgid "  CONFIRM  "
 msgstr "  CONFIRMA  "
 
@@ -3830,267 +3830,275 @@ msgstr " AVISO "
 msgid "    OK    "
 msgstr "    OK    "
 
-#: src/selections.c:852 src/selections.c:884
+#: src/selections.c:894 src/selections.c:926
 msgid " Settings "
 msgstr " Configurações "
 
-#: src/selections.c:868 src/selections.c:919
+#: src/selections.c:910 src/selections.c:961
 msgid "[↓↑] Select. [← →] Adjust. [Enter] Confirm. [ESC] Cancel."
 msgstr "[↓↑] Seleciona. [← →] Ajusta. [Enter] Confirma. [ESC] Cancela."
 
-#: src/selections.c:899 src/selections.c:1464 src/selections.c:1473
+#: src/selections.c:941 src/selections.c:1590 src/selections.c:1599
 msgid "[ CONFIRM  ]"
 msgstr "[ CONFIRMA ]"
 
-#: src/selections.c:910 src/selections.c:1539 src/selections.c:1550
-#: src/selections.c:2236 src/selections.c:2347 src/selections.c:2357
-#: src/selections.c:2479 src/selections.c:2581 src/selections.c:2591
-#: src/selections.c:2709 src/selections.c:2823 src/selections.c:2833
+#: src/selections.c:952 src/selections.c:1665 src/selections.c:1676
+#: src/selections.c:2407 src/selections.c:2518 src/selections.c:2528
+#: src/selections.c:2650 src/selections.c:2752 src/selections.c:2762
+#: src/selections.c:2880 src/selections.c:2994 src/selections.c:3004
 msgid "[  CANCEL  ]"
 msgstr "[  CANCELA ]"
 
-#: src/selections.c:930 src/selections.c:947 src/selections.c:965
-#: src/selections.c:1061
+#: src/selections.c:972 src/selections.c:989 src/selections.c:1007
+#: src/selections.c:1103 src/selections.c:1127
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: src/selections.c:941
+#: src/selections.c:983
 msgid "House System"
 msgstr "Sistema de Casas"
 
-#: src/selections.c:958
+#: src/selections.c:1000
 msgid "Triplicity System"
 msgstr "Sistema de Triplicidade"
 
-#: src/selections.c:977
+#: src/selections.c:1019
 msgid "Terms (bounds) System"
 msgstr "Sistema de Termos"
 
-#: src/selections.c:983
+#: src/selections.c:1025
 msgid "Sun orb"
 msgstr "Orbe do Sol"
 
-#: src/selections.c:987
+#: src/selections.c:1029
 msgid "Moon orb"
 msgstr "Orbe da Lua"
 
-#: src/selections.c:991
+#: src/selections.c:1033
 msgid "Mercury orb"
 msgstr "Orbe de Mercúrio"
 
-#: src/selections.c:995
+#: src/selections.c:1037
 msgid "Venus orb"
 msgstr "Orbe de Vênus"
 
-#: src/selections.c:999
+#: src/selections.c:1041
 msgid "Mars orb"
 msgstr "Orbe de Marte"
 
-#: src/selections.c:1003
+#: src/selections.c:1045
 msgid "Jupiter orb"
 msgstr "Orbe de Júpiter"
 
-#: src/selections.c:1007
+#: src/selections.c:1049
 msgid "Saturn orb"
 msgstr "Orbe de Saturno"
 
-#: src/selections.c:1011
+#: src/selections.c:1053
 msgid "Uranus orb"
 msgstr "Orbe de Urano"
 
-#: src/selections.c:1015
+#: src/selections.c:1057
 msgid "Neptune orb"
 msgstr "Orbe de Netuno"
 
-#: src/selections.c:1019
+#: src/selections.c:1061
 msgid "Pluto orb"
 msgstr "Orbe de Plutão"
 
-#: src/selections.c:1023
+#: src/selections.c:1065
 msgid "Lunar Nodes orb"
 msgstr "Orbe dos Nodos Lunares"
 
-#: src/selections.c:1028
+#: src/selections.c:1070
 msgid "Parallel / Contra-parallel orb"
 msgstr "Orbe dos Aspectos Paralelo e Contra-Paralelo"
 
-#: src/selections.c:1033
+#: src/selections.c:1075
 msgid "Antiscia / Contrantiscia orb"
 msgstr "Orbe dos Aspectos para Antiscia e Contrantiscia"
 
-#: src/selections.c:1039 src/selections.c:1046 src/selections.c:1077
+#: src/selections.c:1081 src/selections.c:1088 src/selections.c:1119
 msgid "yes"
 msgstr "sim"
 
-#: src/selections.c:1039 src/selections.c:1046 src/selections.c:1077
+#: src/selections.c:1081 src/selections.c:1088 src/selections.c:1119
 msgid "no"
 msgstr "não"
 
-#: src/selections.c:1040
+#: src/selections.c:1082
 msgid "Consider Modern Planets Rulling by Exaltation?"
 msgstr "Considerar Exaltação dos Planetas Modernos?"
 
-#: src/selections.c:1047
+#: src/selections.c:1089
 msgid "Use Modern Planets?"
 msgstr "Usar os Planetas Modernos?"
 
-#: src/selections.c:1053
+#: src/selections.c:1095
 msgid "Male"
 msgstr "Masculino"
 
-#: src/selections.c:1053
+#: src/selections.c:1095
 msgid "Female"
 msgstr "Feminino"
 
-#: src/selections.c:1054
+#: src/selections.c:1096
 msgid "Default Gender"
 msgstr "Gênero Padrão"
 
-#: src/selections.c:1071
+#: src/selections.c:1113
 msgid "Interface Language"
 msgstr "Idioma da Interface"
 
-#: src/selections.c:1079
+#: src/selections.c:1121
 msgid "Dark Mode"
 msgstr "Modo Escuro"
 
-#: src/selections.c:1756 src/selections.c:1995
+#: src/selections.c:1140
+msgid "Dynamic"
+msgstr "Dinâmica"
+
+#: src/selections.c:1148
+msgid "Time Key of Primary Direction"
+msgstr "Chave de Tempo de Direção Primária"
+
+#: src/selections.c:1927 src/selections.c:2166
 msgid " Target Age Selection "
 msgstr " Seleção da Idade Alvo "
 
-#: src/selections.c:1782
+#: src/selections.c:1953
 msgid "Use [↑/↓] [PgUp/PgDn] to adjust."
 msgstr "Use [↑/↓] [PgUp/PgDn] Ajustar."
 
-#: src/selections.c:1783
+#: src/selections.c:1954
 msgid "[Enter] confirm | [ESC] cancel."
 msgstr "[Enter] Confirma | [ESC] Cancela."
 
-#: src/selections.c:1790 src/selections.c:2028
+#: src/selections.c:1961 src/selections.c:2199
 msgid "years"
 msgstr "anos"
 
-#: src/selections.c:2021 src/selections.c:2245
+#: src/selections.c:2192 src/selections.c:2416
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr "Use [↑/↓] ajustar. [Enter] confirmar."
 
-#: src/selections.c:2022 src/selections.c:2246
+#: src/selections.c:2193 src/selections.c:2417
 msgid "[ESC] to cancel."
 msgstr "[ESC] cancela."
 
-#: src/selections.c:2219
+#: src/selections.c:2390
 msgid " Gender Selection "
 msgstr " Seleção de Gênero"
 
-#: src/selections.c:2225 src/selections.c:2314 src/selections.c:2323
-#: src/selections.c:2468 src/selections.c:2547 src/selections.c:2556
-#: src/selections.c:2698 src/selections.c:2789 src/selections.c:2798
+#: src/selections.c:2396 src/selections.c:2485 src/selections.c:2494
+#: src/selections.c:2639 src/selections.c:2718 src/selections.c:2727
+#: src/selections.c:2869 src/selections.c:2960 src/selections.c:2969
 msgid "[  CONFIRM  ]"
 msgstr "[ CONFIRMA  ]"
 
-#: src/selections.c:2434
+#: src/selections.c:2605
 msgid " Date "
 msgstr " Data "
 
-#: src/selections.c:2438 src/selections.c:2671
+#: src/selections.c:2609 src/selections.c:2842
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr "[↑/↓] ajustar. [Enter] confirma."
 
-#: src/selections.c:2439 src/selections.c:2672
+#: src/selections.c:2610 src/selections.c:2843
 msgid "[ESC] Cancel."
 msgstr "[ESC] cancela."
 
-#: src/selections.c:2456
+#: src/selections.c:2627
 msgid "Month"
 msgstr "Mês"
 
-#: src/selections.c:2667
+#: src/selections.c:2838
 msgid " Time "
 msgstr " Horário "
 
-#: src/selections.c:2684
+#: src/selections.c:2855
 msgid "Min"
 msgstr "Min"
 
-#: src/selections.c:2685
+#: src/selections.c:2856
 msgid "Sec"
 msgstr "Seg"
 
-#: src/selections.c:2923
+#: src/selections.c:3094
 msgid " Enter TZ Offset "
 msgstr " Fuso-Horário "
 
-#: src/selections.c:2937
+#: src/selections.c:3108
 msgid "Error: Max -12 to +14"
 msgstr "Erro: Máx -12 até +14"
 
-#: src/selections.c:2939 src/selections.c:2941
+#: src/selections.c:3110 src/selections.c:3112
 msgid "Press [Enter] to save"
 msgstr "[ENTER] para salvar"
 
-#: src/selections.c:2944
+#: src/selections.c:3115
 msgid "Press [ESC] to cancel"
 msgstr "[ESC] para cancelar"
 
-#: src/selections.c:2945
+#: src/selections.c:3116
 msgid "Value: "
 msgstr "Valor: "
 
-#: src/selections.c:3142
+#: src/selections.c:3313
 msgid " Select DST "
 msgstr " Horário de Verão? "
 
-#: src/selections.c:3321
+#: src/selections.c:3492
 msgid " Chart's Name "
 msgstr " Nome do Mapa "
 
-#: src/selections.c:3335
+#: src/selections.c:3506
 msgid "Enter a name for your chart (max"
 msgstr "Digite um nome para o seu mapa (máx"
 
-#: src/selections.c:3336
+#: src/selections.c:3507
 msgid "characters)"
 msgstr "caraacteres)"
 
-#: src/selections.c:3457
+#: src/selections.c:3628
 msgid "Unnamed Chart"
 msgstr "Mapa Sem Nome"
 
-#: src/selections.c:3700
+#: src/selections.c:3871
 msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
-#: src/selections.c:4006
+#: src/selections.c:4177
 msgid "Select Country"
 msgstr "Selecionar País"
 
-#: src/selections.c:4008
+#: src/selections.c:4179
 msgid "Country"
 msgstr "País"
 
-#: src/selections.c:4305
+#: src/selections.c:4476
 msgid "Select City in"
 msgstr "Selecione uma Cidade em"
 
-#: src/selections.c:4307
+#: src/selections.c:4478
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "Cidade                                        Estado/Condado/Região/Província"
 
-#: src/selections.c:4572
+#: src/selections.c:4743
 msgid "Failed to prepare statement:"
 msgstr "Falha ao preparar statement"
 
-#: src/selections.c:4620
+#: src/selections.c:4791
 msgid "Warning: City not found in database."
 msgstr "Aviso: Cidade não encontrada no banco de dados."
 
-#: src/selections.c:4655
+#: src/selections.c:4826
 msgid "Default city has not changed"
 msgstr "Cidade padrão não alterada"
 
-#: src/selections.c:4717
+#: src/selections.c:4888
 msgid "Default city has changed"
 msgstr "Cidade padrão alterada"
 

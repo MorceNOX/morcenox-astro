@@ -1698,7 +1698,7 @@ int update_settings(ChartOptions options) {
     }
 
     const char *sql_select;
-    sql_select = "UPDATE profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ? WHERE profile = ?;";
+    sql_select = "UPDATE profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ? WHERE profile = ?;";
 
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
 
@@ -1719,7 +1719,9 @@ int update_settings(ChartOptions options) {
     sqlite3_bind_int(stmt, 6, options.show_modern_planets);
     sqlite3_bind_int(stmt, 7, options.gender);
     sqlite3_bind_text(stmt, 8, options.language, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 9, "default", -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 9, options.time_key);
+
+    sqlite3_bind_text(stmt, 10, "default", -1, SQLITE_STATIC);
 
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
