@@ -1092,17 +1092,17 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
         mvwprintw(table_win, 6, table_width - 20, "%s", ascii_art[4]);
         mvwprintw(table_win, 7, table_width - 20, "%s", ascii_art[5]);
 
-        mvwprintw(table_win, 9, table_width - 26, "%s", "Dominus Mortis:");
-        const char **ascii_art1 = get_planet_ascii(id_regente_c8);
+        // mvwprintw(table_win, 9, table_width - 26, "%s", "Dominus Mortis:");
+        // const char **ascii_art1 = get_planet_ascii(id_regente_c8);
 
-        mvwprintw(table_win, 10, table_width - 20, "%s", ascii_art1[0]);
-        mvwprintw(table_win, 11, table_width - 20, "%s", ascii_art1[1]);
-        mvwprintw(table_win, 12, table_width - 20, "%s", ascii_art1[2]);
-        mvwprintw(table_win, 13, table_width - 20, "%s", ascii_art1[3]);
-        mvwprintw(table_win, 14, table_width - 20, "%s", ascii_art1[4]);
-        mvwprintw(table_win, 15, table_width - 20, "%s", ascii_art1[5]);
+        // mvwprintw(table_win, 10, table_width - 20, "%s", ascii_art1[0]);
+        // mvwprintw(table_win, 11, table_width - 20, "%s", ascii_art1[1]);
+        // mvwprintw(table_win, 12, table_width - 20, "%s", ascii_art1[2]);
+        // mvwprintw(table_win, 13, table_width - 20, "%s", ascii_art1[3]);
+        // mvwprintw(table_win, 14, table_width - 20, "%s", ascii_art1[4]);
+        // mvwprintw(table_win, 15, table_width - 20, "%s", ascii_art1[5]);
 
-        wattroff(table_win, COLOR_PAIR(11) | A_BOLD); 
+        // wattroff(table_win, COLOR_PAIR(11) | A_BOLD); 
     } else {
         wattron(table_win, COLOR_PAIR(12) | A_BOLD | A_REVERSE); // Verde para indicar mapa seguro
         wprintw(table_win, _("None Active"));

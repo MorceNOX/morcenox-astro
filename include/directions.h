@@ -85,6 +85,7 @@ typedef struct {
 } LinhaDirecao;
 
 double get_time_key(int key, double jd, double arco);
+const char* get_key_name(int key);
 double get_obliquidade(double jd);
 double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);
 double _calcular_distancia_meridiana(double ra, double ramc, int acima_do_horizonte);

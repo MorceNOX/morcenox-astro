@@ -354,7 +354,7 @@ Here, you can calculate and visualize astrological charts, view the current tran
 
 You can zoom in and out the charts, pan them across the screen, and use animation mode to visualize the past and future movements of planets and other celestial objects. You can even control the pace of the animation! 
 
-Navigation is handled entirely by arrow keys, function keys, menus and intuitive shortcuts — all within your terminal.
+Navigation is handled entirely by the mouse, the arrow keys, function keys, menus and intuitive shortcuts — all within your terminal.
 
 The modules provide charts, tables and panels, accessible via function and numerical keys, which contains all the data you need to make good interpretations and also predictions.
 
@@ -569,6 +569,8 @@ You can set:
        
    • Display Mode (Dark/Light): 
      Changes the color schemes for the chart wheel and tables.
+     
+   • Time Key for Primary Directions age and date calculations.
        
 
 
@@ -1539,33 +1541,28 @@ Press Q or ESC to return to the main menu.
 • Primary Directions (F15) (Shift+F3) or 3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, modern planets if they are being used and the 12 house cusps.
+Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, and modern planets if they are being used. The house cusps are also available as significators.
 
 Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
 
 The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contra-antiscia of the planets and lunar nodes.
 
-By default, the table displays both, Direct and Converse
-directions. You can filter the results by pressing [C] to see 
-only Converse diretions, [D] for Direct, and [A] to see all 
-directions in the table.
+By default, the table displays both, Direct and Converse directions. You can filter the results by pressing [C] to see only Converse diretions, [D] for Direct, and [A] to see all directions in the table.
 
-All directions displayed are Zodiacal with real latitude, 
-calculated with Naibod time key and dynamic obliquity and
-Mundane proportional to Semi-Arcs (Method Placidus in mundo).
+All directions displayed are Zodiacal with real latitude, calculated with the selected time key and dynamic obliquity, and Mundane proportional to Semi-Arcs (Method Placidus in mundo), which use the same selected time key.
 
-The table also displays, by default, Zodiacal and Mundane
-directions altogether. You can filter by Zodiacal by 
-pressing [Z] and Mundane only by pressing [M].
+The table also displays, by default, Zodiacal and Mundane directions altogether. You can filter by Zodiacal by pressing [Z] and Mundane only by pressing [M].
 
 The first columns shows the age and the date of the event.
 
 Color coding indicate potential destructive directions, good
 directions and a period of alert.
 
-    • When the promissor is the Anareta or Dominus Mortiis and their terms (red reverse for malefic aspects and red bold for other aspects). 
+    • When the promissor is the Anareta or its Antiscia, Contrantiscia or its terms (red reverse for malefic aspects and red bold for other aspects). 
     
-    • Bad aspects directed by malefics or their terms (red). 
+    • Bad aspects or conjunctions directed by malefics or their terms, antiscia or contrantiscia (red). 
+    
+    • Bad aspects directed by the lord of 8th House or its terms, antiscia or contrantiscia (red). 
     
     • Bad aspects directed by no malefics and their terms (yellow) indicate an alert. 
     
@@ -1584,7 +1581,9 @@ directions.
 
 The last column displays the Divider governing the date of the respective direction.
 
-The Dividers are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator.     
+The Dividers are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator. 
+
+In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 2 (two) dynamic keys: True Solar Arc, and Kepler.    
 
 Use [↓↑] to scroll the table.
 Use [←/→] to change the Significator.

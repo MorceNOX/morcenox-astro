@@ -773,8 +773,8 @@ double get_key(int key) {
 const char* get_key_name(int key) {
     switch(key) {
         case TIME_KEY_NAIBOD:         return "Naibod";
-        case TIME_KEY_CARDAN:         return "Cardan";
-        case TIME_KEY_PTOLEMY:        return "Ptolemy";
+        case TIME_KEY_CARDAN:         return _("Cardan");
+        case TIME_KEY_PTOLEMY:        return _("Ptolemy");
         case TIME_KEY_PLACIDUS:       return "Placidus";
         case TIME_KEY_TRUE_SOLAR_ARC: return _("True Solar Arc");           
         case TIME_KEY_KEPLER:         return "Kepler";
@@ -1324,7 +1324,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 
                 bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
-                bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
+                //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
 
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
@@ -1335,7 +1335,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
 
-                if (eh_anareta_ou_mortis) {
+                if (eh_anareta) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
                         par_cor_ativo = COLOR_PAIR(36);
                         atributo_extra |= (A_REVERSE | A_BOLD);
@@ -1345,6 +1345,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                     }
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
+                    par_cor_ativo = COLOR_PAIR(11); 
+                    atributo_extra |= A_BOLD;
+                }
+                else if (eh_senhor_casa8 && eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(11); 
                     atributo_extra |= A_BOLD;
                 }
@@ -2024,7 +2028,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 
                 bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
-                bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
+                //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
 
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
@@ -2035,7 +2039,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
 
-                if (eh_anareta_ou_mortis) {
+                if (eh_anareta) {
                     if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
                         par_cor_ativo = COLOR_PAIR(36);
                         atributo_extra |= (A_REVERSE | A_BOLD);
@@ -2045,6 +2049,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     }
                 }
                 else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
+                    par_cor_ativo = COLOR_PAIR(11); 
+                    atributo_extra |= A_BOLD;
+                }
+                else if (eh_senhor_casa8 && eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(11); 
                     atributo_extra |= A_BOLD;
                 }

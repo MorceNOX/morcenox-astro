@@ -2305,10 +2305,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     else attroff(COLOR_PAIR(55));
 
     
-    if (dark_mode) attron(COLOR_PAIR(52) | A_DIM | FLAGS); else attron(COLOR_PAIR(1));
+    if (dark_mode) attron(COLOR_PAIR(52) | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
-    if (dark_mode) attroff(COLOR_PAIR(52) | A_DIM | FLAGS);
+    if (dark_mode) attroff(COLOR_PAIR(52) | FLAGS);
 
 
     //Draw the outer boundary using a light shade block
@@ -5690,8 +5690,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(40, COLOR_YELLOW, 223);
         init_pair(41, 87, COLOR_BACK_2); // verde bem clarinho
 
-        init_pair(51, 176, COLOR_BACK_1);
-        init_pair(52, 176, COLOR_BACK_2);
+        init_pair(51, 139, COLOR_BACK_1);
+        init_pair(52, 139, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 25); // dark / azul

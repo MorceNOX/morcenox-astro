@@ -40,6 +40,7 @@
 #include "var.h"
 #include "number_helper.h"
 #include "db-utils.h"
+#include "directions.h"
 
 
 int show_confirm_yesno(const char *name, const char *text) {
@@ -1131,12 +1132,12 @@ OptionsEdition select_options() {
                             if (key_types[j] == 1) {
                                 snprintf(time_key_name, sizeof(time_key_name), "%d - %s (%8.6f°)", 
                                 options.time_key, 
-                                key_names[j], 
+                                get_key_name(options.time_key), //key_names[j], 
                                 key_values[j]);
                             } else {
                                 snprintf(time_key_name, sizeof(time_key_name), "%d - %s (%s)", 
                                 options.time_key, 
-                                key_names[j], 
+                                get_key_name(options.time_key), //key_names[j], 
                                 _("Dynamic"));
                             }
                             break;
@@ -1449,6 +1450,31 @@ OptionsEdition select_options() {
                 }
                 break;
             case 10: // Enter
+                attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23)); 
+                mvwprintw(win, w_height - 3, w_width - 28, "             ");
+                wattron(win, attr_confirm);
+                mvwprintw(win, w_height - 2, w_width - 27, _("[ CONFIRM  ]"));
+                wattroff(win, attr_confirm);
+
+                wnoutrefresh(win);
+                doupdate();
+
+                napms(125); 
+
+                wattron(win, attr_confirm);
+                mvwprintw(win, w_height - 3, w_width - 28, _("[ CONFIRM  ]"));
+                wattroff(win, attr_confirm);
+
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, w_height - 3, w_width - 16, "▖");
+                mvwprintw(win, w_height - 2, w_width - 27,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);
+                doupdate();
+
+                napms(125); 
+
                 // Update the database with new planet orbis values
                 db = open_database();
                 if (db) {
@@ -1687,72 +1713,104 @@ OptionsEdition select_options() {
                                 napms(125);
 
                                 // Cleanup allocated memory
-                            if (house_systems) {
-                                for (int i = 0; i < house_system_count; i++) {
-                                    free(house_systems[i]);
+                                if (house_systems) {
+                                    for (int i = 0; i < house_system_count; i++) {
+                                        free(house_systems[i]);
+                                    }
+                                    free(house_systems);
                                 }
-                                free(house_systems);
-                            }
-                            if (house_system_names) {
-                                for (int i = 0; i < house_system_count; i++) {
-                                    free(house_system_names[i]);
+                                if (house_system_names) {
+                                    for (int i = 0; i < house_system_count; i++) {
+                                        free(house_system_names[i]);
+                                    }
+                                    free(house_system_names);
                                 }
-                                free(house_system_names);
-                            }
-                            if (triplicity_ids) {
-                                free(triplicity_ids);
-                            }
-                            if (triplicity_names) {
-                                for (int i = 0; i < triplicity_count; i++) {
-                                    free(triplicity_names[i]);
+                                if (triplicity_ids) {
+                                    free(triplicity_ids);
                                 }
-                                free(triplicity_names);
-                            }
-                            if (terms_ids) {
-                                free(terms_ids);
-                            }
-                            if (terms_names) {
-                                for (int i = 0; i < terms_count; i++) {
-                                    free(terms_names[i]);
+                                if (triplicity_names) {
+                                    for (int i = 0; i < triplicity_count; i++) {
+                                        free(triplicity_names[i]);
+                                    }
+                                    free(triplicity_names);
                                 }
-                                free(terms_names);
-                            }
-                            if (lang_names) {
-                                for (int i = 0; i < lang_count; i++) {
-                                    free(lang_names[i]);
+                                if (terms_ids) {
+                                    free(terms_ids);
                                 }
-                                free(lang_names);
-                            }
-                            if (lang_cods) {
-                                for (int i = 0; i < lang_count; i++) {
-                                    free(lang_cods[i]);
+                                if (terms_names) {
+                                    for (int i = 0; i < terms_count; i++) {
+                                        free(terms_names[i]);
+                                    }
+                                    free(terms_names);
                                 }
-                                free(lang_cods);
-                            }
-                            if (key_ids) {
-                                free(key_ids);
-                            }
-                            if (key_types) {
-                                free(key_types);
-                            }
-                            if (key_values) {
-                                free(key_values);
-                            }
-                            if (key_names) {
-                                for (int i = 0; i < key_count; i++) {
-                                    free(key_names[i]);
+                                if (lang_names) {
+                                    for (int i = 0; i < lang_count; i++) {
+                                        free(lang_names[i]);
+                                    }
+                                    free(lang_names);
                                 }
-                                free(key_names);
-                            }
-                            delwin(win);
-                            ed.changed = 0;
-                            return ed;                            
+                                if (lang_cods) {
+                                    for (int i = 0; i < lang_count; i++) {
+                                        free(lang_cods[i]);
+                                    }
+                                    free(lang_cods);
+                                }
+                                if (key_ids) {
+                                    free(key_ids);
+                                }
+                                if (key_types) {
+                                    free(key_types);
+                                }
+                                if (key_values) {
+                                    free(key_values);
+                                }
+                                if (key_names) {
+                                    for (int i = 0; i < key_count; i++) {
+                                        free(key_names[i]);
+                                    }
+                                    free(key_names);
+                                }
+                                delwin(win);
+                                ed.changed = 0;
+                                return ed;                            
+                            }                    
                         }                    
-                    }                    
+                    }
+                    break;
+            
                 }
-                break;
             }
-            case 27: // ESC
+            break;
+            case 27: { // ESC
+
+                // Botão CANCEL
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23)); 
+                mvwprintw(win, w_height - 3, w_width - 14, "             ");
+                wattron(win, attr_cancel);                                
+                mvwprintw(win, w_height - 2, w_width - 13, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wnoutrefresh(win);
+                doupdate();
+
+                napms(125);
+
+
+                attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
+                wattron(win, attr_cancel);
+                mvwprintw(win, w_height - 3, w_width - 14, _("[  CANCEL  ]"));
+                wattroff(win, attr_cancel);
+
+                wattron(win, COLOR_PAIR(57));
+                mvwprintw(win, w_height - 3, w_width - 2, "▖");
+                mvwprintw(win, w_height - 2, w_width - 13,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                wattroff(win, COLOR_PAIR(57));
+
+                wnoutrefresh(win);
+                doupdate();
+
+                napms(125);
+
                 // Cleanup allocated memory
                 if (house_systems) {
                     for (int i = 0; i < house_system_count; i++) {
