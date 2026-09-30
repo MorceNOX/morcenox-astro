@@ -2547,7 +2547,7 @@ void set_options() {
     }
 
     HOUSE_SYSTEM = ed.options.house_system;
-    GENDER = ed.options.gender;
+    //GENDER = ed.options.gender;
     TIME_KEY = ed.options.time_key;
     snprintf(LANGUAGE, 10, "%s", ed.options.language);
 
