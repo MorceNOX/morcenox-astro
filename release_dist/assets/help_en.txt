@@ -91,9 +91,9 @@ MC Midheaven
 
 IC Imum Coeli
 
-A Antissium
+A Antiscium
 
-CA Contrantissium
+CA Contrantiscium
 
 
 
@@ -226,7 +226,7 @@ Press Q or ESC to return to the main menu.
         
         - F5 - Antisia Aspects Matrix Grid 
         
-        - F6 - Contrantissia Aspects Matrix Grid 
+        - F6 - Contrantiscia Aspects Matrix Grid 
         
     * F4 - Planetary Hours
     
@@ -398,7 +398,7 @@ The application works 100% offline; no data is sent to or retrieved from the int
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 04: The Main Menu
+Index 04: The Initial Screen and The Main Menu
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -417,8 +417,17 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 4
 
-• The Main Menu:
+• The Initial Screen and The Main Menu:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When you opens the application you will see an animation, which occurs only when the application starts, and 2 (two) active elements: a menu in the center, which is the Main Menu, and a bar bellow it, which is the Status Bar.
+
+The Main Menu gives you commands to manage the astrological charts and the application settings, as well as to access some help. You can access this Main Menu and its options whenever you wish by closing the chart wheel screen. As you do it the loaded chart will remain available, unless you hit the "Quick Chart" option, or load another chart, or create a new chart. Otherwise the chart can be accessed again by choosing the "Display Chart" option in the Main Menu and hit <ENTER> or double-clicking it.
+
+The Status Bar displays the location (the city), the time (timestamp), the gender (M for Male, F to Female, and N to Neuter) and the DST (daylight saving time) status for the current astrological chart. So you can easily identify if your chart remains active or not.
+
+As the application starts the current chart will be a fresh chart for the default location and the current time. This current initial chart is not saved in the database by default. To do it, or to save or duplicate any other chart, you have to be in this initial screen and selects the "Save Chart" option in the Main Menu, hitting <ENTER> or double-clicking this option.
+
 
 Available options in the Main Menu:
 
@@ -450,7 +459,7 @@ The selection boxes appear in the following sequence:
 
 5. City (Select from the scrolling list; the State/County/Province/Region is displayed in the 2nd column to help you distinguish homonymous cities).
 
-6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program allways calculates the correct timezone for the selected city.
+6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program always calculates the correct timezone for the selected city.
 
 7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date).
 
@@ -552,8 +561,8 @@ You can set:
    • orb for Parallel Aspects: 
      Specific orb values can be set for parallel and contra-parallel aspects.
      
-    • orb for Aspects with Antissia & Contrantissia: 
-     Specific orb values can be set for Aspects with Antissia & Contrantissia.
+    • orb for Aspects with Antiscia & Contrantiscia: 
+     Specific orb values can be set for Aspects with Antiscia & Contrantiscia.
     
    • Modern Planet Exaltation: 
      Although based on Classical Astrology, you can choose whether to include the exaltation rulerships of the outer planets. (Note: We do not consider modern planets for domicile rulership).
@@ -593,9 +602,11 @@ This option does not overwrite previously saved chart and does not change the ci
 Menu Navigation:
 ───────────────────────────────────────────────────────────────────
 
-   • Arrow keys: Move between menu options
-   • Enter: Select current item
-   • ESC: Exit menu and quit the application
+   • Arrow keys or click: Move between menu options.
+   • Enter or double click: Select and execute the option.
+   • ESC: Exit menu and quit the application. The current chart will be closed automatically.
+   
+   
    
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -621,66 +632,111 @@ Press Q or ESC to return to the main menu.
 • The Chart Wheel:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-When a chart is loaded, the wheel is calculated according to the selected data.
+When a chart is loaded, the astrological wheel is calculated based on previously saved or selected data and then duly displayed.
 
-The status bar in the Main Menu shows the location and time for the current chart. Here this information is displayed at the top left corner of the screen.
+The chart information is displayed at the top left corner of the screen.
 
 The chart screen also displays detailed information while showing the wheel and your Horoscope in the center.
 
-The wheel is divided into 12 segments representing the signs. The 12 zodiac signs are displayed prominently using ASCII art.
+Just below the main data, we can see the sunrise and sunset times, as well as the duration of daylight and nighttime hours.
 
-The two main axes — Ascendant/Descendant and Midheaven/Imum Coeli — are also prominently displayed on the chart wheel.
+The wheel is divided into 12 segments representing the signs. The 12 zodiac sign symbols are displayed prominently using ASCII art each one in its respective segment.
 
-Next to the outer circle, if you wish, you can see the rulers of the decans by pressing [D], three by sign, according to the Chaldean order, each one rulling ten degrees of the respective sign. The ruler charactere is drawn at the center of its decan.
+The two main axes — Horizon (Ascendant/Descendant) and Meridian (Midheaven/Imum Coeli) — are also prominently displayed on the chart wheel.
 
-You can also see the terms rulers by pressing [B]. Each term ruler is drawn in the beggining of its term. There are five terms by sign and their degrees vary according to the chosen system.
+Within the chart wheel, next to the outer circle, if you wish, you can see the rulers of the decans by pressing [D], being three by sign (they are sequenced following the Chaldean order and not the modern order), each one rulling ten degrees of the respective sign. The ruler character is plotted as near as possible of the center of its decan.
+
+You can also see the terms rulers by pressing [B]. Each term ruler is drawn in the beggining of its term. 
+
+There are five terms by sign and their degrees vary according to the chosen system, which can be managed in the program settings.
 
 This way you can graphically see the rulers by term and decan of a body in the chart wheel.
 
-Below the signs, planets and points rotate within their respective signs, displaying their angle (degree and minutes) and retrograde symbol (if applicable).
+Below the sign symbols, planets and points rotate within the astrological wheel, each one inside its respective sign, displaying its glyph, its angle (degree and minutes), and the retrograde symbol (if applicable). From zoom level 3 onwards, the symbol of the corresponding sign will also appear for each planet (or point), being positioned at the space between the degree and the minute.
 
-The chart displays a number in the inner and in the outer circles indicating the respective house cusp. So you can see the boundaries of the houses.
+The chart displays 12 (twelve) numbers, each one over the inner and the outer circles, indicating the respective house cusp initial position. So you can see the boundaries of the houses. If you hit [H] the houses divisions overlay will be displayed.
 
 In the center, in ASCII art, appear the symbols of the planets rulling respectively the day and the hour in effect at the date/time of the chart.
 
 On the right side, you can see a table indicating the positions of the planets and other celestial bodies.
 
+Above the bodies positions table there are information about the local timestamp for the last syzygy (or lunation), the moon's current phase ("current" here means at the time of the chart), the planetary rulers for the day (or night) and for the hour, the sun clock or the local apparent solar time for the chart's location and time. 
+
+In the aforementioned syzygy information text, you can identify whether the last lunation was a New Moon when the SAN's (Syzygy Ante-Nativitatem) symbol is plotted like a dark-blue filled circle, indicating New Moon, or if it is plotted as a bright yellow filled circle, which indicates it was a Full Moon lunation. Notice that the mencioned SAN's symbol is the same used for the identification of the SAN within the chart wheel as well in every place of this application which shows or makes reference to the SAN.
+
+The Moon's phases are also indicated by corresponding symbols in its respective line.
+
 You can also see the table of house cusp positions on the left side of the screen.
 
-Under the house cusps table is drawn, in ASCII-Art, the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol (☽ ) if the chart is nocturnal.
+Still on the left side, under the house cusps table, is drawn in ASCII-Art the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol ( ☽ ) if the chart is nocturnal.
 
 When zooming in on the chart, all information next to the wheel is hidden if the fifth zoom level is active.
 
-You can zoom in/out and pan the chart.
+You can zoom in/out and pan the chart using the mouse or keyboard shortcuts.
+
 Use [+] or [-] to zoom and the arrow keys to pan.
+
 The [R] key resets the chart wheel to its original size and position.
 
 Use the arrow keys or drag and drop with the mouse over the wheel to move it.
 
+Two consecutive clicks on the wheel will zoom in to level 3. If it is already zoomed in—at any zoom level—two clicks will return it to its normal size.
+
 Type [H] to show the houses boundaries in the chart.
 
-You can activate animation mode by pressing [A]. Use ] and [ to adjust the animation pace in 60-second increments. A positive pace shows future events; a negative pace simulates traveling back in time.
+You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ to adjust the animation speed in 60-second increments (faster or slower), or } and { for 1-second increments (faster or slower). Positive values ​​show future events; negative values ​​simulate traveling back in time.
 
-The wheel's aspect ratio will update automatically when the terminal is resized. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", and "Monospace" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio.
+The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", and "Monospace" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
+
+The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. Remember you can pan and zoom in and out the wheel whenever be necessary.
+
+Each planet or point displayed within the astrological wheel will be positioned as close as possible to its actual angular position, respecting sign and house boundaries as well as the actual ordinal position of each.
+
+When two or more elements are in conjunction—or at very close degrees—the program calculates the actual position of each and attempts to display them separately. Consequently, one or more elements might appear outside their sign's boundaries; however, their actual position remains easily identifiable via their degree and background color, which matches the color of the corresponding sign's segment. If an element is not visible, you can zoom in to see it plotted on the chart.
+
+At the bottom, on both the left and right sides, there are labels indicating most of the keyboard shortcuts available on this screen.
+
+In the bottom right corner, you can see whether animation mode is enabled and the animation speed in seconds—that is, the speed of the animation at each update, or rather, how many seconds the map time advances per second.
+
+Also on the right, below the planet table and above the legends, there is a button labeled "Menu." This button opens the Action Menu. It is a scrollable menu providing access to all the program's modules that calculate data and generate tables or panels containing relevant information about the open astrological chart. This menu serves as the gateway to all actions that can be performed within this astrological wheel screen; it can also be accessed by pressing the [M] key.
+
+Some actions do not appear in the Actions Menu but become available once a specific module is invoked and its screen is open—for example, the interpretive text regarding the calculated Temperament; this can only be accessed after the temperament calculation is performed and when its panel is being displayed, therefore, in this example, you can acces it by selecting the "Temperament Analysis" option from the Actions Menu or by pressing the [F8] shortcut key and then pressing [i] for relative information.
+
+Solar Return interpretation modules—and their corresponding shortcut keys—are available in the Actions Menu only while a Solar Return chart is open. Similarly, certain modules that can be run within a natal (or radical) chart are unavailable when the open chart is a Solar Return chart. A list of these commands can be found in the "Shortcuts" and "Solar Return" topics within the Help menu.
+
+All commands in this menu can also be executed using shortcut keys, which include function keys, numeric keys, and certain letter keys. A complete list of shortcut keys is available earlier in this text or by selecting option 2 in the Help menu.
+
+
 
 
 • The Colors:
 ───────────────────────────────────────────────────────────────────
 
-To differentiate celestial bodies, the chart uses color coding:
+To easily differentiate celestial bodies, the chart uses color coding:
 
    • The 7 Main Planets (Sun, Moon, Mercury, Venus, Mars, Jupiter, and Saturn) are displayed in Blue.
     
    • The 3 Modern Planets (Uranus, Neptune, and Pluto) are displayed in Magenta.
     
    • Points and Angles (Asc, Desc, IC, MC, Vertex, Part of Fortune, Syzygy Ante Nativitatem, North/South Node) are in Black.
-    
-The signs are color-coded by element:
+   
+   • Term rulers and decan rulers overlays (when displayed) are in magenta.
+   
+   • House boundaries overlay (when displayed) are light gray.
+   
+The zodiac sign symbols are color-coded by element:
 
    • Fire (Aries, Leo, Sagittarius): Red
    • Water (Cancer, Scorpio, Pisces): Blue
    • Air (Gemini, Libra, Aquarius): Yellow
    • Earth (Taurus, Virgo, Capricorn): Green
+   
+The 30-degree segments defining the area of ​​each sign are colored in two alternating colors, so that the division between the signs is identified by the change in color.
+
+The background color of the symbol, degree, and minute for each planet or point matches the color of the sign it occupies; thus, if two or more planets or points are conjunct—or very close together—near the boundary between two signs, and one or more of them happen to be plotted outside their actual sign, the background color will indicate the correct sign.
+
+
+
 
 • The Animation:
 ───────────────────────────────────────────────────────────────────
@@ -692,6 +748,14 @@ The animation updates the chart every second in the pace displayed at the right 
 To animate a loaded chart, press [A]. Use ] to increase speed and [ to decrease speed by 1 minute per step. The clock and Moon phase in the upper corners will update accordingly to the animation pace, as well as the objects within the chart wheel and the planetary rulers.
 
 The wheel spins 1° clockwise every time the Ascendant adds 1°.
+
+Likewise, each element in the astrological chart changes position whenever its degree reaches the next degree.
+
+The clocks, the moon phase, the day/night and hour rulers, the syzygy at the upper corners, and the position tables beside the wheel are updated accordingly. At faster speeds, you can track the movement of the planets and celestial bodies within the chart wheel.
+
+Access this resource whenever you want to find the position of one or more objects at a specific date and time.
+
+
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1044,6 +1108,8 @@ Note 2: Although they are not physical objects, tradition lectures recomend that
 
 You can press F3 again to see the Declination Aspects (parallel & contra-parallel).
 
+You can also hit F4 in this aspect table to see the Aspects by Sign, F5 to open the Aspects with Antiscia table and F6 for Aspects with Contrantiscia.
+
 Use [↓↑] to scroll the table.
 
 
@@ -1085,14 +1151,14 @@ Use [↓↑] to scroll the table.
 
 
 
-• Antissium Aspects Matrix Grid
+• Antiscium Aspects Matrix Grid
   F5 in the Aspects Table 
 ───────────────────────────────────────────────────────────────────
 
-Displays the aspects between the planets and their Antissia.
+Displays the aspects between the planets and their Antiscia.
 
 Planetary orbs are not used here either.
-An orb of 1.5° is considered to validate the aspect.
+An orb of 2.0° is considered to validate the aspect, but you can modify this value in the settings menu.
 
 Right under the aspect symbol the angular distance is displayed in degrees.
 
@@ -1103,14 +1169,14 @@ This feature is available as an independent option when selecting by the menu ac
 
 
 
-• Contrantissium Aspects Matrix Grid
+• Contrantiscium Aspects Matrix Grid
   F6 in the Aspects Table 
 ───────────────────────────────────────────────────────────────────
 
-Displays the aspects between the planets and their Contrantissia.
+Displays the aspects between the planets and their Contrantiscia.
 
 Planetary orbs are not used here either.
-An orb of 1.5° is considered to validate the aspect.
+An orb of 2.0° is considered to validate the aspect by default, but you can modify this value in the settings menu.
 
 Right under the aspect symbol the angular distance is displayed in degrees.
 
@@ -1195,7 +1261,7 @@ Displays the times (in local time) of Rising (crossing the Ascendant), Culminati
 It is important to determine the orientality or occidentality of the planets relative to other bodies—primarily the Sun—as
 this counts as accidental dignity. The body that rises (ascends) first is oriental relative to the other.
 
-You can also use this module to track planetary transits across the sky and determine the times when they may or may not be visible based on their distance from the Sun.
+You can also use this module to track planetary transits across the sky and determine the times when they may or may not be visible based on their distance from the Sun, as well as identifying events calculated and indicated by Primary Directions, which analyze the initial movements following the time of birth to indicate events that will occur in the future.
 
 
 
@@ -1268,6 +1334,8 @@ If two or more planets received the same score, the criteria to elect the winner
 1) the one which has more dignities in hylegiacal points, 
 2) the one which rules more planets and points in the chart, and
 3) the one which has more apects in general.
+
+After these criteria, if the tie prevails, both (or more) elected planets are dividing the chart's throne and all of them will together be considered as Almutens.
 
 
 
@@ -1370,7 +1438,9 @@ Press Q or ESC to return to the main menu.
 
 You can see what area of native's life and what forces are activated in determined age, as well as which is the planet rulling the specific year of the native's life.
 
-You select an age and the application shows the rulling planet of the year, the house, which is the area of life activated, and the planets in the activated house.
+You select an age and the application shows the rulling planet of the year, the house, which is the area of life activated, and the planets in the activated house, which will also be activated.
+
+The module also points the Lots or Arabic Parts also activated (the ones among the available and calculated parts for the current chart).
 
 An alert will appear when the age coincides with the pulsation cycle of the Alcochoden.
 
@@ -1417,7 +1487,7 @@ Note: When opening the Firdaria's module you will be
       The program will always present the calculated age for the 
       current date and time, with its current fractioned part, 
       bearing in mind the exact Firdaria's calculation.
-      You are free to change the age's value as you wish, wich
+      You are free to change the age's value as you wish, which
       must be usefull for consulting previous or future
       periiods of time. For current moment's analysis you 
       should use the calculated age, as it is presented by 
@@ -1549,9 +1619,9 @@ The Promissors—those that move toward the significators—include the followin
 
 By default, the table displays both, Direct and Converse directions. You can filter the results by pressing [C] to see only Converse diretions, [D] for Direct, and [A] to see all directions in the table.
 
-All directions displayed are Zodiacal with real latitude, calculated with the selected time key and dynamic obliquity, and Mundane proportional to Semi-Arcs (Method Placidus in mundo), which use the same selected time key.
+All directions displayed are 1) Zodiacal with real latitude calculated with Bianchini method, and dynamic obliquity; and, 2) Mundane proportional to Semi-Arcs. The ages and dates of the events for both types are calculated using the selected time-key, which can be set or modified in the application's settings menu option.
 
-The table also displays, by default, Zodiacal and Mundane directions altogether. You can filter by Zodiacal by pressing [Z] and Mundane only by pressing [M].
+The table also displays, by default, Zodiacal and Mundane directions altogether. You can filter by Zodiacal by pressing [Z] and Mundane only by pressing [M]. Press [B] to see both of them.
 
 The first columns shows the age and the date of the event.
 
@@ -1576,12 +1646,11 @@ directions and a period of alert.
     
     • When the promissor is a term, the direction is displayed underlined and dimmed.
     
-The same color coding is applied to both, Direct and Converse 
-directions.
+The same color coding is applied to both, Direct and Converse directions.
 
-The last column displays the Divider governing the date of the respective direction.
+The last column displays the Divisor governing the date of the respective direction.
 
-The Dividers are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator. 
+The Divisors are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator. 
 
 In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 2 (two) dynamic keys: True Solar Arc, and Kepler.    
 
@@ -1594,16 +1663,11 @@ Use [←/→] to change the Significator.
 • Primary Directions of the Arabic Parts (F16) (Shift+F4) or 4
 ───────────────────────────────────────────────────────────────────
 
-Identical to the previous module, but here we calculate and 
-display the directions only for the Arabic Parts of your
-collection, since they are active in the chart.
+Identical to the previous module, but here we calculate and display the directions only for the Arabic Parts of your collection, since they are active in the chart.
 
-In a masculine chart only masculine and neutral parts are 
-displayed; for nocturnal charts, the displayed parts are 
-calculated according to their nocturnal formulae.
+In a masculine chart only masculine and neutral parts are displayed; for nocturnal charts, the displayed parts are calculated according to their nocturnal formulae.
 
-The same color coding of the general directions can be seen in 
-this module.
+The same color coding of the general directions can be seen in this module.
 
 
 Use [↓↑] to scroll the table.
