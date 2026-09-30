@@ -788,6 +788,7 @@ ChartOptions load_default_options() {
     options.terms_system = 1;
     options.modern_planets_rulling = false;
     options.show_modern_planets = false;
+    options.ant_prom = false;
     options.gender = GENDER;
     options.time_key = TIME_KEY;
     snprintf(options.language, 10, "%s", LANGUAGE);
@@ -802,7 +803,7 @@ ChartOptions load_default_options() {
         return options;
     }
 
-    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key FROM profiles WHERE profile = ?;";
+    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key, antiscia_as_promissor FROM profiles WHERE profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (load_default_options): %s\n", sqlite3_errmsg(db));
@@ -822,6 +823,7 @@ ChartOptions load_default_options() {
         int gender_id = sqlite3_column_int(stmt, 6);
         const char *lang_cod = (const char*)sqlite3_column_text(stmt, 7);
         int key = sqlite3_column_int(stmt, 8);
+        int ant_prom = sqlite3_column_int(stmt, 9);
 
         options.dark_mode = dark_mode;
         options.house_system = house_system[0];
@@ -829,6 +831,7 @@ ChartOptions load_default_options() {
         options.terms_system = terms_system;
         options.modern_planets_rulling = modern_planets_rulling;
         options.show_modern_planets = show_modern_planets;
+        options.ant_prom = ant_prom;
         options.gender = gender_id;
         snprintf(options.language, 10, "%s", lang_cod);
         options.time_key = key;
@@ -1172,7 +1175,7 @@ OptionsEdition select_options() {
         wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < 23; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(22));
             
@@ -1300,38 +1303,7 @@ OptionsEdition select_options() {
 
                 mvwprintw(win, 21, 5, "%s %s ", use_text, show_modern_planets_str);
             }
-
             else if (i == 18) {
-                const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
-                const char *gen_text = _("Default Gender");
-
-                mvwprintw(win, 23, 5, "%s: %s ", gen_text, gender_str);
-            }
-
-            else if (i == 19) {
-                char language_name[128];
-                snprintf(language_name, 128, "%s", _("Unknown"));
-                if (lang_count > 0) {
-                    for (int j = 0; j < lang_count; j++) {
-                        if (strcmp(lang_cods[j], options.language) == 0) {
-                            snprintf(language_name, sizeof(language_name), "%s (%s)", 
-                                    options.language, lang_names[j]);
-                            break;
-                        }
-                    }
-                }
-                const char *lang_text = _("Interface Language");
-
-                mvwprintw(win, 25, 5, "%s: %s ", lang_text, language_name);
-            }
-            else if (i == 20) {
-                // Show 'yes' or 'no' instead of 0 or 1
-                const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
-
-                const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 26, 5, "%s: %s ", dark_mode_text, dark_mode_str);
-            }
-            else if (i == 21) {
                 // Show the name of the time key instead of just the number
                 char time_key_name[128];
                 snprintf(time_key_name, 128, "%s", _("Unknown"));
@@ -1356,8 +1328,45 @@ OptionsEdition select_options() {
                 }
 
                 const char *key_text = _("Time Key of Primary Direction");
-                mvwprintw(win, 28, 5, "%s: %s ", key_text, time_key_name);
+                mvwprintw(win, 22, 5, "%s: %s ", key_text, time_key_name);
             }
+            else if (i == 19) {
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *ant_prom_str = options.ant_prom ? _("yes") : _("no");
+
+                const char *ant_prom_text = _("Antiscia/Contrantiscia as Promissors in Primary Directions?");
+                mvwprintw(win, 23, 5, "%s %s ", ant_prom_text, ant_prom_str);
+            }
+            else if (i == 20) {
+                char language_name[128];
+                snprintf(language_name, 128, "%s", _("Unknown"));
+                if (lang_count > 0) {
+                    for (int j = 0; j < lang_count; j++) {
+                        if (strcmp(lang_cods[j], options.language) == 0) {
+                            snprintf(language_name, sizeof(language_name), "%s (%s)", 
+                                    options.language, lang_names[j]);
+                            break;
+                        }
+                    }
+                }
+                const char *lang_text = _("Interface Language");
+
+                mvwprintw(win, 26, 5, "%s: %s ", lang_text, language_name);
+            }
+            else if (i == 21) {
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
+
+                const char *dark_mode_text = _("Dark Mode");
+                mvwprintw(win, 27, 5, "%s: %s ", dark_mode_text, dark_mode_str);
+            }
+            else if (i == 22) {
+                const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
+                const char *gen_text = _("Default Gender");
+
+                mvwprintw(win, 29, 5, "%s: %s ", gen_text, gender_str);
+            }
+
 
             if (i == campo_atual) wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattroff(win, COLOR_PAIR(22));
@@ -1371,10 +1380,10 @@ OptionsEdition select_options() {
 
         switch (key) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 22) % 22; // Now 22 fields
+                campo_atual = (campo_atual - 1 + 23) % 23; // Now 23 fields
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 22;
+                campo_atual = (campo_atual + 1) % 23;
                 break;
             case KEY_RIGHT:
                 
@@ -1468,33 +1477,6 @@ OptionsEdition select_options() {
                     options.show_modern_planets = !options.show_modern_planets;
                 }
                 else if (campo_atual == 18) {
-                    if (options.gender < 4) options.gender++;
-                    if (options.gender == 4) options.gender = 1;            
-                }
-                else if (campo_atual == 19) {
-                    if (lang_count > 0) {
-                        // Find current position
-                        int current_pos = -1;
-                        for (int j = 0; j < lang_count; j++) {
-                            if (strcmp(lang_cods[j], options.language) == 0) {
-                                current_pos = j;
-                                break;
-                            }
-                        }
-                        
-                        if (current_pos >= 0) {
-                            int next_pos = (current_pos + 1) % lang_count;
-                            snprintf(options.language, 10, "%s", lang_cods[next_pos]);
-                        } else {
-                            snprintf(options.language, 10, "%s", lang_cods[0]);
-                        }
-                    }
-                }
-                else if (campo_atual == 20) {
-                    // Toggle dark mode
-                    options.dark_mode = !options.dark_mode;
-                }
-                else if (campo_atual == 21) {
                     if (key_count > 0) {
                         int current_pos = -1;
                         for (int j = 0; j < key_count; j++) {
@@ -1513,6 +1495,37 @@ OptionsEdition select_options() {
                             options.time_key = key_ids[0];
                         }
                     }
+                }
+                else if (campo_atual == 19) {
+                    // Toggle antiscia as promissor
+                    options.ant_prom = !options.ant_prom;
+                }
+                else if (campo_atual == 20) {
+                    if (lang_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < lang_count; j++) {
+                            if (strcmp(lang_cods[j], options.language) == 0) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        if (current_pos >= 0) {
+                            int next_pos = (current_pos + 1) % lang_count;
+                            snprintf(options.language, 10, "%s", lang_cods[next_pos]);
+                        } else {
+                            snprintf(options.language, 10, "%s", lang_cods[0]);
+                        }
+                    }
+                }
+                else if (campo_atual == 21) {
+                    // Toggle dark mode
+                    options.dark_mode = !options.dark_mode;
+                }
+                else if (campo_atual == 22) {
+                    if (options.gender < 4) options.gender++;
+                    if (options.gender == 4) options.gender = 1;            
                 }
                 break;
 
@@ -1608,34 +1621,6 @@ OptionsEdition select_options() {
                     options.show_modern_planets = !options.show_modern_planets;
                 }
                 else if (campo_atual == 18) {
-                    if (options.gender > 0) options.gender--;
-                    if (options.gender == 0) options.gender = 3;
-                }
-                else if (campo_atual == 19) {
-                    if (lang_count > 0) {
-                        // Find current position
-                        int current_pos = -1;
-                        for (int j = 0; j < lang_count; j++) {
-                            if (strcmp(lang_cods[j], options.language) == 0) {
-                                current_pos = j;
-                                break;
-                            }
-                        }
-                        
-                        // Move to previous system
-                        if (current_pos >= 0) {
-                            int prev_pos = (current_pos - 1 + lang_count) % lang_count;
-                            snprintf(options.language, 10, "%s", lang_cods[prev_pos]);
-                        } else {
-                            snprintf(options.language, 10, "%s", lang_cods[0]);
-                        }
-                    }
-                }
-                else  if (campo_atual == 20) {
-                    // Toggle dark mode
-                    options.dark_mode = !options.dark_mode;
-                }
-                else if (campo_atual == 21) {
                     if (key_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1656,6 +1641,38 @@ OptionsEdition select_options() {
                         }
                     }
 
+                }
+                else  if (campo_atual == 19) {
+                    // Toggle antiscia / c.antiscia as promissor
+                    options.ant_prom = !options.ant_prom;
+                }
+                else if (campo_atual == 20) {
+                    if (lang_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < lang_count; j++) {
+                            if (strcmp(lang_cods[j], options.language) == 0) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to previous system
+                        if (current_pos >= 0) {
+                            int prev_pos = (current_pos - 1 + lang_count) % lang_count;
+                            snprintf(options.language, 10, "%s", lang_cods[prev_pos]);
+                        } else {
+                            snprintf(options.language, 10, "%s", lang_cods[0]);
+                        }
+                    }
+                }
+                else  if (campo_atual == 21) {
+                    // Toggle dark mode
+                    options.dark_mode = !options.dark_mode;
+                }
+                else if (campo_atual == 22) {
+                    if (options.gender > 0) options.gender--;
+                    if (options.gender == 0) options.gender = 3;
                 }
                 break;
             case 10: // Enter

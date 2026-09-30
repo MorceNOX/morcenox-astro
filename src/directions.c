@@ -592,9 +592,13 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     //double epsilon = 0.000001;
 
     for (int p = 0; p < prom_id; p++) {
+
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
+
         for (int s = 0; s < 2; s++) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - ((show_modern_planets)?5:4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
-            
+            if (prom[p].type == PROM_TERM && s == 1) continue;
+
             for (int a = 0; a < 7; a++) {
 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
@@ -962,6 +966,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
             prom[p].type == PROM_PART  || 
             prom[p].type == PROM_TERM
         ) continue;
+
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
        
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
@@ -1819,8 +1825,12 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
 
         for (int s = 0; s < 2; s++) {
+
+            if (prom[p].type == PROM_TERM && s == 1) continue;
+
             for (int a = 0; a < 7; a++) {
                 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
@@ -2641,6 +2651,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
             prom[p].type == PROM_PART || 
             prom[p].type == PROM_TERM
         ) continue;
+
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
 
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 

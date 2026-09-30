@@ -45,6 +45,7 @@ typedef struct {
     int terms_system;
     int modern_planets_rulling;
     int show_modern_planets;
+    int ant_prom;
     int gender;
     char language[10];
     int time_key;

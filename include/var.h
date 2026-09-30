@@ -95,6 +95,7 @@ extern int prom_id;
 extern int NUM_OBJECTS;
 
 extern int TIME_KEY;
+extern int ANT_PROM;
 
 void update_interface_language();
 

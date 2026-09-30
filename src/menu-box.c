@@ -2121,7 +2121,7 @@ void load_default_values() {
         return;
     }
 
-    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
+    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key, p.antiscia_as_promissor FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select_city, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (main): %s\n", sqlite3_errmsg(db));
@@ -2144,6 +2144,7 @@ void load_default_values() {
         int show_mod = sqlite3_column_int(stmt, 9);
         const char *def_lang = (const char*)sqlite3_column_text(stmt, 10);
         int key = sqlite3_column_int(stmt, 11);
+        int ant_prom = sqlite3_column_int(stmt, 12);
 
     
         if (city) snprintf(DEFAULT_CITY, sizeof(DEFAULT_CITY), "%s", city);
@@ -2162,6 +2163,7 @@ void load_default_values() {
         DARK_MODE = dark_mode;
 
         TIME_KEY = key;
+        ANT_PROM = ant_prom;
 
         if (db_house_system) {
             char *house_system = strdup(db_house_system);
@@ -2538,6 +2540,7 @@ void set_options() {
     }
 
     DARK_MODE = ed.options.dark_mode;
+    ANT_PROM = ed.options.ant_prom;
 
     if (DARK_MODE) {
         FLAGS |= 0; //A_DIM | A_REVERSE;
