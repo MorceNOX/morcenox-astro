@@ -1621,7 +1621,9 @@ Options include viewing primary directions for the following points—known as S
 
 Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
 
-The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contrantiscia of the planets and lunar nodes (Antiscia/Contrantiscia are optional - You can select the corresponding option in the settings menu item).
+The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contrantiscia of the planets and lunar nodes.
+
+Antiscia/Contrantiscia are optional; You can select the corresponding option in the settings menu item.
 
 By default, the table displays both, Direct and Converse directions. You can filter the results by pressing [C] to see only Converse diretions, [D] for Direct, and [A] to see all directions in the table.
 
@@ -1654,9 +1656,9 @@ directions and a period of alert.
     
 The same color coding is applied to both, Direct and Converse directions.
 
-The last column displays the Divisor governing the date of the respective direction.
+The last column displays the Divisor governing the date of the respective direction. This is the regent of the current term reached by the directed Ascendant. So, every time the Ascendant as significator reaches the boundaries of a term, the respective regent will become the new time-lord, or Divisor.
 
-The Divisors are the rulers of the terms of direct zodiacal directions; they remain in effect until a new term reaches the selected significator. 
+The Divisors are the rulers of the terms of direct and converse zodiacal directions; they remain in effect until a new term reaches the selected significator. 
 
 In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 2 (two) dynamic keys: True Solar Arc, and Kepler.    
 
@@ -1674,6 +1676,8 @@ Identical to the previous module, but here we calculate and display the directio
 In a masculine chart only masculine and neutral parts are displayed; for nocturnal charts, the displayed parts are calculated according to their nocturnal formulae.
 
 The same color coding of the general directions can be seen in this module.
+
+These directions also displays a time-lord, or Divisor, which is the regent of the current term whose boundaries were reached by the directed Part of Fortune, the same way it occurs with the Ascendant in the previous Primary Directions module.
 
 
 Use [↓↑] to scroll the table.

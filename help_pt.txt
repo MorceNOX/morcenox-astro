@@ -1565,7 +1565,9 @@ As opções incluem ver as direções primárias para os seguintes pontos, os ch
 
 Use setas para direita e esquerda para mudar o significador e deslize pela tabela para ver todas as direções para o ponto selecionado.
 
-Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas, dos nodos lunares e da Parte da Fortuna (Antíscia e Contrantiscia são opcionais - caso queira incluí-los, a respectiva opção pode ser definida nas opções de configuração do programa - menu item "Configurações").
+Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas, dos nodos lunares e da Parte da Fortuna.
+
+Os Antíscia e Contrantiscia são opcionais. Caso queira incluí-los, a respectiva opção pode ser definida nas opções de configuração do programa - menu item "Configurações".
 
 Por padrão, a tabela exibe ambas as direções: Diretas e Conversas. Você pode filtrar os resultados pressionando [C] para ver apenas as direções Conversas, [D] para as Diretas e [A] para ver todas as direções na tabela.
 
@@ -1577,7 +1579,7 @@ As primeiras colunas mostram a idade e a data provável do evento.
 
 A codificação por cores indica direções destruidoras potenciais, direções boas e um período de alerta.
 
-• Quando o promissor é o Anareta, ou o seu Antiscia, ou seu Contranbtiscia, ou os termos regidos por esse planeta (branco sobre vermelho para aspectos maléficos e vermelho negrito para outros aspectos).
+• Quando o promissor é o Anareta, ou o seu Antiscia, ou seu Contrantiscia, ou os termos regidos por esse planeta (branco sobre vermelho para aspectos maléficos e vermelho negrito para outros aspectos).
 
 • Aspectos ruins ou conjunções direcionados por maléficos (vermelho) ou os seus antiscia, contrantiscia e termos.
 
@@ -1599,7 +1601,9 @@ O mesmo código de cores é aplicado a ambas as direções — direta e conversa
 
 A última coluna exibe o Divisor que rege a data da respectiva direção. 
 
-Os Divisores são os regentes dos termos das direções zodiacais diretas, que ficam em vigência até que novo termo encoste no significador selecionado.
+A última coluna exibe o Divisor que rege a data da respectiva direção. Este é o regente do termo atual alcançado pelo Ascendente dirigido. Assim, sempre que o Ascendente, na qualidade de significador, atinge os limites de um termo, o respectivo regente passa a ser o novo senhor do tempo, ou Divisor.
+
+Os Divisores são os regentes dos termos das direções zodiacais diretas e conversas; eles permanecem em vigor até que um novo termo alcance o significador selecionado.
 
 No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 2 (duas) chaves dinâmicas: Arco Solar Verdadeiro e Kepler.
 
@@ -1618,6 +1622,7 @@ Em um mapa masculino, apenas partes masculinas e neutras são exibidas; para map
 
 O mesmo código de cores das direções gerais pode ser visto neste módulo.
 
+Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente do atual termo cujos limites foram alcançados pela Parte da Fortuna direcionada, da mesma forma que ocorre com o Ascendente no módulo anterior de Direções Primárias.
 
 Use [↓↑] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
