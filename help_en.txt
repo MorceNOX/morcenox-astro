@@ -658,7 +658,7 @@ Below the sign symbols, planets and points rotate within the astrological wheel,
 
 From zoom level 3 onwards, the symbol of the corresponding sign will also appear for each planet (or point), being positioned at the space between the degree and the minute.
 
-The chart displays 12 (twelve) numbers, each one over the inner and the outer circles, indicating the respective house cusp initial position. So you can see the boundaries of the houses. If you hit [H] the houses divisions overlay will be displayed.
+The chart displays 12 (twelve) numbers, each one over the inner and the outer circles, indicating the respective house cusp position. So you can see the boundaries of the houses. If you hit [H] the houses divisions overlay will be displayed.
 
 In the center, in ASCII art, appear the symbols of the planets rulling respectively the day and the hour in effect at the date/time of the chart.
 

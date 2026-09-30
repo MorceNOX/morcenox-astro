@@ -1316,7 +1316,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
                         int linha_clique_janela = event.y - getbegy(border_win);
                         
                         // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 1; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;

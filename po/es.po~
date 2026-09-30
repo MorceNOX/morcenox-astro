@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-30 06:28-0300\n"
+"POT-Creation-Date: 2026-09-30 06:47-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -798,19 +798,19 @@ msgstr ""
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:2252 src/selections.c:368
+#: src/arabic_parts.c:2246 src/selections.c:368
 msgid " CONFIRM DELETE "
 msgstr ""
 
-#: src/arabic_parts.c:2256 src/selections.c:372
+#: src/arabic_parts.c:2250 src/selections.c:372
 msgid "Are you sure you want to permanently delete:"
 msgstr ""
 
-#: src/arabic_parts.c:2262 src/arabic_parts.c:2329 src/arabic_parts.c:2338
+#: src/arabic_parts.c:2256 src/arabic_parts.c:2323 src/arabic_parts.c:2332
 msgid "   YES   "
 msgstr ""
 
-#: src/arabic_parts.c:2273 src/arabic_parts.c:2362 src/arabic_parts.c:2371
+#: src/arabic_parts.c:2267 src/arabic_parts.c:2356 src/arabic_parts.c:2365
 #: src/selections.c:398 src/selections.c:450 src/selections.c:459
 #: src/selections.c:479 src/selections.c:488 src/selections.c:591
 #: src/selections.c:600 src/selections.c:2212 src/selections.c:2310
@@ -821,11 +821,11 @@ msgstr ""
 msgid "  CANCEL  "
 msgstr ""
 
-#: src/arabic_parts.c:2415 src/arabic_parts.c:2429
+#: src/arabic_parts.c:2409 src/arabic_parts.c:2423
 msgid "Failed deleting arabic part!"
 msgstr ""
 
-#: src/arabic_parts.c:2434
+#: src/arabic_parts.c:2428
 msgid "Arabic Part deleted successfully!"
 msgstr ""
 

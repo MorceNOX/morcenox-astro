@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-30 06:47-0300\n"
+"POT-Creation-Date: 2026-09-30 08:27-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -3123,7 +3123,7 @@ msgstr "Falha ao salvar mapa!"
 msgid "Chart saved!"
 msgstr "Mapa salvo!"
 
-#: src/menu-box.c:642 src/menu-box.c:1067
+#: src/menu-box.c:642 src/menu-box.c:1066
 msgid "No charts available."
 msgstr "Não há mapas disponíveis."
 
@@ -3131,156 +3131,156 @@ msgstr "Não há mapas disponíveis."
 msgid "Select Chart to Delete"
 msgstr "Selecionar Mapa para Excluir"
 
-#: src/menu-box.c:998
+#: src/menu-box.c:997
 msgid "Error deleting chart."
 msgstr "Erro ao excluir mapa."
 
-#: src/menu-box.c:1010
+#: src/menu-box.c:1009
 msgid "Chart deleted successfully."
 msgstr "Mapa excluído com sucesso."
 
-#: src/menu-box.c:1150
+#: src/menu-box.c:1149
 msgid "Select Chart to Load"
 msgstr "Selecionar Mapa para Carregar"
 
-#: src/menu-box.c:1456
+#: src/menu-box.c:1455
 msgid "Chart not found!"
 msgstr "Mapa não encontrado!"
 
-#: src/menu-box.c:1776
+#: src/menu-box.c:1775
 msgid "Location: "
 msgstr "  Cidade: "
 
-#: src/menu-box.c:1784
+#: src/menu-box.c:1783
 msgid "┃ Date/Time: "
 msgstr "┃ Data/Hora: "
 
-#: src/menu-box.c:1792
+#: src/menu-box.c:1791
 msgid "┃ Dst: "
 msgstr "┃ HdV: "
 
-#: src/menu-box.c:1796 src/selections.c:3934 src/selections.c:4084
+#: src/menu-box.c:1795 src/selections.c:3934 src/selections.c:4084
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:1796 src/selections.c:3933 src/selections.c:4087
+#: src/menu-box.c:1795 src/selections.c:3933 src/selections.c:4087
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:1796 src/selections.c:3932
+#: src/menu-box.c:1795 src/selections.c:3932
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:1800
+#: src/menu-box.c:1799
 msgid "┃ Gen: "
 msgstr "┃ Gên: "
 
-#: src/menu-box.c:2009
+#: src/menu-box.c:2008
 #, c-format
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:2501
+#: src/menu-box.c:2499
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:2505 src/menu-box.c:2684
+#: src/menu-box.c:2503 src/menu-box.c:2682
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:2523
+#: src/menu-box.c:2521
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:2527 src/menu-box.c:2685
+#: src/menu-box.c:2525 src/menu-box.c:2683
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:2538
+#: src/menu-box.c:2536
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:2570
+#: src/menu-box.c:2568
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:2676
+#: src/menu-box.c:2674
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:2676
+#: src/menu-box.c:2674
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localização padrão."
 
-#: src/menu-box.c:2677
+#: src/menu-box.c:2675
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:2677
+#: src/menu-box.c:2675
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:2678
+#: src/menu-box.c:2676
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:2678
+#: src/menu-box.c:2676
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:2679
+#: src/menu-box.c:2677
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:2679
+#: src/menu-box.c:2677
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:2680
+#: src/menu-box.c:2678
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:2680
+#: src/menu-box.c:2678
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:2681
+#: src/menu-box.c:2679
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:2681
+#: src/menu-box.c:2679
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:2682
+#: src/menu-box.c:2680
 msgid "Change the Default Location"
 msgstr "Mudar a Localização Padrão"
 
-#: src/menu-box.c:2682
+#: src/menu-box.c:2680
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:2683
+#: src/menu-box.c:2681
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:2683
+#: src/menu-box.c:2681
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:2684
+#: src/menu-box.c:2682
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:2685
+#: src/menu-box.c:2683
 msgid "Technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:2686
+#: src/menu-box.c:2684
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:2686
+#: src/menu-box.c:2684
 msgid "Exit the program."
 msgstr "Sair do programa."
 
@@ -4099,37 +4099,37 @@ msgstr "Mapa Sem Nome"
 msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
-#: src/selections.c:4849
+#: src/selections.c:4848
 msgid "Select Country"
 msgstr "Selecionar País"
 
-#: src/selections.c:4851
+#: src/selections.c:4850
 msgid "Country"
 msgstr "País"
 
-#: src/selections.c:5148
+#: src/selections.c:5146
 msgid "Select City in"
 msgstr "Selecione uma Cidade em"
 
-#: src/selections.c:5150
+#: src/selections.c:5148
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "Cidade                                        Estado/Condado/Região/Província"
 
-#: src/selections.c:5415
+#: src/selections.c:5412
 msgid "Failed to prepare statement:"
 msgstr "Falha ao preparar statement"
 
-#: src/selections.c:5463
+#: src/selections.c:5460
 msgid "Warning: City not found in database."
 msgstr "Aviso: Cidade não encontrada no banco de dados."
 
-#: src/selections.c:5498
+#: src/selections.c:5495
 msgid "Default city has not changed"
 msgstr "Cidade padrão não alterada"
 
-#: src/selections.c:5560
+#: src/selections.c:5557
 msgid "Default city has changed"
 msgstr "Cidade padrão alterada"
 

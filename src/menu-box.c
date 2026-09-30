@@ -832,7 +832,6 @@ void del_chart() {
                         // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
                         int linha_clique_janela = event.y - getbegy(chart_win);
                         
-                        // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
                         int offset_inicio_barra = 1; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
@@ -2434,7 +2433,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                         // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
                         linha_clique_janela = event.y - getbegy(help_win);
                         
-                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
                         int offset_inicio_barra = 2; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)

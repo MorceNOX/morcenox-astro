@@ -643,11 +643,11 @@ Abaixo do símbolo dos signos, os planetas e pontos giram com a roda astrológic
 
 Do 3º nível de zoom em diante, o símbolo do respectivo signo também aparecerá para cada planeta (ou ponto), sendo exibido no espaço do meio entre o grau e o minuto.
 
-O mapa exibe 12 (doze) números, cada um grafado sobre o círculo interno e também próximo da borda, indicando a posição inicial da cúspide de cada casa. Assim, você pode ver os limites das casas. Você pode ver a divisão de casas pressionando a tecla [H].
+O mapa exibe 12 (doze) números, cada um grafado sobre o círculo interno e também próximo da borda, indicando a posição da cúspide da respectiva casa. Assim, você pode ver os limites das casas. Você pode ver a divisão de casas pressionando a tecla [H].
 
-No centro, em arte ASCII, aparecem os símbolos dos planetas que regem, respectivamente, o dia e a hora em vigor na data/hora do mapa.
+No centro, em arte ASCII, aparecem os símbolos dos planetas que regem, respectivamente, o dia (ou noite) e a hora em vigor na data/hora do mapa.
 
-No lado direito, você pode ver uma tabela que indica a posição dos planetas e de outros corpos celestes.
+No lado direito, você pode ver uma tabela que indica a posição dos planetas e dos outros corpos celestes.
 
 Acima da tabela de posições dos corpos celestes, encontram-se informações sobre o horário local da última sizígia (ou lunação), a fase atual da Lua ("atual" aqui se refere ao momento do mapa), os regentes planetários do dia (ou da noite) e da hora, bem como o relógio solar ou a hora solar aparente local para a localização e o horário do mapa.
 
