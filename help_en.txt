@@ -646,13 +646,17 @@ The two main axes — Horizon (Ascendant/Descendant) and Meridian (Midheaven/Imu
 
 Within the chart wheel, next to the outer circle, if you wish, you can see the rulers of the decans by pressing [D], being three by sign (they are sequenced following the Chaldean order and not the modern order), each one rulling ten degrees of the respective sign. The ruler character is plotted as near as possible of the center of its decan.
 
-You can also see the terms rulers by pressing [B]. Each term ruler is drawn in the beggining of its term. 
+You can also see the terms rulers by pressing [B]. 
+
+Each term ruler is drawn in the beggining of its term. 
 
 There are five terms by sign and their degrees vary according to the chosen system, which can be managed in the program settings.
 
 This way you can graphically see the rulers by term and decan of a body in the chart wheel.
 
-Below the sign symbols, planets and points rotate within the astrological wheel, each one inside its respective sign, displaying its glyph, its angle (degree and minutes), and the retrograde symbol (if applicable). From zoom level 3 onwards, the symbol of the corresponding sign will also appear for each planet (or point), being positioned at the space between the degree and the minute.
+Below the sign symbols, planets and points rotate within the astrological wheel, each one inside its respective sign, displaying its glyph, its angle (degree and minutes), and the retrograde symbol (if applicable). 
+
+From zoom level 3 onwards, the symbol of the corresponding sign will also appear for each planet (or point), being positioned at the space between the degree and the minute.
 
 The chart displays 12 (twelve) numbers, each one over the inner and the outer circles, indicating the respective house cusp initial position. So you can see the boundaries of the houses. If you hit [H] the houses divisions overlay will be displayed.
 
@@ -662,7 +666,7 @@ On the right side, you can see a table indicating the positions of the planets a
 
 Above the bodies positions table there are information about the local timestamp for the last syzygy (or lunation), the moon's current phase ("current" here means at the time of the chart), the planetary rulers for the day (or night) and for the hour, the sun clock or the local apparent solar time for the chart's location and time. 
 
-In the aforementioned syzygy information text, you can identify whether the last lunation was a New Moon when the SAN's (Syzygy Ante-Nativitatem) symbol is plotted like a dark-blue filled circle, indicating New Moon, or if it is plotted as a bright yellow filled circle, which indicates it was a Full Moon lunation. Notice that the mencioned SAN's symbol is the same used for the identification of the SAN within the chart wheel as well in every place of this application which shows or makes reference to the SAN.
+In the aforementioned syzygy information text, you can identify whether the last lunation was a New Moon when the symbol of the SAN (Syzygy Ante-Nativitatem) is plotted like a dark-blue filled circle, indicating New Moon, or if it is plotted as a bright yellow filled circle, which indicates it was a Full Moon lunation. Notice that the mencioned SAN's symbol is the same used for the identification of the SAN within the chart wheel as well in every place of this application which shows or makes reference to the SAN.
 
 The Moon's phases are also indicated by corresponding symbols in its respective line.
 
@@ -688,7 +692,9 @@ You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ 
 
 The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", and "Monospace" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
 
-The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. Remember you can pan and zoom in and out the wheel whenever be necessary.
+The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. 
+
+Remember you can pan and zoom in and out the wheel whenever be necessary.
 
 Each planet or point displayed within the astrological wheel will be positioned as close as possible to its actual angular position, respecting sign and house boundaries as well as the actual ordinal position of each.
 

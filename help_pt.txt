@@ -639,7 +639,9 @@ São cinco termos por signo e seus graus variam conforme o sistema de termos pre
 
 Dessa forma, é possível visualizar graficamente os regentes por termo ou decanato de um planeta ou outro ponto dentro da roda.
 
-Abaixo do símbolo dos signos, os planetas e pontos giram com a roda astrológica, cada um dentro de seu respectivo signo, exibindo seu glifo, seu ângulo (grau e minuto) e o sinal de retrógrado (se aplicável). Do 3º nível de zoom em diante, o símbolo do respectivo signo também aparecerá para cada planeta (ou ponto), sendo exibido no espaço do meio entre o grau e o minuto.
+Abaixo do símbolo dos signos, os planetas e pontos giram com a roda astrológica, cada um dentro de seu respectivo signo, exibindo seu glifo, seu ângulo (grau e minuto) e o sinal de retrógrado (se aplicável). 
+
+Do 3º nível de zoom em diante, o símbolo do respectivo signo também aparecerá para cada planeta (ou ponto), sendo exibido no espaço do meio entre o grau e o minuto.
 
 O mapa exibe 12 (doze) números, cada um grafado sobre o círculo interno e também próximo da borda, indicando a posição inicial da cúspide de cada casa. Assim, você pode ver os limites das casas. Você pode ver a divisão de casas pressionando a tecla [H].
 
@@ -675,13 +677,16 @@ Você pode ativar ou desativar o modo de animação pressionando [A] ou a barra 
 
 O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. O programa foi testado com as fontes "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono" e "Monospace" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
-Pode ocorrer de as informações exibidas ao lado da roda fiquem parcialmente ocultas por ela quanto mais próximo de um quadrado for o formato da janela do terminal, ou se a altura da janela for maior do que sua largura, pois o programa calcula a melhor proporção das dimensões e do raio da roda para que, em seu tamanho normal (sem zoom), ela seja o maior círculo inscrito possível dentro de sua janela. Lembre-se de que você pode redimensionar o seu terminal ou mover (pan) e aplicar zoom na roda sempre que achar necessário.
+Pode ocorrer de as informações exibidas ao lado da roda fiquem parcialmente ocultas por ela quanto mais próximo de um quadrado for o formato da janela do terminal, ou se a altura da janela for maior do que sua largura, pois o programa calcula a melhor proporção das dimensões e do raio da roda para que, em seu tamanho normal, ela seja o maior círculo inscrito possível dentro de sua janela. 
+
+Lembre-se de que você pode redimensionar o seu terminal, ou mover e aplicar zoom na roda sempre que achar necessário.
 
 Quanto à plotagem dos planetas e pontos do mapa astrológico, o programa calcula a melhor posição possível para que todos os planetas e pontos sejam exibidos dentro da roda astrológica, posicionando-os o mais próximo possível da sua posição angular real, respeitando-se os limites de signo e casa, bem como a posição ordinal real de cada um. 
 
 Quanto mais determinado planeta ou ponto estiver isolado, sua posição angular na roda astrológica será tão próxima da sua posição angular real quanto maior for a resolução gráfica do terminal.
 
-Quando 2 (dois) ou mais planetas e/ou pontos estiverem em conjunção, ou em graus muito próximos, o programa vai calcular a posição real de cada um deles e tentar exibí-los separadamente, de modo que poderá ocorrer de um ou mais deles serem exibidos fora dos limites de seu signo, mas sua posição real poderá ainda assim ser facilmente identificada por meio do seu grau e de sua cor de fundo, a qual corresponderá à cor da fatia do seu signo. Se algum elemento não estiver sendo exibido, você poderá aplicar o zoom e mover a roda para vê-lo grafado no mapa.
+Quando 2 (dois) ou mais planetas e/ou pontos estiverem em conjunção, ou em graus muito próximos, o programa vai calcular a posição real de cada um deles e tentar exibí-los separadamente, de modo que poderá ocorrer de um ou mais deles serem exibidos fora dos limites de seu signo, mas sua posição real poderá ainda assim ser facilmente identificada por meio do seu grau 
+e de sua cor de fundo, a qual corresponderá à cor da fatia do seu signo. Se algum elemento não estiver sendo exibido, você poderá aplicar o zoom e mover a roda para vê-lo grafado no mapa.
 
 Na parte inferior, tanto à esquerda como à direita, há legendas indicando a maioria das teclas de atalho disponíveis nesta tela.
 
@@ -689,7 +694,8 @@ Na última linha do canto direito você poderá ver se o modo de animação est�
 
 Ainda à direita, abaixo da tabela de planetas e acima das legendas, existe um botão escrito "Menu". Este botão serve para abrir o Menu de Ações. É um menu rolável que disponibiliza acesso a todos os módulos do programa que calculam dados e geram tabelas ou painéis contendo informações relevantes sobre o mapa astrológico aberto. Este menu é a porta de acesso para todas as ações que podem ser executadas dentro desta tela da roda astrológica, cujo acesso também pode ser obtido presionando-se a tecla [M]. 
 
-Algumas ações não estarão presentes no Menu de Ações, mas estão disponíveis depois que determinado módulo for chamado e sua tela esteja aberta como, por exemplo, o texto interpretativo sobre o Temperamento calculado, cujo acesso somente pode ser obtido após o cálculo do temperamento que é executado e exibido selecionando-se a opção "Análise do Temperamento" no Menu de Ações, ou a tecla de atalho [F8].
+Algumas ações não estarão presentes no Menu de Ações, mas estão disponíveis depois que determinado módulo for chamado e sua tela esteja aberta como, por exemplo, o texto interpretativo sobre o Temperamento calculado, cujo acesso somente pode ser 
+obtido após o cálculo do temperamento que é executado e exibido selecionando-se a opção "Análise do Temperamento" no Menu de Ações, ou a tecla de atalho [F8].
 
 Módulos de interpretação da Revolução Solar somente estarão disponíveis no Menu de Ações enquanto determinado mapa de Revolução Solar estiver aberto, assim como suas respectivas teclas de atalho. Do mesmo modo alguns módulos que podem ser executados dentro de um mapa natal, ou radical, não estarão disponíveis quando o mapa aberto for um mapa de Revolução Solar. A relação destes comandos está no tópicos sobre Atalhos e no tópico sobre Revolução Solar, ambos no menu de ajuda.
 
@@ -701,7 +707,8 @@ Todos os comandos existentes neste menu podem ser, também, executados usando te
 • As Cores:
 ───────────────────────────────────────────────────────────────────
 
-Para diferenciar os corpos celestes, o mapa usa codificação de cores:
+Para diferenciar os corpos celestes, o mapa usa codificação de 
+cores:
 
 • Os 7 Principais Planetas (Sol, Lua, Mercúrio, Vênus, Marte, Júpiter e Saturno) são exibidos em Azul.
 
@@ -709,7 +716,8 @@ Para diferenciar os corpos celestes, o mapa usa codificação de cores:
 
 • Pontos e Ângulos (ASC, Desc, IC, MC, Vertex, Parte de Fortuna, SAN, Nodos Norte/Sul) são em Preto.
 
-• Os regentes de termos e regentes de decanatos (quando exibidos) estão em magenta.
+• Os regentes de termos e regentes de decanatos 
+(quando exibidos) estão em magenta.
 
 • A divisão de casas, quando exibidas, estão em cinza claro amarelado.
 
@@ -734,9 +742,11 @@ Por padrão, o "Mapa Rápido" é animado em um intervalo de 1 segundo, permitind
 
 A animação atualiza o mapa a cada segundo no ritmo exibido no canto inferior direito da tela.
 
-Para animar um mapa carregado, pressione [A]. Use ] para aumentar e [ para diminuir a velocidade da animação em passos de 1 minuto.
+Para animar um mapa carregado, pressione [A]. Use ] para aumentar 
+e [ para diminuir a velocidade da animação em passos de 1 minuto.
 
-A roda gira 1° no sentido horário toda vez que o Ascendente avança 1°.
+A roda gira 1° no sentido horário toda vez que o Ascendente avança 
+1°.
 
 Da mesma forma, cada elemento no gráfico astrológico muda de posição sempre que seu grau atinge o grau seguinte.
 

@@ -2706,15 +2706,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         //     continue;
         // }
 
-        if (row_pad > 0) {
-            wattron(pad, COLOR_PAIR(10) | A_DIM);
-            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────"); 
-            wmove(pad, row_pad, 2);
-            whline(pad, ACS_HLINE, table_width - 10);
-            wattroff(pad, COLOR_PAIR(10) | A_DIM);        
-            row_pad++;
-        }
-
+        
         int aproveitamento_puro = strength_planets[i]; // Agora isso é a porcentagem pura (ex: 84)
 
         // 1. Definição de cores justa e democratizada (Mercúrio fica verde!)
@@ -2751,21 +2743,31 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         // Exibe os pontos ponderados reais na direita (Sol/Lua chegam a 50+, Mercúrio a 34)
         mvwprintw(pad, row_pad, 68, "[ %3d pts ]", strength_pontos);
 
-        row_pad++;
+        //if (row_pad > 0) {
+            wattron(pad, COLOR_PAIR(10) | A_DIM);
+            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wmove(pad, row_pad + 1, 2);
+            whline(pad, ACS_HLINE, table_width - 10);
+            wattroff(pad, COLOR_PAIR(10) | A_DIM);        
+        //    row_pad++;
+        //}
+
+        row_pad += 2;
     }
+    row_pad++;
 
     // Rodapé fixo na janela principal
     mvwprintw(table_win, table_height - 1, 4, _("Press Q or ESC to return - Use [↓↑ / JK] to scroll"));
 
     // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll = row_pad - max_linhas_dados_visiveis + 2;
+    int max_scroll = row_pad - max_linhas_dados_visiveis;
     if (max_scroll < 0) max_scroll = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(table_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
     wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
@@ -2821,7 +2823,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
                         int linha_clique_janela = event.y - getbegy(table_win);
                         
                         // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 4; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -2857,7 +2859,7 @@ void display_planetary_energy_profile(PlotObject *plots, int *strength_planets) 
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
         wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
 
@@ -2927,7 +2929,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
     double weights[100];
     get_weights(weights, show_modern_planets);
 
-    int max_linhas_dados = table_height - 8;
+    int max_linhas_dados = table_height - 7;
     WINDOW *pad = newpad(40, table_width - 5);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -2938,15 +2940,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
         //     continue;
         // }
 
-        if (row_pad > 0) {
-            wattron(pad, COLOR_PAIR(10) | A_DIM);
-            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
-            wmove(pad, row_pad, 2);
-            whline(pad, ACS_HLINE, table_width - 10);
-            wattroff(pad, COLOR_PAIR(10) | A_DIM);        
-            row_pad++;
-        }
-        
+               
         /* CORREÇÃO 1: Captura o aproveitamento (0 a 100) direto do seu array reformulado */
         int aproveitamento_puro = strength_planets[i];
 
@@ -2977,20 +2971,29 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
         mvwprintw(pad, row_pad, 72, "%3d points", strength_pontos);
         
         wattroff(pad, COLOR_PAIR(12) | COLOR_PAIR(8) | COLOR_PAIR(11) | A_BOLD | A_DIM | A_REVERSE);
-        row_pad++;
+
+        //if (row_pad > 0) {
+            wattron(pad, COLOR_PAIR(10) | A_DIM);
+            //mvwprintw(pad, row_pad, 2, "────────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wmove(pad, row_pad + 1, 2);
+            whline(pad, ACS_HLINE, table_width - 10);
+            wattroff(pad, COLOR_PAIR(10) | A_DIM);        
+        //}
+
+        row_pad += 2;
     }
-    row_pad += 2;
+    row_pad++;
 
     mvwprintw(table_win, table_height - 1, 2, _("Press Q or ESC to return - [↓↑] to scroll"));
 
     int offset_y = 0;
-    int max_scroll = row_pad - max_linhas_dados + 2;
+    int max_scroll = row_pad - max_linhas_dados;
     if (max_scroll < 0) max_scroll = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(table_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
     wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
     doupdate();
@@ -3038,7 +3041,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
                         int linha_clique_janela = event.y - getbegy(table_win);
                         
                         // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 4; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -3073,7 +3076,7 @@ void display_force(PlotObject *plots, PlanetDignities *dig, int *strength_planet
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, offset_y, row_pad + 4, max_linhas_dados + 1, 3);
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados, 3);
         wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
         doupdate();
@@ -3162,7 +3165,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
-    int max_linhas_dados_visiveis = table_height - 6; 
+    int max_linhas_dados_visiveis = table_height - 7; 
     WINDOW *scroll_pad = newpad(40, 145); 
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
@@ -3173,11 +3176,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         //     (!show_modern_planets && (i >= 13 && i <= 14))) {
         //     continue;
         // }
-
-        wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(scroll_pad, row - 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-        wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-
+        
         // 1. Objeto / Planeta
         wattron(scroll_pad, A_BOLD);
         mvwprintw(scroll_pad, row, 2, "%s", plots[i].object);
@@ -3375,15 +3374,20 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         }
         wattroff(scroll_pad, A_BOLD);
 
+        wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+        mvwprintw(scroll_pad, row + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
+
         row += 2;
     }
+    row++;
     
     // Add instructions
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
     
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
-    int max_scroll_y = row - max_linhas_dados_visiveis + 2;
+    int max_scroll_y = row - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     // Vincula o teclado à PAD virtual
@@ -3393,7 +3397,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(table_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
+    desenhar_scrollbar(table_win, offset_y, row, max_linhas_dados_visiveis, 3);
     wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
@@ -3406,13 +3410,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     int running = 1;
     while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
 
-        int flag = 0;
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, offset_y, row + 2, max_linhas_dados_visiveis, 3);
-        wattroff(table_win, COLOR_PAIR(28) | flag);
-        wnoutrefresh(table_win);
-        
+                
         if (ch == KEY_F(3)) {
             display_force(plots, dig, strength_planets);
             
@@ -3488,7 +3486,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
                             int linha_clique_janela = event.y - getbegy(table_win);
                             
                             // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                            int offset_inicio_barra = 0; 
+                            int offset_inicio_barra = 4; 
                             
                             // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
                             int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -3520,6 +3518,13 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
                 }
                 break;
             }
+            int flag = 0;
+            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+            wattron(table_win, COLOR_PAIR(28) | flag);
+            desenhar_scrollbar(table_win, offset_y, row, max_linhas_dados_visiveis, 3);
+            wattroff(table_win, COLOR_PAIR(28) | flag);
+            wnoutrefresh(table_win);
+
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
@@ -3825,7 +3830,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
-    int max_linhas_dados_visiveis = table_height - 6; 
+    int max_linhas_dados_visiveis = table_height - 7; 
     WINDOW *scroll_pad = newpad(40, 145); 
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
@@ -3839,12 +3844,6 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         //     (!show_modern_planets && (i >= 13 && i <= 14))) {
         //     continue;
         // }
-
-        if (row_pad > 0) {
-            wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-            mvwprintw(scroll_pad, row_pad - 1, c_obj, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-            wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-        }
 
         PlanetRowData data = matrix->rows[i];
 
@@ -3928,8 +3927,16 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_mut + 1, "%s", data.mutual_reception);
         
         wattroff(scroll_pad, A_BOLD);
+
+        //if (row_pad > 0) {
+            wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+            mvwprintw(scroll_pad, row_pad + 1, c_obj, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
+        //}
+
         row_pad += 2;
     }
+    row_pad++;
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Dignities - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
@@ -3937,7 +3944,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados_visiveis + 2;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     // Vincula o teclado à PAD virtual
@@ -3947,7 +3954,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(table_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
     wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
@@ -3959,12 +3966,6 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     int ch;
     int running = 1;
     while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, offset_y, row_pad + 2, max_linhas_dados_visiveis, 3);
-        wattroff(table_win, COLOR_PAIR(28) | flag);
-        wnoutrefresh(table_win);
         
         if (ch == KEY_F(2)) {
             // Abre sua tela de detalhes das dignidades
@@ -4060,7 +4061,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
                             int linha_clique_janela = event.y - getbegy(table_win);
                             
                             // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                            int offset_inicio_barra = 0; 
+                            int offset_inicio_barra = 4; 
                             
                             // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
                             int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
@@ -4092,6 +4093,12 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
                 }
                 break;
             }
+            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+            wattron(table_win, COLOR_PAIR(28) | flag);
+            desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+            wattroff(table_win, COLOR_PAIR(28) | flag);
+            wnoutrefresh(table_win);
+        
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
             doupdate();

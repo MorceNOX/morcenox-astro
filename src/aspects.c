@@ -444,7 +444,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(100);
     
-    int max_linhas_dados = table_height - 6;
+    int max_linhas_dados = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -545,18 +545,19 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                     }
                 }
 
-                row_pad = 2 + 2 * i + 1;
+                
             }
+            row_pad = 3 + 2 * i;
         }
     }
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    int max_scroll_y = row_pad - max_linhas_dados;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(decl_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados, 3);
     wattroff(decl_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(decl_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
@@ -577,13 +578,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     int ch;
     int running = 1;
     while ((ch = wgetch(decl_win)) != 27 && ch != 'q' && ch != 'Q' && running) {   
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(decl_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados - 2, 2);
-        wattroff(decl_win, COLOR_PAIR(28) | flag);
-
-        wnoutrefresh(decl_win);
-
+        
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -614,8 +609,9 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
+                            
                             // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -626,7 +622,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                     if (event.x == col_scrollbar_absoluta) {
                         
                         // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 4; 
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
@@ -655,6 +651,12 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 break;
             }
         }
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(decl_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados, 3);
+        wattroff(decl_win, COLOR_PAIR(28) | flag);
+
+        wnoutrefresh(decl_win);
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
      
@@ -718,7 +720,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(100);
 
-    int max_linhas_dados = table_height - 6;
+    int max_linhas_dados = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -830,23 +832,24 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                     }
                 }
 
-                row_pad = 2 + 2 * i + 1;
+                
             }
             // else {
             //     wattron(pad, COLOR_PAIR(10) | A_DIM);
             //     mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, "░░░"); 
             //     wattroff(pad, COLOR_PAIR(10) | A_DIM);
             // }
+            row_pad = 3 + 2 * i;
         }
     }
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    int max_scroll_y = row_pad - max_linhas_dados;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
@@ -867,12 +870,6 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
-        wattroff(aspects_win, COLOR_PAIR(28) | flag);
-        wnoutrefresh(aspects_win);
         
         if (ch == KEY_F(3)) {
             display_declination_aspects(plots, matrix_decl);
@@ -951,7 +948,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                             if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                                 running = 0;
                                 // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                                return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                                //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                             }
                         }
     
@@ -962,7 +959,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                         if (event.x == col_scrollbar_absoluta) {
                             
                             // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
-                            int offset_inicio_barra = 0; 
+                            int offset_inicio_barra = 4; 
                             int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
     
                             // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
@@ -992,6 +989,12 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                 }
         
             }
+            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+            wattron(aspects_win, COLOR_PAIR(28) | flag);
+            desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+            wattroff(aspects_win, COLOR_PAIR(28) | flag);
+            wnoutrefresh(aspects_win);
+        
             // Atualiza os frames da PAD na tela após o movimento de subida/descida
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
             doupdate();
@@ -1128,7 +1131,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     mouseinterval(100);
 
 
-    int max_linhas_dados = table_height - 6;
+    int max_linhas_dados = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -1231,24 +1234,25 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     }
                 }
                                 
-                row_pad = 2 + 2 * i + 1;
+                
             }
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 mvwprintw(pad, 1 + 2 * i, 3 + 4 * j, "░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
+            row_pad = 3 + 2 * i;
         }
     }
 
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    int max_scroll_y = row_pad - max_linhas_dados;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
 
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
@@ -1267,12 +1271,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 2);
-        wattroff(aspects_win, COLOR_PAIR(28) | flag);
-        wnoutrefresh(aspects_win);
-                
+                 
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -1303,7 +1302,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
                             // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -1314,7 +1313,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     if (event.x == col_scrollbar_absoluta) {
                         
                         // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 4; 
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
@@ -1343,6 +1342,12 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                 break;
             }
         }
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+        wnoutrefresh(aspects_win);
+       
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
     }
@@ -1475,7 +1480,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(100);
 
-    int max_linhas_dados = table_height - 7;
+    int max_linhas_dados = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -1608,19 +1613,20 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
 
-            row_pad = 2 + 2 * i + 1;
+            row_pad = 3 + 2 * i;
             index++;
         }
     }
+    //row_pad++;
 
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados + 2;
+    int max_scroll_y = row_pad - max_linhas_dados;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(aspects_win);
 
@@ -1640,13 +1646,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados - 2, 3);
-        wattroff(aspects_win, COLOR_PAIR(28) | flag);
-        wnoutrefresh(aspects_win);
-
-                
+                        
         switch (ch) {
             case KEY_UP: 
             case 'k': 
@@ -1677,7 +1677,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
                             // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
                         }
                     }
 
@@ -1688,7 +1688,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                     if (event.x == col_scrollbar_absoluta) {
                         
                         // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 4; 
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
@@ -1717,6 +1717,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 break;
             }
         }
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+        wnoutrefresh(aspects_win);
+
         prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
     }

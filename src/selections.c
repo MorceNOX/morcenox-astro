@@ -4665,7 +4665,7 @@ int select_topic(char *file, int max_width) {
                         int linha_clique_janela = event.y - getbegy(win);
                         
                         // O seu offset_y passado na função foi 2. A barra útil começa na linha seguinte (3)
-                        int offset_inicio_barra = 0; 
+                        int offset_inicio_barra = 1; 
                         
                         // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;

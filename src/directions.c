@@ -1272,7 +1272,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int scroll_offset = 0;
     int loop_interativo = 1;
 
-    int max_linhas_exibicao = table_height - 13;
+    int max_linhas_exibicao = (table_height / 2) * 2 - 12;
     WINDOW *scroll_pad = newpad(1200, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
@@ -1647,7 +1647,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad, max_linhas_exibicao, 6);
+        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
         wattroff(table_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(table_win);
@@ -1759,7 +1759,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
                             
                             // Calcula o limite máximo que o scroll_offset pode atingir
                             int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
@@ -1767,7 +1767,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
                             if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
                                 // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
                                 
                                 // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
                                 // arredondamos para o número par mais próximo para não quebrar o layout da tabela
@@ -2076,7 +2076,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     // CRIAÇÃO DO PAD VIRTUAL DE ROLAGEM
     // ────────────────────────────────────────────────────────────────────────
     // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
-    int max_linhas_exibicao = table_height - 13; // Espaço físico real na janela para os dados
+    int max_linhas_exibicao = (table_height / 2) * 2 - 12; // Espaço físico real na janela para os dados
     WINDOW *scroll_pad = newpad(1200, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
@@ -2461,7 +2461,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, scroll_offset, qtd_direcoes * 2, max_linhas_exibicao, 6);
+        desenhar_scrollbar(table_win, scroll_offset, qtd_direcoes * 2 - 1, max_linhas_exibicao - 1, 6);
         wattroff(table_win, COLOR_PAIR(28) | flag);
 
         wnoutrefresh(table_win);
@@ -2574,7 +2574,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                         // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao) {
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
                             
                             // Calcula o limite máximo que o scroll_offset pode atingir
                             int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
@@ -2582,7 +2582,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
                             if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
                                 // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
                                 
                                 // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
                                 // arredondamos para o número par mais próximo para não quebrar o layout da tabela

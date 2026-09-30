@@ -398,7 +398,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
             }
             // Se a barra desceu além do fundo visível, empurra o scroll para baixo
             if (linha_foco_fisica >= (scroll_offset + max_linhas_exibicao - part_lines)) {
-                scroll_offset = linha_foco_fisica - max_linhas_exibicao + part_lines + 2;
+                scroll_offset = linha_foco_fisica - max_linhas_exibicao + part_lines;
             }
         }
 
@@ -535,9 +535,8 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
 
                             if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
                                 // Mapeia proporcionalmente a linha clicada para o novo offset
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 1);
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
                                 
-                                // Mantém o arredondamento de 2 em 2 linhas que seu layout exige
                                 novo_offset = (novo_offset / 2) * 2;
 
                                 if (novo_offset < 0) novo_offset = 0;
@@ -2171,13 +2170,13 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     int linha_clique_janela = event.y - getbegy(aspects_win);
                     
                     // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                    int offset_inicio_barra = 3; 
+                    int offset_inicio_barra = 4; 
                     
                     // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_dados - 1)
                     int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
 
                     // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_tela) {
+                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_tela * 2) {
                         
                         // Calcula o limite máximo que o pad_line_pos pode atingir
                         int max_scroll_y = total_planetas_validos - max_linhas_tela;
@@ -2186,7 +2185,8 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                         // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
                         if (max_linhas_tela > 1 && max_scroll_y > 0) {
                             // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                            int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_tela - 1);
+                            int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_tela - 2);
+
                             
                             // Garante que o valor respeite as barreiras de limite
                             if (novo_offset < 0) novo_offset = 0;
