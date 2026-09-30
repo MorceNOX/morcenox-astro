@@ -597,7 +597,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
         for (int s = 0; s < 2; s++) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - ((show_modern_planets)?5:4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
-            if (prom[p].type == PROM_TERM && s == 1) continue;
+            //if (prom[p].type == PROM_TERM && s == 1) continue;
 
             for (int a = 0; a < 7; a++) {
 
@@ -1829,7 +1829,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
         for (int s = 0; s < 2; s++) {
 
-            if (prom[p].type == PROM_TERM && s == 1) continue;
+            //if (prom[p].type == PROM_TERM && s == 1) continue;
 
             for (int a = 0; a < 7; a++) {
                 
