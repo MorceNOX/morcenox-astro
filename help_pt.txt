@@ -1565,7 +1565,7 @@ As opções incluem ver as direções primárias para os seguintes pontos, os ch
 
 Use setas para direita e esquerda para mudar o significador e deslize pela tabela para ver todas as direções para o ponto selecionado.
 
-Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas, dos nodos lunares e da Parte da Fortuna.
+Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas, dos nodos lunares e da Parte da Fortuna (Antíscia e Contrantiscia são opcionais - caso queira incluí-los, a respectiva opção pode ser definida nas opções de configuração do programa - menu item "Configurações").
 
 Por padrão, a tabela exibe ambas as direções: Diretas e Conversas. Você pode filtrar os resultados pressionando [C] para ver apenas as direções Conversas, [D] para as Diretas e [A] para ver todas as direções na tabela.
 
