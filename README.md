@@ -7,7 +7,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Terminal](https://img.shields.io/badge/Platform-Terminal-lightgrey.svg)](https://en.wikipedia.org/wiki/Terminal)
 
-MorceNOX™ ASTRO is a high-performance,-precision astrological engine designed for the terminal environment. Built with C and the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical astrological charts, from Natal and Solar Revolution to advanced time-lord techniques like Firdaria and Primary Directions.
+MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological engine designed for the terminal environment. Built with C and the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical astrological charts, from Natal and Solar Revolution to advanced time-lord techniques like Firdaria and Primary Directions.
 
 Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
 
@@ -27,14 +27,15 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Planetary Hours:** Full calculation of planetary hours for day and night, synchronized with sunrise/sunset.
 
 ### 🖥 Interactive Terminal Interface
-* **Visual Excellence:** High-resolution ASCII art chart wheels with color-coded elements (Fire, Earth, Air, Water) and planetary types.
+* **Visual Excellence:** High-resolution ASCII art chart wheels with vibrant colors and color-coded elements (Fire, Earth, Air, Water) and planetary types.
 * **Dynamic Interaction:** Zoom in/out, pan the chart, and toggle overlays like Decans, Terms (Bounds), and House Boundaries.
 * **Animation Mode:** Visualize the past and future movement of celestial bodies by adjusting the animation pace.
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
-* **Mouse Support:** Chart Wheel and all windows are clickable. You can pan the chart wheel by dragging and dropping. Double clicking makes the chart zoomed in and out; Every button and scrollbar are clickable, as well as the windows.
+* **Mouse Support:** Double click an option of the menus to execute it! Chart Wheel and all windows are clickable. You can pan the chart wheel by dragging and dropping. Double clicking makes the chart zoomed in and out; Every button and scrollbar are clickable, as well as the windows.
+* **Extense Help:** You can read in a proper window about any part of the program just by selecting a topic.
 
 ### 🌎 Multilingual Support
-* MorceNOX™ ASTRO is available in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
+* MorceNOX™ ASTRO is available entirely in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
 
 ## 🛠 Technical Stack
 
@@ -145,9 +146,9 @@ Then run the application simply by typing: `astro`
 
 ## ⌨️ Usage & Navigation
 
-MorceNOX™ Astro is designed for speed. Most actions require only one or two keystrokes.
+MorceNOX™ Astro is designed for speed, calculation accuracy, and to be a beautiful and an easy to use astrological application. Most actions require only one or two keystrokes, or a click or double-click.
 
-* **Main Menu:** Use `Arrow Keys` to navigate and `Enter` to select.
+* **Main Menu:** Use `Arrow Keys` to navigate and `Enter` to select, or `double click` an option.
 * **Chart Window:**
     * `[M]` - Open Action Menu.
     * `[A]` - Toggle Animation.
@@ -156,8 +157,8 @@ MorceNOX™ Astro is designed for speed. Most actions require only one or two ke
     * `[B]` - Display Terms (Bounds).
     * `[H]` - Display House Boundaries.
     * `[←↓↑→] or drag and drop` - Pan.
-    * `[R]` - Reset Zoom and Pan.    
-* **Sub-Modules:** Accessed via Function and Numeric keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria, `3` for Primary Directions).
+    * `[R]` - Reset Zoom and Pan.
+* **Sub-Modules:** Accessed via Function and Numeric keys (e.g., `F1` for Data, `F3` for Aspects, `F12` for Firdaria, `3` for Primary Directions), and many more. Select the `Help` option to read about any part of the application.
 
 ## Screenshots
 
