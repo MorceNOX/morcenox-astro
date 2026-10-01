@@ -864,7 +864,7 @@ OptionsEdition select_options() {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w); // Captura o tamanho do terminal atual
     
-    int w_width = 80, w_height = 33;
+    int w_width = 95, w_height = 33;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     keypad(win, TRUE);
@@ -1194,7 +1194,7 @@ OptionsEdition select_options() {
                     }
                 }
                 const char *house_system_text = _("House System");
-                mvwprintw(win, 2, 5, "%s: %s ", house_system_text, house_system_name);
+                mvwprintw(win, 2, 2, " ◦ %s: %s ", house_system_text, house_system_name);
             }
             else if (i == 1) {
                 // Show the name of the triplicity system instead of just the number
@@ -1212,7 +1212,7 @@ OptionsEdition select_options() {
                 }
                 const char *trip_text = _("Triplicity System");
 
-                mvwprintw(win, 3, 5, "%s: %s ", trip_text, triplicity_system_name);
+                mvwprintw(win, 3, 2, " ◦ %s: %s ", trip_text, triplicity_system_name);
             }
             else if (i == 2) {
                 // Show the name of the terms system instead of just the number
@@ -1230,70 +1230,70 @@ OptionsEdition select_options() {
                 }
 
                 const char *terms_text = _("Terms (bounds) System");
-                mvwprintw(win, 4, 5, "%s: %s ", terms_text, terms_system_name);
+                mvwprintw(win, 4, 2, " ◦ %s: %s ", terms_text, terms_system_name);
             }
             
             
             else if (i == 3) {
                 const char *orb1 = _("Sun orb");
-                mvwprintw(win, 6, 5, "%s: %.1f ", orb1, planet_orbis[0]);
+                mvwprintw(win, 6, 2, " ◦ %s: %.1f ", orb1, planet_orbis[0]);
             }
             else if (i == 4) {
                 const char *orb2 = _("Moon orb");
-                mvwprintw(win, 7, 5, "%s: %.1f ", orb2, planet_orbis[1]);
+                mvwprintw(win, 7, 2, " ◦ %s: %.1f ", orb2, planet_orbis[1]);
             }
             else if (i == 5) {
                 const char *orb3 = _("Mercury orb");
-                mvwprintw(win, 8, 5, "%s: %.1f ", orb3, planet_orbis[2]);
+                mvwprintw(win, 8, 2, " ◦ %s: %.1f ", orb3, planet_orbis[2]);
             }
             else if (i == 6) {
                 const char *orb4 = _("Venus orb");
-                mvwprintw(win, 9, 5, "%s: %.1f ", orb4, planet_orbis[3]);
+                mvwprintw(win, 9, 2, " ◦ %s: %.1f ", orb4, planet_orbis[3]);
             }
             else if (i == 7) {
                 const char *orb5 = _("Mars orb");
-                mvwprintw(win, 10, 5, "%s: %.1f ", orb5, planet_orbis[4]);
+                mvwprintw(win, 10, 2, " ◦ %s: %.1f ", orb5, planet_orbis[4]);
             }
             else if (i == 8) {
                 const char *orb6 = _("Jupiter orb");
-                mvwprintw(win, 11, 5, "%s: %.1f ", orb6, planet_orbis[5]);
+                mvwprintw(win, 11, 2, " ◦ %s: %.1f ", orb6, planet_orbis[5]);
             }
             else if (i == 9) {
                 const char *orb7 = _("Saturn orb");
-                mvwprintw(win, 12, 5, "%s: %.1f ", orb7, planet_orbis[6]);
+                mvwprintw(win, 12, 2, " ◦ %s: %.1f ", orb7, planet_orbis[6]);
             }
             else if (i == 10) {
                 const char *orb8 = _("Uranus orb");
-                mvwprintw(win, 13, 5, "%s: %.1f ", orb8, planet_orbis[7]);
+                mvwprintw(win, 13, 2, " ◦ %s: %.1f ", orb8, planet_orbis[7]);
             }
             else if (i == 11) {
                 const char *orb9 = _("Neptune orb");
-                mvwprintw(win, 14, 5, "%s: %.1f ", orb9, planet_orbis[8]);
+                mvwprintw(win, 14, 2, " ◦ %s: %.1f ", orb9, planet_orbis[8]);
             }
             else if (i == 12) {
                 const char *orb10 = _("Pluto orb");
-                mvwprintw(win, 15, 5, "%s: %.1f ", orb10, planet_orbis[9]);
+                mvwprintw(win, 15, 2, " ◦ %s: %.1f ", orb10, planet_orbis[9]);
             }
             else if (i == 13) {
                 const char *orb11 = _("Lunar Nodes orb");
-                mvwprintw(win, 16, 5, "%s: %.1f ", orb11, planet_orbis[10]);
+                mvwprintw(win, 16, 2, " ◦ %s: %.1f ", orb11, planet_orbis[10]);
             }
 
             else if (i == 14) {
                 const char *orb12 = _("Parallel / Contra-parallel orb");
-                mvwprintw(win, 17, 5, "%s: %.1f ", orb12, parallel_orbis);
+                mvwprintw(win, 17, 2, " ◦ %s: %.1f ", orb12, parallel_orbis);
             }
 
             else if (i == 15) {
                 const char *orb13 = _("Antiscia / Contrantiscia orb");
-                mvwprintw(win, 18, 5, "%s: %.1f ", orb13, antissia_orbis);
+                mvwprintw(win, 18, 2, " ◦ %s: %.1f ", orb13, antissia_orbis);
             }
 
             else if (i == 16) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
                 const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
-                mvwprintw(win, 20, 5, "%s %s ", consider_text, consider_modern_planets_str);
+                mvwprintw(win, 20, 2, " ◦ %s %s ", consider_text, consider_modern_planets_str);
             }
 
             else if (i == 17) {
@@ -1301,7 +1301,7 @@ OptionsEdition select_options() {
                 const char *show_modern_planets_str = options.show_modern_planets ? _("yes") : _("no");
                 const char *use_text = _("Use Modern Planets?");
 
-                mvwprintw(win, 21, 5, "%s %s ", use_text, show_modern_planets_str);
+                mvwprintw(win, 21, 2, " ◦ %s %s ", use_text, show_modern_planets_str);
             }
             else if (i == 18) {
                 // Show the name of the time key instead of just the number
@@ -1328,14 +1328,14 @@ OptionsEdition select_options() {
                 }
 
                 const char *key_text = _("Time Key of Primary Direction");
-                mvwprintw(win, 22, 5, "%s: %s ", key_text, time_key_name);
+                mvwprintw(win, 22, 2, " ◦ %s: %s ", key_text, time_key_name);
             }
             else if (i == 19) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *ant_prom_str = options.ant_prom ? _("yes") : _("no");
 
                 const char *ant_prom_text = _("Antiscia/Contrantiscia as Promissors in Primary Directions?");
-                mvwprintw(win, 23, 5, "%s %s ", ant_prom_text, ant_prom_str);
+                mvwprintw(win, 23, 2, " ◦ %s %s ", ant_prom_text, ant_prom_str);
             }
             else if (i == 20) {
                 char language_name[128];
@@ -1351,20 +1351,20 @@ OptionsEdition select_options() {
                 }
                 const char *lang_text = _("Interface Language");
 
-                mvwprintw(win, 26, 5, "%s: %s ", lang_text, language_name);
+                mvwprintw(win, 26, 2, " ◦ %s: %s ", lang_text, language_name);
             }
             else if (i == 21) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
 
                 const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 27, 5, "%s: %s ", dark_mode_text, dark_mode_str);
+                mvwprintw(win, 27, 2, " ◦ %s: %s ", dark_mode_text, dark_mode_str);
             }
             else if (i == 22) {
                 const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
                 const char *gen_text = _("Default Gender");
 
-                mvwprintw(win, 29, 5, "%s: %s ", gen_text, gender_str);
+                mvwprintw(win, 29, 2, " ◦ %s: %s ", gen_text, gender_str);
             }
 
 

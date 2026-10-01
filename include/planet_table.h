@@ -65,6 +65,7 @@ typedef struct {
     double declination;
     double latitude;
     double ra;
+    double house_pos;
 } PlotObject;
 
 typedef struct {

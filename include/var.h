@@ -31,13 +31,13 @@
 
 #define MAX_AGE 120.0
 
-#define TIME_KEY_NAIBOD         1
-#define TIME_KEY_CARDANO        2
-#define TIME_KEY_PTOLEMY        3
-#define TIME_KEY_PLACIDUS       4
-#define TIME_KEY_TRUE_SOLAR_ARC 5
-#define TIME_KEY_KEPLER         6
-
+#define TIME_KEY_NAIBOD                   1
+#define TIME_KEY_CARDANO                  2
+#define TIME_KEY_PTOLEMY                  3
+#define TIME_KEY_PLACIDUS                 4
+#define TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE 5
+#define TIME_KEY_KEPLER                   6
+#define TIME_KEY_TRUE_SOLAR_ARC_RA        7
 
 
 

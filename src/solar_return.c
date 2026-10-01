@@ -579,7 +579,7 @@ void abrir_janela_confronto_natal_revolucao(
         line_count += 3;
 
         /* Calcula os pontos ponderados reais apenas para a string informativa do texto */
-        double weights[50];
+        double weights[100];
         get_weights(weights, show_modern_planets);
         int pontos_finais_exibicao = (int)ceil(((double)aproveitamento_almuten[i] * weights[id_almuten_rev[i]]) / 10.0);
 

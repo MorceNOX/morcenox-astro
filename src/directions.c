@@ -409,6 +409,82 @@ double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo
 
 
 
+// Calcula o Arco Solar Real em Ascensão Reta para uma idade específica
+double calcular_arco_solar_real_ra(double jd_natal, double idade_anos, int *err_code) {
+    double xx_natal[6], xx_prog[6];
+    char err_msg[256];
+    
+    // 1. Calcula a posição do Sol no momento exato do nascimento (Eclíptica)
+    if (swe_calc_ut(jd_natal, SE_SUN, 0, xx_natal, err_msg) < 0) {
+        *err_code = -1;
+        return 0.0;
+    }
+    double lon_sol_natal = xx_natal[0];
+    double lat_sol_natal = xx_natal[1];
+    
+    // 2. Transforma as coordenadas natas do Sol para o plano Equatorial para pegar a AR Natal
+    double xx_eq_natal[3] = {lon_sol_natal, lat_sol_natal, 1.0};
+    double xequat_natal[3];
+    // Pegamos a obliquidade real do momento do nascimento para manter a precisão mecânica
+    double obl_natal = 23.4392911; // Ideal obter dinamicamente com swe_calc_ut para o ponto epsilon se quiser
+    swe_cotrans(xx_eq_natal, xequat_natal, -obl_natal);
+    double ra_sol_natal = xequat_natal[0];
+    
+    // 3. Aplica o princípio de 1 dia = 1 ano para achar a data progredida
+    double jd_progredido = jd_natal + idade_anos;
+    
+    // 4. Calcula a posição do Sol na data progredida
+    if (swe_calc_ut(jd_progredido, SE_SUN, 0, xx_prog, err_msg) < 0) {
+        *err_code = -2;
+        return 0.0;
+    }
+    double lon_sol_prog = xx_prog[0];
+    double lat_sol_prog = xx_prog[1];
+    
+    // 5. Transforma a posição progredida para o plano Equatorial
+    double xx_eq_prog[3] = {lon_sol_prog, lat_sol_prog, 1.0};
+    double xequat_prog[3];
+    swe_cotrans(xx_eq_prog, xequat_prog, -obl_natal); // Mantém a obliquidade radix para projeção tradicional
+    double ra_sol_prog = xequat_prog[0];
+    
+    // 6. O ARCO SOLAR EM ASCENSÃO RETA é a diferença direta das RAs
+    double arco_solar_ra = ra_sol_prog - ra_sol_natal;
+    
+    // Normalização estrita do círculo
+    if (arco_solar_ra < 0.0) arco_solar_ra += 360.0;
+    
+    return arco_solar_ra;
+}
+
+
+
+double encontrar_idade_por_arco_solar(double jd_natal, double arco_direcao) {
+    double idade_estimada = arco_direcao; // Palpite inicial (1° = 1 ano)
+    double erro = 1.0;
+    int iteracoes = 0;
+    int err_code;
+    
+    while (fabs(erro) > 0.00001 && iteracoes < 20) {
+        // Chama a função astronômica que criamos anteriormente
+        double arco_solar_calculado = calcular_arco_solar_real_ra(jd_natal, idade_estimada, &err_code);
+        
+        erro = arco_solar_calculado - arco_direcao;
+        idade_estimada -= erro; // Ajusta o palpite
+        iteracoes++;
+    }
+    
+    // Para encaixar no cálculo padrão atual: d->idade_evento = arco / CHAVE;
+    // Retornamos um "fator equivalente" para que a divisão dê a idade_estimada correta.
+    if (idade_estimada > 0.0) {
+        return arco_direcao / idade_estimada;
+    }
+    return NAIBOD_KEY;
+}
+
+
+
+
+
 // Função auxiliar interna para simular o arco gerado pela velocidade do Sol
 static double calcular_arco_kepler_interno(double tjd_ut_natal, double idade_anos) {
     double x2[6];
@@ -455,11 +531,6 @@ double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
     return arco_alvo / idade_estimada;
 }
 
-
-
-#include "swephexp.h"
-#include <stdio.h>
-#include <math.h>
 
 /**
  * Retorna o valor CHAVE dinâmico para a lógica de Kepler com altíssima velocidade.
@@ -888,25 +959,27 @@ double __calcular_distancia_meridiana(double ra_planeta, double ramc, int esta_a
 
 double get_time_key(int key, double jd, double arco) {
     switch(key) {
-        case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
-        case TIME_KEY_CARDANO:         return CARDANO_KEY;
-        case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
-        case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
-        case TIME_KEY_TRUE_SOLAR_ARC: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
-        case TIME_KEY_KEPLER:         return obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
-        default: return NAIBOD_KEY;
+        case TIME_KEY_NAIBOD:                   return NAIBOD_KEY;
+        case TIME_KEY_CARDANO:                  return CARDANO_KEY;
+        case TIME_KEY_PTOLEMY:                  return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:                 return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
+        case TIME_KEY_KEPLER:                   return obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return encontrar_idade_por_arco_solar(jd, arco);
+        default:                                return NAIBOD_KEY;
     }
 }
 
 
 double get_key(int key) {
     switch(key) {
-        case TIME_KEY_NAIBOD:         return NAIBOD_KEY;
-        case TIME_KEY_CARDANO:         return CARDANO_KEY;
-        case TIME_KEY_PTOLEMY:        return PTOLEMY_KEY;
-        case TIME_KEY_PLACIDUS:       return PLACIDUS_KEY;
-        case TIME_KEY_TRUE_SOLAR_ARC: return -1.0;           
-        case TIME_KEY_KEPLER:         return -1.0;
+        case TIME_KEY_NAIBOD:                   return NAIBOD_KEY;
+        case TIME_KEY_CARDANO:                  return CARDANO_KEY;
+        case TIME_KEY_PTOLEMY:                  return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:                 return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return -1.0;           
+        case TIME_KEY_KEPLER:                   return -1.0;
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return -1.0;
         default: return NAIBOD_KEY;
     }
 }
@@ -914,12 +987,13 @@ double get_key(int key) {
 
 const char* get_key_name(int key) {
     switch(key) {
-        case TIME_KEY_NAIBOD:         return "Naibod";
-        case TIME_KEY_CARDANO:         return _("Cardano");
-        case TIME_KEY_PTOLEMY:        return _("Ptolemy");
-        case TIME_KEY_PLACIDUS:       return "Placidus";
-        case TIME_KEY_TRUE_SOLAR_ARC: return _("True Solar Arc");           
-        case TIME_KEY_KEPLER:         return "Kepler";
+        case TIME_KEY_NAIBOD:                   return "Naibod";
+        case TIME_KEY_CARDANO:                  return _("Cardano");
+        case TIME_KEY_PTOLEMY:                  return _("Ptolemy");
+        case TIME_KEY_PLACIDUS:                 return "Placidus";
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return _("True Solar Arc Longitude");           
+        case TIME_KEY_KEPLER:                   return "Kepler";
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return _("True Solar Arc RA");
         default: return "Naibod";
     }
 }
@@ -942,6 +1016,48 @@ double obter_cota_fixa_casa_placidus(int numero_casa) {
         default: return  0.0;
     }
 }
+
+
+
+double calcular_cota_universal(double posicao_domal_swe) {
+    int casa_base = (int)posicao_domal_swe;                // Ex: 11
+    double fracao = posicao_domal_swe - casa_base;         // Ex: 0.5
+    
+    // Mapeia linearmente as transições de cúspides do espaço local
+    double cota_cuspide_atual = obter_cota_fixa_casa_placidus(casa_base);
+    
+    int proxima_casa = (casa_base == 12) ? 1 : casa_base + 1;
+    double cota_proxima_cuspide = obter_cota_fixa_casa_placidus(proxima_casa);
+    
+    // Interpolação que amarra a cota com o sistema de casas em uso!
+    return cota_cuspide_atual + (fracao * (cota_proxima_cuspide - cota_cuspide_atual));
+}
+
+
+double calcular_cota_dinamica_sistema(double house_pos) {
+    // Tratamento estrito de bordas para evitar overflow circular
+    if (house_pos < 1.0) house_pos += 12.0;
+    if (house_pos >= 13.0) house_pos -= 12.0;
+
+    int casa_base = (int)house_pos;                  // Ex: 11
+    double fracao = house_pos - (double)casa_base;   // Ex: 0.5
+
+    // Busca as cotas espaciais das duas cúspides que delimitam o planeta
+    double cota_atual = obter_cota_fixa_casa_placidus(casa_base);
+    
+    int proxima_casa = (casa_base == 12) ? 1 : casa_base + 1;
+    double cota_proxima = obter_cota_fixa_casa_placidus(proxima_casa);
+
+    // Tratamento matemático especial para a transição crítica do Horizonte (Casa 1 para Casa 2)
+    // No nosso mapa de cotas, a Casa 1 vale -1.0 e a Casa 2 vale -0.666667.
+    // Porém, o Horizonte Oeste (Casa 7 para Casa 8) passa de 1.0 para 0.666667.
+    // A interpolação linear simples resolve perfeitamente a variação contínua dos quadrantes:
+    double cota_interpolada = cota_atual + (fracao * (cota_proxima - cota_atual));
+
+    return cota_interpolada;
+}
+
+
 
 
 
@@ -972,62 +1088,60 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
         double dec_prom_rad = para_radianos(prom[p].declination);
-        
         int prom_acima = verificar_se_acima_horizonte(ra_prom, dec_prom_rad, ramc, lat_geo_rad);
-
         double sa_prom = __calcular_semi_arco(dec_prom_rad, lat_geo_rad, prom_acima);
 
-        for (int s = 0; s < 2; s++) { // 0 = Direta, 1 = Conversa            
+        // ====================================================================
+        // EXTRAÇÃO DINÂMICA DE COTAS VIA SISTEMA DE CASAS ATIVO (Topocêntrico/Placidus)
+        // ====================================================================
+        // Se o SIGNIFICADOR (Alvo) for um planeta, a cota dele é dada pelo céu real do sistema de casas
+        double cota_sig_orientada;
+        if (sig[idx_alvo].type == PROM_CUSP) {
+            int num_casa = sig[idx_alvo].house;
+            cota_sig_orientada = obter_cota_fixa_casa_placidus(num_casa);
+        } else {
+            // Lógica universal: Lê a posição domal do planeta e aplica a cota equivalente
+            cota_sig_orientada = calcular_cota_dinamica_sistema(sig[idx_alvo].house_pos);
+        }
+
+        // A cota natal do PROMISSOR também passa a vir do sistema de casas ativo!
+        double cota_prom_natal_dinamica = calcular_cota_dinamica_sistema(prom[p].house_pos);
+
+        for (int s = 0; s < 2; s++) {            
             if (s == 0 && sentido == 1) continue; 
             if (s == 1 && sentido == 0) continue; 
 
             for (int a = 0; a < 7; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
 
+                
                 double arco = 0.0;
                             
-                // 1. Ângulos Horários Iniciais (Cálculos que você já faz)
+                // Ângulos Horários Iniciais com Sinal
                 double md_sig_com_sinal = ra_sig - ramc;
                 if (md_sig_com_sinal > 180.0)  md_sig_com_sinal -= 360.0;
                 if (md_sig_com_sinal < -180.0) md_sig_com_sinal += 360.0;
-                double cota_sig_orientada = md_sig_com_sinal / sa_sig;
             
                 double md_prom_com_sinal = ra_prom - ramc;
                 if (md_prom_com_sinal > 180.0)  md_prom_com_sinal -= 360.0;
                 if (md_prom_com_sinal < -180.0) md_prom_com_sinal += 360.0;
             
-                // 2. DECLARAÇÃO ANTECIPADA: Calcule a md_aspecto_prom aqui para servir a ambos os blocos!
+                // Projeção do Aspecto Longitudinal
                 double md_aspecto_prom = md_prom_com_sinal;
-                if (a < 5) { // Apenas para os aspectos longitudinais clássicos
+                if (a < 5) {
                     md_aspecto_prom = md_prom_com_sinal + (proporcao_aspecto[a] * sa_prom);
                 }
-                
-                // Normalização circular segura da md_aspecto_prom
                 if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
                 if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
             
-
                 // Nova variável para identificar se o alvo atual comporta-se como um ângulo fixo no espaço local
                 int eh_angulo_angular = 0;
                 double cota_espacial_fixa = 0.0;
             
                 if (sig[idx_alvo].type == PROM_ANGLE) {
-                    if (strcmp(sig[idx_alvo].object, "AC") == 0) {
-                        eh_angulo_angular = 1;
-                        cota_espacial_fixa = -1.0; // Horizonte Leste exato
-                    }
-                    else if (strcmp(sig[idx_alvo].object, "MC") == 0) {
-                        eh_angulo_angular = 1;
-                        cota_espacial_fixa = 0.0;  // Meridiano exato
-                    }
-                    else if (strcmp(sig[idx_alvo].object, "DC") == 0) {
-                        eh_angulo_angular = 1;
-                        cota_espacial_fixa = 1.0;  // Horizonte Oeste exato
-                    }
-                    else if (strcmp(sig[idx_alvo].object, "IC") == 0) {
-                        eh_angulo_angular = 1;
-                        cota_espacial_fixa = 0.0;  // Meridiano exato
-                    }
+                    int num_casa = sig[idx_alvo].house;
+                    eh_angulo_angular = 1;
+                    cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);                    
                 }
                 // Se o significador for a estrutura da Cúspide
                 else if (sig[idx_alvo].type == PROM_CUSP) {
@@ -1053,42 +1167,42 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                         double md_destino = sa_sig * cota_aspecto_prom; 
                         arco = md_destino - md_sig_com_sinal;
                     }
-                }
-                else if (sig[idx_alvo].type == PROM_CUSP) {
-                    // Casas intermediárias (2, 3, 5, 6, 8, 9, 11, 12)
-                    if (a > 0 && a < 5) continue; // Trava os aspectos intermediários longitudinais apenas nelas
-            
-                    int num_casa = sig[idx_alvo].house; 
-                    double cota_casa = obter_cota_fixa_casa_placidus(num_casa);
-            
-                    if (s == 0) { 
-                        double md_destino = sa_prom * cota_casa;
-                        arco = md_aspecto_prom - md_destino;
-                    } 
-                    else if (s == 1) { 
-                        double cota_aspecto_prom = md_aspecto_prom / sa_prom;
-                        double md_destino = sa_sig * cota_aspecto_prom; 
-                        arco = md_destino - md_sig_com_sinal;
-                    }
-                }
+                }                
                 else {
-                
-                    // === TRATAMENTO PARA PLANETAS (bloco com paralelos e aspectos normais) ===
-                    if (a == 5 || a == 6) {
-                        double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
-            
+                    // DIRECIONAMENTO ENTRE PLANETAS e cúspides intermediárias
+                                       
+                    if (sig[idx_alvo].type == PROM_CUSP && a > 0 && a < 5) continue;    
+                    if (a == 5 || a == 6) { // Paralelos Mundanos Dinâmicos por Sistema
                         if (s == 0) { 
+                            double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
                             double md_destino = sa_prom * cota_alvo_mundo;
                             arco = md_prom_com_sinal - md_destino;
                         } 
                         else if (s == 1) { 
-                            double cota_prom_natal = md_prom_com_sinal / sa_prom;
-                            if (a == 6) cota_prom_natal = -cota_prom_natal; 
-                            double md_destino = sa_sig * cota_prom_natal;
+                            // Blindagem de duplicidade: O contraparalelo converso busca a cota invertida.
+                            // Mas na direção conversa clássica de Placidus, o espelhamento do contraparalelo 
+                            // no semicírculo oposto pode ser alcançado pelo movimento inverso natural.
+                            double cota_alvo_conversa = (a == 5) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica;
+                            
+                            double md_destino = sa_sig * cota_alvo_conversa;
                             arco = md_destino - md_sig_com_sinal;
+
+                            // Se o arco resultante for exatamente igual ao arco calculado para a conjunção mundana (a == 0),
+                            // ou se o paralelo e o contraparalelo colapsarem na mesma distância, nós evitamos o fantasma geométrico:
+                            if (a == 6) {
+                                // Recalcula rapidamente o paralelo direto converso para testar colisão
+                                double md_dest_p = sa_sig * cota_prom_natal_dinamica;
+                                double arco_p = md_dest_p - md_sig_com_sinal;
+                                if (arco_p < 0.0) arco_p += 360.0;
+                                arco_p = fmod(arco_p, 360.0);
+
+                                // Se o contraparalelo gerou o mesmo arco que o paralelo, descarta a duplicata
+                                if (fabs(arco - arco_p) < 1e-4) continue;
+                            }
                         }
                     }
-                    else { 
+
+                    else { // Aspectos Longitudinais Clássicos (0 a 4)
                         if (s == 0) { 
                             double md_destino = sa_prom * cota_sig_orientada;
                             arco = md_aspecto_prom - md_destino;
@@ -1100,7 +1214,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                         }
                     }
                 }
-                      
+                                  
                 // Normalização comum do arco resultante
                 if (arco < 0.0) arco += 360.0;
                 arco = fmod(arco, 360.0);

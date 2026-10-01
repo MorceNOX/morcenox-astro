@@ -80,13 +80,12 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
 
     int rc = sqlite3_prepare_v2(global_db, query, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
-        return 0; // Falha ao preparar consulta
+        return 0;
     }
 
-    sqlite3_bind_int(stmt, 1, 3);    // Associa o valor fixo 3 ao ?1
+    sqlite3_bind_int(stmt, 1, 3);
     sqlite3_bind_int(stmt, 2, GENDER);
 
-    // Varre as linhas retornadas pelo SQLite
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         ArabicPartCalculada *p = &lista_resultado[qtd_partes];
         
@@ -130,8 +129,6 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
 
         p->longitude = total_lon;
 
-        // Calcula dinamicamente a casa da parte usando a rotina interna de domificação
-        // Passamos as cúspides e a longitude para resgatar a string romana (ex: "IX")
         strcpy(p->house, (char *)get_house_roman(p->longitude, cusps));
 
         int lord = 0;

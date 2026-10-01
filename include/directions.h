@@ -69,6 +69,7 @@ typedef struct {
     double dec_fim;
     int house_fim;
     int type;
+    double house_pos;
 } Promissor;
 
 typedef struct {
