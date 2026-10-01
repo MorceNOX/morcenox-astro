@@ -1660,7 +1660,9 @@ The last column displays the Divisor governing the date of the respective direct
 
 The Divisors are the rulers of the terms of direct and converse zodiacal directions; they remain in effect until a new term reaches the selected significator. 
 
-In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 2 (two) dynamic keys: True Solar Arc, and Kepler.    
+In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 3 (three) dynamic keys: True Solar Arc in Longitude (zodiacal solar arc), Kepler, and True Solar Arc in Right Ascension (Placidus Dynamic Key.
+
+The engine takes account the current house system (selected by the user) to calculate the arc for Mundane directions, which is valid for any quadrant based system. So, if the house system in use were a not quadrant based system (i.e E - Equal Houses, W - Whole Signs and M - Morinus), the application will fallback automatically to P - Placidus system, but only for the mundane directions calculation. The houses in another modules will respect the user's selection.
 
 Use [↓↑] to scroll the table.
 Use [←/→] to change the Significator.

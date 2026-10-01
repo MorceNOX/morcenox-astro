@@ -1605,7 +1605,9 @@ A última coluna exibe o Divisor que rege a data da respectiva direção. Este �
 
 Os Divisores são os regentes dos termos das direções zodiacais diretas e conversas; eles permanecem em vigor até que um novo termo alcance o significador selecionado.
 
-No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 2 (duas) chaves dinâmicas: Arco Solar Verdadeiro e Kepler.
+No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 3 (três) chaves dinâmicas: Arco Solar Verdadeiro em Longitude (arco solar zodiacal), Kepler e Arco Solar Verdadeiro em Ascenção Reta (chave dinâmica de Plácidus).
+
+O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, mas apenas para o cálculo das direções mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
 
 Use [↓↑] para deslizar a tabela.
 Use [←/→] para mudar o Significador.

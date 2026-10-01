@@ -5980,6 +5980,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // 1. Loop to calculate the planetary positions
 
+        char house_system_pd = house_system;
+        if (house_system == 'E' || house_system == 'W' || house_system == 'M') {
+            house_system_pd = 'P';
+        }
+
         for (int i = 0; i < 11; i++) {
             if (swe_calc_ut(julian_day, planets[i], FLAGS_ecliptic, x2, err) < 0) {
                 printf("Error calculating planet %d: %s\n", planets[i], err);
@@ -5989,7 +5994,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             planet_latitudes[i]  = x2[1]; // Ecliptic Latitude (β)
             speed[i]             = x2[3]; // Speed in Longitude
 
-            double house_pos = swe_house_pos(armc, lat, true_obliquity, house_system, x2, serr);
+            double house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x2, serr);
             planet_houses[i] = house_pos;
         }
 
@@ -6001,7 +6006,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         x_sn[0] = south_node;
         x_sn[1] = planet_latitudes[11];
 
-        planet_houses[11] = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+        planet_houses[11] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
         planet_longitudes[14] = ascendant;
@@ -6019,7 +6024,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         x_sn[0] = vertex;
         x_sn[1] = planet_latitudes[18];
 
-        planet_houses[18] = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+        planet_houses[18] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
        
@@ -6093,12 +6098,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         x_sn[0] = fortuna;
         x_sn[1] = planet_latitudes[12];
 
-        planet_houses[12] = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+        planet_houses[12] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
         x_sn[0] = SAN;
         x_sn[1] = planet_latitudes[13];
 
-        planet_houses[13] = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+        planet_houses[13] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
 
@@ -7949,7 +7954,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             x_sn[0] = prom[prom_id].longitude;
             x_sn[1] = prom[prom_id].latitude;
 
-            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
             prom[prom_id].longitude_fim = longitudes_fim[i];
             //prom[prom_id].dec_fim = decl_fim[i];
@@ -7996,7 +8001,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             x_sn[0] = prom[prom_id].longitude;
             x_sn[1] = prom[prom_id].latitude;
-            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
             // Preenchimento do speculum local 'ants'
@@ -8057,7 +8062,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             x_sn[0] = prom[prom_id].longitude;
             x_sn[1] = prom[prom_id].latitude;
-            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system, x_sn, serr);
+            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
             // Preenchimento do speculum de contra-antíssias deslocado na metade superior do array
             int target_idx = index_cant + metade_ants;
