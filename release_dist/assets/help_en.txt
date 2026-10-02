@@ -690,7 +690,7 @@ Type [H] to show the houses boundaries in the chart.
 
 You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ to adjust the animation speed in 60-second increments (faster or slower), or } and { for 1-second increments (faster or slower). Positive values ​​show future events; negative values ​​simulate traveling back in time.
 
-The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", and "Monospace" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
+The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono",  "Monospace", and "Source Cod Pro" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
 
 The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. 
 
@@ -870,7 +870,7 @@ Press Q or ESC to return to the main menu.
 • Rulers by domicile, exaltation, triplicity, term and decan;
 
 • Mutual reception: 
-  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. In this column, the program identifies the planets regardless of whether there is a valid aspect between them. In the next table—accessible by pressing F2 again—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
+  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. When there is an aspect between the planets, the table shows them within curly brackets "{ }"; if not, they will be presented within parenhthesis "( )". In the next table—accessible by pressing F2 again—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
 
 Pressing F2 again and you can see details of the accidental dignities and the state of the planets and bodies.
 
