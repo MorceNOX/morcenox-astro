@@ -11,6 +11,7 @@ MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological eng
 
 Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
 
+<hr>
 <img width="2560" height="1600" alt="02-chart_wheel_windowed" src="https://github.com/user-attachments/assets/a8aa12b3-458a-4bd8-a566-11c580450714" />
 <hr>
 
