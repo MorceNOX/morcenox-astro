@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 16:08-0300\n"
+"POT-Creation-Date: 2026-10-02 16:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1555,7 +1555,7 @@ msgid ""
 msgstr ""
 
 #: src/draw-chart.c:4165
-msgid "Positions Table"
+msgid "Astrological Positions Table"
 msgstr ""
 
 #: src/draw-chart.c:4188

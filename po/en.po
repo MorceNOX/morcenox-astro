@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 16:08-0300\n"
+"POT-Creation-Date: 2026-10-02 16:17-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1607,7 +1607,7 @@ msgstr ""
 
 #: src/draw-chart.c:4165
 #, fuzzy
-msgid "Positions Table"
+msgid "Astrological Positions Table"
 msgstr "House System"
 
 #: src/draw-chart.c:4188

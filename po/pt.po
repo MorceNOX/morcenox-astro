@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 16:08-0300\n"
+"POT-Creation-Date: 2026-10-02 16:17-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1787,8 +1787,8 @@ msgstr ""
 "Perfil de Energia - [↓↑/JK] rolar"
 
 #: src/draw-chart.c:4165
-msgid "Positions Table"
-msgstr "Tabela de Posições"
+msgid "Astrological Positions Table"
+msgstr "Tabela de Posições Astrológicas"
 
 #: src/draw-chart.c:4188
 msgid "Latitude"
@@ -6379,6 +6379,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Positions Table"
+#~ msgstr "Tabela de Posições"
 
 #~ msgid "23. Aspects by Sign"
 #~ msgstr "23. Aspectos por Signo"

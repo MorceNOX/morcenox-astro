@@ -4162,7 +4162,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
 
     // Cabeçalho Fixo na Janela de Borda (Não rola)
     wattron(table_win, A_BOLD);
-    const char *title = _("Positions Table");
+    const char *title = _("Astrological Positions Table");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito

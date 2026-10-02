@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 15:30-0300\n"
+"POT-Creation-Date: 2026-10-02 16:08-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1578,7 +1578,7 @@ msgstr ""
 msgid "Houses Table"
 msgstr ""
 
-#: src/draw-chart.c:4436
+#: src/draw-chart.c:4437
 msgid "   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "
 msgstr ""
 
