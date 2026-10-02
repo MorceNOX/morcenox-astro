@@ -2323,8 +2323,8 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     mvwprintw(help_win, 0, col_fechar + 1, "✖");
     wattroff(help_win, A_BOLD);
 
-    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(100);
+    mousemask(BUTTON1_PRESSED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(200);
 
     //leaveok(stdscr, TRUE);
     //leaveok(shadow_win, TRUE);
@@ -2371,6 +2371,9 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         wattron(help_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(help_win, start_line, line_count, scrollbar_height, 1);
         wattroff(help_win, COLOR_PAIR(28) | flag);
+
+        mvwaddstr(help_win, 1, win_w - 2, "▲");
+        mvwaddstr(help_win, win_h - 2, win_w - 2, "▼");
         
         //wnoutrefresh(shadow_win);
         wnoutrefresh(help_win);
@@ -2426,11 +2429,33 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                             break;
                         }
                     }
+
                     // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
                     int col_scrollbar_absoluta = getbegx(help_win) + (getmaxx(help_win) - 2);
 
+                    if (event.x == col_scrollbar_absoluta && linha_clique_janela == 1) {
+                        //if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            if (start_line > 1) {
+                                start_line -= 2;
+                            } else {
+                                start_line = 0;
+                            }
+                            
+                        //}
+                    }
+                    else if (event.x == col_scrollbar_absoluta && linha_clique_janela == win_h - 2) {
+                        //if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            if (start_line < line_count - max_lines) {
+                                start_line += 2;
+                            }
+                            if (start_line > line_count - max_lines) {
+                                start_line = line_count - max_lines;
+                            }
+                            
+                        //}
+                    }                   
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
-                    if (event.x == col_scrollbar_absoluta) {
+                    else if (event.x == col_scrollbar_absoluta) {
                         
                         // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
                         linha_clique_janela = event.y - getbegy(help_win);
