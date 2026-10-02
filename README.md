@@ -18,10 +18,10 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 ## 🌌 Key Features
 
 ### 🛠 Advanced Charting & Calculations
-* **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time Transit charts.
+* **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time  charts.
 * **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verifies the transits of the planets against the natal (radical) positions, including the Arabic Parts.
 * **Time-Lord Techniques:** Built-in modules for **Firdaria**, **Annual Profections**, and **Vital Chronocrators** (Hyleg & Alcochoden).
-* **Primary Directions:** Precise calculation of Direct and Converse directions for planets, angles and Arabic Parts using Naibod time key and dynamic obliquity for *zodiacal* and mundane proportional to semi-arc for directions *in-mundo*.
+* **Primary Directions:** Precise calculation of Direct and Converse directions for planets, angles and Arabic Parts using several time keys for both, *zodiacal with latitude* and *mundane proportional to semi-arc*.
 * **Arabic Parts:** Create, edit, and manage a custom collection of Arabic Parts, with automated aspect calculation.
 * **Anareta & Vital Threats:** Identify potential physical risks and vital threats based on the 8th house ruler and the Anareting planet.
 
@@ -36,7 +36,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Animation Mode:** Visualize the past and future movement of celestial bodies by adjusting the animation pace.
 * **Full Offline Capability:** 100% offline operation. No data is sent to or retrieved from the internet.
 * **Mouse Support:** Double click an option of the menus to execute it! Chart Wheel and all windows are clickable. You can pan the chart wheel by dragging and dropping. Double clicking makes the chart zoomed in and out; Every button and scrollbar are clickable, as well as the windows.
-* **Extense Help:** You can read in a proper window about any part of the program just by selecting a topic.
+* **Extensive Help:** You can read in a proper window about any part of the program just by selecting a topic.
 
 ### 🌎 Multilingual Support
 * MorceNOX™ ASTRO is available entirely in **English** and **Brazilian Portuguese** in the same version. You just need to select the language by the Settings menu.
