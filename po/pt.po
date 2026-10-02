@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 15:30-0300\n"
+"POT-Creation-Date: 2026-10-02 16:08-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1810,7 +1810,7 @@ msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 msgid "Houses Table"
 msgstr "Tabela de Casas"
 
-#: src/draw-chart.c:4436
+#: src/draw-chart.c:4437
 msgid "   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "
 msgstr "   Casa     Cúspide      Regentes(Dom/Ex)   Objetos na Casa "
 

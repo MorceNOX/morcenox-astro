@@ -4433,15 +4433,16 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     mouseinterval(100);
 
 
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "));
-    
+    wattroff(table_win, A_BOLD);
+
     int row = 4;
     for (int i = 1; i <= 12; i++) {
 
         if (i > 1) wattron(table_win, COLOR_PAIR(10) | A_DIM);
         wmove(table_win, row - 1, 2);
         whline(table_win, ACS_HLINE, table_width - 4);
-        //mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
         if (i > 1) wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         char house_num[4];
@@ -4483,12 +4484,11 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
         row += 2;
 
     }
-    //mvwprintw(table_win, row - 1, 2, "────────────────────────────────────────────────────────────────────────────────────"); 
     wmove(table_win, row - 1, 2);
     whline(table_win, ACS_HLINE, table_width - 4);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, table_height - 3, table_width - 45, _("House System: "));
+    mvwprintw(table_win, table_height - 3, 2, _("House System: "));
     wattroff(table_win, A_BOLD);
 
     wprintw(table_win, "%s", house_system);
