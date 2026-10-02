@@ -3237,7 +3237,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             wattron(scroll_pad, COLOR_PAIR(11));            
         }
         else if (strcmp(plots[i].house, "I") == 0 || strcmp(plots[i].house, "II") == 0 || strcmp(plots[i].house, "III") == 0 || 
-                strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "✖") == 0 || strcmp(plots[i].house, "XI") == 0) {
+                strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "X") == 0 || strcmp(plots[i].house, "XI") == 0) {
                     wattron(scroll_pad, COLOR_PAIR(8));
         }
         else if (strcmp(plots[i].house, "IV") == 0 || strcmp(plots[i].house, "VII") == 0) {
@@ -3806,22 +3806,22 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 75, _("Orient"));
 
     wattron(table_win, COLOR_PAIR(40) | A_DIM);
-    mvwprintw(table_win, 2, 82, _("Dec"));
+    mvwprintw(table_win, 2, 83, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(12) | A_DIM);
-    mvwprintw(table_win, 2, 86, _("Term"));
+    mvwprintw(table_win, 2, 88, _("Term"));
     wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
-    mvwprintw(table_win, 2, 93, _("Trip"));
+    mvwprintw(table_win, 2, 95, _("Trip"));
     wattroff(table_win, COLOR_PAIR(7) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(8) | A_DIM);        
-    mvwprintw(table_win, 2, 101, _("Dom/Ex"));
+    mvwprintw(table_win, 2, 103, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 110, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 112, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -3839,7 +3839,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
     int c_obj = 0, c_pos = 8, c_hse = 22, c_mov = 29, c_dig = 34;
-    int c_sq = 59, c_ori = 73, c_dec_t = 80, c_trm = 84, c_tri = 89, c_rul = 99, c_mut = 105;
+    int c_sq = 59, c_ori = 73, c_dec_t = 81, c_trm = 86, c_tri = 91, c_rul = 101, c_mut = 107;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
