@@ -3146,8 +3146,8 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 26, _("Ess"));
-    mvwprintw(table_win, 2, 31, _("Acc"));
+    mvwprintw(table_win, 2, 25, _("Ess"));
+    mvwprintw(table_win, 2, 30, _("Acc"));
     mvwprintw(table_win, 2, 36, _("Mov"));
     mvwprintw(table_win, 2, 41, _("Speed"));
     mvwprintw(table_win, 2, 48, _("House"));
@@ -3201,7 +3201,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         } else if (dig[i].essential < 0) {
             wattron(scroll_pad, COLOR_PAIR(11));
         }        
-        mvwprintw(scroll_pad, row, 24, "%+2d", dig[i].essential);
+        mvwprintw(scroll_pad, row, 23, "%+2d", dig[i].essential);
         wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11));
 
         if (dig[i].accidental > 0) {
@@ -3209,7 +3209,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         } else if (dig[i].accidental < 0) {
             wattron(scroll_pad, COLOR_PAIR(11));
         } 
-        mvwprintw(scroll_pad, row, 29, "%+3d", dig[i].accidental);
+        mvwprintw(scroll_pad, row, 28, "%+3d", dig[i].accidental);
         wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11));
 
         // 4. Movimento (1 = Direto, 0 = Estacionário, -1 = Retrógrado)
@@ -3799,29 +3799,30 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 24, _("House"));
-    mvwprintw(table_win, 2, 31, _("Mov"));
-    mvwprintw(table_win, 2, 36, _("Dignity"));
-    mvwprintw(table_win, 2, 60, _("Gen/Sect/Quad"));
-    mvwprintw(table_win, 2, 75, _("Orient"));
+    mvwprintw(table_win, 2, 23, _("House"));
+    mvwprintw(table_win, 2, 29, _("Mov"));
+    mvwprintw(table_win, 2, 34, _("Speed"));
+    mvwprintw(table_win, 2, 41, _("Dignity"));
+    mvwprintw(table_win, 2, 65, _("Gen/Sect/Quad"));
+    mvwprintw(table_win, 2, 80, _("Orient"));
 
     wattron(table_win, COLOR_PAIR(40) | A_DIM);
-    mvwprintw(table_win, 2, 83, _("Dec"));
+    mvwprintw(table_win, 2, 88, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(12) | A_DIM);
-    mvwprintw(table_win, 2, 88, _("Term"));
+    mvwprintw(table_win, 2, 93, _("Term"));
     wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
-    mvwprintw(table_win, 2, 95, _("Trip"));
+    mvwprintw(table_win, 2, 100, _("Trip"));
     wattroff(table_win, COLOR_PAIR(7) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(8) | A_DIM);        
-    mvwprintw(table_win, 2, 103, _("Dom/Ex"));
+    mvwprintw(table_win, 2, 108, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 112, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 117, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -3838,8 +3839,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 22, c_mov = 29, c_dig = 34;
-    int c_sq = 59, c_ori = 73, c_dec_t = 81, c_trm = 86, c_tri = 91, c_rul = 101, c_mut = 107;
+    int c_obj = 0, c_pos = 8, c_hse = 20, c_mov = 27, c_spd =30, c_dig = 39;
+    int c_sq = 64, c_ori = 78, c_dec_t = 86, c_trm = 91, c_tri = 96, c_rul = 106, c_mut = 112;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
@@ -3876,6 +3877,15 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         wattron(scroll_pad, COLOR_PAIR(11));
         mvwprintw(scroll_pad, row_pad, c_mov, "%s", plots[i].retrograde);
         wattroff(scroll_pad, COLOR_PAIR(11));
+
+        // 3. Velocidade com cor condicional
+        if (data.speed_color_pair > 0) {
+            wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        }
+        mvwprintw(scroll_pad, row_pad, c_spd, "%7.3f", plots[i].speed);
+        if (data.speed_color_pair > 0) {
+            wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        }
         
         // 6. Dignidades Essenciais
         wattron(scroll_pad, COLOR_PAIR(data.dignity_color_pair));

@@ -209,13 +209,15 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F1 - Dados do Mapa
    
-• F2 - Posições e Dignidades dos Planetas 
+• F2 - Dignidades e Regentes
+
+    - F2 - Posições
    
-    - F2 - Detalhes das Dignidades Acidentais
+    - F3 - Detalhes das Dignidades Acidentais
     
-    - F3 - Força
+    - F4 - Força
     
-    - F4 - Perfil de Energia Planetária
+    - F5 - Perfil de Energia Planetária
     
 • F3 - Aspectos
 
@@ -863,13 +865,15 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Regentes por domicílio, exaltação, triplicidade, termo e decanato;
 
 • Recepção mútua: 
-Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses "( )". Na próxima tabela - pressionando F3 para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
-Ao pressionar F2 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
+Pressione F2 novamente, para ver as posições dos planetas e corpos.
 
-F3 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
+Ao pressionar F3 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
-F4 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
+F4 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
+
+F5 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
 
 Ao escolher pelo Menu de Ações, esses submódulos estão disponíveis como opções independentes.
 
@@ -962,7 +966,7 @@ Use [↓↑] para deslizar a tabela.
 
 
 • Detalhes das Dignidades Acidentais
-(F2 na Tabela de Dignidades)
+(F3 na Tabela de Dignidades)
 ───────────────────────────────────────────────────────────────────
 
 Você pode ver as condições acidentais de todos
@@ -993,7 +997,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 9
 
-• A Força dos Planetas (F3 na Tabela de Dignidades)
+• A Força dos Planetas (F4 na Tabela de Dignidades)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Aqui exibimos a pontuação de cada planeta em suas dignidades essenciais e acidentais, bem como sua força baseada no escore e no peso atribuído pela relevância do planeta.
