@@ -210,13 +210,15 @@ Press Q or ESC to return to the main menu.
     
     • F1 - Data Info 
        
-    • F2 - Planet Positions and Dignities 
+    • F2 - Planet Dignities and Rulership 
+    
+        - F2 - Positions
        
-        - F2 - Accidental Dignities Details
+        - F3 - Accidental Dignities Details
         
-        - F3 - Strength
+        - F4 - Strength
         
-        - F4 - Planetary Energy Profile
+        - F5 - Planetary Energy Profile
         
     • F3 - Aspects
     
@@ -690,7 +692,7 @@ Type [H] to show the houses boundaries in the chart.
 
 You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ to adjust the animation speed in 60-second increments (faster or slower), or } and { for 1-second increments (faster or slower). Positive values ​​show future events; negative values ​​simulate traveling back in time.
 
-The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono",  "Monospace", and "Source Cod Pro" terminal fonts, but any monospaced font can be used. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
+The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the terminal configured with the fonts "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono",  "Monospace", "Source Cod Pro", "Astronomic Mono", "DejaVu LGC Sans Mono", "DejaVu Sans Mono", but any monospaced font can be used and will work nicely. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
 
 The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. 
 
@@ -837,7 +839,7 @@ Here you can see the basic information of your chart.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 08: Positions, Dignities & Rulership Module 
+Index 08: Dignities & Rulership Module 
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -856,7 +858,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 8
 
-• Positions, Dignities & Rulership Table (F2)
+• Dignities & Rulership Table (F2)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 • Positions of planets and objects by sign and house;
@@ -870,13 +872,15 @@ Press Q or ESC to return to the main menu.
 • Rulers by domicile, exaltation, triplicity, term and decan;
 
 • Mutual reception: 
-  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. When there is an aspect between the planets, the table shows them within curly brackets "{ }"; if not, they will be presented within parenhthesis "( )". In the next table—accessible by pressing F2 again—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
+  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. When there is an aspect between the planets, the table shows them within curly brackets "{ }"; if not, they will be presented within parenhthesis "( )". In the next table—accessible by pressing F3—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
 
-Pressing F2 again and you can see details of the accidental dignities and the state of the planets and bodies.
+Press [F2] to see the positions of the planets and bodies.
 
-F3 shows the strength of each planet in the chart based on their dignities and their relevance.
+Pressing F3 to see details of the accidental dignities and the state of the planets and bodies.
 
-F4 shows the Planetary Energy Profile, a chart of bars displaying the strength and the relevance of each planet in a visual fashion way (also pressing [8] in the chart wheel screen).
+F4 shows the strength of each planet in the chart based on their dignities and their relevance.
+
+F5 shows the Planetary Energy Profile, a chart of bars displaying the strength and the relevance of each planet in a visual fashion way (also pressing [8] in the chart wheel screen).
 
 When choosing by the menu actions, these submodules are available as independent options.
 
@@ -965,7 +969,7 @@ Mutual Reception without Aspect*** → +1 point
 
 
 
-• Accidental Dignities Details (F2 in the Dignities Table)
+• Accidental Dignities Details (F3 in the Dignities Table)
 ───────────────────────────────────────────────────────────────────
 
 You can see the accidental conditions of all the planets in the current chart.
@@ -995,7 +999,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 9
 
-• The Strength of The Planets (F3 in the Dignities Table)
+• The Strength of The Planets (F4 in the Dignities Table)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Here we show the score of each planet in their essential and 
@@ -1049,7 +1053,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 10
 
-• Planetary Energy Profile (F4 in the Dignities Table) 
+• Planetary Energy Profile (F5 in the Dignities Table) 
   or F20 (Shift+F8) or 8
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
