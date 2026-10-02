@@ -1169,53 +1169,34 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     }
                 }                
                 else {
-                    // DIRECIONAMENTO ENTRE PLANETAS e cúspides intermediárias
-                                       
+                    // DIRECIONAMENTO ENTRE PLANETAS e cúspides intermediárias                                       
                     if (sig[idx_alvo].type == PROM_CUSP && a > 0 && a < 5) continue;    
-                    if (a == 5 || a == 6) { // Paralelos Mundanos Dinâmicos por Sistema
+                    
+                    if (a == 5 || a == 6) { // Paralelos Mundanos Dinâmicos por Sistema                          
                         if (s == 0) { 
                             double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
-                            double md_destino = sa_prom * cota_alvo_mundo;
-                            arco = md_prom_com_sinal - md_destino;
+                            double md_destino = sa_prom * cota_alvo_mundo; 
+                            arco = md_prom_com_sinal - md_destino; 
                         } 
                         else if (s == 1) { 
-                            // Blindagem de duplicidade: O contraparalelo converso busca a cota invertida.
-                            // Mas na direção conversa clássica de Placidus, o espelhamento do contraparalelo 
-                            // no semicírculo oposto pode ser alcançado pelo movimento inverso natural.
-                            double cota_alvo_conversa = (a == 5) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica;
-                            
-                            double md_destino = sa_sig * cota_alvo_conversa;
-                            arco = md_destino - md_sig_com_sinal;
-
-                            // Se o arco resultante for exatamente igual ao arco calculado para a conjunção mundana (a == 0),
-                            // ou se o paralelo e o contraparalelo colapsarem na mesma distância, nós evitamos o fantasma geométrico:
-                            if (a == 6) {
-                                // Recalcula rapidamente o paralelo direto converso para testar colisão
-                                double md_dest_p = sa_sig * cota_prom_natal_dinamica;
-                                double arco_p = md_dest_p - md_sig_com_sinal;
-                                if (arco_p < 0.0) arco_p += 360.0;
-                                arco_p = fmod(arco_p, 360.0);
-
-                                // Se o contraparalelo gerou o mesmo arco que o paralelo, descarta a duplicata
-                                if (fabs(arco - arco_p) < 1e-4) continue;
-                            }
-                        }
-                    }
-
-                    else { // Aspectos Longitudinais Clássicos (0 a 4)
+                            // Na conversa clássica, o contraparalelo usa o espelhamento da cota natal do promissor 
+                            double cota_alvo_conversa = (a == 5) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica; 
+                            double md_destino = sa_sig * cota_alvo_conversa; 
+                            arco = md_destino - md_sig_com_sinal; 
+                        } 
+                    } else { 
+                        // Aspectos Longitudinais Clássicos (0 a 4) 
                         if (s == 0) { 
-                            double md_destino = sa_prom * cota_sig_orientada;
-                            arco = md_aspecto_prom - md_destino;
+                            double md_destino = sa_prom * cota_sig_orientada; 
+                            arco = md_aspecto_prom - md_destino; 
+                        } else if (s == 1) { 
+                            double cota_aspecto_prom = md_aspecto_prom / sa_prom; 
+                            double md_destino = sa_sig * cota_aspecto_prom; 
+                            arco = md_destino - md_sig_com_sinal; 
                         } 
-                        else if (s == 1) { 
-                            double cota_aspecto_prom = md_aspecto_prom / sa_prom;
-                            double md_destino = sa_sig * cota_aspecto_prom;
-                            arco = md_destino - md_sig_com_sinal;
-                        }
-                    }
+                    }                    
                 }
                                   
-                // Normalização comum do arco resultante
                 if (arco < 0.0) arco += 360.0;
                 arco = fmod(arco, 360.0);
             
@@ -2236,6 +2217,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             strstr(lista_partes[i].name, "Fortuna") != NULL    ||
             strstr(lista_partes[i].name, _("Fortune")) != NULL ||
             strstr(lista_partes[i].name, _("Part of Fortune")) != NULL ||
+            strstr(lista_partes[i].name, "Pars Fortunae") != NULL ||
             strstr(lista_partes[i].name, _("Lot of Fortune")) != NULL ||
             strstr(lista_partes[i].name, "Lot of Fortune") != NULL ||
             strstr(lista_partes[i].name, "Lot da Fortuna") != NULL
@@ -2543,10 +2525,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 bool eh_termo = d->promissor_type == PROM_TERM;
 
                 char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s → %s ", 
+                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
                          eh_termo ? _("Term") : "",
                          eh_termo ? " " : "",
-                         d->promissor_glifo, // d->promissor_name,
+                         d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                          d->significador_glifo);
 
