@@ -675,7 +675,7 @@ Digite [H] para mostrar os limites das casas no mapa.
 
 Você pode ativar ou desativar o modo de animação pressionando [A] ou a barra de espaço. Use ] e [ para ajustar a velocidade da animação em incrementos de 60 segundos, para mais e para menos, ou } e { para incrementos de 1 segundo, para mais e para menos. Valores positivos mostra eventos futuros; valores negativos simulam viajar de volta no tempo.
 
-O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. O programa foi testado com as fontes "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono" e "Monospace" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
+O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. O programa foi testado com as fontes "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", "Monospace" e "Source Cod Pro" para o terminal, mas qualquer fonte mono-espaçada pode ser usada. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
 Pode ocorrer de as informações exibidas ao lado da roda fiquem parcialmente ocultas por ela quanto mais próximo de um quadrado for o formato da janela do terminal, ou se a altura da janela for maior do que sua largura, pois o programa calcula a melhor proporção das dimensões e do raio da roda para que, em seu tamanho normal, ela seja o maior círculo inscrito possível dentro de sua janela. 
 
@@ -863,7 +863,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Regentes por domicílio, exaltação, triplicidade, termo e decanato;
 
 • Recepção mútua: 
-Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Nesta coluna  o programa identifica os planetas, independentemente de haver ou não aspecto válido entre eles. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
 Ao pressionar F2 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
