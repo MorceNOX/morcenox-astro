@@ -275,7 +275,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     int last_hr, int last_min, double last_sec, char *chart_name, int gender_id, double idade);
 
 void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets);
-
+void display_positions(PlotObject *plots, PlanetTableMatrix *matrix);
 void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, char *house_system);
 
 void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, int *strength_planets, PlanetDignities *dig);

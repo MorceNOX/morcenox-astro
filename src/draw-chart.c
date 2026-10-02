@@ -3775,7 +3775,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // Cabeçalho Fixo na Janela de Borda (Não rola)
     wattron(table_win, A_BOLD);
-    const char *title = _("Positions, Dignities & Rulership Table");
+    const char *title = _("Dignities & Rulership Table");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -3796,31 +3796,29 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 24, _("Decl"));
-    mvwprintw(table_win, 2, 32, _("Speed"));
-    mvwprintw(table_win, 2, 41, _("House"));
-    mvwprintw(table_win, 2, 48, _("Mov"));
-    mvwprintw(table_win, 2, 53, _("Dignity"));
-    mvwprintw(table_win, 2, 77, _("Gen/Sect/Quad"));
-    mvwprintw(table_win, 2, 92, _("Orient"));
+    mvwprintw(table_win, 2, 24, _("House"));
+    mvwprintw(table_win, 2, 31, _("Mov"));
+    mvwprintw(table_win, 2, 36, _("Dignity"));
+    mvwprintw(table_win, 2, 60, _("Gen/Sect/Quad"));
+    mvwprintw(table_win, 2, 75, _("Orient"));
 
     wattron(table_win, COLOR_PAIR(40) | A_DIM);
-    mvwprintw(table_win, 2, 99, _("Dec"));
+    mvwprintw(table_win, 2, 82, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(12) | A_DIM);
-    mvwprintw(table_win, 2, 103, _("Term"));
+    mvwprintw(table_win, 2, 86, _("Term"));
     wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
-    mvwprintw(table_win, 2, 109, _("Trip"));
+    mvwprintw(table_win, 2, 93, _("Trip"));
     wattroff(table_win, COLOR_PAIR(7) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(8) | A_DIM);        
-    mvwprintw(table_win, 2, 116, _("Dom/Ex"));
+    mvwprintw(table_win, 2, 101, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 123, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 110, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -3836,8 +3834,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_dec = 22, c_spd = 30, c_hse = 39, c_mov = 46, c_dig = 51;
-    int c_sq = 75, c_ori = 90, c_dec_t = 97, c_trm = 101, c_tri = 105, c_rul = 113, c_mut = 119;
+    int c_obj = 0, c_pos = 8, c_hse = 22, c_mov = 29, c_dig = 34;
+    int c_sq = 59, c_ori = 73, c_dec_t = 80, c_trm = 84, c_tri = 89, c_rul = 99, c_mut = 105;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
@@ -3860,22 +3858,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         }
         mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
         mvwprintw(scroll_pad, row_pad, c_pos + 7, "%s'", plots[i].min);
-        
-        if (isnan(plots[i].declination)) {
-            mvwprintw(scroll_pad, row_pad, c_dec, " ");
-        } else {
-            mvwprintw(scroll_pad, row_pad, c_dec, "%s", data.decl_str);
-        }
-        
-        // 3. Velocidade com cor condicional
-        if (data.speed_color_pair > 0) {
-            wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
-        }
-        mvwprintw(scroll_pad, row_pad, c_spd, "%s", data.speed_str);
-        if (data.speed_color_pair > 0) {
-            wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
-        }
-        
+                       
         // 4. Casa com cor condicional
         if (data.house_color_pair > 0) {
             wattron(scroll_pad, COLOR_PAIR(data.house_color_pair));
@@ -3924,7 +3907,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_rul + 2, "%s", data.rulers_str);
         wattroff(scroll_pad, COLOR_PAIR(8) | A_DIM);
 
-        mvwprintw(scroll_pad, row_pad, c_mut + 1, "%s", data.mutual_reception);
+        mvwprintw(scroll_pad, row_pad, c_mut + 2, "%s", data.mutual_reception);
         
         wattroff(scroll_pad, A_BOLD);
 
@@ -3939,7 +3922,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     row_pad++;
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
-    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Dignities - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"));
+    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Positions - F3 Dignities - F4 Strength - F5 Energy Profile - [↓↑/JK] Scroll"));
     
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
@@ -3969,7 +3952,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         
         if (ch == KEY_F(2)) {
             // Abre sua tela de detalhes das dignidades
-            display_dignities(plots, dig, strength_planets);
+            display_positions(plots, matrix);
             
             // Restaura as molduras fixas da tabela principal
             touchwin(stdscr);
@@ -3985,6 +3968,23 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
         else if (ch == KEY_F(3)) {
+            // Abre sua tela de detalhes das dignidades
+            display_dignities(plots, dig, strength_planets);
+            
+            // Restaura as molduras fixas da tabela principal
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
+            touchwin(shadow_win); 
+            wnoutrefresh(shadow_win);
+            touchwin(table_win);  
+            wnoutrefresh(table_win);
+
+            doupdate();
+
+            // REDESENHO CRÍTICO DA PAD: Força o ncurses a recolocar as linhas da tabela na tela
+            prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+        }
+        else if (ch == KEY_F(4)) {
             // Abre sua tabela de forças limpa (passando as variáveis que vieram por parâmetro)
             display_force(plots, dig, strength_planets);
             
@@ -4000,7 +4000,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
-        else if (ch == KEY_F(4)) {
+        else if (ch == KEY_F(5)) {
             // Abre o novo perfil gráfico com barras horizontais (█)
             display_planetary_energy_profile(plots, strength_planets);
 
@@ -4112,6 +4112,266 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     
     touchwin(stdscr); 
     refresh();
+}
+
+
+
+
+
+
+
+void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    // Dimensionamento responsivo da janela física externa
+    int table_height = 24;
+    if (table_height > max_y - 2) table_height = max_y - 2;
+    int table_width = max_x - 5;
+
+    int start_y = (max_y - table_height) / 2;
+    int start_x = (max_x - table_width) / 2;
+
+    int object_diff = show_modern_planets ? 0 : 3;
+    
+    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wnoutrefresh(shadow_win);
+
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+
+    // Cabeçalho Fixo na Janela de Borda (Não rola)
+    wattron(table_win, A_BOLD);
+    const char *title = _("Positions Table");
+    mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mouseinterval(100);
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 2, 2, _("Object"));
+    mvwprintw(table_win, 2, 10, _("Position"));
+    mvwprintw(table_win, 2, 24, _("House"));
+    mvwprintw(table_win, 2, 35, _("Speed"));
+    mvwprintw(table_win, 2, 45, _("Latitude"));
+    mvwprintw(table_win, 2, 57, _("Declination"));
+    mvwprintw(table_win, 2, 71, _("Right Ascension"));
+           
+    wattron(table_win, COLOR_PAIR(13));
+    mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+    // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
+    // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
+    int max_linhas_dados_visiveis = table_height - 7; 
+    WINDOW *scroll_pad = newpad(40, 145); 
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
+
+    int row_pad = 0;
+    // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
+    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 30, c_lat = 43, c_dec = 57, c_ra = 74;
+
+    for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+        // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
+        //     (!show_modern_planets && (i >= 13 && i <= 14))) {
+        //     continue;
+        // }
+
+        PlanetRowData data = matrix->rows[i];
+
+        // 1. Objeto / Planeta
+        mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", plots[i].object);
+        //wattroff(scroll_pad, A_BOLD);
+        
+        // 2. Coordenadas Básicas
+        if (get_visual_width(plots[i].degree) == 2) {
+            mvwprintw(scroll_pad, row_pad, c_pos + 1, "%s", plots[i].degree);
+        } else { 
+            mvwprintw(scroll_pad, row_pad, c_pos, "%s", plots[i].degree);
+        }
+        mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
+        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%s'", plots[i].min);
+        
+        // 4. Casa com cor condicional
+        if (data.house_color_pair > 0) {
+            wattron(scroll_pad, COLOR_PAIR(data.house_color_pair));
+        }
+        mvwprintw(scroll_pad, row_pad, c_hse + 1, "%s", plots[i].house);
+        if (data.house_color_pair > 0) {
+            wattroff(scroll_pad, COLOR_PAIR(data.house_color_pair));
+        }
+        
+        // 3. Velocidade com cor condicional
+        if (data.speed_color_pair > 0) {
+            wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        }
+        mvwprintw(scroll_pad, row_pad, c_spd, "%s", data.speed_str);
+        if (data.speed_color_pair > 0) {
+            wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        }
+
+        if (isnan(plots[i].latitude)) {
+            mvwprintw(scroll_pad, row_pad, c_lat, " ");
+        } else {
+            mvwprintw(scroll_pad, row_pad, c_lat, "%8.4f", plots[i].latitude);
+        }
+
+        if (isnan(plots[i].declination)) {
+            mvwprintw(scroll_pad, row_pad, c_dec, " ");
+        } else {
+            mvwprintw(scroll_pad, row_pad, c_dec, "%8.4f", plots[i].declination);
+        }
+        
+        if (isnan(plots[i].ra)) {
+            mvwprintw(scroll_pad, row_pad, c_ra, " ");
+        } else {
+            mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", plots[i].ra);
+        }
+        
+       
+        wattroff(scroll_pad, A_BOLD);
+
+        //if (row_pad > 0) {
+            wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+            mvwprintw(scroll_pad, row_pad + 1, c_obj, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+            wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
+        //}
+
+        row_pad += 2;
+    }
+    row_pad++;
+
+    // Adiciona as instruções fixas no rodapé da janela externa (table_win)
+    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to return - [↓↑/JK] Scroll"));
+    
+
+    // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
+    int offset_y = 0;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+    if (max_scroll_y < 0) max_scroll_y = 0;
+
+    // Vincula o teclado à PAD virtual
+    keypad(table_win, TRUE);
+    nodelay(table_win, FALSE);
+
+    int flag = 0;
+    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+    wattron(table_win, COLOR_PAIR(28) | flag);
+    desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+    wattroff(table_win, COLOR_PAIR(28) | flag);
+    wnoutrefresh(table_win);
+
+    doupdate();
+
+    // Renderiza a primeira foto da PAD na tela
+    prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+
+    int ch;
+    int running = 1;
+    while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
+        switch (ch) {
+            case KEY_UP: case 'k': case 'K':
+                if (offset_y > 0) offset_y -= 2;
+                break;
+            case KEY_DOWN: case 'j': case 'J':
+                if (offset_y < max_scroll_y) offset_y += 2;
+                break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }
+                    // 1. Descobre a coluna onde a barra é desenhada
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
+                        int offset_inicio_barra = 4; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                            
+                            // Calcula o limite máximo que o pad_line_pos pode atingir
+                            int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_dados_visiveis > 1 && max_scroll_y > 0) {
+                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
+                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados_visiveis - 1);
+                                int novo_offset = (int)(proporcao * max_scroll_y);
+                                
+                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
+                                offset_y = novo_offset;
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
+        wnoutrefresh(table_win);
+        doupdate();
+        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+    }
+    
+    delwin(scroll_pad);
+    delwin(shadow_win);
+    delwin(table_win);
 }
 
 
@@ -7048,7 +7308,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 
             }
             else if (strcmp(plots[i].house, "I") == 0 || strcmp(plots[i].house, "II") == 0 || strcmp(plots[i].house, "III") == 0 || 
-                    strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "✖") == 0 || strcmp(plots[i].house, "XI") == 0) {
+                    strcmp(plots[i].house, "V") == 0 || strcmp(plots[i].house, "IX") == 0 || strcmp(plots[i].house, "X") == 0 || strcmp(plots[i].house, "XI") == 0) {
                 row->house_color_pair = 8;
             }
             else if (strcmp(plots[i].house, "IV") == 0 || strcmp(plots[i].house, "VII") == 0) {
@@ -7285,7 +7545,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                                 dig[i].accidental += 4;
                             }
 
-                            snprintf(mut, 14, "{%s%s}", plots[i].object, plots[j].object);
+                            snprintf(mut, 14, "{ %s %s }", plots[i].object, plots[j].object);
                             strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
@@ -7293,7 +7553,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         } else {
                             dig[i].accidental += 1; 
 
-                            snprintf(mut, 14, "(%s%s)", plots[i].object, plots[j].object);
+                            snprintf(mut, 14, "( %s %s )", plots[i].object, plots[j].object);
                             strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
