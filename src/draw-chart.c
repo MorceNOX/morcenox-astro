@@ -3158,8 +3158,11 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
-    mvwprintw(table_win, 3, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-    wattroff(table_win, COLOR_PAIR(13));
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
 
     wnoutrefresh(table_win);
 
@@ -3375,9 +3378,9 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         wattroff(scroll_pad, A_BOLD);
 
         wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(scroll_pad, row + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        wmove(scroll_pad, row + 1, 0);
+        whline(scroll_pad, ACS_HLINE, table_width - 4);
         wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-
         row += 2;
     }
     row++;
@@ -3822,8 +3825,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
-    mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-    wattroff(table_win, COLOR_PAIR(13));
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
@@ -3911,11 +3915,10 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         
         wattroff(scroll_pad, A_BOLD);
 
-        //if (row_pad > 0) {
-            wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-            mvwprintw(scroll_pad, row_pad + 1, c_obj, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-            wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-        //}
+        wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+        wmove(scroll_pad, row_pad + 1, c_obj);
+        whline(scroll_pad, ACS_HLINE, table_width - 4);
+        wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
         row_pad += 2;
     }
@@ -4177,7 +4180,8 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
     mvwprintw(table_win, 2, 71, _("Right Ascension"));
            
     wattron(table_win, COLOR_PAIR(13));
-    mvwprintw(table_win, 3, 2, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    wmove(table_win, 3, 2);
+    whline(table_win, ACS_HLINE, table_width - 4);
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
     wnoutrefresh(table_win);
 
@@ -4251,11 +4255,10 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
        
         wattroff(scroll_pad, A_BOLD);
 
-        //if (row_pad > 0) {
-            wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-            mvwprintw(scroll_pad, row_pad + 1, c_obj, "────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-            wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-        //}
+        wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+        wmove(scroll_pad, row_pad + 1, c_obj);
+        whline(scroll_pad, ACS_HLINE, table_width - 4);
+        wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
         row_pad += 2;
     }
