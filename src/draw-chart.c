@@ -650,7 +650,7 @@ int converter_codigo_planeta(int codigo_antigo) {
 
 const char* get_house_roman(double longitude, double *cusps) {
     static const char* roman_houses[] = {
-        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "✖", "XI", "XII"
+        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"
     };
 
     // Uma tolerância infinitesimal para engolir imprecisões do double (1e-9 graus)
@@ -7285,7 +7285,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                                 dig[i].accidental += 4;
                             }
 
-                            snprintf(mut, 14, "(%s / %s)", plots[i].object, plots[j].object);
+                            snprintf(mut, 14, "{%s%s}", plots[i].object, plots[j].object);
                             strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
@@ -7293,7 +7293,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         } else {
                             dig[i].accidental += 1; 
 
-                            snprintf(mut, 14, "(%s / %s)", plots[i].object, plots[j].object);
+                            snprintf(mut, 14, "(%s%s)", plots[i].object, plots[j].object);
                             strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
