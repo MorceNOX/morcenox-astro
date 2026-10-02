@@ -3822,7 +3822,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     mvwprintw(table_win, 2, 108, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 117, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 116, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -3921,7 +3921,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_rul + 2, "%s", data.rulers_str);
         wattroff(scroll_pad, COLOR_PAIR(8) | A_DIM);
 
-        mvwprintw(scroll_pad, row_pad, c_mut + 2, "%s", data.mutual_reception);
+        mvwprintw(scroll_pad, row_pad, c_mut + 1, "%s", data.mutual_reception);
         
         wattroff(scroll_pad, A_BOLD);
 
@@ -9018,54 +9018,55 @@ void open_menu_tables(ContextoMenu *ctx) {
     // 1. Definição estática das diversas opções de funções
     const char *opcoes1[] = {
         _("01. Chart Data Panel"),
-        _("02. Positions, Dignities & Rulerships"),
-        _("03. Accidental Dignities"),
-        _("04. Strength of the Planets"),
-        _("05. Aspects"),
-        _("06. Declination Aspects"),
-        _("07. Planetary Hours"),
-        _("08. Rising, Setting & Culmination Times"),
-        _("09. Houses"),
-        _("10. Hylegiacal & Figuris Almuten"),
-        _("11. Temperament Analysis"),
-        _("12. Annual Profections"),
-        _("13. Firdaria"),
-        _("14. Vital Chronocrators: Life Givers"),
-        _("15. Vital Threats: The Anareta"),
-        _("16. Primary Directions"),
-        _("17. Prymary Directions to Arabic Parts"),
-        _("18. Arabic Parts"),
-        _("19. Mind Analysis"),
-        _("20. Solar Revolution"),
-        _("21. Planetary Energy Profile"),
-        _("22. Primary Motivation"),
-        _("23. Aspects by Sign"),
-        _("24. Aspects to Antiscia"),
-        _("25. Aspects to Contrantiscia")
-        
+        _("02. Astrological Positions"),
+        _("03. Dignities & Rulerships"),        
+        _("04. Accidental Dignities"),
+        _("05. Strength of the Planets"),
+        _("06. Planetary Energy Profile"),
+        _("07. Houses"),
+        _("08. Aspects"),
+        _("09. Declination Aspects"),        
+        _("10. Aspects by Sign"),
+        _("11. Aspects to Antiscia"),
+        _("12. Aspects to Contrantiscia"),
+        _("13. Rising, Setting & Culmination Times"),        
+        _("14. Hylegiacal & Figuris Almuten"),
+        _("15. Temperament Analysis"),
+        _("16. Mind Analysis"),
+        _("17. Primary Motivation"),
+        _("18. Planetary Hours"),               
+        _("19. Arabic Parts"),
+        _("20. Annual Profections"),
+        _("21. Firdaria"),
+        _("22. Vital Chronocrators: Life Givers"),
+        _("23. Vital Threats: The Anareta"),
+        _("24. Primary Directions"),
+        _("25. Prymary Directions to Arabic Parts"),               
+        _("26. Solar Revolution")        
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes1 = sizeof(opcoes1) / sizeof(opcoes1[0]);
 
     const char *opcoes2[] = {
         _("01. Chart Data Panel"),
-        _("02. Positions, Dignities & Rulerships"),
-        _("03. Accidental Dignities"),
-        _("04. Strength of the Planets"),
-        _("05. Aspects"),
-        _("06. Declination Aspects"),
-        _("07. Planetary Hours"),
-        _("08. Rising, Setting & Culmination Times"),
-        _("09. Houses"),
-        _("10. Hylegiacal & Figuris Almuten"),
-        _("11. Radix Confrontation: Solar Return Integration"),
-        _("12. Annual Transits & Radical Projections"),
-        _("13. Arabic Parts"),
-        _("14. Planetary Energy Profile"),
-        _("15. Arabic Parts Solar Return Radix Confrontation"),
-        _("16. Aspects by Sign"),
-        _("17. Aspects to Antiscia"),
-        _("18. Aspects to Contrantiscia")
+        _("02. Astrological Positions"),
+        _("03. Dignities & Rulerships"),        
+        _("04. Accidental Dignities"),
+        _("05. Strength of the Planets"),
+        _("06. Planetary Energy Profile"),
+        _("07. Houses"),
+        _("08. Aspects"),
+        _("09. Declination Aspects"),        
+        _("10. Aspects by Sign"),
+        _("11. Aspects to Antiscia"),
+        _("12. Aspects to Contrantiscia"),
+        _("13. Rising, Setting & Culmination Times"),        
+        _("14. Hylegiacal & Figuris Almuten"),         
+        _("15. Planetary Hours"),
+        _("16. Arabic Parts"),
+        _("17. Arabic Parts Solar Return Radix Confrontation"),       
+        _("18. Radix Confrontation: Solar Return Integration"),
+        _("19. Annual Transits & Radical Projections")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -9335,6 +9336,8 @@ void open_menu_tables(ContextoMenu *ctx) {
 
     desativar_arrasto_mouse();
 
+    AspectMatrix matrix_ants = {0}; 
+
     switch(selected_index) {
         case 0:
             display_table_data(
@@ -9344,37 +9347,73 @@ void open_menu_tables(ContextoMenu *ctx) {
             );
             break;
         case 1:
-            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets);
+            display_positions(ctx->plots, &ctx->planet_matrix);            
             break;
         case 2:
-            display_dignities(ctx->plots, ctx->dig, ctx->strength_planets);
+            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets);
             break;
         case 3:
-            display_force(ctx->plots, ctx->dig, ctx->strength_planets);
+            display_dignities(ctx->plots, ctx->dig, ctx->strength_planets);
             break;
         case 4:
-            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, ctx->num_ants);
+            display_force(ctx->plots, ctx->dig, ctx->strength_planets);
             break;
-        case 5:
-            display_declination_aspects(ctx->plots, &ctx->matrix_decl);
+        case 5:   
+            display_planetary_energy_profile(ctx->plots, ctx->strength_planets);
             break;
         case 6:
-            display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
-            break;
-        case 7:
-            display_rising_times(ctx->plots, ctx->tz_offset);
-            break;
-        case 8:
             display_houses(ctx->cusps, (char (*)[100])ctx->pHouse, ctx->house_ruler_str, ctx->house_system_str);
             break;
+        case 7:    
+            display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, ctx->num_ants);
+            break;
+        case 8:
+            display_declination_aspects(ctx->plots, &ctx->matrix_decl);
+            break;
         case 9:
-            display_almutens(ctx->pontos_calculados, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->mapa_retorno);
+            AspectMatrix matrix_sign = {0};
+            matrix_sign = calculate_aspects_by_sign(ctx->plots);
+            display_aspects_by_sign(ctx->plots, &matrix_sign);
             break;
         case 10:
+            matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, get_antissia_orbis(), ANTISSIUM);
+            display_aspects_antissium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, &matrix_ants, ANTISSIUM);
+            break;
+        case 11:
+            matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, get_antissia_orbis(), CONTRANTISSIUM);
+            display_aspects_antissium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, &matrix_ants, CONTRANTISSIUM);
+            break;
+        case 12:
+            display_rising_times(ctx->plots, ctx->tz_offset);
+            break;
+        case 13:
+            display_almutens(ctx->pontos_calculados, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->mapa_retorno);
+            break;
+        case 14:
             if (!ctx->mapa_retorno) {
                 display_temperament(ctx->plots, &ctx->matrix, ctx->phase_id, ctx->season_id, ctx->week_day + 1, ctx->planetary_hour + 1);
+            } else {           
+                display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
             }
-            else {
+            break;
+        case 15:
+            if (!ctx->mapa_retorno) {
+                display_natal_mind_analysis(ctx->mercurio, ctx->lua, ctx->mercury_retro, ctx->phase_id, &ctx->matrix, ctx->pontos_calculados, ctx->plots);
+            } else {           
+                display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
+            }
+            break;
+        case 16:
+            if (!ctx->mapa_retorno) {
+                display_motivation(ctx->plots, ctx->house_rulers);
+            } else {           
+                display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal, ctx->obj_natal);
+            }
+            break;
+        case 17:
+            if (!ctx->mapa_retorno) {
+                display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
+            } else {
                 processar_confronto_natal_revolucao(
                     ctx->qtd_almuten_rev,
                     ctx->almuten_rev,
@@ -9398,106 +9437,47 @@ void open_menu_tables(ContextoMenu *ctx) {
                 );
             }
             break;
-        case 11:
+        case 18:
             if (!ctx->mapa_retorno) {
-                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects);
-            }
-            
-            else {
+                display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
+            } else {
                 process_revolution_transits(ctx->jd_natal, ctx->planet_longitudes, ctx->planet_latitudes, ctx->armc_natal, ctx->lat_natal, ctx->house_system, ctx->tipo_h_natal, ctx->idx_hyleg_natal, ctx->longitudes_natal, ctx->cusps_natal, ctx->obj_natal, ctx->total_obj_natal);
             }    
             break;
-        case 12:
-            if (!ctx->mapa_retorno) {
-                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
-            }
-            else {
-                display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
-            }
-            break;
-        case 13:
-            if (!ctx->mapa_retorno) {
-                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
-            }
-            else {
-                display_planetary_energy_profile(ctx->plots, ctx->strength_planets);
-            }
-            break;            
-        case 14:
-            if (!ctx->mapa_retorno) {
-                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
-            }
-            else {
-                display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal, ctx->obj_natal);
-            }
-            break;
-        case 15:
-            if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom);
-            }
-            else {
-                AspectMatrix matrix_sign = {0};
-                matrix_sign = calculate_aspects_by_sign(ctx->plots);
-                display_aspects_by_sign(ctx->plots, &matrix_sign);
-                break;
-            }
-            break;
-        case 16:
-            if (!ctx->mapa_retorno) {
-                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
-            }
-            else {
-                AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, get_antissia_orbis(), ANTISSIUM);
-                display_aspects_antissium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, &matrix_ants, ANTISSIUM);  
-            }           
-            break;
-        case 17:
-            if (!ctx->mapa_retorno) {
-                display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
-            }
-            else {
-                AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, get_antissia_orbis(), CONTRANTISSIUM);
-                display_aspects_antissium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, &matrix_ants, CONTRANTISSIUM);  
-            }           
-            break;
-        case 18:
-            display_natal_mind_analysis(ctx->mercurio, ctx->lua, ctx->mercury_retro, ctx->phase_id, &ctx->matrix, ctx->pontos_calculados, ctx->plots);
-            break;
         case 19:
-            if (!ctx->mapa_retorno) {    
-                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects);
-                saiu_retorno = true;
+            if (!ctx->mapa_retorno) {
+                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects);
             }
             break;
         case 20:
-            display_planetary_energy_profile(ctx->plots, ctx->strength_planets);
-            break;
+            if (!ctx->mapa_retorno) {
+                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
+            }
+            break;            
         case 21:
-            if (!ctx->mapa_retorno) {    
-                display_motivation(ctx->plots, ctx->house_rulers);
+            if (!ctx->mapa_retorno) {
+                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             }
             break;
         case 22:
             if (!ctx->mapa_retorno) {
-                AspectMatrix matrix_sign = {0};
-                matrix_sign = calculate_aspects_by_sign(ctx->plots);
-                display_aspects_by_sign(ctx->plots, &matrix_sign);
+                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             }
             break;
         case 23:
             if (!ctx->mapa_retorno) {
-                AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, get_antissia_orbis(), ANTISSIUM);
-                display_aspects_antissium(ctx->plots, &ctx->ants[0], ctx->num_ants / 2, &matrix_ants, ANTISSIUM);
+                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom);
             }
             break;
         case 24:
             if (!ctx->mapa_retorno) {
-                AspectMatrix matrix_ants = {0}; 
-                matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, get_antissia_orbis(), CONTRANTISSIUM);
-                display_aspects_antissium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, &matrix_ants, CONTRANTISSIUM);
+                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
+            }           
+            break;
+        case 25:
+            if (!ctx->mapa_retorno) {
+                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects);
+                saiu_retorno = true;
             }
             break;
         default:
