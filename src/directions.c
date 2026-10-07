@@ -3148,8 +3148,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
     double sa_sig = __calcular_semi_arco(dec_sig_rad, lat_geo_rad, sig_acima);
     
     
-    double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0, 999.9, 999.9}; 
-    char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍", "∥", "∦"};
+    double proporcao_aspecto[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9}; 
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
 
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || 
