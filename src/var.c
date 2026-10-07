@@ -28,6 +28,10 @@
 #include "var.h"
 
 
+
+MetodoDirecaoGlobal METODO_CALCULO_ATIVO = METODO_PLACIDUS_SEMI_ARCO;
+DirZodLatitude ZOD_PD_WITH_LAT = PROM_SIG;
+
 char LANGUAGE[8] = "en"; 
 
 char DEFAULT_CITY[100] = "Guarulhos";

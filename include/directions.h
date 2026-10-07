@@ -49,12 +49,6 @@ typedef enum {
 } TipoDirecaoEnum;
 
 
-// typedef struct {
-//     int time_key;
-
-// } DirectionsOptions;
-
-
 typedef struct {
     int id;
     char object[10];

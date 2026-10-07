@@ -1,0 +1,144 @@
+/*
+ * MorceNOX-ASTRO™
+ * Copyright (C) 2026 Amilcar Antonio Mesquita Rizk amilcar.rizk@gmail.com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+ */
+
+#ifndef PRIMARY_DIRECTIONS_H
+#define PRIMARY_DIRECTIONS_H
+
+#include "arabic_parts.h"
+#include "aspects.h"
+
+
+#define PROM_PLANET 1
+#define PROM_TERM 2
+#define PROM_POINT 3
+#define PROM_ANTISCIUM 4
+#define PROM_CONTRANTISCIUM 5
+#define PROM_CUSP 6
+#define PROM_ANGLE 7
+#define PROM_PART 8
+
+
+#define DIRECT 0
+#define CONVERSE 1
+
+#define OBLIQUIDADE 23.439291
+
+#define TOTAL_SIGNIFICADORES 31
+
+//#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
+#define NAIBOD_KEY   0.985647358005769
+#define CARDANO_KEY   0.986666679822222
+#define PTOLEMY_KEY  1.000000000000000
+#define PLACIDUS_KEY 0.986388888888889
+                    
+typedef enum {
+    DIRECAO_ZODIACAL = 0,
+    DIRECAO_MUNDANA  = 1
+} TipoDirecaoEnum;
+
+typedef enum { DIRECAO_DIRETA, DIRECAO_CONVERSA } TipoDirecao;
+typedef enum { ESFERA_ZODIACAL, ESFERA_MUNDANA } TipoEsfera;
+
+typedef struct {
+    char nome[20];
+    double longitude;
+    double latitude_ecliptica;
+} PlanetaNatal;
+
+typedef struct {
+    char label[50];
+    TipoEsfera esfera;
+    double ra;
+    double dec;
+    double dm;
+    double sa;
+    double ph;
+    int eh_leste;
+    int acima_horiz;
+    double offset_mundano; // Offset em graus horários/proporcionais para aspectos mundanos
+} PontoCalculado;
+
+
+
+// Estrutura interna para auxiliar no motor de cálculos locais (Placidus)
+typedef struct {
+    double dm;
+    double sa;
+    double ph;
+    int eh_leste;
+} DadosLocais;
+
+
+typedef struct {
+    int id;
+    char object[10];
+    char object_name[30];
+    double longitude;
+    double latitude;
+    double ra;
+    int house;
+    double declination;
+    double longitude_fim;
+    double ra_fim;
+    double dec_fim;
+    int house_fim;
+    int type;
+    double house_pos;
+} Promissor;
+
+typedef struct {
+    char promissor_name[30];    // O planeta que se move (ex: "Mars") Manter somente o nome do planeta memo se for aspecto
+    char promissor_glifo[10];   // Glifo do planeta (manter somente o glifo do planeta, mesmo se for aspecto)
+    int promissor_type;         //
+    char aspecto_symbol[10];    // ☌, ⚹, □, △, ☍
+    char significador_name[20]; // O ponto receptor parado (ex: "Moon" [Hyleg])
+    char significador_glifo[10];
+    double arco_graus;          // Distância em graus no Equador Celeste
+    double idade_evento;        // Idade calculada via Naibod
+    int ano_calendario;         // Ano exato do evento (YY + idade)
+    int mes_calendario;
+    int dia_calendario;
+    int tipo_direcao_id;        // 0 = Zodiacal; 1 = Mundane
+    char tipo_direcao[15];      // "Zodiacal" ou "Mundane"
+    int sentido;                // 0 = Direct; 1 = Converse
+    char divisor_name[30];
+    char divisor_gliph[10];
+} LinhaDirecao;
+
+
+double get_obliquidade(double jd);
+double calcular_latitude_dinamica_bianchini(double jd, const char *object, double lon_aspecto);
+double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_rad, double cota_sig, 
+                                                 double ra_prom, double dec_prom_rad, double cota_prom_natal,
+                                                 double offset_proporcao, int a, int s, double ramc, double lat_geografica);
+double get_time_key(int key, double jd, double arco);
+double get_key(int key);
+const char* get_key_name(int key);
+void converter_coordenadas(double lon, double lat_ecl, double *ra, double *dec);
+void processar_espaco_local(double ra, double dec, double ramc, double lat_geo, DadosLocais *dl);
+double calcular_arco(PontoCalculado sig, PontoCalculado prom, TipoDirecao tipo, double lat_geo);
+int calcular_direcoes_geral(Promissor *sig, int idx_alvo, int total_promissores_base, Promissor *prom, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int esfera_filtro, int sentido_filtro);
+int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom);
+
+void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom);
+
+void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char *nome_senhor_da_casa8, ChartObject *obj, int num_objects, double *cusps, double jd, double ramc, double lat);
+int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_partes, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom);
+int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom);
+
+#endif

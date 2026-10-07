@@ -792,6 +792,9 @@ ChartOptions load_default_options() {
     options.gender = GENDER;
     options.time_key = TIME_KEY;
     snprintf(options.language, 10, "%s", LANGUAGE);
+    options.zod_pd_with_lat = ZOD_PD_WITH_LAT;
+    options.pd_arc_calc = METODO_CALCULO_ATIVO;
+
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -803,7 +806,7 @@ ChartOptions load_default_options() {
         return options;
     }
 
-    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key, antiscia_as_promissor FROM profiles WHERE profile = ?;";
+    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key, antiscia_as_promissor, pd_arc_calc, zod_pd_with_lat FROM profiles WHERE profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (load_default_options): %s\n", sqlite3_errmsg(db));
@@ -824,6 +827,8 @@ ChartOptions load_default_options() {
         const char *lang_cod = (const char*)sqlite3_column_text(stmt, 7);
         int key = sqlite3_column_int(stmt, 8);
         int ant_prom = sqlite3_column_int(stmt, 9);
+        int pd_arc_calc = sqlite3_column_int(stmt, 10);
+        int zod_pd_with_lat = sqlite3_column_int(stmt, 11);
 
         options.dark_mode = dark_mode;
         options.house_system = house_system[0];
@@ -835,6 +840,8 @@ ChartOptions load_default_options() {
         options.gender = gender_id;
         snprintf(options.language, 10, "%s", lang_cod);
         options.time_key = key;
+        options.pd_arc_calc = pd_arc_calc;
+        options.zod_pd_with_lat = zod_pd_with_lat;
 
         found = 1;
     }
@@ -870,13 +877,79 @@ OptionsEdition select_options() {
     keypad(win, TRUE);
     nodelay(win, FALSE);
 
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    int rc;
+
+    int *pd_arc_calc_ids = NULL;
+    char **pd_arc_calc_names = NULL;
+    int pd_arc_calc_count = 0;
+
+    db = open_database();
+    if (db) {
+        const char *sql_select_pd_arc_systems = "SELECT id, name FROM pd_arc_calc ORDER BY id;";
+        rc = sqlite3_prepare_v2(db, sql_select_pd_arc_systems, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                int id = sqlite3_column_int(stmt, 0);
+                const char *name = (const char*)sqlite3_column_text(stmt, 1);
+                
+                // Resize arrays
+                pd_arc_calc_ids = realloc(pd_arc_calc_ids, (pd_arc_calc_count + 1) * sizeof(int));
+                pd_arc_calc_names = realloc(pd_arc_calc_names, (pd_arc_calc_count + 1) * sizeof(char*));
+                
+                // Store triplicity system ID and name
+                pd_arc_calc_ids[pd_arc_calc_count] = id;
+                
+                pd_arc_calc_names[pd_arc_calc_count] = malloc(strlen(name) + 1);
+                strcpy(pd_arc_calc_names[pd_arc_calc_count], name);
+                
+                pd_arc_calc_count++;
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+
+
+    int *pd_zod_lat_ids = NULL;
+    char **pd_zod_lat_names = NULL;
+    int pd_zod_lat_count = 0;
+
+    db = open_database();
+    if (db) {
+        const char *sql_select_lat_systems = "SELECT id, description FROM pd_zod_latitude ORDER BY id;";
+        rc = sqlite3_prepare_v2(db, sql_select_lat_systems, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                int id = sqlite3_column_int(stmt, 0);
+                const char *description = (const char*)sqlite3_column_text(stmt, 1);
+                
+                // Resize arrays
+                pd_zod_lat_ids = realloc(pd_zod_lat_ids, (pd_zod_lat_count + 1) * sizeof(int));
+                pd_zod_lat_names = realloc(pd_zod_lat_names, (pd_zod_lat_count + 1) * sizeof(char*));
+                
+                // Store triplicity system ID and name
+                pd_zod_lat_ids[pd_zod_lat_count] = id;
+                
+                pd_zod_lat_names[pd_zod_lat_count] = malloc(strlen(description) + 1);
+                strcpy(pd_zod_lat_names[pd_zod_lat_count], description);
+                
+                pd_zod_lat_count++;
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+
+
     // Load house systems from database
     char **house_systems = NULL;
     char **house_system_names = NULL;
     int house_system_count = 0;
-    sqlite3 *db;
-    sqlite3_stmt *stmt;
-    int rc;
+
 
     db = open_database();
     if (db) {
@@ -1175,7 +1248,7 @@ OptionsEdition select_options() {
         wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
-        for (int i = 0; i < 23; i++) {
+        for (int i = 0; i < 24; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(22));
             
@@ -1328,16 +1401,48 @@ OptionsEdition select_options() {
                 }
 
                 const char *key_text = _("Time Key of Primary Direction");
-                mvwprintw(win, 22, 2, " ◦ %s: %s ", key_text, time_key_name);
+                mvwprintw(win, 23, 2, " ◦ %s: %s ", key_text, time_key_name);
             }
             else if (i == 19) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *ant_prom_str = options.ant_prom ? _("yes") : _("no");
 
                 const char *ant_prom_text = _("Antiscia/Contrantiscia as Promissors in Primary Directions?");
-                mvwprintw(win, 23, 2, " ◦ %s %s ", ant_prom_text, ant_prom_str);
+                mvwprintw(win, 24, 2, " ◦ %s %s ", ant_prom_text, ant_prom_str);
             }
+            // else if (i == 20) {
+            //     char pd_zod_lat_name[128];
+            //     snprintf(pd_zod_lat_name, 128, "%s", _("Unknown"));
+            //     if (pd_zod_lat_count > 0) {
+            //         for (int j = 0; j < pd_zod_lat_count; j++) {
+            //             if (pd_zod_lat_ids[j] == (int)options.zod_pd_with_lat) {
+            //                 snprintf(pd_zod_lat_name, sizeof(pd_zod_lat_name), "%d (%s)", 
+            //                         options.zod_pd_with_lat, pd_zod_lat_names[j]);
+            //                 break;
+            //             }
+            //         }
+            //     }
+            //     const char *pd_zod_lat_text = _("Zodiacal Prim Dir with Latitude for");
+
+            //     mvwprintw(win, 24, 2, " ◦ %s: %s ", pd_zod_lat_text, pd_zod_lat_name);
+            // }
             else if (i == 20) {
+                char pd_arc_calc_name[128];
+                snprintf(pd_arc_calc_name, 128, "%s", _("Unknown"));
+                if (pd_arc_calc_count > 0) {
+                    for (int j = 0; j < pd_arc_calc_count; j++) {
+                        if (pd_arc_calc_ids[j] == (int)options.pd_arc_calc) {
+                            snprintf(pd_arc_calc_name, sizeof(pd_arc_calc_name), "%d (%s)", 
+                                    options.pd_arc_calc, pd_arc_calc_names[j]);
+                            break;
+                        }
+                    }
+                }
+                const char *pd_arc_calc_text = _("Prim Dir Arc Calculation Method");
+
+                mvwprintw(win, 25, 2, " ◦ %s: %s ", pd_arc_calc_text, pd_arc_calc_name);
+            }
+            else if (i == 21) {
                 char language_name[128];
                 snprintf(language_name, 128, "%s", _("Unknown"));
                 if (lang_count > 0) {
@@ -1351,16 +1456,16 @@ OptionsEdition select_options() {
                 }
                 const char *lang_text = _("Interface Language");
 
-                mvwprintw(win, 26, 2, " ◦ %s: %s ", lang_text, language_name);
+                mvwprintw(win, 27, 2, " ◦ %s: %s ", lang_text, language_name);
             }
-            else if (i == 21) {
+            else if (i == 22) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
 
                 const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 27, 2, " ◦ %s: %s ", dark_mode_text, dark_mode_str);
+                mvwprintw(win, 28, 2, " ◦ %s: %s ", dark_mode_text, dark_mode_str);
             }
-            else if (i == 22) {
+            else if (i == 23) {
                 const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
                 const char *gen_text = _("Default Gender");
 
@@ -1380,10 +1485,10 @@ OptionsEdition select_options() {
 
         switch (key) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 23) % 23; // Now 23 fields
+                campo_atual = (campo_atual - 1 + 24) % 24; // Now 25 fields
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 23;
+                campo_atual = (campo_atual + 1) % 24;
                 break;
             case KEY_RIGHT:
                 
@@ -1500,7 +1605,49 @@ OptionsEdition select_options() {
                     // Toggle antiscia as promissor
                     options.ant_prom = !options.ant_prom;
                 }
+                // else if (campo_atual == 20) {
+                //     if (pd_zod_lat_count > 0) {
+                //         // Find current position
+                //         int current_pos = -1;
+                //         for (int j = 0; j < pd_zod_lat_count; j++) {
+                //             if (pd_zod_lat_ids[j] == (int)options.zod_pd_with_lat) {
+                //                 current_pos = j;
+                //                 break;
+                //             }
+                //         }
+                        
+                //         // Move to next system
+                //         if (current_pos >= 0) {
+                //             int next_pos = (current_pos + 1) % pd_zod_lat_count;
+                //             options.zod_pd_with_lat = pd_zod_lat_ids[next_pos];
+                //         } else {
+                //             // If not found, start with first
+                //             options.zod_pd_with_lat = pd_zod_lat_ids[0];
+                //         }
+                //     }
+                // }
                 else if (campo_atual == 20) {
+                    if (pd_arc_calc_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < pd_arc_calc_count; j++) {
+                            if (pd_arc_calc_ids[j] == (int)options.pd_arc_calc) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to next system
+                        if (current_pos >= 0) {
+                            int next_pos = (current_pos + 1) % pd_arc_calc_count;
+                            options.pd_arc_calc = (int)pd_arc_calc_ids[next_pos];
+                        } else {
+                            // If not found, start with first
+                            options.pd_arc_calc = (int)pd_arc_calc_ids[0];
+                        }
+                    }
+                }
+                else if (campo_atual == 21) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1519,11 +1666,11 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 21) {
+                else if (campo_atual == 22) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
-                else if (campo_atual == 22) {
+                else if (campo_atual == 23) {
                     if (options.gender < 4) options.gender++;
                     if (options.gender == 4) options.gender = 1;            
                 }
@@ -1646,7 +1793,50 @@ OptionsEdition select_options() {
                     // Toggle antiscia / c.antiscia as promissor
                     options.ant_prom = !options.ant_prom;
                 }
+                // else if (campo_atual == 20) {
+                //     // Cycle backwards through triplicity systems
+                //     if (pd_zod_lat_count > 0) {
+                //         // Find current position
+                //         int current_pos = -1;
+                //         for (int j = 0; j < pd_zod_lat_count; j++) {
+                //             if (pd_zod_lat_ids[j] == (int)options.zod_pd_with_lat) {
+                //                 current_pos = j;
+                //                 break;
+                //             }
+                //         }
+                        
+                //         // Move to previous system
+                //         if (current_pos >= 0) {
+                //             int prev_pos = (current_pos - 1 + pd_zod_lat_count) % pd_zod_lat_count;
+                //             options.zod_pd_with_lat = pd_zod_lat_ids[prev_pos];
+                //         } else {
+                //             // If not found, start with first
+                //             options.zod_pd_with_lat = pd_zod_lat_ids[0];
+                //         }
+                //     }
+                // }
                 else if (campo_atual == 20) {
+                    if (pd_arc_calc_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < pd_arc_calc_count; j++) {
+                            if (pd_arc_calc_ids[j] == (int)options.pd_arc_calc) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to previous system
+                        if (current_pos >= 0) {
+                            int prev_pos = (current_pos - 1 + pd_arc_calc_count) % pd_arc_calc_count;
+                            options.pd_arc_calc = pd_arc_calc_ids[prev_pos];
+                        } else {
+                            // If not found, start with first
+                            options.pd_arc_calc = pd_arc_calc_ids[0];
+                        }
+                    }
+                }
+                else if (campo_atual == 21) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1666,11 +1856,11 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else  if (campo_atual == 21) {
+                else  if (campo_atual == 22) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
-                else if (campo_atual == 22) {
+                else if (campo_atual == 23) {
                     if (options.gender > 0) options.gender--;
                     if (options.gender == 0) options.gender = 3;
                 }
@@ -1822,6 +2012,24 @@ OptionsEdition select_options() {
                                     free(key_names[i]);
                                 }
                                 free(key_names);
+                            }                            
+                            if (pd_zod_lat_ids) {
+                                free(pd_zod_lat_ids);
+                            }
+                            if (pd_zod_lat_names) {
+                                for (int i = 0; i < pd_zod_lat_count; i++) {
+                                    free(pd_zod_lat_names[i]);
+                                }
+                                free(pd_zod_lat_names);
+                            }                            
+                            if (pd_arc_calc_ids) {
+                                free(pd_arc_calc_ids);
+                            }
+                            if (pd_arc_calc_names) {
+                                for (int i = 0; i < pd_arc_calc_count; i++) {
+                                    free(pd_arc_calc_names[i]);
+                                }
+                                free(pd_arc_calc_names);
                             }
                             delwin(win);
                             ed.changed = 0;
@@ -1996,6 +2204,21 @@ OptionsEdition select_options() {
                                     }
                                     free(key_names);
                                 }
+                                if (pd_zod_lat_names) {
+                                    for (int i = 0; i < pd_zod_lat_count; i++) {
+                                        free(pd_zod_lat_names[i]);
+                                    }
+                                    free(pd_zod_lat_names);
+                                }                            
+                                if (pd_arc_calc_ids) {
+                                    free(pd_arc_calc_ids);
+                                }
+                                if (pd_arc_calc_names) {
+                                    for (int i = 0; i < pd_arc_calc_count; i++) {
+                                        free(pd_arc_calc_names[i]);
+                                    }
+                                    free(pd_arc_calc_names);
+                                }
                                 delwin(win);
                                 ed.changed = 0;
                                 return ed;                            
@@ -2095,6 +2318,21 @@ OptionsEdition select_options() {
                     }
                     free(key_names);
                 }
+                if (pd_zod_lat_names) {
+                    for (int i = 0; i < pd_zod_lat_count; i++) {
+                        free(pd_zod_lat_names[i]);
+                    }
+                    free(pd_zod_lat_names);
+                }                            
+                if (pd_arc_calc_ids) {
+                    free(pd_arc_calc_ids);
+                }
+                if (pd_arc_calc_names) {
+                    for (int i = 0; i < pd_arc_calc_count; i++) {
+                        free(pd_arc_calc_names[i]);
+                    }
+                    free(pd_arc_calc_names);
+                }
                 delwin(win);
                 ed.changed = 0;
                 return ed;
@@ -2159,6 +2397,21 @@ OptionsEdition select_options() {
             free(key_names[i]);
         }
         free(key_names);
+    }
+    if (pd_zod_lat_names) {
+        for (int i = 0; i < pd_zod_lat_count; i++) {
+            free(pd_zod_lat_names[i]);
+        }
+        free(pd_zod_lat_names);
+    }                            
+    if (pd_arc_calc_ids) {
+        free(pd_arc_calc_ids);
+    }
+    if (pd_arc_calc_names) {
+        for (int i = 0; i < pd_arc_calc_count; i++) {
+            free(pd_arc_calc_names[i]);
+        }
+        free(pd_arc_calc_names);
     }
     
     delwin(win);

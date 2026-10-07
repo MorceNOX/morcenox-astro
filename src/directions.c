@@ -645,22 +645,242 @@ double encontrar_longitude_promissor_por_dec(double dec_alvo, double jd, char* o
 }
 
 
+
+int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, 
+                                            double jd, int sentido_filtro, Promissor *prom, int total_promissores,
+                                            double ramc, double lat_geografica, int *qtd_direcoes) {
+    
+    int object_diff = show_modern_planets ? 0 : 3;
+    double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
+    
+    // 1. Extrair os dados equatoriais e a Posição Horária (PH) do Significador Fixo
+    double ra_sig = sig[idx_alvo].ra;
+    double dec_sig = sig[idx_alvo].declination;
+    double dec_sig_rad = dec_sig * M_PI / 180.0;
+    double lat_geo_rad = lat_geografica * M_PI / 180.0;
+    
+    double ad_sig_geo = asin(tan(dec_sig_rad) * tan(lat_geo_rad));
+    double sad_sig = 90.0 + (ad_sig_geo * 180.0 / M_PI);
+    
+    double diff_sig = ra_sig - ramc;
+    while (diff_sig > 180.0)  diff_sig -= 360.0;
+    while (diff_sig < -180.0) diff_sig += 360.0;
+    double dm_sig = fabs(diff_sig);
+    
+    // PH do Significador
+    double ph_sig = (dm_sig <= sad_sig) ? (dm_sig / sad_sig) : ((180.0 - dm_sig) / (180.0 - sad_sig));
+    
+    // 2. Fixar o Polo Topocêntrico do Significador
+    double tan_polo_sig = tan(lat_geo_rad) * ph_sig;
+
+    for (int p = 0; p < total_promissores; p++) {
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
+
+        for (int s = 0; s < 2; s++) {
+            if (s == 0 && sentido_filtro == 1) continue;
+            if (s == 1 && sentido_filtro == 0) continue;
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+
+            for (int a = 0; a < 10; a++) {
+                if (prom[p].type == PROM_TERM && a > 0) break;
+
+                double arco = 0.0;
+                int eh_paralelo = (a == 8 || a == 9);
+
+                if (eh_paralelo) {
+                    if (s == 1) continue; // Trava original do seu código para paralelos
+
+                    double dec_alvo_paralelo = (a == 8) ? dec_sig : -dec_sig;
+                    double obl = get_obliquidade(jd);
+
+                    // =========================================================
+                    // 1. EXTRAINDO AS COORDENADAS EQUATORIAIS NATAIS REAIS DO PROMISSOR
+                    // =========================================================
+                    double xx_prom[3], xequat_prom[3];
+                    xx_prom[0] = prom[p].longitude;
+                    xx_prom[1] = calcular_latitude_dinamica_bianchini(jd, prom[p].object, prom[p].longitude);
+                    xx_prom[2] = 1.0;
+                    swe_cotrans(xx_prom, xequat_prom, -obl);
+                    
+                    // REINTRODUÇÃO DAS SUAS VARIÁVEIS CRÍTICAS
+                    double ra_natal_prom  = xequat_prom[0]; // RA Natal real do planeta promissor
+                    double dec_natal_prom = xequat_prom[1]; // DEC Natal real do planeta promissor
+
+                    // 2. Descobrimos onde a Eclíptica pura intercepta a declinação alvo do Significador
+                    double sin_lon = sin(dec_alvo_paralelo * M_PI / 180.0) / sin(obl * M_PI / 180.0);
+                    if (fabs(sin_lon) > 1.0) continue; // Declinação impossível de alcançar
+                    
+                    double lon_raiz1 = asin(sin_lon) * 180.0 / M_PI;
+                    if (lon_raiz1 < 0) lon_raiz1 += 360.0;
+                    double lon_raiz2 = fmod(180.0 - lon_raiz1 + 360.0, 360.0);
+
+                    double xx_alvo[3], xequat_alvo[3];
+                    double lon_cortes[2] = {lon_raiz1, lon_raiz2};
+
+                    for (int k = 0; k < 2; k++) {
+                        xx_alvo[0] = lon_cortes[k]; 
+                        xx_alvo[1] = 0.0; // Paralelo zodiacal puro intercepta a linha da eclíptica
+                        xx_alvo[2] = 1.0;
+                        swe_cotrans(xx_alvo, xequat_alvo, -obl);
+                        
+                        double ra_aspecto  = xequat_alvo[0];
+                        double dec_aspecto = dec_alvo_paralelo;
+
+                        // =========================================================
+                        // 3. MOTOR TOPOCÊNTRICO AMARRADO À POSIÇÃO NATAL DO PROMISSOR
+                        // =========================================================
+                        // Calculamos as Distâncias Ascensionais (AD) sob o mesmo Polo do Significador.
+                        // Repare o acoplamento: 'dec_natal_prom' agora calibra a AD do Significador Natal!
+                        double sin_ad_sig_polo  = tan(dec_natal_prom * M_PI / 180.0) * tan_polo_sig;
+                        double sin_ad_prom_polo = tan(dec_aspecto * M_PI / 180.0) * tan_polo_sig;
+                        
+                        if (fabs(sin_ad_sig_polo) > 1.0)  sin_ad_sig_polo  = (sin_ad_sig_polo > 0)  ? 1.0 : -1.0;
+                        if (fabs(sin_ad_prom_polo) > 1.0) sin_ad_prom_polo = (sin_ad_prom_polo > 0) ? 1.0 : -1.0;
+
+                        // As Ascensões Oblíquas agora usam a 'ra_natal_prom' como o ponto de partida real!
+                        double oa_sig_ficticio = ra_natal_prom - (asin(sin_ad_sig_polo) * 180.0 / M_PI);
+                        double oa_prom         = ra_aspecto    - (asin(sin_ad_prom_polo) * 180.0 / M_PI);
+
+                        // O arco mede a separação exata que diferencia cada planeta
+                        arco = (s == 0) ? (oa_prom - oa_sig_ficticio) : (oa_sig_ficticio - oa_prom);
+                        
+                        if (arco < 0) arco += 360.0;
+                        arco = fmod(arco, 360.0);
+                        if (arco > 180.0) arco = 360.0 - arco;
+
+                        if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                            // Filtro contra ecos internos do próprio planeta
+                            int ja_salvo = 0;
+                            for (int m = 0; m < *qtd_direcoes; m++) {
+                                if (lista_resultado[m].sentido == s &&
+                                    strcmp(lista_resultado[m].promissor_name, prom[p].object_name) == 0 &&
+                                    strcmp(lista_resultado[m].aspecto_symbol, simbolos_aspectos[a]) == 0 &&
+                                    fabs(lista_resultado[m].arco_graus - arco) < 0.005) {
+                                    ja_salvo = 1; break;
+                                }
+                            }
+                            if (ja_salvo) continue;
+
+                            // Preenchimento mantendo seus ponteiros originais intactos para o color-coding
+                            LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
+                            d->sentido = s;
+                            strcpy(d->promissor_name, prom[p].object_name);
+                            strcpy(d->promissor_glifo, prom[p].object);
+                            strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
+                            strcpy(d->significador_name, sig[idx_alvo].object_name);
+                            strcpy(d->significador_glifo, sig[idx_alvo].object);
+                            d->promissor_type = prom[p].type;
+                            d->arco_graus = arco;
+
+                            double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                            d->idade_evento = arco / CHAVE;
+                            double dias_decorridos = d->idade_evento * 365.242199;
+                            int ano_c, mes_c, dia_c; double hora_c;
+                            swe_revjul(jd + dias_decorridos, 1, &ano_c, &mes_c, &dia_c, &hora_c);
+                            d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
+                            strcpy(d->tipo_direcao, "Zodiacal");
+                            d->tipo_direcao_id = DIRECAO_ZODIACAL;
+
+                            (*qtd_direcoes)++;
+                            if (*qtd_direcoes >= 300) return *qtd_direcoes;
+                        }
+                    }
+                    continue; // Pula o resto do loop de aspectos longitudinais para este planeta
+                }
+
+
+
+                // --- OUTROS 8 ASPECTOS LONGITUDINAIS TOPOCÊNTRICOS ---
+                double lon_aspecto;
+                if (s == 0) {
+                    lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                } else if (prom[p].type == PROM_TERM && s == 1) {
+                    lon_aspecto = fmod(prom[p].longitude_fim - angulos_aspectos[a], 360.0);
+                } else {
+                    lon_aspecto = fmod(prom[p].longitude - angulos_aspectos[a], 360.0);
+                }
+                lon_aspecto = fmod(lon_aspecto, 360.0);
+                if (lon_aspecto < 0.0) lon_aspecto += 360.0;
+
+                double lat_calculada = calcular_latitude_dinamica_bianchini(jd, prom[p].object, lon_aspecto);
+
+                double xx[3], xequat[3];
+                xx[0] = lon_aspecto; xx[1] = lat_calculada; xx[2] = 1.0;
+                swe_cotrans(xx, xequat, -get_obliquidade(jd));
+                double ra_aspecto = xequat[0];
+                double dec_aspecto = xequat[1];
+
+                // Ascensão Oblíqua sob o Polo Topocêntrico do Significador
+                double sin_ad_sig_polo  = tan(dec_sig_rad) * tan_polo_sig;
+                double sin_ad_prom_polo = tan(dec_aspecto * M_PI / 180.0) * tan_polo_sig;
+                if (fabs(sin_ad_sig_polo) > 1.0)  sin_ad_sig_polo  = (sin_ad_sig_polo > 0)  ? 1.0 : -1.0;
+                if (fabs(sin_ad_prom_polo) > 1.0) sin_ad_prom_polo = (sin_ad_prom_polo > 0) ? 1.0 : -1.0;
+
+                double oa_sig  = ra_sig - (asin(sin_ad_sig_polo) * 180.0 / M_PI);
+                double oa_prom = ra_aspecto - (asin(sin_ad_prom_polo) * 180.0 / M_PI);
+
+                arco = (s == 0) ? (oa_prom - oa_sig) : (oa_sig - oa_prom);
+                if (arco < 0) arco += 360.0;
+                arco = fmod(arco, 360.0);
+                if (arco > 180.0) arco = 360.0 - arco;
+
+                if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                    int ja_salvo = 0;
+                    for (int m = 0; m < *qtd_direcoes; m++) {
+                        if (lista_resultado[m].sentido == s &&
+                            strcmp(lista_resultado[m].promissor_name, prom[p].object_name) == 0 &&
+                            strcmp(lista_resultado[m].aspecto_symbol, simbolos_aspectos[a]) == 0 &&
+                            fabs(lista_resultado[m].arco_graus - arco) < 0.005) {
+                            ja_salvo = 1; break;
+                        }
+                    }
+                    if (ja_salvo) continue;
+
+                    LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
+                    d->sentido = s;
+                    strcpy(d->promissor_name, prom[p].object_name);
+                    strcpy(d->promissor_glifo, prom[p].object);
+                    strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
+                    strcpy(d->significador_name, sig[idx_alvo].object_name);
+                    strcpy(d->significador_glifo, sig[idx_alvo].object);
+                    d->promissor_type = prom[p].type;
+                    d->arco_graus = arco;
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    d->idade_evento = arco / CHAVE;
+                    double dias_decorridos = d->idade_evento * 365.242199;
+                    int ano_c, mes_c, dia_c; double hora_c;
+                    swe_revjul(jd + dias_decorridos, 1, &ano_c, &mes_c, &dia_c, &hora_c);
+                    d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
+                    strcpy(d->tipo_direcao, "Zodiacal");
+                    d->tipo_direcao_id = DIRECAO_ZODIACAL;
+                    (*qtd_direcoes)++;
+                    if (*qtd_direcoes >= 300) return *qtd_direcoes;
+                }
+            }
+        }
+    }                   
+    return *qtd_direcoes;
+}
+
+
+
+
+
+
+
 // Calcula o cronograma de direções zodiacais para QUALQUER ponto escolhido
 int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom) {
 
     int qtd_direcoes = 0;
     int object_diff = show_modern_planets ? 0 : 3;
 
-    //if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
-
-    // Calcula a Ascensão Reta baseada na coordenada do ponto alvo escolhido
     double ra_significador = sig[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
     double dec_significador = sig[idx_alvo].declination; // Declinação natal do alvo
 
-    double angulos_aspectos[] = {0.0, 60.0, 90.0, 120.0, 180.0, 999.9, 999.9};
-    char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍", "∥", "∦"};
-
-    //double epsilon = 0.000001;
+    double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
 
     for (int p = 0; p < prom_id; p++) {
 
@@ -670,20 +890,15 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - ((show_modern_planets)?5:4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
             //if (prom[p].type == PROM_TERM && s == 1) continue;
 
-            for (int a = 0; a < 7; a++) {
+            for (int a = 0; a < 10; a++) {
 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
-                // --- DENTRO DO LOOP PRINCIPAL DOS ASPECTOS (a < 7) ---
-
                 double arco = 0.0;
-                int eh_paralelo = (a == 5 || a == 6);
+                int eh_paralelo = (a == 8 || a == 9);
 
                 if (eh_paralelo) {
-                    if (s == 1) continue; // Evita duplicidade de sentido para paralelos
-
-                    // Declinação que o PROMISSOR precisa alcançar
-                    double dec_alvo_paralelo = (a == 5) ? dec_significador : -dec_significador;
+                    double dec_alvo_paralelo = (a == 8) ? dec_significador : -dec_significador;
 
                     // Pega as coordenadas equatoriais NATAIS do promissor
                     // Precisamos saber a AR natal do promissor para descobrir quanto ele precisa andar
@@ -774,8 +989,6 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                 }
 
                 // --- LOGICA ORIGINAL PARA OS OUTROS 5 ASPECTOS (a < 5) ---
-                // (Mantenha o seu cálculo original de lon_aspecto, swe_cotrans e cálculo de arco aqui)
-
 
                 double lon_aspecto; // = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
                 
@@ -882,6 +1095,7 @@ fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
     return qtd_direcoes;
 }
+
 
 
 // Retorna 1 se o planeta estiver ACIMA do horizonte, e 0 se estiver ABAIXO
@@ -991,12 +1205,13 @@ const char* get_key_name(int key) {
         case TIME_KEY_CARDANO:                  return _("Cardano");
         case TIME_KEY_PTOLEMY:                  return _("Ptolemy");
         case TIME_KEY_PLACIDUS:                 return "Placidus";
-        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return _("True Solar Arc Longitude");           
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return _("True Solar Ecliptical Arc");           
         case TIME_KEY_KEPLER:                   return "Kepler";
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return _("True Solar Arc RA");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return _("True Solar Equatorial Arc");
         default: return "Naibod";
     }
 }
+
 
 
 double obter_cota_fixa_casa_placidus(int numero_casa) {
@@ -1058,6 +1273,86 @@ double calcular_cota_dinamica_sistema(double house_pos) {
 }
 
 
+// NOVA FUNÇÃO: Conversão Zodiacal COMPLETA (Com Latitude Eclíptica β)
+void converter_zodiacal_com_latitude(double longitude, double latitude_ecliptica, double *ra, double *dec) {
+    double lam = para_radianos(longitude);          // λ
+    double bet = para_radianos(latitude_ecliptica); // β
+    double eps = para_radianos(OBLIQUIDADE);         // ε
+    
+    // 1. Cálculo da Declinação (δ)
+    double sin_dec = sin(bet) * cos(eps) + cos(bet) * sin(eps) * sin(lam);
+    double dec_rad = asin(sin_dec);
+    *dec = para_graus(dec_rad);
+    
+    // 2. Cálculo da Ascensão Reta (RA)
+    double num = sin(lam) * cos(eps) - tan(bet) * sin(eps);
+    double den = cos(lam);
+    
+    double ra_rad = atan2(num, den);
+    double ra_graus = para_graus(ra_rad);
+    
+    // Normalização no círculo de 0 a 360 graus
+    if (ra_graus < 0) ra_graus += 360.0;
+    *ra = ra_graus;
+}
+
+
+
+double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_rad, double cota_sig, 
+                                                 double ra_prom, double dec_prom_rad, double cota_prom_natal,
+                                                 double offset_proporcao, int a, int s, double ramc, double lat_geografica) {
+    double lat_geo_rad = para_radianos(lat_geografica);
+    double cota_alvo_sig = cota_sig;
+    double cota_alvo_prom = cota_prom_natal;
+
+    (void)ramc;
+
+    // Tratamento de Aspectos e Declinações Mundanas via Cotas Topocêntricas
+    if (a == 8 || a == 9) { // Paralelos/Contraparalelos Mundanos
+        if (s == 0) cota_alvo_sig = (a == 8) ? cota_sig : -cota_sig;
+        else        cota_alvo_prom = (a == 8) ? cota_prom_natal : -cota_prom_natal;
+    } 
+    else if (a < 8) { // Aspectos Longitudinais Clássicos
+        if (s == 0) cota_alvo_sig = cota_sig + offset_proporcao;
+        else        cota_alvo_prom = cota_prom_natal + offset_proporcao;
+    }
+
+    // Determinação dos Polos Topocêntricos Contínuos (Fórmula de Tangente)
+    // O sistema topocêntrico gera o polo do quadrante usando o valor absoluto da cota
+    double tan_polo_sig  = tan(lat_geo_rad) * fabs(cota_alvo_sig);
+    double tan_polo_prom = tan(lat_geo_rad) * fabs(cota_alvo_prom);
+
+    // Cálculos de Distância Ascensional (AD) sob os respectivos Polos Topocêntricos
+    double sin_ad_sig  = tan(dec_sig_rad) * tan_polo_sig;
+    double sin_ad_prom = tan(dec_prom_rad) * tan_polo_sig; // Na direta, projeta o promissor no polo do sig
+    if (s == 1) {
+        sin_ad_sig  = tan(dec_sig_rad) * tan_polo_prom;    // Na conversa, projeta o sig no polo do promissor
+        sin_ad_prom = tan(dec_prom_rad) * tan_polo_prom;
+    }
+
+    // Travas de segurança para limites esféricos fora da curva
+    if (fabs(sin_ad_sig) > 1.0)  sin_ad_sig  = (sin_ad_sig > 0)  ? 1.0 : -1.0;
+    if (fabs(sin_ad_prom) > 1.0) sin_ad_prom = (sin_ad_prom > 0) ? 1.0 : -1.0;
+
+    double ad_sig_graus  = asin(sin_ad_sig) * 180.0 / M_PI;
+    double ad_prom_graus = asin(sin_ad_prom) * 180.0 / M_PI;
+
+    // Aplicação da regra de sinais Leste/Oeste para gerar Ascensões Oblíquas (OA = RA - AD)
+    // Regra clássica: Se a cota orientada for negativa (Leste), subtrai AD. Se positiva (Oeste), soma AD.
+    double oa_sig  = ra_sig  - (ad_sig_graus  * (cota_alvo_sig < 0  ? 1.0 : -1.0));
+    double oa_prom = ra_prom - (ad_prom_graus * (cota_alvo_prom < 0 ? 1.0 : -1.0));
+
+    // O Arco Topocêntrico final é a diferença linear direta das posições ascensionais planificadas
+    double arco_topo = 0.0;
+    if (s == 0) {
+        arco_topo = oa_prom - oa_sig;
+    } else {
+        arco_topo = oa_sig - oa_prom;
+    }
+
+    return arco_topo;
+}
+
 
 
 
@@ -1073,8 +1368,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
     
     double sa_sig = __calcular_semi_arco(dec_sig_rad, lat_geo_rad, sig_acima);
     
-    double proporcao_aspecto[] = {0.0, 0.66666667, 1.0, 1.33333333, 2.0, 999.9, 999.9}; 
-    char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍", "∥", "∦"};
+    double proporcao_aspecto[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9}; 
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
 
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || 
@@ -1111,7 +1406,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
             if (s == 0 && sentido == 1) continue; 
             if (s == 1 && sentido == 0) continue; 
 
-            for (int a = 0; a < 7; a++) {
+            for (int a = 0; a < 10; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
 
                 
@@ -1128,7 +1423,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
             
                 // Projeção do Aspecto Longitudinal
                 double md_aspecto_prom = md_prom_com_sinal;
-                if (a < 5) {
+                if (a < 8) {
                     md_aspecto_prom = md_prom_com_sinal + (proporcao_aspecto[a] * sa_prom);
                 }
                 if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
@@ -1172,15 +1467,15 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     // DIRECIONAMENTO ENTRE PLANETAS e cúspides intermediárias                                       
                     if (sig[idx_alvo].type == PROM_CUSP && a > 0 && a < 5) continue;    
                     
-                    if (a == 5 || a == 6) { // Paralelos Mundanos Dinâmicos por Sistema                          
+                    if (a == 8 || a == 9) { // Paralelos Mundanos Dinâmicos por Sistema                          
                         if (s == 0) { 
-                            double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
+                            double cota_alvo_mundo = (a == 8) ? cota_sig_orientada : -cota_sig_orientada;
                             double md_destino = sa_prom * cota_alvo_mundo; 
                             arco = md_prom_com_sinal - md_destino; 
                         } 
                         else if (s == 1) { 
                             // Na conversa clássica, o contraparalelo usa o espelhamento da cota natal do promissor 
-                            double cota_alvo_conversa = (a == 5) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica; 
+                            double cota_alvo_conversa = (a == 8) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica; 
                             double md_destino = sa_sig * cota_alvo_conversa; 
                             arco = md_destino - md_sig_com_sinal; 
                         } 
@@ -1435,15 +1730,28 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         LinhaDirecao cronograma_asc[300];
 
         memset(cronograma_asc, 0, sizeof(cronograma_asc));
-        qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom);
-        
+        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+            qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc);
+        }
+        else {
+            //qtd_direcoes_asc = calcular_direcoes_geral(sig, indices_significadores[3], prom_id, prom, cronograma_asc, jd, ramc, lat, 0, 2);
+            qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom);
+        }
+
         if (tipo != 1) {
             memset(cronograma_z, 0, sizeof(cronograma_z));
-            qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+            if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod);
+            }
+            else {
+                //qtd_direcoes_zod = calcular_direcoes_geral(sig, idx_atual_calculo, prom_id, prom, cronograma_z, jd, ramc, lat, 0, sentido);
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+            }
         }
         if (tipo != 0) {   
-            memset(cronograma_m, 0, sizeof(cronograma_m));
-            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+            memset(cronograma_m, 0, sizeof(cronograma_m));            
+            //qtd_direcoes_mun = calcular_direcoes_geral(sig, idx_atual_calculo, prom_id, prom, cronograma_m, jd, ramc, lat, 1, sentido);
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);            
         }
         
         int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
@@ -1756,18 +2064,31 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
         wattron(table_win, A_DIM | A_ITALIC);
         if (TIME_KEY < 5) {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
         }
         else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
         }
-        if (tipo == 0) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
-        } else if (tipo == 1) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs."));
+        
+        
+        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Mundane (Continuous Local Poles)."));
+            } else {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (OA under the Pole) + Mundane (Continuous Local Poles)."));
+            }
         } else {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Mundane (Proportional Semi-Arcs In Mundo)."));
+            } else {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
+            }
         }
+
         wattroff(table_win, A_ITALIC);
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
@@ -1957,8 +2278,8 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     double ra_significador = ra_out; //calcular_ra(parts[idx_alvo].longitude, NAN, jd);   
     double dec_significador = dec_out; // Declinação natal do alvo
 
-    double angulos_aspectos[] = {0.0, 60.0, 90.0, 120.0, 180.0, 999.9, 999.9};
-    char *simbolos_aspectos[] = {"☌", "⚹", "□", "△", "☍", "∥", "∦"};
+    double angulos_aspectos[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9}; 
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
     
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
@@ -1968,18 +2289,18 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
             //if (prom[p].type == PROM_TERM && s == 1) continue;
 
-            for (int a = 0; a < 7; a++) {
+            for (int a = 0; a < 10; a++) {
                 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double arco = 0.0;
-                int eh_paralelo = (a == 5 || a == 6);
+                int eh_paralelo = (a == 8 || a == 9);
 
                 if (eh_paralelo) {
                     if (s == 1) continue; // Evita duplicidade de sentido para paralelos
 
                     // Declinação que o PROMISSOR precisa alcançar
-                    double dec_alvo_paralelo = (a == 5) ? dec_significador : -dec_significador;
+                    double dec_alvo_paralelo = (a == 8) ? dec_significador : -dec_significador;
 
                     // Pega as coordenadas equatoriais NATAIS do promissor
                     // Precisamos saber a AR natal do promissor para descobrir quanto ele precisa andar
@@ -2853,7 +3174,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
             if (s == 0 && sentido == 1) continue;
             if (s == 1 && sentido == 0) continue;
 
-            for (int a = 0; a < 7; a++) {
+            for (int a = 0; a < 10; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
 
                 double arco = 0.0;
@@ -2869,9 +3190,9 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                 if (md_prom_com_sinal < -180.0) md_prom_com_sinal += 360.0;
             
                 // --- TRATAMENTO DOS PARALELOS E CONTRAPARALELOS MUNDANOS ---
-                if (a == 5 || a == 6) {
+                if (a == 8 || a == 9) {
                     // Alvo geométrico: mesma cota (paralelo) ou cota invertida (contraparalelo)
-                    double cota_alvo_mundo = (a == 5) ? cota_sig_orientada : -cota_sig_orientada;
+                    double cota_alvo_mundo = (a == 8) ? cota_sig_orientada : -cota_sig_orientada;
 
                     if (s == 0) { // Direção Direta
                         // O promissor se move até atingir a proporção mundana do significador
@@ -2882,7 +3203,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                         // O significador se move até atingir a proporção mundana do promissor
                         double cota_prom_natal = md_prom_com_sinal / sa_prom;
                         // Ajusta o sinal para o espelhamento converso do contraparalelo
-                        if (a == 6) cota_prom_natal = -cota_prom_natal; 
+                        if (a == 9) cota_prom_natal = -cota_prom_natal; 
                         
                         double md_destino = sa_sig * cota_prom_natal;
                         arco = md_destino - md_sig_com_sinal;

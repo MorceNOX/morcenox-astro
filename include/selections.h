@@ -20,6 +20,7 @@
 #define SELECTIONS_H
 
 #include "number_helper.h"
+#include "var.h"
 
 // Estrutura para consolidar a data de nascimento
 typedef struct {
@@ -49,6 +50,8 @@ typedef struct {
     int gender;
     char language[10];
     int time_key;
+    DirZodLatitude zod_pd_with_lat;
+    MetodoDirecaoGlobal pd_arc_calc;
 } ChartOptions;
 
 typedef struct {

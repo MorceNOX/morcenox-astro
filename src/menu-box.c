@@ -2121,7 +2121,7 @@ void load_default_values() {
         return;
     }
 
-    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key, p.antiscia_as_promissor FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
+    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key, p.antiscia_as_promissor, p.pd_arc_calc, p.zod_pd_with_lat FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select_city, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (main): %s\n", sqlite3_errmsg(db));
@@ -2145,7 +2145,8 @@ void load_default_values() {
         const char *def_lang = (const char*)sqlite3_column_text(stmt, 10);
         int key = sqlite3_column_int(stmt, 11);
         int ant_prom = sqlite3_column_int(stmt, 12);
-
+        int pd_arc_calc = sqlite3_column_int(stmt, 13);
+        int zod_pd_with_lat = sqlite3_column_int(stmt, 14);
     
         if (city) snprintf(DEFAULT_CITY, sizeof(DEFAULT_CITY), "%s", city);
         if (country) snprintf(DEFAULT_COUNTRY, sizeof(DEFAULT_COUNTRY), "%s", country);
@@ -2164,6 +2165,8 @@ void load_default_values() {
 
         TIME_KEY = key;
         ANT_PROM = ant_prom;
+        METODO_CALCULO_ATIVO = pd_arc_calc;
+        ZOD_PD_WITH_LAT = zod_pd_with_lat;
 
         if (db_house_system) {
             char *house_system = strdup(db_house_system);
@@ -2566,6 +2569,8 @@ void set_options() {
 
     DARK_MODE = ed.options.dark_mode;
     ANT_PROM = ed.options.ant_prom;
+    ZOD_PD_WITH_LAT = ed.options.zod_pd_with_lat;
+    METODO_CALCULO_ATIVO = ed.options.pd_arc_calc;
 
     if (DARK_MODE) {
         FLAGS |= 0; //A_DIM | A_REVERSE;

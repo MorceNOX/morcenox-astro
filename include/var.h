@@ -40,6 +40,26 @@
 #define TIME_KEY_TRUE_SOLAR_ARC_RA        7
 
 
+typedef enum {
+    METODO_PLACIDUS_SEMI_ARCO = 1,
+    METODO_TOPOCENTRICO = 2
+} MetodoDirecaoGlobal;
+
+
+typedef enum {
+    PROM_SIG = 1,
+    PROM = 2,
+    SIG = 3,
+    NONE = 4
+} DirZodLatitude;
+
+
+// Esta é a variável global que sua tela de opções vai alterar
+extern MetodoDirecaoGlobal METODO_CALCULO_ATIVO; 
+extern DirZodLatitude ZOD_PD_WITH_LAT;
+
+
+
 
 extern sqlite3 *global_db;
 
