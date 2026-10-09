@@ -1383,22 +1383,45 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
     (void)ramc;
 
-    // Tratamento de Aspectos e Declinações Mundanas via Cotas Topocêntricas
-    if (a == 8 || a == 9) { // Paralelos/Contraparalelos Mundanos
+    // 1. FILTRO TOPOLÓGICO: Validação geométrica de quadrantes para Rapt-Parallel e Contra-Parallel
+    if (a == 10 || a == 11) {
+        // No sistema topocêntrico, o sinal da cota representa o lado em relação ao meridiano (Leste < 0, Oeste > 0)
+        int mesmos_lados_meridiano = ((cota_sig >= 0 && cota_prom_natal >= 0) || (cota_sig < 0 && cota_prom_natal < 0));
+
+        if (a == 10 && !mesmos_lados_meridiano) {
+            return -1.0; // Aborta e sinaliza arco inválido para Rapt Parallel em lados opostos
+        }
+        if (a == 11 && mesmos_lados_meridiano) {
+            return -1.0; // Aborta e sinaliza arco inválido para Rapt Contra-Parallel no mesmo lado
+        }
+
+        // Configuração de cotas para Rapt Parallels Topocêntricos
+        if (a == 10) {
+            // No Rapt Parallel, ambos são direcionados para uma cota média proporcional ou equivalente
+            if (s == 0) cota_alvo_sig = cota_prom_natal;
+            else        cota_alvo_prom = cota_sig;
+        } 
+        else if (a == 11) {
+            // No Rapt Contra-Parallel topocêntrico, projeta-se o astro na cota oposta (hemisfério espelhado)
+            if (s == 0) cota_alvo_sig = -cota_prom_natal;
+            else        cota_alvo_prom = -cota_sig;
+        }
+    } 
+    // Tratamento de Aspectos e Declinações Mundanas Padrão
+    else if (a == 8 || a == 9) { 
         if (s == 0) cota_alvo_sig = (a == 8) ? cota_sig : -cota_sig;
         else        cota_alvo_prom = (a == 8) ? cota_prom_natal : -cota_prom_natal;
     } 
-    else if (a < 8) { // Aspectos Longitudinais Clássicos
+    else if (a < 8) { 
         if (s == 0) cota_alvo_sig = cota_sig + offset_proporcao;
         else        cota_alvo_prom = cota_prom_natal + offset_proporcao;
     }
-
-    // Determinação dos Polos Topocêntricos Contínuos (Fórmula de Tangente)
-    // O sistema topocêntrico gera o polo do quadrante usando o valor absoluto da cota
+    
+    // 2. Determinação dos Polos Topocêntricos Contínuos (Fórmula de Tangente)
     double tan_polo_sig  = tan(lat_geo_rad) * fabs(cota_alvo_sig);
     double tan_polo_prom = tan(lat_geo_rad) * fabs(cota_alvo_prom);
 
-    // Cálculos de Distância Ascensional (AD) sob os respectivos Polos Topocêntricos
+    // 3. Cálculos de Distância Ascensional (AD) sob os respectivos Polos Topocêntricos
     double sin_ad_sig  = tan(dec_sig_rad) * tan_polo_sig;
     double sin_ad_prom = tan(dec_prom_rad) * tan_polo_sig; // Na direta, projeta o promissor no polo do sig
     if (s == 1) {
@@ -1413,18 +1436,22 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
     double ad_sig_graus  = asin(sin_ad_sig) * 180.0 / M_PI;
     double ad_prom_graus = asin(sin_ad_prom) * 180.0 / M_PI;
 
-    // Aplicação da regra de sinais Leste/Oeste para gerar Ascensões Oblíquas (OA = RA - AD)
-    // Regra clássica: Se a cota orientada for negativa (Leste), subtrai AD. Se positiva (Oeste), soma AD.
+    // 4. Aplicação da regra de sinais Leste/Oeste para gerar Ascensões Oblíquas (OA = RA - AD)
     double oa_sig  = ra_sig  - (ad_sig_graus  * (cota_alvo_sig < 0  ? 1.0 : -1.0));
     double oa_prom = ra_prom - (ad_prom_graus * (cota_alvo_prom < 0 ? 1.0 : -1.0));
 
-    // O Arco Topocêntrico final é a diferença linear direta das posições ascensionais planificadas
+    // 5. O Arco Topocêntrico final é a diferença linear direta das posições ascensionais planificadas
     double arco_topo = 0.0;
     if (s == 0) {
         arco_topo = oa_prom - oa_sig;
     } else {
         arco_topo = oa_sig - oa_prom;
     }
+
+    // Normalização matemática do arco resultante entre -180 e 180
+    if (arco_topo > 180.0)  arco_topo -= 360.0;
+    if (arco_topo < -180.0) arco_topo += 360.0;
+    arco_topo = fabs(arco_topo);
 
     return arco_topo;
 }
@@ -1444,8 +1471,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
     
     double sa_sig = __calcular_semi_arco(dec_sig_rad, lat_geo_rad, sig_acima);
     
-    double proporcao_aspecto[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9}; 
-    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
+    double proporcao_aspecto[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9, 999.9, 999.9}; 
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦", "R∥", "R∦"};
 
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || 
@@ -1455,6 +1482,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
         ) continue;
 
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && strstr(prom[p].object, "🝴") != NULL) continue;
        
         // 2. Dados tridimensionais REAIS do Promissor
         double ra_prom = prom[p].ra; 
@@ -1465,27 +1493,23 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
         // ====================================================================
         // EXTRAÇÃO DINÂMICA DE COTAS VIA SISTEMA DE CASAS ATIVO (Topocêntrico/Placidus)
         // ====================================================================
-        // Se o SIGNIFICADOR (Alvo) for um planeta, a cota dele é dada pelo céu real do sistema de casas
         double cota_sig_orientada;
         if (sig[idx_alvo].type == PROM_CUSP) {
             int num_casa = sig[idx_alvo].house;
             cota_sig_orientada = obter_cota_fixa_casa_placidus(num_casa);
         } else {
-            // Lógica universal: Lê a posição domal do planeta e aplica a cota equivalente
             cota_sig_orientada = calcular_cota_dinamica_sistema(sig[idx_alvo].house_pos);
         }
 
-        // A cota natal do PROMISSOR também passa a vir do sistema de casas ativo!
         double cota_prom_natal_dinamica = calcular_cota_dinamica_sistema(prom[p].house_pos);
 
         for (int s = 0; s < 2; s++) {            
             if (s == 0 && sentido == 1) continue; 
             if (s == 1 && sentido == 0) continue; 
 
-            for (int a = 0; a < 10; a++) {
+            for (int a = 0; a < 12; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
 
-                
                 double arco = 0.0;
                             
                 // Ângulos Horários Iniciais com Sinal
@@ -1505,7 +1529,6 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (md_aspecto_prom > 180.0)  md_aspecto_prom -= 360.0;
                 if (md_aspecto_prom < -180.0) md_aspecto_prom += 360.0;
             
-                // Nova variável para identificar se o alvo atual comporta-se como um ângulo fixo no espaço local
                 int eh_angulo_angular = 0;
                 double cota_espacial_fixa = 0.0;
             
@@ -1514,64 +1537,120 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     eh_angulo_angular = 1;
                     cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);                    
                 }
-                // Se o significador for a estrutura da Cúspide
                 else if (sig[idx_alvo].type == PROM_CUSP) {
                     int num_casa = sig[idx_alvo].house;
-                    // Permitimos que as Casas Angulares (1, 4, 7, 10) também entrem no bloco matemático de cotas fixas
                     if (num_casa == 1 || num_casa == 4 || num_casa == 7 || num_casa == 10) {
                         eh_angulo_angular = 1;
                         cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);
                     }
                 }
             
-                // ====================================================
-                // INJEÇÃO NO MOTOR DE CÁLCULO DO ARCO
-                // ====================================================
-                if (eh_angulo_angular) {
-                    // Ambos agora rodam por aqui! Sem ruídos de ponto flutuante das coordenadas equatoriais natais.
-                    if (s == 0) { // === DIREÇÃO DIRETA ===
-                        double md_destino = sa_prom * cota_espacial_fixa;
-                        arco = md_aspecto_prom - md_destino;
-                    } 
-                    else if (s == 1) { // === DIREÇÃO CONVERSA ===
-                        double cota_aspecto_prom = md_aspecto_prom / sa_prom;
-                        double md_destino = sa_sig * cota_aspecto_prom; 
-                        arco = md_destino - md_sig_com_sinal;
-                    }
-                }                
-                else {
-                    // DIRECIONAMENTO ENTRE PLANETAS e cúspides intermediárias                                       
-                    if (sig[idx_alvo].type == PROM_CUSP && a > 0 && a < 5) continue;    
+                // FORK DE ALGORITMO: PLACIDUS VS TOPOCÊNTRICO
+                if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                    double cota_sig_final = eh_angulo_angular ? cota_espacial_fixa : cota_sig_orientada;
                     
-                    if (a == 8 || a == 9) { // Paralelos Mundanos Dinâmicos por Sistema                          
+                    // Chamada da função interna atualizada
+                    arco = calcular_arco_mundano_topocentrico_interno(ra_sig, dec_sig_rad, cota_sig_final,
+                                                                     ra_prom, dec_prom_rad, cota_prom_natal_dinamica,
+                                                                     proporcao_aspecto[a], a, s, ramc, lat_geografica);
+                    
+                    // VALIDAÇÃO DE ERRO TOPOCÊNTRICO: Aborta se o filtro de quadrante barrou o aspecto (-1.0)
+                    if (arco < 0.0) {
+                        continue;
+                    }
+                } 
+                else {
+                    // MOTOR PADRÃO: PLACIDUS SEMI-ARCO (Seu Código Original Corrigido)
+                    if (eh_angulo_angular) {
                         if (s == 0) { 
-                            double cota_alvo_mundo = (a == 8) ? cota_sig_orientada : -cota_sig_orientada;
-                            double md_destino = sa_prom * cota_alvo_mundo; 
-                            arco = md_prom_com_sinal - md_destino; 
+                            double md_destino = sa_prom * cota_espacial_fixa;
+                            arco = md_aspecto_prom - md_destino;
                         } 
                         else if (s == 1) { 
-                            // Na conversa clássica, o contraparalelo usa o espelhamento da cota natal do promissor 
-                            double cota_alvo_conversa = (a == 8) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica; 
-                            double md_destino = sa_sig * cota_alvo_conversa; 
-                            arco = md_destino - md_sig_com_sinal; 
-                        } 
-                    } else { 
-                        // Aspectos Longitudinais Clássicos (0 a 4) 
-                        if (s == 0) { 
-                            double md_destino = sa_prom * cota_sig_orientada; 
-                            arco = md_aspecto_prom - md_destino; 
-                        } else if (s == 1) { 
-                            double cota_aspecto_prom = md_aspecto_prom / sa_prom; 
+                            double cota_aspecto_prom = md_aspecto_prom / sa_prom;
                             double md_destino = sa_sig * cota_aspecto_prom; 
-                            arco = md_destino - md_sig_com_sinal; 
+                            arco = md_destino - md_sig_com_sinal;
+                        }
+                    }              
+                    else {
+                        if (sig[idx_alvo].type == PROM_CUSP && a > 0 && a < 8) continue;    
+                        
+                        // 1. PARALELOS E CONTRA-PARALELOS MUNDANOS SIMPLES (Apenas um se move)
+                        if (a == 8 || a == 9) { 
+                            if (s == 0) { 
+                                double cota_alvo_mundo = (a == 8) ? cota_sig_orientada : -cota_sig_orientada;
+                                double md_destino = sa_prom * cota_alvo_mundo; 
+                                arco = md_prom_com_sinal - md_destino; 
+                            } 
+                            else if (s == 1) { 
+                                double cota_alvo_conversa = (a == 8) ? cota_prom_natal_dinamica : -cota_prom_natal_dinamica; 
+                                double md_destino = sa_sig * cota_alvo_conversa; 
+                                arco = md_destino - md_sig_com_sinal; 
+                            } 
                         } 
-                    }                    
+                        // 2. ASPECTOS LONGITUDINAIS CLÁSSICOS (Trígono, Quadratura, etc.)
+                        else if (a < 8) { 
+                            if (s == 0) { 
+                                double md_destino = sa_prom * cota_sig_orientada; 
+                                arco = md_aspecto_prom - md_destino; 
+                            } else if (s == 1) { 
+                                double cota_aspecto_prom = md_aspecto_prom / sa_prom; 
+                                double md_destino = sa_sig * cota_aspecto_prom; 
+                                arco = md_destino - md_sig_com_sinal; 
+                            } 
+                        }
+                        // 3. RAPT PARALLEL E RAPT CONTRA-PARALELO (Ambos se movem - MOVIMENTO DUPLO)
+                        else if (a == 10 || a == 11) {
+                            double md_sig = md_sig_com_sinal;
+                            double md_prom = md_prom_com_sinal;
+                            
+                            double delta_ra = ra_prom - ra_sig;
+                            if (delta_ra > 180.0)  delta_ra -= 360.0;
+                            if (delta_ra < -180.0) delta_ra += 360.0;
+                            delta_ra = fabs(delta_ra);
+
+                            int mesmos_lados_meridiano = ((md_sig >= 0 && md_prom >= 0) || (md_sig < 0 && md_prom < 0));
+
+                            if (a == 10 && !mesmos_lados_meridiano) continue;
+                            if (a == 11 && mesmos_lados_meridiano)  continue;
+
+                            double sa_sig_efetivo = sa_sig;
+                            double sa_prom_efetivo = sa_prom;
+
+                            double md_sig_abs = fabs(md_sig);
+                            double md_prom_abs = fabs(md_prom);
+                            double hd_sig_abs = fabs(sa_sig_efetivo - md_sig_abs);
+                            double hd_prom_abs = fabs(sa_prom_efetivo - md_prom_abs);
+
+                            int focado_no_horizonte = ((hd_sig_abs + hd_prom_abs) < (md_sig_abs + md_prom_abs)) ? 1 : 0;
+
+                            if (!focado_no_horizonte) {
+                                if (s == 0) { // Direta: calcula o arco baseado na proporção do movimento duplo
+                                    double dist_proporcional_prom = (sa_prom_efetivo * delta_ra) / (sa_sig_efetivo + sa_prom_efetivo);
+                                    arco = md_prom_abs - dist_proporcional_prom;
+                                } else { // Conversa
+                                    double dist_proporcional_sig = (sa_sig_efetivo * delta_ra) / (sa_sig_efetivo + sa_prom_efetivo);
+                                    arco = md_sig_abs - dist_proporcional_sig;
+                                }
+                            } else {
+                                if (s == 0) {
+                                    double dist_proporcional_prom = (sa_prom_efetivo * delta_ra) / (sa_sig_efetivo + sa_prom_efetivo);
+                                    arco = hd_prom_abs - dist_proporcional_prom;
+                                } else {
+                                    double dist_proporcional_sig = (sa_sig_efetivo * delta_ra) / (sa_sig_efetivo + sa_prom_efetivo);
+                                    arco = hd_sig_abs - dist_proporcional_sig;
+                                }
+                            }
+                        }
+                    }
                 }
-                                  
+
+                                 
                 if (arco < 0.0) arco += 360.0;
                 arco = fmod(arco, 360.0);
-            
-                if (arco > 0.0 && arco <= MAX_AGE * 1.05) { 
+      
+           
+                if (arco > 0.001 && arco <= MAX_AGE * 1.05) { 
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                     
                     d->sentido = s;
@@ -3436,6 +3515,11 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
     snprintf(file_csv, sizeof(file_csv), "%s.csv", file_name);
     show_alert_popup(_("Directions exported to file:"), file_csv);
 
+    char sig_glyph[10];
+    char sig_name[64];
+
+    snprintf(sig_glyph, 10, "%s", dir[1].significador_glifo);
+    snprintf(sig_name, 64, "%s", dir[1].significador_name);
 
     char info_path[512];
     snprintf(info_path, sizeof(info_path), "%s/export/%s.info", CONFIG_PATH, file_name);
@@ -3450,6 +3534,7 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
 
     fprintf(info, "%s: %s\n", _("Primary Directions Calculation Method"), (method == METODO_TOPOCENTRICO ? _("Tpocentric Method") : _("Placidus Proportional Semi-Arcs Method")));
     fprintf(info, "%s: %s\n", _("Time Key"), get_key_name(time_key));
+    fprintf(info, "%s: %s - %s\n", _("Active Significator Target"), sig_glyph, sig_name);
     fprintf(info, "%s: %s\n", _("csv File:"), file_csv);
     fprintf(info, "%s: %d\n", _("Total Directions:"), qtd_direcoes);
     fclose(info);

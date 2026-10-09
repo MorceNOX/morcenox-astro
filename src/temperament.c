@@ -88,7 +88,7 @@ void desenhar_barra_porcentagem(WINDOW *win, int row, int col, float porcentagem
     if (num_blocos < 0) num_blocos = 0;
     
     // Imprime o valor numérico formatado com uma casa decimal antes da barra
-    mvwprintw(win, row, col, "[%5.1f%%] ", porcentagem);
+    mvwprintw(win, row, col, "[%6.2f%%] ", porcentagem);
     
     // Desenha os blocos preenchidos da barra
     wattron(win, COLOR_PAIR(cor_par) | A_DIM | A_UNDERLINE | FLAGS);
@@ -612,7 +612,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
         // Imprime o texto correspondente do temperamento
 
         wattron(table_win, A_ITALIC);
-        mvwprintw(table_win, linha_atual, 6, "%s %5.1f%%", lista[i].label, lista[i].porcentagem);
+        mvwprintw(table_win, linha_atual, 6, "%s %6.2f%%", lista[i].label, lista[i].porcentagem);
         wattroff(table_win, A_ITALIC);
         
         // Desenha a barra gráfica com o par de cores correto associado ao elemento
@@ -843,7 +843,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     mouseinterval(100);
     
 
-    mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return] "));
+    mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll │ Q|ESC: Return] "));
     wnoutrefresh(border_win);
 
     doupdate();
@@ -870,14 +870,14 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     line_count += 2;
 
-    wprintw(pad, "    %s: %d  |  %s: %d  |  %s: %d  |  %s: %d\n\n", 
+    wprintw(pad, "    %s: %d  |  %s: %d  │  %s: %d  |  %s: %d\n\n", 
             _("Hot"), score.total_quente, 
             _("Cold"), score.total_frio, 
             _("Moist"), score.total_umido, 
             _("Dry"), score.total_seco);
     line_count += 2;
 
-    wprintw(pad, "    %s: %d  |  %s: %d\n\n\n", _("Heat Axis"), eixo_calor, _("Moisture Axis"), eixo_umidade);
+    wprintw(pad, "            %s: %d  │  %s: %d\n\n\n", _("Heat Axis"), eixo_calor, _("Moisture Axis"), eixo_umidade);
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"));
     line_count += 2;
@@ -1228,7 +1228,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     line_count += 2;
 
     for (int i = 0; i < 4; i++) {
-        wprintw(pad, "%s %d: %s %5.1f%%\n", _("Rank"), i + 1, lista[i].label, lista[i].porcentagem);
+        wprintw(pad, "%s %d: %s %6.2f%%\n", _("Rank"), i + 1, lista[i].label, lista[i].porcentagem);
         line_count += 2;
 
     }
