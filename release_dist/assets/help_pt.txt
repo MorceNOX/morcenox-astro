@@ -1622,27 +1622,28 @@ As primeiras colunas mostram a idade e a data provável do evento.
 
 A codificação por cores indica direções destruidoras potenciais, direções boas e um período de alerta.
 
-• Quando o promissor é o Anareta, ou o seu Antiscia, ou seu Contrantiscia, ou os termos regidos por esse planeta (branco sobre vermelho para aspectos maléficos e vermelho negrito para outros aspectos).
+    • Quando o promissor é o Anareta, ou o seu Antiscia, ou seu Contrantiscia, ou os termos regidos por esse planeta (branco sobre vermelho para aspectos maléficos e vermelho negrito para outros aspectos).
 
-• Aspectos ruins ou conjunções direcionados por maléficos (vermelho) ou os seus antiscia, contrantiscia e termos.
+    • Aspectos ruins ou conjunções direcionados por maléficos (vermelho) ou os seus antiscia, contrantiscia e termos.
 
-• Aspectos ruins direcionados pelo senhor da Casa 8 (vermelho) ou os seus antiscia, contrantiscia e termos.
+    • Aspectos ruins direcionados pelo senhor da Casa 8 (vermelho) ou os seus antiscia, contrantiscia e termos.
 
-• Aspectos ruins direcionados por não-maléfico e os seus termos (amarelo) indicam um alerta.
+    • Aspectos ruins direcionados por não-maléfico e os seus termos (amarelo) indicam um alerta.
 
-• Aspectos bons direcionados por benéficos (verde) e os termos desses planetas são direções muito boas.
+    • Aspectos bons direcionados por benéficos (verde) e os termos desses planetas são direções muito boas.
 
-• Aspectos bons direcionados por outros planetas (azul) e os termos desses planetas são direções potencialmente boas.
+    • Aspectos bons direcionados por outros planetas (azul) e os termos desses planetas são direções potencialmente boas.
 
-• Conjunções (magenta) exigem alguma análise.
+    • Conjunções (magenta) exigem alguma análise.
 
-• Outros aspectos (preto).
+    • Outros aspectos (preto).
 
-• Quando o promissor é um termo a direção é exibida com sublinhado e cor esmaecida.
+    • Quando o promissor é um termo a direção é exibida com sublinhado e cor esmaecida.
+
+    • Quando o promissor for um Aantíscio ou Contrantíscio, a direção será exibida com a cor principal escurecida e em itálico.
+
 
 O mesmo código de cores é aplicado a ambas as direções — direta e conversa.
-
-A última coluna exibe o Divisor que rege a data da respectiva direção. 
 
 A última coluna exibe o Divisor que rege a data da respectiva direção. Este é o regente do termo atual alcançado pelo Ascendente dirigido. Assim, sempre que o Ascendente, na qualidade de significador, atinge os limites de um termo, o respectivo regente passa a ser o novo senhor do tempo, ou Divisor.
 

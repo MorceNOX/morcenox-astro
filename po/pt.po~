@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 02:55-0300\n"
+"POT-Creation-Date: 2026-10-09 05:08-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -148,8 +148,8 @@ msgid "(THE SUN - ☉ )\n"
 msgstr "(O SOL - ☉ )\n"
 
 #: src/almuten.c:858
-msgid "(THE MOON - ☽ )\n"
-msgstr "(A LUA - ☽ )\n"
+msgid "(THE MOON - ☾ )\n"
+msgstr "(A LUA - ☾ )\n"
 
 #: src/almuten.c:859
 msgid "(MERCURY - ☿ )\n"
@@ -516,8 +516,8 @@ msgid "(THE SUN - ☉ ) \n"
 msgstr "(O SOL - ☉ ) \n"
 
 #: src/almuten.c:1274
-msgid "(THE MOON - ☽ ) \n"
-msgstr "(A LUA - ☽ ) \n"
+msgid "(THE MOON - ☾ ) \n"
+msgstr "(A LUA - ☾ ) \n"
 
 #: src/almuten.c:1275
 msgid "(MERCURY - ☿ ) \n"
@@ -1153,12 +1153,12 @@ msgid "Arc (Equat.)"
 msgstr "Arco (Equat.)"
 
 #: src/directions.c:2054 src/directions.c:3198
-msgid "Method"
-msgstr "Método"
+msgid "Sphere"
+msgstr "Esfera"
 
 #: src/directions.c:2055 src/directions.c:3199
-msgid "Direction"
-msgstr "Sentido"
+msgid "Motion"
+msgstr "Direção"
 
 #: src/directions.c:2056 src/directions.c:3200
 msgid "Divisor"
@@ -1237,36 +1237,37 @@ msgstr ""
 msgid "Time Key: %s (Dynamic). ε: Dynamic."
 msgstr "Chave de Tempo Dinâmica: %s. ε: Dinâmica"
 
-#: src/directions.c:2183
-msgid "Topocentric System: Zodiacal (Oblique Ascensions under the Pole)."
-msgstr "Sistema Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo)."
+#: src/directions.c:2183 src/directions.c:3328
+msgid "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."
+msgstr "Método Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo)."
 
-#: src/directions.c:2185
-msgid "Topocentric System: Mundane (Continuous Local Poles)."
-msgstr "Sistema Topocêntrico: Mundanas (Polos Locais Contínuos)."
+#: src/directions.c:2185 src/directions.c:3330
+msgid "Topocentric Method: Mundane (Continuous Local Poles)."
+msgstr "Método Topocêntrico: Mundanas (Polos Locais Contínuos)."
 
-#: src/directions.c:2187
+#: src/directions.c:2187 src/directions.c:3332
 msgid ""
-"Topocentric System: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
+"Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
 "(Continuous Local Poles)."
 msgstr ""
-"Sistema Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo) + Mundanas "
+"Método Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo) + Mundanas "
 "(Polos Locais Contínuos)."
 
-#: src/directions.c:2191
-msgid "Placidus System: Zodiacal (Ecliptic Projection Bianchini Method)."
-msgstr "Sistema Placidus: Zodiacais (Projeção Eclíptica Método Bianchini)"
-
-#: src/directions.c:2193
-msgid "Placidus System: Mundane (Proportional Semi-Arcs In Mundo)."
-msgstr "Sistema Placidus: Mundanas (Semi-Arcos Proporcionais In Mundo)."
-
-#: src/directions.c:2195
+#: src/directions.c:2191 src/directions.c:3336
 msgid ""
-"Placidus System: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-"
-"Arcs)."
+"Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."
+msgstr "Método Placidus: Zodiacais (Projeção Eclíptica c/ Lat. Método Bianchini)"
+
+#: src/directions.c:2193 src/directions.c:3338
+msgid "Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."
+msgstr "Método Placidus: Mundanas (Semi-Arcos Proporcionais In Mundo)."
+
+#: src/directions.c:2195 src/directions.c:3340
+msgid ""
+"Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane "
+"(Proportional Semi-Arcs)."
 msgstr ""
-"Sistema Placidus: Zodiacais (Projeção na Eclíptica) + Mundanas (Semi-Arcos "
+"Método Placidus: Zodiacais (Projeção Eclíptica c/ Lat.) + Mundanas (Semi-Arcos "
 "Proporcionais)."
 
 #: src/directions.c:2204 src/directions.c:3349
@@ -1304,37 +1305,6 @@ msgstr "Lote da Fortuna"
 #: src/directions.c:2905
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
-
-#: src/directions.c:3328
-msgid "Topocentric: Zodiacal (Oblique Ascensions under the Pole)."
-msgstr "Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo)."
-
-#: src/directions.c:3330
-msgid "Topocentric: Mundane (Continuous Local Poles)."
-msgstr "Topocêntrico: Mundanas (Polos Locais Contínuos)."
-
-#: src/directions.c:3332
-msgid ""
-"Topocentric: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
-"(Continuous Local Poles)."
-msgstr ""
-"Sistema Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo) + Mundanas "
-"(Polos Locais Contínuos)."
-
-#: src/directions.c:3336
-msgid "Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."
-msgstr "Placidus: Zodiacais (Projeção Eclíptica Método Bianchini)"
-
-#: src/directions.c:3338
-msgid "Placidus: Mundane (Proportional Semi-Arcs In Mundo)."
-msgstr "Placidus: Mundanas (Semi-Arcos Proporcionais In Mundo)."
-
-#: src/directions.c:3340
-msgid ""
-"Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."
-msgstr ""
-"Placidus: Zodiacais (Projeção na Eclíptica) + Mundanas (Semi-Arcos "
-"Proporcionais)."
 
 #: src/draw-chart.c:395 src/draw-chart.c:6022 src/firdaria.c:97 src/hyleg.c:337
 #: src/profections.c:52 src/solar_return.c:1183 src/solar_return.c:1350
@@ -3105,8 +3075,8 @@ msgid "☉ Sun"
 msgstr "☉ Sol"
 
 #: src/hyleg.c:1076
-msgid "☽ Moon"
-msgstr "☽ Lua"
+msgid "☾ Moon"
+msgstr "☾ Lua"
 
 #: src/hyleg.c:1077
 msgid "ASC (Ascendant Degree)"
@@ -4247,8 +4217,8 @@ msgid "SUN ☉"
 msgstr "SOL ☉"
 
 #: src/solar_return.c:546
-msgid "MOON ☽"
-msgstr "LUA ☽"
+msgid "MOON ☾"
+msgstr "LUA ☾"
 
 #: src/solar_return.c:546
 msgid "MERCURY ☿"
@@ -6430,6 +6400,38 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Method"
+#~ msgstr "Método"
+
+#~ msgid "Direction"
+#~ msgstr "Sentido"
+
+#~ msgid "Topocentric System: Zodiacal (Oblique Ascensions under the Pole)."
+#~ msgstr "Sistema Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo)."
+
+#~ msgid "Topocentric System: Mundane (Continuous Local Poles)."
+#~ msgstr "Sistema Topocêntrico: Mundanas (Polos Locais Contínuos)."
+
+#~ msgid ""
+#~ "Topocentric System: Zodiacal (Oblique Ascensions under the Pole) + "
+#~ "Mundane (Continuous Local Poles)."
+#~ msgstr ""
+#~ "Sistema Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo) + "
+#~ "Mundanas (Polos Locais Contínuos)."
+
+#~ msgid "Placidus System: Zodiacal (Ecliptic Projection Bianchini Method)."
+#~ msgstr "Sistema Placidus: Zodiacais (Projeção Eclíptica Método Bianchini)"
+
+#~ msgid "Placidus System: Mundane (Proportional Semi-Arcs In Mundo)."
+#~ msgstr "Sistema Placidus: Mundanas (Semi-Arcos Proporcionais In Mundo)."
+
+#~ msgid ""
+#~ "Placidus System: Zodiacal (Ecliptic Projection) + Mundane (Proportional "
+#~ "Semi-Arcs)."
+#~ msgstr ""
+#~ "Sistema Placidus: Zodiacais (Projeção na Eclíptica) + Mundanas (Semi-"
+#~ "Arcos Proporcionais)."
 
 #~ msgid ""
 #~ "Topocentric: Zodiacal (OA under the Pole) + Mundane (Continuous Local "

@@ -856,7 +856,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             (*qtd_direcoes)++;
-                            if (*qtd_direcoes >= 500) return *qtd_direcoes;
+                            if (*qtd_direcoes >= 600) return *qtd_direcoes;
                         }
                     }
                     continue; // Pula o resto do loop de aspectos longitudinais para este planeta
@@ -929,7 +929,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     strcpy(d->tipo_direcao, "Zodiacal");
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
                     (*qtd_direcoes)++;
-                    if (*qtd_direcoes >= 500) return *qtd_direcoes;
+                    if (*qtd_direcoes >= 600) return *qtd_direcoes;
                 }
             }
         }
@@ -1058,7 +1058,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             qtd_direcoes++;
-                            if (qtd_direcoes >= 500) goto fim_calculo;
+                            if (qtd_direcoes >= 600) goto fim_calculo;
                         }
                     }
                     continue; // Pula o resto do loop padrão de aspectos longitudinais para não duplicar dados!
@@ -1161,7 +1161,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 500) goto fim_calculo;
+                    if (qtd_direcoes >= 600) goto fim_calculo;
                 }
             }
         }
@@ -1601,7 +1601,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 500) goto fim_calculo;
+                    if (qtd_direcoes >= 600) goto fim_calculo;
                 }
             } 
         }
@@ -1745,7 +1745,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int loop_interativo = 1;
 
     int max_linhas_exibicao = (table_height / 2) * 2 - 12;
-    WINDOW *scroll_pad = newpad(1200, table_width - 8); 
+    WINDOW *scroll_pad = newpad(2400, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
     wattron(shadow_win, COLOR_PAIR(9));
@@ -1803,9 +1803,9 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         int qtd_direcoes_mun = 0;
         int qtd_direcoes_asc = 0;
         
-        LinhaDirecao cronograma_z[500];
-        LinhaDirecao cronograma_m[500];
-        LinhaDirecao cronograma_asc[500];
+        LinhaDirecao cronograma_z[600];
+        LinhaDirecao cronograma_m[600];
+        LinhaDirecao cronograma_asc[600];
 
         memset(cronograma_asc, 0, sizeof(cronograma_asc));
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
@@ -2051,8 +2051,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         mvwprintw(table_win, 5, col_dia + 4, _("Day"));
         mvwprintw(table_win, 5, col_dir + 4, _("Directional Event")); 
         mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
-        mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
-        mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
+        mvwprintw(table_win, 5, col_tipo + 4, _("Sphere"));
+        mvwprintw(table_win, 5, col_sen + 4, _("Motion"));
         mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
@@ -2072,6 +2072,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 LinhaDirecao *d = &cronograma[i];
 
                 bool eh_termo = d->promissor_type == PROM_TERM;
+                bool eh_antiscia = d->promissor_type == PROM_ANTISCIUM || d->promissor_type == PROM_CONTRANTISCIUM;
 
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
@@ -2141,6 +2142,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 if (eh_termo) {
                    atributo_extra |= A_UNDERLINE;
                 }
+                else if (eh_antiscia) {
+                    atributo_extra |= A_DIM | A_ITALIC;
+                } 
+
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
@@ -2149,7 +2154,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 mvwprintw(scroll_pad, row_pad, col_mes, "%02d.", d->mes_calendario);
                 mvwprintw(scroll_pad, row_pad, col_dia, "%02d", d->dia_calendario);
                 mvwprintw(scroll_pad, row_pad, col_dir, "%s", texto_evento);
-                mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
+                mvwprintw(scroll_pad, row_pad, col_arco, "%8.4f°", d->arco_graus);
                 mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
                 mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
                 mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
@@ -2180,19 +2185,19 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Zodiacal (Oblique Ascensions under the Pole)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
         } else {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Zodiacal (Ecliptic Projection Bianchini Method)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Mundane (Proportional Semi-Arcs In Mundo)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
             }
         }
         
@@ -2497,7 +2502,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             qtd_direcoes++;
-                            if (qtd_direcoes >= 500) goto fim_calculo;
+                            if (qtd_direcoes >= 600) goto fim_calculo;
                         }
                     }
                     continue; // Pula o resto do loop padrão de aspectos longitudinais para não duplicar dados!
@@ -2605,7 +2610,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 500) return qtd_direcoes;
+                    if (qtd_direcoes >= 600) return qtd_direcoes;
                 }
             }
         }
@@ -2755,7 +2760,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 500) goto fim_calculo;
+                    if (qtd_direcoes >= 600) goto fim_calculo;
                 }
             }
 
@@ -2862,7 +2867,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     // ────────────────────────────────────────────────────────────────────────
     // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
     int max_linhas_exibicao = (table_height / 2) * 2 - 12; // Espaço físico real na janela para os dados
-    WINDOW *scroll_pad = newpad(1200, table_width - 8); 
+    WINDOW *scroll_pad = newpad(2400, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
     wattron(shadow_win, COLOR_PAIR(9));
@@ -2920,9 +2925,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         int qtd_direcoes_mun = 0;
         int qtd_direcoes_for = 0;
         
-        LinhaDirecao cronograma_z[500];
-        LinhaDirecao cronograma_m[500];
-        LinhaDirecao cronograma_for[500];
+        LinhaDirecao cronograma_z[600];
+        LinhaDirecao cronograma_m[600];
+        LinhaDirecao cronograma_for[600];
 
         memset(cronograma_for, 0, sizeof(cronograma_for));
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
@@ -3195,8 +3200,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         mvwprintw(table_win, 5, col_dia + 4, _("Day"));
         mvwprintw(table_win, 5, col_dir + 4, _("Directional Event")); 
         mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
-        mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
-        mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
+        mvwprintw(table_win, 5, col_tipo + 4, _("Sphere"));
+        mvwprintw(table_win, 5, col_sen + 4, _("Motion"));
         mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
@@ -3217,6 +3222,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 LinhaDirecao *d = &cronograma[i];
 
                 bool eh_termo = d->promissor_type == PROM_TERM;
+                bool eh_antiscia = d->promissor_type == PROM_ANTISCIUM || d->promissor_type == PROM_CONTRANTISCIUM;
 
                 char texto_evento[100];
                 snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
@@ -3284,8 +3290,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 }
 
                 if (eh_termo) {
-                   atributo_extra |= A_UNDERLINE;
-                }
+                    atributo_extra |= A_UNDERLINE;
+                 }
+                 else if (eh_antiscia) {
+                     atributo_extra |= A_DIM | A_ITALIC;
+                 }
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 
@@ -3294,7 +3303,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 mvwprintw(scroll_pad, row_pad, col_mes, "%02d.", d->mes_calendario);
                 mvwprintw(scroll_pad, row_pad, col_dia, "%02d", d->dia_calendario);
                 mvwprintw(scroll_pad, row_pad, col_dir, "%s", texto_evento);
-                mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
+                mvwprintw(scroll_pad, row_pad, col_arco, "%8.4f°", d->arco_graus);
                 mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
                 mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
                 mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
@@ -3325,19 +3334,19 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
         } else {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Mundane (Proportional Semi-Arcs In Mundo)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
             }
         }
 

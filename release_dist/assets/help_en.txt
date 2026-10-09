@@ -1696,6 +1696,8 @@ directions and a period of alert.
     
     • When the promissor is a term, the direction is displayed underlined and dimmed.
     
+    • Antiscion and Contrantiscion as promissor, the direction will be displayed dimmed and italic. 
+    
 The same color coding is applied to both, Direct and Converse directions.
 
 The last column displays the Divisor governing the date of the respective direction. This is the regent of the current term reached by the directed Ascendant. So, every time the Ascendant as significator reaches the boundaries of a term, the respective regent will become the new time-lord, or Divisor.

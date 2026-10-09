@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 02:55-0300\n"
+"POT-Creation-Date: 2026-10-09 05:08-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -139,7 +139,7 @@ msgid "(THE SUN - ☉ )\n"
 msgstr ""
 
 #: src/almuten.c:858
-msgid "(THE MOON - ☽ )\n"
+msgid "(THE MOON - ☾ )\n"
 msgstr ""
 
 #: src/almuten.c:859
@@ -404,7 +404,7 @@ msgid "(THE SUN - ☉ ) \n"
 msgstr ""
 
 #: src/almuten.c:1274
-msgid "(THE MOON - ☽ ) \n"
+msgid "(THE MOON - ☾ ) \n"
 msgstr ""
 
 #: src/almuten.c:1275
@@ -950,12 +950,12 @@ msgid "Arc (Equat.)"
 msgstr ""
 
 #: src/directions.c:2054 src/directions.c:3198
-msgid "Method"
+msgid "Sphere"
 msgstr ""
 
 #: src/directions.c:2055 src/directions.c:3199
 #, fuzzy
-msgid "Direction"
+msgid "Motion"
 msgstr "Location: "
 
 #: src/directions.c:2056 src/directions.c:3200
@@ -1038,32 +1038,33 @@ msgstr ""
 msgid "Time Key: %s (Dynamic). ε: Dynamic."
 msgstr ""
 
-#: src/directions.c:2183
-msgid "Topocentric System: Zodiacal (Oblique Ascensions under the Pole)."
+#: src/directions.c:2183 src/directions.c:3328
+msgid "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."
 msgstr ""
 
-#: src/directions.c:2185
-msgid "Topocentric System: Mundane (Continuous Local Poles)."
+#: src/directions.c:2185 src/directions.c:3330
+msgid "Topocentric Method: Mundane (Continuous Local Poles)."
 msgstr ""
 
-#: src/directions.c:2187
+#: src/directions.c:2187 src/directions.c:3332
 msgid ""
-"Topocentric System: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
+"Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
 "(Continuous Local Poles)."
 msgstr ""
 
-#: src/directions.c:2191
-msgid "Placidus System: Zodiacal (Ecliptic Projection Bianchini Method)."
-msgstr ""
-
-#: src/directions.c:2193
-msgid "Placidus System: Mundane (Proportional Semi-Arcs In Mundo)."
-msgstr ""
-
-#: src/directions.c:2195
+#: src/directions.c:2191 src/directions.c:3336
 msgid ""
-"Placidus System: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-"
-"Arcs)."
+"Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."
+msgstr ""
+
+#: src/directions.c:2193 src/directions.c:3338
+msgid "Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."
+msgstr ""
+
+#: src/directions.c:2195 src/directions.c:3340
+msgid ""
+"Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane "
+"(Proportional Semi-Arcs)."
 msgstr ""
 
 #: src/directions.c:2204 src/directions.c:3349
@@ -1101,33 +1102,6 @@ msgstr ""
 #, fuzzy
 msgid " Primary Directions to Arabic Parts "
 msgstr "Location: "
-
-#: src/directions.c:3328
-msgid "Topocentric: Zodiacal (Oblique Ascensions under the Pole)."
-msgstr ""
-
-#: src/directions.c:3330
-msgid "Topocentric: Mundane (Continuous Local Poles)."
-msgstr ""
-
-#: src/directions.c:3332
-msgid ""
-"Topocentric: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
-"(Continuous Local Poles)."
-msgstr ""
-
-#: src/directions.c:3336
-msgid "Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."
-msgstr ""
-
-#: src/directions.c:3338
-msgid "Placidus: Mundane (Proportional Semi-Arcs In Mundo)."
-msgstr ""
-
-#: src/directions.c:3340
-msgid ""
-"Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."
-msgstr ""
 
 #: src/draw-chart.c:395 src/draw-chart.c:6022 src/firdaria.c:97 src/hyleg.c:337
 #: src/profections.c:52 src/solar_return.c:1183 src/solar_return.c:1350
@@ -2782,7 +2756,7 @@ msgstr ""
 
 #: src/hyleg.c:1076
 #, fuzzy
-msgid "☽ Moon"
+msgid "☾ Moon"
 msgstr "Moon orb"
 
 #: src/hyleg.c:1077
@@ -3869,7 +3843,7 @@ msgid "SUN ☉"
 msgstr ""
 
 #: src/solar_return.c:546
-msgid "MOON ☽"
+msgid "MOON ☾"
 msgstr ""
 
 #: src/solar_return.c:546
@@ -5380,6 +5354,10 @@ msgstr ""
 #: src/temperament.c:1241
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Direction"
+#~ msgstr "Location: "
 
 #, fuzzy
 #~ msgid "                    "
