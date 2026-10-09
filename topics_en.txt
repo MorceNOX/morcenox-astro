@@ -707,7 +707,7 @@ bodies:
   • ☿ MERCURY: 
     Governs the rational mind, logic, speech, and analytical skills.
                
-  • ☽ THE MOON: 
+  • ☾ THE MOON: 
     Governs the irrational mind, subconscious, memories, and habits.
 
 ───────────────────────────────────────────────────────────────────
@@ -765,7 +765,7 @@ PLANETARY GOVERNOR PROFILES:
   • ☉ THE SUN: 
     Noble, clear, purpose-driven mind. Seeks honor and leadership.
                
-  • ☽ THE MOON: 
+  • ☾ THE MOON: 
     Highly intuitive, imaginative, adaptable, and receptive.
                 
   • ☿ MERCURY: 
@@ -815,6 +815,9 @@ Press Q or ESC to return to the main menu.
  
 • Vertex (Vx or 🜊)
 ───────────────────────────────────────────────────────────────────
+
+The Vertex and Anti-Vertex are the points where the prime vertical 
+intersects the ecliptic.
 
 The Vertex represents a mathematical point of karmic destiny and 
 unexpected, life-altering events. It represents unexpected external 

@@ -543,7 +543,7 @@ void abrir_janela_confronto_natal_revolucao(
 
     line_count += 2;
 
-    const char *nomes_planetas[] = {"", _("SUN ☉"), _("MOON ☽"), _("MERCURY ☿"), _("VENUS ♀"), _("MARS ♂"), _("JUPITER ♃"), _("SATURN ♄")};
+    const char *nomes_planetas[] = {"", _("SUN ☉"), _("MOON ☾"), _("MERCURY ☿"), _("VENUS ♀"), _("MARS ♂"), _("JUPITER ♃"), _("SATURN ♄")};
     
 
     if (qtd_almuten_rev > 1) {
@@ -1181,7 +1181,7 @@ void get_hyleg_data(int tipo_h_natal, int idx_hyleg_natal, double *longitudes_na
 
     // Mapeamento de nomes e glifos do Hyleg Natal baseado no ID tradicional dele (0 a 6)
     const char *nomes_tradicionais[] = {_("Sun"), _("Moon"), _("Mercury"), _("Venus"), _("Mars"), _("Jupiter"), _("Saturn")};
-    const char *glifos_tradicionais[] = {"☉", "☽", "☿", "♀", "♂", "♃", "♄"};
+    const char *glifos_tradicionais[] = {"☉", "☾", "☿", "♀", "♂", "♃", "♄"};
         
     if (idx_hyleg_natal >= 0 && idx_hyleg_natal <= 6) {
         strcpy(nome_hyleg_texto, nomes_tradicionais[idx_hyleg_natal]);
@@ -1346,7 +1346,7 @@ void abrir_janela_transitos_revolucao(
                  "forces physically position themselves over your life-long natal structure.\n\n"), 
                  MAX_LINE_WIDTH);
 
-    const char *glifos_planets[] = {"☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "⯓", "☊", "☋"};
+    const char *glifos_planets[] = {"☉", "☾", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "⯓", "☊", "☋"};
     const char *nomes_planets[]  = {_("Sun"), _("Moon"), _("Mercury"), _("Venus"), _("Mars"), _("Jupiter"), _("Saturn"), _("Uranus"), _("Neptune"), _("Pluto"), _("North Node"), _("South Node")};
 
     const char *glifos_parts[qtd_partes];

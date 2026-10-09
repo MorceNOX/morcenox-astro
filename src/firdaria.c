@@ -59,7 +59,7 @@ int checar_alerta_anaretico(int id_anareta, int id_major_firdaria, int id_sub_fi
 
 // Constantes tradicionais de tempo (Escala de IDs: 1=Sol, 2=Lua, 3=Mercúrio, 4=Vênus, 5=Marte, 6=Júpiter, 7=Saturno)
 static const int FIRD_DURACOES[] = {0, 10, 9, 13, 8, 7, 12, 11, 0, 0, 0, 3, 2}; // IDs 11=NN, 12=NS
-static const int ORDEM_SUB_CALDEIA[] = {7, 6, 5, 1, 4, 3, 2}; // ♄, ♃, ♂, ☉, ♀, ☿, ☽
+static const int ORDEM_SUB_CALDEIA[] = {7, 6, 5, 1, 4, 3, 2}; // ♄, ♃, ♂, ☉, ♀, ☿, ☾
 
 // ────────────────────────────────────────────────────────────────────────
 // 2. MOTORES MATEMÁTICOS DE SUPORTE
@@ -95,7 +95,7 @@ static DataFirdaria somar_tempo_firdaria(DataFirdaria base, double anos_a_somar)
 static void preencher_dados_texto_planeta(int id, char *nome, char *glifo) {
     switch (id) {
         case 1:  strcpy(nome, _("Sun"));     strcpy(glifo, "☉"); break;
-        case 2:  strcpy(nome, _("Moon"));    strcpy(glifo, "☽"); break;
+        case 2:  strcpy(nome, _("Moon"));    strcpy(glifo, "☾"); break;
         case 3:  strcpy(nome, _("Mercury")); strcpy(glifo, "☿"); break;
         case 4:  strcpy(nome, _("Venus"));   strcpy(glifo, "♀"); break;
         case 5:  strcpy(nome, _("Mars"));    strcpy(glifo, "♂"); break;
@@ -117,10 +117,10 @@ RelatorioFirdaria processar_dados_firdaria(double idade_fracao, bool mapa_diurno
 
     int seq_major[9];
     if (mapa_diurno) {
-        int ordem[] = {1, 4, 3, 2, 7, 6, 5, 11, 12}; // ☉ -> ♀ -> ☿ -> ☽ -> ♄ -> ♃ -> ♂ -> ☊ -> ☋
+        int ordem[] = {1, 4, 3, 2, 7, 6, 5, 11, 12}; // ☉ -> ♀ -> ☿ -> ☾ -> ♄ -> ♃ -> ♂ -> ☊ -> ☋
         memcpy(seq_major, ordem, sizeof(ordem));
     } else {
-        int ordem[] = {2, 5, 6, 7, 1, 4, 3, 11, 12}; // ☽ -> ♂ -> ♃ -> ♄ -> ☉ -> ♀ -> ☿ -> ☊ -> ☋
+        int ordem[] = {2, 5, 6, 7, 1, 4, 3, 11, 12}; // ☾ -> ♂ -> ♃ -> ♄ -> ☉ -> ♀ -> ☿ -> ☊ -> ☋
         memcpy(seq_major, ordem, sizeof(ordem));
     }
 

@@ -48,7 +48,7 @@ DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual) {
         case 1:  case 8:  prof.id_senhor_do_ano = 5; strcpy(prof.glifo_senhor, "♂"); strcpy(prof.nome_senhor, _("Mars")); break;
         case 2:  case 7:  prof.id_senhor_do_ano = 4; strcpy(prof.glifo_senhor, "♀"); strcpy(prof.nome_senhor, _("Venus")); break;
         case 3:  case 6:  prof.id_senhor_do_ano = 3; strcpy(prof.glifo_senhor, "☿"); strcpy(prof.nome_senhor, _("Mercury")); break;
-        case 4:           prof.id_senhor_do_ano = 2; strcpy(prof.glifo_senhor, "☽"); strcpy(prof.nome_senhor, _("Moon")); break;
+        case 4:           prof.id_senhor_do_ano = 2; strcpy(prof.glifo_senhor, "☾"); strcpy(prof.nome_senhor, _("Moon")); break;
         case 5:           prof.id_senhor_do_ano = 1; strcpy(prof.glifo_senhor, "☉"); strcpy(prof.nome_senhor, _("Sun")); break;
         case 9:  case 12: prof.id_senhor_do_ano = 6; strcpy(prof.glifo_senhor, "♃"); strcpy(prof.nome_senhor, _("Jupiter")); break;
         case 10: case 11: prof.id_senhor_do_ano = 7; strcpy(prof.glifo_senhor, "♄"); strcpy(prof.nome_senhor, _("Saturn")); break;

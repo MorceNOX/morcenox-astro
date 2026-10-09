@@ -91,7 +91,7 @@ int obter_swiss_ephemeris_id(const char *object) {
     if (strcmp(object, "☉") == 0) {
         return SE_SUN;
     }
-    if (strcmp(object, "☽") == 0) {
+    if (strcmp(object, "☾") == 0) {
         return SE_MOON;
     }
     if (strcmp(object, "☿") == 0) {
@@ -856,7 +856,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             (*qtd_direcoes)++;
-                            if (*qtd_direcoes >= 300) return *qtd_direcoes;
+                            if (*qtd_direcoes >= 500) return *qtd_direcoes;
                         }
                     }
                     continue; // Pula o resto do loop de aspectos longitudinais para este planeta
@@ -929,7 +929,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     strcpy(d->tipo_direcao, "Zodiacal");
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
                     (*qtd_direcoes)++;
-                    if (*qtd_direcoes >= 300) return *qtd_direcoes;
+                    if (*qtd_direcoes >= 500) return *qtd_direcoes;
                 }
             }
         }
@@ -1021,12 +1021,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
                     if (arco1 < 0) arco1 += 360.0;
                     if (arco2 < 0) arco2 += 360.0;
-
-                    // Escolhemos qual dos dois arcos processar nesta iteração. 
-                    // Para processar ambos no seu motor sem quebrar o loop, usamos uma técnica simples:
-                    // Na primeira iteração passamos o arco1, se quiser mapear o segundo ponto, podemos rodar um mini sub-loop.
-                    // Vamos usar um loop de 2 iterações para garantir que os dois pontos entrem no cronograma!
-                    
+                                        
                     double arcos_paralelo[2] = {arco1, arco2};
 
                     for (int k = 0; k < 2; k++) {
@@ -1063,7 +1058,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             qtd_direcoes++;
-                            if (qtd_direcoes >= 300) goto fim_calculo;
+                            if (qtd_direcoes >= 500) goto fim_calculo;
                         }
                     }
                     continue; // Pula o resto do loop padrão de aspectos longitudinais para não duplicar dados!
@@ -1166,7 +1161,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 300) goto fim_calculo;
+                    if (qtd_direcoes >= 500) goto fim_calculo;
                 }
             }
         }
@@ -1606,7 +1601,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 300) goto fim_calculo;
+                    if (qtd_direcoes >= 500) goto fim_calculo;
                 }
             } 
         }
@@ -1808,9 +1803,9 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         int qtd_direcoes_mun = 0;
         int qtd_direcoes_asc = 0;
         
-        LinhaDirecao cronograma_z[300];
-        LinhaDirecao cronograma_m[300];
-        LinhaDirecao cronograma_asc[300];
+        LinhaDirecao cronograma_z[500];
+        LinhaDirecao cronograma_m[500];
+        LinhaDirecao cronograma_asc[500];
 
         memset(cronograma_asc, 0, sizeof(cronograma_asc));
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
@@ -2502,7 +2497,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             qtd_direcoes++;
-                            if (qtd_direcoes >= 300) goto fim_calculo;
+                            if (qtd_direcoes >= 500) goto fim_calculo;
                         }
                     }
                     continue; // Pula o resto do loop padrão de aspectos longitudinais para não duplicar dados!
@@ -2610,7 +2605,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 300) return qtd_direcoes;
+                    if (qtd_direcoes >= 500) return qtd_direcoes;
                 }
             }
         }
@@ -2760,7 +2755,7 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 300) goto fim_calculo;
+                    if (qtd_direcoes >= 500) goto fim_calculo;
                 }
             }
 
@@ -2925,9 +2920,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         int qtd_direcoes_mun = 0;
         int qtd_direcoes_for = 0;
         
-        LinhaDirecao cronograma_z[300];
-        LinhaDirecao cronograma_m[300];
-        LinhaDirecao cronograma_for[300];
+        LinhaDirecao cronograma_z[500];
+        LinhaDirecao cronograma_m[500];
+        LinhaDirecao cronograma_for[500];
 
         memset(cronograma_for, 0, sizeof(cronograma_for));
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {

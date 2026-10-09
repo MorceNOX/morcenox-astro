@@ -697,7 +697,7 @@ fundacionais:
   • ☿ MERCÚRIO: 
   Governa a mente racional, a lógica, a fala e as habilidades analíticas.
                
-  • ☽ A LUA: 
+  • ☾ A LUA: 
   Governa a mente irracional, o subconsciente, memórias e hábitos.
 
 ───────────────────────────────────────────────────────────────────
@@ -765,7 +765,7 @@ PERFIS DE GOVERNADOR PLANETÁRIO:
   • ☉ O SOL: 
     Mente nobre, clara, orientada a um propósito. Busca honra e liderança.
                
-  • ☽ A LUA: 
+  • ☾ A LUA: 
     Altamente intuitivo, imaginativo, adaptável e receptivo.
                 
   • ☿ MERCÚRIO: 
@@ -818,7 +818,10 @@ Press Q ou ESC para retornar ao menu principal.
  
 • Vértex (Vx ou 🜊)
 ───────────────────────────────────────────────────────────────────
-    
+
+O Vértex e o Anti-Vértex são os pontos onde o Primeiro Vertical
+intercepta a Eclíptica.
+   
 O Vértex representa um ponto matemático de destino
 kármico e eventos inesperados que alteram a vida.
 Representa portas externas e imprevistas se abrindo.

@@ -441,7 +441,7 @@ const char **get_planet_ascii_by_gliph(char *planet) {
     if (strcmp(planet, "☉") == 0) {
         return (const char **)planet_ascii[0];
     }
-    else if (strcmp(planet, "☽") == 0) {
+    else if (strcmp(planet, "☾") == 0) {
         return (const char **)planet_ascii[1];
     }
     else if (strcmp(planet, "☿") == 0) {
@@ -584,7 +584,7 @@ double obter_idade_padrao_mapa_double() {
 const char* obter_glifo_planeta_por_id(int id_planeta) {
     switch (id_planeta) {
         case 1:  return "☉";  // Sun (Sol)
-        case 2:  return "☽";  // Luna (Lua)
+        case 2:  return "☾";  // Luna (Lua)
         case 3:  return "☿";  // Mercury (Mercúrio)
         case 4:  return "♀";  // Venus (Vênus)
         case 5:  return "♂";  // Mars (Marte)
@@ -6918,7 +6918,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         PlotObject plotsA[] = {
             {0, planet_longitudes[0], "☉", _("Sol"), get_sign(sign[0]), d0, m0, (speed[0] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[0], cusps), speed[0], rising_times[0], set_times[0], mid_times[0], planet_declinations[0], planet_latitudes[0], planet_ra[0], planet_houses[0]},
-            {1, planet_longitudes[1], "☽", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
+            {1, planet_longitudes[1], "☾", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
             {2, planet_longitudes[2], "☿", _("Mercury"), get_sign(sign[2]), d2, m2, (speed[2] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[2], cusps), speed[2], rising_times[2], set_times[2], mid_times[2], planet_declinations[2], planet_latitudes[2], planet_ra[2], planet_houses[2]},
             {3, planet_longitudes[3], "♀", _("Venus"), get_sign(sign[3]), d3, m3, (speed[3] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[3], cusps), speed[3], rising_times[3], set_times[3], mid_times[3], planet_declinations[3], planet_latitudes[3], planet_ra[3], planet_houses[3]},
             {4, planet_longitudes[4], "♂", _("Mars"), get_sign(sign[4]), d4, m4, (speed[4] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[4], cusps), speed[4], rising_times[4], set_times[4], mid_times[4], planet_declinations[4], planet_latitudes[4], planet_ra[4], planet_houses[4]},
@@ -6940,7 +6940,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         PlotObject plotsB[] = {
             {0, planet_longitudes[0], "☉", _("Sol"), get_sign(sign[0]), d0, m0, (speed[0] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[0], cusps), speed[0], rising_times[0], set_times[0], mid_times[0], planet_declinations[0], planet_latitudes[0], planet_ra[0], planet_houses[0]},
-            {1, planet_longitudes[1], "☽", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
+            {1, planet_longitudes[1], "☾", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
             {2, planet_longitudes[2], "☿", _("Mercury"), get_sign(sign[2]), d2, m2, (speed[2] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[2], cusps), speed[2], rising_times[2], set_times[2], mid_times[2], planet_declinations[2], planet_latitudes[2], planet_ra[2], planet_houses[2]},
             {3, planet_longitudes[3], "♀", _("Venus"), get_sign(sign[3]), d3, m3, (speed[3] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[3], cusps), speed[3], rising_times[3], set_times[3], mid_times[3], planet_declinations[3], planet_latitudes[3], planet_ra[3], planet_houses[3]},
             {4, planet_longitudes[4], "♂", _("Mars"), get_sign(sign[4]), d4, m4, (speed[4] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[4], cusps), speed[4], rising_times[4], set_times[4], mid_times[4], planet_declinations[4], planet_latitudes[4], planet_ra[4], planet_houses[4]},

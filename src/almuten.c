@@ -855,7 +855,7 @@ void abrir_janela_interpretacao_almuten(int res_almuten[12], int qtd_vencedores)
         
         // Define o título nominal baseado no ID astronômico da Swiss Ephemeris
         if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉ )\n"));
-        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽ )\n"));
+        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☾ )\n"));
         else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿ )\n"));
         else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀ )\n"));
         else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂ )\n"));
@@ -1271,7 +1271,7 @@ void abrir_janela_interpretacao_almuten_revolucao(int res_almuten[12], int qtd_v
         wprintw(pad, " %s  %s ", glifo, _(" ANNUAL OPERATIONAL RULER "));
         
         if (id_planeta == 1) wprintw(pad, _("(THE SUN - ☉ ) \n"));
-        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☽ ) \n"));
+        else if (id_planeta == 2) wprintw(pad, _("(THE MOON - ☾ ) \n"));
         else if (id_planeta == 3) wprintw(pad, _("(MERCURY - ☿ ) \n"));
         else if (id_planeta == 4) wprintw(pad, _("(VENUS - ♀ ) \n"));
         else if (id_planeta == 5) wprintw(pad, _("(MARS - ♂ ) \n"));

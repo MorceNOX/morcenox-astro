@@ -53,7 +53,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 ☉ Sol
 
-☽ Lua
+☾ Lua
 
 ☿ Mercúrio
 
@@ -668,7 +668,7 @@ As fases da Lua também são indicadas por símbolos correspondentes na linha re
 
 Você também pode ver a tabela de posições das cúspides de cada casa no lado esquerdo da tela.
 
-Ainda à esquerda, logo abaixo das cúspides, você verá desenhado, em ASCII-Art, o símbolo do Sol ( ☉ ) se o mapa for diurno, ou o símbolo da Lua ( ☽ ) se o mapa for noturno.
+Ainda à esquerda, logo abaixo das cúspides, você verá desenhado, em ASCII-Art, o símbolo do Sol ( ☉ ) se o mapa for diurno, ou o símbolo da Lua ( ☾ ) se o mapa for noturno.
 
 Ao aplicar zoom no mapa, todas as informações ao lado da roda são ocultadas se o quinto nível de zoom estiver ativo.
 

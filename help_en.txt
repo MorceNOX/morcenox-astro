@@ -53,7 +53,7 @@ Press Q or ESC to return to the main menu.
 
 ☉  Sun
 
-☽  Moon
+☾  Moon
 
 ☿  Mercury
 
@@ -682,7 +682,7 @@ The Moon's phases are also indicated by corresponding symbols in its respective 
 
 You can also see the table of house cusp positions on the left side of the screen.
 
-Still on the left side, under the house cusps table, is drawn in ASCII-Art the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol ( ☽ ) if the chart is nocturnal.
+Still on the left side, under the house cusps table, is drawn in ASCII-Art the Sun's symbol ( ☉ ) if the chart is diurnal, or the Moon's symbol ( ☾ ) if the chart is nocturnal.
 
 When zooming in on the chart, all information next to the wheel is hidden if the fifth zoom level is active.
 

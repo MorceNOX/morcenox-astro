@@ -1073,7 +1073,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattron(table_win, A_BOLD | COLOR_PAIR(8));
     
     if (tipo_h == H_SOL) wprintw(table_win, _("☉ Sun"));
-    else if (tipo_h == H_LUNA) wprintw(table_win, _("☽ Moon"));
+    else if (tipo_h == H_LUNA) wprintw(table_win, _("☾ Moon"));
     else if (tipo_h == H_ASC) wprintw(table_win, _("ASC (Ascendant Degree)"));
     else if (tipo_h == H_SAN) wprintw(table_win, _("SAN (Syzygy Ante-Nativitatem)"));
     else if (tipo_h == H_FORTUNA) wprintw(table_win, _("🝴 Part of Fortune"));

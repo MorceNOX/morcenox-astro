@@ -40,7 +40,7 @@ typedef struct {
 
 typedef struct {
     char object_name[30]; // Nome do planeta (ex: "Venus", "Moon")
-    char glifo[10];       // Glifo Unicode (ex: "♀", "☽")
+    char glifo[10];       // Glifo Unicode (ex: "♀", "☾")
     int anos_concedidos;  // Anos totais calculados
     char tipo_anos[40];   // "Great", "Medium", "Lesser" ou "Proxy Rule"
     int casa_alcochoden;  // NOVO: A casa física real onde o Alcochoden está (1 a 12)

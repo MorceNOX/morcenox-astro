@@ -1148,7 +1148,7 @@ static int campo_texto_amigavel_avancado(WINDOW *win, int y, int x, char *buffer
 // Vetor contendo todas as opções válidas de Links do sistema (Total: 24 opções)
 static const char *OPCOES_LINK[] = {
     "-",                                                                     // 0: Nenhum
-    "☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "⯓", "☊", "☋",             // 1-12: Planetas e Nodos
+    "☉", "☾", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "⯓", "☊", "☋",             // 1-12: Planetas e Nodos
     "AC", "II", "III", "IC", "V", "VI", "DC", "VIII", "IX", "MC", "XI", "XII" // 13-24: Casas Romanas
 };
 static const int TOTAL_OPCOES_LINK = 25;
