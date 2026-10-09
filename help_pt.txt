@@ -1655,8 +1655,9 @@ No menu de configurações você pode selecionar a chave de tempo a ser utilizad
 
 O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, ou T - Polich/Page Topocêntrico, caso o método de cálculo Topocêntrico esteja selecionado para o cálculo das direções, mas apenas para o cálculo das direções primárias mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
 
-Use [↓↑] para deslizar a tabela.
+Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
+Tecle [P] para imprimir (exportar) as direções para um arquivo .csv.
 
 
 
@@ -1674,8 +1675,9 @@ Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente
 
 Todas as configurações, a chave temporal selecionada e o sistema de cálculo que operam no módulo principal de Direções Primárias funcionarão aqui da mesma maneira.
 
-Use [↓↑] para deslizar a tabela.
+Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
+Tecle [P] para imprimir (exportar) as direções para um arquivo .csv.
 
 
 

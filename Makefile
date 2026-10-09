@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.37.2
+VERSION = 1.38.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -76,6 +76,8 @@ src/%.o: src/%.c
 # Regra para criar a estrutura de diretórios e injetar o banco no $HOME do usuário
 setup-dir:
 	@echo "Criando diretórios de configuração em $(APP_CONFIG_DIR)..."
+	@mkdir -p $(APP_CONFIG_DIR)/export
+	@sleep 0.1
 	@mkdir -p $(APP_CONFIG_DIR)/ephe
 	@sleep 0.1 # Pequena pausa de segurança para o sistema operacional consolidar as pastas no disco
 	@if [ -z "$$(ls -A $(APP_CONFIG_DIR)/ephe 2>/dev/null)" ]; then \
@@ -203,6 +205,7 @@ package: all translate
 	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@if [ -d "ephe" ]; then cp -r ephe $(PKG_DIR)/assets/ ; fi
+	@mkdir -p $(PKG_DIR)/assets/export 2>/dev/null || true
 
 	# 5. Copy the Launcher script
 	@if [ -f "astro.sh" ]; then \

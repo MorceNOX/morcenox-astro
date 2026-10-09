@@ -67,6 +67,7 @@ OptionsEdition select_options();
 int set_tz();
 int set_dst();
 void set_chart_name(char *chart_name, size_t max_length);
+void set_file_name(char *chart_name, size_t max_length);
 int selecionar_idade_visual(int idade_inicial);
 double selecionar_idade_visual_fracionada(double idade_inicial);
 int select_gender();

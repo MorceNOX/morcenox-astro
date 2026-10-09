@@ -1708,8 +1708,9 @@ In the settings menu you can select the time key to calculate the age and the da
 
 The engine takes the current house system (selected by the user) into account when calculating the arc of mundane directions, which applies to any quadrant-based system. Therefore, if the house system in use is not quadrant-based (i.e., E – Equal Houses, W – Whole Sign, or M – Morinus), the application will automatically default to the P – Placidus system—or T – Polich/Page Topocentric if the Topocentric calculation method is selected—but only for the calculation of mundane primary directions. In all other modules, the house system will respect the user's selection.
 
-Use [↓↑] to scroll the table.
+Use [↓↑][PgUp/PgDn] to scroll the table.
 Use [←/→] to change the Significator.
+Press [P] to print (export) directions to .csv file.
 
 
 
@@ -1728,8 +1729,9 @@ These directions also displays a time-lord, or Divisor, which is the regent of t
 All the settings, the selected the time key and the calculation system, which work in the main Primary Directions module will work here at the same way. 
 
 
-Use [↓↑] to scroll the table.
+Use [↓↑][PgUp/PgDn] to scroll the table.
 Use [←/→] to change the Significator.
+Press [P] to print (export) directions to .csv file.
 
 
 

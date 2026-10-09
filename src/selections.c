@@ -4370,6 +4370,212 @@ int set_dst() {
 
 
 
+void set_file_name(char *chart_name, size_t max_length) {
+    unsigned short term_w = get_terminal_width();
+    unsigned short term_h = get_terminal_height();
+    
+    int dialog_width = 55;
+    int dialog_height = 8;
+    int dialog_start_x = (term_w - dialog_width) / 2;
+    int dialog_start_y = (term_h - dialog_height) / 2;
+    
+    WINDOW *win = newwin(dialog_height, dialog_width, dialog_start_y, dialog_start_x);
+    WINDOW *dialog_shadow = newwin(dialog_height, dialog_width, dialog_start_y + 1, dialog_start_x + 1);
+    
+    nodelay(win, FALSE);
+    keypad(win, TRUE);
+    curs_set(1); 
+    
+    // Desenha a sombra
+    werase(dialog_shadow);
+    wattron(dialog_shadow, COLOR_PAIR(24));
+    box(dialog_shadow, 0, 0);
+    wattroff(dialog_shadow, COLOR_PAIR(24));
+    wnoutrefresh(dialog_shadow);
+    
+    // Cria um buffer interno de caracteres largos (wchar_t) para evitar quebra de UTF-8
+    wchar_t w_buffer[max_length];
+    size_t w_len = 0;
+    int input_pos = 0;
+
+    // Converte a string de entrada atual (se houver) de char* para wchar_t*
+    if (chart_name != NULL && get_visual_width(chart_name) > 0) {
+        w_len = mbstowcs(w_buffer, chart_name, max_length - 1);
+        if (w_len == (size_t)-1) {
+            w_len = 0;
+        }
+        input_pos = w_len;
+    }
+    w_buffer[w_len] = L'\0';
+
+    int done = 0;
+    wint_t key; // Variável correta para wget_wch (suporta códigos especiais e wchar_t)
+    int key_type;
+
+    wbkgd(win, COLOR_PAIR(22) | FLAGS);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(win) - 4;
+
+    mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
+    
+    while (!done) {
+        // Renderiza e limpa a janela com segurança
+        werase(win);
+        
+        wattron(win, COLOR_PAIR(22) | A_DIM);
+        box(win, 0, 0);
+        wattroff(win, COLOR_PAIR(22) | A_DIM);
+        
+        wattron(win, A_BOLD);
+        const char *title = _(" Exporting To .csv File ");
+
+        mvwprintw(win, 0, (dialog_width - get_visual_width(title)) / 2, title);
+        wattroff(win, A_BOLD);
+
+        mvwprintw(win, 0, col_fechar, "[");
+        mvwprintw(win, 0, col_fechar + 2, "]");
+    
+        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(win, 0, col_fechar + 1, "✖");
+        wattroff(win, A_BOLD);
+
+        wattron(win, COLOR_PAIR(22));
+
+        const char *str1 = _("Enter the file name (max");
+        const char *str2 = _("characters)");
+
+        mvwprintw(win, 3, 1, "%s %zu %s:", str1, max_length - 1, str2);
+        wattroff(win, COLOR_PAIR(22));
+
+        // Exibe a string usando a função de caracteres largos do ncursesw
+        wattron(win, COLOR_PAIR(28) | A_REVERSE);
+        mvwprintw(win, 5, 2, ">                                                  ");
+        mvwaddwstr(win, 5, 4, w_buffer);
+        wattroff(win, COLOR_PAIR(28) | A_REVERSE);
+        
+        // Move o cursor físico para a posição baseada no número de caracteres (e não de bytes)
+        wmove(win, 5, 4 + input_pos);
+        wnoutrefresh(win);
+
+        doupdate();
+        
+        // wget_wch retorna se é uma tecla especial (KEY_CODE_YES) ou um caractere comum
+        key_type = wget_wch(win, &key);
+        
+        if (key_type == KEY_CODE_YES) {
+            // Tratamento de teclas especiais mapeadas pelo ncurses
+            switch (key) {
+                case KEY_LEFT:
+                    if (input_pos > 0) input_pos--;
+                    break;
+                    
+                case KEY_RIGHT:
+                    if (input_pos < (int)w_len) input_pos++;
+                    break;
+                    
+                case KEY_BACKSPACE:
+                    if (input_pos > 0) {
+                        for (int i = input_pos - 1; i < (int)w_len; i++) {
+                            w_buffer[i] = w_buffer[i + 1];
+                        }
+                        w_len--;
+                        input_pos--;
+                    }
+                    break;
+                    
+                case KEY_DC: // Tecla DEL física
+                    if (input_pos < (int)w_len) {
+                        for (int i = input_pos; i < (int)w_len; i++) {
+                            w_buffer[i] = w_buffer[i + 1];
+                        }
+                        w_len--;
+                    }
+                    break;
+                case KEY_MOUSE:
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        // Coordenadas do clique convertidas para o plano local da janela
+                        int linha_clique_janela = event.y - getbegy(win);
+                        int col_clique_janela = event.x - getbegx(win);
+                        
+                        // Define matematicamente a caixa de clique do botão fechar
+                        int col_inicio_fechar = getmaxx(win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+                        
+                        // ========================================================
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                        // ========================================================
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                                w_buffer[0] = L'\0';
+                                w_len = 0;
+                                done = 1;
+                            }
+                        }
+                    }
+                    break;
+            }
+        } else {
+            // Tratamento de caracteres normais e emuladores de terminal brutos
+            switch (key) {
+                case 10: // Enter (\n)
+                case 13: // Carriage Return (\r)
+                    done = 1;
+                    break;
+                    
+                case 27: // ESC
+                    w_buffer[0] = L'\0';
+                    w_len = 0;
+                    done = 1;
+                    break;
+                    
+                case 127: // Backspace emulado como DEL por terminais modernos
+                case 8:   // Backspace clássico Ctrl+H
+                    if (input_pos > 0) {
+                        for (int i = input_pos - 1; i < (int)w_len; i++) {
+                            w_buffer[i] = w_buffer[i + 1];
+                        }
+                        w_len--;
+                        input_pos--;
+                    }
+                    break;
+                    
+                default:
+                    // Verifica se ainda há espaço no buffer e se é um caractere imprimível válido
+                    if (w_len < (max_length - 1) && iswprint(key)) {
+                        // Abre espaço para inserção no meio do texto (Shift Right)
+                        for (int i = (int)w_len; i >= input_pos; i--) {
+                            w_buffer[i + 1] = w_buffer[i];
+                        }
+                        w_buffer[input_pos] = key;
+                        w_len++;
+                        input_pos++;
+                    }
+                    break;
+            }
+        }
+    }
+    
+    curs_set(0);
+    delwin(win);
+    delwin(dialog_shadow);
+    
+    // Converte o buffer largo de volta para a string char* UTF-8 de saída
+    if (chart_name != NULL) {
+        if (w_len == 0) {
+            strncpy(chart_name, _("primary_directions"), max_length);
+        } else {
+            wcstombs(chart_name, w_buffer, max_length);
+        }
+    }
+}
+
+
+
+
+
 
 
 void set_chart_name(char *chart_name, size_t max_length) {
