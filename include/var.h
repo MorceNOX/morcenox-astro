@@ -29,7 +29,7 @@
 //#define _(String) gettext(String)
 #define _(String) dgettext(LANGUAGE, String)
 
-#define MAX_AGE 120.0
+#define MAX_AGE 110.0
 
 #define TIME_KEY_NAIBOD                   1
 #define TIME_KEY_CARDANO                  2

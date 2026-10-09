@@ -210,15 +210,13 @@ Press Q or ESC to return to the main menu.
     
     • F1 - Data Info 
        
-    • F2 - Planet Dignities and Rulership 
-    
-        - F2 - Positions
+    • F2 - Planet Positions and Dignities 
        
-        - F3 - Accidental Dignities Details
+        - F2 - Accidental Dignities Details
         
-        - F4 - Strength
+        - F3 - Strength
         
-        - F5 - Planetary Energy Profile
+        - F4 - Planetary Energy Profile
         
     • F3 - Aspects
     
@@ -572,8 +570,19 @@ You can set:
    • Show Modern Planets: 
      You can choose if the 3 modern planets will be part or not of your charts. But remember that we do not include dignities by domicile for these planets.
      
-   • The Default Gender: 
-     Male, Female or Neuter.
+   • Time Key for calculating the age and date of Primary Direction events:
+     Here you can select one of the 7 (seven) available time keys—4 (four) static and 3 (three) dynamic.
+
+   • Antiscia/Contra-antiscia as Promissors in Primary Directions:
+     You can choose "yes" or "no" to include the Antiscion and Contra-antiscion of the base promissors—namely the planets, lunar nodes, and the Part of Fortune—in the list of promissors, along with their respective aspects.
+
+   • Primary Direction Arc Calculation Method:
+     Choose between:
+
+     1 - Placidus Proportional Semi-Arc, and
+
+     2 - Topocentric
+     
      
    • Interface Language: 
      Choose the language for the interface. Currently English and Brazilian Portuguese are available.
@@ -581,11 +590,10 @@ You can set:
    • Display Mode (Dark/Light): 
      Changes the color schemes for the chart wheel and tables.
      
-   • Time Key for Primary Directions age and date calculations.
-       
-
-
-
+   • The Default Gender: 
+     Male, Female or Neuter.
+     
+   
 All settings are persistent and saved in the application database.
 
 
@@ -839,7 +847,7 @@ Here you can see the basic information of your chart.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 08: Dignities & Rulership Module 
+Index 08: Positions, Dignities & Rulership Module 
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -858,7 +866,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 8
 
-• Dignities & Rulership Table (F2)
+• Positions, Dignities & Rulership Table (F2)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 • Positions of planets and objects by sign and house;
@@ -872,15 +880,13 @@ Press Q or ESC to return to the main menu.
 • Rulers by domicile, exaltation, triplicity, term and decan;
 
 • Mutual reception: 
-  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. When there is an aspect between the planets, the table shows them within curly brackets "{ }"; if not, they will be presented within parenhthesis "( )". In the next table—accessible by pressing F3—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
+  This column shows the pair of planets that are in mutual reception, either by domicile or by exaltation. When there is an aspect between the planets, the table shows them within curly brackets "{ }"; if not, they will be presented within parenhthesis "( )". In the next table—accessible by pressing F2 again—we can see the (Asp) flag if an aspect exists, as well as more detailed information regarding accidental dignities.
 
-Press [F2] to see the positions of the planets and bodies.
+Pressing F2 again and you can see details of the accidental dignities and the state of the planets and bodies.
 
-Pressing F3 to see details of the accidental dignities and the state of the planets and bodies.
+F3 shows the strength of each planet in the chart based on their dignities and their relevance.
 
-F4 shows the strength of each planet in the chart based on their dignities and their relevance.
-
-F5 shows the Planetary Energy Profile, a chart of bars displaying the strength and the relevance of each planet in a visual fashion way (also pressing [8] in the chart wheel screen).
+F4 shows the Planetary Energy Profile, a chart of bars displaying the strength and the relevance of each planet in a visual fashion way (also pressing [8] in the chart wheel screen).
 
 When choosing by the menu actions, these submodules are available as independent options.
 
@@ -969,7 +975,7 @@ Mutual Reception without Aspect*** → +1 point
 
 
 
-• Accidental Dignities Details (F3 in the Dignities Table)
+• Accidental Dignities Details (F2 in the Dignities Table)
 ───────────────────────────────────────────────────────────────────
 
 You can see the accidental conditions of all the planets in the current chart.
@@ -999,7 +1005,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 9
 
-• The Strength of The Planets (F4 in the Dignities Table)
+• The Strength of The Planets (F3 in the Dignities Table)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Here we show the score of each planet in their essential and 
@@ -1053,7 +1059,7 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 10
 
-• Planetary Energy Profile (F5 in the Dignities Table) 
+• Planetary Energy Profile (F4 in the Dignities Table) 
   or F20 (Shift+F8) or 8
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1537,7 +1543,7 @@ The Hyleg (Giver of Life) and Alcochoden (Giver of Years) form the
 foundation of traditional longevity and constitutional vitality 
 analysis, as structured by Ptolemy, Ibn Ezra, and Guido Bonatti.
 
-    • Hyle:
+    • Hyleg:
       Hyleg is the planet with more vital force in the chart 
       elected according to criteria based primary on the chart's 
       sect and the house placing. 
@@ -1623,6 +1629,8 @@ Press Q or ESC to return to the main menu.
 
 Options include viewing primary directions for the following points—known as Significators: the Hyleg, the Sun, the Moon, the Part of Fortune, the Prenatal Syzygy (SAN), the Ascendant, the Midheaven, the planets Mercury, Venus, Mars, Jupiter, and Saturn, the Descendant, the IC, the North and South Lunar Nodes, and modern planets if they are being used. The house cusps are also available as significators.
 
+Directions are displayed in chronological order for a single significator at a time.
+
 Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
 
 The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contrantiscia of the planets and lunar nodes.
@@ -1631,7 +1639,37 @@ Antiscia/Contrantiscia are optional; You can select the corresponding option in 
 
 By default, the table displays both, Direct and Converse directions. You can filter the results by pressing [C] to see only Converse diretions, [D] for Direct, and [A] to see all directions in the table.
 
-All directions displayed are 1) Zodiacal with real latitude calculated with Bianchini method, and dynamic obliquity; and, 2) Mundane proportional to Semi-Arcs. The ages and dates of the events for both types are calculated using the selected time-key, which can be set or modified in the application's settings menu option.
+All displayed directions are:
+
+A) For the Placidus method (Ptolemy default method):
+
+    1) Zodiacal, with true latitude calculated using the Bianchini method and dynamic obliquity, and
+
+    2) Mundane, proportional to semi-arcs.
+
+B) For the Topocentric method (the most modern, the Polich/Page Topocentric method):
+
+    1) Zodiacal with latitude, calculated via oblique ascensions under the pole, and
+
+    2) Mundane, calculated via continuous local poles.
+
+Both Zodiacal and Mundane directions—regardless of the calculation system—use the time key selected by the user in the application's settings menu.
+
+The available time keys are as follows:
+
+    1) Naibod (1 year = 0.985647°);
+
+    2) Cardano (1 year = 0.986667°);
+
+    3) Ptolemy (1 year = 1.000000°);
+
+    4) Placidus (1 year = 0.986389°);
+
+    5) True Ecliptical Solar Arc (Dynamic Key—i.e., the arc size varies annually according to a specific formula);
+
+    6) Kepler (Dynamic Key); and
+
+    7) True Equatorial Solar Arc.
 
 The table also displays, by default, Zodiacal and Mundane directions altogether. You can filter by Zodiacal by pressing [Z] and Mundane only by pressing [M]. Press [B] to see both of them.
 
@@ -1666,7 +1704,7 @@ The Divisors are the rulers of the terms of direct and converse zodiacal directi
 
 In the settings menu you can select the time key to calculate the age and the date of the events. There are availabe 4 (four) static keys: Naibod, Cardan, Ptolemy and Placidus; and 3 (three) dynamic keys: True Solar Arc in Longitude (zodiacal solar arc), Kepler, and True Solar Arc in Right Ascension (Placidus Dynamic Key.
 
-The engine takes account the current house system (selected by the user) to calculate the arc for Mundane directions, which is valid for any quadrant based system. So, if the house system in use were a not quadrant based system (i.e E - Equal Houses, W - Whole Signs and M - Morinus), the application will fallback automatically to P - Placidus system, but only for the mundane directions calculation. The houses in another modules will respect the user's selection.
+The engine takes the current house system (selected by the user) into account when calculating the arc of mundane directions, which applies to any quadrant-based system. Therefore, if the house system in use is not quadrant-based (i.e., E – Equal Houses, W – Whole Sign, or M – Morinus), the application will automatically default to the P – Placidus system—or T – Polich/Page Topocentric if the Topocentric calculation method is selected—but only for the calculation of mundane primary directions. In all other modules, the house system will respect the user's selection.
 
 Use [↓↑] to scroll the table.
 Use [←/→] to change the Significator.
@@ -1683,7 +1721,9 @@ In a masculine chart only masculine and neutral parts are displayed; for nocturn
 
 The same color coding of the general directions can be seen in this module.
 
-These directions also displays a time-lord, or Divisor, which is the regent of the current term whose boundaries were reached by the directed Part of Fortune, the same way it occurs with the Ascendant in the previous Primary Directions module.
+These directions also displays a time-lord, or Divisor, which is the regent of the current term whose boundaries were reached by the directed Part of Fortune, instead of the Ascendant, the same way it occurs with the Ascendant in the previous Primary Directions module.
+
+All the settings, the selected the time key and the calculation system, which work in the main Primary Directions module will work here at the same way. 
 
 
 Use [↓↑] to scroll the table.

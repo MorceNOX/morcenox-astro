@@ -209,15 +209,13 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F1 - Dados do Mapa
    
-• F2 - Dignidades e Regentes
-
-    - F2 - Posições
+• F2 - Posições e Dignidades dos Planetas 
    
-    - F3 - Detalhes das Dignidades Acidentais
+    - F2 - Detalhes das Dignidades Acidentais
     
-    - F4 - Força
+    - F3 - Força
     
-    - F5 - Perfil de Energia Planetária
+    - F4 - Perfil de Energia Planetária
     
 • F3 - Aspectos
 
@@ -560,19 +558,30 @@ Obs.2: Os números das casas no círculo menor da roda do
 
 • Mostrar Planetas Modernos: 
   Você pode escolher se os 3 planetas modernos farão parte ou não dos seus mapas. Mas lembre-se que não incluímos dignidades por domicílio para esses planetas.
+  
+• Chave de Tempo para calcular a idade e a data dos eventos das Direções Primárias:
+  Aqui você pode selecionar uma entre as 7 (sete) chaves de tempo disponíveis, sendo 4 (quatro) estáticas e 3 (três) dinâmicas.
 
-• O Gênero Padrão: 
-  Masculino, Feminino ou Neutro.
+• Antíscia/Contrantíscia como Promissores nas Direções Primárias:
+  Você pode escolher entre sim e não, para que o Antíscia e o Contrantíscia dos promissores base, ou seja, dos planetas, dos nodos lunares e da parte da fortuna, também sejam incluídos no rol de promissores, incluindo-se os respectivos aspectos.
+
+• Método de Cálculo do Arco das Direções Primárias:
+  Escolha entre: 
+  
+  1 - Placidus Semi-Arc Proportional ou Placidus Semi-Arco Proporcional, e
+  
+  2 - Topocêntrico
 
 • Idioma da Interface: 
   Escolha entre Inglês e Português o idioma dos elementos da interface (o nome dos países estará sempre em Inglês).
 
 • Modo de Exibição (Escuro/Claro): 
   Altera os esquemas de cores da roda do mapa e tabelas.
-  
-• Chave de Tempo para calcular a idade e a data dos eventos das Direções Primárias.
+ 
+• O Gênero Padrão: 
+  Masculino, Feminino ou Neutro.
 
-
+ 
 Todas as configurações são persistentes e salvas no banco de dados do aplicativo.
 
 
@@ -865,15 +874,13 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Regentes por domicílio, exaltação, triplicidade, termo e decanato;
 
 • Recepção mútua: 
-Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses "( )". Na próxima tabela - pressionando F3 para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
-Pressione F2 novamente, para ver as posições dos planetas e corpos.
+Ao pressionar F2 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
-Ao pressionar F3 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
+F3 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
 
-F4 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
-
-F5 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
+F4 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
 
 Ao escolher pelo Menu de Ações, esses submódulos estão disponíveis como opções independentes.
 
@@ -966,7 +973,7 @@ Use [↓↑] para deslizar a tabela.
 
 
 • Detalhes das Dignidades Acidentais
-(F3 na Tabela de Dignidades)
+(F2 na Tabela de Dignidades)
 ───────────────────────────────────────────────────────────────────
 
 Você pode ver as condições acidentais de todos
@@ -997,7 +1004,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 9
 
-• A Força dos Planetas (F4 na Tabela de Dignidades)
+• A Força dos Planetas (F3 na Tabela de Dignidades)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Aqui exibimos a pontuação de cada planeta em suas dignidades essenciais e acidentais, bem como sua força baseada no escore e no peso atribuído pela relevância do planeta.
@@ -1567,6 +1574,8 @@ Press Q or ESC to return to the main menu.
 
 As opções incluem ver as direções primárias para os seguintes pontos, os chamados Significadores: o Hyleg, o Sol, a Lua, a Parte da Fortuna, a Sizígia Pré-Natal - SAN, o Ascendente, o Meio do Céu, os planetas Mercúrio, Vênus, Marte, Júpiter e Saturno, o Descendente, o IC, os Nodos Lunares Norte e Sul e os planetas modernos caso estejam sendo usados. As cúspides das casas também estão disponíveis como significadores.
 
+As direções são exibidas por ordem de data para um único significador por vez.
+
 Use setas para direita e esquerda para mudar o significador e deslize pela tabela para ver todas as direções para o ponto selecionado.
 
 Os promissores, aqueles que dirigem as direções aos significadores, são os seguintes, bem como seus aspectos: os 7 planetas tradicionais, os 3 planetas modernos, caso estejam em uso, a Parte da Fortuna, os Nodos Lunares Norte e Sul, os Termos, os Antiscia e os Contrantiscia dos planetas, dos nodos lunares e da Parte da Fortuna.
@@ -1575,7 +1584,37 @@ Os Antíscia e Contrantiscia são opcionais. Caso queira incluí-los, a respecti
 
 Por padrão, a tabela exibe ambas as direções: Diretas e Conversas. Você pode filtrar os resultados pressionando [C] para ver apenas as direções Conversas, [D] para as Diretas e [A] para ver todas as direções na tabela.
 
-Todas as direções exibidas são 1) Zodiacais, com latitude real calculada pelo métodp Bianchini e obliquidade dinâmica, e 2) Mundanas proporcionais aos Semi-Arcos. Ambas utilizam a chave temporal selecionada pelo usuário no menu de configurações da aplicação.
+Todas as direções exibidas são:
+
+A) Para o método Placidus (o padrão descrito por Ptolomeu):
+
+    1) Zodiacais, com latitude real calculada pelo métodp Bianchini e obliquidade dinâmica, e 
+    
+    2) Mundanas proporcionais aos Semi-Arcos. 
+    
+B) Para o método Topocêntrico (o mais moderno e atual, o modelo Topocêntrico de Polich/Page):
+
+    1) Zodiacais com latitude, calculadas por Ascensões Oblíquas sob o Polo, e
+    
+    2) Mundanas, calculadas por Polos Locais Contínuos.  
+
+Ambas, Zodiacais e Mundanas, independentemente do sistema de cálculo, utilizam a chave temporal selecionada pelo usuário no menu de configurações da aplicação.
+
+As chaves de tempo disponíveiss são as seguintes:
+
+    1) Naibod (1 ano = 0,985647°);
+    
+    2) Cardano (1 ano = 0,986667°);
+    
+    3) Ptolomeu (1 ano = 1,000000°);
+    
+    4) Placidus (1 ano = 0,986389°);
+    
+    5) Arco Solar Eclíptico Verdadeiro (Chave Dinâmica, ou seja, o tamanho do arco por ano varia para cada ano, conforme fórmula específica);
+    
+    6) Kepler (Chave Dinâmica), e
+    
+    7) Arco Solar Equatorial Verdadeiro.
 
 A tabela também exibe, por padrão, direções zodiacais e mundanas em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] e pelas mundanas pressionando [M], e [B] para exibir ambas.
 
@@ -1607,11 +1646,13 @@ A última coluna exibe o Divisor que rege a data da respectiva direção.
 
 A última coluna exibe o Divisor que rege a data da respectiva direção. Este é o regente do termo atual alcançado pelo Ascendente dirigido. Assim, sempre que o Ascendente, na qualidade de significador, atinge os limites de um termo, o respectivo regente passa a ser o novo senhor do tempo, ou Divisor.
 
-Os Divisores são os regentes dos termos das direções zodiacais diretas e conversas; eles permanecem em vigor até que um novo termo alcance o significador selecionado.
+Os Divisores são os regentes dos termos das Direções Zodiacais Diretas e Conversas; eles permanecem em vigor até que um novo termo alcance o significador selecionado.
 
-No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 3 (três) chaves dinâmicas: Arco Solar Verdadeiro em Longitude (arco solar zodiacal), Kepler e Arco Solar Verdadeiro em Ascenção Reta (chave dinâmica de Plácidus).
+Nas direções zodiacais conversas, um termo entra em vigor quando seu final é atingido pelo significador.
 
-O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, mas apenas para o cálculo das direções mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
+No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 3 (três) chaves dinâmicas: Arco Solar Eclíptico Verdadeiro, ou em Longitude (arco solar zodiacal), Kepler e Arco Solar Equatorial Verdadeiro, ou em Ascenção Reta (chave dinâmica de Plácidus).
+
+O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, ou T - Polich/Page Topocêntrico, caso o método de cálculo Topocêntrico esteja selecionado para o cálculo das direções, mas apenas para o cálculo das direções primárias mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
 
 Use [↓↑] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
@@ -1628,7 +1669,9 @@ Em um mapa masculino, apenas partes masculinas e neutras são exibidas; para map
 
 O mesmo código de cores das direções gerais pode ser visto neste módulo.
 
-Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente do atual termo cujos limites foram alcançados pela Parte da Fortuna direcionada, da mesma forma que ocorre com o Ascendente no módulo anterior de Direções Primárias.
+Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente do atual termo cujos limites foram alcançados pela Parte da Fortuna direcionada, em vez do Ascendente, da mesma forma que ocorre com o Ascendente no módulo anterior de Direções Primárias.
+
+Todas as configurações, a chave temporal selecionada e o sistema de cálculo que operam no módulo principal de Direções Primárias funcionarão aqui da mesma maneira.
 
 Use [↓↑] para deslizar a tabela.
 Use [←/→] para mudar o Significador.

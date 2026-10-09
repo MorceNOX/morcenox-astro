@@ -45,6 +45,8 @@ int comparar_plots_por_longitude(const void *a, const void *b);
 int comparar_zodiac_por_longitude(const void *a, const void *b);
 int comparar_directions_por_idade(const void *a, const void *b);
 int comparar_directions_por_idade_tipo_termo(const void *a, const void *b);
+int comparar_directions_por_idade_termo_temp(const void *a, const void *b);
+int comparar_directions_por_idade_termo_temp_tipo_sentido(const void *a, const void *b);
 int comparar_directions_por_idade_termo(const void *a, const void *b);
 int comparar_distantes(const void *a, const void *b);
 int comparar_doubles(const void *a, const void *b);

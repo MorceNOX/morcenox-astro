@@ -6255,7 +6255,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         char house_system_pd = house_system;
         if (house_system == 'E' || house_system == 'W' || house_system == 'M') {
-            house_system_pd = 'P';
+            if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                house_system_pd = 'T';
+            }
+            else {
+                house_system_pd = 'P';
+            }
         }
 
         for (int i = 0; i < 11; i++) {

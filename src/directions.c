@@ -407,6 +407,74 @@ double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo
 }
 
 
+// Versão otimizada: Não calcula o Sol natal repetidamente e reduz operações de vetor
+double calcular_arco_solar_real_ra_FAST(double jd_natal, double ra_sol_natal, double idade_anos, int *err_code) {
+    double xx_prog[6];
+    char err_msg[256];
+    
+    // 1. Aplica o princípio de 1 dia = 1 ano para achar a data progredida
+    double jd_progredido = jd_natal + idade_anos;
+    
+    // 2. Calcula a posição do Sol na data progredida (Apenas 1 chamada à Swiss Ephemeris)
+    // Dica de performance: SEFLG_SPEED pode ser somado ao terceiro parâmetro se não precisar de alta precisão de nutação nas progressões
+    if (swe_calc_ut(jd_progredido, SE_SUN, 0, xx_prog, err_msg) < 0) {
+        *err_code = -2;
+        return 0.0;
+    }
+    
+    // 3. Transforma a posição progredida para o plano Equatorial
+    double xx_eq_prog[3] = {xx_prog[0], xx_prog[1], 1.0};
+    double xequat_prog[3];
+    const double obl_natal = 23.4392911; 
+    swe_cotrans(xx_eq_prog, xequat_prog, -obl_natal); 
+    
+    // 4. O ARCO SOLAR EM ASCENSÃO RETA
+    double arco_solar_ra = xequat_prog[0] - ra_sol_natal;
+    
+    if (arco_solar_ra < 0.0) arco_solar_ra += 360.0;
+    
+    return arco_solar_ra;
+}
+
+double encontrar_chave_por_arco_solar_ra_FAST(double jd_natal, double arco_direcao) {
+    // 1. CALCULA O SOL NATAL APENAS UMA VEZ AQUI
+    double xx_natal[6], xequat_natal[3];
+    char err_msg[256];
+    int err_code;
+    
+    if (swe_calc_ut(jd_natal, SE_SUN, 0, xx_natal, err_msg) < 0) {
+        return NAIBOD_KEY;
+    }
+    double xx_eq_natal[3] = {xx_natal[0], xx_natal[1], 1.0};
+    const double obl_natal = get_obliquidade(jd_natal);
+    swe_cotrans(xx_eq_natal, xequat_natal, -obl_natal);
+    double ra_sol_natal = xequat_natal[0];
+
+    // 2. BUSCA DO LOOP OTIMIZADA
+    double idade_estimada = arco_direcao; 
+    double erro = 1.0;
+    int iteracoes = 0;
+    
+    // Como a velocidade média do Sol em AR é muito próxima da velocidade média em Longitude (~0.9856),
+    // podemos usar a Chave de Naibod como um "ajustador de passo" (derivada aproximada) 
+    // para fazer o loop convergir em apenas 2 ou 3 passos em vez de 20!
+    const double velocidade_media_sol = 0.98564733;
+
+    while (fabs(erro) > 0.00001 && iteracoes < 10) {
+        double arco_solar_calculado = calcular_arco_solar_real_ra_FAST(jd_natal, ra_sol_natal, idade_estimada, &err_code);
+        
+        erro = arco_solar_calculado - arco_direcao;
+        
+        // Ajuste por inclinação de curva (Newton-Raphson aproximado) faz convergir instantaneamente
+        idade_estimada -= (erro / velocidade_media_sol); 
+        iteracoes++;
+    }
+    
+    if (idade_estimada > 0.0) {
+        return arco_direcao / idade_estimada;
+    }
+    return NAIBOD_KEY;
+}
 
 
 // Calcula o Arco Solar Real em Ascensão Reta para uma idade específica
@@ -456,9 +524,7 @@ double calcular_arco_solar_real_ra(double jd_natal, double idade_anos, int *err_
     return arco_solar_ra;
 }
 
-
-
-double encontrar_idade_por_arco_solar(double jd_natal, double arco_direcao) {
+double encontrar_chave_por_arco_solar_ra(double jd_natal, double arco_direcao) {
     double idade_estimada = arco_direcao; // Palpite inicial (1° = 1 ano)
     double erro = 1.0;
     int iteracoes = 0;
@@ -480,9 +546,6 @@ double encontrar_idade_por_arco_solar(double jd_natal, double arco_direcao) {
     }
     return NAIBOD_KEY;
 }
-
-
-
 
 
 // Função auxiliar interna para simular o arco gerado pela velocidade do Sol
@@ -648,7 +711,7 @@ double encontrar_longitude_promissor_por_dec(double dec_alvo, double jd, char* o
 
 int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, 
                                             double jd, int sentido_filtro, Promissor *prom, int total_promissores,
-                                            double ramc, double lat_geografica, int *qtd_direcoes) {
+                                            double ramc, double lat_geografica, int *qtd_direcoes, bool is_part) {
     
     int object_diff = show_modern_planets ? 0 : 3;
     double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
@@ -674,14 +737,24 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
     // 2. Fixar o Polo Topocêntrico do Significador
     double tan_polo_sig = tan(lat_geo_rad) * ph_sig;
 
+    
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+
+
     for (int p = 0; p < total_promissores; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
-
+        else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if (!is_part) {
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
+        }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
+        
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido_filtro == 1) continue;
             if (s == 1 && sentido_filtro == 0) continue;
-            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
-
+                        
             for (int a = 0; a < 10; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
 
@@ -871,7 +944,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
 
 
 // Calcula o cronograma de direções zodiacais para QUALQUER ponto escolhido
-int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom) {
+int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom, bool is_part) {
 
     int qtd_direcoes = 0;
     int object_diff = show_modern_planets ? 0 : 3;
@@ -882,14 +955,22 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
     char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
 
-    for (int p = 0; p < prom_id; p++) {
 
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+
+
+
+    for (int p = 0; p < prom_id; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
+        else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if (!is_part) {
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
+        }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
 
         for (int s = 0; s < 2; s++) {
-            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - ((show_modern_planets)?5:4)) || prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue; // Um ponto não direciona a si mesmo
-            //if (prom[p].type == PROM_TERM && s == 1) continue;
-
             for (int a = 0; a < 10; a++) {
 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
@@ -1179,7 +1260,7 @@ double get_time_key(int key, double jd, double arco) {
         case TIME_KEY_PLACIDUS:                 return PLACIDUS_KEY;
         case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
         case TIME_KEY_KEPLER:                   return obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return encontrar_idade_por_arco_solar(jd, arco);
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return encontrar_chave_por_arco_solar_ra_FAST(jd, arco);
         default:                                return NAIBOD_KEY;
     }
 }
@@ -1495,7 +1576,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (arco < 0.0) arco += 360.0;
                 arco = fmod(arco, 360.0);
             
-                if (arco > 0.001 && arco <= MAX_AGE * 1.05) { 
+                if (arco > 0.0 && arco <= MAX_AGE * 1.05) { 
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                     
                     d->sentido = s;
@@ -1588,23 +1669,23 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         if (sig[i].id == P_ASC - object_diff) idx_asc = i;
-        if (sig[i].id == P_MC - object_diff)  idx_mc = i; 
-        if (strcmp(sig[i].object_name, "SAN") == 0) idx_san = i; 
-        if (strcmp(sig[i].object_name, _("Part of Fortune")) == 0) idx_fortuna = i; 
-        if (sig[i].id == P_MERCURY) idx_mercury = i;
-        if (sig[i].id == P_VENUS) idx_venus = i;
-        if (sig[i].id == P_MARS) idx_mars = i;
-        if (sig[i].id == P_JUPITER) idx_jupiter = i;
-        if (sig[i].id == P_SATURN) idx_saturn = i;
-        if (show_modern_planets) {
+        else if (sig[i].id == P_MC - object_diff)  idx_mc = i; 
+        else if (strcmp(sig[i].object_name, "SAN") == 0) idx_san = i; 
+        else if (strcmp(sig[i].object_name, _("Part of Fortune")) == 0) idx_fortuna = i; 
+        else if (sig[i].id == P_MERCURY) idx_mercury = i;
+        else if (sig[i].id == P_VENUS) idx_venus = i;
+        else if (sig[i].id == P_MARS) idx_mars = i;
+        else if (sig[i].id == P_JUPITER) idx_jupiter = i;
+        else if (sig[i].id == P_SATURN) idx_saturn = i;
+        else if (show_modern_planets) {
             if (sig[i].id == P_URANUS) idx_uranus = i;
-            if (sig[i].id == P_NEPTUNE) idx_neptune = i;
-            if (sig[i].id == P_PLUTO) idx_pluto = i;
+            else if (sig[i].id == P_NEPTUNE) idx_neptune = i;
+            else if (sig[i].id == P_PLUTO) idx_pluto = i;
         }
-        if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
-        if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
-        if (sig[i].id == P_DC - object_diff) idx_dc = i;
-        if (sig[i].id == P_IC - object_diff) idx_ic = i; 
+        else if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
+        else if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
+        else if (sig[i].id == P_DC - object_diff) idx_dc = i;
+        else if (sig[i].id == P_IC - object_diff) idx_ic = i; 
     }
 
     if (!mapa_retorno) {
@@ -1616,7 +1697,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         else {
             for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
                 if (tipo_h == H_ASC && sig[i].id == P_ASC - object_diff) { idx_hileg = i; break; }
-                if (tipo_h == H_FORTUNA && sig[i].id == P_FORTUNA - object_diff) { idx_hileg = i; break; }
+                else if (tipo_h == H_FORTUNA && sig[i].id == P_FORTUNA - object_diff) { idx_hileg = i; break; }
             }
         }
     }
@@ -1700,6 +1781,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int sentido = 2;
     int tipo = 2;
 
+    bool PART_DIRECTIONS = false;
+
     while (loop_interativo) {
         werase(table_win);
         werase(scroll_pad);
@@ -1731,26 +1814,23 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
         memset(cronograma_asc, 0, sizeof(cronograma_asc));
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-            qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc);
+            qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
         }
         else {
-            //qtd_direcoes_asc = calcular_direcoes_geral(sig, indices_significadores[3], prom_id, prom, cronograma_asc, jd, ramc, lat, 0, 2);
-            qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom);
+            qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, PART_DIRECTIONS);
         }
 
         if (tipo != 1) {
             memset(cronograma_z, 0, sizeof(cronograma_z));
             if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod);
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
             }
             else {
-                //qtd_direcoes_zod = calcular_direcoes_geral(sig, idx_atual_calculo, prom_id, prom, cronograma_z, jd, ramc, lat, 0, sentido);
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
             }
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));            
-            //qtd_direcoes_mun = calcular_direcoes_geral(sig, idx_atual_calculo, prom_id, prom, cronograma_m, jd, ramc, lat, 1, sentido);
             qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);            
         }
         
@@ -1758,27 +1838,32 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         int qtd_direcoes = qtd_direcoes_real;
         int qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_asc;
 
-        LinhaDirecao cronograma_a[qtd_direcoes_calculo];
-        memset(cronograma_a, 0, sizeof(cronograma_a));
+
+        LinhaDirecao *cronograma_a = (LinhaDirecao *)calloc(qtd_direcoes_calculo, sizeof(LinhaDirecao));
+
+        
 
         int index = 0;
-        for (int i = 0; i < qtd_direcoes_asc; i++) {
-            if (cronograma_asc[i].promissor_type == PROM_TERM) {
-                cronograma_a[index] = cronograma_asc[i];
-                    
-                snprintf(cronograma_a[index].significador_glifo, 10, "%c", '0');
-                index++;
-            }            
-        }
-        for (int i = 0; i < qtd_direcoes_zod; i++) {
-            cronograma_a[index] = cronograma_z[i];
-            index++;
-        }
-        for (int i = 0; i < qtd_direcoes_mun; i++) {
-            cronograma_a[index] = cronograma_m[i];
-            index++;
-        }
-        
+        if (cronograma_a) {    
+            for (int i = 0; i < qtd_direcoes_asc; i++) {
+                if (cronograma_asc[i].promissor_type == PROM_TERM) {
+                    cronograma_a[index] = cronograma_asc[i];
+                        
+                    snprintf(cronograma_a[index].significador_glifo, 10, "%c", '0');
+                    index++;
+                }            
+            }
+            
+            if (qtd_direcoes_zod > 0) {
+                memcpy(&cronograma_a[index], cronograma_z, qtd_direcoes_zod * sizeof(LinhaDirecao));
+                index += qtd_direcoes_zod;
+            }
+            if (qtd_direcoes_mun > 0) {
+                memcpy(&cronograma_a[index], cronograma_m, qtd_direcoes_mun * sizeof(LinhaDirecao));
+                index += qtd_direcoes_mun;
+            }
+                        
+        }    
         qsort(cronograma_a, index, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
 
         // obter glifo e nome do regente do termo natal do ascendente //significador
@@ -1803,85 +1888,111 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             strcpy(cronograma_a[i].divisor_gliph, glifo_atual);
         }
 
-        LinhaDirecao cronograma[qtd_direcoes];
-        memset(cronograma, 0, sizeof(cronograma));
+
+
+        LinhaDirecao *cronograma = (LinhaDirecao *)calloc(qtd_direcoes_zod + qtd_direcoes_mun, sizeof(LinhaDirecao));
 
         index = 0;
-        if (tipo == 1 && sentido == 2) {
+        if (cronograma) {            
             for (int i = 0; i < qtd_direcoes; i++) {
                 if (cronograma_a[i].significador_glifo[0] == '0') {
                     continue;
                 }
-                if (cronograma_a[i].tipo_direcao_id == 0) {
-                    continue;
-                }
+                
                 cronograma[index] = cronograma_a[i];
                 index++;
             }
-            qtd_direcoes = index;
         }
-        else if (tipo == 1 && sentido == 0) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
-                    continue;
-                }                
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (tipo == 1 && sentido == 1) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
-                    continue;
-                }                
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (sentido == 1) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].sentido == 0) {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (sentido == 0) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].sentido == 1) {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
+        qtd_direcoes = index;
+
+
+
+
+
+
+        // index = 0;
+        // if (tipo == 1 && sentido == 2) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (tipo == 1 && sentido == 0) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
+        //             continue;
+        //         }                
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (tipo == 1 && sentido == 1) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
+        //             continue;
+        //         }                
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (sentido == 1) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].sentido == 0) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (sentido == 0) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].sentido == 1) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+
+
+
+        free(cronograma_a);
+
+
+
 
         // if (qtd_direcoes != qtd_direcoes_real) {
         //     show_alert_popup("Qtde de direções não bate!", "");
@@ -2057,6 +2168,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 row_pad += 2;            
             }
         }
+        free(cronograma);
 
         wattron(table_win, COLOR_PAIR(13));
         mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
@@ -2073,22 +2185,22 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Zodiacal (Oblique Ascensions under the Pole)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Mundane (Continuous Local Poles)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (OA under the Pole) + Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric System: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
         } else {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Zodiacal (Ecliptic Projection Bianchini Method)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Mundane (Proportional Semi-Arcs In Mundo)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus System: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
             }
         }
-
+        
         wattroff(table_win, A_ITALIC);
 
         // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
@@ -2278,9 +2390,9 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
     double ra_significador = ra_out; //calcular_ra(parts[idx_alvo].longitude, NAN, jd);   
     double dec_significador = dec_out; // Declinação natal do alvo
 
-    double angulos_aspectos[] = {0.0, 0.66666667, -0.66666667, 1.0, -1.0, 1.33333333, -1.33333333, 2.0, 999.9, 999.9}; 
+    double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
     char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
-    
+
     for (int p = 0; p < prom_id; p++) {
         if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE || prom[p].type == PROM_PART) continue;
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
@@ -2511,631 +2623,11 @@ fim_calculo:
 
 
 
-void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char *nome_senhor_da_casa8, ChartObject *obj, int num_objects, double *cusps, double jd, double ramc, double lat) {
-
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);
-    
-    int table_height = 29;
-    int table_width = max_x - 10;
-    int start_y = (max_y - table_height) / 2;
-    int start_x = 5;
-    
-    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
-    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
-    
-    keypad(table_win, TRUE); // Habilita o teclado para capturar as 4 setas
-
-    ArabicPartCalculada lista_partes[MAX_PARTS] = {0};
-
-    int qtd_partes = load_and_calculate_arabic_parts(obj, num_objects, cusps, lista_partes);
-
-    int indices_significadores[qtd_partes];
-    int idx_fortuna = 0;
-
-    for (int i = 0; i < qtd_partes; i++) {
-        if (strstr(lista_partes[i].name, "Fortune") != NULL    ||
-            strstr(lista_partes[i].name, "Fortuna") != NULL    ||
-            strstr(lista_partes[i].name, _("Fortune")) != NULL ||
-            strstr(lista_partes[i].name, _("Part of Fortune")) != NULL ||
-            strstr(lista_partes[i].name, "Pars Fortunae") != NULL ||
-            strstr(lista_partes[i].name, _("Lot of Fortune")) != NULL ||
-            strstr(lista_partes[i].name, "Lot of Fortune") != NULL ||
-            strstr(lista_partes[i].name, "Lot da Fortuna") != NULL
-        ) {
-            idx_fortuna = i;
-        }
-        indices_significadores[i] = i;
-    }
-
-    int seletor_alvo_atual = 0; 
-    int scroll_offset = 0; // Controla qual linha virtual será a primeira a aparecer na tela
-    int loop_interativo = 1;
-
-    // ────────────────────────────────────────────────────────────────────────
-    // CRIAÇÃO DO PAD VIRTUAL DE ROLAGEM
-    // ────────────────────────────────────────────────────────────────────────
-    // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
-    int max_linhas_exibicao = (table_height / 2) * 2 - 12; // Espaço físico real na janela para os dados
-    WINDOW *scroll_pad = newpad(1200, table_width - 8); 
-
-    // Desenha sombra e frame fixo de fundo
-    wattron(shadow_win, COLOR_PAIR(9));
-    box(shadow_win, 0, 0); 
-    wattroff(shadow_win, COLOR_PAIR(9));
-    wnoutrefresh(shadow_win);
-
-    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
-    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
-
-    int sentido = 2;
-    int tipo = 2;
-
-    // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
-
-    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
-    mvwprintw(table_win, 0, col_fechar, "[");
-    mvwprintw(table_win, 0, col_fechar + 2, "]");
-    wattroff(table_win, COLOR_PAIR(13));
-
-    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(table_win, 0, col_fechar + 1, "✖");
-    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
-    wnoutrefresh(table_win);
-
-
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(100);
-
-    while (loop_interativo) {
-        // Limpa todas as estruturas gráficas antes de recalcular
-        werase(table_win);
-        werase(scroll_pad);
-
-        box(table_win, 0, 0);
-        
-        wattron(table_win, A_BOLD);
-        const char *title = _(" Primary Directions to Arabic Parts ");
-        mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
-
-        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
-        mvwprintw(table_win, 0, col_fechar, "[");
-        mvwprintw(table_win, 0, col_fechar + 2, "]");
-        wattroff(table_win, COLOR_PAIR(13));
-
-        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-        mvwprintw(table_win, 0, col_fechar + 1, "✖");
-        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
-
-        int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
-
-        int qtd_direcoes_zod = 0;
-        int qtd_direcoes_mun = 0;
-        int qtd_direcoes_for = 0;
-        
-        LinhaDirecao cronograma_z[300];
-        LinhaDirecao cronograma_m[300];
-        LinhaDirecao cronograma_for[300];
-        
-        memset(cronograma_for, 0, sizeof(cronograma_for));
-        qtd_direcoes_for = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom);
-
-        if (tipo != 1) {
-            memset(cronograma_z, 0, sizeof(cronograma_z));
-            qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, sentido, prom);
-        }
-        if (tipo != 0) {   
-            memset(cronograma_m, 0, sizeof(cronograma_m));
-            qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
-        }
-        int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
-        int qtd_direcoes = qtd_direcoes_real;
-        int qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_for;
-
-        LinhaDirecao cronograma_a[qtd_direcoes_calculo];
-        memset(cronograma_a, 0, sizeof(cronograma_a));
-
-        int index = 0;
-        for (int i = 0; i < qtd_direcoes_for; i++) {
-            if (cronograma_for[i].promissor_type == PROM_TERM) {
-                cronograma_a[index] = cronograma_for[i];
-                    
-                snprintf(cronograma_a[index].significador_glifo, 10, "%c", '0');
-                index++;
-            }            
-        }
-        for (int i = 0; i < qtd_direcoes_zod; i++) {
-            cronograma_a[index] = cronograma_z[i];
-            index++;
-        }
-        for (int i = 0; i < qtd_direcoes_mun; i++) {
-            cronograma_a[index] = cronograma_m[i];
-            index++;
-        }
-        
-        qsort(cronograma_a, index, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
-
-        // obter glifo e nome do regente do termo natal do significador
-        int regente_do_termo = get_term_ruler(lista_partes[indices_significadores[idx_fortuna]].longitude);            
-        char glifo_atual[10];
-        char divisor_atual[30];
-        snprintf(glifo_atual, sizeof(glifo_atual), "%s", planet_regent_symbols[regente_do_termo]);
-        snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
-
-        qtd_direcoes = index;
-
-        for (int i = 0; i < qtd_direcoes; i++) {
-            if (cronograma_a[i].promissor_type == PROM_TERM && 
-                cronograma_a[i].significador_glifo[0] == '0'
-            ) {
-                strcpy(divisor_atual, cronograma_a[i].promissor_name);
-                int id_planeta = obter_id_planeta_por_nome(divisor_atual);
-                strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
-            }
-
-            strcpy(cronograma_a[i].divisor_name, divisor_atual);
-            strcpy(cronograma_a[i].divisor_gliph, glifo_atual);
-        }
-
-        LinhaDirecao cronograma[qtd_direcoes];
-        memset(cronograma, 0, sizeof(cronograma));
-
-        index = 0;
-        if (tipo == 1 && sentido == 2) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].tipo_direcao_id == 0) {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (tipo == 1 && sentido == 0) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
-                    continue;
-                }                
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (tipo == 1 && sentido == 1) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
-                    continue;
-                }                
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (sentido == 1) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].sentido == 0) {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else if (sentido == 0) {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                if (cronograma_a[i].sentido == 1) {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-        else {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                if (cronograma_a[i].significador_glifo[0] == '0') {
-                    continue;
-                }
-                cronograma[index] = cronograma_a[i];
-                index++;
-            }
-            qtd_direcoes = index;
-        }
-
-        // Garante que o scroll não vá para o vazio se trocarmos para um planeta com menos direções
-        if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
-            scroll_offset = qtd_direcoes * 2 - max_linhas_exibicao;
-        }
-        if (scroll_offset < 0) scroll_offset = 0;
-
-        // --- RENDERIZAÇÃO DO CABEÇALHO FIXO ---
-        mvwprintw(table_win, 2, 4, _("Active Significator Target: "));
-        wattron(table_win, A_BOLD | COLOR_PAIR(8));
-        if (idx_atual_calculo != -1) {
-
-            char abreviacao[4];
-            get_part_abbreviation(lista_partes[idx_atual_calculo].name, abreviacao);
-        
-
-            wprintw(table_win, "%s - %s", abreviacao, lista_partes[idx_atual_calculo].name);
-        } else {
-            wprintw(table_win, _("Point not calculated in this chart"));
-        }
-        wattroff(table_win, A_BOLD | COLOR_PAIR(8));
-
-        wattron(table_win, A_ITALIC);
-        wprintw(table_win, _(" │ Directions: "));
-        wattron(table_win, A_BOLD | COLOR_PAIR(7));
-        if (tipo == 0) {
-            wprintw(table_win, "Zod");            
-        }
-        else if (tipo == 1) {
-            wprintw(table_win, "Mund");            
-        }
-        else if (tipo == 2) {
-            wprintw(table_win, "Zod & Mund");            
-        }
-        wprintw(table_win, " │ ");
-
-        if (sentido == 0) {
-            wprintw(table_win, "Dir");            
-        }
-        else if (sentido == 1) {
-            wprintw(table_win, "Conv");            
-        }
-        else if (sentido == 2) {
-            wprintw(table_win, "Dir & Conv");            
-        }
-        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
-
-        wattron(table_win, A_DIM);
-        mvwprintw(table_win, 2, table_width - 32, _("Use [←/→] Signif. [↑/↓] Scroll"));
-        wattroff(table_win, A_DIM);
-
-        wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 4, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-        wattroff(table_win, COLOR_PAIR(13));
-
-        // Colunas Alinhadas Fixas (Mapeadas a partir de 0 para casar com as coordenadas do Pad)
-        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91, col_div = 102;
-
-        wattron(table_win, A_BOLD | COLOR_PAIR(13));
-        mvwprintw(table_win, 5, col_idade + 4, _("Age")); 
-        mvwprintw(table_win, 5, col_ano + 4, _("Year"));
-        mvwprintw(table_win, 5, col_mes + 3, _(" Mo"));
-        mvwprintw(table_win, 5, col_dia + 4, _("Day"));
-        mvwprintw(table_win, 5, col_dir + 4, _("Directional Event")); 
-        mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
-        mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
-        mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
-        mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
-        wattroff(table_win, A_BOLD | COLOR_PAIR(13));
-
-        wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, 6, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-        wattroff(table_win, COLOR_PAIR(13));
-
-        // --- RENDERIZAÇÃO DAS LINHAS DENTRO DO PAD VIRTUAL ---
-        int row_pad = 0; // O Pad começa na linha virtual 0 e vai empilhando tudo
-        int linhas_reais_pad = qtd_direcoes * 2;
-
-        if (qtd_direcoes == 0 || idx_atual_calculo == -1) {
-            wattron(scroll_pad, A_DIM);
-            mvwprintw(scroll_pad, row_pad, col_dir, _("No directional contacts available for this specific point."));
-            wattroff(scroll_pad, A_DIM);
-        } else {
-            for (int i = 0; i < qtd_direcoes; i++) {
-                LinhaDirecao *d = &cronograma[i];
-
-                bool eh_termo = d->promissor_type == PROM_TERM;
-
-                char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
-                         eh_termo ? _("Term") : "",
-                         eh_termo ? " " : "",
-                         d->promissor_glifo, d->promissor_name,
-                         (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                         d->significador_glifo);
-
-
-                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0);
-                bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
-
-                bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
-                bool eh_saturno = (strcmp(d->promissor_name, _("Saturn")) == 0);
-                bool eh_nodo_sul = (strcmp(d->promissor_name, _("South Node")) == 0);
-                bool eh_malefico_essencial = (eh_marte || eh_saturno || eh_nodo_sul);
-                
-                bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
-                bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
-                //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
-
-                bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
-                bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
-                bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
-
-                bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
-
-                int par_cor_ativo = COLOR_PAIR(13);
-                int atributo_extra = A_NORMAL;
-
-                if (eh_anareta) {
-                    if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
-                        par_cor_ativo = COLOR_PAIR(36);
-                        atributo_extra |= (A_REVERSE | A_BOLD);
-                    } else {
-                        par_cor_ativo = COLOR_PAIR(11); 
-                        //atributo_extra = A_BOLD;
-                    }
-                }
-                else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
-                    par_cor_ativo = COLOR_PAIR(11); 
-                    atributo_extra |= A_BOLD;
-                }
-                else if (eh_senhor_casa8 && eh_aspecto_tenso) {
-                    par_cor_ativo = COLOR_PAIR(11); 
-                    atributo_extra |= A_BOLD;
-                }
-                else if (!eh_malefico_essencial && eh_aspecto_tenso) {
-                    par_cor_ativo = COLOR_PAIR(25);
-                    atributo_extra |= A_REVERSE;
-                }
-                else if (eh_benefico_essencial) {
-                    par_cor_ativo = COLOR_PAIR(12);
-                    atributo_extra = A_DIM;      
-                }
-                else if (strcmp(d->aspecto_symbol, "☌") == 0) {
-                    par_cor_ativo = COLOR_PAIR(7);
-                    atributo_extra |= A_BOLD;
-                }
-                else if (!eh_aspecto_tenso) {
-                    par_cor_ativo = COLOR_PAIR(8);
-                    atributo_extra |= A_NORMAL;
-                }
-
-                if (eh_termo) {
-                   atributo_extra |= A_UNDERLINE;
-                }
-                
-                wattron(scroll_pad, par_cor_ativo | atributo_extra);
-
-                mvwprintw(scroll_pad, row_pad, col_idade, "%8.4f y", d->idade_evento);
-                mvwprintw(scroll_pad, row_pad, col_ano, "%4d.", d->ano_calendario);
-                mvwprintw(scroll_pad, row_pad, col_mes, "%02d.", d->mes_calendario);
-                mvwprintw(scroll_pad, row_pad, col_dia, "%02d", d->dia_calendario);
-                mvwprintw(scroll_pad, row_pad, col_dir, "%s", texto_evento);
-                mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
-                mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
-                mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
-                mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
-
-                wattroff(scroll_pad, par_cor_ativo | atributo_extra);
-
-                wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(scroll_pad, row_pad + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-                wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
-
-
-                row_pad += 2;
-            }
-        }
-
-        wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
-        wattroff(table_win, COLOR_PAIR(13));
-
-        wattron(table_win, A_DIM | A_ITALIC);
-        if (TIME_KEY < 5) {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
-        }
-        else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s Rate (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
-        }
-        
-        if (tipo == 0) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Zodiacal with Real Latitude (Method Placidus)."));
-        } else if (tipo == 1) {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mundane proportional to Semi-Arcs."));
-        } else {
-            mvwprintw(table_win, table_height - 5, 4, _("Aspects: Mixed Systems (Zodiacal w/ Latitude + Mundane proportional to Semi-Arcs)."));
-        }
-        wattroff(table_win, A_ITALIC);
-
-        // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
-        if (linhas_reais_pad > max_linhas_exibicao) {
-            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
-                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
-                scroll_offset / 2 + 1, 
-                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
-                _("of"),
-                qtd_direcoes,
-                _(") │ [←/→] Change Target"),
-                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
-        } else {
-            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
-        }
-        wattroff(table_win, A_DIM);
-
-        mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
-
-        int flag = 0;
-        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(table_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(table_win, scroll_offset, qtd_direcoes * 2 - 1, max_linhas_exibicao - 1, 6);
-        wattroff(table_win, COLOR_PAIR(28) | flag);
-
-        wnoutrefresh(table_win);
-
-        int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
-        if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
-            fim_y_recorte = start_y + 7 + (linhas_reais_pad - scroll_offset) - 1;
-        }
-
-        if (linhas_reais_pad > 0) {
-            prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
-        }
-        doupdate();
-
-        int ch = wgetch(table_win);
-        switch (ch) {
-            case 'C':
-            case 'c':
-                sentido = 1;
-                break;
-            case 'd':
-            case 'D':
-                sentido = 0;
-                break;
-            case 'a':
-            case 'A':
-                sentido = 2;
-                break;
-            case 'Z':
-            case 'z':
-                tipo = 0;
-                break;
-            case 'm':
-            case 'M':
-                tipo = 1;
-                break;
-            case 'b':
-            case 'B':
-                tipo = 2;
-                break;
-            case KEY_RIGHT:
-                seletor_alvo_atual = (seletor_alvo_atual + 1) % 14;
-                scroll_offset = 0;
-                break;
-            case KEY_LEFT:
-                seletor_alvo_atual = (seletor_alvo_atual - 1 + 14) % 14;
-                scroll_offset = 0;
-                break;
-            case KEY_DOWN:
-                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
-                    scroll_offset += 2;
-                }
-                break;
-            case KEY_UP:
-                if (scroll_offset > 0) {
-                    scroll_offset -= 2;
-                }
-                break;
-            case KEY_NPAGE:
-                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
-                    scroll_offset += max_linhas_exibicao;
-                }
-                else {
-                    scroll_offset = qtd_direcoes * 2 - 1;
-                }
-                break;
-            case KEY_PPAGE:
-                if (scroll_offset >= 0) {
-                    scroll_offset -= max_linhas_exibicao;
-                    if (scroll_offset < 0) {
-                        scroll_offset = 0;
-                    }
-                }
-                break;
-
-            case KEY_MOUSE: {
-                MEVENT event;
-                if (getmouse(&event) == OK) {
-                    // Coordenadas do clique convertidas para o plano local da janela
-                    int linha_clique_janela = event.y - getbegy(table_win);
-                    int col_clique_janela = event.x - getbegx(table_win);
-                    
-                    // Define matematicamente a caixa de clique do botão fechar
-                    int col_inicio_fechar = getmaxx(table_win) - 4;
-                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
-
-                    // ========================================================
-                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
-                    // ========================================================
-                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
-                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
-                            loop_interativo = 0;
-                            break; // Sai do switch do mouse e fecha a janela
-                        }
-                    }  
-
-                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
-                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
-
-                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
-                    if (event.x == col_scrollbar_absoluta) {
-                        
-                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
-                        int linha_clique_janela = event.y - getbegy(table_win);
-                        
-                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
-                        int offset_inicio_barra = 6 + 1; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
-
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
-                            
-                            // Calcula o limite máximo que o scroll_offset pode atingir
-                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
-
-                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
-                                
-                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
-                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
-                                novo_offset = (novo_offset / 2) * 2;
-
-                                // Garante que o valor respeite as barreiras de limite
-                                if (novo_offset < 0) novo_offset = 0;
-                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
-
-                                scroll_offset = novo_offset;
-                            }
-                        }
-                    }
-                }
-                break;
-            }
-            case 27:
-            case 'q':
-            case 'Q':
-                loop_interativo = 0;
-                break;
-        }
-    }
-    
-    delwin(shadow_win);
-    delwin(table_win);
-    touchwin(stdscr);
-    refresh();
-}
-
-
-
 int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
     int qtd_direcoes = 0;
     double lat_geo_rad = para_radianos(lat_geografica);
 
-    if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
+    //if (idx_alvo < 0 || idx_alvo >= NUM_OBJECTS) return 0;
 
     double dec_out, ra_out;
     calc_declination_ra_point(jd, parts[idx_alvo].longitude, &ra_out, &dec_out);
@@ -3279,3 +2771,756 @@ fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
     return qtd_direcoes;
 }
+
+
+
+
+void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char *nome_senhor_da_casa8, ChartObject *obj, int num_objects, double *cusps, double jd, double ramc, double lat) {
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    
+    int table_height = 29;
+    int table_width = max_x - 10;
+    int start_y = (max_y - table_height) / 2;
+    int start_x = 5;
+    
+    WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    
+    keypad(table_win, TRUE); // Habilita o teclado para capturar as 4 setas
+
+    ArabicPartCalculada lista_partes[MAX_PARTS] = {0};
+
+    int qtd_partes = load_and_calculate_arabic_parts(obj, num_objects, cusps, lista_partes);
+
+    int indices_significadores[qtd_partes];
+    int idx_fortuna = 0;
+
+    for (int i = 0; i < qtd_partes; i++) {
+        if (strstr(lista_partes[i].name, "Fortune") != NULL    ||
+            strstr(lista_partes[i].name, "Fortuna") != NULL    ||
+            strstr(lista_partes[i].name, _("Fortune")) != NULL ||
+            strstr(lista_partes[i].name, _("Part of Fortune")) != NULL ||
+            strstr(lista_partes[i].name, "Pars Fortunae") != NULL ||
+            strstr(lista_partes[i].name, _("Lot of Fortune")) != NULL ||
+            strstr(lista_partes[i].name, "Lot of Fortune") != NULL ||
+            strstr(lista_partes[i].name, "Lot da Fortuna") != NULL
+        ) {
+            idx_fortuna = i;
+        }
+        indices_significadores[i] = i;
+    }
+
+    Promissor *sig = (Promissor *)calloc(qtd_partes, sizeof(Promissor));
+
+
+    char house_system_pd = HOUSE_SYSTEM;
+    if (HOUSE_SYSTEM == 'E' || HOUSE_SYSTEM == 'W' || HOUSE_SYSTEM == 'M') {
+        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+            house_system_pd = 'T';
+        }
+        else {
+            house_system_pd = 'P';
+        }
+    }
+
+    for (int i = 0; i < qtd_partes; i++) {
+        char abrev[10];
+        get_part_abbreviation(lista_partes[i].name, abrev);
+        
+        snprintf(sig[i].object, 10, "%s", abrev);
+        snprintf(sig[i].object_name, 64, "%s", lista_partes[i].name);
+        sig[i].id = i;
+
+        sig[i].longitude = lista_partes[i].longitude;            
+        sig[i].latitude = 0.0; // Rigorosamente 0.0 na eclíptica
+        
+        double xx_in[3], xx_out[3];
+        xx_in[0] = sig[i].longitude;
+        xx_in[1] = sig[i].latitude;
+        xx_in[2] = 1.0;
+
+        double true_obliquity = get_obliquidade(jd);
+
+        swe_cotrans(xx_in, xx_out, -true_obliquity);
+        sig[i].declination = xx_out[1];
+        sig[i].ra = xx_out[0];
+        
+        sig[i].house = get_house(sig[i].longitude, cusps);
+        sig[i].type = PROM_PART;
+
+        double x2[6];
+        char serr[256];
+        x2[0] = sig[i].longitude;
+        x2[1] = sig[i].latitude;
+        sig[i].house_pos = swe_house_pos(ramc, lat, true_obliquity, house_system_pd, x2, serr);        
+    }
+
+
+    int seletor_alvo_atual = 0; 
+    int scroll_offset = 0; // Controla qual linha virtual será a primeira a aparecer na tela
+    int loop_interativo = 1;
+
+    // ────────────────────────────────────────────────────────────────────────
+    // CRIAÇÃO DO PAD VIRTUAL DE ROLAGEM
+    // ────────────────────────────────────────────────────────────────────────
+    // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
+    int max_linhas_exibicao = (table_height / 2) * 2 - 12; // Espaço físico real na janela para os dados
+    WINDOW *scroll_pad = newpad(1200, table_width - 8); 
+
+    // Desenha sombra e frame fixo de fundo
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0); 
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wnoutrefresh(shadow_win);
+
+    wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
+    wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS); 
+
+    int sentido = 2;
+    int tipo = 2;
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(table_win);
+
+    bool PART_DIRECTIONS = true;
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(100);
+
+    while (loop_interativo) {
+        // Limpa todas as estruturas gráficas antes de recalcular
+        werase(table_win);
+        werase(scroll_pad);
+
+        box(table_win, 0, 0);
+        
+        wattron(table_win, A_BOLD);
+        const char *title = _(" Primary Directions to Arabic Parts ");
+        mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
+
+        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        mvwprintw(table_win, 0, col_fechar, "[");
+        mvwprintw(table_win, 0, col_fechar + 2, "]");
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(table_win, 0, col_fechar + 1, "✖");
+        wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+        int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
+
+        int qtd_direcoes_zod = 0;
+        int qtd_direcoes_mun = 0;
+        int qtd_direcoes_for = 0;
+        
+        LinhaDirecao cronograma_z[300];
+        LinhaDirecao cronograma_m[300];
+        LinhaDirecao cronograma_for[300];
+
+        memset(cronograma_for, 0, sizeof(cronograma_for));
+        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+            qtd_direcoes_for = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
+        }
+        else {
+            qtd_direcoes_for = calcular_direcoes_zodiacais_geral(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, PART_DIRECTIONS);
+        }
+
+        if (tipo != 1) {
+            memset(cronograma_z, 0, sizeof(cronograma_z));
+            if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+            }
+            else {
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
+            }
+        }
+        if (tipo != 0) {   
+            memset(cronograma_m, 0, sizeof(cronograma_m));            
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);            
+        }
+
+        // qtd_direcoes_for = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom);
+
+        // if (tipo != 1) {
+        //     memset(cronograma_z, 0, sizeof(cronograma_z));
+        //     qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+        // }
+        // if (tipo != 0) {   
+        //     memset(cronograma_m, 0, sizeof(cronograma_m));
+        //     qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+        // }
+        int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
+        int qtd_direcoes = qtd_direcoes_real;
+        int qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_for;
+
+
+
+
+        LinhaDirecao *cronograma_a = (LinhaDirecao *)calloc(qtd_direcoes_calculo, sizeof(LinhaDirecao));
+
+        
+
+
+        int index = 0;
+        if (cronograma_a) {
+            for (int i = 0; i < qtd_direcoes_for; i++) {
+                if (cronograma_for[i].promissor_type == PROM_TERM) {
+                    cronograma_a[index] = cronograma_for[i];
+                        
+                    snprintf(cronograma_a[index].significador_glifo, 10, "%c", '0');
+                    index++;
+                }            
+            }
+            if (qtd_direcoes_zod > 0) {
+                memcpy(&cronograma_a[index], cronograma_z, qtd_direcoes_zod * sizeof(LinhaDirecao));
+                index += qtd_direcoes_zod;
+            }
+            if (qtd_direcoes_mun > 0) {
+                memcpy(&cronograma_a[index], cronograma_m, qtd_direcoes_mun * sizeof(LinhaDirecao));
+                index += qtd_direcoes_mun;
+            }
+            
+        }
+        qsort(cronograma_a, index, sizeof(LinhaDirecao), comparar_directions_por_idade_tipo_termo);
+
+        // obter glifo e nome do regente do termo natal do significador
+        //int regente_do_termo = get_term_ruler(lista_partes[indices_significadores[idx_fortuna]].longitude);            
+        int regente_do_termo = get_term_ruler(sig[indices_significadores[idx_fortuna]].longitude);   
+        char glifo_atual[10];
+        char divisor_atual[30];
+        snprintf(glifo_atual, sizeof(glifo_atual), "%s", planet_regent_symbols[regente_do_termo]);
+        snprintf(divisor_atual, sizeof(divisor_atual), "%s", planet_regent_names[regente_do_termo]);
+
+        qtd_direcoes = index;
+
+        for (int i = 0; i < qtd_direcoes; i++) {
+            if (cronograma_a[i].promissor_type == PROM_TERM && 
+                cronograma_a[i].significador_glifo[0] == '0'
+            ) {
+                strcpy(divisor_atual, cronograma_a[i].promissor_name);
+                int id_planeta = obter_id_planeta_por_nome(divisor_atual);
+                strcpy(glifo_atual, obter_glifo_planeta_por_id(id_planeta));
+            }
+
+            strcpy(cronograma_a[i].divisor_name, divisor_atual);
+            strcpy(cronograma_a[i].divisor_gliph, glifo_atual);
+        }
+
+
+
+
+        LinhaDirecao *cronograma = (LinhaDirecao *)calloc(qtd_direcoes_zod + qtd_direcoes_mun, sizeof(LinhaDirecao));
+
+
+
+
+        index = 0;
+        if (cronograma) {            
+            for (int i = 0; i < qtd_direcoes; i++) {
+                if (cronograma_a[i].significador_glifo[0] == '0') {
+                    continue;
+                }
+                
+                cronograma[index] = cronograma_a[i];
+                index++;
+            }
+        }
+        qtd_direcoes = index;
+
+
+
+
+        // index = 0;
+        // if (tipo == 1 && sentido == 2) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (tipo == 1 && sentido == 0) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 1) {
+        //             continue;
+        //         }                
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (tipo == 1 && sentido == 1) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].tipo_direcao_id == 0 || cronograma_a[i].sentido == 0) {
+        //             continue;
+        //         }                
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (sentido == 1) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].sentido == 0) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else if (sentido == 0) {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         if (cronograma_a[i].sentido == 1) {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        // else {
+        //     for (int i = 0; i < qtd_direcoes; i++) {
+        //         if (cronograma_a[i].significador_glifo[0] == '0') {
+        //             continue;
+        //         }
+        //         cronograma[index] = cronograma_a[i];
+        //         index++;
+        //     }
+        //     qtd_direcoes = index;
+        // }
+        
+        
+        
+        free(cronograma_a);
+
+
+
+
+        // if (qtd_direcoes != qtd_direcoes_real) {
+        //     show_alert_popup("Qtde de direções não bate!", "");
+        // }
+
+        // Garante que o scroll não vá para o vazio se trocarmos para um planeta com menos direções
+        if (scroll_offset > qtd_direcoes * 2 - max_linhas_exibicao) {
+            scroll_offset = qtd_direcoes * 2 - max_linhas_exibicao;
+        }
+        if (scroll_offset < 0) scroll_offset = 0;
+
+        // --- RENDERIZAÇÃO DO CABEÇALHO FIXO ---
+        mvwprintw(table_win, 2, 4, _("Active Significator Target: "));
+        wattron(table_win, A_BOLD | COLOR_PAIR(8));
+        // if (idx_atual_calculo != -1) {
+
+        //     char abreviacao[4];
+        //     get_part_abbreviation(lista_partes[idx_atual_calculo].name, abreviacao);
+        
+
+        //     wprintw(table_win, "%s - %s", abreviacao, lista_partes[idx_atual_calculo].name);
+        // } else {
+        //     wprintw(table_win, _("Point not calculated in this chart"));
+        // }
+
+        if (idx_atual_calculo != -1) {
+            wprintw(table_win, "%s %s", sig[idx_atual_calculo].object, sig[idx_atual_calculo].object_name);
+        } else {
+            wprintw(table_win, _("Point not calculated in this chart"));
+        }
+        wattroff(table_win, A_BOLD | COLOR_PAIR(8));
+
+        wattron(table_win, A_ITALIC);
+        wprintw(table_win, _(" │ Directions: "));
+        wattron(table_win, A_BOLD | COLOR_PAIR(7));
+        if (tipo == 0) {
+            wprintw(table_win, "Zod");            
+        }
+        else if (tipo == 1) {
+            wprintw(table_win, "Mund");            
+        }
+        else if (tipo == 2) {
+            wprintw(table_win, "Zod & Mund");            
+        }
+        wprintw(table_win, " │ ");
+
+        if (sentido == 0) {
+            wprintw(table_win, "Dir");            
+        }
+        else if (sentido == 1) {
+            wprintw(table_win, "Conv");            
+        }
+        else if (sentido == 2) {
+            wprintw(table_win, "Dir & Conv");            
+        }
+        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
+
+        wattron(table_win, A_DIM);
+        mvwprintw(table_win, 2, table_width - 32, _("Use [←/→] Signif. [↑/↓] Scroll"));
+        wattroff(table_win, A_DIM);
+
+        wattron(table_win, COLOR_PAIR(13));
+        mvwprintw(table_win, 4, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        wattroff(table_win, COLOR_PAIR(13));
+
+        // Colunas Alinhadas Fixas (Mapeadas a partir de 0 para casar com as coordenadas do Pad)
+        int col_idade = 0, col_ano = 16, col_mes = 21, col_dia = 24, col_dir = 33, col_arco = 67, col_tipo = 81, col_sen = 91, col_div = 102;
+
+        wattron(table_win, A_BOLD | COLOR_PAIR(13));
+        mvwprintw(table_win, 5, col_idade + 4, _("Age")); 
+        mvwprintw(table_win, 5, col_ano + 4, _("Year"));
+        mvwprintw(table_win, 5, col_mes + 3, _(" Mo"));
+        mvwprintw(table_win, 5, col_dia + 4, _("Day"));
+        mvwprintw(table_win, 5, col_dir + 4, _("Directional Event")); 
+        mvwprintw(table_win, 5, col_arco + 4, _("Arc (Equat.)"));
+        mvwprintw(table_win, 5, col_tipo + 4, _("Method"));
+        mvwprintw(table_win, 5, col_sen + 4, _("Direction"));
+        mvwprintw(table_win, 5, col_div + 4, _("Divisor"));
+        wattroff(table_win, A_BOLD | COLOR_PAIR(13));
+
+        wattron(table_win, COLOR_PAIR(13));
+        mvwprintw(table_win, 6, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        wattroff(table_win, COLOR_PAIR(13));
+
+        // --- RENDERIZAÇÃO DAS LINHAS DENTRO DO PAD VIRTUAL ---
+        int row_pad = 0; // O Pad começa na linha virtual 0 e vai empilhando tudo
+        int linhas_reais_pad = qtd_direcoes * 2;
+
+        if (qtd_direcoes == 0 || idx_atual_calculo == -1) {
+            wattron(scroll_pad, A_DIM);
+            mvwprintw(scroll_pad, row_pad, col_dir, _("No directional contacts available for this specific point."));
+            wattroff(scroll_pad, A_DIM);
+        } else {
+            for (int i = 0; i < qtd_direcoes; i++) {
+                LinhaDirecao *d = &cronograma[i];
+
+                bool eh_termo = d->promissor_type == PROM_TERM;
+
+                char texto_evento[100];
+                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
+                         eh_termo ? _("Term") : "",
+                         eh_termo ? " " : "",
+                         d->promissor_glifo, d->promissor_name,
+                         (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
+                         d->significador_glifo);
+
+                
+
+                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0);
+                bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
+                
+                bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
+                bool eh_saturno = (strcmp(d->promissor_name, _("Saturn")) == 0);
+                bool eh_nodo_sul = (strcmp(d->promissor_name, _("South Node")) == 0);
+                bool eh_malefico_essencial = (eh_marte || eh_saturno || eh_nodo_sul);
+                
+                bool eh_anareta      = (strcmp(d->promissor_name, nome_anareta) == 0);
+                bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
+                //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
+
+                bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
+                bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
+                bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
+
+                bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
+
+                int par_cor_ativo = COLOR_PAIR(13);
+                int atributo_extra = A_NORMAL;
+
+                if (eh_anareta) {
+                    if (eh_aspecto_tenso || strcmp(d->aspecto_symbol, "☌") == 0) {
+                        par_cor_ativo = COLOR_PAIR(36);
+                        atributo_extra |= (A_REVERSE | A_BOLD);
+                    } else {
+                        par_cor_ativo = COLOR_PAIR(11); 
+                        //atributo_extra = A_BOLD;
+                    }
+                }
+                else if (eh_malefico_essencial && (eh_aspecto_tenso || eh_conjuncao)) {
+                    par_cor_ativo = COLOR_PAIR(11); 
+                    atributo_extra |= A_BOLD;
+                }
+                else if (eh_senhor_casa8 && eh_aspecto_tenso) {
+                    par_cor_ativo = COLOR_PAIR(11); 
+                    atributo_extra |= A_BOLD;
+                }
+                else if (!eh_malefico_essencial && eh_aspecto_tenso) {
+                    par_cor_ativo = COLOR_PAIR(25);
+                    atributo_extra |= A_REVERSE;
+                }
+                else if (eh_benefico_essencial) {
+                    par_cor_ativo = COLOR_PAIR(12);
+                    atributo_extra = A_DIM;      
+                }
+                else if (strcmp(d->aspecto_symbol, "☌") == 0) {
+                    par_cor_ativo = COLOR_PAIR(7);
+                    atributo_extra |= A_BOLD;
+                }
+                else if (!eh_aspecto_tenso) {
+                    par_cor_ativo = COLOR_PAIR(8);
+                    atributo_extra |= A_NORMAL;
+                }
+
+                if (eh_termo) {
+                   atributo_extra |= A_UNDERLINE;
+                }
+
+                wattron(scroll_pad, par_cor_ativo | atributo_extra);
+
+                mvwprintw(scroll_pad, row_pad, col_idade, "%8.4f y", d->idade_evento);
+                mvwprintw(scroll_pad, row_pad, col_ano, "%4d.", d->ano_calendario);
+                mvwprintw(scroll_pad, row_pad, col_mes, "%02d.", d->mes_calendario);
+                mvwprintw(scroll_pad, row_pad, col_dia, "%02d", d->dia_calendario);
+                mvwprintw(scroll_pad, row_pad, col_dir, "%s", texto_evento);
+                mvwprintw(scroll_pad, row_pad, col_arco, "%05.2f°", d->arco_graus);
+                mvwprintw(scroll_pad, row_pad, col_tipo, "%s", d->tipo_direcao);
+                mvwprintw(scroll_pad, row_pad, col_sen, "%s", (d->sentido == 0 ? _("Direct") : _("Converse")));
+                mvwprintw(scroll_pad, row_pad, col_div, "%s %s", d->divisor_gliph, d->divisor_name);
+
+                wattroff(scroll_pad, par_cor_ativo | atributo_extra);
+
+                wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+                mvwprintw(scroll_pad, row_pad + 1, 0, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+                wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
+
+                row_pad += 2;            
+            }            
+        }
+        free(cronograma);
+
+        wattron(table_win, COLOR_PAIR(13));
+        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        wattroff(table_win, COLOR_PAIR(13));
+
+        wattron(table_win, A_DIM | A_ITALIC);
+        if (TIME_KEY < 5) {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+        }
+        else {
+            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
+        }
+        
+        
+        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Mundane (Continuous Local Poles)."));
+            } else {
+                mvwprintw(table_win, table_height - 5, 4, _("Topocentric: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
+            }
+        } else {
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection Bianchini Method)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Mundane (Proportional Semi-Arcs In Mundo)."));
+            } else {
+                mvwprintw(table_win, table_height - 5, 4, _("Placidus: Zodiacal (Ecliptic Projection) + Mundane (Proportional Semi-Arcs)."));
+            }
+        }
+
+        wattroff(table_win, A_ITALIC);
+
+        // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
+        if (linhas_reais_pad > max_linhas_exibicao) {
+            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
+                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
+                scroll_offset / 2 + 1, 
+                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                _("of"),
+                qtd_direcoes,
+                _(") │ [←/→] Change Target"),
+                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+        } else {
+            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+        }
+        wattroff(table_win, A_DIM);
+
+        mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
+
+        wnoutrefresh(table_win);
+
+        int fim_y_recorte = start_y + 7 + max_linhas_exibicao - 2;
+        if ((scroll_offset + max_linhas_exibicao) > linhas_reais_pad) {
+            fim_y_recorte = start_y + 7 + (linhas_reais_pad - scroll_offset) - 1;
+        }
+
+        if (linhas_reais_pad > 0) {
+            prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+        }
+        doupdate();
+
+        int ch = wgetch(table_win);
+        switch (ch) {
+            case 'C':
+            case 'c':
+                sentido = 1;
+                break;
+            case 'd':
+            case 'D':
+                sentido = 0;
+                break;
+            case 'a':
+            case 'A':
+                sentido = 2;
+                break;
+            case 'Z':
+            case 'z':
+                tipo = 0;
+                break;
+            case 'm':
+            case 'M':
+                tipo = 1;
+                break;
+            case 'b':
+            case 'B':
+                tipo = 2;
+                break;
+            case KEY_RIGHT:
+                seletor_alvo_atual = (seletor_alvo_atual + 1) % (qtd_partes);
+                scroll_offset = 0;
+                break;
+            case KEY_LEFT:
+                seletor_alvo_atual = (seletor_alvo_atual - 1 + qtd_partes) % (qtd_partes);
+                scroll_offset = 0;
+                break;
+            case KEY_DOWN:
+                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
+                    scroll_offset += 2;
+                }
+                break;
+            case KEY_UP:
+                if (scroll_offset > 0) {
+                    scroll_offset -= 2;
+                }
+                break;
+            case KEY_NPAGE:
+                if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
+                    scroll_offset += max_linhas_exibicao;
+                }
+                else {
+                    scroll_offset = qtd_direcoes * 2 - 1;
+                }
+                break;
+            case KEY_PPAGE:
+                if (scroll_offset >= 0) {
+                    scroll_offset -= max_linhas_exibicao;
+                    if (scroll_offset < 0) {
+                        scroll_offset = 0;
+                    }
+                }
+                break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(table_win);
+                    int col_clique_janela = event.x - getbegx(table_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(table_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            loop_interativo = 0;
+                            break; // Sai do switch do mouse e fecha a janela
+                        }
+                    }           
+                    
+                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                    // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        
+                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        int offset_inicio_barra = 6 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
+                            
+                            // Calcula o limite máximo que o scroll_offset pode atingir
+                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
+                                
+                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
+                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                novo_offset = (novo_offset / 2) * 2;
+
+                                // Garante que o valor respeite as barreiras de limite
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                scroll_offset = novo_offset;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+    
+            case 27:
+            case 'q':
+            case 'Q':
+                loop_interativo = 0;
+                break;
+        }
+    }
+
+    free(sig);
+    
+    delwin(shadow_win);
+    delwin(table_win);
+    touchwin(stdscr);
+    refresh();
+}
+
+
+
