@@ -636,7 +636,7 @@ void show_alert_popup(const char *txt_line1, const char *txt_line2) {
     int w2 = get_visual_width(txt_line2);
     int width = (w1 > w2 ? w1 + 4 : w2 + 4);
 
-    int pop_w = 54 > width ? 54 : width;
+    int pop_w = width + 4 > 54 ? width + 4 : 54;
     int pop_h = 8;
     int pop_x = (term_w - pop_w) / 2;
     int pop_y = (term_h - pop_h) / 2;

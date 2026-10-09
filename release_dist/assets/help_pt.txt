@@ -1655,6 +1655,8 @@ No menu de configurações você pode selecionar a chave de tempo a ser utilizad
 
 O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, ou T - Polich/Page Topocêntrico, caso o método de cálculo Topocêntrico esteja selecionado para o cálculo das direções, mas apenas para o cálculo das direções primárias mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
 
+Você pode exportar as direções para um arquivo .csv pressionando [P]. Uma caixa de diálogo solicitará o nome do arquivo e, em seguida, dois arquivos serão gerados com o mesmo nome, porém com extensões diferentes: 1) um arquivo .csv, contendo as direções, e 2) um arquivo .info, contendo informações sobre as direções exportadas.
+
 Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
 Tecle [P] para imprimir (exportar) as direções para um arquivo .csv.
@@ -1674,6 +1676,8 @@ O mesmo código de cores das direções gerais pode ser visto neste módulo.
 Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente do atual termo cujos limites foram alcançados pela Parte da Fortuna direcionada, em vez do Ascendente, da mesma forma que ocorre com o Ascendente no módulo anterior de Direções Primárias.
 
 Todas as configurações, a chave temporal selecionada e o sistema de cálculo que operam no módulo principal de Direções Primárias funcionarão aqui da mesma maneira.
+
+Você pode, também, exportar as direções para um arquivo .csv pressionando [P]. Uma caixa de diálogo solicitará o nome do arquivo e, em seguida, dois arquivos serão gerados com o mesmo nome, porém com extensões diferentes: 1) um arquivo .csv, contendo as direções, e 2) um arquivo .info, contendo informações sobre as direções exportadas.
 
 Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.

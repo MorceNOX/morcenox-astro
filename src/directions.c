@@ -1618,7 +1618,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 29;
+    int table_height = 31;
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
@@ -1744,7 +1744,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int scroll_offset = 0;
     int loop_interativo = 1;
 
-    int max_linhas_exibicao = (table_height / 2) * 2 - 12;
+    int max_linhas_exibicao = (table_height / 2) * 2 - 14;
     WINDOW *scroll_pad = newpad(2400, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
@@ -2170,48 +2170,50 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         }
 
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, table_height - 9, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
         if (TIME_KEY < 5) {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+            mvwprintw(table_win, table_height - 8, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
         }
         else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
+            mvwprintw(table_win, table_height - 8, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
         }
         
         
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
         } else {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
             }
         }
         
         wattroff(table_win, A_ITALIC);
 
-        // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
-            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
-                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
+            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                _("Showing"),
                 scroll_offset / 2 + 1, 
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
-                qtd_direcoes,
-                _(") │ [←/→] Change Target"),
-                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+                qtd_direcoes                
+            );
+            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+            mvwprintw(table_win, table_height - 3, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                
         } else {
             mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
@@ -2265,7 +2267,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 break;
             case 'P':
             case 'p':
-                print_directions_to_csv(cronograma, qtd_direcoes);
+                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff);
@@ -2385,7 +2387,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 29;
+    int table_height = 30;
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
@@ -2471,7 +2473,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     // CRIAÇÃO DO PAD VIRTUAL DE ROLAGEM
     // ────────────────────────────────────────────────────────────────────────
     // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
-    int max_linhas_exibicao = (table_height / 2) * 2 - 12; // Espaço físico real na janela para os dados
+    int max_linhas_exibicao = (table_height / 2) * 2 - 14; // Espaço físico real na janela para os dados
     WINDOW *scroll_pad = newpad(2400, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
@@ -2924,48 +2926,50 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         
         wattron(table_win, COLOR_PAIR(13));
-        mvwprintw(table_win, table_height - 7, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, table_height - 9, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(13));
 
         wattron(table_win, A_DIM | A_ITALIC);
         if (TIME_KEY < 5) {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
+            mvwprintw(table_win, table_height - 8, 4, _("Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."), get_key_name(TIME_KEY), 1.0 / get_key(TIME_KEY));
         }
         else {
-            mvwprintw(table_win, table_height - 6, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
+            mvwprintw(table_win, table_height - 8, 4, _("Time Key: %s (Dynamic). ε: Dynamic."), get_key_name(TIME_KEY));
         }
         
         
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Mundane (Continuous Local Poles)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
         } else {
             if (tipo == 0) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
-                mvwprintw(table_win, table_height - 5, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
+                mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
             }
         }
-
+        
         wattroff(table_win, A_ITALIC);
 
-        // Exibe um indicador visual de paginação se houver mais linhas abaixo ou acima
         if (linhas_reais_pad > max_linhas_exibicao) {
-            mvwprintw(table_win, table_height - 3, 4, "%s %d-%d %s %d%s%s",
-                _("[↑/↓] [PgUp/PgDn] Scroll (Showing"),
+            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                _("Showing"),
                 scroll_offset / 2 + 1, 
                 ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
                 _("of"),
-                qtd_direcoes,
-                _(") │ [←/→] Change Target"),
-                _(" │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+                qtd_direcoes                
+            );
+            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+            mvwprintw(table_win, table_height - 3, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                
         } else {
             mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
@@ -3019,7 +3023,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 break;
             case 'P':
             case 'p':
-                print_directions_to_csv(cronograma, qtd_direcoes);
+                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % (qtd_partes);
@@ -3384,12 +3388,14 @@ fim_calculo:
 
 
 
-void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes) {
+void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoGlobal method, int time_key) {
     
     desativar_arrasto_mouse();
 
-    char file_name[100];
-    set_file_name(file_name, 100);    
+    char file_name[120];
+    memset(file_name, 0, sizeof(file_name));
+
+    set_file_name(file_name, sizeof(file_name));    
     char file_path[512];
     snprintf(file_path, sizeof(file_path), "%s/export/%s.csv", CONFIG_PATH, file_name);
 
@@ -3426,10 +3432,32 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes) {
     }
 
     fclose(file);
-    
     char file_csv[128];
     snprintf(file_csv, sizeof(file_csv), "%s.csv", file_name);
     show_alert_popup(_("Directions exported to file:"), file_csv);
+
+
+    char info_path[512];
+    snprintf(info_path, sizeof(info_path), "%s/export/%s.info", CONFIG_PATH, file_name);
+
+    FILE *info = fopen(info_path, "w");
+    if (info == NULL) {
+        show_alert_popup(_("Error attempting to save directions metadata to file!"), info_path);
+        ativar_arrasto_mouse();
+        flushinp();
+        return;
+    }
+
+    fprintf(info, "%s: %s\n", _("Primary Directions Calculation Method"), (method == METODO_TOPOCENTRICO ? _("Tpocentric Method") : _("Placidus Proportional Semi-Arcs Method")));
+    fprintf(info, "%s: %s\n", _("Time Key"), get_key_name(time_key));
+    fprintf(info, "%s: %s\n", _("csv File:"), file_csv);
+    fprintf(info, "%s: %d\n", _("Total Directions:"), qtd_direcoes);
+    fclose(info);
+
+    char file_info[128];
+    snprintf(file_info, sizeof(file_info), "%s.info", file_name);
+    show_alert_popup(_("Directions metadata exported to file:"), file_info);
+
 
     ativar_arrasto_mouse();
     flushinp();

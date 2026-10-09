@@ -1708,6 +1708,8 @@ In the settings menu you can select the time key to calculate the age and the da
 
 The engine takes the current house system (selected by the user) into account when calculating the arc of mundane directions, which applies to any quadrant-based system. Therefore, if the house system in use is not quadrant-based (i.e., E – Equal Houses, W – Whole Sign, or M – Morinus), the application will automatically default to the P – Placidus system—or T – Polich/Page Topocentric if the Topocentric calculation method is selected—but only for the calculation of mundane primary directions. In all other modules, the house system will respect the user's selection.
 
+You can export the directions to a .csv file by pressing [P]. A dialog will ask you for the file name and, then, 2 files will be generated with the same name, but different extensions: 1) a file .csv, containing the directions, and 2) a file .info, containing the information about the directions exported.
+
 Use [↓↑][PgUp/PgDn] to scroll the table.
 Use [←/→] to change the Significator.
 Press [P] to print (export) directions to .csv file.
@@ -1726,7 +1728,9 @@ The same color coding of the general directions can be seen in this module.
 
 These directions also displays a time-lord, or Divisor, which is the regent of the current term whose boundaries were reached by the directed Part of Fortune, instead of the Ascendant, the same way it occurs with the Ascendant in the previous Primary Directions module.
 
-All the settings, the selected the time key and the calculation system, which work in the main Primary Directions module will work here at the same way. 
+All the settings, the selected the time key and the calculation system, which work in the main Primary Directions module will work here at the same way.
+
+You can, also, export the directions to a .csv file by pressing [P]. A dialog will ask you for the file name and, then, 2 files will be generated with the same name, but different extensions: 1) a file .csv, containing the directions, and 2) a file .info, containing the information about the directions exported. 
 
 
 Use [↓↑][PgUp/PgDn] to scroll the table.
