@@ -1385,26 +1385,55 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
     // 1. FILTRO TOPOLÓGICO: Validação geométrica de quadrantes para Rapt-Parallel e Contra-Parallel
     if (a == 10 || a == 11) {
-        // No sistema topocêntrico, o sinal da cota representa o lado em relação ao meridiano (Leste < 0, Oeste > 0)
+        // Sinal da cota representa o lado em relação ao meridiano (Leste < 0, Oeste > 0)
         int mesmos_lados_meridiano = ((cota_sig >= 0 && cota_prom_natal >= 0) || (cota_sig < 0 && cota_prom_natal < 0));
 
         if (a == 10 && !mesmos_lados_meridiano) {
-            return -1.0; // Aborta e sinaliza arco inválido para Rapt Parallel em lados opostos
+            return -1.0; // Aborta Rapt Parallel em lados opostos
         }
         if (a == 11 && mesmos_lados_meridiano) {
-            return -1.0; // Aborta e sinaliza arco inválido para Rapt Contra-Parallel no mesmo lado
+            return -1.0; // Aborta Rapt Contra-Parallel no mesmo lado
         }
 
-        // Configuração de cotas para Rapt Parallels Topocêntricos
-        if (a == 10) {
-            // No Rapt Parallel, ambos são direcionados para uma cota média proporcional ou equivalente
-            if (s == 0) cota_alvo_sig = cota_prom_natal;
-            else        cota_alvo_prom = cota_sig;
+        // DECISÃO DE EIXO TOPOCÊNTRICO: 
+        // As cotas vão de 0.0 (Meridiano) a 1.0/-1.0 (Horizonte).
+        // Se a soma das cotas absolutas for maior que 1.0, os planetas estão mais perto do Horizonte.
+        int focado_no_horizonte = (fabs(cota_sig) + fabs(cota_prom_natal) > 1.0) ? 1 : 0;
+
+        if (!focado_no_horizonte) {
+            // --- EIXO DO MERIDIANO ---
+            if (a == 10) {
+                if (s == 0) cota_alvo_sig = cota_prom_natal;
+                else        cota_alvo_prom = cota_sig;
+            } 
+            else if (a == 11) {
+                if (s == 0) cota_alvo_sig = -cota_prom_natal;
+                else        cota_alvo_prom = -cota_sig;
+            }
         } 
-        else if (a == 11) {
-            // No Rapt Contra-Parallel topocêntrico, projeta-se o astro na cota oposta (hemisfério espelhado)
-            if (s == 0) cota_alvo_sig = -cota_prom_natal;
-            else        cota_alvo_prom = -cota_sig;
+        else {
+            // --- EIXO DO HORIZONTE ---
+            // No horizonte topocêntrico, o ponto de encontro reflete o espelhamento a partir do limite 1.0.
+            // O sinal original (Leste/Oeste) precisa ser rigorosamente preservado.
+            if (a == 10) {
+                if (s == 0) {
+                    double sinal = (cota_prom_natal >= 0) ? 1.0 : -1.0;
+                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
+                } else {
+                    double sinal = (cota_sig >= 0) ? 1.0 : -1.0;
+                    cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
+                }
+            } 
+            else if (a == 11) {
+                // Contra-paralelo no horizonte inverte o hemisfério (muda o sinal)
+                if (s == 0) {
+                    double sinal = (cota_prom_natal >= 0) ? -1.0 : 1.0;
+                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
+                } else {
+                    double sinal = (cota_sig >= 0) ? -1.0 : 1.0;
+                    cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
+                }
+            }
         }
     } 
     // Tratamento de Aspectos e Declinações Mundanas Padrão
@@ -1423,9 +1452,9 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
     // 3. Cálculos de Distância Ascensional (AD) sob os respectivos Polos Topocêntricos
     double sin_ad_sig  = tan(dec_sig_rad) * tan_polo_sig;
-    double sin_ad_prom = tan(dec_prom_rad) * tan_polo_sig; // Na direta, projeta o promissor no polo do sig
+    double sin_ad_prom = tan(dec_prom_rad) * tan_polo_sig; 
     if (s == 1) {
-        sin_ad_sig  = tan(dec_sig_rad) * tan_polo_prom;    // Na conversa, projeta o sig no polo do promissor
+        sin_ad_sig  = tan(dec_sig_rad) * tan_polo_prom;    
         sin_ad_prom = tan(dec_prom_rad) * tan_polo_prom;
     }
 
@@ -1440,7 +1469,7 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
     double oa_sig  = ra_sig  - (ad_sig_graus  * (cota_alvo_sig < 0  ? 1.0 : -1.0));
     double oa_prom = ra_prom - (ad_prom_graus * (cota_alvo_prom < 0 ? 1.0 : -1.0));
 
-    // 5. O Arco Topocêntrico final é a diferença linear direta das posições ascensionais planificadas
+    // 5. O Arco Topocêntrico final
     double arco_topo = 0.0;
     if (s == 0) {
         arco_topo = oa_prom - oa_sig;
@@ -1455,6 +1484,7 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
     return arco_topo;
 }
+
 
 
 
