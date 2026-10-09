@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 08:53-0300\n"
+"POT-Creation-Date: 2026-10-09 09:13-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -879,7 +879,7 @@ msgstr ""
 msgid "True Solar Equatorial Arc"
 msgstr ""
 
-#: src/directions.c:1600 src/directions.c:3574
+#: src/directions.c:1600 src/directions.c:3576
 msgid "Mundane"
 msgstr ""
 
@@ -1090,7 +1090,7 @@ msgid ""
 "Glyph;Significator Name;Arc;Sphere;Motion;Divisor Glyph;Divisor Name\n"
 msgstr ""
 
-#: src/directions.c:3430
+#: src/directions.c:3432
 msgid "Directions exported to file:"
 msgstr ""
 

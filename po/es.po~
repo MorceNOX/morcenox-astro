@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 08:14-0300\n"
+"POT-Creation-Date: 2026-10-09 08:53-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -925,7 +925,7 @@ msgid "Directional Event"
 msgstr ""
 
 #: src/directions.c:2053 src/directions.c:2807
-msgid "Arc (Equat.)"
+msgid "Arc"
 msgstr ""
 
 #: src/directions.c:2054 src/directions.c:2808

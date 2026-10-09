@@ -3425,6 +3425,8 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes) {
         );
     }
 
+    fclose(file);
+    
     char file_csv[128];
     snprintf(file_csv, sizeof(file_csv), "%s.csv", file_name);
     show_alert_popup(_("Directions exported to file:"), file_csv);

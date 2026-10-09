@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 08:14-0300\n"
+"POT-Creation-Date: 2026-10-09 08:53-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1148,8 +1148,8 @@ msgid "Directional Event"
 msgstr "Evento Direcional"
 
 #: src/directions.c:2053 src/directions.c:2807
-msgid "Arc (Equat.)"
-msgstr "Arco (Equat.)"
+msgid "Arc"
+msgstr "Arco"
 
 #: src/directions.c:2054 src/directions.c:2808
 msgid "Sphere"
@@ -6434,6 +6434,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Arc (Equat.)"
+#~ msgstr "Arco (Equat.)"
 
 #~ msgid "Method"
 #~ msgstr "Método"
