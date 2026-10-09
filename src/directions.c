@@ -1113,7 +1113,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                 }
 
                 // Filtra arcos de idade humana viável (0 a 150 anos)
-                if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
 
                     d->sentido = s;
@@ -2189,11 +2189,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                          eh_termo ? " " : "",
                          d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                         d->significador_glifo);
+                         d->significador_glifo
+                );              
 
-                
-
-                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0);
+                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0 || strcmp(d->aspecto_symbol, "R∦") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
                 
                 bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
@@ -2946,11 +2945,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                          eh_termo ? " " : "",
                          d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
-                         d->significador_glifo);
+                         d->significador_glifo
+                );
 
-                
-
-                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0);
+                bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0 || strcmp(d->aspecto_symbol, "R∦") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
                 
                 bool eh_marte   = (strcmp(d->promissor_name, _("Mars")) == 0);
