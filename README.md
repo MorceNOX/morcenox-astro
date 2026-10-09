@@ -238,6 +238,8 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 This program is free software. You can redistribute and/or modify it under the terms of the **GNU General Public License (GPL)** as published by the Free Software Foundation.
 
+> All of this is being done to put into practice what I have learned about astrology and the associated calculations. Therefore, it is possible that someone might find something incorrect or unusual. In that case, I would appreciate any help or suggestions to make this application even better.
+
 ## 👤 Author
 
 **Amilcar Antonio Mesquita Rizk**
