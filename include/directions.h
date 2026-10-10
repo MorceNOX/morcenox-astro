@@ -43,6 +43,8 @@
 #define CARDANO_KEY   0.986666679822222
 #define PTOLEMY_KEY  1.000000000000000
 #define PLACIDUS_KEY 0.986388888888889
+
+#define DELTA_ARCO 0.00277778  // Tolerância de 10 segundos de arco (equivalente a 1 dia de vida)
                     
 typedef enum {
     DIRECAO_ZODIACAL = 0,
@@ -68,6 +70,7 @@ typedef struct {
 } Promissor;
 
 typedef struct {
+    int promissor_id;
     char promissor_name[64]; // O planeta que se move (ex: "Mars")
     char promissor_glifo[10];
     int promissor_type;

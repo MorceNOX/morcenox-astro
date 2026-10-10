@@ -379,10 +379,11 @@ double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo
     // 1. Posição natal do Sol
     swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
     double sol_natal = x2[0];
-    double sol_alvo = normalize360(sol_natal + arco_alvo);
+    double sol_alvo = sol_natal + arco_alvo;
+    if (sol_alvo >= 360.0) sol_alvo -= 360.0;
 
     // 2. Estimativa inicial rápida (Usa Naibod como ponto de partida)
-    double dias_estimados = arco_alvo / NAIBOD_KEY;
+    double dias_estimados = arco_alvo / 0.98564733;
 
     // 3. Método de Newton-Raphson (Apenas 3 passos são necessários!)
     for (int i = 0; i < 3; i++) {
@@ -390,10 +391,11 @@ double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo
         double sol_estimado = x2[0];
         double velocidade_sol = x2[3]; // Velocidade em graus/dia
 
-        double erro = normalize360(sol_estimado - sol_alvo);
-        if (erro > 180.0) erro -= 360.0;
+        double erro = sol_estimado - sol_alvo;
+        if (erro > 180.0)  erro -= 360.0;
+        if (erro < -180.0) erro += 360.0;
 
-        // Ajusta a estimativa usando a derivada (velocidade real do Sol naquele dia)
+        // Ajusta a estimativa usando a derivada exata
         dias_estimados -= erro / velocidade_sol;
     }
 
@@ -402,79 +404,93 @@ double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo
         return x2[3];
     }
 
-    // Retorna a chave perfeitamente calibrada para a escala de tempo "1 ano = 1 dia"
-    return arco_alvo / dias_estimados;
+    // CORREÇÃO DE ESCALA: Neutraliza a multiplicação por 365.242199 que o motor pai fará,
+    // garantindo que os dias_decorridos finais batam exatamente com dias_estimados!
+    double idade_anos_reais = dias_estimados; 
+    return arco_alvo / idade_anos_reais;
 }
 
-
-// Versão otimizada: Não calcula o Sol natal repetidamente e reduz operações de vetor
-double calcular_arco_solar_real_ra_FAST(double jd_natal, double ra_sol_natal, double idade_anos, int *err_code) {
-    double xx_prog[6];
+// 1. FUNÇÃO INTERNA CORRIGIDA (Calcula o arco de RA real para um JD Progredido específico)
+double calcular_arco_solar_real_ra_FAST(double ra_sol_natal, double jd_progredido, int *err_code) {
+    double xx_prog[6], xequat_prog[3], xx_eq_prog[3];
     char err_msg[256];
     
-    // 1. Aplica o princípio de 1 dia = 1 ano para achar a data progredida
-    double jd_progredido = jd_natal + idade_anos;
-    
-    // 2. Calcula a posição do Sol na data progredida (Apenas 1 chamada à Swiss Ephemeris)
-    // Dica de performance: SEFLG_SPEED pode ser somado ao terceiro parâmetro se não precisar de alta precisão de nutação nas progressões
+    // Calcula a posição do Sol no JD progredido real
     if (swe_calc_ut(jd_progredido, SE_SUN, 0, xx_prog, err_msg) < 0) {
         *err_code = -2;
         return 0.0;
     }
     
-    // 3. Transforma a posição progredida para o plano Equatorial
-    double xx_eq_prog[3] = {xx_prog[0], xx_prog[1], 1.0};
-    double xequat_prog[3];
-    const double obl_natal = 23.4392911; 
-    swe_cotrans(xx_eq_prog, xequat_prog, -obl_natal); 
+    // CORREÇÃO: Obter a obliquidade dinâmica correta para a data progredida
+    double obl_dinamica = get_obliquidade(jd_progredido); 
     
-    // 4. O ARCO SOLAR EM ASCENSÃO RETA
+    xx_eq_prog[0] = xx_prog[0];
+    xx_eq_prog[1] = xx_prog[1];
+    xx_eq_prog[2] = 1.0;
+    
+    swe_cotrans(xx_eq_prog, xequat_prog, -obl_dinamica); 
+    
     double arco_solar_ra = xequat_prog[0] - ra_sol_natal;
-    
-    if (arco_solar_ra < 0.0) arco_solar_ra += 360.0;
+    if (arco_solar_ra < 0.0)  arco_solar_ra += 360.0;
+    if (arco_solar_ra > 360.0) arco_solar_ra = fmod(arco_solar_ra, 360.0);
     
     return arco_solar_ra;
 }
 
+// 2. FUNÇÃO DE BUSCA ATUALIZADA (Retorna o fator de conversão perfeito)
 double encontrar_chave_por_arco_solar_ra_FAST(double jd_natal, double arco_direcao) {
-    // 1. CALCULA O SOL NATAL APENAS UMA VEZ AQUI
-    double xx_natal[6], xequat_natal[3];
+    double xx_natal[6], xequat_natal[3], xx_eq_natal[3];
     char err_msg[256];
     int err_code;
     
+    // Calcula Sol Natal
     if (swe_calc_ut(jd_natal, SE_SUN, 0, xx_natal, err_msg) < 0) {
         return NAIBOD_KEY;
     }
-    double xx_eq_natal[3] = {xx_natal[0], xx_natal[1], 1.0};
-    const double obl_natal = get_obliquidade(jd_natal);
+    
+    double obl_natal = get_obliquidade(jd_natal);
+    xx_eq_natal[0] = xx_natal[0];
+    xx_eq_natal[1] = xx_natal[1];
+    xx_eq_natal[2] = 1.0;
+    
     swe_cotrans(xx_eq_natal, xequat_natal, -obl_natal);
     double ra_sol_natal = xequat_natal[0];
 
-    // 2. BUSCA DO LOOP OTIMIZADA
-    double idade_estimada = arco_direcao; 
+    // BUSCA DE NEWTON-RAPHSON BASEADA EM DIAS JULIANOS REAIS
+    // Chave inicial estimada baseada em Naibod: 1 ano de vida = 1 dia de progressão solar
+    double idade_estimada_anos = arco_direcao / 0.98564733; 
+    double jd_progredido_estimado = jd_natal + idade_estimada_anos; 
+    
     double erro = 1.0;
     int iteracoes = 0;
-    
-    // Como a velocidade média do Sol em AR é muito próxima da velocidade média em Longitude (~0.9856),
-    // podemos usar a Chave de Naibod como um "ajustador de passo" (derivada aproximada) 
-    // para fazer o loop convergir em apenas 2 ou 3 passos em vez de 20!
-    const double velocidade_media_sol = 0.98564733;
+    const double velocidade_media_sol_por_dia = 0.98564733; // Velocidade em graus por dia de progressão
 
-    while (fabs(erro) > 0.00001 && iteracoes < 10) {
-        double arco_solar_calculado = calcular_arco_solar_real_ra_FAST(jd_natal, ra_sol_natal, idade_estimada, &err_code);
+    while (fabs(erro) > 0.000001 && iteracoes < 10) {
+        // Passa o JD progredido real estimado para o cálculo astronômico
+        double arco_solar_calculado = calcular_arco_solar_real_ra_FAST(ra_sol_natal, jd_progredido_estimado, &err_code);
         
         erro = arco_solar_calculado - arco_direcao;
         
-        // Ajuste por inclinação de curva (Newton-Raphson aproximado) faz convergir instantaneamente
-        idade_estimada -= (erro / velocidade_media_sol); 
+        // O ajuste corrige DIRETAMENTE os dias do Dia Juliano de progressão [1]
+        jd_progredido_estimado -= (erro / velocidade_media_sol_por_dia); 
         iteracoes++;
     }
     
-    if (idade_estimada > 0.0) {
-        return arco_direcao / idade_estimada;
+    // Descobre quantos dias de progressão real se passaram
+    double dias_de_progressao = jd_progredido_estimado - jd_natal;
+    
+    if (dias_de_progressao > 0.0) {
+        // CORREÇÃO DA FRAÇÃO DA CHAVE:
+        // Como o seu motor principal faz: d->idade_evento = arco / CHAVE;
+        // E depois faz: dias_decorridos = d->idade_evento * 365.242199;
+        // Nós devolvemos a CHAVE perfeitamente calibrada para neutralizar o ano tropical do seu motor pai!
+        double idade_anos_reais = dias_de_progressao; 
+        return arco_direcao / idade_anos_reais;
     }
+    
     return NAIBOD_KEY;
 }
+
 
 
 // Calcula o Arco Solar Real em Ascensão Reta para uma idade específica
@@ -595,49 +611,42 @@ double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
 }
 
 
-/**
- * Retorna o valor CHAVE dinâmico para a lógica de Kepler com altíssima velocidade.
- * Uso no seu código: double chave = obter_chave_kepler_ultra_rapida(tjd_natal, arco);
- *                    double idade = arco / chave;
- */
+
 double obter_chave_kepler_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
     double x2[6];
     char serr[256];
     int32 iflag = SEFLG_SPEED;
 
-    // 1. Estimativa inicial rápida usando uma média padrão (ex: Naibod)
-    // Isso nos joga muito perto da idade real antes de começar
-    double idade_estimada = arco_alvo / NAIBOD_KEY;
+    // 1. Estimativa inicial rápida em dias (1 dia = 1 ano)
+    double dias_estimados = arco_alvo / 0.98564733;
 
-    // 2. Método de Newton-Raphson (Apenas 3 passos encontram a precisão máxima)
+    // 2. Método de Newton-Raphson
     for (int i = 0; i < 3; i++) {
-        // Encontra a data do trânsito na idade estimada
-        double tjd_ut_atual = tjd_ut_natal + (idade_estimada * 365.242199);
+        // CORREÇÃO: Varre as efemérides no passo secundário correto (dias desde o natal)
+        double tjd_ut_atual = tjd_ut_natal + dias_estimados;
         
         if (swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr) < 0) {
-            // Se falhar, aborta para evitar loop infinito
             break; 
         }
 
-        double velocidade_sol = x2[3]; // x2[3] contém a velocidade diária em graus/dia
+        double velocidade_sol = x2[3]; 
         
-        // Na lógica de Kepler: Arco = Velocidade * Idade
-        double arco_estimado = velocidade_sol * idade_estimada;
+        // Na lógica de Kepler: Arco = Velocidade do Dia * Tempo decorrido (em anos)
+        // Como mapeamos 1 dia = 1 ano para o trânsito, o tempo decorrido é dias_estimados
+        double arco_estimado = velocidade_sol * dias_estimados;
         double erro = arco_estimado - arco_alvo;
 
-        // Ajusta a estimativa dividindo o erro pela derivada aproximada (velocidade)
-        idade_estimada -= erro / velocidade_sol;
+        dias_estimados -= erro / velocidade_sol;
     }
 
-    // 3. Proteção contra divisão por zero para arcos nulos ou recém-nascidos
-    if (idade_estimada < 1e-6) {
+    if (dias_estimados < 1e-6) {
         swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
-        return x2[3]; // Retorna a velocidade do dia do nascimento
+        return x2[3]; 
     }
 
-    // Retorna a Chave Equivalente exata para fechar com a sua equação matemática:
-    // Idade = Arco / Chave -> Chave = Arco / Idade
-    return arco_alvo / idade_estimada;
+    // Retorna a chave calibrada para fechar perfeitamente com a equação do motor pai
+    double idade_anos_reais = dias_estimados;
+    return arco_alvo / idade_anos_reais;
 }
 
 
@@ -822,7 +831,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                         arco = fmod(arco, 360.0);
                         if (arco > 180.0) arco = 360.0 - arco;
 
-                        if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                        if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
                             // Filtro contra ecos internos do próprio planeta
                             int ja_salvo = 0;
                             for (int m = 0; m < *qtd_direcoes; m++) {
@@ -838,6 +847,8 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             // Preenchimento mantendo seus ponteiros originais intactos para o color-coding
                             LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
                             d->sentido = s;
+
+                            d->promissor_id = p;
                             strcpy(d->promissor_name, prom[p].object_name);
                             strcpy(d->promissor_glifo, prom[p].object);
                             strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -846,17 +857,45 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             d->promissor_type = prom[p].type;
                             d->arco_graus = arco;
 
+                            // 1. Obter a chave/fator do sistema usando suas macros estáticas
                             double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                            if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+        
+                            // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                             d->idade_evento = arco / CHAVE;
-                            double dias_decorridos = d->idade_evento * 365.242199;
-                            int ano_c, mes_c, dia_c; double hora_c;
-                            swe_revjul(jd + dias_decorridos, 1, &ano_c, &mes_c, &dia_c, &hora_c);
+                    
+                            double dias_decorridos = 0.0;
+        
+                            // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                            if (TIME_KEY == TIME_KEY_NAIBOD) {
+                                dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_CARDANO) {
+                                dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                                dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                            }
+                            else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                                dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                            }
+                            else {                                
+                                dias_decorridos = d->idade_evento * 365.242199;
+                            }
+                    
+                            // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
+                            double jd_evento = jd + dias_decorridos;
+                            
+                            int ano_c, mes_c, dia_c, hora_c, min_c;
+                            double sec_c;
+                            swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+
                             d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                             strcpy(d->tipo_direcao, "Zodiacal");
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             (*qtd_direcoes)++;
-                            if (*qtd_direcoes >= 600) return *qtd_direcoes;
+                            if (*qtd_direcoes >= 600) goto fim_calculo;
                         }
                     }
                     continue; // Pula o resto do loop de aspectos longitudinais para este planeta
@@ -898,7 +937,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                 arco = fmod(arco, 360.0);
                 if (arco > 180.0) arco = 360.0 - arco;
 
-                if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
                     int ja_salvo = 0;
                     for (int m = 0; m < *qtd_direcoes; m++) {
                         if (lista_resultado[m].sentido == s &&
@@ -912,6 +951,8 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
 
                     LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
                     d->sentido = s;
+
+                    d->promissor_id = p;
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -920,20 +961,79 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     d->promissor_type = prom[p].type;
                     d->arco_graus = arco;
 
+                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                     d->idade_evento = arco / CHAVE;
-                    double dias_decorridos = d->idade_evento * 365.242199;
-                    int ano_c, mes_c, dia_c; double hora_c;
-                    swe_revjul(jd + dias_decorridos, 1, &ano_c, &mes_c, &dia_c, &hora_c);
+            
+                    double dias_decorridos = 0.0;
+
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        dias_decorridos = d->idade_evento * 365.242199;
+                    }
+            
+                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
+                    double jd_evento = jd + dias_decorridos;
+
+                    int ano_c, mes_c, dia_c, hora_c, min_c;
+                    double sec_c;
+                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+
                     d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                     strcpy(d->tipo_direcao, "Zodiacal");
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
+                    
                     (*qtd_direcoes)++;
-                    if (*qtd_direcoes >= 600) return *qtd_direcoes;
+                    if (*qtd_direcoes >= 600) goto fim_calculo;
                 }
             }
         }
-    }                   
+    }
+
+fim_calculo:
+    qsort(lista_resultado, *qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+
+    // if (*qtd_direcoes > 1) {
+    //     int i_valido = 0;
+
+    //     for (int i_atual = 1; i_atual < *qtd_direcoes; i_atual++) {
+    //         LinhaDirecao *d0 = &lista_resultado[i_valido];
+    //         LinhaDirecao *d1 = &lista_resultado[i_atual];
+
+    //         bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+    //         bool mesmo_sentido = (d0->sentido == d1->sentido);
+            
+    //         double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+
+    //         bool arco_identico = (delta_arco < DELTA_ARCO);
+
+    //         if (mesmo_promissor && mesmo_sentido && arco_identico) {
+    //             continue; 
+    //         }
+
+    //         i_valido++;
+    //         if (i_valido != i_atual) {
+    //             lista_resultado[i_valido] = *d1;
+    //         }
+    //     }
+
+    //     *qtd_direcoes = i_valido + 1;
+    // }
     return *qtd_direcoes;
 }
 
@@ -1032,6 +1132,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                             d->sentido = s;
                             
+                            d->promissor_id = p;
                             strcpy(d->promissor_name, prom[p].object_name);
                             strcpy(d->promissor_glifo, prom[p].object);
                             strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -1040,12 +1141,35 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             d->promissor_type = prom[p].type;
                             d->arco_graus = arco;
 
+                            // 1. Obter a chave/fator do sistema usando suas macros estáticas
                             double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                            if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+        
+                            // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                             d->idade_evento = arco / CHAVE;
-
-                            double dias_decorridos = d->idade_evento * 365.242199;
+                    
+                            double dias_decorridos = 0.0;
+        
+                            // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                            if (TIME_KEY == TIME_KEY_NAIBOD) {
+                                dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_CARDANO) {
+                                dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                                dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                            }
+                            else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                                dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                            }
+                            else {                                
+                                dias_decorridos = d->idade_evento * 365.242199;
+                            }
+                    
+                            // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                             double jd_evento = jd + dias_decorridos;
-
+        
                             int ano_c, mes_c, dia_c, hora_c, min_c;
                             double sec_c;
                             swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
@@ -1118,6 +1242,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
                     d->sentido = s;
                     
+                    d->promissor_id = p;
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -1131,16 +1256,33 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
 
+                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
-                    d->idade_evento = arco / CHAVE; // Baseado em #define NAIBOD_KEY 1.014646
+                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
+                    d->idade_evento = arco / CHAVE;
+            
+                    double dias_decorridos = 0.0;
 
-                    // 2. Transforma a idade em dias exatos (Ano trópico astronômico médio)
-                    // Ano trópico médio = 365.242199 dias. 
-                    double dias_decorridos = d->idade_evento * 365.242199;
-
-                    // 3. Calcula o Dia Juliano exato em que o evento ocorre
-                    // 'jd' é o Dia Juliano UT do momento do nascimento passado para a função
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        dias_decorridos = d->idade_evento * 365.242199;
+                    }
+            
+                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
 
                     // 4. Devolve o Dia Juliano direto para o calendário misto histórico da Swiss Ephemeris
@@ -1169,6 +1311,33 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 
 fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+
+    // if (qtd_direcoes > 1) {
+    //     int i_valido = 0;
+
+    //     for (int i_atual = 1; i_atual < qtd_direcoes; i_atual++) {
+    //         LinhaDirecao *d0 = &lista_resultado[i_valido];
+    //         LinhaDirecao *d1 = &lista_resultado[i_atual];
+
+    //         bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+    //         bool mesmo_sentido = (d0->sentido == d1->sentido);
+            
+    //         double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+
+    //         bool arco_identico = (delta_arco < DELTA_ARCO);
+
+    //         if (mesmo_promissor && mesmo_sentido && arco_identico) {
+    //             continue; 
+    //         }
+
+    //         i_valido++;
+    //         if (i_valido != i_atual) {
+    //             lista_resultado[i_valido] = *d1;
+    //         }
+    //     }
+
+    //     qtd_direcoes = i_valido + 1;
+    // }
     return qtd_direcoes;
 }
 
@@ -1397,43 +1566,56 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
         // DECISÃO DE EIXO TOPOCÊNTRICO: 
         // As cotas vão de 0.0 (Meridiano) a 1.0/-1.0 (Horizonte).
-        // Se a soma das cotas absolutas for maior que 1.0, os planetas estão mais perto do Horizonte.
         int focado_no_horizonte = (fabs(cota_sig) + fabs(cota_prom_natal) > 1.0) ? 1 : 0;
 
-        // --- EIXO DO MERIDIANO ---
+        // Variável auxiliar para evitar divisões por zero em planetas muito próximos do meridiano
+        double soma_cotas = fabs(cota_sig) + fabs(cota_prom_natal);
+        if (soma_cotas <= 0.0001) soma_cotas = 1.0;
+
         if (!focado_no_horizonte) {
+            // --- EIXO DO MERIDIANO (Cota Proporcional Dinâmica) ---
+            double cota_proporcional = (fabs(cota_sig) * cota_prom_natal + fabs(cota_prom_natal) * cota_sig) / soma_cotas;
+
             if (a == 10) {
-                // CORREÇÃO: Na direta (s==0), o promissor é quem viaja até a cota do significador.
-                if (s == 0) cota_alvo_prom = cota_sig;
-                else        cota_alvo_sig = cota_prom_natal;
+                if (s == 0) cota_alvo_prom = cota_proporcional;
+                else        cota_alvo_sig  = cota_proporcional;
             } 
             else if (a == 11) {
-                // No contra-paralelo meridiano, a cota alvo recebe o sinal invertido
-                if (s == 0) cota_alvo_prom = -cota_sig;
-                else        cota_alvo_sig = -cota_prom_natal;
+                if (s == 0) cota_alvo_prom = -cota_proporcional;
+                else        cota_alvo_sig  = -cota_proporcional;
             }
         } 
-        // --- EIXO DO HORIZONTE ---
         else {
+            // --- EIXO DO HORIZONTE (Cota Complementar Proporcional) ---
+            // 1. Encontra a distância proporcional que falta para cada um tocar o horizonte (1.0)
+            double dist_horizonte_sig  = 1.0 - fabs(cota_sig);
+            double dist_horizonte_prom = 1.0 - fabs(cota_prom_natal);
+            double soma_dist_horizonte = dist_horizonte_sig + dist_horizonte_prom;
+            if (soma_dist_horizonte <= 0.0001) soma_dist_horizonte = 1.0;
+
+            // 2. Calcula o ponto médio complementar ponderado no horizonte
+            double dist_proporcional_encontro = (dist_horizonte_sig * dist_horizonte_prom + dist_horizonte_prom * dist_horizonte_sig) / soma_dist_horizonte;
+
             if (a == 10) {
-                if (s == 0) { // Direta: projeta o Promissor em relação ao limite complementar do Significador
+                if (s == 0) {
                     double sinal = (cota_sig >= 0) ? 1.0 : -1.0;
-                    cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
-                } else { // Conversa
+                    cota_alvo_prom = sinal * (1.0 - dist_proporcional_encontro);
+                } else {
                     double sinal = (cota_prom_natal >= 0) ? 1.0 : -1.0;
-                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
+                    cota_alvo_sig  = sinal * (1.0 - dist_proporcional_encontro);
                 }
             } 
             else if (a == 11) {
-                if (s == 0) { // Direta (Contra-paralelo inverte o sinal do hemisfério)
-                    double sinal = (cota_sig >= 0) ? -1.0 : 1.0;
-                    cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
-                } else { // Conversa
+                if (s == 0) {
+                    double sinal = (cota_sig >= 0) ? -1.0 : 1.0; // Inverte hemisfério
+                    cota_alvo_prom = sinal * (1.0 - dist_proporcional_encontro);
+                } else {
                     double sinal = (cota_prom_natal >= 0) ? -1.0 : 1.0;
-                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
+                    cota_alvo_sig  = sinal * (1.0 - dist_proporcional_encontro);
                 }
             }
         }
+
 
     } 
     // Tratamento de Aspectos e Declinações Mundanas Padrão
@@ -1686,6 +1868,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                     
                     d->sentido = s;
+
+                    d->promissor_id = p;
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -1694,10 +1878,34 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     d->promissor_type = prom[p].type;
                     
                     d->arco_graus = arco;
+                    
+                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                     d->idade_evento = arco / CHAVE;
             
-                    double dias_decorridos = d->idade_evento * 365.242199;
+                    double dias_decorridos = 0.0;
+
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        dias_decorridos = d->idade_evento * 365.242199;
+                    }
+            
+                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
             
                     int ano_c, mes_c, dia_c, hora_c, min_c;
@@ -1720,7 +1928,35 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
 
 fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+
+    if (qtd_direcoes > 1) {
+        int i_valido = 0;
+
+        for (int i_atual = 1; i_atual < qtd_direcoes; i_atual++) {
+            LinhaDirecao *d0 = &lista_resultado[i_valido];
+            LinhaDirecao *d1 = &lista_resultado[i_atual];
+
+            bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+            bool mesmo_sentido = (d0->sentido == d1->sentido);
+            
+            double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+
+            bool arco_identico = (delta_arco < DELTA_ARCO);
+
+            if (mesmo_promissor && mesmo_sentido && arco_identico) {
+                continue; 
+            }
+
+            i_valido++;
+            if (i_valido != i_atual) {
+                lista_resultado[i_valido] = *d1;
+            }
+        }
+
+        qtd_direcoes = i_valido + 1;
+    }
     return qtd_direcoes;
+
 }
 
 
@@ -3375,6 +3611,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                             LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                             d->sentido = s;
                             
+                            d->promissor_id = p;
                             strcpy(d->promissor_name, prom[p].object_name);
                             strcpy(d->promissor_glifo, prom[p].object);
                             strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -3389,10 +3626,33 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                             d->promissor_type = prom[p].type;
                             d->arco_graus = arco;
 
+                            // 1. Obter a chave/fator do sistema usando suas macros estáticas
                             double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                            if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+        
+                            // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                             d->idade_evento = arco / CHAVE;
-
-                            double dias_decorridos = d->idade_evento * 365.242199;
+                    
+                            double dias_decorridos = 0.0;
+        
+                            // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                            if (TIME_KEY == TIME_KEY_NAIBOD) {
+                                dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_CARDANO) {
+                                dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                                dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                            }
+                            else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                                dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                            }
+                            else {                                
+                                dias_decorridos = d->idade_evento * 365.242199;
+                            }
+                    
+                            // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                             double jd_evento = jd + dias_decorridos;
 
                             int ano_c, mes_c, dia_c, hora_c, min_c;
@@ -3468,6 +3728,7 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
 
                     d->sentido = s;
                     
+                    d->promissor_id = p;
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -3486,17 +3747,34 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
 
+                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                     d->idade_evento = arco / CHAVE;
+            
+                    double dias_decorridos = 0.0;
 
-                    // 2. Transforma a idade em dias exatos (Ano trópico astronômico médio)
-                    // Ano trópico médio = 365.242199 dias. 
-                    double dias_decorridos = d->idade_evento * 365.242199;
-
-                    // 3. Calcula o Dia Juliano exato em que o evento ocorre
-                    // 'jd' é o Dia Juliano UT do momento do nascimento que passado para a função
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        dias_decorridos = d->idade_evento * 365.242199;
+                    }
+            
+                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
-
                     // 4. Devolve o Dia Juliano direto para o calendário misto histórico da Swiss Ephemeris
                     int ano_c, mes_c, dia_c, hora_c, min_c;
                     double sec_c;
@@ -3716,6 +3994,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                     
                     d->sentido = s;
+
+                    d->promissor_id = p;
                     strcpy(d->promissor_name, prom[p].object_name);
                     strcpy(d->promissor_glifo, prom[p].object);
                     strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
@@ -3730,11 +4010,33 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                     
                     d->arco_graus = arco;
 
+                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                     d->idade_evento = arco / CHAVE;
             
-                    double dias_decorridos = d->idade_evento * 365.242199;
+                    double dias_decorridos = 0.0;
+
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        dias_decorridos = d->idade_evento * 365.242199;
+                    }
             
+                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
             
                     // 4. Converte o Dia Juliano para data UTC (Swisseph gerencia calendários)
