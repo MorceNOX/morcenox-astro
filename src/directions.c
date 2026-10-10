@@ -1400,41 +1400,41 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
         // Se a soma das cotas absolutas for maior que 1.0, os planetas estão mais perto do Horizonte.
         int focado_no_horizonte = (fabs(cota_sig) + fabs(cota_prom_natal) > 1.0) ? 1 : 0;
 
+        // --- EIXO DO MERIDIANO ---
         if (!focado_no_horizonte) {
-            // --- EIXO DO MERIDIANO ---
             if (a == 10) {
-                if (s == 0) cota_alvo_sig = cota_prom_natal;
-                else        cota_alvo_prom = cota_sig;
+                // CORREÇÃO: Na direta (s==0), o promissor é quem viaja até a cota do significador.
+                if (s == 0) cota_alvo_prom = cota_sig;
+                else        cota_alvo_sig = cota_prom_natal;
             } 
             else if (a == 11) {
-                if (s == 0) cota_alvo_sig = -cota_prom_natal;
-                else        cota_alvo_prom = -cota_sig;
+                // No contra-paralelo meridiano, a cota alvo recebe o sinal invertido
+                if (s == 0) cota_alvo_prom = -cota_sig;
+                else        cota_alvo_sig = -cota_prom_natal;
             }
         } 
+        // --- EIXO DO HORIZONTE ---
         else {
-            // --- EIXO DO HORIZONTE ---
-            // No horizonte topocêntrico, o ponto de encontro reflete o espelhamento a partir do limite 1.0.
-            // O sinal original (Leste/Oeste) precisa ser rigorosamente preservado.
             if (a == 10) {
-                if (s == 0) {
-                    double sinal = (cota_prom_natal >= 0) ? 1.0 : -1.0;
-                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
-                } else {
+                if (s == 0) { // Direta: projeta o Promissor em relação ao limite complementar do Significador
                     double sinal = (cota_sig >= 0) ? 1.0 : -1.0;
                     cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
+                } else { // Conversa
+                    double sinal = (cota_prom_natal >= 0) ? 1.0 : -1.0;
+                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
                 }
             } 
             else if (a == 11) {
-                // Contra-paralelo no horizonte inverte o hemisfério (muda o sinal)
-                if (s == 0) {
-                    double sinal = (cota_prom_natal >= 0) ? -1.0 : 1.0;
-                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
-                } else {
+                if (s == 0) { // Direta (Contra-paralelo inverte o sinal do hemisfério)
                     double sinal = (cota_sig >= 0) ? -1.0 : 1.0;
                     cota_alvo_prom = sinal * (1.0 - fabs(cota_sig));
+                } else { // Conversa
+                    double sinal = (cota_prom_natal >= 0) ? -1.0 : 1.0;
+                    cota_alvo_sig = sinal * (1.0 - fabs(cota_prom_natal));
                 }
             }
         }
+
     } 
     // Tratamento de Aspectos e Declinações Mundanas Padrão
     else if (a == 8 || a == 9) { 
@@ -1672,6 +1672,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                                     arco = hd_sig_abs - dist_proporcional_sig;
                                 }
                             }
+
                         }
                     }
                 }
