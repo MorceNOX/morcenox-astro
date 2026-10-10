@@ -1657,6 +1657,8 @@ O motor leva em consideração o sistema de casas atual (selecionado pelo usuár
 
 Você pode exportar as direções para um arquivo .csv pressionando [P]. Uma caixa de diálogo solicitará o nome do arquivo e, em seguida, dois arquivos serão gerados com o mesmo nome, porém com extensões diferentes: 1) um arquivo .csv, contendo as direções, e 2) um arquivo .info, contendo informações sobre as direções exportadas.
 
+Para as Direções Mundanas, você pode selecionar os aspectos que serão apresentados na tabela temporal das direções. Pressione [1] para selecionar todos os aspectos mundanos; Pressione [2] para excluir os sextis mundanos e as quadraturas mundanas da lista. Esta seleção pode ser feita a qualquer momento enquanto a tabela de Direções Primárias estiver sendo exibida.
+
 Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.
 Tecle [P] para imprimir (exportar) as direções para um arquivo .csv.
@@ -1678,6 +1680,8 @@ Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente
 Todas as configurações, a chave temporal selecionada e o sistema de cálculo que operam no módulo principal de Direções Primárias funcionarão aqui da mesma maneira.
 
 Você pode, também, exportar as direções para um arquivo .csv pressionando [P]. Uma caixa de diálogo solicitará o nome do arquivo e, em seguida, dois arquivos serão gerados com o mesmo nome, porém com extensões diferentes: 1) um arquivo .csv, contendo as direções, e 2) um arquivo .info, contendo informações sobre as direções exportadas.
+
+A seleção de aspectos mundanos para as Direções Mundanas funciona aqui da mesma forma que no módulo anterior.
 
 Use [↓↑][PgUp/PgDn] para deslizar a tabela.
 Use [←/→] para mudar o Significador.

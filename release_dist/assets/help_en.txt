@@ -1710,6 +1710,8 @@ The engine takes the current house system (selected by the user) into account wh
 
 You can export the directions to a .csv file by pressing [P]. A dialog will ask you for the file name and, then, 2 files will be generated with the same name, but different extensions: 1) a file .csv, containing the directions, and 2) a file .info, containing the information about the directions exported.
 
+For Mundane Directions, you can also select the mundane aspects to be part of the time table: If you hit [1] all mundane aspects will be selected; if you press [2] the sextiles and squares will be excluded from the table. You can do these selections whenever you wish while the Directions table is displayed.
+
 Use [↓↑][PgUp/PgDn] to scroll the table.
 Use [←/→] to change the Significator.
 Press [P] to print (export) directions to .csv file.
@@ -1730,7 +1732,9 @@ These directions also displays a time-lord, or Divisor, which is the regent of t
 
 All the settings, the selected the time key and the calculation system, which work in the main Primary Directions module will work here at the same way.
 
-You can, also, export the directions to a .csv file by pressing [P]. A dialog will ask you for the file name and, then, 2 files will be generated with the same name, but different extensions: 1) a file .csv, containing the directions, and 2) a file .info, containing the information about the directions exported. 
+You can, also, export the directions to a .csv file by pressing [P]. A dialog will ask you for the file name and, then, 2 files will be generated with the same name, but different extensions: 1) a file .csv, containing the directions, and 2) a file .info, containing the information about the directions exported.
+
+The filter for mundane aspects for Mundane Directions will work here, the same way it does in the previous module. 
 
 
 Use [↓↑][PgUp/PgDn] to scroll the table.

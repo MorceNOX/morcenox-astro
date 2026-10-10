@@ -1028,7 +1028,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                         arco = arcos_paralelo[k];
 
                         // Filtra arcos de idade humana viável (0 a 150 anos)
-                        if (arco > 0.0 && arco <= MAX_AGE * 1.05) {
+                        if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
                             LinhaDirecao *d = &lista_resultado[qtd_direcoes];
                             d->sentido = s;
                             
@@ -1489,7 +1489,7 @@ double calcular_arco_mundano_topocentrico_interno(double ra_sig, double dec_sig_
 
 
 
-int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom) {
+int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, double ramc, double lat_geografica, int sentido, Promissor *prom, int *mundane_aspects) {
     int qtd_direcoes = 0;
     double lat_geo_rad = para_radianos(lat_geografica);
 
@@ -1538,6 +1538,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
             if (s == 1 && sentido == 0) continue; 
 
             for (int a = 0; a < 12; a++) {
+                if (!mundane_aspects[a]) continue;
                 if (prom[p].type == PROM_TERM && a > 0) break;
 
                 double arco = 0.0;
@@ -1887,6 +1888,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
     bool PART_DIRECTIONS = false;
 
+    int mundane_aspects[12] = {1,1,1,1,1,1,1,1,1,1,1,1};
+
     while (loop_interativo) {
         werase(table_win);
         werase(scroll_pad);
@@ -1935,7 +1938,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));            
-            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);            
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
         }
         
         int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
@@ -2320,11 +2323,12 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 qtd_direcoes                
             );
             wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
-            mvwprintw(table_win, table_height - 3, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
                 
         } else {
-            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+            mvwprintw(table_win, table_height - 4, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
+        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)"));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart ─ [P] Print to File"));
@@ -2376,6 +2380,18 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             case 'P':
             case 'p':
                 print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                break;
+            case '1':
+                for (int i = 0; i < 12; i++) mundane_aspects[i] = 1;
+                break;
+            case '2':
+                for (int i = 0; i < 12; i++) {
+                    if (i > 0 && i < 5) {
+                        mundane_aspects[i] = 0; 
+                    } else {
+                        mundane_aspects[i] = 1;
+                    }
+                }
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff);
@@ -2495,7 +2511,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 30;
+    int table_height = 31;
     int table_width = max_x - 10;
     int start_y = (max_y - table_height) / 2;
     int start_x = 5;
@@ -2614,6 +2630,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
     mouseinterval(100);
 
+    int mundane_aspects[12] = {1,1,1,1,1,1,1,1,1,1,1,1};
+
     while (loop_interativo) {
         // Limpa todas as estruturas gráficas antes de recalcular
         werase(table_win);
@@ -2663,7 +2681,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));            
-            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);            
+            qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
         }
 
         // qtd_direcoes_for = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom);
@@ -3075,11 +3093,12 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 qtd_direcoes                
             );
             wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
-            mvwprintw(table_win, table_height - 3, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
                 
         } else {
-            mvwprintw(table_win, table_height - 3, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
+            mvwprintw(table_win, table_height - 4, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
+        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)"));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart ─ [P] Print to File"));
@@ -3131,6 +3150,18 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             case 'P':
             case 'p':
                 print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                break;
+            case '1':
+                for (int i = 0; i < 12; i++) mundane_aspects[i] = 1;
+                break;
+            case '2':
+                for (int i = 0; i < 12; i++) {
+                    if (i > 0 && i < 5) {
+                        mundane_aspects[i] = 0; 
+                    } else {
+                        mundane_aspects[i] = 1;
+                    }
+                }
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % (qtd_partes);
