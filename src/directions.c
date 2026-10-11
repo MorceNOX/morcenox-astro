@@ -65,6 +65,19 @@ double get_obliquidade(double jd) {
 }
 
 
+double obter_ano_tropical_dinamico(double jd_natal) {
+    // J2000.0 corresponde ao Dia Juliano 2451545.0
+    // 36525.0 é o número de dias em um século juliano
+    double T = (jd_natal - 2451545.0) / 36525.0;
+
+    // Fórmula polinomial de Laskar para a variação do Ano Tropical
+    double ano_tropical = 365.2421896698 - (0.00000615359 * T) - (0.000000000729 * T * T);
+
+    return ano_tropical;
+}
+
+
+
 int obter_dias_do_mes(int mes, int ano) {
     // Para a imensa maioria dos meses, o valor é estático
     if (mes == 4 || mes == 6 || mes == 9 || mes == 11) return 30;
@@ -241,7 +254,7 @@ double calcular_arco_kepler_para_idade(double tjd_ut_natal, double idade_anos) {
     int32 iflag = SEFLG_SPEED;
     
     // Calcula a velocidade do Sol no ano/data do trânsito alvo
-    double tjd_ut_atual = tjd_ut_natal + (idade_anos * 365.242199);
+    double tjd_ut_atual = tjd_ut_natal + (idade_anos * obter_ano_tropical_dinamico(tjd_ut_natal));
     swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr);
     
     double velocidade_do_sol = x2[3]; // Índice 3 contém a velocidade em graus/dia
@@ -570,7 +583,7 @@ static double calcular_arco_kepler_interno(double tjd_ut_natal, double idade_ano
     char serr[256];
     int32 iflag = SEFLG_SPEED;
     
-    double tjd_ut_atual = tjd_ut_natal + (idade_anos * 365.242199);
+    double tjd_ut_atual = tjd_ut_natal + (idade_anos * obter_ano_tropical_dinamico(tjd_ut_natal));
     swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr);
     
     return x2[3] * idade_anos; // Velocidade instantânea do dia * anos acumulados
@@ -879,8 +892,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
-                            else {                                
-                                dias_decorridos = d->idade_evento * 365.242199;
+                            else {
+                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                                dias_decorridos = d->idade_evento * ano_tropical_epoca;                                
                             }
                     
                             // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -984,7 +998,8 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else {                                
-                        dias_decorridos = d->idade_evento * 365.242199;
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -1008,32 +1023,32 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
 fim_calculo:
     qsort(lista_resultado, *qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
 
-    // if (*qtd_direcoes > 1) {
-    //     int i_valido = 0;
+    if (*qtd_direcoes > 1) {
+        int i_valido = 0;
 
-    //     for (int i_atual = 1; i_atual < *qtd_direcoes; i_atual++) {
-    //         LinhaDirecao *d0 = &lista_resultado[i_valido];
-    //         LinhaDirecao *d1 = &lista_resultado[i_atual];
+        for (int i_atual = 1; i_atual < *qtd_direcoes; i_atual++) {
+            LinhaDirecao *d0 = &lista_resultado[i_valido];
+            LinhaDirecao *d1 = &lista_resultado[i_atual];
 
-    //         bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
-    //         bool mesmo_sentido = (d0->sentido == d1->sentido);
+            bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+            bool mesmo_sentido = (d0->sentido == d1->sentido);
             
-    //         double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+            double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
 
-    //         bool arco_identico = (delta_arco < DELTA_ARCO);
+            bool arco_identico = (delta_arco < DELTA_ARCO);
 
-    //         if (mesmo_promissor && mesmo_sentido && arco_identico) {
-    //             continue; 
-    //         }
+            if (mesmo_promissor && mesmo_sentido && arco_identico) {
+                continue; 
+            }
 
-    //         i_valido++;
-    //         if (i_valido != i_atual) {
-    //             lista_resultado[i_valido] = *d1;
-    //         }
-    //     }
+            i_valido++;
+            if (i_valido != i_atual) {
+                lista_resultado[i_valido] = *d1;
+            }
+        }
 
-    //     *qtd_direcoes = i_valido + 1;
-    // }
+        *qtd_direcoes = i_valido + 1;
+    }
     return *qtd_direcoes;
 }
 
@@ -1049,7 +1064,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     int qtd_direcoes = 0;
     int object_diff = show_modern_planets ? 0 : 3;
 
-    double ra_significador = sig[idx_alvo].ra; //calcular_ra(plots[idx_alvo].longitude, plots[idx_alvo].declination, jd);
+    double ra_significador = sig[idx_alvo].ra;
     double dec_significador = sig[idx_alvo].declination; // Declinação natal do alvo
 
     double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
@@ -1164,7 +1179,8 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
                             else {                                
-                                dias_decorridos = d->idade_evento * 365.242199;
+                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
                     
                             // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -1279,7 +1295,8 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else {                                
-                        dias_decorridos = d->idade_evento * 365.242199;
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -1312,32 +1329,32 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
 fim_calculo:
     qsort(lista_resultado, qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
 
-    // if (qtd_direcoes > 1) {
-    //     int i_valido = 0;
+    if (qtd_direcoes > 1) {
+        int i_valido = 0;
 
-    //     for (int i_atual = 1; i_atual < qtd_direcoes; i_atual++) {
-    //         LinhaDirecao *d0 = &lista_resultado[i_valido];
-    //         LinhaDirecao *d1 = &lista_resultado[i_atual];
+        for (int i_atual = 1; i_atual < qtd_direcoes; i_atual++) {
+            LinhaDirecao *d0 = &lista_resultado[i_valido];
+            LinhaDirecao *d1 = &lista_resultado[i_atual];
 
-    //         bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
-    //         bool mesmo_sentido = (d0->sentido == d1->sentido);
+            bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+            bool mesmo_sentido = (d0->sentido == d1->sentido);
             
-    //         double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+            double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
 
-    //         bool arco_identico = (delta_arco < DELTA_ARCO);
+            bool arco_identico = (delta_arco < DELTA_ARCO);
 
-    //         if (mesmo_promissor && mesmo_sentido && arco_identico) {
-    //             continue; 
-    //         }
+            if (mesmo_promissor && mesmo_sentido && arco_identico) {
+                continue; 
+            }
 
-    //         i_valido++;
-    //         if (i_valido != i_atual) {
-    //             lista_resultado[i_valido] = *d1;
-    //         }
-    //     }
+            i_valido++;
+            if (i_valido != i_atual) {
+                lista_resultado[i_valido] = *d1;
+            }
+        }
 
-    //     qtd_direcoes = i_valido + 1;
-    // }
+        qtd_direcoes = i_valido + 1;
+    }
     return qtd_direcoes;
 }
 
@@ -1459,7 +1476,7 @@ const char* get_key_name(int key) {
 
 
 
-double obter_cota_fixa_casa_placidus(int numero_casa) {
+double obter_proporcao_polar_casa(int numero_casa) {
     switch(numero_casa) {
         case 10: return  0.0;         // Meio do Céu (Cresta do Meridiano)
         case 11: return -0.33333333;  // Leste, Acima (1/3 do SAD)
@@ -1484,10 +1501,10 @@ double calcular_cota_universal(double posicao_domal_swe) {
     double fracao = posicao_domal_swe - casa_base;         // Ex: 0.5
     
     // Mapeia linearmente as transições de cúspides do espaço local
-    double cota_cuspide_atual = obter_cota_fixa_casa_placidus(casa_base);
+    double cota_cuspide_atual = obter_proporcao_polar_casa(casa_base);
     
     int proxima_casa = (casa_base == 12) ? 1 : casa_base + 1;
-    double cota_proxima_cuspide = obter_cota_fixa_casa_placidus(proxima_casa);
+    double cota_proxima_cuspide = obter_proporcao_polar_casa(proxima_casa);
     
     // Interpolação que amarra a cota com o sistema de casas em uso!
     return cota_cuspide_atual + (fracao * (cota_proxima_cuspide - cota_cuspide_atual));
@@ -1503,10 +1520,10 @@ double calcular_cota_dinamica_sistema(double house_pos) {
     double fracao = house_pos - (double)casa_base;   // Ex: 0.5
 
     // Busca as cotas espaciais das duas cúspides que delimitam o planeta
-    double cota_atual = obter_cota_fixa_casa_placidus(casa_base);
+    double cota_atual = obter_proporcao_polar_casa(casa_base);
     
     int proxima_casa = (casa_base == 12) ? 1 : casa_base + 1;
-    double cota_proxima = obter_cota_fixa_casa_placidus(proxima_casa);
+    double cota_proxima = obter_proporcao_polar_casa(proxima_casa);
 
     // Tratamento matemático especial para a transição crítica do Horizonte (Casa 1 para Casa 2)
     // No nosso mapa de cotas, a Casa 1 vale -1.0 e a Casa 2 vale -0.666667.
@@ -1708,7 +1725,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
         double cota_sig_orientada;
         if (sig[idx_alvo].type == PROM_CUSP) {
             int num_casa = sig[idx_alvo].house;
-            cota_sig_orientada = obter_cota_fixa_casa_placidus(num_casa);
+            cota_sig_orientada = obter_proporcao_polar_casa(num_casa);
         } else {
             cota_sig_orientada = calcular_cota_dinamica_sistema(sig[idx_alvo].house_pos);
         }
@@ -1748,13 +1765,13 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                 if (sig[idx_alvo].type == PROM_ANGLE) {
                     int num_casa = sig[idx_alvo].house;
                     eh_angulo_angular = 1;
-                    cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);                    
+                    cota_espacial_fixa = obter_proporcao_polar_casa(num_casa);                    
                 }
                 else if (sig[idx_alvo].type == PROM_CUSP) {
                     int num_casa = sig[idx_alvo].house;
                     if (num_casa == 1 || num_casa == 4 || num_casa == 7 || num_casa == 10) {
                         eh_angulo_angular = 1;
-                        cota_espacial_fixa = obter_cota_fixa_casa_placidus(num_casa);
+                        cota_espacial_fixa = obter_proporcao_polar_casa(num_casa);
                     }
                 }
             
@@ -1902,7 +1919,8 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else {                                
-                        dias_decorridos = d->idade_evento * 365.242199;
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -2117,8 +2135,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     wnoutrefresh(table_win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
+
+    drag_and_drop_on();
 
     int sentido = 2;
     int tipo = 2;
@@ -2565,7 +2585,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         } else {
             mvwprintw(table_win, table_height - 4, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
-        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)"));
+        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)   │ [3] (☌ □ △ ☍ ∥ ∦ R∥ R∦)"));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart ─ [P] Print to File"));
@@ -2575,6 +2595,9 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
         wattroff(table_win, COLOR_PAIR(28) | flag);
+
+        mvwaddstr(table_win, 6, table_width - 2, "▲");
+        mvwaddstr(table_win, table_height - 9, table_width - 2, "▼");
 
         wnoutrefresh(table_win);
 
@@ -2624,6 +2647,15 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             case '2':
                 for (int i = 0; i < 12; i++) {
                     if (i > 0 && i < 5) {
+                        mundane_aspects[i] = 0; 
+                    } else {
+                        mundane_aspects[i] = 1;
+                    }
+                }
+                break;
+            case '3':
+                for (int i = 0; i < 12; i++) {
+                    if (i > 0 && i < 3) {
                         mundane_aspects[i] = 0; 
                     } else {
                         mundane_aspects[i] = 1;
@@ -2685,47 +2717,206 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         }
                     }           
                     
-                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
-                        int linha_clique_janela = event.y - getbegy(table_win);
-                        
-                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        // O seu offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
+                        // Assumindo estrutura padrão: Seta Cima na linha 6, Canal da Barra da 7 até max, Seta Baixo no fim.
+                        int linha_seta_cima = 6;
+                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a sua seta de baixo estiver em outra linha
                         int offset_inicio_barra = 6 + 1; 
+                        int altura_canal_barra = max_linhas_exibicao - 1;
+
+                        int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
+
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM DE 2 EM 2
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(table_win, TRUE);
+                                while (1) {
+                                    if (scroll_offset > 1) {
+                                        scroll_offset -= 2;
+                                        
+                                        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                        if (linhas_reais_pad > max_linhas_exibicao) {
+                                            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                                _("Showing"),
+                                                scroll_offset / 2 + 1, 
+                                                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                                _("of"),
+                                                qtd_direcoes                
+                                            );
+                                            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                                
+                                        }
+                                        wnoutrefresh(table_win);
+                                        prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                        doupdate();
+                                    } else {
+                                        scroll_offset = 0;
+                                    }
+
+                                    napms(125); // Confortável para as setas
+
+                                    int ch_check = wgetch(table_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(table_win, FALSE);
+                            }
+                        }
                         
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM DE 2 EM 2
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(table_win, TRUE);
+                                while (1) {
+                                    if (scroll_offset < max_scroll_y - 1) {
+                                        scroll_offset += 2;
+                                        
+                                        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                        if (linhas_reais_pad > max_linhas_exibicao) {
+                                            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                                _("Showing"),
+                                                scroll_offset / 2 + 1, 
+                                                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                                _("of"),
+                                                qtd_direcoes                
+                                            );
+                                            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                                
+                                        }
+                                        wnoutrefresh(table_win);
+                                        prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                        doupdate();
+                                    } else {
+                                        scroll_offset = max_scroll_y;
+                                    }
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
-                            
-                            // Calcula o limite máximo que o scroll_offset pode atingir
-                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                                    napms(125);
 
-                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
-                                
-                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
-                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                    int ch_check = wgetch(table_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(table_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DA BARRA DE ROLAGEM (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(table_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (altura_canal_barra - 1) > 0) {
+                                linha_trilho_atual = (scroll_offset * (altura_canal_barra - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou em cima do quadrado do trilho, ativa o arrasto relativo (sem saltos)
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int scroll_offset_original = scroll_offset;
+
+                            while (1) {
+                                int novo_offset = scroll_offset;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado no movimento da mão do usuário
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((altura_canal_barra - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (altura_canal_barra - 1);
+                                        novo_offset = scroll_offset_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte rápido)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < altura_canal_barra) {
+                                        if ((altura_canal_barra - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (altura_canal_barra - 1);
+                                        }
+                                    }
+                                }
+
+                                // ARREDONDAMENTO PAR OBRIGATÓRIO: Garante que os pulos sejam sempre múltiplos de 2
                                 novo_offset = (novo_offset / 2) * 2;
 
-                                // Garante que o valor respeite as barreiras de limite
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                scroll_offset = novo_offset;
+                                if (scroll_offset != novo_offset) {
+                                    scroll_offset = novo_offset;
+                                    
+                                    desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                    if (linhas_reais_pad > max_linhas_exibicao) {
+                                        wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                        mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                            _("Showing"),
+                                            scroll_offset / 2 + 1, 
+                                            ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                            _("of"),
+                                            qtd_direcoes                
+                                        );
+                                        wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                        mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                            
+                                    }
+                                    wnoutrefresh(table_win);
+                                    prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                    doupdate();
+                                }
+
+                                // Se foi um clique rápido simples fora do trilho, quebra imediatamente
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+
+                                napms(10); // Rastreamento fluido do arrasto
+
+                                int ch_check = wgetch(table_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(table_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(table_win, FALSE);
                         }
                     }
                 }
                 break;
             }
+    
     
             case 27:
             case 'q':
@@ -2740,6 +2931,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     delwin(table_win);
     touchwin(stdscr);
     refresh();
+
+    drag_and_drop_off();
 }
 
 
@@ -2864,8 +3057,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
     bool PART_DIRECTIONS = true;
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
+
+    drag_and_drop_on();
 
     int mundane_aspects[12] = {1,1,1,1,1,1,1,1,1,1,1,1};
 
@@ -3335,7 +3530,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         } else {
             mvwprintw(table_win, table_height - 4, 4, _("Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));
         }
-        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)"));
+        mvwprintw(table_win, table_height - 3, 4, _("Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)   │ [3] (☌ □ △ ☍ ∥ ∦ R∥ R∦)"));
         wattroff(table_win, A_DIM);
 
         mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart ─ [P] Print to File"));
@@ -3345,6 +3540,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         wattron(table_win, COLOR_PAIR(28) | flag);
         desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
         wattroff(table_win, COLOR_PAIR(28) | flag);
+
+        mvwaddstr(table_win, 6, table_width - 2, "▲");
+        mvwaddstr(table_win, table_height - 9, table_width - 2, "▼");
 
         wnoutrefresh(table_win);
 
@@ -3400,12 +3598,21 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     }
                 }
                 break;
+            case '3':
+                for (int i = 0; i < 12; i++) {
+                    if (i > 0 && i < 3) {
+                        mundane_aspects[i] = 0; 
+                    } else {
+                        mundane_aspects[i] = 1;
+                    }
+                }
+                break;
             case KEY_RIGHT:
-                seletor_alvo_atual = (seletor_alvo_atual + 1) % (qtd_partes);
+                seletor_alvo_atual = (seletor_alvo_atual + 1) % qtd_partes;
                 scroll_offset = 0;
                 break;
             case KEY_LEFT:
-                seletor_alvo_atual = (seletor_alvo_atual - 1 + qtd_partes) % (qtd_partes);
+                seletor_alvo_atual = (seletor_alvo_atual - 1 + qtd_partes) % qtd_partes;
                 scroll_offset = 0;
                 break;
             case KEY_DOWN:
@@ -3455,47 +3662,206 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         }
                     }           
                     
-                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
 
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
-                        int linha_clique_janela = event.y - getbegy(table_win);
-                        
-                        // O seu offset_y passado na função foi 6. A área útil da barra começa na linha seguinte (7)
+                        // O seu offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
+                        // Assumindo estrutura padrão: Seta Cima na linha 6, Canal da Barra da 7 até max, Seta Baixo no fim.
+                        int linha_seta_cima = 6;
+                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a sua seta de baixo estiver em outra linha
                         int offset_inicio_barra = 6 + 1; 
+                        int altura_canal_barra = max_linhas_exibicao - 1;
+
+                        int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
+
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM DE 2 EM 2
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(table_win, TRUE);
+                                while (1) {
+                                    if (scroll_offset > 1) {
+                                        scroll_offset -= 2;
+                                        
+                                        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                        if (linhas_reais_pad > max_linhas_exibicao) {
+                                            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                                _("Showing"),
+                                                scroll_offset / 2 + 1, 
+                                                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                                _("of"),
+                                                qtd_direcoes                
+                                            );
+                                            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                                
+                                        }
+                                        wnoutrefresh(table_win);
+                                        prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                        doupdate();
+                                    } else {
+                                        scroll_offset = 0;
+                                    }
+
+                                    napms(125); // Confortável para as setas
+
+                                    int ch_check = wgetch(table_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(table_win, FALSE);
+                            }
+                        }
                         
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM DE 2 EM 2
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(table_win, TRUE);
+                                while (1) {
+                                    if (scroll_offset < max_scroll_y - 1) {
+                                        scroll_offset += 2;
+                                        
+                                        desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                        if (linhas_reais_pad > max_linhas_exibicao) {
+                                            wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                                _("Showing"),
+                                                scroll_offset / 2 + 1, 
+                                                ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                                _("of"),
+                                                qtd_direcoes                
+                                            );
+                                            wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                            mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                                
+                                        }
+                                        wnoutrefresh(table_win);
+                                        prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                        doupdate();
+                                    } else {
+                                        scroll_offset = max_scroll_y;
+                                    }
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_exibicao - 1) {
-                            
-                            // Calcula o limite máximo que o scroll_offset pode atingir
-                            int max_scroll_y = (qtd_direcoes * 2) - max_linhas_exibicao;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                                    napms(125);
 
-                            if (max_linhas_exibicao > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_exibicao - 2);
-                                
-                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
-                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
+                                    int ch_check = wgetch(table_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(table_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DA BARRA DE ROLAGEM (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(table_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (altura_canal_barra - 1) > 0) {
+                                linha_trilho_atual = (scroll_offset * (altura_canal_barra - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou em cima do quadrado do trilho, ativa o arrasto relativo (sem saltos)
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int scroll_offset_original = scroll_offset;
+
+                            while (1) {
+                                int novo_offset = scroll_offset;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado no movimento da mão do usuário
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((altura_canal_barra - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (altura_canal_barra - 1);
+                                        novo_offset = scroll_offset_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte rápido)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < altura_canal_barra) {
+                                        if ((altura_canal_barra - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (altura_canal_barra - 1);
+                                        }
+                                    }
+                                }
+
+                                // ARREDONDAMENTO PAR OBRIGATÓRIO: Garante que os pulos sejam sempre múltiplos de 2
                                 novo_offset = (novo_offset / 2) * 2;
 
-                                // Garante que o valor respeite as barreiras de limite
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                scroll_offset = novo_offset;
+                                if (scroll_offset != novo_offset) {
+                                    scroll_offset = novo_offset;
+                                    
+                                    desenhar_scrollbar(table_win, scroll_offset, linhas_reais_pad - 1, max_linhas_exibicao - 1, 6);
+                                    if (linhas_reais_pad > max_linhas_exibicao) {
+                                        wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+                                        mvwprintw(table_win, table_height - 5, 4, "%s %d-%d %s %d",
+                                            _("Showing"),
+                                            scroll_offset / 2 + 1, 
+                                            ((scroll_offset + max_linhas_exibicao) > qtd_direcoes * 2) ? qtd_direcoes : (scroll_offset / 2 + max_linhas_exibicao / 2),
+                                            _("of"),
+                                            qtd_direcoes                
+                                        );
+                                        wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
+                                        mvwprintw(table_win, table_height - 4, 4, "%s", _("[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] Both"));  
+                                            
+                                    }
+                                    wnoutrefresh(table_win);
+                                    prefresh(scroll_pad, scroll_offset, 0, start_y + 7, start_x + 4, fim_y_recorte, start_x + table_width - 5);
+                                    doupdate();
+                                }
+
+                                // Se foi um clique rápido simples fora do trilho, quebra imediatamente
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+
+                                napms(10); // Rastreamento fluido do arrasto
+
+                                int ch_check = wgetch(table_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(table_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(table_win, FALSE);
                         }
                     }
                 }
                 break;
             }
+    
     
             case 27:
             case 'q':
@@ -3505,15 +3871,16 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         free(cronograma);
     }
-
-    free(sig);
     
     delwin(shadow_win);
     delwin(table_win);
     touchwin(stdscr);
     refresh();
+
+    drag_and_drop_off();
 }
 
+    
 
 
 
@@ -3649,7 +4016,8 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
                             else {                                
-                                dias_decorridos = d->idade_evento * 365.242199;
+                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
                     
                             // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -3770,7 +4138,8 @@ int calcular_direcoes_zodiacais_partes(ArabicPartCalculada *parts, int qtd_parte
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else {                                
-                        dias_decorridos = d->idade_evento * 365.242199;
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
@@ -3829,7 +4198,7 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
     for (int i = 0; i < qtd_direcoes; i++) {
         LinhaDirecao *d = &dir[i];
 
-        fprintf(file, "%8.4f;%02d/%02d/%04d;%s;%s;%s;%s;%s;%8.4f%s;%s;%s;%s;%s\n",
+        fprintf(file, "%8.4f;%02d/%02d/%04d;%s;%s;%s;%s;%s;%8.4f;%s;%s;%s;%s\n",
                        d->idade_evento,
                        d->dia_calendario,
                        d->mes_calendario,
@@ -3840,7 +4209,6 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
                        d->significador_glifo,
                        d->significador_name,
                        d->arco_graus,
-                       "°",
                        (d->tipo_direcao_id == 0 ? "Z" : "M"),
                        (d->sentido == 0 ? "D" : "C"),
                        d->divisor_gliph,
@@ -4033,7 +4401,8 @@ int calcular_direcoes_mundanas_partes(ArabicPartCalculada *parts, int idx_alvo, 
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else {                                
-                        dias_decorridos = d->idade_evento * 365.242199;
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris

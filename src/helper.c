@@ -34,10 +34,181 @@
 #include <ctype.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "var.h"
 #include "helper.h"
 #include "planet_table.h"
 #include "directions.h"
+
+
+
+void abrir_no_navegador(const char *url) {
+    #if defined(_WIN32) || defined(_WIN64)
+        // No Windows, o 'start' precisa do cmd. Usamos spawn ou mantemos um comando em thread.
+        // Como o prompt foca em ambiente UNIX pelo erro 'sh:', mantemos o system com '&' para Win:
+        char comando[1024];
+        snprintf(comando, sizeof(comando), "start %s", url);
+        system(comando);
+    #else
+        // Linux / macOS / BSD
+        pid_t pid = fork();
+
+        if (pid < 0) {
+            // Falha ao criar o processo (raro)
+            return;
+        }
+
+        if (pid == 0) {
+            // --- PROCESSO FILHO ---
+            // Redireciona a saída de erro e padrão para o "limbo" (/dev/null)
+            // Isso evita que mensagens do navegador fiquem poluindo ou quebrando a tela do ncurses
+            freopen("/dev/null", "w", stdout);
+            freopen("/dev/null", "w", stderr);
+
+            #if __APPLE__
+                // macOS
+                execl("/usr/bin/open", "open", url, (char *)NULL);
+            #else
+                // Linux / BSD
+                execl("/usr/bin/xdg-open", "xdg-open", url, (char *)NULL);
+            #endif
+
+            // Se o execl falhar (ex: xdg-open não encontrado naquele caminho fixo), 
+            // tentamos buscar diretamente pelo PATH do sistema:
+            #if __APPLE__
+                execlp("open", "open", url, (char *)NULL);
+            #else
+                execlp("xdg-open", "xdg-open", url, (char *)NULL);
+            #endif
+
+            // Caso absolutamente tudo falhe, mata o processo filho para não virar um zumbi
+            _exit(127);
+        } else {
+            // --- PROCESSO PAI ---
+            // Usamos waitpid com WNOHANG para limpar o processo filho da memória 
+            // assim que ele terminar, sem travar a aplicação atual (evita processos zumbis)
+            int status;
+            waitpid(pid, &status, WNOHANG);
+        }
+    #endif
+}
+
+
+// Função auxiliar para descobrir quantos bytes um caractere UTF-8 ocupa na string
+// baseando-se em quantas colunas ele ocupa na tela (usando a biblioteca wchar)
+int converter_coluna_para_indice_byte(const char *str, int col_alvo) {
+    int byte_idx = 0;
+    int col_atual = 0;
+    mbstate_t ps;
+    memset(&ps, 0, sizeof(ps));
+
+    while (str[byte_idx] != '\0' && col_atual < col_alvo) {
+        wchar_t wc;
+        // Converte o caractere multibyte atual para caractere largo (wide char)
+        size_t len = mbrtowc(&wc, &str[byte_idx], MB_CUR_MAX, &ps);
+        
+        if (len == (size_t)-1 || len == (size_t)-2 || len == 0) {
+            // Falha de decodificação ou fim da string, avança 1 byte por segurança
+            byte_idx++;
+            col_atual++;
+        } else {
+            // Descobre a largura visual real que o caractere ocupa na tela
+            int largura = wcwidth(wc);
+            if (largura < 0) largura = 0; // Caracteres de controle, etc.
+            
+            col_atual += largura;
+            byte_idx += len;
+        }
+    }
+    return byte_idx;
+}
+
+char* extrair_url_da_posicao(const char *linha_texto, int col_clique) {
+    if (!linha_texto) return NULL;
+
+    // 1. Converte a coluna visual do clique no índice real de bytes na string C
+    int byte_clique = converter_coluna_para_indice_byte(linha_texto, col_clique);
+    
+    // Garante que o índice está dentro dos limites da string
+    int total_bytes = strlen(linha_texto);
+    if (byte_clique < 0 || byte_clique >= total_bytes) return NULL;
+
+    // Se o clique foi em um espaço em branco, ignora
+    if (isspace((unsigned char)linha_texto[byte_clique])) return NULL;
+
+    int inicio = byte_clique;
+    int fim = byte_clique;
+
+    // 2. Encontra os limites brutos de bytes baseados em espaços em branco
+    while (inicio > 0 && !isspace((unsigned char)linha_texto[inicio - 1])) {
+        inicio--;
+    }
+    while (linha_texto[fim] != '\0' && !isspace((unsigned char)linha_texto[fim])) {
+        fim++;
+    }
+
+    int tamanho = fim - inicio;
+    if (tamanho < 7) return NULL; // Menor tamanho possível: "http://"
+
+    // 3. Copia o bloco bruto para manipulação
+    char *bloco = (char *)malloc(tamanho + 1);
+    if (!bloco) return NULL;
+    strncpy(bloco, &linha_texto[inicio], tamanho);
+    bloco[tamanho] = '\0';
+
+    int idx_inicio = 0;
+    int idx_fim = tamanho - 1;
+
+    // 4. Limpa delimitadores de abertura no início do bloco (<, (, [, etc.)
+    while (idx_inicio < idx_fim) {
+        char c = bloco[idx_inicio];
+        if (c == '<' || c == '(' || c == '[' || c == '{' || c == '"' || c == '\'') {
+            idx_inicio++;
+        } else {
+            break;
+        }
+    }
+
+    // 5. Limpa delimitadores de fechamento e pontuações no fim do bloco (>, ), ], ., ,, !, etc.)
+    while (idx_fim > idx_inicio) {
+        char c = bloco[idx_fim];
+        if (c == '>' || c == ')' || c == ']' || c == '}' || c == '"' || c == '\'' ||
+            c == '.' || c == ',' || c == '!' || c == '?' || c == ';') {
+            idx_fim--;
+        } else {
+            break;
+        }
+    }
+
+    int novo_tamanho = idx_fim - idx_inicio + 1;
+    if (novo_tamanho < 7) {
+        free(bloco);
+        return NULL;
+    }
+
+    // 6. Extrai a string limpa final
+    char *url_limpa = (char *)malloc(novo_tamanho + 1);
+    if (!url_limpa) {
+        free(bloco);
+        return NULL;
+    }
+    strncpy(url_limpa, &bloco[idx_inicio], novo_tamanho);
+    url_limpa[novo_tamanho] = '\0';
+
+    free(bloco);
+
+    // 7. Valida se o resultado final inicia de forma correta
+    if (strncmp(url_limpa, "http://", 7) == 0 || strncmp(url_limpa, "https://", 8) == 0) {
+        return url_limpa;
+    }
+
+    free(url_limpa);
+    return NULL;
+}
+
+
+
 
 
 
@@ -140,6 +311,17 @@ void ativar_arrasto_mouse() {
 
 }
 
+
+void drag_and_drop_on() {
+    printf("\033[?1002h"); 
+    fflush(stdout);
+    flushinp();
+}
+
+void drag_and_drop_off() {
+    printf("\033[?1002l"); 
+    fflush(stdout);
+}
 
 double get_exact_aspect_ratio_ncurses(WINDOW *win, int curr_timeout) {
     // Atualiza as variáveis internas de tamanho do ncurses

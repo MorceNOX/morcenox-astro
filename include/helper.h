@@ -28,12 +28,17 @@ typedef struct {
     int type;
 } AuxOrdenacao;
 
+void abrir_no_navegador(const char *url);
+int converter_coluna_para_indice_byte(const char *str, int col_alvo);
+char* extrair_url_da_posicao(const char *linha_texto, int col_clique);
 void desenhar_scrollbar(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y);
 void desenhar_scrollbar2(WINDOW *win, int scroll_atual, int total_linhas, int linhas_visiveis, int offset_y);
 void ativar_arrasto_e_scroll_mouse();
 void desativar_mouse();
 void desativar_arrasto_mouse();
 void ativar_arrasto_mouse();
+void drag_and_drop_on();
+void drag_and_drop_off();
 double get_exact_aspect_ratio_ncurses(WINDOW *win, int curr_timeout);
 double get_exact_aspect_ratio();
 double get_terminal_font_aspect_ratio();

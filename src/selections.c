@@ -48,7 +48,11 @@ int show_confirm_yesno(const char *name, const char *text) {
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
 
-    int pop_w = 54;
+    int w1 = get_visual_width(name);
+    int w2 = get_visual_width(text);
+    int width = (w1 > w2 ? w1 + 4 : w2 + 4);
+
+    int pop_w = width + 4 > 54 ? width + 4 : 54;
     int pop_h = 8;
     int pop_x = (term_w - pop_w) / 2;
     int pop_y = (term_h - pop_h) / 2;
@@ -62,9 +66,7 @@ int show_confirm_yesno(const char *name, const char *text) {
 
     // Desenha sombra
     werase(pop_shadow);
-    wattron(pop_shadow, COLOR_PAIR(24));
-    box(pop_shadow, 0, 0);
-    wattroff(pop_shadow, COLOR_PAIR(24));
+    wbkgd(pop_shadow, COLOR_PAIR(24));
     wnoutrefresh(pop_shadow);
 
     // Configura e desenha a estrutura fixa da janela principal
@@ -78,8 +80,8 @@ int show_confirm_yesno(const char *name, const char *text) {
     mvwprintw(pop_win, 0, (pop_w - get_visual_width(title)) / 2, title);
     wattroff(pop_win, COLOR_PAIR(27) | A_BOLD);
 
-    mvwprintw(pop_win, 2, 4, "%s:", text);
-    mvwprintw(pop_win, 3, 4, "\"%.46s\" ?", name);
+    mvwprintw(pop_win, 2, 4, "%s", text);
+    mvwprintw(pop_win, 3, 4, "\"%s\"", name);
 
     int botao_focado = 0; // 0 = Confirmar, 1 = Cancelar
     int confirmado = 0;

@@ -859,6 +859,29 @@ double get_moon_phase_by_longitude(double julian_day) {
 }
 
 
+
+
+void calcular_atmosfera_por_altitude(double elev_metros, double *pressao_mbar, double *temperatura_celsius) {
+    // Se a elevação for negativa (abaixo do nível do mar) ou nula, assume o padrão estável
+    if (elev_metros <= 0.0) {
+        *pressao_mbar = 1013.25;
+        *temperatura_celsius = 15.0;
+        return;
+    }
+
+    // 1. Cálculo da Temperatura Média Estimada (Cai 6.5°C a cada 1000 metros)
+    *temperatura_celsius = 15.0 - (0.0065 * elev_metros);
+    
+    // Proteção para altitudes extremas (Evita temperaturas absurdamente frias abaixo do limite da troposfera)
+    if (*temperatura_celsius < -56.5) *temperatura_celsius = -56.5;
+
+    // 2. Aplicação da Fórmula Barométrica Padrão da Troposfera (IAU / ISA)
+    // 1013.25 * (1.0 - 0.0065 * h / 288.15) ^ 5.25588
+    double base = 1.0 - (0.0065 * elev_metros / 288.15);
+    *pressao_mbar = 1013.25 * pow(base, 5.25588);
+}
+
+
 // Helper to get the Sun's altitude at a specific Julian Day
 double get_sun_altitude(double tjd_ut, double lat, double lon, double elev) {
     double xx[6];          // Armazena os resultados de swe_calc
@@ -868,11 +891,10 @@ double get_sun_altitude(double tjd_ut, double lat, double lon, double elev) {
     
     double geopos[3] = {lon, lat, elev};
 
-    // 1. Converter UT para Ephemeris Time (Tempo Dinâmico Terrestre)
+    // 1. Converter UT para Ephemeris Time
     double delta_t = swe_deltat(tjd_ut);
     double tjd_et = tjd_ut + delta_t;
 
-    // Usaremos a flag básica para coordenadas equatoriais em relação ao ET
     int flag = SEFLG_SWIEPH | SEFLG_EQUATORIAL;
 
     // 2. Calcular a posição do Sol usando o tempo orbital exato (tjd_et)
@@ -885,13 +907,17 @@ double get_sun_altitude(double tjd_ut, double lat, double lon, double elev) {
     xequ[1] = xx[1]; // Declinação (DEC)
     xequ[2] = xx[2]; // Distância
 
-    // 3. Converter para o horizonte local
+
+    // 3. CALCULO DINÂMICO DA ATMOSFERA PARA REFRAÇÃO
+    double pressao_local = 1013.25;
+    double temp_local = 15.0;
+    calcular_atmosfera_por_altitude(elev, &pressao_local, &temp_local);
+
+    // 4. Converter para o horizonte local passando a pressão e temperatura reais!
     // Importante: swe_azalt exige explicitamente o tempo em UT (tjd_ut) na entrada
-    swe_azalt(tjd_ut, SE_EQU2HOR, geopos, 0, 0, xequ, xaz);
+    swe_azalt(tjd_ut, SE_EQU2HOR, geopos, pressao_local, temp_local, xequ, xaz);
     
-    // Retorna xaz[1] (altitude verdadeira). O algoritmo de bisseção se encarrega
-    // de cruzar o horizonte visual usando o alvo de -0.833333 graus.
-    return xaz[1];
+    return xaz[1]; // Retorna a altitude real corrigida atmosfericamente
 }
 
 
@@ -5952,8 +5978,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(23, COLOR_RED, 223);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); // yellow
-        init_pair(26, COLOR_BLACK, 37); // Verde quase ciano
-        init_pair(27, COLOR_RED, 37);
+        init_pair(26, COLOR_BLACK, 44); // Verde quase ciano
+        init_pair(27, COLOR_RED, 44);
         init_pair(28, COLOR_MAGENTA, 224);
         init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
@@ -6120,6 +6146,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             exit(1); 
         }
     }
+
+    // DEBUG
+    // char delta_t_str[50];
+    // snprintf(delta_t_str, 50, "%f", swe_deltat(2451545.0) * 86400.0);
+    // show_alert_popup("Delta T em J2000 em segundos:", delta_t_str);
+
+
 
     if (mapa_retorno) {
         if (!dark_mode) {

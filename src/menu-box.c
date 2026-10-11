@@ -2210,18 +2210,15 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     char** help_lines;
     int line_count;
 
-    // Get terminal dimensions
     int term_w = getmaxx(stdscr);
     int term_h = getmaxy(stdscr);
     
-    // Calculate window dimensions
     int win_w = (term_w > 71) ? MAX_HELP_LINE_WIDTH + 4 : term_w - 3;
     int win_h = (term_h > 20) ? 20 : term_h - 4;
     int win_x = (term_w - win_w) / 2;
     int win_y = (term_h - win_h) / 2;
     
     if (file_content) {
-        // Successfully loaded file, split into lines
         help_lines = split_lines_wrap(file_content, &line_count, win_w - 4);
         if (!help_lines) {
             // Fallback to hardcoded text if splitting fails
@@ -2230,7 +2227,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         }
     }
     
-    // If file loading failed or file_content is NULL, use hardcoded text
     if (!help_lines) {
         const char *default_help_text[] = {
             "Welcome to the MorceNOX™ ASTRO!",
@@ -2261,7 +2257,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         return; // Failed to load help content
     }
     
-    // Create windows
     WINDOW *help_win = newwin(win_h, win_w, win_y, win_x);
     WINDOW *shadow_win = newwin(win_h, win_w, win_y + 1, win_x + 1);
 
@@ -2271,7 +2266,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     int txt_x = win_x + 1; // Avança 1 coluna em relação à borda esquerda
     WINDOW *txt_win = newwin(txt_h, txt_w, txt_y, txt_x);
     
-    // Check if windows were created successfully
     if (!help_win || !shadow_win || !txt_win) {
         if (txt_win) delwin(txt_win);
         if (help_win) delwin(help_win);
@@ -2287,13 +2281,9 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         return;
     }
 
-       
-    // Draw shadow
     wbkgd(shadow_win, COLOR_PAIR(24));
-    //box(shadow_win, 0, 0);
     wnoutrefresh(shadow_win);
     
-    // Draw main window with border
     wbkgd(help_win, COLOR_PAIR(22) | FLAGS);
     wbkgd(txt_win, COLOR_PAIR(22) | FLAGS);
 
@@ -2301,11 +2291,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     wattron(help_win, A_BOLD);
     mvwprintw(help_win, 0, (win_w - get_visual_width(title)) / 2, title);
     wattroff(help_win, A_BOLD);
-    //wnoutrefresh(help_win);
-
-
-
-    
+   
     // Calculate how many lines we can display
     int max_lines = win_h - 4;  // Leave space for border and title
     int start_line = from_line;
@@ -2322,12 +2308,14 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     mvwprintw(help_win, 0, col_fechar, "[");
     mvwprintw(help_win, 0, col_fechar + 2, "]");
 
-    wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(help_win, A_BOLD);
     mvwprintw(help_win, 0, col_fechar + 1, "✖");
     wattroff(help_win, A_BOLD);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(200);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
+    mouseinterval(100);
+
+    drag_and_drop_on();
 
     //leaveok(stdscr, TRUE);
     //leaveok(shadow_win, TRUE);
@@ -2335,7 +2323,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     //leaveok(txt_win, TRUE);
     
     while (!done) {
-        // Clear the text area
         werase(txt_win);
         
         mvwprintw(help_win, 0, col_fechar, "[");
@@ -2345,7 +2332,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         mvwprintw(help_win, 0, col_fechar + 1, "✖");
         wattroff(help_win, A_BOLD);
         
-        // Draw text content
         int display_lines = 0;
         for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
             if (help_lines[i]) {
@@ -2378,7 +2364,6 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         mvwaddstr(help_win, 1, win_w - 2, "▲");
         mvwaddstr(help_win, win_h - 2, win_w - 2, "▼");
         
-        //wnoutrefresh(shadow_win);
         wnoutrefresh(help_win);
         wnoutrefresh(txt_win);
         doupdate();
@@ -2414,6 +2399,55 @@ void show_text_file(const char* filename, const char* title, int from_line) {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
+                    
+                    // --- NOVA LÓGICA: DETECÇÃO DE CLIQUE EM LINKS DINÂMICOS ---
+                    int txt_beg_x = getbegx(txt_win);
+                    int txt_beg_y = getbegy(txt_win);
+                    int txt_max_x = getmaxx(txt_win);
+                    int txt_max_y = getmaxy(txt_win);
+
+                    // Verifica se o clique ocorreu dentro dos limites da janela de texto (txt_win)
+                    if (event.y >= txt_beg_y && event.y < txt_beg_y + txt_max_y &&
+                        event.x >= txt_beg_x && event.x < txt_beg_x + txt_max_x) {
+                        
+                        if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
+                            // Descobre qual linha relativa da janela foi clicada e soma ao start_line atual
+                            int linha_relativa_janela = event.y - txt_beg_y;
+                            int linha_real_arquivo = start_line + linha_relativa_janela;
+                            
+                            // Descobre a coluna clicada em relação ao início do texto
+                            int col_clique_texto = event.x - txt_beg_x;
+
+                            // Garante que estamos dentro do limite do arquivo
+                            if (linha_real_arquivo < line_count && help_lines[linha_real_arquivo]) {                                
+                                char *url_detectada = extrair_url_da_posicao(help_lines[linha_real_arquivo], col_clique_texto);
+                             
+                                if (url_detectada != NULL) {
+                                    if (show_confirm_yesno(url_detectada, _("Are you sure you want to OPEN this link?"))) {
+                                        touchwin(help_win);
+                                        wnoutrefresh(help_win);
+                                        touchwin(txt_win);
+                                        wnoutrefresh(txt_win);
+                                        doupdate();
+
+                                        abrir_no_navegador(url_detectada);
+
+                                    } else {
+                                        touchwin(help_win);
+                                        wnoutrefresh(help_win);
+                                        touchwin(txt_win);
+                                        wnoutrefresh(txt_win);
+                                        doupdate();
+                                    }
+                                    free(url_detectada); // Libera a memória alocada pela busca
+                                    break; // Para o processamento do mouse aqui
+
+                                }
+                            }
+                        }
+                    }
+                    // --- FIM DA NOVA LÓGICA ---
+
                     int col_clique_janela = event.x - getbegx(help_win);
                     
                     // Define matematicamente a caixa de clique do botão fechar
@@ -2433,62 +2467,189 @@ void show_text_file(const char* filename, const char* title, int from_line) {
                         }
                     }
 
-                    // 1. Descobre a coluna onde a barra é desenhada (usando a mesma lógica da sua função)
+                    // 1. Descobre a coluna onde a barra é desenhada
                     int col_scrollbar_absoluta = getbegx(help_win) + (getmaxx(help_win) - 2);
-
+                    
+                    // --- CLIQUE NA SETA PARA CIMA (▲) ---
                     if (event.x == col_scrollbar_absoluta && linha_clique_janela == 1) {
-                        //if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                            if (start_line > 1) {
-                                start_line -= 2;
-                            } else {
-                                start_line = 0;
-                            }
+                        if (event.bstate & BUTTON1_PRESSED) {
+                            // Define temporariamente a janela como não-bloqueante para checar o release
+                            nodelay(help_win, TRUE); 
                             
-                        //}
+                            while (1) {
+                                if (start_line > 0) {
+                                    start_line--; // Rola 1 por 1 ou 2 por 2 enquanto pressionado
+                                    
+                                    // Atualiza a tela para o usuário ver o texto subindo em tempo real
+                                    werase(txt_win);
+                                    int display_lines = 0;
+                                    for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
+                                        if (help_lines[i]) {
+                                            if (strstr(help_lines[i], "•") != NULL) wattron(txt_win, A_BOLD);
+                                            mvwprintw(txt_win, display_lines, 0, "%s", help_lines[i]);
+                                            if (strstr(help_lines[i], "•") != NULL) wattroff(txt_win, A_BOLD);
+                                            display_lines++;
+                                        }
+                                    }
+                                    desenhar_scrollbar(help_win, start_line, line_count, max_lines, 1);
+                                    wnoutrefresh(help_win);
+                                    wnoutrefresh(txt_win);
+                                    doupdate();
+                                }
+                                
+                                // Pausa curta (em microssegundos) para controlar a velocidade da rolagem
+                                napms(125); 
+
+                                // Verifica se há um novo evento de mouse indicando o RELEASE
+                                int ch_check = wgetch(help_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break; // O usuário soltou o botão, para a rolagem!
+                                        }
+                                    }
+                                }
+                            }
+                            nodelay(help_win, FALSE); // Restaura o modo bloqueante original
+                        }
                     }
+                    
+                    // --- CLIQUE NA SETA PARA BAIXO (▼) ---
                     else if (event.x == col_scrollbar_absoluta && linha_clique_janela == win_h - 2) {
-                        //if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                            if (start_line < line_count - max_lines) {
-                                start_line += 2;
-                            }
-                            if (start_line > line_count - max_lines) {
-                                start_line = line_count - max_lines;
-                            }
+                        if (event.bstate & BUTTON1_PRESSED) {
+                            nodelay(help_win, TRUE);
                             
-                        //}
-                    }                   
+                            while (1) {
+                                if (start_line < line_count - max_lines) {
+                                    start_line++;
+                                    
+                                    werase(txt_win);
+                                    int display_lines = 0;
+                                    for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
+                                        if (help_lines[i]) {
+                                            if (strstr(help_lines[i], "•") != NULL) wattron(txt_win, A_BOLD);
+                                            mvwprintw(txt_win, display_lines, 0, "%s", help_lines[i]);
+                                            if (strstr(help_lines[i], "•") != NULL) wattroff(txt_win, A_BOLD);
+                                            display_lines++;
+                                        }
+                                    }
+                                    desenhar_scrollbar(help_win, start_line, line_count, max_lines, 1);
+                                    wnoutrefresh(help_win);
+                                    wnoutrefresh(txt_win);
+                                    doupdate();
+                                } else {
+                                    break; // Chegou ao fim do arquivo
+                                }
+                                
+                                napms(125); // Velocidade da rolagem (80 milissegundos)
+
+                                int ch_check = wgetch(help_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            nodelay(help_win, FALSE);
+                        }
+                    }
+                  
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     else if (event.x == col_scrollbar_absoluta) {
-                        
-                        // 3. Descobre a linha clicada em relação ao início da janela 'table_win'
-                        linha_clique_janela = event.y - getbegy(help_win);
-                        
-                        int offset_inicio_barra = 2; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_linhas_exibicao - 1)
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
-
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_lines) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(help_win, TRUE);
                             
-                            // Calcula o limite máximo que o scroll_offset pode atingir
-                            int max_scroll_y = (line_count) - max_lines;
+                            // --- DETECÇÃO DO TRILHO (O SEGREDO PARA EVITAR O SALTO) ---
+                            int max_scroll_y = line_count - max_lines;
                             if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            if (max_lines > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_lines - 1);
-                                
-                                // Como o seu sistema avança de 2 em 2 linhas (par/ímpar devido aos dados),
-                                // arredondamos para o número par mais próximo para não quebrar o layout da tabela
-                                //novo_offset = (novo_offset / 2) * 2;
+                            // Calcula exatamente qual é a linha visual atual do trilho na tela
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && max_lines > 1) {
+                                linha_trilho_atual = (start_line * (max_lines - 1)) / max_scroll_y;
+                            }
+                            // Ajusta para a coordenada interna da janela (considerando o offset inicial 2)
+                            int linha_trilho_janela = linha_trilho_atual + 2;
 
-                                // Garante que o valor respeite as barreiras de limite
+                            // Se o clique foi EXATAMENTE em cima do trilho, entramos no modo de arrasto relativo
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            
+                            // Guarda a posição inicial do clique para calcular o deslocamento (delta)
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int start_line_original = start_line;
+
+                            while (1) {
+                                int novo_offset = start_line;
+
+                                if (modo_arrasto_trilho) {
+                                    // MODO ARRASTO RELATIVO: Move proporcionalmente ao movimento da mão do usuário
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if (max_lines > 1 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (max_lines - 1);
+                                        novo_offset = start_line_original + delta_scroll;
+                                    }
+                                } else {
+                                    // MODO CLIQUE ABSOLUTO: Mantém o comportamento de teleportar se clicar fora do trilho
+                                    int offset_inicio_barra = 2; 
+                                    int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < max_lines) {                            
+                                        if (max_lines > 1 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (max_lines - 1);                                
+                                        }
+                                    }
+                                }
+
+                                // Limita os valores para não estourar os limites do arquivo
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                start_line = novo_offset;
+                                if (start_line != novo_offset) {
+                                    start_line = novo_offset;
+
+                                    // Redesenha a interface
+                                    werase(txt_win);
+                                    int display_lines = 0;
+                                    for (int i = start_line; i < line_count && display_lines < max_lines; i++) {
+                                        if (help_lines[i]) {
+                                            if (strstr(help_lines[i], "•") != NULL) wattron(txt_win, A_BOLD);
+                                            mvwprintw(txt_win, display_lines, 0, "%s", help_lines[i]);
+                                            if (strstr(help_lines[i], "•") != NULL) wattroff(txt_win, A_BOLD);
+                                            display_lines++;
+                                        }
+                                    }
+                                    desenhar_scrollbar(help_win, start_line, line_count, max_lines, 1);
+                                    wnoutrefresh(help_win);
+                                    wnoutrefresh(txt_win);
+                                    doupdate();
+                                }
+
+                                // Se foi apenas um clique rápido fora do trilho, encerra imediatamente
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+
+                                napms(10); 
+
+                                int ch_check = wgetch(help_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(help_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(help_win, FALSE);
                         }
                     }
                 }
@@ -2511,6 +2672,8 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     delwin(txt_win);
     delwin(help_win);
     delwin(shadow_win);
+
+    drag_and_drop_off();
 }
 
 void show_help_screen() {
@@ -2655,9 +2818,9 @@ int main() {
         init_pair(7, 220, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
-        init_pair(10, 232, 37); // verde água
-        init_pair(11, COLOR_CYAN, 27);
-        init_pair(12, 230, 27);
+        init_pair(10, 232, 44); // verde água // 37
+        init_pair(11, 50, 24);
+        init_pair(12, 230, 24);
         //init_pair(13, COLOR_GREEN, COLOR_BLUE);
         init_pair(14, COLOR_RED, COLOR_BLUE);
         init_pair(15, COLOR_BLUE, 208); // orange
@@ -2699,7 +2862,7 @@ int main() {
 
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(32, COLOR_BLUE, COLOR_GREEN);
+        init_pair(32, COLOR_BLUE, 82);
         init_pair(33, COLOR_BLUE, 17);
     
 
