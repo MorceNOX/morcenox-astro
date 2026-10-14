@@ -21,6 +21,7 @@
 
 #include <sqlite3.h>
 #include <libintl.h>
+#include "zonedetect.h"
 
 #ifndef LOCALEDIR
 #define LOCALEDIR "./locale"
@@ -76,6 +77,14 @@ extern char CITY[100];
 extern char COUNTRY[100];
 extern char STATE[100];
 extern char TZ_IANA[100];
+extern int CITY_ID;
+
+extern double LAT;
+extern double LON;
+extern double ELEV;
+
+extern bool USAR_COORDENADAS;
+
 
 extern char CHART_NAME[100];
 extern char MESSAGE[100];
@@ -89,6 +98,10 @@ extern char HOUSE_SYSTEM;
 
 extern char CONFIG_PATH[256];
 extern const char *DB_PATH;
+extern bool REINDEX_DB;
+extern const char *ZD_DATABASE_TIMEZONE_PATH;
+extern const char *ZD_DATABASE_COUNTRY_PATH;
+
 
 extern bool MAPA_DIURNO;
 extern int GENDER;

@@ -62,6 +62,7 @@ int get_visual_width(const char *str);
 unsigned short get_terminal_width(void);
 unsigned short get_terminal_height(void);
 void draw_centered_text(WINDOW *win, int y, int x, int available_width, const char *text, int attr);
+void trim(char *str);
 int find_first_item_with_letter(const char **items, int count, int start_index, char letter);
 int find_first_item_with_letter_offset(const char **items, int count, int start_index, char letter, int offset);
 int calculate_max_display_items(int menu_height);

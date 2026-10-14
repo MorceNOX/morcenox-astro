@@ -30,6 +30,7 @@
 #include "var.h"
 #include "planet_table.h"
 #include "helper.h"
+#include "fuso-horario.h"
 
 
 #include "var.h" // Garante o acesso à variável global_db e ao DB_PATH
@@ -49,10 +50,12 @@ sqlite3* open_database() {
         global_db = NULL;
         return NULL;
     }
+    activate_foreign_keys(global_db);
     auto_vacuum(global_db);
     configurar_banco(global_db);
-    //reconstruir_indice_cidades(global_db);
-
+    if (REINDEX_DB) {
+        reconstruir_indice_cidades(global_db);
+    }
     return global_db;
 }
 
@@ -84,7 +87,12 @@ int reconstruir_indice_cidades(sqlite3 *db) {
         "CREATE INDEX idx_city_search ON cities (country, state COLLATE GLOBAL_SEM_ACENTO, city COLLATE GLOBAL_SEM_ACENTO);",
 
         "DROP INDEX IF EXISTS idx_chart_search;",
+
         "CREATE INDEX idx_chart_search ON charts (chart_name COLLATE GLOBAL_SEM_ACENTO);",
+
+        "DROP INDEX IF EXISTS idx_coordenadas;",
+
+        "CREATE INDEX IF NOT EXISTS idx_coordenadas ON cities (lat, lon);",
         
         "COMMIT;"
     };
@@ -140,6 +148,14 @@ int configurar_banco(sqlite3 *db) {
         return 0;
     }
 
+    const char* sql_index3 = "CREATE INDEX IF NOT EXISTS idx_coordenadas ON cities (lat, lon);";
+
+    if (sqlite3_exec(db, sql_index3, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
     //fprintf(stderr, "Colação GLOBAL_SEM_ACENTO ativada usando a biblioteca SQLite externa!\n");
     return 1;
 }
@@ -154,6 +170,22 @@ void auto_vacuum(sqlite3 *db) {
     char *err_msg = 0;
 
     int rc = sqlite3_exec(db, "PRAGMA incremental_vacuum;", 0, 0, &err_msg);
+
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Erro ao executar o vácuo incremental: %s\n", err_msg);
+        sqlite3_free(err_msg);
+    }
+}
+
+
+void activate_foreign_keys(sqlite3 *db) {
+    if (!db) {
+        return;
+    }
+
+    char *err_msg = 0;
+
+    int rc = sqlite3_exec(db, "PRAGMA foreign_keys = ON;", 0, 0, &err_msg);
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Erro ao executar o vácuo incremental: %s\n", err_msg);
@@ -209,6 +241,165 @@ int prepare_statement(sqlite3 *db, const char *sql, sqlite3_stmt **stmt) {
 
 
 
+int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, CidadeVizinha *resultado) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in buscar_cidade_mais_proxima\n");
+        return 0;
+    }
+    
+    // 1. Criação da Bounding Box (Filtro rápido de ~50km de margem)
+    double margem_lat = 50.0 / 111.0; 
+    // Ajusta a margem de longitude com base na latitude atual para evitar distorções perto dos polos
+    double margem_lon = 50.0 / (111.0 * cos(lat_busca * M_PI / 180.0)); 
+
+    double lat_min = lat_busca - margem_lat;
+    double lat_max = lat_busca + margem_lat;
+    double lon_min = lon_busca - margem_lon;
+    double lon_max = lon_busca + margem_lon;
+
+    // 2. Query SQL Otimizada com Haversine nativo do SQLite
+    const char *sql = 
+        "SELECT state, elev, "
+        "       (6371 * acos("
+        "           cos(radians(?1)) * cos(radians(lat)) * "
+        "           cos(radians(lon) - radians(?2)) + "
+        "           sin(radians(?1)) * sin(radians(lat))"
+        "       )) AS distancia_km "
+        "FROM cities "
+        "WHERE lat BETWEEN ?3 AND ?4 " // Filtro rápido usando índices (Bounding Box)
+        "  AND lon BETWEEN ?5 AND ?6 "
+        "ORDER BY distancia_km ASC "
+        "LIMIT 1;";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao preparar query: %s\n", sqlite3_errmsg(db));
+        return 0;
+    }
+
+    // 3. Vincula os parâmetros (Binds) de forma segura
+    sqlite3_bind_double(stmt, 1, lat_busca);
+    sqlite3_bind_double(stmt, 2, lon_busca);
+    sqlite3_bind_double(stmt, 3, lat_min);
+    sqlite3_bind_double(stmt, 4, lat_max);
+    sqlite3_bind_double(stmt, 5, lon_min);
+    sqlite3_bind_double(stmt, 6, lon_max);
+
+    // 4. Executa a busca
+    int sucesso = 0;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        snprintf(resultado->state, sizeof(resultado->state), "%s", (const char*)sqlite3_column_text(stmt, 0));
+        
+        resultado->elev = sqlite3_column_double(stmt, 1);
+        
+        resultado->distance_km = sqlite3_column_double(stmt, 2);
+
+        sucesso = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    return sucesso; // Retorna 1 se achou uma cidade próxima, 0 se não houver nenhuma no quadrado de 50km
+}
+
+
+
+int save_city() {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    int rc;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in save_city\n");
+        return 0;
+    }
+    const char *sql = "SELECT country_id, country_code, state_id, state_code FROM cities "
+                      "WHERE country = ? AND state = ?;";
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+    if (rc != SQLITE_OK) {
+        show_alert_popup(_("Failed prepare statement!"), sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return 0;
+    }
+
+    char location_type[100];
+
+    set_elev();
+    set_country(COUNTRY, sizeof(COUNTRY));
+    set_state(STATE, sizeof(STATE));
+    set_location_name(CITY, sizeof(CITY));
+    if (!select_location_type(location_type)) snprintf(location_type, 100, "%s", _("city"));
+
+    trim(COUNTRY);
+    trim(STATE);
+    trim(CITY);
+
+    sqlite3_bind_text(stmt, 1, COUNTRY, -1, SQLITE_STATIC); 
+    sqlite3_bind_text(stmt, 2, STATE, -1, SQLITE_STATIC);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        int country_id = sqlite3_column_int(stmt, 0);
+        const char *country_code = (const char*)sqlite3_column_text(stmt, 1);
+        int state_id = sqlite3_column_int(stmt, 2);
+        const char *state_code = (const char*)sqlite3_column_text(stmt, 3);
+
+
+        const char *sql_ins = "INSERT INTO cities (city, country, country_id, country_code, state, state_id, state_code, type, lat, lon, elev, timezone, gmt_offset_standard, gmt_offset_secs) "
+                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        rc = sqlite3_prepare_v2(db, sql_ins, -1, &stmt, NULL);
+
+        if (rc != SQLITE_OK) {
+            show_alert_popup(_("Failed prepare saving city! (prepare insert)"), sqlite3_errmsg(db));
+            sqlite3_close(db);
+            return 0;
+        }
+
+        int secs = (int)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN);
+        char gmt_str[10];
+        get_degree_str((double)secs / 3600.0, gmt_str);
+
+        sqlite3_bind_text(stmt, 1, CITY, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 2, COUNTRY, -1, SQLITE_STATIC);
+        sqlite3_bind_int(stmt, 3, country_id);
+        sqlite3_bind_text(stmt, 4, country_code, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 5, STATE, -1, SQLITE_STATIC);
+        sqlite3_bind_int(stmt, 6, state_id);
+        sqlite3_bind_text(stmt, 7, state_code, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 8, location_type, -1, SQLITE_STATIC);
+        
+        sqlite3_bind_double(stmt, 9, LAT);
+        sqlite3_bind_double(stmt, 10, LON);
+        sqlite3_bind_double(stmt, 11, ELEV);
+        sqlite3_bind_text(stmt, 12, TZ_IANA, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 13, gmt_str, -1, SQLITE_STATIC);
+        sqlite3_bind_int(stmt, 14, secs);
+
+        rc = sqlite3_step(stmt);
+        if (rc != SQLITE_DONE) {
+            show_alert_popup(_("Failed saving city! (bind insert)"), sqlite3_errmsg(db));
+            sqlite3_finalize(stmt);
+            return 0;
+        }
+
+    } else {
+        show_alert_popup(_("Failed saving city! (step)"), sqlite3_errmsg(db));
+        sqlite3_finalize(stmt);
+        return 0;
+    } 
+
+    show_alert_popup(_("City saved!"), "");
+
+    sqlite3_finalize(stmt);
+    close_database(db);
+
+    return 1;
+}
+
 
 int get_coordinates(char *city, char *country, char *state, double *lat, double *lon, double *elev, double *tz_offset, char *tz_iana) {    
 
@@ -228,7 +419,7 @@ int get_coordinates(char *city, char *country, char *state, double *lat, double 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
-        exit(1);
+        return 0;
     }
 
     sqlite3_bind_text(stmt, 1, country, -1, SQLITE_STATIC);

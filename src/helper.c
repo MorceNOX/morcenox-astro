@@ -820,6 +820,46 @@ unsigned short get_terminal_height(void) {
 }
 
 
+
+void trim(char *str) {
+    if (str == NULL || *str == '\0') return;
+
+    char *inicio = str;
+    char *fim;
+
+    // 1. Avança o ponteiro 'inicio' enquanto houver espaços em branco
+    while (*inicio && isspace((unsigned char)*inicio)) {
+        inicio++;
+    }
+
+    // Se a string inteira era composta apenas por espaços
+    if (*inicio == '\0') {
+        *str = '\0';
+        return;
+    }
+
+    // 2. Encontra o fim da string e recua enquanto houver espaços
+    fim = inicio;
+    while (*fim) {
+        fim++;
+    }
+    fim--; // Aponta para o último caractere antes do '\0'
+
+    while (fim > inicio && isspace((unsigned char)*fim)) {
+        fim--;
+    }
+
+    // 3. Desloca a string válida para o começo do ponteiro 'str' original
+    char *destino = str;
+    while (inicio <= fim) {
+        *destino++ = *inicio++;
+    }
+
+    // 4. Finaliza a nova string com o caractere nulo
+    *destino = '\0';
+}
+
+
 /**
  * Handles: Visual width calculation, padding math, and ncurses drawing.
  * @param win: The window to draw on

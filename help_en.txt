@@ -384,13 +384,15 @@ All data is stored in an SQLite database provided by this application.
 
 We utilize an up-to-date free database of cities provided by https://github.com/dr5hn/countries-states-cities-database, which we have enhanced with structural improvements using the pytz (timezonefinder) and srtm libraries to better serve the application's needs (These libraries were only used to enhance the application's database during the development phase. They are not used by the program and you don't need to install them).
 
-The cities' database contains approximately 153 thousand cities. It is good enough for a free and well-structured database, working on a free astrological software, but small villages may not be listed. Therefore, for small villages, you should look for the name of the town where it is located, or a city very close to it. 
+The cities' database contains approximately 153 thousand cities. It is good enough for a free and well-structured database, working on a free astrological software, but small villages may not be listed. Therefore, for small villages, you should look for the name of the town where it is located, or a city very close to it. Or, from the version v1.40.0 onwards, entering the coordinates manually, and following the next dialogs to incorporate the new location to the database.
 
-For example, Princess Diana was born in Sandringham, a small village located in King's Lynn borough, in the county of Norfolk. You will see that Sandringham is not listed. So, to get her chart, you must select United Kingdom as the country, then look for King's Lynn in Norfolk county or state. (County or State is the 2nd column in the cities table).
+For example, Princess Diana was born in Sandringham, a small village located in King's Lynn borough, in the county of Norfolk. You will see that Sandringham is not listed. So, to get her chart, you must select United Kingdom as the country, then look for King's Lynn in Norfolk county or state. (County or State is the 2nd column in the cities table). Or you can close the city selection window and type the coordinates manually.
 
-The same happens to the Friedrich Nietzsche's chart. He was born in Röcken, a small village that was recently annexed to the town of Lützen, in Germany. So you must select Lützen, in the Saxony-Anhalt state, as the Nietzsche's hometown.
+The same happens to the Friedrich Nietzsche's chart. He was born in Röcken, a small village that was recently annexed to the town of Lützen, in Germany. So you must select Lützen, in the Saxony-Anhalt state, as the Nietzsche's hometown, or enter the Röcken coordinates manually.
 
 This software links with the ICU library (libicu), which is licensed under the ICU License and Unicode License. You can find the full license text at github.io (https://github.com/unicode-org/icu/blob/main/LICENSE)
+
+To identify the correct country and time zone based on coordinates, this application — starting with version v1.40.0 — uses the ZoneDetect library and its associated databases to enable the calculation of an astrological chart using geographic coordinates.
 
 Astrological information has been compiled from various authoritative sources related to Traditional Astrology and some of them are included in the Technical Topics.
 
@@ -459,9 +461,9 @@ The selection boxes appear in the following sequence:
 
 5. City (Select from the scrolling list; the State/County/Province/Region is displayed in the 2nd column to help you distinguish homonymous cities).
 
-6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program always calculates the correct timezone for the selected city.
+6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program always calculates the correct timezone for the selected city (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore).
 
-7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date).
+7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date). (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore).
 
 8. Chart Name (Type a name for your new chart). The name of the current chart will appear by default. You can maintain this name to overwrite the current chart with the new data or select another name to get a new chart.
 
@@ -470,6 +472,8 @@ The values are selected by using the arrow keys and <ENTER> to confirm.
 You can hit the <ESC> key in any box to cancel the edition.
 
 After setting the data, remember to save the chart. If you close the application without saving, or if you open the Quick Chart, the data will be lost.
+
+If your city or location was not found in the point 5, you can close the city selection window or the country select window and you will be asked about entering the coordinates by hand. All you have to do is entering the longitude and the latitude in the respective dialogs, so the system will find the correct country and timezone for the coordinates. An aproximate elevatin will also be calculated by the system. In the following dialogs you must enter the name for the location and select its type, as well as confirm or adjust the elevation value. You will enter the chart's name and the chart will be displayed in the chart wheel.
 
 The Quick Chart will overwrite the selected data by the current time and default location.
 
@@ -489,6 +493,8 @@ Save the current chart data to the database.
 A dialog will ask you about the chart name, which you can preserve the current or set a new one.
 
 This option can also be used to save the current loaded chart with a different name (so you can delete or not the previous one).
+
+If you trying to save the new chart after entering the coordinates by hand, the engine will try to save the new location before saving the chart. If everything was done correctly, the new location will be saved, as well as the new chart.
 
 If you set an existing chat's name the previous one will be overwritten after the confirmation.
 
@@ -2133,6 +2139,13 @@ Press Q or ESC to return to the main menu.
 
   https://icu.unicode.org/
   (https://github.com/unicode-org/icu/blob/main/LICENSE)
+  
+• ZoneDetect
+
+  https://github.com/BertoldVdb/ZoneDetect
+  <https://github.com/BertoldVdb/ZoneDetect#BSD-3-Clause-1-ov-file>
+  Copyright (c) 2018-2019, Bertold Van den Bergh 
+  (vandenbergh@bertold.org) All rights reserved.
     
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 MorceNOX™ ASTRO - Your astrological companion!

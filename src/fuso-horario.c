@@ -24,6 +24,7 @@
 #include <unicode/ustring.h>
 #include <sqlite3.h>
 
+#include "zonedetect.h" 
 #include "fuso-horario.h"
 #include "db-utils.h"
 

@@ -20,11 +20,19 @@
 #define NUMBER_HELPER_H
 
 typedef struct {
+    int grau;
+    int min;
+    int sec;
+} Grau;
+
+typedef struct {
     int hora;
     int min;
     int sec;
 } Hora;
 
+double get_decimal_degrees(Grau c);
+void get_degree_str(double grauDecimal, char* resultado);
 Hora get_fmt_hour(double h);
 int mod_a(int n, int div);
 char* intToRoman(int num);

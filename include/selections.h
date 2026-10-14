@@ -29,18 +29,32 @@ typedef struct {
     int dia;
 } DataNascimento;
 
+
+
 typedef struct {
     DataNascimento date;
     int changed;
 } DateEdition;
+
+
 
 typedef struct {
     Hora hora;
     int changed;
 } HoraEdition;
 
+
+
+typedef struct {
+    Grau grau;
+    int changed;
+} GrausEdition;
+
+
+
 typedef struct {
     int dark_mode;
+    int reindex_db;
     char house_system;
     int triplicity_system;
     int terms_system;
@@ -64,8 +78,15 @@ int show_confirm_delete_popup(const char *name);
 void show_alert_popup(const char *txt_line1, const char *txt_line2);
 ChartOptions load_default_options();
 OptionsEdition select_options();
+GrausEdition set_lat();
+GrausEdition set_lon();
+int set_elev();
 int set_tz();
 int set_dst();
+int select_location_type(char *type);
+void set_location_name(char *chart_name, size_t max_length);
+void set_country(char *location_name, size_t max_length);
+void set_state(char *location_name, size_t max_length);
 void set_chart_name(char *chart_name, size_t max_length);
 void set_file_name(char *chart_name, size_t max_length);
 int selecionar_idade_visual(int idade_inicial);

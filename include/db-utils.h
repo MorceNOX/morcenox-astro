@@ -23,7 +23,15 @@
 #include "selections.h"
 #include "planet_table.h"
 #include "helper.h"
+#include "zonedetect.h"
 
+
+// Estrutura para receber os dados clonados da cidade vizinha
+typedef struct {
+    char state[64];
+    double elev;
+    double distance_km;
+} CidadeVizinha;
 
 
 sqlite3* open_database();
@@ -32,10 +40,13 @@ void terminate_database();
 int reconstruir_indice_cidades(sqlite3 *db);
 int configurar_banco(sqlite3 *db);
 void auto_vacuum(sqlite3 *db);
+void activate_foreign_keys(sqlite3 *db);
 int execute_query(sqlite3 *db, const char *sql, sqlite3_stmt **stmt);
 int prepare_statement(sqlite3 *db, const char *sql, sqlite3_stmt **stmt);
 int execute_with_database(const char *sql, int (*callback)(sqlite3*, sqlite3_stmt*));
+int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, CidadeVizinha *resultado);
 void free_string_array(char **array, int count);
+int save_city();
 int get_coordinates(char *city, char *country, char *state, double *lat, double *lon, double *elev, double *tz_offset, char *tz_iana);
 int get_sign_properties(int sign, PrimitiveProperties *props);
 int get_planet_properties(int id, PrimitiveProperties *props);

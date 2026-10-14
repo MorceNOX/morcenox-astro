@@ -24,6 +24,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <libintl.h>
+#include "zonedetect.h"
 
 #include "var.h"
 
@@ -43,6 +44,13 @@ char CITY[100] = "Guarulhos";
 char COUNTRY[100] = "Brazil";
 char STATE[100] = "São Paulo";
 char TZ_IANA[100] = "America/Sao_Paulo";
+int CITY_ID = 12070;
+
+double LAT = -23.4628;
+double LON = -46.5333;
+double ELEV = 774.0;
+
+bool USAR_COORDENADAS = false;
 
 char CHART_NAME[100] = "NewChart";
 char MESSAGE[100] = "";
@@ -53,9 +61,12 @@ int YY = 2026, MM = 6, DD = 6, HH = 12, MIN = 0, SEC = 0, DST = -1;
 
 int DARK_MODE = 0;
 char HOUSE_SYSTEM = 'P';
+bool REINDEX_DB = 0;
 
 char CONFIG_PATH[256];
-const char *DB_PATH;
+const char *DB_PATH = NULL;
+const char *ZD_DATABASE_TIMEZONE_PATH = NULL;
+const char *ZD_DATABASE_COUNTRY_PATH = NULL;
 
 sqlite3 *global_db = NULL;
 

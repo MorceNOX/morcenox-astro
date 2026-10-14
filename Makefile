@@ -86,6 +86,14 @@ setup-dir:
 	else \
 	    echo "Arquivos da Swiss Ephemeris já existem em $(APP_CONFIG_DIR)/ephe/. Pulando cópia." ; \
 	fi
+	@sleep 0.1
+	@mkdir -p $(APP_CONFIG_DIR)/database
+	@if [ -z "$$(ls -A $(APP_CONFIG_DIR)/database 2>/dev/null)" ]; then \
+	    echo "Pasta database vazia. Copiando arquivos de banco de dados da ZoneDetect..." ; \
+	    cp -r database/* $(APP_CONFIG_DIR)/database/ ; \
+	else \
+	    echo "Arquivos da ZoneDetect já existem em $(APP_CONFIG_DIR)/database/. Pulando cópia." ; \
+	fi
 	@if [ ! -f "$(APP_CONFIG_DIR)/help_en.txt" ]; then \
 	    cp help_en.txt $(APP_CONFIG_DIR)/; \
 	    cp topics_en.txt $(APP_CONFIG_DIR)/; \
@@ -205,6 +213,7 @@ package: all translate
 	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@if [ -d "ephe" ]; then cp -r ephe $(PKG_DIR)/assets/ ; fi
+	@if [ -d "database" ]; then cp -r database $(PKG_DIR)/assets/ ; fi
 	@mkdir -p $(PKG_DIR)/assets/export 2>/dev/null || true
 
 	# 5. Copy the Launcher script

@@ -39,6 +39,7 @@
 #include "helper.h"
 #include "var.h"
 #include "environment.h"
+#include "zonedetect.h"
 
 #ifndef VERSION
 #define VERSION "0.0.0-unknown"
@@ -332,6 +333,7 @@ void set_data() {
     desativar_arrasto_mouse();
 
     char chart_name[100];
+    char location[100];
 
     DataNascimento dt;
     DateEdition ed = selecionar_data();
@@ -391,21 +393,114 @@ void set_data() {
 
     GENDER = gender_id;
 
-    double lat = 0.0, lon = 0.0, elev = 0.0;
-                                  
-    if (load_city_coordinates(CITY, COUNTRY, STATE, TZ_IANA, &TZ_OFFSET, &lat, &lon, &elev)) {    
+    double lat = 0.0, lon = 0.0, elev = 0.0;                                  
+    bool found_city = load_city_coordinates(CITY, COUNTRY, STATE, TZ_IANA, &TZ_OFFSET, &lat, &lon, &elev);
+
+    touchwin(stdscr);
+    wnoutrefresh(stdscr);
+    doupdate();
+
+    if (!found_city) {
         
-        if (set_tz()) {
+        if (show_confirm_yesno(_("Do you want to enter the coordinates of the location?"), "")) {
+
+            USAR_COORDENADAS = true;
+
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
+            doupdate();
             
-            if (set_dst()) {
-                set_chart_name(chart_name, sizeof(chart_name));                                
-                snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);               
-            
-                call_chart();
+            GrausEdition ed_lon = set_lon();
+            touchwin(stdscr);
+            wnoutrefresh(stdscr);
+            doupdate();
+
+            if (ed_lon.changed) {
+                GrausEdition ed_lat = set_lat();
+                touchwin(stdscr);
+                wnoutrefresh(stdscr);
+                doupdate();
                 
-                snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart data have been set.")); 
-            }
-            else {
+                if (ed_lat.changed) {                    
+                    set_location_name(location, sizeof(location));
+                    touchwin(stdscr);
+                    wnoutrefresh(stdscr);
+                    doupdate();
+    
+                    set_chart_name(chart_name, sizeof(chart_name));
+                    touchwin(stdscr);
+                    wnoutrefresh(stdscr);
+                    doupdate();    
+                    
+                    lat = get_decimal_degrees(ed_lat.grau);
+                    lon = get_decimal_degrees(ed_lon.grau);
+
+                    ZoneDetect *cdtz = ZDOpenDatabase(ZD_DATABASE_TIMEZONE_PATH);
+                    if (cdtz) {
+                        char *fuso_detectado = ZDHelperSimpleLookupString(cdtz, lat, lon);                       
+                                              
+                        snprintf(TZ_IANA, sizeof(TZ_IANA), "%s", fuso_detectado);
+                        snprintf(CITY, 100, "%s", location);
+                        
+                        TZ_OFFSET = obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
+                        DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
+                        
+                        show_alert_popup(_("Timezone:"), TZ_IANA);
+                        ZDHelperSimpleLookupStringFree(fuso_detectado);                     
+                    }
+                    ZDCloseDatabase(cdtz);
+
+                    ZoneDetect *cdc = ZDOpenDatabase(ZD_DATABASE_COUNTRY_PATH);
+                    if (cdc) {
+                        char *pais_detectado = ZDHelperSimpleLookupString(cdc, lat, lon);                       
+                                              
+                        snprintf(COUNTRY, sizeof(COUNTRY), "%s", pais_detectado);
+                        
+                        show_alert_popup(_("Country:"), COUNTRY);
+                        ZDHelperSimpleLookupStringFree(pais_detectado);               
+                    }
+                    ZDCloseDatabase(cdc);
+
+                    CidadeVizinha viz = {0};
+
+                    if (buscar_cidade_mais_proxima(lat, lon, &viz)) {
+                        snprintf(STATE, sizeof(STATE), "%s", viz.state);
+                        ELEV = viz.elev;
+
+                        char elev_str[20];
+                        snprintf(elev_str, 20, "%8.2f", ELEV);
+                        show_alert_popup(_("State:"), STATE);
+                        show_alert_popup(_("Elevation:"), elev_str);
+
+                        set_elev();
+                    }
+
+                    snprintf(CITY, sizeof(CITY), "%s", location);
+                    snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);                  
+                    LAT = lat;
+                    LON = lon;
+
+
+                    call_chart();
+
+
+                } else {
+                    strncpy(CITY, city_bkp, 100);
+                    strncpy(COUNTRY, country_bkp, 100);
+                    strncpy(STATE, state_bkp, 100);
+                    strncpy(TZ_IANA, tz_iana_bkp, 100);
+                    TZ_OFFSET = tz_offset_bkp;
+                    YY = yy_bkp;
+                    MM = mm_bkp;
+                    DD = dd_bkp;
+                    HH = hh_bkp;
+                    MIN = min_bkp;
+                    SEC = sec_bkp;
+                    GENDER = gender_bkp;
+                    snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
+        
+                }
+            } else {
                 strncpy(CITY, city_bkp, 100);
                 strncpy(COUNTRY, country_bkp, 100);
                 strncpy(STATE, state_bkp, 100);
@@ -419,9 +514,8 @@ void set_data() {
                 SEC = sec_bkp;
                 GENDER = gender_bkp;
                 snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
-
             }
-        }
+        } 
         else {
             strncpy(CITY, city_bkp, 100);
             strncpy(COUNTRY, country_bkp, 100);
@@ -436,23 +530,22 @@ void set_data() {
             SEC = sec_bkp;
             GENDER = gender_bkp;
             snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
-
-        }
+        }                    
+        
+       
     }
     else {
-        strncpy(CITY, city_bkp, 100);
-        strncpy(COUNTRY, country_bkp, 100);
-        strncpy(STATE, state_bkp, 100);
-        strncpy(TZ_IANA, tz_iana_bkp, 100);
-        TZ_OFFSET = tz_offset_bkp;
-        YY = yy_bkp;
-        MM = mm_bkp;
-        DD = dd_bkp;
-        HH = hh_bkp;
-        MIN = min_bkp;
-        SEC = sec_bkp;
-        GENDER = gender_bkp;
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
+
+        USAR_COORDENADAS = false;
+
+        LAT = lat;
+        LON = lon;
+        ELEV = elev;
+        TZ_OFFSET = obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
+        DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
+
+        call_chart();
+
     }
 
     ativar_arrasto_mouse();
@@ -461,6 +554,14 @@ void set_data() {
 
 
 void save_chart() {
+
+    if (USAR_COORDENADAS) {
+        if (!save_city()) {
+            show_alert_popup(_("City could not be saved!"), "");
+            snprintf(MESSAGE, sizeof(MESSAGE), _("Chart not saved!"));
+            return;
+        }
+    }
     sqlite3 *db;
     sqlite3_stmt *stmt;
     int rc;
@@ -509,7 +610,6 @@ void save_chart() {
         rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
 
         if (rc != SQLITE_OK) {
-            //fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
             show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
             sqlite3_finalize(stmt);
             sqlite3_close(db);
@@ -534,12 +634,12 @@ void save_chart() {
         sqlite3_bind_text(stmt, 16, CHART_NAME, -1, SQLITE_STATIC);
     }
     else {
-        const char *sql_load2 = "SELECT id FROM cities WHERE country = ? AND state = ? AND city = ?;";
+        const char *sql_load2 = "SELECT id FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
         rc = sqlite3_prepare_v2(db, sql_load2, -1, &stmt, NULL);
         
         if (rc != SQLITE_OK) {
             //fprintf(stderr, "Failed to prepare load statement: %s\n", sqlite3_errmsg(db));
-            show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
+            show_alert_popup(_("Failed to prepare load statement. Chart not saved!"), sqlite3_errmsg(db));
             sqlite3_finalize(stmt);
             sqlite3_close(db);
             return;
@@ -556,7 +656,7 @@ void save_chart() {
             rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
 
             if (rc != SQLITE_OK) {
-                show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
+                show_alert_popup(_("Failed to insert. Chart not saved!"), sqlite3_errmsg(db));
                 sqlite3_finalize(stmt);
                 sqlite3_close(db);
                 return;
@@ -580,22 +680,22 @@ void save_chart() {
             sqlite3_bind_int(stmt, 15, city_id);
         }
         else {
-            show_alert_popup(_("Chart not saved!"), "");
+            show_alert_popup(_("Failed to bind insert statement. Chart not saved!"), "");
+            sqlite3_finalize(stmt);
+            return;
         }
     }
 
 
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
-        //fprintf(stderr, "Failed saving chart: %s\n", sqlite3_errmsg(db));
-        show_alert_popup(_("Failed saving chart!"), sqlite3_errmsg(db));
+        show_alert_popup(_("Failed saving chart (step)!"), sqlite3_errmsg(db));
         sqlite3_finalize(stmt);
         return;
     }
 
     snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart saved!"));
 
-    // 6. Clean up resources
     sqlite3_finalize(stmt);
     close_database(db);
 
@@ -940,7 +1040,7 @@ void del_chart() {
                 }
                 break;
             }
-            case 10: // Enter
+            case 10: //
                 // INTERCEPTAÇÃO: Mostra o popup antes de fechar o menu
                 if (show_confirm_delete_popup(chart_names[selected_chart_index])) {
                     chart_selected = 1; // Se confirmou, sai do loop e vai deletar
@@ -1380,7 +1480,7 @@ void load_chart() {
     const char *selected_chart_name = chart_names[selected_chart_index];
     
     // Now load the full chart data
-    const char *sql_load = "SELECT c.year, c.month, c.day, c.hour, c.min, c.sec, c.dst, i.gmt_offset_secs, c.country, c.state, c.city, c.dst_offset, i.timezone, c.gender FROM charts c INNER JOIN cities i ON c.country = i.country AND c.state = i.state AND c.city = i.city WHERE c.chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
+    const char *sql_load = "SELECT c.year, c.month, c.day, c.hour, c.min, c.sec, c.dst, i.gmt_offset_secs, c.country, c.state, c.city, c.dst_offset, i.timezone, c.gender, c.city_id, i.lat, i.lon, i.elev FROM charts c INNER JOIN cities i ON c.country = i.country AND c.state = i.state AND c.city = i.city WHERE c.chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
     rc = sqlite3_prepare_v2(db, sql_load, -1, &stmt, NULL);
     
     if (rc != SQLITE_OK) {
@@ -1415,10 +1515,16 @@ void load_chart() {
         const char *state = (const char*)sqlite3_column_text(stmt, 9);
         const char *city = (const char*)sqlite3_column_text(stmt, 10);
 
-        DST_OFFSET = sqlite3_column_double(stmt, 11);
+        DST_OFFSET = sqlite3_column_double(stmt, 11) / 3600;
         const char *timezone = (const char*)sqlite3_column_text(stmt, 12);
 
         GENDER = sqlite3_column_int(stmt, 13);
+
+        CITY_ID = sqlite3_column_int(stmt, 14);
+        
+        LAT = sqlite3_column_double(stmt, 15);
+        LON = sqlite3_column_double(stmt, 16);
+        ELEV = sqlite3_column_double(stmt, 17);
         
         if (country) {
             snprintf(COUNTRY, sizeof(COUNTRY), "%s", country);
@@ -1455,17 +1561,8 @@ void load_chart() {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart not found!"));
     }
     else {
-        //get_iana_timezone(CITY, STATE, COUNTRY, &TZ_IANA);
-
-        if (DST != 0) {
-            DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
-        }
-        else {
-            DST_OFFSET = 0.0;
-        }
+        DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
         call_chart();
-
-        //snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Loaded chart data."));
     }
 }
 
@@ -1914,8 +2011,8 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
 void action_exit() {
     printf("Exiting program...\n");
-    endwin();
     
+    endwin();    
     terminate_database();
 
     exit(0);
@@ -1940,7 +2037,7 @@ void call_chart_now() {
     MIN = local_time->tm_min;
     SEC = local_time->tm_sec;
 
-    mktime(local_time);
+    timegm(local_time);
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1979,7 +2076,6 @@ void call_chart_now() {
         found = 1;
     }
     
-    // Clean up statement resources
     sqlite3_finalize(stmt);
     close_database(db);
 
@@ -2002,9 +2098,6 @@ void call_chart_now() {
     snprintf(STATE, sizeof(STATE), "%s", DEFAULT_STATE);
     snprintf(TZ_IANA, sizeof(TZ_IANA), "%s", tz_iana);
 
-    //PlanetDignities *dig_natal;
-    //double cusps[13] = {0};
-
     snprintf(CHART_NAME, 100, _("Here And Now"));
 
     chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
@@ -2014,9 +2107,6 @@ void call_chart_now() {
 
 void call_chart() {
     struct tm local_time_struct;
-    double lat = 0.0, lon = 0.0, elev = 0.0; // Initialized to default values
-    char country[100];
-
     time_t raw_time;
     time(&raw_time);
 
@@ -2031,72 +2121,15 @@ void call_chart() {
     local_time_struct.tm_sec = SEC;
     local_time_struct.tm_isdst = DST;
 
-    mktime(&local_time_struct);
+    timegm(&local_time_struct);
 
-    sqlite3 *db;
-    sqlite3_stmt *stmt;
-    int rc;
-
-    db = open_database();
-    if (!db) {
-        fprintf(stderr, "Failed to open database in call_chart\n");
-        return;
-    }
-    
-    const char *sql_select = "SELECT lat, lon, elev, country, gmt_offset_secs, timezone FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
-    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement in call_chart: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        exit(1);
-    }
-
-    char city[100];
-    snprintf(city, sizeof(city), "%s", CITY);
-
-    sqlite3_bind_text(stmt, 1, COUNTRY, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, STATE, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, city, -1, SQLITE_STATIC);
-
-    double tz_offset = TZ_OFFSET;
-        
-    int found = 0;
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        lat = sqlite3_column_double(stmt, 0);
-        lon = sqlite3_column_double(stmt, 1);
-        elev = sqlite3_column_double(stmt, 2);
-        snprintf(country, sizeof(country), "%s", sqlite3_column_text(stmt, 3));
-        //tz_offset = sqlite3_column_double(stmt, 4) / 3600;
-        const char *timezone = (const char*)sqlite3_column_text(stmt, 5);
-                
-        snprintf(TZ_IANA, 100, "%s", timezone);
-        tz_offset = obter_segundos_gmt_na_data(timezone, YY, MM, DD, HH, MIN) / 3600;
-        
-        found = 1;
-
-    }
-    
-    // Clean up statement resources
-    sqlite3_finalize(stmt);
-    close_database(db);
-
-    // Optional: Only trigger chart if data was actually found
-    if (!found) {
-        fprintf(stderr, "Warning: City '%s' not found in database.\n", city);
-    }
-
-    double dst_offset = 0.0;
-    if (DST != 0) {
-        dst_offset = (double)obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;        
-    }
-    else {
-        dst_offset = 0.0;
-    }
+       
+    double dst_offset = (double)obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600; 
+    double tz_offset = (double)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;   
 
     tz_offset = tz_offset + dst_offset;
 
-    chart(&local_time_struct, lat, lon, elev, tz_offset, city, country, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
+    chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
 
 
@@ -2776,6 +2809,11 @@ void load_env_configuration() {
     load_env_file(env_path);
 
     DB_PATH = getenv("DB_PATH");
+    ZD_DATABASE_TIMEZONE_PATH = getenv("ZD_DATABASE_TIMEZONE_PATH");
+    ZD_DATABASE_COUNTRY_PATH = getenv("ZD_DATABASE_COUNTRY_PATH");
+    
+    const char *reindex_var = getenv("REINDEX_DB");
+    REINDEX_DB = (reindex_var[0] == '1');    
 }
 
 
@@ -2818,9 +2856,9 @@ int main() {
         init_pair(7, 220, COLOR_BLUE);
         init_pair(8, COLOR_MAGENTA, COLOR_BLUE);
         init_pair(9, COLOR_BLUE, COLOR_BLUE);
-        init_pair(10, 232, 44); // verde água // 37
-        init_pair(11, 50, 24);
-        init_pair(12, 230, 24);
+        init_pair(10, 232, 37); // verde água // 37
+        init_pair(11, COLOR_CYAN, 23);
+        init_pair(12, 230, 23);
         //init_pair(13, COLOR_GREEN, COLOR_BLUE);
         init_pair(14, COLOR_RED, COLOR_BLUE);
         init_pair(15, COLOR_BLUE, 208); // orange
@@ -2876,7 +2914,7 @@ int main() {
             {_("Change the Default Location"), _("Select a new city as default for the Quick Chart."), set_default_city},
             {_("Settings"), _("Modify the default settings."), set_options},
             {_("Help"), _("See the help window for this application."), show_help_screen},
-            {_("Technical Topics"), _("Technical topics used in this program."), show_topics},
+            {_("Technical Topics"), _("Some technical topics used in this program."), show_topics},
             {_("Exit"), _("Exit the program."), action_exit}
         };
         int n_choices = ARRAY_SIZE(options);
@@ -2891,10 +2929,6 @@ int main() {
     }
 
     endwin();
-    //free(TZ_IANA);
-
-    
-    // close_database(db);
     terminate_database();
 
     return 1;

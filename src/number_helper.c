@@ -19,7 +19,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "number_helper.h"
+
+
+// Função que converte GMS (inteiros) para Graus Decimais (double)
+double get_decimal_degrees(Grau c) {
+    // 1. Identifica se a coordenada é negativa pelo campo dos graus
+    double sinal = (c.grau < 0) ? -1.0 : 1.0;
+    
+    // 2. Obtém o valor absoluto dos graus para não errar a soma
+    double grausAbsolutos = abs(c.grau);
+    
+    // 3. Calcula as frações decimais usando divisores do tipo double (60.0 e 3600.0)
+    double fracaoMinutos = c.min / 60.0;
+    double fracaoSegundos = c.sec / 3600.0;
+    
+    // 4. Junta as partes e aplica o sinal correto
+    return sinal * (grausAbsolutos + fracaoMinutos + fracaoSegundos);
+}
+
+
+void get_degree_str(double grauDecimal, char* resultado) {
+    // Define o sinal (+ ou -)
+    char sinal = (grauDecimal >= 0) ? '+' : '-';
+    
+    // Trabalha com o valor absoluto para extrair graus e minutos
+    double valorAbsoluto = fabs(grauDecimal);
+    
+    // Extrai a parte inteira dos graus
+    int graus = (int)valorAbsoluto;
+    
+    // Calcula os minutos (o que sobrou multiplicado por 60) e arredonda
+    int minutos = (int)round((valorAbsoluto - graus) * 60.0);
+    
+    // Se o arredondamento dos minutos der 60, ajusta para 0 e soma 1 grau
+    if (minutos == 60) {
+        minutos = 0;
+        graus += 1;
+    }
+    
+    // Formata a string no padrão desejado: sinal seguido de 2 dígitos para graus e minutos
+    sprintf(resultado, "%c%02d:%02d", sinal, graus, minutos);
+}
+
+
+
 
 
 Hora get_fmt_hour(double h) {
