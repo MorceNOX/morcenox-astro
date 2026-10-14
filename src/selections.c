@@ -3348,7 +3348,7 @@ int select_location_type(char *type) {
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
     keypad(win, TRUE);
-    curs_set(0); // Oculta o cursor piscante
+    curs_set(0);
 
     int botao_focado = 0;
 
@@ -3370,6 +3370,25 @@ int select_location_type(char *type) {
         _("subdistrict"),
         _("town"),
         _("village")
+    };
+
+    char *loc_types[] = {
+        "abandoned",
+        "adm",
+        "city",
+        "county",
+        "destroyed",
+        "district",
+        "locality",
+        "oblast",
+        "parish",
+        "province",
+        "regency",
+        "section",
+        "setlement",
+        "subdistrict",
+        "town",
+        "village"
     };
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
@@ -3625,7 +3644,7 @@ int select_location_type(char *type) {
         }
     }
 
-    snprintf(type, 100, "%s", location_types[type_id]);
+    snprintf(type, 100, "%s", loc_types[type_id]);
 
     delwin(win);
     delwin(shadow);
