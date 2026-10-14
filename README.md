@@ -48,7 +48,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **UI/UX:** `ncurses` (for the terminal-based interface).
 * **Database:** [SQLite](https://github.com/sqlite/sqlite) (for storing charts, settings, and a massive city database).
 * **Data Source:** Enhanced `countries-states-cities-database` (approx. 153k cities).
-* **Internationalization:** `libicu` (Unicode/ICU support).
+* **Internationalization:** `libicu` (Unicode/ICU support) and `ZoneDetect` (https://github.com/BertoldVdb/ZoneDetect).
 
 ## 🚀 Installation & Requirements
 
@@ -78,16 +78,18 @@ echo "export SE_EPHE_PATH="$HOME"/ephe >> .bashrc
 #### For Ubuntu/Debian based systems
 * `libncurses-dev`
 * `libicu-dev`
+* `libshp-dev`
 
 ```
-sudo apt-get install build-essentials gcc make libncurses-dev libicu-dev
+sudo apt-get install build-essentials gcc make libncurses-dev libicu-dev libshp-dev
 ```
 
 #### For Fedora/Red-Hat/CentOS
 * `ncurses-devel`
 * `libicu-devel`
+* `shapelib-devel`
 ```
-sudo dnf install gcc make ncurses-devel libicu-devel
+sudo dnf install gcc make ncurses-devel libicu-devel shapelib-devel
 ```
 
 Clone and Build the SQLite database with libicu
