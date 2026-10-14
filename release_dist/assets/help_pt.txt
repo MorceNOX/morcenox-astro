@@ -381,13 +381,15 @@ Todos os dados são armazenados em um banco de dados SQLite fornecido por este a
 
 Utilizamos um banco de dados atualizado e gratuito de cidades fornecido por https://github.com/dr5hn/countries-states-cities-database, que aprimoramos com melhorias estruturais usando as bibliotecas pytz (timezonefinder) e srtm para servir melhor às necessidades do aplicativo (Essas bibliotecas foram apenas usadas para aprimorar o banco de dados durante a fase de desenvolvimento. Elas não são usadas pelo programa e você não precisa instalá-las).
 
-O banco de dados de cidades contém aproximadamente 153 mil cidades. É bom o suficiente para um banco de dados gratuito e bem estruturado, trabalhando em um software astrológico gratuito, mas vilarejos pequenos podem não estar listados. Portanto, para vilarejos, você deve procurar pelo nome da cidade onde ele está localizado, ou uma cidade muito próxima a ele.
+O banco de dados de cidades contém aproximadamente 153 mil cidades. É bom o suficiente para um banco de dados gratuito e bem estruturado, trabalhando em um software astrológico gratuito, mas vilarejos pequenos podem não estar listados. Portanto, para vilarejos, você deve procurar pelo nome da cidade onde ele está localizado, ou uma cidade muito próxima a ele. Ou então, a partir da versão v1.40.0, digitar as coordenadas manualmente e seguir os diálogos subsequentes para que a nova localização seja incorporada ao banco de dados.
 
-Por exemplo, Princess Diana nasceu em Sandringham, uma pequena vila localizada no distrito de King's Lynn, no condado de Norfolk. Você verá que Sandringham não está listada. Assim, para obter o mapa dela, você deve selecionar Reino Unido como país, depois procurar por King's Lynn em Norfolk ou estado. (Condado ou Estado é a 2ª coluna na tabela de cidades).
+Por exemplo, Princess Diana nasceu em Sandringham, uma pequena vila localizada no distrito de King's Lynn, no condado de Norfolk. Você verá que Sandringham não está listada. Assim, para obter o mapa dela, você deve selecionar Reino Unido como país, depois procurar por King's Lynn em Norfolk ou estado. (Condado ou Estado é a 2ª coluna na tabela de cidades). Ou fechar a janela de seleção de cidade e digitar as coordenadas manualmente.
 
-O mesmo acontece com o mapa de Friedrich Nietzsche. Ele nasceu em Röcken, uma pequena vila que foi recentemente anexada à cidade de Lützen, na Alemanha. Portanto, você deve selecionar Lützen, no estado Saxônia-Anhalt, como a cidade natal de Nietzsche.
+O mesmo acontece com o mapa de Friedrich Nietzsche. Ele nasceu em Röcken, uma pequena vila que foi recentemente anexada à cidade de Lützen, na Alemanha. Portanto, você deve selecionar Lützen, no estado Saxônia-Anhalt, como a cidade natal de Nietzsche, ou entrar com os dados de Röcken manualmente.
 
 Este software se conecta com a biblioteca ICU (libicu), que é licenciada sob a Licença ICU e Licença Unicode. Você pode encontrar o texto completo da licença em github.io (https://github.com/unicode-org/icu/blob/main/LICENSE)
+
+Para identificação do país e do fuso-horário corretos pelas coordenadas, esta aplicação, a partir da versão v1.40.0, utiliza a biblioteca ZoneDetect e seus respectivos banco de dados para viabilizar o cálculo de um mapa astrológico pelas coordenadas geográficas.
 
 As informações astrológicas foram compiladas de várias fontes autoritativas relacionadas à Astrologia Tradicional e algumas são incluídas nos Tópicos Técnicos.
 
@@ -485,6 +487,10 @@ Role por uma lista de seus mapas salvos e selecione um para carregar. O mapa esc
 Salve os dados do mapa atual no banco de dados.
 
 Um diálogo perguntará sobre o nome do mapa. Você pode preservar o atual ou definir um novo.
+
+Se você estiver tentando salvar o novo mapa após inserir as coordenadas manualmente, o sistema tentará salvar a nova localização antes de salvar o mapa. Se tudo tiver sido feito corretamente, a nova localização será salva, assim como o novo mapa.
+
+Se a sua cidade ou local não for encontrado no passo 5, você pode fechar a janela de seleção de cidade ou de país; o sistema solicitará então que você insira as coordenadas manualmente. Basta inserir a longitude e a latitude nos diálogos correspondentes para que o sistema identifique o país e o fuso horário corretos para essas coordenadas. O sistema também calculará uma altitude aproximada. Nas telas seguintes, você deverá inserir o nome do local e selecionar o seu tipo, bem como confirmar ou ajustar o valor da altitude. Por fim, você informará o nome do mapa, e ele será exibido na roda astrológica.
 
 Essa opção também pode ser usada para salvar o mapa carregado atual com um nome diferente (assim você pode excluir ou não o anterior).
 
@@ -642,7 +648,7 @@ Os símbolos dos 12 signos do zodíaco são exibidos proeminentemente em arte AS
 
 Os dois eixos principais, Horizonte (Ascendente/Descendente) e Meridiano (Meio-do-Céu/Fundo-do-Céu) são, também, exibidos em destaque na roda do mapa.
 
-Dentro do círculo maior, bem próximo da borda do mapa, se desejar, você pode visualizar o glifo dos regentes dos decanatos pressionando [D] — três por signo (e aqui consideramos a ordem caldaica e não os decanatos modernos), cada um regendo dez graus de um signo, sendo tais glifos plotados o mais próximo possível do centro do seu respectivo decanato.
+Dentro do círculo maior, bem próximo da borda do mapa, se desejar, você pode visualizar o glifo dos regentes dos decanatos pressionando [D], sendo três por signo (e aqui consideramos a ordem caldaica e não os decanatos modernos), cada um regendo dez graus de um signo, sendo tais glifos plotados o mais próximo possível do centro do seu respectivo decanato.
 
 Você também pode visualizar os regentes dos termos ao pressionar a tecla [B]. Neste caso o regente de cada termo é desenhado próximo à borda do mapa no grau inicial do seu respectivo termo.
 
@@ -686,7 +692,11 @@ Digite [H] para mostrar os limites das casas no mapa.
 
 Você pode ativar ou desativar o modo de animação pressionando [A] ou a barra de espaço. Use ] e [ para ajustar a velocidade da animação em incrementos de 60 segundos, para mais e para menos, ou } e { para incrementos de 1 segundo, para mais e para menos. Valores positivos mostra eventos futuros; valores negativos simulam viajar de volta no tempo.
 
-O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. O programa foi testado com as fontes "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono", "Monospace", "Source Cod Pro", "Astronomic Mono", "DejaVu LGC Sans Mono", "DejaVu Sans Mono" para o terminal, mas qualquer fonte mono-espaçada pode ser usada e vai funcionar corretamente. Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
+O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. 
+
+O programa foi testado com as fontes Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono, Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono para o terminal, mas qualquer fonte mono-espaçada pode ser usada e vai funcionar corretamente. 
+
+Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
 Pode ocorrer de as informações exibidas ao lado da roda fiquem parcialmente ocultas por ela quanto mais próximo de um quadrado for o formato da janela do terminal, ou se a altura da janela for maior do que sua largura, pois o programa calcula a melhor proporção das dimensões e do raio da roda para que, em seu tamanho normal, ela seja o maior círculo inscrito possível dentro de sua janela. 
 
@@ -2003,7 +2013,14 @@ Press Q or ESC to return to the main menu.
 
   https://icu.unicode.org/
   (https://github.com/unicode-org/icu/blob/main/LICENSE)
-    
+
+• ZoneDetect
+
+  https://github.com/BertoldVdb/ZoneDetect
+  <https://github.com/BertoldVdb/ZoneDetect#BSD-3-Clause-1-ov-file>
+  Copyright (c) 2018-2019, Bertold Van den Bergh 
+  (vandenbergh@bertold.org) All rights reserved.
+  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 MorceNOX™ ASTRO - Your astrological companion!
   
