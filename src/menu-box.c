@@ -500,7 +500,7 @@ void set_data() {
                         show_alert_popup(_("State:"), STATE);
                         show_alert_popup(_("Elevation:"), elev_str);
 
-                        set_elev();
+                        set_elevation();
                     }
 
                     snprintf(CITY, sizeof(CITY), "%s", location);

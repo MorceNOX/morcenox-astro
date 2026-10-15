@@ -466,7 +466,7 @@ int save_city() {
 
     char location_type[100];
 
-    set_elev();
+    set_elevation();
     set_country(COUNTRY, sizeof(COUNTRY));
     set_state(STATE, sizeof(STATE));
     set_location_name(CITY, sizeof(CITY));

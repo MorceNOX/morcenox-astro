@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 03:43-0300\n"
+"POT-Creation-Date: 2026-10-15 07:03-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -59,7 +59,7 @@ msgid "Planetary"
 msgstr "Regente"
 
 #: src/almuten.c:612 src/directions.c:2420 src/directions.c:3365
-#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:3729
+#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:4106
 msgid "Day"
 msgstr "Dia"
 
@@ -69,7 +69,7 @@ msgid "Night"
 msgstr "Noite"
 
 #: src/almuten.c:612 src/draw-chart.c:2214 src/draw-chart.c:4709
-#: src/draw-chart.c:4737 src/selections.c:4038
+#: src/draw-chart.c:4737 src/selections.c:4415
 msgid "Hour"
 msgstr "Hora"
 
@@ -856,22 +856,22 @@ msgstr "Fórmula Diurna"
 msgid "Nocturnal Formulae"
 msgstr "Fórmula Noturna"
 
-#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/selections.c:3127
+#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/selections.c:3504
 msgid "Gender"
 msgstr "Gênero"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3128
+#: src/draw-chart.c:2177 src/selections.c:3505
 msgid "Masculine"
 msgstr "Masculino"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3128
+#: src/draw-chart.c:2177 src/selections.c:3505
 msgid "Feminine"
 msgstr "Feminino"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/draw-chart.c:2177
-#: src/selections.c:1471 src/selections.c:3128
+#: src/selections.c:1471 src/selections.c:3505
 msgid "Neuter"
 msgstr "Neutro"
 
@@ -1086,71 +1086,47 @@ msgstr " Matriz de Aspectos com Antiscia "
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos com Contrantiscia "
 
-#: src/db-utils.c:390
-msgid "No city found in 25km!"
-msgstr "Nenhuma cidade encontrada em 25km!"
-
-#: src/db-utils.c:390
-msgid "Trying 50km."
-msgstr "Tentando 50km."
-
-#: src/db-utils.c:395
+#: src/db-utils.c:391
 msgid "No city found in 50km!"
 msgstr "Nenhuma cidade encontrada em 50km!"
 
-#: src/db-utils.c:395
-msgid "Trying 75km."
-msgstr "Tentando 75km."
+#: src/db-utils.c:391
+msgid "Trying 200km."
+msgstr "Tentando 200km!"
 
-#: src/db-utils.c:400
-msgid "No city found in 75km!"
-msgstr "Nenhuma cidade encontrada em 75km!"
+#: src/db-utils.c:396
+msgid "No city found in 200km!"
+msgstr "Nenhuma cidade encontrada em 200km!"
 
-#: src/db-utils.c:400
-msgid "Trying 100km."
-msgstr "Tentando 100km!"
-
-#: src/db-utils.c:405
-msgid "No city found in 100km!"
-msgstr "Nenhuma cidade encontrada em 100km!"
-
-#: src/db-utils.c:405
-msgid "Trying 300km."
-msgstr "Tentando 300km."
-
-#: src/db-utils.c:410
-msgid "No city found in 300km!"
-msgstr "Nenhuma cidade encontrada em 300km!"
-
-#: src/db-utils.c:410
+#: src/db-utils.c:396
 msgid "Trying 1000km."
 msgstr "Tentando 1000km."
 
-#: src/db-utils.c:415
+#: src/db-utils.c:401
 msgid "No city found in 1000km!"
 msgstr "Nenhuma cidade encontrada em 1000km!"
 
-#: src/db-utils.c:438 src/db-utils.c:476
+#: src/db-utils.c:424 src/db-utils.c:462
 msgid "Failed prepare statement!"
 msgstr "Falha ao preparar statement"
 
-#: src/db-utils.c:487 src/selections.c:3359
+#: src/db-utils.c:473 src/selections.c:3736
 msgid "city"
 msgstr "cidade"
 
-#: src/db-utils.c:508
+#: src/db-utils.c:494
 msgid "Failed prepare saving city! (prepare insert)"
 msgstr "Falha ao preparar salvar cidade! (prepare insert)"
 
-#: src/db-utils.c:535
+#: src/db-utils.c:521
 msgid "Failed saving city! (bind insert)"
 msgstr "Falha ao tentar salvar cidade! (bind insert)"
 
-#: src/db-utils.c:541
+#: src/db-utils.c:527
 msgid "Failed saving city! (step)"
 msgstr "Falha ao salvar cidade (step)!"
 
-#: src/db-utils.c:546
+#: src/db-utils.c:532
 msgid "City saved!"
 msgstr "Cidade salva!"
 
@@ -1203,7 +1179,7 @@ msgstr "Use [←/→] Signif. [↑/↓] Rolagem"
 msgid "Age"
 msgstr "Idade"
 
-#: src/directions.c:2418 src/directions.c:3363 src/selections.c:3727
+#: src/directions.c:2418 src/directions.c:3363 src/selections.c:4104
 msgid "Year"
 msgstr "Ano"
 
@@ -3376,15 +3352,15 @@ msgstr "┃ Data/Hora: "
 msgid "┃ Dst: "
 msgstr "┃ HDV: "
 
-#: src/menu-box.c:1920 src/selections.c:6010 src/selections.c:6160
+#: src/menu-box.c:1920 src/selections.c:6387 src/selections.c:6537
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:1920 src/selections.c:6009 src/selections.c:6163
+#: src/menu-box.c:1920 src/selections.c:6386 src/selections.c:6540
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:1920 src/selections.c:6008
+#: src/menu-box.c:1920 src/selections.c:6385
 msgid "Auto"
 msgstr "Auto"
 
@@ -4088,21 +4064,23 @@ msgid "[ CONFIRM  ]"
 msgstr "[ CONFIRMA ]"
 
 #: src/selections.c:1240 src/selections.c:2127 src/selections.c:2138
-#: src/selections.c:2241 src/selections.c:2252 src/selections.c:3111
-#: src/selections.c:3183 src/selections.c:3192 src/selections.c:3214
-#: src/selections.c:3223 src/selections.c:3296 src/selections.c:3306
-#: src/selections.c:3429 src/selections.c:3501 src/selections.c:3510
-#: src/selections.c:3532 src/selections.c:3541 src/selections.c:3614
-#: src/selections.c:3624 src/selections.c:3751 src/selections.c:3818
-#: src/selections.c:3827 src/selections.c:3851 src/selections.c:3860
-#: src/selections.c:3936 src/selections.c:3946 src/selections.c:4064
-#: src/selections.c:4142 src/selections.c:4151 src/selections.c:4176
-#: src/selections.c:4185 src/selections.c:4261 src/selections.c:4271
-#: src/selections.c:4390 src/selections.c:4475 src/selections.c:4484
-#: src/selections.c:4508 src/selections.c:4517 src/selections.c:4593
-#: src/selections.c:4603 src/selections.c:4719 src/selections.c:4804
-#: src/selections.c:4813 src/selections.c:4837 src/selections.c:4846
-#: src/selections.c:4922 src/selections.c:4932
+#: src/selections.c:2241 src/selections.c:2252 src/selections.c:3117
+#: src/selections.c:3240 src/selections.c:3249 src/selections.c:3273
+#: src/selections.c:3282 src/selections.c:3360 src/selections.c:3370
+#: src/selections.c:3488 src/selections.c:3560 src/selections.c:3569
+#: src/selections.c:3591 src/selections.c:3600 src/selections.c:3673
+#: src/selections.c:3683 src/selections.c:3806 src/selections.c:3878
+#: src/selections.c:3887 src/selections.c:3909 src/selections.c:3918
+#: src/selections.c:3991 src/selections.c:4001 src/selections.c:4128
+#: src/selections.c:4195 src/selections.c:4204 src/selections.c:4228
+#: src/selections.c:4237 src/selections.c:4313 src/selections.c:4323
+#: src/selections.c:4441 src/selections.c:4519 src/selections.c:4528
+#: src/selections.c:4553 src/selections.c:4562 src/selections.c:4638
+#: src/selections.c:4648 src/selections.c:4767 src/selections.c:4852
+#: src/selections.c:4861 src/selections.c:4885 src/selections.c:4894
+#: src/selections.c:4970 src/selections.c:4980 src/selections.c:5096
+#: src/selections.c:5181 src/selections.c:5190 src/selections.c:5214
+#: src/selections.c:5223 src/selections.c:5299 src/selections.c:5309
 msgid "[  CANCEL  ]"
 msgstr "[  CANCELA ]"
 
@@ -4245,269 +4223,277 @@ msgstr "[Enter] Confirma | [ESC] Cancela."
 msgid "years"
 msgstr "anos"
 
-#: src/selections.c:2811 src/selections.c:3120 src/selections.c:3438
+#: src/selections.c:2811 src/selections.c:3126 src/selections.c:3497
+#: src/selections.c:3815
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr "Use [↑/↓] ajustar. [Enter] confirmar."
 
-#: src/selections.c:2812 src/selections.c:3121 src/selections.c:3439
+#: src/selections.c:2812 src/selections.c:3127 src/selections.c:3498
+#: src/selections.c:3816
 msgid "[ESC] to cancel."
 msgstr "[ESC] cancela."
 
-#: src/selections.c:3094
-msgid " Gender Selection "
-msgstr " Seleção de Gênero"
-
-#: src/selections.c:3100 src/selections.c:3156 src/selections.c:3165
-#: src/selections.c:3263 src/selections.c:3272 src/selections.c:3418
-#: src/selections.c:3474 src/selections.c:3483 src/selections.c:3581
-#: src/selections.c:3590 src/selections.c:3740 src/selections.c:3788
-#: src/selections.c:3797 src/selections.c:3902 src/selections.c:3911
-#: src/selections.c:4053 src/selections.c:4112 src/selections.c:4121
-#: src/selections.c:4227 src/selections.c:4236 src/selections.c:4379
-#: src/selections.c:4445 src/selections.c:4454 src/selections.c:4559
-#: src/selections.c:4568 src/selections.c:4708 src/selections.c:4774
-#: src/selections.c:4783 src/selections.c:4888 src/selections.c:4897
-msgid "[  CONFIRM  ]"
-msgstr "[ CONFIRMA  ]"
-
-#: src/selections.c:3357
-msgid "abandoned"
-msgstr "abandonada"
-
-#: src/selections.c:3358
-msgid "adm"
-msgstr "adm"
-
-#: src/selections.c:3360
-msgid "county"
-msgstr "condado"
-
-#: src/selections.c:3361
-msgid "destroyed"
-msgstr "destruída"
-
-#: src/selections.c:3362
-msgid "district"
-msgstr "distrito"
-
-#: src/selections.c:3363
-msgid "locality"
-msgstr "localidade"
-
-#: src/selections.c:3364
-msgid "oblast"
-msgstr "oblast"
-
-#: src/selections.c:3365
-msgid "parish"
-msgstr "freguesia"
-
-#: src/selections.c:3366
-msgid "province"
-msgstr "província"
-
-#: src/selections.c:3367
-msgid "regency"
-msgstr "regência"
-
-#: src/selections.c:3368
-msgid "section"
-msgstr "seção"
-
-#: src/selections.c:3369
-msgid "setlement"
-msgstr "povoado"
-
-#: src/selections.c:3370
-msgid "subdistrict"
-msgstr "subdistrito"
-
-#: src/selections.c:3371
-msgid "town"
-msgstr "zona urbana"
-
-#: src/selections.c:3372
-msgid "village"
-msgstr "vilarejo"
-
-#: src/selections.c:3412
-msgid " Location Type Selection "
-msgstr " Selecionar o Tipo da Localidade "
-
-#: src/selections.c:3445
-msgid "Location Type"
-msgstr " Localidade Tipo: "
-
-#: src/selections.c:3706
-msgid " Date "
-msgstr " Data "
-
-#: src/selections.c:3710 src/selections.c:4026 src/selections.c:4352
-#: src/selections.c:4681
-msgid "Use [←↓↑→] to ajust. [Enter] confirm."
-msgstr "[↑/↓] ajustar. [Enter] confirma."
-
-#: src/selections.c:3711 src/selections.c:4027 src/selections.c:4353
-#: src/selections.c:4682
-msgid "[ESC] Cancel."
-msgstr "[ESC] cancela."
-
-#: src/selections.c:3728
-msgid "Month"
-msgstr "Mês"
-
-#: src/selections.c:4022
-msgid " Time "
-msgstr " Horário "
-
-#: src/selections.c:4039 src/selections.c:4365 src/selections.c:4694
-msgid "Min"
-msgstr "Min"
-
-#: src/selections.c:4040 src/selections.c:4366 src/selections.c:4695
-msgid "Sec"
-msgstr "Seg"
-
-#: src/selections.c:4348
-msgid " Longitude "
-msgstr "Longitude "
-
-#: src/selections.c:4364 src/selections.c:4693
-msgid "Degree"
-msgstr "Grau"
-
-#: src/selections.c:4677
-msgid " Latitude "
-msgstr " Latitude "
-
-#: src/selections.c:5025
-msgid " Location's Name "
-msgstr " Nome do Local "
-
-#: src/selections.c:5039
-msgid "Enter the name of the location (max"
-msgstr "Digite o nome da localidade (máx"
-
-#: src/selections.c:5040 src/selections.c:5244 src/selections.c:5449
-#: src/selections.c:6253 src/selections.c:6461
-msgid "characters)"
-msgstr "caracteres)"
-
-#: src/selections.c:5161
-msgid "Somewhere"
-msgstr "Algum Lugar"
-
-#: src/selections.c:5229
-msgid " Confirm State Name "
-msgstr " Confirme o Nome do Estado "
-
-#: src/selections.c:5243
-msgid "Enter the name of the State (max"
-msgstr "Digite o nome do Estado (máx"
-
-#: src/selections.c:5365
-msgid "Some State"
-msgstr "Estado"
-
-#: src/selections.c:5434
-msgid " Confirm Country Name "
-msgstr " Confirme o Nome do País "
-
-#: src/selections.c:5448
-msgid "Enter the name of the Country (max"
-msgstr "Digite o nome do País (máx"
-
-#: src/selections.c:5570
-msgid "Some Country"
-msgstr "País"
-
-#: src/selections.c:5633
+#: src/selections.c:3100 src/selections.c:6010
 msgid " Elevation "
 msgstr " Elevação "
 
-#: src/selections.c:5644 src/selections.c:5858 src/selections.c:5860
+#: src/selections.c:3106 src/selections.c:3210 src/selections.c:3219
+#: src/selections.c:3324 src/selections.c:3333 src/selections.c:3477
+#: src/selections.c:3533 src/selections.c:3542 src/selections.c:3640
+#: src/selections.c:3649 src/selections.c:3795 src/selections.c:3851
+#: src/selections.c:3860 src/selections.c:3958 src/selections.c:3967
+#: src/selections.c:4117 src/selections.c:4165 src/selections.c:4174
+#: src/selections.c:4279 src/selections.c:4288 src/selections.c:4430
+#: src/selections.c:4489 src/selections.c:4498 src/selections.c:4604
+#: src/selections.c:4613 src/selections.c:4756 src/selections.c:4822
+#: src/selections.c:4831 src/selections.c:4936 src/selections.c:4945
+#: src/selections.c:5085 src/selections.c:5151 src/selections.c:5160
+#: src/selections.c:5265 src/selections.c:5274
+msgid "[  CONFIRM  ]"
+msgstr "[ CONFIRMA  ]"
+
+#: src/selections.c:3130
+msgid "Enter the Elevation Value"
+msgstr "Digite o Valor da Elevação"
+
+#: src/selections.c:3471
+msgid " Gender Selection "
+msgstr " Seleção de Gênero"
+
+#: src/selections.c:3734
+msgid "abandoned"
+msgstr "abandonada"
+
+#: src/selections.c:3735
+msgid "adm"
+msgstr "adm"
+
+#: src/selections.c:3737
+msgid "county"
+msgstr "condado"
+
+#: src/selections.c:3738
+msgid "destroyed"
+msgstr "destruída"
+
+#: src/selections.c:3739
+msgid "district"
+msgstr "distrito"
+
+#: src/selections.c:3740
+msgid "locality"
+msgstr "localidade"
+
+#: src/selections.c:3741
+msgid "oblast"
+msgstr "oblast"
+
+#: src/selections.c:3742
+msgid "parish"
+msgstr "freguesia"
+
+#: src/selections.c:3743
+msgid "province"
+msgstr "província"
+
+#: src/selections.c:3744
+msgid "regency"
+msgstr "regência"
+
+#: src/selections.c:3745
+msgid "section"
+msgstr "seção"
+
+#: src/selections.c:3746
+msgid "setlement"
+msgstr "povoado"
+
+#: src/selections.c:3747
+msgid "subdistrict"
+msgstr "subdistrito"
+
+#: src/selections.c:3748
+msgid "town"
+msgstr "zona urbana"
+
+#: src/selections.c:3749
+msgid "village"
+msgstr "vilarejo"
+
+#: src/selections.c:3789
+msgid " Location Type Selection "
+msgstr " Selecionar o Tipo da Localidade "
+
+#: src/selections.c:3822
+msgid "Location Type"
+msgstr " Localidade Tipo: "
+
+#: src/selections.c:4083
+msgid " Date "
+msgstr " Data "
+
+#: src/selections.c:4087 src/selections.c:4403 src/selections.c:4729
+#: src/selections.c:5058
+msgid "Use [←↓↑→] to ajust. [Enter] confirm."
+msgstr "[↑/↓] ajustar. [Enter] confirma."
+
+#: src/selections.c:4088 src/selections.c:4404 src/selections.c:4730
+#: src/selections.c:5059
+msgid "[ESC] Cancel."
+msgstr "[ESC] cancela."
+
+#: src/selections.c:4105
+msgid "Month"
+msgstr "Mês"
+
+#: src/selections.c:4399
+msgid " Time "
+msgstr " Horário "
+
+#: src/selections.c:4416 src/selections.c:4742 src/selections.c:5071
+msgid "Min"
+msgstr "Min"
+
+#: src/selections.c:4417 src/selections.c:4743 src/selections.c:5072
+msgid "Sec"
+msgstr "Seg"
+
+#: src/selections.c:4725
+msgid " Longitude "
+msgstr "Longitude "
+
+#: src/selections.c:4741 src/selections.c:5070
+msgid "Degree"
+msgstr "Grau"
+
+#: src/selections.c:5054
+msgid " Latitude "
+msgstr " Latitude "
+
+#: src/selections.c:5402
+msgid " Location's Name "
+msgstr " Nome do Local "
+
+#: src/selections.c:5416
+msgid "Enter the name of the location (max"
+msgstr "Digite o nome da localidade (máx"
+
+#: src/selections.c:5417 src/selections.c:5621 src/selections.c:5826
+#: src/selections.c:6630 src/selections.c:6838
+msgid "characters)"
+msgstr "caracteres)"
+
+#: src/selections.c:5538
+msgid "Somewhere"
+msgstr "Algum Lugar"
+
+#: src/selections.c:5606
+msgid " Confirm State Name "
+msgstr " Confirme o Nome do Estado "
+
+#: src/selections.c:5620
+msgid "Enter the name of the State (max"
+msgstr "Digite o nome do Estado (máx"
+
+#: src/selections.c:5742
+msgid "Some State"
+msgstr "Estado"
+
+#: src/selections.c:5811
+msgid " Confirm Country Name "
+msgstr " Confirme o Nome do País "
+
+#: src/selections.c:5825
+msgid "Enter the name of the Country (max"
+msgstr "Digite o nome do País (máx"
+
+#: src/selections.c:5947
+msgid "Some Country"
+msgstr "País"
+
+#: src/selections.c:6021 src/selections.c:6235 src/selections.c:6237
 msgid "Press [Enter] to save"
 msgstr "[ENTER] para salvar"
 
-#: src/selections.c:5646 src/selections.c:5863
+#: src/selections.c:6023 src/selections.c:6240
 msgid "Press [ESC] to cancel"
 msgstr "[ESC] para cancelar"
 
-#: src/selections.c:5647 src/selections.c:5864
+#: src/selections.c:6024 src/selections.c:6241
 msgid "Value: "
 msgstr "Valor: "
 
-#: src/selections.c:5842
+#: src/selections.c:6219
 msgid " Enter TZ Offset "
 msgstr " Fuso-Horário "
 
-#: src/selections.c:5856
+#: src/selections.c:6233
 msgid "Error: Max -12 to +14"
 msgstr "Erro: Máx -12 até +14"
 
-#: src/selections.c:6061
+#: src/selections.c:6438
 msgid " Select DST "
 msgstr " Horário de Verão? "
 
-#: src/selections.c:6238
+#: src/selections.c:6615
 msgid " Exporting To .csv File "
 msgstr " Exportando Para Arquivo .csv "
 
-#: src/selections.c:6252
+#: src/selections.c:6629
 msgid "Enter the file name (max"
 msgstr "Digite o nome do arquivo (max"
 
-#: src/selections.c:6374
+#: src/selections.c:6751
 msgid "primary_directions"
 msgstr "direcoes_primarias"
 
-#: src/selections.c:6446
+#: src/selections.c:6823
 msgid " Chart's Name "
 msgstr " Nome do Mapa "
 
-#: src/selections.c:6460
+#: src/selections.c:6837
 msgid "Enter a name for your chart (max"
 msgstr "Digite um nome para o seu mapa (máx"
 
-#: src/selections.c:6582
+#: src/selections.c:6959
 msgid "Unnamed Chart"
 msgstr "Mapa Sem Nome"
 
-#: src/selections.c:6825
+#: src/selections.c:7202
 msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
-#: src/selections.c:7131 src/selections.c:7457
+#: src/selections.c:7508 src/selections.c:7834
 msgid "Select Country"
 msgstr "Selecionar País"
 
-#: src/selections.c:7133 src/selections.c:7459
+#: src/selections.c:7510 src/selections.c:7836
 msgid "Country"
 msgstr "País"
 
-#: src/selections.c:7757
+#: src/selections.c:8134
 msgid "Select City in"
 msgstr "Selecione uma Cidade em"
 
-#: src/selections.c:7759
+#: src/selections.c:8136
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "Cidade                                        Estado/Condado/Região/Província"
 
-#: src/selections.c:8023
+#: src/selections.c:8400
 msgid "Failed to prepare statement:"
 msgstr "Falha ao preparar statement"
 
-#: src/selections.c:8070
+#: src/selections.c:8447
 msgid "Warning: City not found in database."
 msgstr "Aviso: Cidade não encontrada no banco de dados."
 
-#: src/selections.c:8112
+#: src/selections.c:8489
 msgid "Default city has not changed"
 msgstr "Cidade padrão não alterada"
 
-#: src/selections.c:8174
+#: src/selections.c:8551
 msgid "Default city has changed"
 msgstr "Cidade padrão alterada"
 
@@ -6734,6 +6720,24 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "No city found in 25km!"
+#~ msgstr "Nenhuma cidade encontrada em 25km!"
+
+#~ msgid "Trying 50km."
+#~ msgstr "Tentando 50km."
+
+#~ msgid "Trying 75km."
+#~ msgstr "Tentando 75km."
+
+#~ msgid "No city found in 75km!"
+#~ msgstr "Nenhuma cidade encontrada em 75km!"
+
+#~ msgid "Trying 300km."
+#~ msgstr "Tentando 300km."
+
+#~ msgid "No city found in 300km!"
+#~ msgstr "Nenhuma cidade encontrada em 300km!"
 
 #~ msgid "Add Location"
 #~ msgstr "Adicionar Localização"

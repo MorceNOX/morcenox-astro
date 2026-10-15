@@ -81,6 +81,7 @@ OptionsEdition select_options();
 GrausEdition set_lat();
 GrausEdition set_lon();
 int set_elev();
+int set_elevation();
 int set_tz();
 int set_dst();
 int select_location_type(char *type);
