@@ -67,7 +67,6 @@ void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double l
         p->casa_profectada = (idade % 12) + 1;
         p->signo_id = (signo_asc_natal + idade) % 12;
 
-        // ACESSANDO SUAS FUNÇÕES DE SIGNOS:
         p->signo_nome  = get_sign_name(p->signo_id);
         p->signo_glifo = get_sign(p->signo_id);
 
@@ -78,7 +77,6 @@ void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double l
         }
 
         // 3. IDENTIFICAÇÃO DO SENHOR DO ANO
-        // ACESSANDO SUAS FUNÇÕES DE PLANETAS:
         p->senhor_ano_id    = obter_regente_trad(p->signo_id);
         p->senhor_ano_nome  = obter_nome_planeta_por_id(p->senhor_ano_id);
         p->senhor_ano_glifo = obter_glifo_planeta_por_id(p->senhor_ano_id);
