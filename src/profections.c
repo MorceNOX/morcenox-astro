@@ -830,7 +830,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
 
         }
         else if (ch == KEY_F(2)) {
-            LinhaProfecao tabela[100];
+            LinhaProfecao tabela[121];
             gerar_tabela_profecoes_anuais(tabela, 121, cusps[1], jd);
             exibir_janela_tabela_profecoes(tabela, 121, idade, prof.glifo_senhor, prof.nome_senhor);
 
