@@ -236,46 +236,80 @@ Here are some screenshots of the application. You can have an idea of what you e
 <img width="2560" height="1600" alt="10-planetary_hours" src="https://github.com/user-attachments/assets/56ffff4e-410d-45ed-aef2-cc02b5f4cb2e" />
 <hr>
 
-<hr>
-## 📜 Licenses of 3rd Party Libraries and Resources
+## Licenses
 
-### Swiss Ephemeris
+
+### 📜 Licenses of 3rd Party Libraries and Resources
+
+
+
+
+#### • Swiss Ephemeris
 
   https://github.com/aloistr/swisseph
-  GNU Affero General Public License (AGPL) 
+  
+  GNU Affero General Public License (AGPL)
+  
   <https://www.gnu.org/licenses/agpl-3.0.ca.html>
 
-### countries-states-cities-database
+
+
+
+#### • countries-states-cities-database
 
   https://github.com/dr5hn/countries-states-cities-database
-  ODbL-1.0 license 
+  
+  ODbL-1.0 license
+  
   <https://opendatacommons.org/licenses/odbl/1.0/>
   
-### SQLite
+
+
+
+#### • SQLite
 
   https://sqlite.org/
-  Public Domain
- 
-### ncurses
-
-  https://invisible-island.net/ncurses/ 
-  NCURSES License 
-  <https://invisible-island.net/ncurses/ncurses-license.html>
   
-### ICU library (libicu)
+  Public Domain
+
+
+ 
+
+#### • ncurses
+
+  https://invisible-island.net/ncurses/
+  
+  NCURSES License
+  
+  <https://invisible-island.net/ncurses/ncurses-license.html>
+
+
+  
+
+#### • ICU library (libicu)
 
   https://icu.unicode.org/
-  (https://github.com/unicode-org/icu/blob/main/LICENSE)
   
-### ZoneDetect
+  (https://github.com/unicode-org/icu/blob/main/LICENSE)
+
+
+
+  
+#### • ZoneDetect
 
   https://github.com/BertoldVdb/ZoneDetect
+  
   <https://github.com/BertoldVdb/ZoneDetect#BSD-3-Clause-1-ov-file>
-  Copyright (c) 2018-2019, Bertold Van den Bergh 
+  
+  Copyright (c) 2018-2019, Bertold Van den Bergh
+  
   (vandenbergh@bertold.org) All rights reserved.
 
 <hr>
-## License
+
+
+
+### License
 
 This program is free software. You can redistribute and/or modify it under the terms of the **GNU General Public License (GPL)** as published by the Free Software Foundation.
 
