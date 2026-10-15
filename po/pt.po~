@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 14:30-0300\n"
+"POT-Creation-Date: 2026-10-15 14:32-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -3989,8 +3989,8 @@ msgid ""
 "Age;Year;Activated House;Sign Glyph;Sign Name;Degrees Profected Asc;Lord of "
 "Year Glyph;Lord of Year Name\n"
 msgstr ""
-"Idade;Ano;Casa Ativada;Signo Glifo;Signo Nome;Graus Asc Profectado;Regente do "
-"Ano Glifo;Regente do Ano Nome\n"
+"Idade;Ano;Casa Ativada;Signo Glifo;Signo Nome;Graus Asc Profectado;Regente "
+"do Ano Glifo;Regente do Ano Nome\n"
 
 #: src/profections.c:119
 #, c-format
@@ -3998,8 +3998,8 @@ msgid "%d;%d;House %d;%s;%s;%.4f;%s;%s\n"
 msgstr "%d;%d;Casa %d;%s;%s;%.4f;%s;%s\n"
 
 #: src/profections.c:135
-msgid "Profections"
-msgstr "Tabela de Profecções Anuais"
+msgid "Profections File:"
+msgstr "Arquivo de Profecções:"
 
 #: src/profections.c:198
 msgid " Profections "
@@ -6817,6 +6817,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Profections"
+#~ msgstr "Tabela de Profecções Anuais"
 
 #~ msgid "Use [←/→] Change Target"
 #~ msgstr "Use [←/→] Trocar o Alvo"

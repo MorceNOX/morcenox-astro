@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 14:30-0300\n"
+"POT-Creation-Date: 2026-10-15 14:32-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -3631,7 +3631,7 @@ msgstr ""
 
 #: src/profections.c:135
 #, fuzzy
-msgid "Profections"
+msgid "Profections File:"
 msgstr "Location: "
 
 #: src/profections.c:198
@@ -5800,6 +5800,10 @@ msgstr ""
 #: src/temperament.c:1242
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Profections"
+#~ msgstr "Location: "
 
 #, fuzzy
 #~ msgid "[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target"

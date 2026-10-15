@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 14:30-0300\n"
+"POT-Creation-Date: 2026-10-15 14:32-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3533,7 +3533,7 @@ msgid "%d;%d;House %d;%s;%s;%.4f;%s;%s\n"
 msgstr ""
 
 #: src/profections.c:135
-msgid "Profections"
+msgid "Profections File:"
 msgstr ""
 
 #: src/profections.c:198

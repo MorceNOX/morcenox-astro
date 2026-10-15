@@ -2852,22 +2852,18 @@ int selecionar_idade_visual(int idade_inicial) {
                     idade = 0;
                 }
                 break;
-            case 10: // ENTER
+                case 10: /* ENTER */
                 if (botao_focado == 0) {
-                    confirmado = 1;
-
-                    mvwprintw(win, 5, 9, "             ");
-
+                    mvwprintw(win, 5, 9, "              ");
                     int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                     wattron(win, attr_confirm);
                     mvwprintw(win, 6, 10, _("  CONFIRM  "));
                     wattroff(win, attr_confirm);
 
-                    wnoutrefresh(win);  
+                    wnoutrefresh(win);
                     doupdate();
-
                     napms(125);
-                    
+
                     attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                     wattron(win, attr_confirm);
                     mvwprintw(win, 5, 9, _("  CONFIRM  "));
@@ -2875,13 +2871,14 @@ int selecionar_idade_visual(int idade_inicial) {
 
                     wattron(win, COLOR_PAIR(57));
                     mvwprintw(win, 5, 20, "▖");
-                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
+                    mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘ ");
                     wattroff(win, COLOR_PAIR(57));
 
-                    wnoutrefresh(win);  
+                    wnoutrefresh(win);
                     doupdate();
-
                     napms(125);
+
+                    confirmado = 1;
 
                 } else {
                     mvwprintw(win, 5, 28, "            ");
@@ -2974,18 +2971,16 @@ int selecionar_idade_visual(int idade_inicial) {
                             botao_focado = 0;
                                  
                             if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                                mvwprintw(win, 5, 9, "             ");
-
+                                mvwprintw(win, 5, 9, "              ");
                                 int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_confirm);
                                 mvwprintw(win, 6, 10, _("  CONFIRM  "));
                                 wattroff(win, attr_confirm);
-
-                                wnoutrefresh(win);  
+    
+                                wnoutrefresh(win);
                                 doupdate();
-
                                 napms(125);
-                                
+    
                                 attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                 wattron(win, attr_confirm);
                                 mvwprintw(win, 5, 9, _("  CONFIRM  "));
@@ -2993,18 +2988,16 @@ int selecionar_idade_visual(int idade_inicial) {
     
                                 wattron(win, COLOR_PAIR(57));
                                 mvwprintw(win, 5, 20, "▖");
-                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘");
+                                mvwprintw(win, 6, 10,    "▀▀▀▀▀▀▀▀▀▀▘ ");
                                 wattroff(win, COLOR_PAIR(57));
     
-                                wnoutrefresh(win);  
+                                wnoutrefresh(win);
                                 doupdate();
-
                                 napms(125);
 
                                 confirmado = 1;
                                 break; 
-                            }
-                        }
+                            }                        }
                         // 🌟 CASO 2: Clicou exatamente no NO
                         else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
                             if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {   
