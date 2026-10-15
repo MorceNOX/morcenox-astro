@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 09:14-0300\n"
+"POT-Creation-Date: 2026-10-15 11:21-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -29,20 +29,20 @@ msgstr "   Ponto Hylegíaco        Longitude       Almuten Calculado"
 msgid "Sol "
 msgstr "Sol "
 
-#: src/almuten.c:567 src/draw-chart.c:398 src/draw-chart.c:605
-#: src/draw-chart.c:622 src/draw-chart.c:7089 src/draw-chart.c:7111
+#: src/almuten.c:567 src/draw-chart.c:407 src/draw-chart.c:614
+#: src/draw-chart.c:631 src/draw-chart.c:7110 src/draw-chart.c:7132
 #: src/hyleg.c:338
 msgid "Luna"
 msgstr "Lua"
 
-#: src/almuten.c:567 src/draw-chart.c:1577 src/draw-chart.c:7102
-#: src/draw-chart.c:7121 src/draw-chart.c:8463 src/draw-chart.c:8524
+#: src/almuten.c:567 src/draw-chart.c:1586 src/draw-chart.c:7123
+#: src/draw-chart.c:7142 src/draw-chart.c:8484 src/draw-chart.c:8545
 msgid "Ascendant"
 msgstr "Ascendente"
 
-#: src/almuten.c:567 src/directions.c:2034 src/directions.c:2965
-#: src/draw-chart.c:431 src/draw-chart.c:1581 src/draw-chart.c:7100
-#: src/draw-chart.c:7119 src/draw-chart.c:8249 src/draw-chart.c:8315
+#: src/almuten.c:567 src/directions.c:2067 src/directions.c:2998
+#: src/draw-chart.c:440 src/draw-chart.c:1590 src/draw-chart.c:7121
+#: src/draw-chart.c:7140 src/draw-chart.c:8270 src/draw-chart.c:8336
 msgid "Part of Fortune"
 msgstr "Parte da Fortuna"
 
@@ -54,22 +54,22 @@ msgstr "Sizígia Pré-Natal        "
 msgid "Tie"
 msgstr "Empate"
 
-#: src/almuten.c:612 src/draw-chart.c:2214
+#: src/almuten.c:612 src/draw-chart.c:2223
 msgid "Planetary"
 msgstr "Regente"
 
-#: src/almuten.c:612 src/directions.c:2420 src/directions.c:3365
-#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:4104
+#: src/almuten.c:612 src/directions.c:2453 src/directions.c:3398
+#: src/draw-chart.c:2223 src/draw-chart.c:4730 src/selections.c:4104
 msgid "Day"
 msgstr "Dia"
 
-#: src/almuten.c:612 src/draw-chart.c:2214 src/draw-chart.c:4709
-#: src/draw-chart.c:4737
+#: src/almuten.c:612 src/draw-chart.c:2223 src/draw-chart.c:4730
+#: src/draw-chart.c:4758
 msgid "Night"
 msgstr "Noite"
 
-#: src/almuten.c:612 src/draw-chart.c:2214 src/draw-chart.c:4709
-#: src/draw-chart.c:4737 src/selections.c:4413
+#: src/almuten.c:612 src/draw-chart.c:2223 src/draw-chart.c:4730
+#: src/draw-chart.c:4758 src/selections.c:4413
 msgid "Hour"
 msgstr "Hora"
 
@@ -861,16 +861,16 @@ msgid "Gender"
 msgstr "Gênero"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3503
+#: src/draw-chart.c:2186 src/selections.c:3503
 msgid "Masculine"
 msgstr "Masculino"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3503
+#: src/draw-chart.c:2186 src/selections.c:3503
 msgid "Feminine"
 msgstr "Feminino"
 
-#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/draw-chart.c:2177
+#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/draw-chart.c:2186
 #: src/selections.c:1471 src/selections.c:3503
 msgid "Neuter"
 msgstr "Neutro"
@@ -879,13 +879,13 @@ msgstr "Neutro"
 msgid "Part Name"
 msgstr "Nome da Parte"
 
-#: src/arabic_parts.c:248 src/arabic_parts.c:823 src/draw-chart.c:3174
-#: src/draw-chart.c:3827 src/draw-chart.c:4211
+#: src/arabic_parts.c:248 src/arabic_parts.c:823 src/draw-chart.c:3183
+#: src/draw-chart.c:3836 src/draw-chart.c:4220
 msgid "Position"
 msgstr "Posição"
 
-#: src/arabic_parts.c:249 src/arabic_parts.c:824 src/draw-chart.c:2296
-#: src/draw-chart.c:3179 src/draw-chart.c:3828 src/draw-chart.c:4212
+#: src/arabic_parts.c:249 src/arabic_parts.c:824 src/draw-chart.c:2305
+#: src/draw-chart.c:3188 src/draw-chart.c:3837 src/draw-chart.c:4221
 #: src/profections.c:149
 msgid "House"
 msgstr "Casa"
@@ -915,8 +915,8 @@ msgid "Use [↑/↓] Select | [e] Edit | [i] Include | [d] Delete | [x] Aspects.
 msgstr ""
 "Use [↑/↓] Seleciona | [e] Editar | [i] Incluir | [d] Excluir | [x] Aspectos."
 
-#: src/arabic_parts.c:414 src/arabic_parts.c:932 src/draw-chart.c:3732
-#: src/draw-chart.c:4524 src/draw-chart.c:5654 src/firdaria.c:464
+#: src/arabic_parts.c:414 src/arabic_parts.c:932 src/draw-chart.c:3741
+#: src/draw-chart.c:4545 src/draw-chart.c:5675 src/firdaria.c:464
 #: src/hyleg.c:844 src/hyleg.c:1199 src/mind.c:331 src/profections.c:236
 msgid "Press ESC to return to chart"
 msgstr "Pressione ESC para retornar ao mapa"
@@ -1130,165 +1130,165 @@ msgstr "Falha ao salvar cidade (step)!"
 msgid "City saved!"
 msgstr "Cidade salva!"
 
-#: src/directions.c:1467
+#: src/directions.c:1500
 msgid "Cardano"
 msgstr "Cardano"
 
-#: src/directions.c:1468
+#: src/directions.c:1501
 msgid "Ptolemy"
 msgstr "Ptolomeu"
 
-#: src/directions.c:1470
+#: src/directions.c:1503
 msgid "True Solar Ecliptical Arc"
 msgstr "Arco Solar Eclíptico Verdadeiro"
 
-#: src/directions.c:1472
+#: src/directions.c:1505
 msgid "True Solar Equatorial Arc"
 msgstr "Arco Solar Equatorial Verdadeiro"
 
-#: src/directions.c:1937 src/directions.c:4420
+#: src/directions.c:1970 src/directions.c:4453
 msgid "Mundane"
 msgstr "Mundana"
 
-#: src/directions.c:2156
+#: src/directions.c:2189
 msgid " Primary Directions "
 msgstr " Direções Primárias "
 
-#: src/directions.c:2370 src/directions.c:3305
+#: src/directions.c:2403 src/directions.c:3338
 msgid "Active Significator Target: "
 msgstr "Significador Ativo Alvo: "
 
-#: src/directions.c:2374
+#: src/directions.c:2407
 msgid " [EMPHASIZED HYLEG]"
 msgstr " [HYLEG ENFATIZADO]"
 
-#: src/directions.c:2376 src/directions.c:3321
+#: src/directions.c:2409 src/directions.c:3354
 msgid "Point not calculated in this chart"
 msgstr "Ponto não calculado neste mapa"
 
-#: src/directions.c:2381 src/directions.c:3326
+#: src/directions.c:2414 src/directions.c:3359
 msgid " │ Directions: "
 msgstr " │ Direções: "
 
-#: src/directions.c:2407 src/directions.c:3351
+#: src/directions.c:2440 src/directions.c:3384
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr "Use [←/→] Signif. [↑/↓] Rolagem"
 
-#: src/directions.c:2417 src/directions.c:3362 src/selections.c:2499
+#: src/directions.c:2450 src/directions.c:3395 src/selections.c:2499
 #: src/selections.c:2817
 msgid "Age"
 msgstr "Idade"
 
-#: src/directions.c:2418 src/directions.c:3363 src/selections.c:4102
+#: src/directions.c:2451 src/directions.c:3396 src/selections.c:4102
 msgid "Year"
 msgstr "Ano"
 
-#: src/directions.c:2419 src/directions.c:3364
+#: src/directions.c:2452 src/directions.c:3397
 msgid " Mo"
 msgstr "Mês"
 
-#: src/directions.c:2421 src/directions.c:3366
+#: src/directions.c:2454 src/directions.c:3399
 msgid "Directional Event"
 msgstr "Evento Direcional"
 
-#: src/directions.c:2422 src/directions.c:3367
+#: src/directions.c:2455 src/directions.c:3400
 msgid "Arc"
 msgstr "Arco"
 
-#: src/directions.c:2423 src/directions.c:3368
+#: src/directions.c:2456 src/directions.c:3401
 msgid "Sphere"
 msgstr "Esfera"
 
-#: src/directions.c:2424 src/directions.c:3369
+#: src/directions.c:2457 src/directions.c:3402
 msgid "Motion"
 msgstr "Direção"
 
-#: src/directions.c:2425 src/directions.c:3370
+#: src/directions.c:2458 src/directions.c:3403
 msgid "Divisor"
 msgstr "Divisor"
 
-#: src/directions.c:2437 src/directions.c:3383
+#: src/directions.c:2470 src/directions.c:3416
 msgid "No directional contacts available for this specific point."
 msgstr "Não há contatos direcionais disponíveis para este ponto específico."
 
-#: src/directions.c:2448 src/directions.c:3394 src/draw-chart.c:3840
+#: src/directions.c:2481 src/directions.c:3427 src/draw-chart.c:3849
 msgid "Term"
 msgstr "Termo"
 
-#: src/directions.c:2458 src/directions.c:3404 src/draw-chart.c:407
-#: src/draw-chart.c:608 src/draw-chart.c:625 src/draw-chart.c:6189
-#: src/draw-chart.c:7092 src/draw-chart.c:7114 src/firdaria.c:101
+#: src/directions.c:2491 src/directions.c:3437 src/draw-chart.c:416
+#: src/draw-chart.c:617 src/draw-chart.c:634 src/draw-chart.c:6210
+#: src/draw-chart.c:7113 src/draw-chart.c:7135 src/firdaria.c:101
 #: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:48 src/solar_return.c:1322
 #: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
 msgid "Mars"
 msgstr "Marte"
 
-#: src/directions.c:2459 src/directions.c:3405 src/draw-chart.c:413
-#: src/draw-chart.c:610 src/draw-chart.c:627 src/draw-chart.c:6187
-#: src/draw-chart.c:7094 src/draw-chart.c:7116 src/firdaria.c:103
+#: src/directions.c:2492 src/directions.c:3438 src/draw-chart.c:422
+#: src/draw-chart.c:619 src/draw-chart.c:636 src/draw-chart.c:6208
+#: src/draw-chart.c:7115 src/draw-chart.c:7137 src/firdaria.c:103
 #: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:54 src/solar_return.c:1322
 #: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
 msgid "Saturn"
 msgstr "Saturno"
 
-#: src/directions.c:2460 src/directions.c:3406 src/draw-chart.c:428
-#: src/draw-chart.c:615 src/draw-chart.c:632 src/draw-chart.c:1583
-#: src/draw-chart.c:7099 src/draw-chart.c:7118 src/firdaria.c:105
+#: src/directions.c:2493 src/directions.c:3439 src/draw-chart.c:437
+#: src/draw-chart.c:624 src/draw-chart.c:641 src/draw-chart.c:1592
+#: src/draw-chart.c:7120 src/draw-chart.c:7139 src/firdaria.c:105
 #: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
 msgid "South Node"
 msgstr "Nodo Sul"
 
-#: src/directions.c:2467 src/directions.c:3413 src/draw-chart.c:410
-#: src/draw-chart.c:609 src/draw-chart.c:626 src/draw-chart.c:6188
-#: src/draw-chart.c:7093 src/draw-chart.c:7115 src/firdaria.c:102
+#: src/directions.c:2500 src/directions.c:3446 src/draw-chart.c:419
+#: src/draw-chart.c:618 src/draw-chart.c:635 src/draw-chart.c:6209
+#: src/draw-chart.c:7114 src/draw-chart.c:7136 src/firdaria.c:102
 #: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:53 src/solar_return.c:1322
 #: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
 msgid "Jupiter"
 msgstr "Júpiter"
 
-#: src/directions.c:2468 src/directions.c:3414 src/draw-chart.c:404
-#: src/draw-chart.c:607 src/draw-chart.c:624 src/draw-chart.c:6184
-#: src/draw-chart.c:7091 src/draw-chart.c:7113 src/firdaria.c:100
+#: src/directions.c:2501 src/directions.c:3447 src/draw-chart.c:413
+#: src/draw-chart.c:616 src/draw-chart.c:633 src/draw-chart.c:6205
+#: src/draw-chart.c:7112 src/draw-chart.c:7134 src/firdaria.c:100
 #: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:49 src/solar_return.c:1322
 #: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
 msgid "Venus"
 msgstr "Vênus"
 
-#: src/directions.c:2469 src/directions.c:3415 src/draw-chart.c:425
-#: src/draw-chart.c:614 src/draw-chart.c:631 src/draw-chart.c:1585
-#: src/draw-chart.c:7098 src/draw-chart.c:7117 src/firdaria.c:104
+#: src/directions.c:2502 src/directions.c:3448 src/draw-chart.c:434
+#: src/draw-chart.c:623 src/draw-chart.c:640 src/draw-chart.c:1594
+#: src/draw-chart.c:7119 src/draw-chart.c:7138 src/firdaria.c:104
 #: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
 msgid "North Node"
 msgstr "Nodo Norte"
 
-#: src/directions.c:2527 src/directions.c:3472
+#: src/directions.c:2560 src/directions.c:3505
 msgid "Direct"
 msgstr "Direta"
 
-#: src/directions.c:2527 src/directions.c:3472
+#: src/directions.c:2560 src/directions.c:3505
 msgid "Converse"
 msgstr "Conversa"
 
-#: src/directions.c:2546 src/directions.c:3491
+#: src/directions.c:2579 src/directions.c:3524
 #, c-format
 msgid "Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."
 msgstr ""
 "Chave de Tempo: %s (1° de Rotação Equatorial = %6.4f Years). ε: Dinâmica."
 
-#: src/directions.c:2549 src/directions.c:3494
+#: src/directions.c:2582 src/directions.c:3527
 #, c-format
 msgid "Time Key: %s (Dynamic). ε: Dynamic."
 msgstr "Chave de Tempo Dinâmica: %s. ε: Dinâmica"
 
-#: src/directions.c:2555 src/directions.c:3500
+#: src/directions.c:2588 src/directions.c:3533
 msgid "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."
 msgstr "Método Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo)."
 
-#: src/directions.c:2557 src/directions.c:3502
+#: src/directions.c:2590 src/directions.c:3535
 msgid "Topocentric Method: Mundane (Continuous Local Poles)."
 msgstr "Método Topocêntrico: Mundanas (Polos Locais Contínuos)."
 
-#: src/directions.c:2559 src/directions.c:3504
+#: src/directions.c:2592 src/directions.c:3537
 msgid ""
 "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
 "(Continuous Local Poles)."
@@ -1296,17 +1296,17 @@ msgstr ""
 "Método Topocêntrico: Zodiacais (Ascensões Oblíquas sob o Polo) + Mundanas "
 "(Polos Locais Contínuos)."
 
-#: src/directions.c:2563 src/directions.c:3508
+#: src/directions.c:2596 src/directions.c:3541
 msgid ""
 "Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."
 msgstr ""
 "Método Placidus: Zodiacais (Projeção Eclíptica c/ Lat. Método Bianchini)"
 
-#: src/directions.c:2565 src/directions.c:3510
+#: src/directions.c:2598 src/directions.c:3543
 msgid "Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."
 msgstr "Método Placidus: Mundanas (Semi-Arcos Proporcionais In Mundo)."
 
-#: src/directions.c:2567 src/directions.c:3512
+#: src/directions.c:2600 src/directions.c:3545
 msgid ""
 "Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane "
 "(Proportional Semi-Arcs)."
@@ -1314,21 +1314,21 @@ msgstr ""
 "Método Placidus: Zodiacais (Projeção Eclíptica c/ Lat.) + Mundanas (Semi-"
 "Arcos Proporcionais)."
 
-#: src/directions.c:2576 src/directions.c:2750 src/directions.c:2795
-#: src/directions.c:2877 src/directions.c:3521 src/directions.c:3695
-#: src/directions.c:3740 src/directions.c:3822
+#: src/directions.c:2609 src/directions.c:2783 src/directions.c:2828
+#: src/directions.c:2910 src/directions.c:3554 src/directions.c:3728
+#: src/directions.c:3773 src/directions.c:3855
 msgid "Showing"
 msgstr "Exibindo"
 
-#: src/directions.c:2579 src/directions.c:2753 src/directions.c:2798
-#: src/directions.c:2880 src/directions.c:3524 src/directions.c:3698
-#: src/directions.c:3743 src/directions.c:3825
+#: src/directions.c:2612 src/directions.c:2786 src/directions.c:2831
+#: src/directions.c:2913 src/directions.c:3557 src/directions.c:3731
+#: src/directions.c:3776 src/directions.c:3858
 msgid "of"
 msgstr "de"
 
-#: src/directions.c:2583 src/directions.c:2757 src/directions.c:2802
-#: src/directions.c:2884 src/directions.c:3528 src/directions.c:3702
-#: src/directions.c:3747 src/directions.c:3829
+#: src/directions.c:2616 src/directions.c:2790 src/directions.c:2835
+#: src/directions.c:2917 src/directions.c:3561 src/directions.c:3735
+#: src/directions.c:3780 src/directions.c:3862
 msgid ""
 "[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ "
 "[Z] Zod [M] Mund [B] Both"
@@ -1336,7 +1336,7 @@ msgstr ""
 "[↑/↓][PgUp/PgDn] Rolar │ [←/→] Trocar o Alvo │ [C] Conv [D] Dir [A] Todas │ "
 "[Z] Zod [M] Mund [B] Ambas"
 
-#: src/directions.c:2586 src/directions.c:3531
+#: src/directions.c:2619 src/directions.c:3564
 msgid ""
 "Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] "
 "Both"
@@ -1344,7 +1344,7 @@ msgstr ""
 "Use [←/→] Trocar o Alvo │ [C] Conv [D] Dir [A] Todas │ [Z] Zod [M] Mund [B] "
 "Ambas"
 
-#: src/directions.c:2588 src/directions.c:3533
+#: src/directions.c:2621 src/directions.c:3566
 msgid ""
 "Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)   │ "
 "[3] (☌ □ △ ☍ ∥ ∦ R∥ R∦)"
@@ -1352,27 +1352,27 @@ msgstr ""
 "Aspectos Mundanos: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦) │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦) │ [3] "
 "(☌ □ △ ☍ ∥ ∦ R∥ R∦)"
 
-#: src/directions.c:2591 src/directions.c:3536
+#: src/directions.c:2624 src/directions.c:3569
 msgid "Press ESC to return to chart ─ [P] Print to File"
 msgstr "Pressione ESC para retornar ao mapa ─ [P] Imprimir em Arquivo"
 
-#: src/directions.c:2964
+#: src/directions.c:2997
 msgid "Fortune"
 msgstr "Fortuna"
 
-#: src/directions.c:2967
+#: src/directions.c:3000
 msgid "Lot of Fortune"
 msgstr "Lote da Fortuna"
 
-#: src/directions.c:3075
+#: src/directions.c:3108
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
-#: src/directions.c:4190
+#: src/directions.c:4223
 msgid "Error attempting to save directions to file!"
 msgstr "Erro ao tentar salvar direções para arquivo!"
 
-#: src/directions.c:4196
+#: src/directions.c:4229
 #, c-format
 msgid ""
 "Age;Date;Promissor Glyph;Promissor Name;Event;Significator "
@@ -1382,536 +1382,536 @@ msgstr ""
 "Significador;Nome do Significador;Arco;Esfera;Direção;Glifo do Divisor;Nome "
 "do Divisor\n"
 
-#: src/directions.c:4222
+#: src/directions.c:4255
 msgid "Directions exported to file:"
 msgstr "Direções exportadas para arquivo:"
 
-#: src/directions.c:4235
+#: src/directions.c:4268
 msgid "Error attempting to save directions metadata to file!"
 msgstr "Erro ao tentar salvar metadados das direções para arquivo!"
 
-#: src/directions.c:4241
+#: src/directions.c:4274
 msgid "Primary Directions Calculation Method"
 msgstr "Método de Cálculo das Direções Primárias"
 
-#: src/directions.c:4241
+#: src/directions.c:4274
 msgid "Tpocentric Method"
 msgstr "Métodp Topocêntrico"
 
-#: src/directions.c:4241
+#: src/directions.c:4274
 msgid "Placidus Proportional Semi-Arcs Method"
 msgstr "Método Placidus Semi-Arcos Proporcionais"
 
-#: src/directions.c:4242
+#: src/directions.c:4275
 msgid "Time Key"
 msgstr "Chave de Tempo"
 
-#: src/directions.c:4243
+#: src/directions.c:4276
 msgid "Active Significator Target"
 msgstr "Significador Ativo Alvo"
 
-#: src/directions.c:4244
+#: src/directions.c:4277
 msgid "csv File:"
 msgstr "Arquivo csv"
 
-#: src/directions.c:4245
+#: src/directions.c:4278
 msgid "Total Directions:"
 msgstr "Quantidade de Direções:"
 
-#: src/directions.c:4250
+#: src/directions.c:4283
 msgid "Directions metadata exported to file:"
 msgstr "Metadados exportados para arquivo:"
 
-#: src/draw-chart.c:395 src/draw-chart.c:6183 src/firdaria.c:97 src/hyleg.c:337
+#: src/draw-chart.c:404 src/draw-chart.c:6204 src/firdaria.c:97 src/hyleg.c:337
 #: src/profections.c:52 src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Sun"
 msgstr "Sol"
 
-#: src/draw-chart.c:395 src/draw-chart.c:604 src/draw-chart.c:621
-#: src/draw-chart.c:7088 src/draw-chart.c:7110 src/hyleg.c:337
+#: src/draw-chart.c:404 src/draw-chart.c:613 src/draw-chart.c:630
+#: src/draw-chart.c:7109 src/draw-chart.c:7131 src/hyleg.c:337
 msgid "Sol"
 msgstr "Sol"
 
-#: src/draw-chart.c:398 src/draw-chart.c:6186 src/firdaria.c:98 src/hyleg.c:338
+#: src/draw-chart.c:407 src/draw-chart.c:6207 src/firdaria.c:98 src/hyleg.c:338
 #: src/profections.c:51 src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Moon"
 msgstr "Lua"
 
-#: src/draw-chart.c:401 src/draw-chart.c:606 src/draw-chart.c:623
-#: src/draw-chart.c:6185 src/draw-chart.c:7090 src/draw-chart.c:7112
+#: src/draw-chart.c:410 src/draw-chart.c:615 src/draw-chart.c:632
+#: src/draw-chart.c:6206 src/draw-chart.c:7111 src/draw-chart.c:7133
 #: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:50
 #: src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Mercury"
 msgstr "Mercúrio"
 
-#: src/draw-chart.c:416 src/draw-chart.c:611 src/draw-chart.c:628
-#: src/draw-chart.c:1595 src/draw-chart.c:7095 src/solar_return.c:1491
+#: src/draw-chart.c:425 src/draw-chart.c:620 src/draw-chart.c:637
+#: src/draw-chart.c:1604 src/draw-chart.c:7116 src/solar_return.c:1491
 msgid "Uranus"
 msgstr "Urano"
 
-#: src/draw-chart.c:419 src/draw-chart.c:612 src/draw-chart.c:629
-#: src/draw-chart.c:1594 src/draw-chart.c:7096 src/solar_return.c:1491
+#: src/draw-chart.c:428 src/draw-chart.c:621 src/draw-chart.c:638
+#: src/draw-chart.c:1603 src/draw-chart.c:7117 src/solar_return.c:1491
 msgid "Neptune"
 msgstr "Netuno"
 
-#: src/draw-chart.c:422 src/draw-chart.c:613 src/draw-chart.c:630
-#: src/draw-chart.c:1596 src/draw-chart.c:7097 src/solar_return.c:1491
+#: src/draw-chart.c:431 src/draw-chart.c:622 src/draw-chart.c:639
+#: src/draw-chart.c:1605 src/draw-chart.c:7118 src/solar_return.c:1491
 msgid "Pluto"
 msgstr "Plutão"
 
-#: src/draw-chart.c:425
+#: src/draw-chart.c:434
 msgid "Caput Draconis"
 msgstr "Cabeça do Dragão"
 
-#: src/draw-chart.c:428
+#: src/draw-chart.c:437
 msgid "Cauda Draconis"
 msgstr "Cauda do Dragão"
 
-#: src/draw-chart.c:633
+#: src/draw-chart.c:642
 msgid "?"
 msgstr "?"
 
-#: src/draw-chart.c:771 src/draw-chart.c:784 src/draw-chart.c:792
+#: src/draw-chart.c:780 src/draw-chart.c:793 src/draw-chart.c:801
 msgid "🌑 New Moon"
 msgstr "🌑 Lua Nova"
 
-#: src/draw-chart.c:772 src/draw-chart.c:785
+#: src/draw-chart.c:781 src/draw-chart.c:794
 msgid "🌘 Waxing Crescent"
 msgstr "🌘 Crescente Côncava"
 
-#: src/draw-chart.c:773 src/draw-chart.c:786
+#: src/draw-chart.c:782 src/draw-chart.c:795
 msgid "🌗 First Quarter"
 msgstr "🌗 Quarto Crescente"
 
-#: src/draw-chart.c:774 src/draw-chart.c:787
+#: src/draw-chart.c:783 src/draw-chart.c:796
 msgid "🌖 Waxing Gibbous"
 msgstr "🌖 Crescente Convexa"
 
-#: src/draw-chart.c:775 src/draw-chart.c:788
+#: src/draw-chart.c:784 src/draw-chart.c:797
 msgid "🌕 Full Moon"
 msgstr "🌕 Lua Cheia"
 
-#: src/draw-chart.c:776 src/draw-chart.c:789
+#: src/draw-chart.c:785 src/draw-chart.c:798
 msgid "🌔 Waning Gibbous"
 msgstr "🌔 Minguante Convexa"
 
-#: src/draw-chart.c:777 src/draw-chart.c:790
+#: src/draw-chart.c:786 src/draw-chart.c:799
 msgid "🌓 Last Quarter"
 msgstr "🌓 Quarto Minguante"
 
-#: src/draw-chart.c:778 src/draw-chart.c:791
+#: src/draw-chart.c:787 src/draw-chart.c:800
 msgid "🌒 Waning Crescent"
 msgstr "🌒 Minguante Côncava"
 
-#: src/draw-chart.c:1578 src/draw-chart.c:7103 src/draw-chart.c:7122
-#: src/draw-chart.c:8464 src/draw-chart.c:8525
+#: src/draw-chart.c:1587 src/draw-chart.c:7124 src/draw-chart.c:7143
+#: src/draw-chart.c:8485 src/draw-chart.c:8546
 msgid "Midheaven"
 msgstr "Meio-do-Céu"
 
-#: src/draw-chart.c:1579 src/draw-chart.c:7105 src/draw-chart.c:7124
-#: src/draw-chart.c:8464 src/draw-chart.c:8525
+#: src/draw-chart.c:1588 src/draw-chart.c:7126 src/draw-chart.c:7145
+#: src/draw-chart.c:8485 src/draw-chart.c:8546
 msgid "Nadir"
 msgstr "Fundo-do-Céu"
 
-#: src/draw-chart.c:1580 src/draw-chart.c:7104 src/draw-chart.c:7123
-#: src/draw-chart.c:8463 src/draw-chart.c:8524
+#: src/draw-chart.c:1589 src/draw-chart.c:7125 src/draw-chart.c:7144
+#: src/draw-chart.c:8484 src/draw-chart.c:8545
 msgid "Descendant"
 msgstr "Descendente"
 
-#: src/draw-chart.c:1582 src/draw-chart.c:7101 src/draw-chart.c:7120
-#: src/draw-chart.c:8422 src/draw-chart.c:8482
+#: src/draw-chart.c:1591 src/draw-chart.c:7122 src/draw-chart.c:7141
+#: src/draw-chart.c:8443 src/draw-chart.c:8503
 msgid "SAN"
 msgstr "SAN"
 
-#: src/draw-chart.c:1584 src/draw-chart.c:7106 src/draw-chart.c:7125
+#: src/draw-chart.c:1593 src/draw-chart.c:7127 src/draw-chart.c:7146
 msgid "Vertex"
 msgstr "Vértex"
 
-#: src/draw-chart.c:2192 src/draw-chart.c:2260
+#: src/draw-chart.c:2201 src/draw-chart.c:2269
 msgid "Time"
 msgstr "Horário"
 
-#: src/draw-chart.c:2192 src/draw-chart.c:2260
+#: src/draw-chart.c:2201 src/draw-chart.c:2269
 msgid "Local"
 msgstr "Local"
 
-#: src/draw-chart.c:2199
+#: src/draw-chart.c:2208
 msgid "Sunrise"
 msgstr "Nascer-do-Sol"
 
-#: src/draw-chart.c:2200
+#: src/draw-chart.c:2209
 msgid " Sunset"
 msgstr "   Pôr-do-Sol"
 
-#: src/draw-chart.c:2206
+#: src/draw-chart.c:2215
 msgid "  Hour (Day)"
 msgstr " Hora Diurna"
 
-#: src/draw-chart.c:2207
+#: src/draw-chart.c:2216
 msgid "Hour (Night)"
 msgstr "Hora Noturna"
 
-#: src/draw-chart.c:2208
+#: src/draw-chart.c:2217
 msgid "Houses"
 msgstr "Casas"
 
-#: src/draw-chart.c:2212
+#: src/draw-chart.c:2221
 msgid "Syzygy"
 msgstr "Sizígia"
 
-#: src/draw-chart.c:2213
+#: src/draw-chart.c:2222
 msgid "Moon Phase"
 msgstr "Fase da Lua"
 
-#: src/draw-chart.c:2216
+#: src/draw-chart.c:2225
 msgid "Sun Clock"
 msgstr "Rel. de Sol"
 
-#: src/draw-chart.c:2220 src/draw-chart.c:2225
+#: src/draw-chart.c:2229 src/draw-chart.c:2234
 msgid "Divisions = Zodiac Signs"
 msgstr "Divisões = Signos do Zodíaco"
 
-#: src/draw-chart.c:2221
+#: src/draw-chart.c:2230
 msgid "Radix Confrontation: C | Annual Transits: T "
 msgstr "Confrontação Radix: C | Trânsitos do Ano: T"
 
-#: src/draw-chart.c:2222
+#: src/draw-chart.c:2231
 msgid "Anim: A | Parts Radix Confrontation: P "
 msgstr "Anim: A | Confrontação Partes / Radix: P"
 
-#: src/draw-chart.c:2226
+#: src/draw-chart.c:2235
 msgid "Anim: A    | Menu: M "
 msgstr "Anim: A    | Menu: M "
 
-#: src/draw-chart.c:2229
+#: src/draw-chart.c:2238
 msgid "Aspect: / *| Speed: ]/[ | Quit: Q "
 msgstr "Aspecto: /*| Veloc: ]/[ | Sair: Q "
 
-#: src/draw-chart.c:2232 src/draw-chart.c:9048 src/draw-chart.c:9059
+#: src/draw-chart.c:2241 src/draw-chart.c:9069 src/draw-chart.c:9080
 msgid "[    MENU    ]"
 msgstr "[    MENU    ]"
 
-#: src/draw-chart.c:2245
+#: src/draw-chart.c:2254
 msgid " Action: F1..F9, F12, 0-8 "
 msgstr " Ação: F1..F9, F12, 0-8 "
 
-#: src/draw-chart.c:2246
+#: src/draw-chart.c:2255
 msgid " Houses: H | Terms: B | Decans: D "
 msgstr " Casas: H | Termos: B | Decans: D "
 
-#: src/draw-chart.c:2247
+#: src/draw-chart.c:2256
 msgid "      Aspect Ratio: "
 msgstr "           Aspecto: "
 
-#: src/draw-chart.c:2252
+#: src/draw-chart.c:2261
 msgid "▶️  Running"
 msgstr "▶️  Rodando"
 
-#: src/draw-chart.c:2252
+#: src/draw-chart.c:2261
 msgid "⏸️  Stopped"
 msgstr "⏸️  Parado"
 
-#: src/draw-chart.c:2263
+#: src/draw-chart.c:2272
 msgid "Speed Animation"
 msgstr "Veloc. Animação"
 
-#: src/draw-chart.c:2506
+#: src/draw-chart.c:2515
 msgid "Aries"
 msgstr "Áries"
 
-#: src/draw-chart.c:2507
+#: src/draw-chart.c:2516
 msgid "Taurus"
 msgstr "Touro"
 
-#: src/draw-chart.c:2508
+#: src/draw-chart.c:2517
 msgid "Gemini"
 msgstr "Gêmeos"
 
-#: src/draw-chart.c:2509
+#: src/draw-chart.c:2518
 msgid "Cancer"
 msgstr "Câncer"
 
-#: src/draw-chart.c:2510
+#: src/draw-chart.c:2519
 msgid "Leo"
 msgstr "Leão"
 
-#: src/draw-chart.c:2511
+#: src/draw-chart.c:2520
 msgid "Virgo"
 msgstr "Virgem"
 
-#: src/draw-chart.c:2512
+#: src/draw-chart.c:2521
 msgid "Libra"
 msgstr "Libra"
 
-#: src/draw-chart.c:2513
+#: src/draw-chart.c:2522
 msgid "Scorpio"
 msgstr "Escorpião"
 
-#: src/draw-chart.c:2514
+#: src/draw-chart.c:2523
 msgid "Sagittarius"
 msgstr "Sagitário"
 
-#: src/draw-chart.c:2515
+#: src/draw-chart.c:2524
 msgid "Capricorn"
 msgstr "Capricórnio"
 
-#: src/draw-chart.c:2516
+#: src/draw-chart.c:2525
 msgid "Aquarius"
 msgstr "Aquário"
 
-#: src/draw-chart.c:2517
+#: src/draw-chart.c:2526
 msgid "Pisces"
 msgstr "Peixes"
 
-#: src/draw-chart.c:2570 src/draw-chart.c:2574 src/draw-chart.c:2578
+#: src/draw-chart.c:2579 src/draw-chart.c:2583 src/draw-chart.c:2587
 #: src/motivation.c:232 src/temperament.c:71 src/temperament.c:661
 #: src/temperament.c:667 src/temperament.c:680 src/temperament.c:698
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
-#: src/draw-chart.c:2571 src/draw-chart.c:2575 src/draw-chart.c:2579
+#: src/draw-chart.c:2580 src/draw-chart.c:2584 src/draw-chart.c:2588
 #: src/motivation.c:236 src/temperament.c:74 src/temperament.c:662
 #: src/temperament.c:670 src/temperament.c:686 src/temperament.c:706
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
-#: src/draw-chart.c:2572 src/draw-chart.c:2576 src/draw-chart.c:2580
+#: src/draw-chart.c:2581 src/draw-chart.c:2585 src/draw-chart.c:2589
 #: src/motivation.c:241 src/temperament.c:73 src/temperament.c:655
 #: src/temperament.c:669 src/temperament.c:679 src/temperament.c:694
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
-#: src/draw-chart.c:2573 src/draw-chart.c:2577 src/draw-chart.c:2581
+#: src/draw-chart.c:2582 src/draw-chart.c:2586 src/draw-chart.c:2590
 #: src/motivation.c:246 src/temperament.c:72 src/temperament.c:656
 #: src/temperament.c:668 src/temperament.c:685 src/temperament.c:702
 #, c-format
 msgid "Water"
 msgstr "Água"
 
-#: src/draw-chart.c:2684
+#: src/draw-chart.c:2693
 msgid " Planetary Energy Profile "
 msgstr " Perfil de Energia Planetária "
 
-#: src/draw-chart.c:2708
+#: src/draw-chart.c:2717
 msgid ""
 "Planet               Bar Chart Representation                        Points"
 msgstr ""
 "Planeta              Representação do Gráfico de Barras              Pontos"
 
-#: src/draw-chart.c:2786
+#: src/draw-chart.c:2795
 msgid "Press Q or ESC to return - Use [↓↑ / JK] to scroll"
 msgstr "Pressione Q ou ESC para retornar - Use [↓↑ / JK] para rolar"
 
-#: src/draw-chart.c:2927
+#: src/draw-chart.c:2936
 msgid " Planetary Strength "
 msgstr " Força Planetária "
 
-#: src/draw-chart.c:2947
+#: src/draw-chart.c:2956
 msgid ""
 "Planet    Essential    Accidental        Score          Weight        "
 "Strength"
 msgstr ""
 "Planeta   Essencial    Acidental         Pontuação      Peso          Força"
 
-#: src/draw-chart.c:3013
+#: src/draw-chart.c:3022
 msgid "Press Q or ESC to return - [↓↑] to scroll"
 msgstr "Pressione Q ou ESC para retornar - Use [↓↑] para rolar"
 
-#: src/draw-chart.c:3151
+#: src/draw-chart.c:3160
 msgid "Accidental Dignities"
 msgstr "Dignidades Acidentais"
 
-#: src/draw-chart.c:3173 src/draw-chart.c:3826 src/draw-chart.c:4210
+#: src/draw-chart.c:3182 src/draw-chart.c:3835 src/draw-chart.c:4219
 msgid "Object"
 msgstr "Objeto"
 
-#: src/draw-chart.c:3175
+#: src/draw-chart.c:3184
 msgid "Ess"
 msgstr "Ess"
 
-#: src/draw-chart.c:3176
+#: src/draw-chart.c:3185
 msgid "Acc"
 msgstr "Aci"
 
-#: src/draw-chart.c:3177 src/draw-chart.c:3829
+#: src/draw-chart.c:3186 src/draw-chart.c:3838
 msgid "Mov"
 msgstr "Mov"
 
-#: src/draw-chart.c:3178 src/draw-chart.c:3830 src/draw-chart.c:4213
+#: src/draw-chart.c:3187 src/draw-chart.c:3839 src/draw-chart.c:4222
 msgid "Speed"
 msgstr "Veloc"
 
-#: src/draw-chart.c:3180
+#: src/draw-chart.c:3189
 msgid "State / Conditions"
 msgstr "Estado / Condição"
 
-#: src/draw-chart.c:3181
+#: src/draw-chart.c:3190
 msgid "Aspects (B/M)"
 msgstr "Aspectod (B/M)"
 
-#: src/draw-chart.c:3183 src/draw-chart.c:3851
+#: src/draw-chart.c:3192 src/draw-chart.c:3860
 msgid "Mut.Rec"
 msgstr "Rec.Mút"
 
-#: src/draw-chart.c:3255
+#: src/draw-chart.c:3264
 msgid "Fast"
 msgstr "Rápido"
 
-#: src/draw-chart.c:3255
+#: src/draw-chart.c:3264
 msgid "Mean"
 msgstr "Médio"
 
-#: src/draw-chart.c:3255
+#: src/draw-chart.c:3264
 msgid "Slow"
 msgstr "Lento"
 
-#: src/draw-chart.c:3310
+#: src/draw-chart.c:3319
 msgid "VoC "
 msgstr "VdC "
 
-#: src/draw-chart.c:3317
+#: src/draw-chart.c:3326
 msgid "Siege "
 msgstr "Cerco "
 
-#: src/draw-chart.c:3328
+#: src/draw-chart.c:3337
 msgid "Joy "
 msgstr "Júb "
 
-#: src/draw-chart.c:3333
+#: src/draw-chart.c:3342
 msgid "JoyS "
 msgstr "JúbS"
 
-#: src/draw-chart.c:3347 src/draw-chart.c:3354
+#: src/draw-chart.c:3356 src/draw-chart.c:3363
 msgid "Occid "
 msgstr "Ocid "
 
-#: src/draw-chart.c:3415
+#: src/draw-chart.c:3424
 msgid "Press ESC/Q to close - F3 Strength - F4 Energy Profile - [↓↑/JK] Scroll"
 msgstr ""
 "Pressione Q/ESC retornar - F3 Força - F4 Perfil de Energia - [↓↑/JK] rolar"
 
-#: src/draw-chart.c:3615
+#: src/draw-chart.c:3624
 msgid "Chart Data"
 msgstr "Dados do Mapa"
 
-#: src/draw-chart.c:3647
+#: src/draw-chart.c:3656
 #, c-format
 msgid "%s (Age: %8.4f)"
 msgstr "%s (Idade: %8.4f)"
 
-#: src/draw-chart.c:3647
+#: src/draw-chart.c:3656
 msgid "Solar Revolution Chart"
 msgstr "Mapa de Revolução Solar"
 
-#: src/draw-chart.c:3652
+#: src/draw-chart.c:3661
 msgid "Radix Chart"
 msgstr "Mapa Radical"
 
-#: src/draw-chart.c:3655
+#: src/draw-chart.c:3664
 msgid "Location:"
-msgstr "Cidade:"
+msgstr "Localidade:"
 
-#: src/draw-chart.c:3659
+#: src/draw-chart.c:3668
 msgid "Time: "
 msgstr "Horário:"
 
-#: src/draw-chart.c:3663
+#: src/draw-chart.c:3672
 msgid "Julian Day: "
 msgstr "Dia Juliano:"
 
-#: src/draw-chart.c:3675
+#: src/draw-chart.c:3684
 msgid "Sunrise:"
 msgstr "Nascer-do-Sol:"
 
-#: src/draw-chart.c:3680
+#: src/draw-chart.c:3689
 msgid "Sunset:"
 msgstr "Pôr-do-Sol:"
 
-#: src/draw-chart.c:3684
+#: src/draw-chart.c:3693
 msgid "Next Sunrise:"
 msgstr "Próx.Nasc.Sol:"
 
-#: src/draw-chart.c:3688
+#: src/draw-chart.c:3697
 msgid "Local Apparent Solar Time:"
 msgstr "Horário Solar Aparente Local:"
 
-#: src/draw-chart.c:3692
+#: src/draw-chart.c:3701
 msgid "Moon Phase:"
 msgstr "Fase da Lua:"
 
-#: src/draw-chart.c:3697
+#: src/draw-chart.c:3706
 msgid "Syzygy Ante-Nativitatem (SAN):"
 msgstr "Sizígia Pré-Natal (SAN):"
 
-#: src/draw-chart.c:3707
+#: src/draw-chart.c:3716
 msgid "Conjunctional pre-natal syzygy - New Moon"
 msgstr "Sizígia pré-natal conjuncional - Nova"
 
-#: src/draw-chart.c:3710
+#: src/draw-chart.c:3719
 msgid "Preventional pre-natal syzygy - Full Moon"
 msgstr "Sizígia pré-natal prevencional - Cheia"
 
-#: src/draw-chart.c:3714
+#: src/draw-chart.c:3723
 msgid "Astrological Season:"
 msgstr "Estação do Ano:"
 
-#: src/draw-chart.c:3716
+#: src/draw-chart.c:3725
 #, c-format
 msgid "%s (North Hemisphere)"
 msgstr "%s (Hemisphério Norte)"
 
-#: src/draw-chart.c:3723
+#: src/draw-chart.c:3732
 msgid "Diurnal chart"
 msgstr "Mapa Diurno"
 
-#: src/draw-chart.c:3726
+#: src/draw-chart.c:3735
 msgid "Nocturnal chart"
 msgstr "Mapa Noturno"
 
-#: src/draw-chart.c:3729
+#: src/draw-chart.c:3738
 msgid "Masculine chart"
 msgstr "Mapa Masculino"
 
-#: src/draw-chart.c:3729
+#: src/draw-chart.c:3738
 msgid "Feminine chart"
 msgstr "Mapa Feminino"
 
-#: src/draw-chart.c:3729
+#: src/draw-chart.c:3738
 msgid "Neuter gender chart"
 msgstr "Mapa de Gênero Neutro"
 
-#: src/draw-chart.c:3807
+#: src/draw-chart.c:3816
 msgid "Dignities & Rulership Table"
 msgstr "Tabela de Dignidades & Regentes"
 
-#: src/draw-chart.c:3831
+#: src/draw-chart.c:3840
 msgid "Dignity"
 msgstr "Dignidade"
 
-#: src/draw-chart.c:3832
+#: src/draw-chart.c:3841
 msgid "Gen/Sect/Quad"
 msgstr "Gên/Seita/Quad"
 
-#: src/draw-chart.c:3833 src/draw-chart.c:7879
+#: src/draw-chart.c:3842 src/draw-chart.c:7900
 msgid "Orient"
 msgstr "Orient"
 
-#: src/draw-chart.c:3836
+#: src/draw-chart.c:3845
 msgid "Dec"
 msgstr "Dec"
 
-#: src/draw-chart.c:3844
+#: src/draw-chart.c:3853
 msgid "Trip"
 msgstr "Trip"
 
-#: src/draw-chart.c:3848
+#: src/draw-chart.c:3857
 msgid "Dom/Ex"
 msgstr "Dom/Ex"
 
-#: src/draw-chart.c:3964
+#: src/draw-chart.c:3973
 msgid ""
 "Press ESC/Q to close - F2 Positions - F3 Dignities - F4 Strength - F5 Energy "
 "Profile - [↓↑/JK] Scroll"
@@ -1919,133 +1919,141 @@ msgstr ""
 "Pressione Q/ESC retornar - F2 Posições - F3 Dignidades - F4 Força - F5 "
 "Perfil de Energia - [↓↑/JK] rolar"
 
-#: src/draw-chart.c:4191
+#: src/draw-chart.c:4200
 msgid "Astrological Positions Table"
 msgstr "Tabela de Posições Astrológicas"
 
-#: src/draw-chart.c:4214
+#: src/draw-chart.c:4223
+msgid "Longitude"
+msgstr "Longitude"
+
+#: src/draw-chart.c:4224
 msgid "Latitude"
 msgstr "Latitude"
 
-#: src/draw-chart.c:4215
+#: src/draw-chart.c:4225
 msgid "Declination"
 msgstr "Declinação"
 
-#: src/draw-chart.c:4216
+#: src/draw-chart.c:4226
 msgid "Right Ascension"
 msgstr "Ascensão Reta"
 
-#: src/draw-chart.c:4304
+#: src/draw-chart.c:4227
+msgid "Semi-Arc"
+msgstr "Semi-Arco"
+
+#: src/draw-chart.c:4325
 msgid "Press ESC/Q to return - [↓↑/JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
-#: src/draw-chart.c:4442
+#: src/draw-chart.c:4463
 msgid "Houses Table"
 msgstr "Tabela de Casas"
 
-#: src/draw-chart.c:4463
+#: src/draw-chart.c:4484
 msgid "   House    Cusp         Rulers(Dom/Exalt)  Objects in the House "
 msgstr "   Casa     Cúspide      Regentes(Dom/Ex)   Objetos na Casa "
 
-#: src/draw-chart.c:4517
+#: src/draw-chart.c:4538
 msgid "House System: "
 msgstr "Sistema de Casas: "
 
-#: src/draw-chart.c:4594
+#: src/draw-chart.c:4615
 msgid "Planetary Hours"
 msgstr "Horas Planetárias"
 
-#: src/draw-chart.c:4614
+#: src/draw-chart.c:4635
 msgid "Day:"
 msgstr "Dia:"
 
-#: src/draw-chart.c:4615
+#: src/draw-chart.c:4636
 msgid "Night:"
 msgstr "Noite:"
 
-#: src/draw-chart.c:4689
+#: src/draw-chart.c:4710
 msgid "Next day (hour 1):"
 msgstr "Próx.Dia (hora 1):"
 
-#: src/draw-chart.c:4703
+#: src/draw-chart.c:4724
 msgid "  Hour length (Day)"
 msgstr "        Hora Diurna"
 
-#: src/draw-chart.c:4704
+#: src/draw-chart.c:4725
 msgid "Hour length (Night)"
 msgstr "       Hora Noturna"
 
-#: src/draw-chart.c:4709
+#: src/draw-chart.c:4730
 msgid "Chart's Planetary"
 msgstr "Regente Planetário"
 
-#: src/draw-chart.c:4737
+#: src/draw-chart.c:4758
 msgid " Day"
 msgstr " Dia"
 
-#: src/draw-chart.c:4737
+#: src/draw-chart.c:4758
 msgid "  Hour"
 msgstr "  Hora"
 
-#: src/draw-chart.c:4746
+#: src/draw-chart.c:4767
 msgid "Press ESC to return to chart | [i] for interpretation."
 msgstr "Pressione ESC para retornar ao mapa - [i] interpretação"
 
-#: src/draw-chart.c:4852
+#: src/draw-chart.c:4873
 msgid " Planetary Hours Analysis "
 msgstr "Análise da Hora Planetária"
 
-#: src/draw-chart.c:4871
+#: src/draw-chart.c:4892
 msgid " [↓↑|JK: Scroll | Q|ESC: Return] "
 msgstr " [↓↑|JK: Rolagem | Q|ESC: Retornar] "
 
-#: src/draw-chart.c:4900
+#: src/draw-chart.c:4921
 #, c-format
 msgid "  1. REGENT OF THE %s: %s  \n"
 msgstr "  1. REGENTE D%s: %s  \n"
 
-#: src/draw-chart.c:4900
+#: src/draw-chart.c:4921
 msgid "DAY"
 msgstr "O DIA"
 
-#: src/draw-chart.c:4900
+#: src/draw-chart.c:4921
 msgid "NIGHT"
 msgstr "A NOITE"
 
-#: src/draw-chart.c:4908
+#: src/draw-chart.c:4929
 msgid "Leadership and visibility."
 msgstr "Liderança e visibilidade."
 
-#: src/draw-chart.c:4911
+#: src/draw-chart.c:4932
 msgid "A day marked by a certain restlessness and heightened sensitivity."
 msgstr "Dia em que impera certa agitação e sensibilidade à flor-da-pele."
 
-#: src/draw-chart.c:4914
+#: src/draw-chart.c:4935
 msgid "A day for communications, studies, business, and partnerships."
 msgstr "Dia para as comunicações, estudos, negócios e associações."
 
-#: src/draw-chart.c:4917
+#: src/draw-chart.c:4938
 msgid "A day associated with pleasure and comfort."
 msgstr "Dia associado ao prazer e ao conforto."
 
-#: src/draw-chart.c:4920
+#: src/draw-chart.c:4941
 msgid "Beginnings, action, competition, achievements, and discipline."
 msgstr "Inícios, ação, competição, conquistas e disciplina."
 
-#: src/draw-chart.c:4923
+#: src/draw-chart.c:4944
 msgid "A favorable day for any undertaking."
 msgstr "Dia favorável a qualquer empreendimento."
 
-#: src/draw-chart.c:4926
+#: src/draw-chart.c:4947
 msgid "Discipline, patience, and deep reflection."
 msgstr "Disciplina, paciência e reflexão profunda."
 
-#: src/draw-chart.c:4935
+#: src/draw-chart.c:4956
 #, c-format
 msgid "  2. REGENT OF THE HOUR: %s  \n"
 msgstr "  2. REGENTE DA HORA: %s  \n"
 
-#: src/draw-chart.c:4943
+#: src/draw-chart.c:4964
 #, c-format
 msgid ""
 "This is a favorable time for energetic activities or those involving "
@@ -2064,7 +2072,7 @@ msgstr ""
 "construção.\n"
 "\n"
 
-#: src/draw-chart.c:4947
+#: src/draw-chart.c:4968
 #, c-format
 msgid ""
 "Time to shine. It favors activities requiring energy or matters related to "
@@ -2079,7 +2087,7 @@ msgstr ""
 "financeiros, de prosperidade e negócios, bem como para procurar emprego, "
 "fazer planos para o futuro e comprar coisas novas.\n"
 
-#: src/draw-chart.c:4953
+#: src/draw-chart.c:4974
 #, c-format
 msgid ""
 "A favorable time for all domestic activities (especially buying food) and "
@@ -2097,7 +2105,7 @@ msgstr ""
 "Desfavorável para tarefas que exigem estabilidade.\n"
 "\n"
 
-#: src/draw-chart.c:4958
+#: src/draw-chart.c:4979
 #, c-format
 msgid ""
 "Ideal for routine tasks. It is a good time to review and re-evaluate your "
@@ -2112,7 +2120,7 @@ msgstr ""
 "decisões rápidas, limpar e organizar sua casa ou seu negócio, e viajar para "
 "visitar parentes. No entanto, não é um bom momento para mudar de casa.\n"
 
-#: src/draw-chart.c:4964
+#: src/draw-chart.c:4985
 #, c-format
 msgid ""
 "Mercury is suitable for communication, as well as for sending, signing, and "
@@ -2133,7 +2141,7 @@ msgstr ""
 "profissionais.\n"
 "\n"
 
-#: src/draw-chart.c:4969
+#: src/draw-chart.c:4990
 #, c-format
 msgid ""
 "Time for communication. It is an excellent time for sending documents and "
@@ -2149,7 +2157,7 @@ msgstr ""
 "documentos oficiais, dedicar-se a atividades relacionadas a estudos ou ao "
 "ensino em geral, e memorizar textos.\n"
 
-#: src/draw-chart.c:4976
+#: src/draw-chart.c:4997
 #, c-format
 msgid ""
 "A suitable time for harmony and beauty, and ideal for pleasure, social "
@@ -2170,7 +2178,7 @@ msgstr ""
 "que exijam grande seriedade, concentração ou esforço.\n"
 "\n"
 
-#: src/draw-chart.c:4984
+#: src/draw-chart.c:5005
 #, c-format
 msgid ""
 "A time for harmony and matters related to beauty. It is ideal for activities "
@@ -2188,7 +2196,7 @@ msgstr ""
 "momento perfeito para adquirir itens para a casa, renovar o guarda-roupa ou "
 "marcar a data do noivado ou de um casamento feliz.\n"
 
-#: src/draw-chart.c:4992
+#: src/draw-chart.c:5013
 #, c-format
 msgid ""
 "A time for action, achievements, and new beginnings. Ideal for starting "
@@ -2207,7 +2215,7 @@ msgstr ""
 "superiores e autoridades ou firmar parcerias.\n"
 "\n"
 
-#: src/draw-chart.c:4998
+#: src/draw-chart.c:5019
 #, c-format
 msgid ""
 "A time for action, achievements, and picking up where you left off. It is "
@@ -2220,7 +2228,7 @@ msgstr ""
 "competitivo. Recomenda-se cautela com discussões, acidentes e incêndios, "
 "dada a energia poderosa deste horário.\n"
 
-#: src/draw-chart.c:5004
+#: src/draw-chart.c:5025
 #, c-format
 msgid ""
 "An auspicious time to launch any type of venture or project. An ideal moment "
@@ -2241,7 +2249,7 @@ msgstr ""
 "governança.\n"
 "\n"
 
-#: src/draw-chart.c:5009
+#: src/draw-chart.c:5030
 #, c-format
 msgid ""
 "It is time to expand toward new horizons and find happiness. It brings "
@@ -2254,7 +2262,7 @@ msgstr ""
 "e tratar de assuntos relacionados a dinheiro, abundância e prosperidade, bem "
 "como para agilizar questões jurídicas.\n"
 
-#: src/draw-chart.c:5014
+#: src/draw-chart.c:5035
 #, c-format
 msgid ""
 "A suitable time for deep reflection, organizing ideas, and carrying out "
@@ -2280,7 +2288,7 @@ msgstr ""
 "comerciais ou casamentos).\n"
 "\n"
 
-#: src/draw-chart.c:5022
+#: src/draw-chart.c:5043
 #, c-format
 msgid ""
 "It is time to resolve matters. This period calls for deep reflection, a "
@@ -2299,211 +2307,211 @@ msgstr ""
 "feitas. É excelente para finalizar assuntos, mas péssimo para iniciar coisas "
 "novas.\n"
 
-#: src/draw-chart.c:5041
+#: src/draw-chart.c:5062
 msgid "  3. PLANETARY ALIGNMENT SYNTHESIS:  \n"
 msgstr "  3. SÍNTESE DO ALINHAMENTO PLANETÁRIO:  \n"
 
-#: src/draw-chart.c:5053
+#: src/draw-chart.c:5074
 msgid "A moment of peak vitality and visible leadership."
 msgstr "Um momento de vitalidade máxima e liderança visível."
 
-#: src/draw-chart.c:5054
+#: src/draw-chart.c:5075
 msgid "Emotional sensitivity meets outward energy."
 msgstr "A sensibilidade emocional encontra a energia voltada para o exterior."
 
-#: src/draw-chart.c:5055
+#: src/draw-chart.c:5076
 msgid "Communicative leadership; a time to speak with authority."
 msgstr "Liderança comunicativa: um momento para falar com autoridade."
 
-#: src/draw-chart.c:5056
+#: src/draw-chart.c:5077
 msgid "A beautiful moment for public displays of affection or art."
 msgstr "Um belo momento para demonstrações públicas de afeto ou arte."
 
-#: src/draw-chart.c:5057
+#: src/draw-chart.c:5078
 msgid "Aggressive leadership; use your power with caution."
 msgstr "Liderança agressiva; use seu poder com cautela."
 
-#: src/draw-chart.c:5058
+#: src/draw-chart.c:5079
 msgid "Expanding your influence through visible action."
 msgstr "Expandindo sua influência por meio de ações visíveis."
 
-#: src/draw-chart.c:5059
+#: src/draw-chart.c:5080
 msgid "Structured success; leading with discipline."
 msgstr "Sucesso estruturado; liderança com disciplina."
 
-#: src/draw-chart.c:5064
+#: src/draw-chart.c:5085
 msgid "Action driven by intuition."
 msgstr "Ação impulsionada pela intuição."
 
-#: src/draw-chart.c:5065
+#: src/draw-chart.c:5086
 msgid "A quiet, reflective moment of domestic peace."
 msgstr "Um momento tranquilo e reflexivo de paz doméstica."
 
-#: src/draw-chart.c:5066
+#: src/draw-chart.c:5087
 msgid "Quick changes in moods; perfect for writing or chatting."
 msgstr "Mudanças rápidas de humor; perfeito para escrever ou conversar."
 
-#: src/draw-chart.c:5067
+#: src/draw-chart.c:5088
 msgid "A day of aesthetic beauty and emotional comfort."
 msgstr "Um dia de beleza estética e conforto emocional."
 
-#: src/draw-chart.c:5068
+#: src/draw-chart.c:5089
 msgid "A turbulent day; emotions may fuel physical conflicts."
 msgstr "Um dia turbulento; as emoções podem alimentar conflitos físicos."
 
-#: src/draw-chart.c:5069
+#: src/draw-chart.c:5090
 msgid "An expansive time for emotional growth and travel."
 msgstr "Um período de grande expansão para o crescimento emocional e viagens."
 
-#: src/draw-chart.c:5070
+#: src/draw-chart.c:5091
 msgid "A day of emotional boundaries and serious reflection."
 msgstr "Um dia de limites emocionais e reflexão profunda."
 
-#: src/draw-chart.c:5075
+#: src/draw-chart.c:5096
 msgid "A sharp, communicative start to a powerful day."
 msgstr "Um começo dinâmico e comunicativo para um dia poderoso."
 
-#: src/draw-chart.c:5076
+#: src/draw-chart.c:5097
 msgid "Fluid communication influenced by deep emotions."
 msgstr "Comunicação fluida influenciada por emoções profundas."
 
-#: src/draw-chart.c:5077
+#: src/draw-chart.c:5098
 msgid "The peak of intellectual and commercial activity."
 msgstr "O auge da atividade intelectual e comercial."
 
-#: src/draw-chart.c:5078
+#: src/draw-chart.c:5099
 msgid "Artistic expression through words and design."
 msgstr "Expressão artística por meio de palavras e design."
 
-#: src/draw-chart.c:5079
+#: src/draw-chart.c:5100
 msgid "A sharp, potentially argumentative energy."
 msgstr "Uma energia incisiva, potencialmente propensa a discussões."
 
-#: src/draw-chart.c:5080
+#: src/draw-chart.c:5101
 msgid "A great time for business expansion and ideas."
 msgstr "Um ótimo momento para a expansão dos negócios e para novas ideias."
 
-#: src/draw-chart.c:5081
+#: src/draw-chart.c:5102
 msgid "Logical, structured, and disciplined communication."
 msgstr "Comunicação lógica, estruturada e disciplinada."
 
-#: src/draw-chart.c:5086
+#: src/draw-chart.c:5107
 msgid "Radiant beauty meets solar visibility."
 msgstr "Beleza radiante encontra visibilidade solar."
 
-#: src/draw-chart.c:5087
+#: src/draw-chart.c:5108
 msgid "A soft, romantic, and emotionally harmonious moment."
 msgstr "Um momento suave, romântico e emocionalmente harmonioso."
 
-#: src/draw-chart.c:5088
+#: src/draw-chart.c:5109
 msgid "Charming words and attractive social connections."
 msgstr "Palavras encantadoras e conexões sociais atraentes."
 
-#: src/draw-chart.c:5089
+#: src/draw-chart.c:5110
 msgid "Maximum pleasure, harmony, and aesthetic joy."
 msgstr "Máximo prazer, harmonia e deleite estético."
 
-#: src/draw-chart.c:5090
+#: src/draw-chart.c:5111
 msgid "Passionate energy meeting artistic grace."
 msgstr "Energia apaixonada encontrando a graça artística."
 
-#: src/draw-chart.c:5091
+#: src/draw-chart.c:5112
 msgid "Luxurious and abundant social encounters."
 msgstr "Encontros sociais luxuosos e fartos."
 
-#: src/draw-chart.c:5092
+#: src/draw-chart.c:5113
 msgid "Classic, disciplined elegance and refined taste."
 msgstr "Elegância clássica e disciplinada, e gosto refinado."
 
-#: src/draw-chart.c:5097
+#: src/draw-chart.c:5118
 msgid "Heroic action and bold, visible leadership."
 msgstr "Ação heroica e liderança ousada e visível."
 
-#: src/draw-chart.c:5098
+#: src/draw-chart.c:5119
 msgid "Sudden, impulsive movements driven by passion."
 msgstr "Movimentos repentinos e impulsivos, impulsionados pela paixão."
 
-#: src/draw-chart.c:5099
+#: src/draw-chart.c:5120
 msgid "Decisive, sharp, and energetic communication."
 msgstr "Comunicação decisiva, incisiva e enérgica."
 
-#: src/draw-chart.c:5100
+#: src/draw-chart.c:5121
 msgid "Intense passion and physical attraction."
 msgstr "Paixão intensa e atração física."
 
-#: src/draw-chart.c:5101
+#: src/draw-chart.c:5122
 msgid "Unbridled energy and pure, competitive drive."
 msgstr "Energia desenfreada e um impulso competitivo puro."
 
-#: src/draw-chart.c:5102
+#: src/draw-chart.c:5123
 msgid "Bold, expansive, and courageous new undertakings."
 msgstr "Novos empreendimentos ousados, abrangentes e corajosos."
 
-#: src/draw-chart.c:5103
+#: src/draw-chart.c:5124
 msgid "Hard-fought victories through endurance and strength."
 msgstr "Vitórias arduamente conquistadas graças à resistência e à força."
 
-#: src/draw-chart.c:5109
+#: src/draw-chart.c:5130
 msgid "Great prosperity and public recognition."
 msgstr "Grande prosperidade e reconhecimento público."
 
-#: src/draw-chart.c:5110
+#: src/draw-chart.c:5131
 msgid "Expansive moods and fortunate travels."
 msgstr "Estados de espírito expansivos e viagens auspiciosas."
 
-#: src/draw-chart.c:5111
+#: src/draw-chart.c:5132
 msgid "Profitable deals and wise negotiations."
 msgstr "Estados de espírito expansivos e viagens auspiciosas."
 
-#: src/draw-chart.c:5112
+#: src/draw-chart.c:5133
 msgid "Joyful abundance in your social life."
 msgstr "Abundância repleta de alegria em sua vida social."
 
-#: src/draw-chart.c:5113
+#: src/draw-chart.c:5134
 msgid "Large-scale, energetic, and prosperous projects."
 msgstr "Projetos de grande escala, dinâmicos e prósperos."
 
-#: src/draw-chart.c:5114
+#: src/draw-chart.c:5135
 msgid "Maximum expansion and unparalleled luck."
 msgstr "Expansão máxima e sorte inigualável."
 
-#: src/draw-chart.c:5115
+#: src/draw-chart.c:5136
 msgid "Wise, structured growth and long-term gains."
 msgstr "Crescimento sensato e estruturado e ganhos de longo prazo."
 
-#: src/draw-chart.c:5120
+#: src/draw-chart.c:5141
 msgid "Serious leadership and heavy responsibility."
 msgstr "Liderança séria e grande responsabilidade."
 
-#: src/draw-chart.c:5121
+#: src/draw-chart.c:5142
 msgid "Somber reflection and emotional restraint."
 msgstr "Reflexão sombria e contenção emocional."
 
-#: src/draw-chart.c:5122
+#: src/draw-chart.c:5143
 msgid "Careful, methodical, and slow communication."
 msgstr "Comunicação cuidadosa, metódica e lenta."
 
-#: src/draw-chart.c:5123
+#: src/draw-chart.c:5144
 msgid "Tasteful restraint and classic, structured beauty."
 msgstr "Contenção de bom gosto e beleza clássica e estruturada."
 
-#: src/draw-chart.c:5124
+#: src/draw-chart.c:5145
 msgid "Intense discipline and defensive strength."
 msgstr "Disciplina intensa e solidez defensiva."
 
-#: src/draw-chart.c:5125
+#: src/draw-chart.c:5146
 msgid "Expanding through careful, structured planning."
 msgstr "Expandindo por meio de um planejamento cuidadoso e estruturado."
 
-#: src/draw-chart.c:5126
+#: src/draw-chart.c:5147
 msgid "The peak of discipline, duty, and endurance."
 msgstr "O auge da disciplina, do dever e da resistência."
 
-#: src/draw-chart.c:5140
+#: src/draw-chart.c:5161
 msgid "  4. REGENTS' STRENGTH:  \n"
 msgstr "  4. FORÇA DOS REGENTES: \n"
 
-#: src/draw-chart.c:5155
+#: src/draw-chart.c:5176
 #, c-format
 msgid ""
 " • REGENT OF %s: ( %s )\n"
@@ -2512,15 +2520,15 @@ msgstr ""
 " • REGENTE D%s: ( %s )\n"
 "\n"
 
-#: src/draw-chart.c:5155
+#: src/draw-chart.c:5176
 msgid "THE DAY"
 msgstr "O DIA"
 
-#: src/draw-chart.c:5155
+#: src/draw-chart.c:5176
 msgid "THE NIGHT"
 msgstr "A NOITE"
 
-#: src/draw-chart.c:5160
+#: src/draw-chart.c:5181
 #, c-format
 msgid ""
 "The base dignity score of the Regent of %s is: %d.\n"
@@ -2533,15 +2541,15 @@ msgstr ""
 "Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:5162 src/draw-chart.c:5207
+#: src/draw-chart.c:5183 src/draw-chart.c:5228
 msgid "the Day"
 msgstr "o Dia"
 
-#: src/draw-chart.c:5162 src/draw-chart.c:5207
+#: src/draw-chart.c:5183 src/draw-chart.c:5228
 msgid "the Night"
 msgstr "a Noite"
 
-#: src/draw-chart.c:5166 src/draw-chart.c:5229 src/solar_return.c:598
+#: src/draw-chart.c:5187 src/draw-chart.c:5250 src/solar_return.c:598
 msgid ""
 "Structural Efficiency Verdict:\n"
 "\n"
@@ -2549,7 +2557,7 @@ msgstr ""
 "Veredito sobre a Eficiência Estrutural:\n"
 "\n"
 
-#: src/draw-chart.c:5174 src/draw-chart.c:5237 src/solar_return.c:605
+#: src/draw-chart.c:5195 src/draw-chart.c:5258 src/solar_return.c:605
 msgid ""
 " • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n"
 "\n"
@@ -2557,7 +2565,7 @@ msgstr ""
 " • ALTA CAPACIDADE OPERACIONAL (EXCELENTE TÓPICO):\n"
 "\n"
 
-#: src/draw-chart.c:5179
+#: src/draw-chart.c:5200
 #, c-format
 msgid ""
 "This planet commands %s with magnificent backing.\n"
@@ -2577,15 +2585,15 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:5182
+#: src/draw-chart.c:5203
 msgid "the day"
 msgstr "o dia"
 
-#: src/draw-chart.c:5182
+#: src/draw-chart.c:5203
 msgid "the night"
 msgstr "a noite"
 
-#: src/draw-chart.c:5186 src/draw-chart.c:5249 src/solar_return.c:617
+#: src/draw-chart.c:5207 src/draw-chart.c:5270 src/solar_return.c:617
 msgid ""
 " • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n"
 "\n"
@@ -2593,7 +2601,7 @@ msgstr ""
 " • CAPACIDADE OPERACIONAL MODERADA (TÓPICO BALANCEADO):\n"
 "\n"
 
-#: src/draw-chart.c:5191 src/draw-chart.c:5254
+#: src/draw-chart.c:5212 src/draw-chart.c:5275
 #, c-format
 msgid ""
 "This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
@@ -2614,7 +2622,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:5198 src/draw-chart.c:5261 src/solar_return.c:629
+#: src/draw-chart.c:5219 src/draw-chart.c:5282 src/solar_return.c:629
 msgid ""
 " • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n"
 "\n"
@@ -2622,7 +2630,7 @@ msgstr ""
 " • DRENAGEM CRÍTICA DE CAPACIDADE (TÓPICO SILENCIADO OU IMPEDIDO):\n"
 "\n"
 
-#: src/draw-chart.c:5203
+#: src/draw-chart.c:5224
 #, c-format
 msgid ""
 "WARNING: The Lord of %s operates under extreme systemic debility (%d%%).\n"
@@ -2642,7 +2650,7 @@ msgstr ""
 "bloqueios administrativos ou a sensação de tentar abrir uma porta \n"
 "trancada.\n"
 
-#: src/draw-chart.c:5218
+#: src/draw-chart.c:5239
 #, c-format
 msgid ""
 " • REGENT OF THE HOUR: ( %s )\n"
@@ -2651,7 +2659,7 @@ msgstr ""
 " • REGENTE DA HORA: ( %s )\n"
 "\n"
 
-#: src/draw-chart.c:5223
+#: src/draw-chart.c:5244
 #, c-format
 msgid ""
 "The base dignity score of the Regent of the hour is: %d.\n"
@@ -2664,7 +2672,7 @@ msgstr ""
 "Líquida).\n"
 "\n"
 
-#: src/draw-chart.c:5242
+#: src/draw-chart.c:5263
 #, c-format
 msgid ""
 "This planet commands the hour with magnificent backing.\n"
@@ -2684,7 +2692,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: src/draw-chart.c:5266
+#: src/draw-chart.c:5287
 #, c-format
 msgid ""
 "WARNING: The Lord of the hour operates under extreme systemic debility "
@@ -2705,15 +2713,15 @@ msgstr ""
 "bloqueios administrativos ou a sensação de tentar abrir uma porta \n"
 "trancada.\n"
 
-#: src/draw-chart.c:5281
+#: src/draw-chart.c:5302
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"
 msgstr "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar à tabela.\n"
 
-#: src/draw-chart.c:5565
+#: src/draw-chart.c:5586
 msgid "Rising Times | Setting Times | Upper Culmination Times"
 msgstr "Horários de Ascensão, Ocaso & Culminação Superior"
 
-#: src/draw-chart.c:5568
+#: src/draw-chart.c:5589
 msgid ""
 "       Rising                    Setting                   "
 "Culmination                   Time zone: Local"
@@ -2721,200 +2729,200 @@ msgstr ""
 "       Ascensão                  Ocaso                     "
 "Culminação                   Fuso Horário: Local"
 
-#: src/draw-chart.c:7549
+#: src/draw-chart.c:7570
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:7565
+#: src/draw-chart.c:7586
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:7581
+#: src/draw-chart.c:7602
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:7595
+#: src/draw-chart.c:7616
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:7609
+#: src/draw-chart.c:7630
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:7625
+#: src/draw-chart.c:7646
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:7637
+#: src/draw-chart.c:7658
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:7657
+#: src/draw-chart.c:7678
 msgid "pilgrim "
 msgstr "peregrino "
 
-#: src/draw-chart.c:7883
+#: src/draw-chart.c:7904
 msgid "Occid"
 msgstr "Ocid"
 
-#: src/draw-chart.c:7937
+#: src/draw-chart.c:7958
 msgid "Spring"
 msgstr "Primavera"
 
-#: src/draw-chart.c:7937 src/draw-chart.c:7958
+#: src/draw-chart.c:7958 src/draw-chart.c:7979
 msgid "Sanguine"
 msgstr "Sanguíneo"
 
-#: src/draw-chart.c:7940
+#: src/draw-chart.c:7961
 msgid "Summer"
 msgstr "Verão"
 
-#: src/draw-chart.c:7940 src/draw-chart.c:7962
+#: src/draw-chart.c:7961 src/draw-chart.c:7983
 msgid "Choleric"
 msgstr "Colérico"
 
-#: src/draw-chart.c:7943
+#: src/draw-chart.c:7964
 msgid "Autumn"
 msgstr "Outono"
 
-#: src/draw-chart.c:7943 src/draw-chart.c:7966
+#: src/draw-chart.c:7964 src/draw-chart.c:7987
 msgid "Melancholic"
 msgstr "Melancólico"
 
-#: src/draw-chart.c:7946
+#: src/draw-chart.c:7967
 msgid "Winter"
 msgstr "Inverno"
 
-#: src/draw-chart.c:7946 src/draw-chart.c:7970
+#: src/draw-chart.c:7967 src/draw-chart.c:7991
 msgid "Phlegmatic"
 msgstr "Fleumático"
 
-#: src/draw-chart.c:8261
+#: src/draw-chart.c:8282
 #, c-format
 msgid "Cusp %d"
 msgstr "Cúspide %d"
 
-#: src/draw-chart.c:9193 src/draw-chart.c:9224
+#: src/draw-chart.c:9214 src/draw-chart.c:9245
 msgid "01. Chart Data Panel"
 msgstr "01. Dados do Mapa"
 
-#: src/draw-chart.c:9194 src/draw-chart.c:9225
+#: src/draw-chart.c:9215 src/draw-chart.c:9246
 msgid "02. Astrological Positions"
 msgstr "02. Posições Astrológicas"
 
-#: src/draw-chart.c:9195 src/draw-chart.c:9226
+#: src/draw-chart.c:9216 src/draw-chart.c:9247
 msgid "03. Dignities & Rulerships"
 msgstr "03. Dignidades & Regentes"
 
-#: src/draw-chart.c:9196 src/draw-chart.c:9227
+#: src/draw-chart.c:9217 src/draw-chart.c:9248
 msgid "04. Accidental Dignities"
 msgstr "04. Dignidades Acidentais"
 
-#: src/draw-chart.c:9197 src/draw-chart.c:9228
+#: src/draw-chart.c:9218 src/draw-chart.c:9249
 msgid "05. Strength of the Planets"
 msgstr "05. Força dos Planetas"
 
-#: src/draw-chart.c:9198 src/draw-chart.c:9229
+#: src/draw-chart.c:9219 src/draw-chart.c:9250
 msgid "06. Planetary Energy Profile"
 msgstr "06. Perfil de Energia Planetária "
 
-#: src/draw-chart.c:9199 src/draw-chart.c:9230
+#: src/draw-chart.c:9220 src/draw-chart.c:9251
 msgid "07. Houses"
 msgstr "07. Casas"
 
-#: src/draw-chart.c:9200 src/draw-chart.c:9231
+#: src/draw-chart.c:9221 src/draw-chart.c:9252
 msgid "08. Aspects"
 msgstr "08. Aspectos"
 
-#: src/draw-chart.c:9201 src/draw-chart.c:9232
+#: src/draw-chart.c:9222 src/draw-chart.c:9253
 msgid "09. Declination Aspects"
 msgstr "09. Aspectos de Declinação"
 
-#: src/draw-chart.c:9202 src/draw-chart.c:9233
+#: src/draw-chart.c:9223 src/draw-chart.c:9254
 msgid "10. Aspects by Sign"
 msgstr "10. Aspectos por Signo"
 
-#: src/draw-chart.c:9203 src/draw-chart.c:9234
+#: src/draw-chart.c:9224 src/draw-chart.c:9255
 msgid "11. Aspects to Antiscia"
 msgstr "11. Aspectos com Antiscia"
 
-#: src/draw-chart.c:9204 src/draw-chart.c:9235
+#: src/draw-chart.c:9225 src/draw-chart.c:9256
 msgid "12. Aspects to Contrantiscia"
 msgstr "12. Aspects para Contrantiscia"
 
-#: src/draw-chart.c:9205 src/draw-chart.c:9236
+#: src/draw-chart.c:9226 src/draw-chart.c:9257
 msgid "13. Rising, Setting & Culmination Times"
 msgstr "13. Horários de Ascensão, Ocaso & Culminação"
 
-#: src/draw-chart.c:9206 src/draw-chart.c:9237
+#: src/draw-chart.c:9227 src/draw-chart.c:9258
 msgid "14. Hylegiacal & Figuris Almuten"
 msgstr "14. Almuten Figuris & dos Pontos Hylegíacos"
 
-#: src/draw-chart.c:9207
+#: src/draw-chart.c:9228
 msgid "15. Temperament Analysis"
 msgstr "15. Análise do Temperamento"
 
-#: src/draw-chart.c:9208
+#: src/draw-chart.c:9229
 msgid "16. Mind Analysis"
 msgstr "16. Análise da Mente"
 
-#: src/draw-chart.c:9209
+#: src/draw-chart.c:9230
 msgid "17. Primary Motivation"
 msgstr "17. Motivação Primária"
 
-#: src/draw-chart.c:9210
+#: src/draw-chart.c:9231
 msgid "18. Planetary Hours"
 msgstr "18. Horas Planetárias"
 
-#: src/draw-chart.c:9211
+#: src/draw-chart.c:9232
 msgid "19. Arabic Parts"
 msgstr "19. Partes Árabes"
 
-#: src/draw-chart.c:9212
+#: src/draw-chart.c:9233
 msgid "20. Annual Profections"
 msgstr "20. Profecções Anuais"
 
-#: src/draw-chart.c:9213
+#: src/draw-chart.c:9234
 msgid "21. Firdaria"
 msgstr "21. Firdária"
 
-#: src/draw-chart.c:9214
+#: src/draw-chart.c:9235
 msgid "22. Vital Chronocrators: Life Givers"
 msgstr "22. Cronocratas Vitais: Doadores de Vida"
 
-#: src/draw-chart.c:9215
+#: src/draw-chart.c:9236
 msgid "23. Vital Threats: The Anareta"
 msgstr "23. Ameaças Vitais: O Anareta"
 
-#: src/draw-chart.c:9216
+#: src/draw-chart.c:9237
 msgid "24. Primary Directions"
 msgstr "24. Direções Primárias"
 
-#: src/draw-chart.c:9217
+#: src/draw-chart.c:9238
 msgid "25. Prymary Directions to Arabic Parts"
 msgstr "25. Direções Primárias às Partes Árabes"
 
-#: src/draw-chart.c:9218
+#: src/draw-chart.c:9239
 msgid "26. Solar Revolution"
 msgstr "26. Revolução Solar"
 
-#: src/draw-chart.c:9238
+#: src/draw-chart.c:9259
 msgid "15. Planetary Hours"
 msgstr "15. Horas Planetárias"
 
-#: src/draw-chart.c:9239
+#: src/draw-chart.c:9260
 msgid "16. Arabic Parts"
 msgstr "16. Partes Árabes"
 
-#: src/draw-chart.c:9240
+#: src/draw-chart.c:9261
 msgid "17. Arabic Parts Solar Return Radix Confrontation"
 msgstr "17. Partes Árabes - Confrontação Rev. Solar/Radix"
 
-#: src/draw-chart.c:9241
+#: src/draw-chart.c:9262
 msgid "18. Radix Confrontation: Solar Return Integration"
 msgstr "18. Confrontação Radix e Retorno Solar"
 
-#: src/draw-chart.c:9242
+#: src/draw-chart.c:9263
 msgid "19. Annual Transits & Radical Projections"
 msgstr "19. Trânsitos do Ano & Projeções Radicais"
 

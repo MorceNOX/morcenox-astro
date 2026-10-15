@@ -1358,13 +1358,33 @@ fim_calculo:
     return qtd_direcoes;
 }
 
+// int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, double ramc, double lat_geo_rad) {
+//     // 1. Calcula a menor Distância Meridiana em relação ao MC (Superior) de forma circular segura
+//     double md_mc = fabs(ra_planeta - ramc);
+//     if (md_mc > 180.0) md_mc = 360.0 - md_mc;
 
+//     // 2. Calcula o Semi-Arco Diurno (SAD) exato via cossenos
+//     double tan_lat = tan(lat_geo_rad);
+//     double tan_dec = tan(dec_planeta_rad);
+//     double cos_sad = -tan_lat * tan_dec;
+
+//     // Proteção rigorosa contra regiões circumpolares (Sol da meia-noite / Noite polar)
+//     if (cos_sad >= 1.0)  return 0; // Nunca nasce (Sempre abaixo do horizonte)
+//     if (cos_sad <= -1.0) return 1; // Nunca se põe (Sempre acima do horizonte)
+
+//     double sad_graus = acos(cos_sad) * (180.0 / M_PI);
+
+//     // Se a distância ao Meio do Céu for menor ou igual ao Semi-Arco Diurno, está acima
+//     return (md_mc <= sad_graus) ? 1 : 0;
+// }
 
 // Retorna 1 se o planeta estiver ACIMA do horizonte, e 0 se estiver ABAIXO
 int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, double ramc, double lat_geo_rad) {
-    // 1. Calcula a menor Distância Meridiana em relação ao MC (Superior) de forma circular segura
-    double md_mc = fabs(ra_planeta - ramc);
-    if (md_mc > 180.0) md_mc = 360.0 - md_mc;
+    // 1. Calcula a menor Distância Meridiana em relação ao MC (Superior)
+    double md_mc = ra_planeta - ramc;
+    if (md_mc > 180.0)  md_mc -= 360.0;
+    if (md_mc < -180.0) md_mc += 360.0;
+    md_mc = fabs(md_mc);
 
     // 2. Calcula o Semi-Arco Diurno (SAD) exato via cossenos
     double tan_lat = tan(lat_geo_rad);
@@ -1372,14 +1392,27 @@ int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, doub
     double cos_sad = -tan_lat * tan_dec;
 
     // Proteção rigorosa contra regiões circumpolares (Sol da meia-noite / Noite polar)
-    if (cos_sad >= 1.0)  return 0; // Nunca nasce (Sempre abaixo do horizonte)
-    if (cos_sad <= -1.0) return 1; // Nunca se põe (Sempre acima do horizonte)
+    if (cos_sad >= 1.0)  return 0; // Nunca nasce (Sempre abaixo)
+    if (cos_sad <= -1.0) return 1; // Nunca se põe (Sempre acima)
 
     double sad_graus = acos(cos_sad) * (180.0 / M_PI);
+
+    // CORREÇÃO CRÍTICA: Tolerância de ponto flutuante (1 milionésimo de grau)
+    // Evita que erros de arredondamento joguem o Descendente para baixo e o Ascendente para cima
+    double epsilon = 1e-6;
+
+    if (fabs(md_mc - sad_graus) < epsilon) {
+        // O ponto está EXATAMENTE sobre o horizonte (Borda do Ascendente/Descendente).
+        // Na astrologia tradicional e matemática de Placidus, os pontos de horizonte 
+        // são padronizados como início do quadrante diurno (Acima) ou noturno (Abaixo).
+        // Adotaremos 1 (Acima) para ambos para manter a simetria de espelhamento do motor.
+        return 1; 
+    }
 
     // Se a distância ao Meio do Céu for menor ou igual ao Semi-Arco Diurno, está acima
     return (md_mc <= sad_graus) ? 1 : 0;
 }
+
 
 double __calcular_semi_arco(double dec_rad, double lat_rad, int esta_acima) {
     // Fórmula astronômica esférica estrita para Diferença Ascensional (DA)

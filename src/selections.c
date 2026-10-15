@@ -5338,7 +5338,7 @@ GrausEdition set_lat() {
 
 
 
-int set_location_name(char *location_name, size_t max_length) {
+int set_location_name(char *name, size_t max_length) {
     
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
@@ -5352,8 +5352,8 @@ int set_location_name(char *location_name, size_t max_length) {
     int input_pos = 0;
 
     // Converte a string de entrada atual (se houver) de char* para wchar_t*
-    if (location_name != NULL && get_visual_width(location_name) > 0) {
-        w_len = mbstowcs(w_buffer, location_name, max_length - 1);
+    if (name != NULL && get_visual_width(name) > 0) {
+        w_len = mbstowcs(w_buffer, name, max_length - 1);
         if (w_len == (size_t)-1) {
             w_len = 0;
         }
@@ -5419,7 +5419,7 @@ int set_location_name(char *location_name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter the Name of the Location");
-        mvwprintw(win, 3, 1, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s:", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -5710,11 +5710,11 @@ int set_location_name(char *location_name, size_t max_length) {
     curs_set(0);
 
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
-    if (location_name != NULL) {
+    if (name != NULL) {
         if (w_len == 0) {
-            strncpy(location_name, _("Somewhere"), max_length);
+            strncpy(name, _("Somewhere"), max_length);
         } else {
-            wcstombs(location_name, w_buffer, max_length);
+            wcstombs(name, w_buffer, max_length);
         }
     }
 
@@ -5724,7 +5724,7 @@ int set_location_name(char *location_name, size_t max_length) {
 
 
 
-int set_state(char *location_name, size_t max_length) {    
+int set_state(char *name, size_t max_length) {    
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
@@ -5737,8 +5737,8 @@ int set_state(char *location_name, size_t max_length) {
     int input_pos = 0;
 
     // Converte a string de entrada atual (se houver) de char* para wchar_t*
-    if (location_name != NULL && get_visual_width(location_name) > 0) {
-        w_len = mbstowcs(w_buffer, location_name, max_length - 1);
+    if (name != NULL && get_visual_width(name) > 0) {
+        w_len = mbstowcs(w_buffer, name, max_length - 1);
         if (w_len == (size_t)-1) {
             w_len = 0;
         }
@@ -5804,7 +5804,7 @@ int set_state(char *location_name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter the Name of the State");
-        mvwprintw(win, 3, 1, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s:", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -6095,11 +6095,11 @@ int set_state(char *location_name, size_t max_length) {
     curs_set(0);
 
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
-    if (location_name != NULL) {
+    if (name != NULL) {
         if (w_len == 0) {
-            strncpy(location_name, _("Some State"), max_length);
+            strncpy(name, _("Some State"), max_length);
         } else {
-            wcstombs(location_name, w_buffer, max_length);
+            wcstombs(name, w_buffer, max_length);
         }
     }
 
@@ -6109,7 +6109,7 @@ int set_state(char *location_name, size_t max_length) {
 
 
 
-int set_country(char *location_name, size_t max_length) {
+int set_country(char *name, size_t max_length) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
@@ -6122,8 +6122,8 @@ int set_country(char *location_name, size_t max_length) {
     int input_pos = 0;
 
     // Converte a string de entrada atual (se houver) de char* para wchar_t*
-    if (location_name != NULL && get_visual_width(location_name) > 0) {
-        w_len = mbstowcs(w_buffer, location_name, max_length - 1);
+    if (name != NULL && get_visual_width(name) > 0) {
+        w_len = mbstowcs(w_buffer, name, max_length - 1);
         if (w_len == (size_t)-1) {
             w_len = 0;
         }
@@ -6189,7 +6189,7 @@ int set_country(char *location_name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter the Name of the Country");
-        mvwprintw(win, 3, 1, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s:", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -6480,11 +6480,11 @@ int set_country(char *location_name, size_t max_length) {
     curs_set(0);
 
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
-    if (location_name != NULL) {
+    if (name != NULL) {
         if (w_len == 0) {
-            strncpy(location_name, _("Some Country"), max_length);
+            strncpy(name, _("Some Country"), max_length);
         } else {
-            wcstombs(location_name, w_buffer, max_length);
+            wcstombs(name, w_buffer, max_length);
         }
     }
 
@@ -7093,7 +7093,7 @@ int set_dst() {
 
 
 
-int set_file_name(char *location_name, size_t max_length) {
+int set_file_name(char *name, size_t max_length) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
@@ -7106,8 +7106,8 @@ int set_file_name(char *location_name, size_t max_length) {
     int input_pos = 0;
 
     // Converte a string de entrada atual (se houver) de char* para wchar_t*
-    if (location_name != NULL && get_visual_width(location_name) > 0) {
-        w_len = mbstowcs(w_buffer, location_name, max_length - 1);
+    if (name != NULL && get_visual_width(name) > 0) {
+        w_len = mbstowcs(w_buffer, name, max_length - 1);
         if (w_len == (size_t)-1) {
             w_len = 0;
         }
@@ -7173,7 +7173,7 @@ int set_file_name(char *location_name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter the File Name");
-        mvwprintw(win, 3, 1, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s:", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -7464,11 +7464,11 @@ int set_file_name(char *location_name, size_t max_length) {
     curs_set(0);
 
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
-    if (location_name != NULL) {
+    if (name != NULL) {
         if (w_len == 0) {
-            strncpy(location_name, _("primary_directions"), max_length);
+            strncpy(name, _("primary_directions"), max_length);
         } else {
-            wcstombs(location_name, w_buffer, max_length);
+            wcstombs(name, w_buffer, max_length);
         }
     }
 
@@ -7480,7 +7480,7 @@ int set_file_name(char *location_name, size_t max_length) {
 
 
 
-int set_chart_name(char *location_name, size_t max_length) {
+int set_chart_name(char *name, size_t max_length) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
@@ -7493,8 +7493,8 @@ int set_chart_name(char *location_name, size_t max_length) {
     int input_pos = 0;
 
     // Converte a string de entrada atual (se houver) de char* para wchar_t*
-    if (location_name != NULL && get_visual_width(location_name) > 0) {
-        w_len = mbstowcs(w_buffer, location_name, max_length - 1);
+    if (name != NULL && get_visual_width(name) > 0) {
+        w_len = mbstowcs(w_buffer, name, max_length - 1);
         if (w_len == (size_t)-1) {
             w_len = 0;
         }
@@ -7560,7 +7560,7 @@ int set_chart_name(char *location_name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter the Name for your Chart");
-        mvwprintw(win, 3, 1, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s:", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -7851,11 +7851,11 @@ int set_chart_name(char *location_name, size_t max_length) {
     curs_set(0);
 
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
-    if (location_name != NULL) {
+    if (name != NULL) {
         if (w_len == 0) {
-            strncpy(location_name, _("Unnamed Chart"), max_length);
+            strncpy(name, _("Unnamed Chart"), max_length);
         } else {
-            wcstombs(location_name, w_buffer, max_length);
+            wcstombs(name, w_buffer, max_length);
         }
     }
 

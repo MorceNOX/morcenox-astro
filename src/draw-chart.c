@@ -61,6 +61,15 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+// Funções matemáticas utilitárias para conversão
+static double para_radianos(double graus) { return graus * M_PI / 180.0; }
+//static double para_graus(double radianos) { return radianos * 180.0 / M_PI; }
+
+
 #define X_GAP 2
 
 #define PH_SOL 0
@@ -3775,7 +3784,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
 
  
 
-void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets) {
+void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets, double ramc, double lat) {
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -3991,7 +4000,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         
         if (ch == KEY_F(2)) {
             // Abre sua tela de detalhes das dignidades
-            display_positions(plots, matrix);
+            display_positions(plots, matrix, ramc, lat);
             
             // Restaura as molduras fixas da tabela principal
             touchwin(stdscr);
@@ -4159,7 +4168,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
 
 
-void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
+void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc, double lat) {
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -4211,9 +4220,11 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
     mvwprintw(table_win, 2, 10, _("Position"));
     mvwprintw(table_win, 2, 24, _("House"));
     mvwprintw(table_win, 2, 35, _("Speed"));
-    mvwprintw(table_win, 2, 45, _("Latitude"));
-    mvwprintw(table_win, 2, 57, _("Declination"));
-    mvwprintw(table_win, 2, 71, _("Right Ascension"));
+    mvwprintw(table_win, 2, 45, _("Longitude"));
+    mvwprintw(table_win, 2, 59, _("Latitude"));
+    mvwprintw(table_win, 2, 74, _("Declination"));
+    mvwprintw(table_win, 2, 88, _("Right Ascension"));
+    mvwprintw(table_win, 2, 109, _("Semi-Arc"));
            
     wattron(table_win, COLOR_PAIR(13));
     wmove(table_win, 3, 2);
@@ -4229,7 +4240,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 30, c_lat = 43, c_dec = 57, c_ra = 74;
+    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 30, c_lon = 44, c_lat = 57, c_dec = 74, c_ra = 91, c_sa = 107;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
@@ -4270,6 +4281,8 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
             wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
         }
 
+        mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", plots[i].longitude);
+
         if (isnan(plots[i].latitude)) {
             mvwprintw(scroll_pad, row_pad, c_lat, " ");
         } else {
@@ -4287,7 +4300,15 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix) {
         } else {
             mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", plots[i].ra);
         }
-        
+
+        int acima = verificar_se_acima_horizonte(plots[i].ra, para_radianos(plots[i].declination), ramc, para_radianos(lat)); 
+        double sa = __calcular_semi_arco(para_radianos(plots[i].declination), para_radianos(lat), acima);
+
+        char sa_pos = ' ';
+        if (acima) sa_pos = 'D';
+        else       sa_pos = 'N';
+
+        mvwprintw(scroll_pad, row_pad, c_sa, "%8.4f(%c)", sa, sa_pos);
        
         wattroff(scroll_pad, A_BOLD);
 
@@ -8845,7 +8866,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case KEY_F(2):
                 desativar_arrasto_mouse();
-                display_table(plots, &planet_matrix, dig, strength_planets);
+                display_table(plots, &planet_matrix, dig, strength_planets, armc, lat);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;    
@@ -9520,10 +9541,10 @@ void open_menu_tables(ContextoMenu *ctx) {
             );
             break;
         case 1:
-            display_positions(ctx->plots, &ctx->planet_matrix);            
+            display_positions(ctx->plots, &ctx->planet_matrix, ctx->armc, ctx->lat);            
             break;
         case 2:
-            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets);
+            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets, ctx->armc, ctx->lat);
             break;
         case 3:
             display_dignities(ctx->plots, ctx->dig, ctx->strength_planets);
