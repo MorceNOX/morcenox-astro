@@ -27,7 +27,22 @@ typedef struct {
     char nome_senhor[20];   // "Sun", "Moon", "Jupiter", etc.
 } DadosProfeccao;
 
+typedef struct {
+    int idade;
+    int ano_calendario;
+    int casa_profectada;
+    int signo_id;
+    const char *signo_nome;       // Suporta o retorno de get_sign_name()
+    const char *signo_glifo;      // Suporta o retorno de get_sign()
+    int senhor_ano_id;            // ID interno do planeta regente (1 a 7)
+    const char *senhor_ano_nome;  // Suporta o retorno de obter_nome_planeta_por_id()
+    const char *senhor_ano_glifo; // Suporta o retorno de obter_glifo_planeta_por_id()
+    double longitude_asc_prof;
+} LinhaProfecao;
+
+void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento);
+void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade);
 DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual);
-void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects);
+void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects, double jd);
 
 #endif

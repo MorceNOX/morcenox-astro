@@ -243,7 +243,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
     i - Interpretação do Temperamento 
 
-• F9 - Profeções Anuais
+• F9 - Profecções Anuais
+
+    F2 - Tabela de Profecções Anuais
 
 • F12 - Firdária
 
@@ -1443,6 +1445,12 @@ Você seleciona uma idade e a aplicação mostra o planeta regente do ano, a cas
 O módulo também aponta quais são as Partes Árabes que também estarão sendo ativadas (dentre as partes disponíveis e que são calculadas para o mapa corrente).
 
 Um alerta aparecerá quando a idade coincidir com o ciclo de pulsação do Alcochoden.
+
+Pressione [F2] nesta tela para abrir a Tabela de Profecções Anuais, exibindo, para cada ano, o grau e signo do Ascendente profectado, a casa ativada e o regente do ano, desde a idade 0 até 120.
+
+Os dados do ano correspondente à idade selecionada na tela anterior serão exibidos em outra cor para que fique em destaque.
+
+Pressione [P] na tela da tabela de Profecções Anuais para exportar seu conteúdo para um arquivo .csv. 
 
 
 

@@ -8912,7 +8912,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(9):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
-                    display_profections(plots, alco.anos_concedidos, cusps, obj, total_objects);
+                    display_profections(plots, alco.anos_concedidos, cusps, obj, total_objects, julian_day);
                     ativar_arrasto_mouse();
                     flushinp();
                 }
@@ -9640,7 +9640,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 19:
             if (!ctx->mapa_retorno) {
-                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects);
+                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects, ctx->julian_day);
             }
             break;
         case 20:

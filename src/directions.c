@@ -2189,12 +2189,12 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         const char *title = _(" Primary Directions ");
         mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
-        wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+        wattron(table_win, COLOR_PAIR(13));
         mvwprintw(table_win, 0, col_fechar, "[");
         mvwprintw(table_win, 0, col_fechar + 2, "]");
         wattroff(table_win, COLOR_PAIR(13));
 
-        wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        wattron(table_win, COLOR_PAIR(13) | A_BOLD);
         mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 11:21-0300\n"
+"POT-Creation-Date: 2026-10-15 14:32-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -676,7 +676,7 @@ msgstr ""
 
 #: src/arabic_parts.c:249 src/arabic_parts.c:824 src/draw-chart.c:2305
 #: src/draw-chart.c:3188 src/draw-chart.c:3837 src/draw-chart.c:4221
-#: src/profections.c:149
+#: src/profections.c:260 src/profections.c:706
 #, fuzzy
 msgid "House"
 msgstr "House System"
@@ -707,7 +707,7 @@ msgstr ""
 
 #: src/arabic_parts.c:414 src/arabic_parts.c:932 src/draw-chart.c:3741
 #: src/draw-chart.c:4545 src/draw-chart.c:5675 src/firdaria.c:464
-#: src/hyleg.c:844 src/hyleg.c:1199 src/mind.c:331 src/profections.c:236
+#: src/hyleg.c:844 src/hyleg.c:1199 src/mind.c:331
 #, fuzzy
 msgid "Press ESC to return to chart"
 msgstr "Press [ESC] to cancel"
@@ -975,12 +975,13 @@ msgstr "Location: "
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr ""
 
-#: src/directions.c:2450 src/directions.c:3395 src/selections.c:2499
-#: src/selections.c:2817
+#: src/directions.c:2450 src/directions.c:3395 src/profections.c:223
+#: src/selections.c:2499 src/selections.c:2817
 msgid "Age"
 msgstr "Age"
 
-#: src/directions.c:2451 src/directions.c:3396 src/selections.c:4102
+#: src/directions.c:2451 src/directions.c:3396 src/profections.c:224
+#: src/selections.c:4102
 msgid "Year"
 msgstr "Year"
 
@@ -1021,8 +1022,9 @@ msgstr ""
 #: src/directions.c:2491 src/directions.c:3437 src/draw-chart.c:416
 #: src/draw-chart.c:617 src/draw-chart.c:634 src/draw-chart.c:6210
 #: src/draw-chart.c:7113 src/draw-chart.c:7135 src/firdaria.c:101
-#: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:48 src/solar_return.c:1322
-#: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
+#: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:605
+#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
+#: src/solar_return.c:1708
 #, fuzzy
 msgid "Mars"
 msgstr "Mars orb"
@@ -1030,8 +1032,9 @@ msgstr "Mars orb"
 #: src/directions.c:2492 src/directions.c:3438 src/draw-chart.c:422
 #: src/draw-chart.c:619 src/draw-chart.c:636 src/draw-chart.c:6208
 #: src/draw-chart.c:7115 src/draw-chart.c:7137 src/firdaria.c:103
-#: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:54 src/solar_return.c:1322
-#: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
+#: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:611
+#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
+#: src/solar_return.c:1708
 #, fuzzy
 msgid "Saturn"
 msgstr "Saturn orb"
@@ -1046,8 +1049,9 @@ msgstr ""
 #: src/directions.c:2500 src/directions.c:3446 src/draw-chart.c:419
 #: src/draw-chart.c:618 src/draw-chart.c:635 src/draw-chart.c:6209
 #: src/draw-chart.c:7114 src/draw-chart.c:7136 src/firdaria.c:102
-#: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:53 src/solar_return.c:1322
-#: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
+#: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:610
+#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
+#: src/solar_return.c:1711
 #, fuzzy
 msgid "Jupiter"
 msgstr "Jupiter orb"
@@ -1055,8 +1059,9 @@ msgstr "Jupiter orb"
 #: src/directions.c:2501 src/directions.c:3447 src/draw-chart.c:413
 #: src/draw-chart.c:616 src/draw-chart.c:633 src/draw-chart.c:6205
 #: src/draw-chart.c:7112 src/draw-chart.c:7134 src/firdaria.c:100
-#: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:49 src/solar_return.c:1322
-#: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
+#: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:606
+#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
+#: src/solar_return.c:1711
 #, fuzzy
 msgid "Venus"
 msgstr "Venus orb"
@@ -1117,13 +1122,15 @@ msgstr ""
 
 #: src/directions.c:2609 src/directions.c:2783 src/directions.c:2828
 #: src/directions.c:2910 src/directions.c:3554 src/directions.c:3728
-#: src/directions.c:3773 src/directions.c:3855
+#: src/directions.c:3773 src/directions.c:3855 src/profections.c:295
+#: src/profections.c:408 src/profections.c:452 src/profections.c:531
 msgid "Showing"
 msgstr ""
 
 #: src/directions.c:2612 src/directions.c:2786 src/directions.c:2831
 #: src/directions.c:2913 src/directions.c:3557 src/directions.c:3731
-#: src/directions.c:3776 src/directions.c:3858
+#: src/directions.c:3776 src/directions.c:3858 src/profections.c:298
+#: src/profections.c:411 src/profections.c:455 src/profections.c:534
 msgid "of"
 msgstr ""
 
@@ -1221,7 +1228,7 @@ msgid "Directions metadata exported to file:"
 msgstr ""
 
 #: src/draw-chart.c:404 src/draw-chart.c:6204 src/firdaria.c:97 src/hyleg.c:337
-#: src/profections.c:52 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:609 src/solar_return.c:1322 src/solar_return.c:1491
 #, fuzzy
 msgid "Sun"
 msgstr "Saturn orb"
@@ -1232,14 +1239,14 @@ msgid "Sol"
 msgstr ""
 
 #: src/draw-chart.c:407 src/draw-chart.c:6207 src/firdaria.c:98 src/hyleg.c:338
-#: src/profections.c:51 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:608 src/solar_return.c:1322 src/solar_return.c:1491
 #, fuzzy
 msgid "Moon"
 msgstr "Moon orb"
 
 #: src/draw-chart.c:410 src/draw-chart.c:615 src/draw-chart.c:632
 #: src/draw-chart.c:6206 src/draw-chart.c:7111 src/draw-chart.c:7133
-#: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:50
+#: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:607
 #: src/solar_return.c:1322 src/solar_return.c:1491
 #, fuzzy
 msgid "Mercury"
@@ -3598,66 +3605,136 @@ msgstr ""
 msgid " Press ESC to return to chart | [↓↑] Scroll "
 msgstr "Press [ESC] to cancel"
 
-#: src/profections.c:96
+#: src/profections.c:92
+msgid "Nothing to Print!"
+msgstr ""
+
+#: src/profections.c:92
+msgid "No file created!"
+msgstr ""
+
+#: src/profections.c:107
+msgid "Error attempting to save profections to file!"
+msgstr ""
+
+#: src/profections.c:113
+#, c-format
+msgid ""
+"Age;Year;Activated House;Sign Glyph;Sign Name;Degrees Profected Asc;Lord of "
+"Year Glyph;Lord of Year Name\n"
+msgstr ""
+
+#: src/profections.c:119
+#, c-format
+msgid "%d;%d;House %d;%s;%s;%.4f;%s;%s\n"
+msgstr ""
+
+#: src/profections.c:135
+#, fuzzy
+msgid "Profections File:"
+msgstr "Location: "
+
+#: src/profections.c:198
+#, fuzzy
+msgid " Profections "
+msgstr "Location: "
+
+#: src/profections.c:225
+msgid "Activated House"
+msgstr ""
+
+#: src/profections.c:226
+msgid "Profected Sign"
+msgstr ""
+
+#: src/profections.c:227
+#, fuzzy
+msgid "Lord of the Year"
+msgstr "Save the Chart"
+
+#: src/profections.c:239
+msgid "No profection data available for this chart."
+msgstr ""
+
+#: src/profections.c:302 src/profections.c:415
+#, fuzzy
+msgid "[↑/↓][PgUp/PgDn] Scroll"
+msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
+
+#: src/profections.c:308
+msgid "Profection System: Sign-by-Sign (Traditional Wheel) ─ 1 Sign = 1 Year"
+msgstr ""
+
+#: src/profections.c:311
+#, fuzzy
+msgid "Press ESC to return to chart ─ [P] Export to CSV"
+msgstr "Press [ESC] to cancel"
+
+#: src/profections.c:653
 msgid "Annual Profections Panel"
 msgstr ""
 
-#: src/profections.c:138
+#: src/profections.c:695
 msgid "  [CRITICAL ALCOCHODEN RETURN YEAR!]"
 msgstr ""
 
-#: src/profections.c:148
+#: src/profections.c:705
 msgid "ACTIVATED NATAL HOUSE: "
 msgstr ""
 
-#: src/profections.c:151
+#: src/profections.c:708
 msgid " (Focusing your natal experiences into this specific area of life)"
 msgstr ""
 
-#: src/profections.c:154
+#: src/profections.c:711
 msgid "PROFECTED ZODIAC SIGN: "
 msgstr ""
 
-#: src/profections.c:165
+#: src/profections.c:722
 msgid "LORD OF THE YEAR (Chronocrator): "
 msgstr ""
 
-#: src/profections.c:169
+#: src/profections.c:726
 msgid "This planet rules your entire year and all transits to it"
 msgstr ""
 
-#: src/profections.c:177
+#: src/profections.c:734
 msgid "NATAL PLANETS WOKEN UP IN THIS HOUSE:"
 msgstr ""
 
-#: src/profections.c:186
+#: src/profections.c:743
 msgid "Planet"
 msgstr ""
 
-#: src/profections.c:194
+#: src/profections.c:751
 msgid "is natally placed here and is now triggered."
 msgstr ""
 
-#: src/profections.c:203
+#: src/profections.c:760
 msgid "No natal planets placed in House"
 msgstr ""
 
-#: src/profections.c:203
+#: src/profections.c:760
 msgid "The Lord of the Year acts alone."
 msgstr ""
 
-#: src/profections.c:216
+#: src/profections.c:773
 #, fuzzy
 msgid "Part"
 msgstr " Chart's Name "
 
-#: src/profections.c:222
+#: src/profections.c:779
 msgid "is placed here in your natal chart and is now triggered."
 msgstr ""
 
-#: src/profections.c:231
+#: src/profections.c:788
 msgid "No natal parts placed in House"
 msgstr ""
+
+#: src/profections.c:792
+#, fuzzy
+msgid "Press ESC to return to chart ─ F2 to Profections Table"
+msgstr "Press [ESC] to cancel"
 
 #: src/selections.c:78
 msgid " CONFIRM "
@@ -5723,6 +5800,14 @@ msgstr ""
 #: src/temperament.c:1242
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Profections"
+#~ msgstr "Location: "
+
+#, fuzzy
+#~ msgid "[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target"
+#~ msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
 #~ msgid "characters)"
 #~ msgstr "characters)"

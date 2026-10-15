@@ -246,6 +246,8 @@ Press Q or ESC to return to the main menu.
     
     • F9 - Annual Profections
     
+        F2 - Annual Profections Table
+    
     • F12 - Firdaria
     
     • F13 (shift+F1) or 1 - Vital Chronocrators (Hyleg & Alcochoden)
@@ -1466,7 +1468,11 @@ The module also points the Lots or Arabic Parts also activated (the ones among t
 
 An alert will appear when the age coincides with the pulsation cycle of the Alcochoden.
 
+Press [F2] in this screen to open the Annual Profections Table, which displays the Age, the Year, the Activateed House, the degree and sign of the Profected Ascendant, and the Lord of the Year, for every year from age 0 to 120.
 
+In the table, the selected year will be displayed in another colour to differentiate from the others.
+
+Press [P] in the Profections table to export to a .csv file.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
