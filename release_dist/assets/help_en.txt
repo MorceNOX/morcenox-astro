@@ -461,9 +461,9 @@ The selection boxes appear in the following sequence:
 
 5. City (Select from the scrolling list; the State/County/Province/Region is displayed in the 2nd column to help you distinguish homonymous cities).
 
-6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program always calculates the correct timezone for the selected city (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore).
+6. Timezone (TZ) (Displays the timezone from the cities database; you may confirm or manually type a new one). Actually this is shown only for reference, because the program always calculates the correct timezone for the selected city (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore). (Deprecated since version v1.40.0).
 
-7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date). (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore).
+7. DST (Daylight Saving Time: choose between Yes, No, or Auto. If Auto, the application applies the correct DST interval for the specific date). (From version v1.40.0 onwards it is automatically selected and the dialog does not appear aanymore). (Deprecated since version v1.40.0).
 
 8. Chart Name (Type a name for your new chart). The name of the current chart will appear by default. You can maintain this name to overwrite the current chart with the new data or select another name to get a new chart.
 
@@ -706,7 +706,7 @@ Type [H] to show the houses boundaries in the chart.
 
 You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ to adjust the animation speed in 60-second increments (faster or slower), or } and { for 1-second increments (faster or slower). Positive values ​​show future events; negative values ​​simulate traveling back in time.
 
-The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the terminal configured with the fonts "Adwaita Mono", "Bitstream Vera Sans Mono", "Noto Sans Mono",  "Monospace", "Source Cod Pro", "Astronomic Mono", "DejaVu LGC Sans Mono", "DejaVu Sans Mono", but any monospaced font can be used and will work nicely. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
+The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the terminal configured with the fonts Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono,  Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono, but any monospaced font can be used and will work nicely. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
 
 The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. 
 
