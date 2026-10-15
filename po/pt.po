@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 07:31-0300\n"
+"POT-Creation-Date: 2026-10-15 09:14-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -59,7 +59,7 @@ msgid "Planetary"
 msgstr "Regente"
 
 #: src/almuten.c:612 src/directions.c:2420 src/directions.c:3365
-#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:4105
+#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:4104
 msgid "Day"
 msgstr "Dia"
 
@@ -69,7 +69,7 @@ msgid "Night"
 msgstr "Noite"
 
 #: src/almuten.c:612 src/draw-chart.c:2214 src/draw-chart.c:4709
-#: src/draw-chart.c:4737 src/selections.c:4414
+#: src/draw-chart.c:4737 src/selections.c:4413
 msgid "Hour"
 msgstr "Hora"
 
@@ -856,22 +856,22 @@ msgstr "Fórmula Diurna"
 msgid "Nocturnal Formulae"
 msgstr "Fórmula Noturna"
 
-#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/selections.c:3503
+#: src/arabic_parts.c:237 src/arabic_parts.c:812 src/selections.c:3502
 msgid "Gender"
 msgstr "Gênero"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3504
+#: src/draw-chart.c:2177 src/selections.c:3503
 msgid "Masculine"
 msgstr "Masculino"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/arabic_parts.c:1594
-#: src/draw-chart.c:2177 src/selections.c:3504
+#: src/draw-chart.c:2177 src/selections.c:3503
 msgid "Feminine"
 msgstr "Feminino"
 
 #: src/arabic_parts.c:237 src/arabic_parts.c:812 src/draw-chart.c:2177
-#: src/selections.c:1471 src/selections.c:3504
+#: src/selections.c:1471 src/selections.c:3503
 msgid "Neuter"
 msgstr "Neutro"
 
@@ -1110,7 +1110,7 @@ msgstr "Nenhuma cidade encontrada em 1000km!"
 msgid "Failed prepare statement!"
 msgstr "Falha ao preparar statement"
 
-#: src/db-utils.c:473 src/selections.c:3735
+#: src/db-utils.c:473 src/selections.c:3734
 msgid "city"
 msgstr "cidade"
 
@@ -1179,7 +1179,7 @@ msgstr "Use [←/→] Signif. [↑/↓] Rolagem"
 msgid "Age"
 msgstr "Idade"
 
-#: src/directions.c:2418 src/directions.c:3363 src/selections.c:4103
+#: src/directions.c:2418 src/directions.c:3363 src/selections.c:4102
 msgid "Year"
 msgstr "Ano"
 
@@ -3255,229 +3255,229 @@ msgstr ""
 msgid "Do you want to enter the coordinates of the location?"
 msgstr "Você quer digitar as coordenadas do local?"
 
-#: src/menu-box.c:449
+#: src/menu-box.c:440
 msgid "Timezone:"
 msgstr "Fuso-Horário:"
 
-#: src/menu-box.c:463
+#: src/menu-box.c:454
 msgid "Country not found!"
 msgstr "País não encontrado!"
 
-#: src/menu-box.c:463
+#: src/menu-box.c:454
 msgid "Please, verify the coordinates!"
 msgstr "Por favor, verifique as coordenadas!"
 
-#: src/menu-box.c:477 src/menu-box.c:528 src/menu-box.c:544 src/menu-box.c:560
+#: src/menu-box.c:468 src/menu-box.c:529 src/menu-box.c:545 src/menu-box.c:561
 msgid "Data have not been changed."
 msgstr "Os dados não foram alterados"
 
-#: src/menu-box.c:487
+#: src/menu-box.c:478
 msgid "Country:"
 msgstr "País:"
 
-#: src/menu-box.c:500
+#: src/menu-box.c:491
 msgid "State:"
 msgstr "Estado:"
 
-#: src/menu-box.c:501
+#: src/menu-box.c:492
 msgid "Elevation:"
 msgstr "Elevação:"
 
-#: src/menu-box.c:588
+#: src/menu-box.c:589
 msgid "City could not be saved!"
 msgstr "Falha ao tentar salvar cidade!"
 
-#: src/menu-box.c:589 src/menu-box.c:609 src/menu-box.c:641
+#: src/menu-box.c:590 src/menu-box.c:610 src/menu-box.c:642
 #, c-format
 msgid "Chart not saved!"
 msgstr "O mapa não foi salvo"
 
-#: src/menu-box.c:606
+#: src/menu-box.c:607
 msgid "Are you sure you want to SAVE the chart"
 msgstr "Você tem certeza que quer SALVAR o mapa"
 
-#: src/menu-box.c:670
+#: src/menu-box.c:671
 msgid "Failed to prepare load statement. Chart not saved!"
 msgstr "Falha ao preparar load statement. Chart não salvo!"
 
-#: src/menu-box.c:687
+#: src/menu-box.c:688
 msgid "Failed to insert. Chart not saved!"
 msgstr "Falha ao inserir. Chart não salvo!"
 
-#: src/menu-box.c:711
+#: src/menu-box.c:712
 msgid "Failed to bind insert statement. Chart not saved!"
 msgstr "Falha ao linkar insert. O Chart não foi salvo!"
 
-#: src/menu-box.c:720
+#: src/menu-box.c:721
 msgid "Failed saving chart (step)!"
 msgstr "Falha ao salvar chart (step)!"
 
-#: src/menu-box.c:725
+#: src/menu-box.c:726
 msgid "Chart saved!"
 msgstr "Mapa salvo!"
 
-#: src/menu-box.c:770 src/menu-box.c:1194
+#: src/menu-box.c:771 src/menu-box.c:1195
 msgid "No charts available."
 msgstr "Não há mapas disponíveis."
 
-#: src/menu-box.c:850
+#: src/menu-box.c:851
 msgid "Select Chart to Delete"
 msgstr "Selecionar Mapa para Excluir"
 
-#: src/menu-box.c:1125
+#: src/menu-box.c:1126
 msgid "Error deleting chart."
 msgstr "Erro ao excluir mapa."
 
-#: src/menu-box.c:1137
+#: src/menu-box.c:1138
 msgid "Chart deleted successfully."
 msgstr "Mapa excluído com sucesso."
 
-#: src/menu-box.c:1277
+#: src/menu-box.c:1278
 msgid "Select Chart to Load"
 msgstr "Selecionar Mapa para Carregar"
 
-#: src/menu-box.c:1589
+#: src/menu-box.c:1590
 msgid "Chart not found!"
 msgstr "Mapa não encontrado!"
 
-#: src/menu-box.c:1900
+#: src/menu-box.c:1901
 msgid "Location: "
 msgstr "  Cidade: "
 
-#: src/menu-box.c:1908
+#: src/menu-box.c:1909
 msgid "┃ Date/Time: "
 msgstr "┃ Data/Hora: "
 
-#: src/menu-box.c:1916
+#: src/menu-box.c:1917
 msgid "┃ Dst: "
 msgstr "┃ HDV: "
 
-#: src/menu-box.c:1920 src/selections.c:6386 src/selections.c:6536
+#: src/menu-box.c:1921 src/selections.c:6927 src/selections.c:7077
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:1920 src/selections.c:6385 src/selections.c:6539
+#: src/menu-box.c:1921 src/selections.c:6926 src/selections.c:7080
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:1920 src/selections.c:6384
+#: src/menu-box.c:1921 src/selections.c:6925
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:1924
+#: src/menu-box.c:1925
 msgid "┃ Gen: "
 msgstr "┃ Gên: "
 
-#: src/menu-box.c:2129
+#: src/menu-box.c:2130
 #, c-format
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:2487
+#: src/menu-box.c:2488
 msgid "Are you sure you want to OPEN this link?"
 msgstr "Você tem certeza que quer ABRIR este link?"
 
-#: src/menu-box.c:2753
+#: src/menu-box.c:2754
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:2757 src/menu-box.c:2944
+#: src/menu-box.c:2758 src/menu-box.c:2945
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:2775
+#: src/menu-box.c:2776
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:2779 src/menu-box.c:2945
+#: src/menu-box.c:2780 src/menu-box.c:2946
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:2790
+#: src/menu-box.c:2791
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:2825
+#: src/menu-box.c:2826
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:2936
+#: src/menu-box.c:2937
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:2936
+#: src/menu-box.c:2937
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localização padrão."
 
-#: src/menu-box.c:2937
+#: src/menu-box.c:2938
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:2937
+#: src/menu-box.c:2938
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:2938
+#: src/menu-box.c:2939
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:2938
+#: src/menu-box.c:2939
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:2939
+#: src/menu-box.c:2940
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:2939
+#: src/menu-box.c:2940
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:2940
+#: src/menu-box.c:2941
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:2940
+#: src/menu-box.c:2941
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:2941
+#: src/menu-box.c:2942
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:2941
+#: src/menu-box.c:2942
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:2942
+#: src/menu-box.c:2943
 msgid "Change the Default Location"
 msgstr "Mudar a Localização Padrão"
 
-#: src/menu-box.c:2942
+#: src/menu-box.c:2943
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:2943
+#: src/menu-box.c:2944
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:2943
+#: src/menu-box.c:2944
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:2944
+#: src/menu-box.c:2945
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:2945
+#: src/menu-box.c:2946
 msgid "Some technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:2946
+#: src/menu-box.c:2947
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:2946
+#: src/menu-box.c:2947
 msgid "Exit the program."
 msgstr "Sair do programa."
 
@@ -4065,22 +4065,34 @@ msgstr "[ CONFIRMA ]"
 
 #: src/selections.c:1240 src/selections.c:2127 src/selections.c:2138
 #: src/selections.c:2241 src/selections.c:2252 src/selections.c:3117
-#: src/selections.c:3239 src/selections.c:3248 src/selections.c:3272
-#: src/selections.c:3281 src/selections.c:3359 src/selections.c:3369
-#: src/selections.c:3487 src/selections.c:3559 src/selections.c:3568
-#: src/selections.c:3590 src/selections.c:3599 src/selections.c:3672
-#: src/selections.c:3682 src/selections.c:3805 src/selections.c:3877
-#: src/selections.c:3886 src/selections.c:3908 src/selections.c:3917
-#: src/selections.c:3990 src/selections.c:4000 src/selections.c:4127
-#: src/selections.c:4194 src/selections.c:4203 src/selections.c:4227
-#: src/selections.c:4236 src/selections.c:4312 src/selections.c:4322
-#: src/selections.c:4440 src/selections.c:4518 src/selections.c:4527
-#: src/selections.c:4552 src/selections.c:4561 src/selections.c:4637
-#: src/selections.c:4647 src/selections.c:4766 src/selections.c:4851
-#: src/selections.c:4860 src/selections.c:4884 src/selections.c:4893
-#: src/selections.c:4969 src/selections.c:4979 src/selections.c:5095
-#: src/selections.c:5180 src/selections.c:5189 src/selections.c:5213
-#: src/selections.c:5222 src/selections.c:5298 src/selections.c:5308
+#: src/selections.c:3238 src/selections.c:3247 src/selections.c:3271
+#: src/selections.c:3280 src/selections.c:3358 src/selections.c:3368
+#: src/selections.c:3486 src/selections.c:3558 src/selections.c:3567
+#: src/selections.c:3589 src/selections.c:3598 src/selections.c:3671
+#: src/selections.c:3681 src/selections.c:3804 src/selections.c:3876
+#: src/selections.c:3885 src/selections.c:3907 src/selections.c:3916
+#: src/selections.c:3989 src/selections.c:3999 src/selections.c:4126
+#: src/selections.c:4193 src/selections.c:4202 src/selections.c:4226
+#: src/selections.c:4235 src/selections.c:4311 src/selections.c:4321
+#: src/selections.c:4439 src/selections.c:4517 src/selections.c:4526
+#: src/selections.c:4551 src/selections.c:4560 src/selections.c:4636
+#: src/selections.c:4646 src/selections.c:4765 src/selections.c:4850
+#: src/selections.c:4859 src/selections.c:4883 src/selections.c:4892
+#: src/selections.c:4968 src/selections.c:4978 src/selections.c:5094
+#: src/selections.c:5179 src/selections.c:5188 src/selections.c:5212
+#: src/selections.c:5221 src/selections.c:5297 src/selections.c:5307
+#: src/selections.c:5409 src/selections.c:5552 src/selections.c:5562
+#: src/selections.c:5622 src/selections.c:5631 src/selections.c:5655
+#: src/selections.c:5664 src/selections.c:5794 src/selections.c:5937
+#: src/selections.c:5947 src/selections.c:6007 src/selections.c:6016
+#: src/selections.c:6040 src/selections.c:6049 src/selections.c:6179
+#: src/selections.c:6322 src/selections.c:6332 src/selections.c:6392
+#: src/selections.c:6401 src/selections.c:6425 src/selections.c:6434
+#: src/selections.c:7163 src/selections.c:7306 src/selections.c:7316
+#: src/selections.c:7376 src/selections.c:7385 src/selections.c:7409
+#: src/selections.c:7418 src/selections.c:7550 src/selections.c:7693
+#: src/selections.c:7703 src/selections.c:7763 src/selections.c:7772
+#: src/selections.c:7796 src/selections.c:7805
 msgid "[  CANCEL  ]"
 msgstr "[  CANCELA ]"
 
@@ -4223,276 +4235,280 @@ msgstr "[Enter] Confirma | [ESC] Cancela."
 msgid "years"
 msgstr "anos"
 
-#: src/selections.c:2811 src/selections.c:3496 src/selections.c:3814
+#: src/selections.c:2811 src/selections.c:3495 src/selections.c:3813
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr "Use [↑/↓] ajustar. [Enter] confirmar."
 
-#: src/selections.c:2812 src/selections.c:3126 src/selections.c:3497
-#: src/selections.c:3815
+#: src/selections.c:2812 src/selections.c:3126 src/selections.c:3496
+#: src/selections.c:3814 src/selections.c:5418 src/selections.c:5803
+#: src/selections.c:6188 src/selections.c:7172 src/selections.c:7559
 msgid "[ESC] to cancel."
 msgstr "[ESC] cancela."
 
-#: src/selections.c:3100 src/selections.c:6009
+#: src/selections.c:3100 src/selections.c:6550
 msgid " Elevation "
 msgstr " Elevação "
 
-#: src/selections.c:3106 src/selections.c:3209 src/selections.c:3218
-#: src/selections.c:3323 src/selections.c:3332 src/selections.c:3476
-#: src/selections.c:3532 src/selections.c:3541 src/selections.c:3639
-#: src/selections.c:3648 src/selections.c:3794 src/selections.c:3850
-#: src/selections.c:3859 src/selections.c:3957 src/selections.c:3966
-#: src/selections.c:4116 src/selections.c:4164 src/selections.c:4173
-#: src/selections.c:4278 src/selections.c:4287 src/selections.c:4429
-#: src/selections.c:4488 src/selections.c:4497 src/selections.c:4603
-#: src/selections.c:4612 src/selections.c:4755 src/selections.c:4821
-#: src/selections.c:4830 src/selections.c:4935 src/selections.c:4944
-#: src/selections.c:5084 src/selections.c:5150 src/selections.c:5159
-#: src/selections.c:5264 src/selections.c:5273
+#: src/selections.c:3106 src/selections.c:3208 src/selections.c:3217
+#: src/selections.c:3322 src/selections.c:3331 src/selections.c:3475
+#: src/selections.c:3531 src/selections.c:3540 src/selections.c:3638
+#: src/selections.c:3647 src/selections.c:3793 src/selections.c:3849
+#: src/selections.c:3858 src/selections.c:3956 src/selections.c:3965
+#: src/selections.c:4115 src/selections.c:4163 src/selections.c:4172
+#: src/selections.c:4277 src/selections.c:4286 src/selections.c:4428
+#: src/selections.c:4487 src/selections.c:4496 src/selections.c:4602
+#: src/selections.c:4611 src/selections.c:4754 src/selections.c:4820
+#: src/selections.c:4829 src/selections.c:4934 src/selections.c:4943
+#: src/selections.c:5083 src/selections.c:5149 src/selections.c:5158
+#: src/selections.c:5263 src/selections.c:5272 src/selections.c:5398
+#: src/selections.c:5520 src/selections.c:5529 src/selections.c:5594
+#: src/selections.c:5603 src/selections.c:5783 src/selections.c:5905
+#: src/selections.c:5914 src/selections.c:5979 src/selections.c:5988
+#: src/selections.c:6168 src/selections.c:6290 src/selections.c:6299
+#: src/selections.c:6364 src/selections.c:6373 src/selections.c:7152
+#: src/selections.c:7274 src/selections.c:7283 src/selections.c:7348
+#: src/selections.c:7357 src/selections.c:7539 src/selections.c:7661
+#: src/selections.c:7670 src/selections.c:7735 src/selections.c:7744
 msgid "[  CONFIRM  ]"
 msgstr "[ CONFIRMA  ]"
 
-#: src/selections.c:3129
+#: src/selections.c:3128
 msgid "Enter the Elevation Value"
 msgstr "Digite o Valor da Elevação"
 
-#: src/selections.c:3470
+#: src/selections.c:3469
 msgid " Gender Selection "
 msgstr " Seleção de Gênero"
 
-#: src/selections.c:3733
+#: src/selections.c:3732
 msgid "abandoned"
 msgstr "abandonada"
 
-#: src/selections.c:3734
+#: src/selections.c:3733
 msgid "adm"
 msgstr "adm"
 
-#: src/selections.c:3736
+#: src/selections.c:3735
 msgid "county"
 msgstr "condado"
 
-#: src/selections.c:3737
+#: src/selections.c:3736
 msgid "destroyed"
 msgstr "destruída"
 
-#: src/selections.c:3738
+#: src/selections.c:3737
 msgid "district"
 msgstr "distrito"
 
-#: src/selections.c:3739
+#: src/selections.c:3738
 msgid "locality"
 msgstr "localidade"
 
-#: src/selections.c:3740
+#: src/selections.c:3739
 msgid "oblast"
 msgstr "oblast"
 
-#: src/selections.c:3741
+#: src/selections.c:3740
 msgid "parish"
 msgstr "freguesia"
 
-#: src/selections.c:3742
+#: src/selections.c:3741
 msgid "province"
 msgstr "província"
 
-#: src/selections.c:3743
+#: src/selections.c:3742
 msgid "regency"
 msgstr "regência"
 
-#: src/selections.c:3744
+#: src/selections.c:3743
 msgid "section"
 msgstr "seção"
 
-#: src/selections.c:3745
+#: src/selections.c:3744
 msgid "setlement"
 msgstr "povoado"
 
-#: src/selections.c:3746
+#: src/selections.c:3745
 msgid "subdistrict"
 msgstr "subdistrito"
 
-#: src/selections.c:3747
+#: src/selections.c:3746
 msgid "town"
 msgstr "zona urbana"
 
-#: src/selections.c:3748
+#: src/selections.c:3747
 msgid "village"
 msgstr "vilarejo"
 
-#: src/selections.c:3788
+#: src/selections.c:3787
 msgid " Location Type Selection "
 msgstr " Selecionar o Tipo da Localidade "
 
-#: src/selections.c:3821
+#: src/selections.c:3820
 msgid "Location Type"
 msgstr " Localidade Tipo: "
 
-#: src/selections.c:4082
+#: src/selections.c:4081
 msgid " Date "
 msgstr " Data "
 
-#: src/selections.c:4086 src/selections.c:4402 src/selections.c:4728
-#: src/selections.c:5057
+#: src/selections.c:4085 src/selections.c:4401 src/selections.c:4727
+#: src/selections.c:5056
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr "[↑/↓] ajustar. [Enter] confirma."
 
-#: src/selections.c:4087 src/selections.c:4403 src/selections.c:4729
-#: src/selections.c:5058
+#: src/selections.c:4086 src/selections.c:4402 src/selections.c:4728
+#: src/selections.c:5057
 msgid "[ESC] Cancel."
 msgstr "[ESC] cancela."
 
-#: src/selections.c:4104
+#: src/selections.c:4103
 msgid "Month"
 msgstr "Mês"
 
-#: src/selections.c:4398
+#: src/selections.c:4397
 msgid " Time "
 msgstr " Horário "
 
-#: src/selections.c:4415 src/selections.c:4741 src/selections.c:5070
+#: src/selections.c:4414 src/selections.c:4740 src/selections.c:5069
 msgid "Min"
 msgstr "Min"
 
-#: src/selections.c:4416 src/selections.c:4742 src/selections.c:5071
+#: src/selections.c:4415 src/selections.c:4741 src/selections.c:5070
 msgid "Sec"
 msgstr "Seg"
 
-#: src/selections.c:4724
+#: src/selections.c:4723
 msgid " Longitude "
 msgstr "Longitude "
 
-#: src/selections.c:4740 src/selections.c:5069
+#: src/selections.c:4739 src/selections.c:5068
 msgid "Degree"
 msgstr "Grau"
 
-#: src/selections.c:5053
+#: src/selections.c:5052
 msgid " Latitude "
 msgstr " Latitude "
 
-#: src/selections.c:5401
-msgid " Location's Name "
-msgstr " Nome do Local "
+#: src/selections.c:5392
+msgid " Location Name "
+msgstr " Nome da Localidade "
 
-#: src/selections.c:5415
-msgid "Enter the name of the location (max"
-msgstr "Digite o nome da localidade (máx"
+#: src/selections.c:5421
+msgid "Enter the Name of the Location"
+msgstr "Digite o Nome da Localidade"
 
-#: src/selections.c:5416 src/selections.c:5620 src/selections.c:5825
-#: src/selections.c:6629 src/selections.c:6837
-msgid "characters)"
-msgstr "caracteres)"
-
-#: src/selections.c:5537
+#: src/selections.c:5715
 msgid "Somewhere"
 msgstr "Algum Lugar"
 
-#: src/selections.c:5605
-msgid " Confirm State Name "
-msgstr " Confirme o Nome do Estado "
+#: src/selections.c:5777
+msgid " State Name "
+msgstr " Nome do Estado "
 
-#: src/selections.c:5619
-msgid "Enter the name of the State (max"
-msgstr "Digite o nome do Estado (máx"
+#: src/selections.c:5806
+msgid "Enter the Name of the State"
+msgstr "Digite o Nome do Estado"
 
-#: src/selections.c:5741
+#: src/selections.c:6100
 msgid "Some State"
-msgstr "Estado"
+msgstr "Um Estado"
 
-#: src/selections.c:5810
-msgid " Confirm Country Name "
-msgstr " Confirme o Nome do País "
+#: src/selections.c:6162
+msgid " Country Name "
+msgstr " Nome do País "
 
-#: src/selections.c:5824
-msgid "Enter the name of the Country (max"
-msgstr "Digite o nome do País (máx"
+#: src/selections.c:6191
+msgid "Enter the Name of the Country"
+msgstr "Digite o nome do País"
 
-#: src/selections.c:5946
+#: src/selections.c:6485
 msgid "Some Country"
 msgstr "País"
 
-#: src/selections.c:6020 src/selections.c:6234 src/selections.c:6236
+#: src/selections.c:6561 src/selections.c:6775 src/selections.c:6777
 msgid "Press [Enter] to save"
 msgstr "[ENTER] para salvar"
 
-#: src/selections.c:6022 src/selections.c:6239
+#: src/selections.c:6563 src/selections.c:6780
 msgid "Press [ESC] to cancel"
 msgstr "[ESC] para cancelar"
 
-#: src/selections.c:6023 src/selections.c:6240
+#: src/selections.c:6564 src/selections.c:6781
 msgid "Value: "
 msgstr "Valor: "
 
-#: src/selections.c:6218
+#: src/selections.c:6759
 msgid " Enter TZ Offset "
 msgstr " Fuso-Horário "
 
-#: src/selections.c:6232
+#: src/selections.c:6773
 msgid "Error: Max -12 to +14"
 msgstr "Erro: Máx -12 até +14"
 
-#: src/selections.c:6437
+#: src/selections.c:6978
 msgid " Select DST "
 msgstr " Horário de Verão? "
 
-#: src/selections.c:6614
+#: src/selections.c:7146
 msgid " Exporting To .csv File "
 msgstr " Exportando Para Arquivo .csv "
 
-#: src/selections.c:6628
-msgid "Enter the file name (max"
-msgstr "Digite o nome do arquivo (max"
+#: src/selections.c:7175
+msgid "Enter the File Name"
+msgstr "Digite o Nome do Arquivo"
 
-#: src/selections.c:6750
+#: src/selections.c:7469
 msgid "primary_directions"
 msgstr "direcoes_primarias"
 
-#: src/selections.c:6822
+#: src/selections.c:7533
 msgid " Chart's Name "
 msgstr " Nome do Mapa "
 
-#: src/selections.c:6836
-msgid "Enter a name for your chart (max"
-msgstr "Digite um nome para o seu mapa (máx"
+#: src/selections.c:7562
+msgid "Enter the Name for your Chart"
+msgstr "Digite um Nome para o seu Mapa"
 
-#: src/selections.c:6958
+#: src/selections.c:7856
 msgid "Unnamed Chart"
 msgstr "Mapa Sem Nome"
 
-#: src/selections.c:7201
+#: src/selections.c:8100
 msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
-#: src/selections.c:7507 src/selections.c:7833
+#: src/selections.c:8406 src/selections.c:8732
 msgid "Select Country"
 msgstr "Selecionar País"
 
-#: src/selections.c:7509 src/selections.c:7835
+#: src/selections.c:8408 src/selections.c:8734
 msgid "Country"
 msgstr "País"
 
-#: src/selections.c:8133
+#: src/selections.c:9032
 msgid "Select City in"
 msgstr "Selecione uma Cidade em"
 
-#: src/selections.c:8135
+#: src/selections.c:9034
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "Cidade                                        Estado/Condado/Região/Província"
 
-#: src/selections.c:8399
+#: src/selections.c:9298
 msgid "Failed to prepare statement:"
 msgstr "Falha ao preparar statement"
 
-#: src/selections.c:8446
+#: src/selections.c:9345
 msgid "Warning: City not found in database."
 msgstr "Aviso: Cidade não encontrada no banco de dados."
 
-#: src/selections.c:8488
+#: src/selections.c:9387
 msgid "Default city has not changed"
 msgstr "Cidade padrão não alterada"
 
-#: src/selections.c:8550
+#: src/selections.c:9449
 msgid "Default city has changed"
 msgstr "Cidade padrão alterada"
 
@@ -6719,6 +6735,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "characters)"
+#~ msgstr "caracteres)"
 
 #~ msgid "No city found in 25km!"
 #~ msgstr "Nenhuma cidade encontrada em 25km!"

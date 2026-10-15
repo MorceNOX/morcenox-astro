@@ -423,16 +423,7 @@ void set_data() {
                 doupdate();
                 
                 if (ed_lat.changed) {                    
-                    set_location_name(location, sizeof(location));
-                    touchwin(stdscr);
-                    wnoutrefresh(stdscr);
-                    doupdate();
-    
-                    set_chart_name(chart_name, sizeof(chart_name));
-                    touchwin(stdscr);
-                    wnoutrefresh(stdscr);
-                    doupdate();    
-                    
+                                       
                     lat = get_decimal_degrees(ed_lat.grau);
                     lon = get_decimal_degrees(ed_lon.grau);
 
@@ -502,6 +493,16 @@ void set_data() {
 
                         set_elevation();
                     }
+
+                    set_location_name(location, sizeof(location));
+                    touchwin(stdscr);
+                    wnoutrefresh(stdscr);
+                    doupdate();
+    
+                    set_chart_name(chart_name, sizeof(chart_name));
+                    touchwin(stdscr);
+                    wnoutrefresh(stdscr);
+                    doupdate();   
 
                     snprintf(CITY, sizeof(CITY), "%s", location);
                     snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);                  
