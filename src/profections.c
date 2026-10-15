@@ -145,7 +145,7 @@ void exportar_profecoes_to_csv(LinhaProfecao *tabela_prof, int qtd_profecoes) {
 
 
 
-void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade) {
+void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade, char *glifo_senhor, char *nome_senhor) {
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -215,6 +215,10 @@ void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_prof
             scroll_offset = qtd_profecoes * 2 - max_linhas_exibicao;
         }
         if (scroll_offset < 0) scroll_offset = 0;
+
+        wattron(table_win, COLOR_PAIR(8) | A_BOLD);
+        mvwprintw(table_win, 2, 4, "%s: %d │ %s: %s %s", _("Selected Age"), idade, _("Lord of the Year"), glifo_senhor, nome_senhor); 
+        wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
 
         wattron(table_win, COLOR_PAIR(13));
         mvwprintw(table_win, 4, 2, "──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
@@ -828,7 +832,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
         else if (ch == KEY_F(2)) {
             LinhaProfecao tabela[100];
             gerar_tabela_profecoes_anuais(tabela, 121, cusps[1], jd);
-            exibir_janela_tabela_profecoes(tabela, 121, idade);
+            exibir_janela_tabela_profecoes(tabela, 121, idade, prof.glifo_senhor, prof.nome_senhor);
         }
     } while (ch != 27 && ch != 'q');
     

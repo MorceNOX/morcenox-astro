@@ -41,7 +41,7 @@ typedef struct {
 } LinhaProfecao;
 
 void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento);
-void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade);
+void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade, char *glifo_senhor, char *nome_senhor);
 DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual);
 void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects, double jd);
 
