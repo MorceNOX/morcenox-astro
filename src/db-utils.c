@@ -388,17 +388,12 @@ int get_data_from_nearest_city(double lat_busca, double lon_busca, char *pais, C
         return 1;
     }
 
-    show_alert_popup(_("No city found in 50km!"), _("Trying 100km."));
-    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 100, pais, resultado)) {
+    show_alert_popup(_("No city found in 50km!"), _("Trying 200km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 200, pais, resultado)) {
         return 1;
     }
 
-    show_alert_popup(_("No city found in 100km!"), _("Trying 300km."));
-    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 300, pais, resultado)) {
-        return 1;
-    }
-
-    show_alert_popup(_("No city found in 300km!"), _("Trying 1000km."));
+    show_alert_popup(_("No city found in 200km!"), _("Trying 1000km."));
     if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 1000, pais, resultado)) {
         return 1;
     }

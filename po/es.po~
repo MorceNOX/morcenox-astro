@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2026.
 #
-#: src/menu-box.c:406
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -2869,6 +2868,10 @@ msgstr ""
 #: src/hyleg.c:1195
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
+msgstr ""
+
+#: src/menu-box.c:406
+msgid "Do you want to enter the coordinates of the location?"
 msgstr ""
 
 #: src/menu-box.c:449

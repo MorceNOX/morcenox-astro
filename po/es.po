@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 03:43-0300\n"
+"POT-Creation-Date: 2026-10-15 05:28-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -863,71 +863,47 @@ msgstr ""
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr ""
 
-#: src/db-utils.c:390
-msgid "No city found in 25km!"
-msgstr ""
-
-#: src/db-utils.c:390
-msgid "Trying 50km."
-msgstr ""
-
-#: src/db-utils.c:395
+#: src/db-utils.c:391
 msgid "No city found in 50km!"
 msgstr ""
 
-#: src/db-utils.c:395
-msgid "Trying 75km."
+#: src/db-utils.c:391
+msgid "Trying 200km."
 msgstr ""
 
-#: src/db-utils.c:400
-msgid "No city found in 75km!"
+#: src/db-utils.c:396
+msgid "No city found in 200km!"
 msgstr ""
 
-#: src/db-utils.c:400
-msgid "Trying 100km."
-msgstr ""
-
-#: src/db-utils.c:405
-msgid "No city found in 100km!"
-msgstr ""
-
-#: src/db-utils.c:405
-msgid "Trying 300km."
-msgstr ""
-
-#: src/db-utils.c:410
-msgid "No city found in 300km!"
-msgstr ""
-
-#: src/db-utils.c:410
+#: src/db-utils.c:396
 msgid "Trying 1000km."
 msgstr ""
 
-#: src/db-utils.c:415
+#: src/db-utils.c:401
 msgid "No city found in 1000km!"
 msgstr ""
 
-#: src/db-utils.c:438 src/db-utils.c:476
+#: src/db-utils.c:424 src/db-utils.c:462
 msgid "Failed prepare statement!"
 msgstr ""
 
-#: src/db-utils.c:487 src/selections.c:3359
+#: src/db-utils.c:473 src/selections.c:3359
 msgid "city"
 msgstr ""
 
-#: src/db-utils.c:508
+#: src/db-utils.c:494
 msgid "Failed prepare saving city! (prepare insert)"
 msgstr ""
 
-#: src/db-utils.c:535
+#: src/db-utils.c:521
 msgid "Failed saving city! (bind insert)"
 msgstr ""
 
-#: src/db-utils.c:541
+#: src/db-utils.c:527
 msgid "Failed saving city! (step)"
 msgstr ""
 
-#: src/db-utils.c:546
+#: src/db-utils.c:532
 msgid "City saved!"
 msgstr ""
 
