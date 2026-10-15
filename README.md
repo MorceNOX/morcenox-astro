@@ -184,15 +184,14 @@ Here are some screenshots of the application. You can have an idea of what you e
 <img width="2560" height="1600" alt="02b-chart_wheel_city_selection_rs" src="https://github.com/user-attachments/assets/08abfa61-e6a8-4dc8-a50a-aad6c8754d62" />
 <hr>
 
-### Aspects Tables
-<img width="2560" height="1600" alt="03a-aspects_antissia" src="https://github.com/user-attachments/assets/0055e263-2b27-49fe-b9b6-f4930bf51bef" />
-<img width="2560" height="1600" alt="03b-aspects_table" src="https://github.com/user-attachments/assets/f6b612ad-71ab-4549-a322-3d84061e6aa4" />
-<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/c8928481-5b54-4ace-a2ad-d9064e4eb6cd" />
+### Aspects Table
+<hr>
+<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/77b082fd-0a7c-461d-aecf-33b95a53acd4" />
 <hr>
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04a-primary_directions_table" src="https://github.com/user-attachments/assets/c60dba11-7f41-4e88-99d8-d5e03bc13016" />
+<img width="2560" height="1600" alt="04a-primary_directions_table" src="https://github.com/user-attachments/assets/80ea2243-198c-4574-aeec-f0e34abc4085" />
 <hr>
 
 ### Firdaria
