@@ -172,15 +172,15 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Main Menu
 <hr>
-<img width="2560" height="1600" alt="01-main_menu" src="https://github.com/user-attachments/assets/c01bef01-0e2a-4b0e-8913-7583301d6eb8" />
+<img width="2560" height="1600" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/e4a85689-b9b8-41f5-bf34-00c7e8094cc9" />
 <hr>
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/fee884b5-0279-4029-a379-a3918b0a471b" />
+<img width="2560" height="1539" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/1501387a-0449-43fd-bce0-a90e8c180734" />
 <img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/1351ff44-3f31-4bc2-b045-e07ef6e516fc" />
 <img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/f212e5d2-2c94-4d60-8c77-340e657f6c67" />
-<img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/8b15035b-45da-4850-9c3b-d68b49ddef8b" />
+<img width="2560" height="1539" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/170cd625-9be4-44e5-aa37-96d8aa7a6c26" />
 <img width="2560" height="1600" alt="02b-chart_wheel_city_selection_rs" src="https://github.com/user-attachments/assets/08abfa61-e6a8-4dc8-a50a-aad6c8754d62" />
 <hr>
 
