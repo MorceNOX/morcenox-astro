@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 22:23-0300\n"
+"POT-Creation-Date: 2026-10-14 22:38-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1086,71 +1086,71 @@ msgstr " Matriz de Aspectos com Antiscia "
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos com Contrantiscia "
 
-#: src/db-utils.c:380
+#: src/db-utils.c:390
 msgid "No city found in 25km!"
 msgstr "Nenhuma cidade encontrada em 25km!"
 
-#: src/db-utils.c:380
+#: src/db-utils.c:390
 msgid "Trying 50km."
 msgstr "Tentando 50km."
 
-#: src/db-utils.c:385
+#: src/db-utils.c:395
 msgid "No city found in 50km!"
 msgstr "Nenhuma cidade encontrada em 50km!"
 
-#: src/db-utils.c:385
+#: src/db-utils.c:395
 msgid "Trying 75km."
 msgstr "Tentando 75km."
 
-#: src/db-utils.c:390
+#: src/db-utils.c:400
 msgid "No city found in 75km!"
 msgstr "Nenhuma cidade encontrada em 75km!"
 
-#: src/db-utils.c:390
+#: src/db-utils.c:400
 msgid "Trying 100km."
 msgstr "Tentando 100km!"
 
-#: src/db-utils.c:395
+#: src/db-utils.c:405
 msgid "No city found in 100km!"
 msgstr "Nenhuma cidade encontrada em 100km!"
 
-#: src/db-utils.c:395
+#: src/db-utils.c:405
 msgid "Trying 300km."
 msgstr "Tentando 300km."
 
-#: src/db-utils.c:400
+#: src/db-utils.c:410
 msgid "No city found in 300km!"
 msgstr "Nenhuma cidade encontrada em 300km!"
 
-#: src/db-utils.c:400
+#: src/db-utils.c:410
 msgid "Trying 1000km."
 msgstr "Tentando 1000km."
 
-#: src/db-utils.c:405
+#: src/db-utils.c:415
 msgid "No city found in 1000km!"
 msgstr "Nenhuma cidade encontrada em 1000km!"
 
-#: src/db-utils.c:428 src/db-utils.c:466
+#: src/db-utils.c:438 src/db-utils.c:476
 msgid "Failed prepare statement!"
 msgstr "Falha ao preparar statement"
 
-#: src/db-utils.c:477 src/selections.c:3359
+#: src/db-utils.c:487 src/selections.c:3359
 msgid "city"
 msgstr "cidade"
 
-#: src/db-utils.c:498
+#: src/db-utils.c:508
 msgid "Failed prepare saving city! (prepare insert)"
 msgstr "Falha ao preparar salvar cidade! (prepare insert)"
 
-#: src/db-utils.c:525
+#: src/db-utils.c:535
 msgid "Failed saving city! (bind insert)"
 msgstr "Falha ao tentar salvar cidade! (bind insert)"
 
-#: src/db-utils.c:531
+#: src/db-utils.c:541
 msgid "Failed saving city! (step)"
 msgstr "Falha ao salvar cidade (step)!"
 
-#: src/db-utils.c:536
+#: src/db-utils.c:546
 msgid "City saved!"
 msgstr "Cidade salva!"
 

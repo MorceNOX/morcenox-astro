@@ -4882,8 +4882,10 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     idlok(pad, TRUE);
     scrollok(pad, TRUE);
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
+
+    drag_and_drop_on();
 
     char str[512];
     char str2[512];
@@ -5288,7 +5290,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     
    
     // Altura visível real onde o texto do pad aparece na tela
-    int visible_height = (i_start_y + i_height - 2) - (i_start_y + 1) + 1;
+    int visible_height = (i_start_y + i_height - 4) - (i_start_y + 1) + 1;
     
     keypad(border_win, TRUE);
 
@@ -5298,9 +5300,11 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         int flag = 0;
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(border_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 0);
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
         wattroff(border_win, COLOR_PAIR(28) | flag);
         
+        mvwaddstr(border_win, 1, i_width - 2, "▲");
+        mvwaddstr(border_win, 2 + visible_height, i_width - 2, "▼");
 
         // --- 2. ENVIAR JANELAS PARA O BUFFER (Ordem correta de renderização) ---
         wnoutrefresh(border_win); 
@@ -5351,34 +5355,165 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 3. Descobre a linha clicada em relação ao início da janela
-                        int linha_clique_janela = event.y - getbegy(border_win);
-                        
-                        // Como passou 0 no final de desenhar_scrollbar, o offset de início é 0
-                        int offset_inicio_barra = 1; 
-                        
-                        // Calcula qual "degrau" da barra o usuário clicou (0 até visible_height - 1)
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        // Definição das posições verticais (Seta de Cima é linha 1, Canal inicia na linha 2)
+                        int linha_seta_cima = 1;
+                        int offset_inicio_barra = 2; 
+                        int linha_seta_baixo = offset_inicio_barra + visible_height; // Linha logo após o canal
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
-                            
-                            // Calcula o limite máximo que o pad_line_pos pode atingir
-                            int max_scroll_y = line_count - visible_height;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                        int max_scroll_y = line_count - visible_height;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            // CORREÇÃO: Verifica se o visor é válido para cálculo matemático
-                            if (visible_height > 1 && max_scroll_y > 0) {
-                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
-                                int novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
-                                
-                                // Garante que o valor respeite as barreiras de limite
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(border_win, TRUE);
+                                while (1) {
+                                    if (pad_line_pos > 0) {
+                                        pad_line_pos--;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(border_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                        wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(border_win);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                        doupdate();
+                                    }
+
+                                    napms(80); // Velocidade confortável das setas
+
+                                    int ch_check = wgetch(border_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(border_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(border_win, TRUE);
+                                while (1) {
+                                    if (pad_line_pos < max_scroll_y) {
+                                        pad_line_pos++;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(border_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                        wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(border_win);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+
+                                    napms(80);
+
+                                    int ch_check = wgetch(border_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(border_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DO PAD (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(border_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (visible_height - 1) > 0) {
+                                linha_trilho_atual = (pad_line_pos * (visible_height - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou sobre o trilho existente, ativa o modo de arrasto relativo
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int pad_line_pos_original = pad_line_pos;
+
+                            while (1) {
+                                int novo_offset = pad_line_pos;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado na movimentação da mão
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((visible_height - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (visible_height - 1);
+                                        novo_offset = pad_line_pos_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte de página)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                                        if ((visible_height - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                        }
+                                    }
+                                }
+
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD
-                                pad_line_pos = novo_offset;
+                                if (pad_line_pos != novo_offset) {
+                                    pad_line_pos = novo_offset;
+                                    
+                                    // Redesenho imediato
+                                    int flag = 0;
+                                    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                    wattron(border_win, COLOR_PAIR(28) | flag);
+                                    desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                    wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                    wnoutrefresh(border_win);
+                                    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                    doupdate();
+                                }
+    
+    
+                                // Se for um clique estático fora do trilho, encerra o loop na hora
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+                                napms(10); // Rastreamento fino de arrasto
+                                int ch_check = wgetch(border_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(border_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(border_win, FALSE);
                         }
                     }
                 }
