@@ -97,7 +97,7 @@ Clone and Build the SQLite database with libicu
 git clone https://github.com/sqlite/sqlite.git
 cd sqlite
 
-export CFLAGS="-DSQLITE_ENABLE_ICU -licui18n -licuuc -licudata"
+export CFLAGS="-DSQLITE_ENABLE_ICU -DSQLITE_ENABLE_MATH_FUNCTIONS -licui18n -licuuc -licudata"
 ../configure --enable-fts5 --with-icu-config --enable-icu-collations
 make -j$(nproc)
 sudo make install
