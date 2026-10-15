@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 15:26-0300\n"
+"POT-Creation-Date: 2026-10-15 16:10-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -671,7 +671,7 @@ msgstr ""
 
 #: src/arabic_parts.c:249 src/arabic_parts.c:824 src/draw-chart.c:2305
 #: src/draw-chart.c:3188 src/draw-chart.c:3837 src/draw-chart.c:4221
-#: src/profections.c:258 src/profections.c:704
+#: src/profections.c:264 src/profections.c:710
 msgid "House"
 msgstr ""
 
@@ -951,12 +951,12 @@ msgstr ""
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr ""
 
-#: src/directions.c:2450 src/directions.c:3395 src/profections.c:221
+#: src/directions.c:2450 src/directions.c:3395 src/profections.c:227
 #: src/selections.c:2499 src/selections.c:2817
 msgid "Age"
 msgstr ""
 
-#: src/directions.c:2451 src/directions.c:3396 src/profections.c:222
+#: src/directions.c:2451 src/directions.c:3396 src/profections.c:228
 #: src/selections.c:4095
 msgid "Year"
 msgstr ""
@@ -996,7 +996,7 @@ msgstr ""
 #: src/directions.c:2491 src/directions.c:3437 src/draw-chart.c:416
 #: src/draw-chart.c:617 src/draw-chart.c:634 src/draw-chart.c:6210
 #: src/draw-chart.c:7113 src/draw-chart.c:7135 src/firdaria.c:101
-#: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:603
+#: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:609
 #: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
 #: src/solar_return.c:1708
 msgid "Mars"
@@ -1005,7 +1005,7 @@ msgstr ""
 #: src/directions.c:2492 src/directions.c:3438 src/draw-chart.c:422
 #: src/draw-chart.c:619 src/draw-chart.c:636 src/draw-chart.c:6208
 #: src/draw-chart.c:7115 src/draw-chart.c:7137 src/firdaria.c:103
-#: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:609
+#: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:615
 #: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
 #: src/solar_return.c:1708
 msgid "Saturn"
@@ -1021,7 +1021,7 @@ msgstr ""
 #: src/directions.c:2500 src/directions.c:3446 src/draw-chart.c:419
 #: src/draw-chart.c:618 src/draw-chart.c:635 src/draw-chart.c:6209
 #: src/draw-chart.c:7114 src/draw-chart.c:7136 src/firdaria.c:102
-#: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:608
+#: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:614
 #: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
 #: src/solar_return.c:1711
 msgid "Jupiter"
@@ -1030,7 +1030,7 @@ msgstr ""
 #: src/directions.c:2501 src/directions.c:3447 src/draw-chart.c:413
 #: src/draw-chart.c:616 src/draw-chart.c:633 src/draw-chart.c:6205
 #: src/draw-chart.c:7112 src/draw-chart.c:7134 src/firdaria.c:100
-#: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:604
+#: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:610
 #: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
 #: src/solar_return.c:1711
 msgid "Venus"
@@ -1092,15 +1092,15 @@ msgstr ""
 
 #: src/directions.c:2609 src/directions.c:2783 src/directions.c:2828
 #: src/directions.c:2910 src/directions.c:3554 src/directions.c:3728
-#: src/directions.c:3773 src/directions.c:3855 src/profections.c:293
-#: src/profections.c:406 src/profections.c:450 src/profections.c:529
+#: src/directions.c:3773 src/directions.c:3855 src/profections.c:299
+#: src/profections.c:412 src/profections.c:456 src/profections.c:535
 msgid "Showing"
 msgstr ""
 
 #: src/directions.c:2612 src/directions.c:2786 src/directions.c:2831
 #: src/directions.c:2913 src/directions.c:3557 src/directions.c:3731
-#: src/directions.c:3776 src/directions.c:3858 src/profections.c:296
-#: src/profections.c:409 src/profections.c:453 src/profections.c:532
+#: src/directions.c:3776 src/directions.c:3858 src/profections.c:302
+#: src/profections.c:415 src/profections.c:459 src/profections.c:538
 msgid "of"
 msgstr ""
 
@@ -1192,7 +1192,7 @@ msgid "Directions metadata exported to file:"
 msgstr ""
 
 #: src/draw-chart.c:404 src/draw-chart.c:6204 src/firdaria.c:97 src/hyleg.c:337
-#: src/profections.c:607 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:613 src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Sun"
 msgstr ""
 
@@ -1202,13 +1202,13 @@ msgid "Sol"
 msgstr ""
 
 #: src/draw-chart.c:407 src/draw-chart.c:6207 src/firdaria.c:98 src/hyleg.c:338
-#: src/profections.c:606 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:612 src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Moon"
 msgstr ""
 
 #: src/draw-chart.c:410 src/draw-chart.c:615 src/draw-chart.c:632
 #: src/draw-chart.c:6206 src/draw-chart.c:7111 src/draw-chart.c:7133
-#: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:605
+#: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:611
 #: src/solar_return.c:1322 src/solar_return.c:1491
 msgid "Mercury"
 msgstr ""
@@ -3527,108 +3527,108 @@ msgid ""
 "Year Glyph;Lord of Year Name\n"
 msgstr ""
 
-#: src/profections.c:117
+#: src/profections.c:121
 #, c-format
-msgid "%d;%d;House %d;%s;%s;%.4f;%s;%s\n"
+msgid "%d;%d;House %d;%d;%s;%d;%s;%.4f;%s;%s\n"
 msgstr ""
 
-#: src/profections.c:133
+#: src/profections.c:139
 msgid "Profections File:"
 msgstr ""
 
-#: src/profections.c:196
+#: src/profections.c:202
 msgid " Profections "
 msgstr ""
 
-#: src/profections.c:223
+#: src/profections.c:229
 msgid "Activated House"
 msgstr ""
 
-#: src/profections.c:224
+#: src/profections.c:230
 msgid "Profected Sign"
 msgstr ""
 
-#: src/profections.c:225
+#: src/profections.c:231
 msgid "Lord of the Year"
 msgstr ""
 
-#: src/profections.c:237
+#: src/profections.c:243
 msgid "No profection data available for this chart."
 msgstr ""
 
-#: src/profections.c:300 src/profections.c:413
+#: src/profections.c:306 src/profections.c:419
 msgid "[↑/↓][PgUp/PgDn] Scroll"
 msgstr ""
 
-#: src/profections.c:306
+#: src/profections.c:312
 msgid "Profection System: Sign-by-Sign (Traditional Wheel) ─ 1 Sign = 1 Year"
 msgstr ""
 
-#: src/profections.c:309
+#: src/profections.c:315
 msgid "Press ESC to return to chart ─ [P] Export to CSV"
 msgstr ""
 
-#: src/profections.c:651
+#: src/profections.c:657
 msgid "Annual Profections Panel"
 msgstr ""
 
-#: src/profections.c:693
+#: src/profections.c:699
 msgid "  [CRITICAL ALCOCHODEN RETURN YEAR!]"
 msgstr ""
 
-#: src/profections.c:703
+#: src/profections.c:709
 msgid "ACTIVATED NATAL HOUSE: "
 msgstr ""
 
-#: src/profections.c:706
+#: src/profections.c:712
 msgid " (Focusing your natal experiences into this specific area of life)"
 msgstr ""
 
-#: src/profections.c:709
+#: src/profections.c:715
 msgid "PROFECTED ZODIAC SIGN: "
 msgstr ""
 
-#: src/profections.c:720
+#: src/profections.c:726
 msgid "LORD OF THE YEAR (Chronocrator): "
 msgstr ""
 
-#: src/profections.c:724
+#: src/profections.c:730
 msgid "This planet rules your entire year and all transits to it"
 msgstr ""
 
-#: src/profections.c:732
+#: src/profections.c:738
 msgid "NATAL PLANETS WOKEN UP IN THIS HOUSE:"
 msgstr ""
 
-#: src/profections.c:741
+#: src/profections.c:747
 msgid "Planet"
 msgstr ""
 
-#: src/profections.c:749
+#: src/profections.c:755
 msgid "is natally placed here and is now triggered."
 msgstr ""
 
-#: src/profections.c:758
+#: src/profections.c:764
 msgid "No natal planets placed in House"
 msgstr ""
 
-#: src/profections.c:758
+#: src/profections.c:764
 msgid "The Lord of the Year acts alone."
 msgstr ""
 
-#: src/profections.c:771
+#: src/profections.c:777
 msgid "Part"
 msgstr ""
 
-#: src/profections.c:777
+#: src/profections.c:783
 msgid "is placed here in your natal chart and is now triggered."
 msgstr ""
 
-#: src/profections.c:786
+#: src/profections.c:792
 msgid "No natal parts placed in House"
 msgstr ""
 
-#: src/profections.c:790
+#: src/profections.c:796
 msgid "Press ESC to return to chart ─ F2 to Profections Table"
 msgstr ""
 

@@ -114,11 +114,17 @@ void exportar_profecoes_to_csv(LinhaProfecao *tabela_prof, int qtd_profecoes) {
     for (int i = 0; i < qtd_profecoes; i++) {
         const LinhaProfecao *p = &tabela_prof[i];
 
-        fprintf(file, _("%d;%d;House %d;%s;%s;%.4f;%s;%s\n"),
+        double posicao_no_signo = fmod(p->longitude_asc_prof, 30.0);
+        int grau_signo = (int)floor(posicao_no_signo);
+        int minuto_signo = (int)floor((posicao_no_signo - grau_signo) * 60.0);
+
+        fprintf(file, _("%d;%d;House %d;%d;%s;%d;%s;%.4f;%s;%s\n"),
             p->idade,
             p->ano_calendario,
             p->casa_profectada,
+            grau_signo,
             p->signo_glifo,
+            minuto_signo,
             p->signo_nome,
             p->longitude_asc_prof,
             p->senhor_ano_glifo,
