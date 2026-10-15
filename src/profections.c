@@ -761,7 +761,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
 
     if (planetas_encontrados == 0) {
         wattron(table_win, A_DIM);
-        mvwprintw(table_win, 17, 6, "%s %d. %s", _("No natal planets placed in House"), prof.casa_ativada, _("The Lord of the Year acts alone."));
+        mvwprintw(table_win, row_p++, 6, "%s %d. %s", _("No natal planets placed in House"), prof.casa_ativada, _("The Lord of the Year acts alone."));
         wattroff(table_win, A_DIM);
     }
 

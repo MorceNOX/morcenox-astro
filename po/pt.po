@@ -3993,9 +3993,9 @@ msgstr ""
 "do Ano Glifo;Regente do Ano Nome\n"
 
 #: src/profections.c:121
-#, fuzzy, c-format
+#, c-format
 msgid "%d;%d;House %d;%d;%s;%d;%s;%.4f;%s;%s\n"
-msgstr "%d;%d;Casa %d;%s;%s;%.4f;%s;%s\n"
+msgstr "%d;%d;Casa %d;%d;%s;%d;%s;%.4f;%s;%s\n"
 
 #: src/profections.c:139
 msgid "Profections File:"
