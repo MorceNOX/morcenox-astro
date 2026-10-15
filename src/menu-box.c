@@ -403,7 +403,7 @@ void set_data() {
 
     if (!found_city) {
         
-        if (show_confirm_yesno(_("Do you want to enter the coordinates of the location?"), "")) {
+        if (show_confirm_yesno("", _("Do you want to enter the coordinates of the location?"))) {
 
             USAR_COORDENADAS = true;
 

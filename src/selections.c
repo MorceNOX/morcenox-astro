@@ -81,7 +81,7 @@ int show_confirm_yesno(const char *name, const char *text) {
     wattroff(pop_win, COLOR_PAIR(27) | A_BOLD);
 
     mvwprintw(pop_win, 2, 4, "%s", text);
-    mvwprintw(pop_win, 3, 4, "\"%s\"", name);
+    mvwprintw(pop_win, 3, 4, "%s", name);
 
     int botao_focado = 0; // 0 = Confirmar, 1 = Cancelar
     int confirmado = 0;
@@ -4364,9 +4364,9 @@ GrausEdition set_lon() {
             const char *ht = _("Degree");
             const char *mt = _("Min");
             const char *st = _("Sec");
-            if (i == 0) mvwprintw(win, 2, 5, " %s: %02d ", ht, hn.grau);
-            if (i == 1) mvwprintw(win, 2, 18, " %s: %02d ", mt, hn.min);
-            if (i == 2) mvwprintw(win, 2, 29, " %s: %02d ", st, hn.sec);
+            if (i == 0) mvwprintw(win, 2, 5, " %s: %02d°", ht, hn.grau);
+            if (i == 1) mvwprintw(win, 2, 18, " %s: %02d'", mt, hn.min);
+            if (i == 2) mvwprintw(win, 2, 29, " %s: %02d\"", st, hn.sec);
 
             if (i == campo_atual) {
                 wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
@@ -4693,9 +4693,9 @@ GrausEdition set_lat() {
             const char *ht = _("Degree");
             const char *mt = _("Min");
             const char *st = _("Sec");
-            if (i == 0) mvwprintw(win, 2, 5, " %s: %02d ", ht, hn.grau);
-            if (i == 1) mvwprintw(win, 2, 18, " %s: %02d ", mt, hn.min);
-            if (i == 2) mvwprintw(win, 2, 29, " %s: %02d ", st, hn.sec);
+            if (i == 0) mvwprintw(win, 2, 5, " %s: %02d°", ht, hn.grau);
+            if (i == 1) mvwprintw(win, 2, 18, " %s: %02d'", mt, hn.min);
+            if (i == 2) mvwprintw(win, 2, 29, " %s: %02d\"", st, hn.sec);
 
             if (i == campo_atual) {
                 wattroff(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
@@ -5593,8 +5593,8 @@ int set_elev() {
     unsigned short term_w = get_terminal_width();
     unsigned short term_h = get_terminal_height();
     
-    int menu_width = 25;
-    int menu_height = 8;
+    int menu_width = 30;
+    int menu_height = 10;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;
     

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 00:03-0300\n"
+"POT-Creation-Date: 2026-10-15 03:43-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -2956,8 +2956,9 @@ msgid ""
 msgstr ""
 
 #: src/menu-box.c:406
+#, fuzzy
 msgid "Do you want to enter the coordinates of the location?"
-msgstr ""
+msgstr "Enter a name for your chart (max"
 
 #: src/menu-box.c:449
 #, fuzzy
