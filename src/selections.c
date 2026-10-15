@@ -7045,6 +7045,333 @@ int select_topic(char *file, int max_width) {
 }
 
 
+
+
+int select_country(char *country_chart) {
+
+    sqlite3 *db;
+    
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in load_city_coordinates\n");
+        return 0;
+    }
+    
+    // Get list of countries
+    char **countries = NULL;
+    int country_count = 0;
+    get_countries_from_db(&countries, &country_count);
+    
+    if (country_count == 0) {
+        close_database(db);
+        return 0;
+    }
+    
+    // Get terminal dimensions
+    unsigned short term_w = get_terminal_width();
+    unsigned short term_h = get_terminal_height();
+    
+    // Calculate window size for country menu
+    int menu_width = 88;
+    int menu_height = 20;
+    int menu_start_x = (term_w - menu_width) / 2;
+    int menu_start_y = (term_h - menu_height) / 2;
+    
+    // Create windows
+    WINDOW *country_win = newwin(menu_height, menu_width, menu_start_y, menu_start_x);
+    WINDOW *country_shadow = newwin(menu_height, menu_width, menu_start_y + 1, menu_start_x + 1);
+    
+    // Country selection variables
+    int selected_country_index = 0;  // This tracks the actual index in the array
+    int country_scroll_offset = 0;   // This tracks which item is at the top of the visible list
+    int max_display_items = menu_height - 4;  // Adjust for title and borders
+    
+    // Initialize ncurses for this menu
+    nodelay(country_win, FALSE);
+    keypad(country_win, TRUE);
+    //curs_set(0);
+
+    // 2. Desenha o botão [X] no canto superior direito
+    int col_fechar = getmaxx(country_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+
+    wattron(country_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+    mvwprintw(country_win, 0, col_fechar, "[");
+    mvwprintw(country_win, 0, col_fechar + 2, "]");
+    wattroff(country_win, COLOR_PAIR(22));
+
+    wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(country_win, 0, col_fechar + 1, "✖");
+    wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
+    
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mouseinterval(175);
+
+    int country_selected = 0;
+    int key;
+
+    // Clear and draw shadow
+    werase(country_shadow);
+    wattron(country_shadow, COLOR_PAIR(24));
+    box(country_shadow, 0, 0);
+    wattroff(country_shadow, COLOR_PAIR(24));
+    wnoutrefresh(country_shadow);
+
+    wbkgd(country_win, COLOR_PAIR(22) | FLAGS);
+    
+    while (!country_selected) {
+
+        // Clear and redraw main menu
+        werase(country_win);
+        wattron(country_win, COLOR_PAIR(22) | A_DIM);
+        box(country_win, 0, 0);        
+        wattroff(country_win, COLOR_PAIR(22) | A_DIM);
+
+        wattron(country_win, A_BOLD);
+
+        const char *title1 = _("Select Country");
+        mvwprintw(country_win, 0, (menu_width - get_visual_width(title1)) / 2, title1);
+        mvwprintw(country_win, 1, 2, _("Country"));
+        wattroff(country_win, A_BOLD);
+
+        wattron(country_win, COLOR_PAIR(22)); // Cor padrão para os colchetes
+        mvwprintw(country_win, 0, col_fechar, "[");
+        mvwprintw(country_win, 0, col_fechar + 2, "]");
+        wattroff(country_win, COLOR_PAIR(22));
+
+        wattron(country_win, COLOR_PAIR(22) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        mvwprintw(country_win, 0, col_fechar + 1, "✖");
+        wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
+
+        wattron(country_win, COLOR_PAIR(29) | A_DIM);
+        mvwprintw(country_win, 2, 2, "────────────────────────────────────────────────────────────────────────────────────");
+        wattroff(country_win, COLOR_PAIR(29) | A_DIM);
+        
+        //wrefresh(country_win);
+        
+        // Draw country items with proper scrolling
+        for (int i = 0; i < max_display_items; i++) {
+            int item_index = i + country_scroll_offset;
+            if (item_index < country_count) {
+                int attr = (item_index == selected_country_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(22);
+                wattron(country_win, attr);
+                mvwprintw(country_win, i + 3, 1, " %s%*s ", countries[item_index], 83 - get_visual_width(countries[item_index]), "");
+                wattroff(country_win, attr);
+            }
+        }
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(country_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(country_win, country_scroll_offset, country_count, max_display_items, 2);
+        wattroff(country_win, COLOR_PAIR(28) | flag);
+
+        wnoutrefresh(country_win);
+
+        doupdate();
+        
+        key = wgetch(country_win);
+        
+        // Handle letter jumping
+        if (isalpha(key)) {
+            int new_index = find_first_item_with_letter((const char**)countries, country_count, selected_country_index, key);
+            if (new_index != selected_country_index) {
+                selected_country_index = new_index;
+                // Adjust scroll offset to keep selected item visible
+                if (selected_country_index < country_scroll_offset) {
+                    country_scroll_offset = selected_country_index;
+                } else if (selected_country_index >= country_scroll_offset + max_display_items) {
+                    country_scroll_offset = selected_country_index - max_display_items + 1;
+                }
+                continue; // Skip the normal key processing
+            }
+        }
+        
+        switch(key) {
+            case KEY_UP:
+                if (selected_country_index > 0) {
+                    selected_country_index--;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index < country_scroll_offset) {
+                        country_scroll_offset = selected_country_index;
+                    }
+                }
+                break;
+            case KEY_DOWN:
+                if (selected_country_index < country_count - 1) {
+                    selected_country_index++;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index >= country_scroll_offset + max_display_items) {
+                        country_scroll_offset = selected_country_index - max_display_items + 1;
+                    }
+                }
+                break;
+            case KEY_PPAGE:
+                if (selected_country_index > 0) {
+                    selected_country_index -= max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index < 0) {
+                        selected_country_index = 0;
+                    }
+                    if (selected_country_index < country_scroll_offset) {
+                        country_scroll_offset = selected_country_index;
+                    }
+                }
+                break;
+            case KEY_NPAGE:
+                if (selected_country_index < country_count - 1) {
+                    selected_country_index += max_display_items;
+                    // Adjust scroll offset if needed
+                    if (selected_country_index > country_count - 1) {
+                        selected_country_index = country_count - 1;
+                    }
+                    if (selected_country_index < country_scroll_offset) {
+                        country_scroll_offset = selected_country_index;
+                    } else if (selected_country_index >= country_scroll_offset + max_display_items) {
+                        country_scroll_offset = selected_country_index - max_display_items + 1;
+                    }
+                }
+                break;
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    // Coordenadas do clique convertidas para o plano local da janela
+                    int linha_clique_janela = event.y - getbegy(country_win);
+                    int col_clique_janela = event.x - getbegx(country_win);
+                    
+                    // Define matematicamente a caixa de clique do botão fechar
+                    int col_inicio_fechar = getmaxx(country_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
+
+                    // ========================================================
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
+                    // ========================================================
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            free_string_array(countries, country_count);
+                            delwin(country_win);
+                            delwin(country_shadow);
+                            close_database(db);
+                            return 0;
+                        }
+                        break;
+
+                    }
+                    // 1. Descobre os limites da barra de rolagem
+                    int col_scrollbar_absoluta = getbegx(country_win) + (getmaxx(country_win) - 2);
+                    
+                    // O offset_y passado na função foi 2. A área de dados começa na linha seguinte (3)
+                    int offset_inicio_dados = 2 + 1; 
+                    int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
+
+
+                    // 2. Verifica se o clique ocorreu exatamente na coluna da barra
+                    if (event.x == col_scrollbar_absoluta) {
+                        
+                        // Guardamos qual era a posição relativa do item selecionado na tela antes do clique
+                        // Exemplo: se o item selecionado era o 3º visível na tela, a posicao_relativa_tela será 2
+                        int posicao_relativa_tela = selected_country_index - country_scroll_offset;
+                        if (posicao_relativa_tela < 0 || posicao_relativa_tela >= max_display_items) {
+                            posicao_relativa_tela = 0; // Fallback caso estivesse fora da tela por algum motivo
+                        }
+
+                        // 3. Descobre a linha clicada em relação ao início da janela 'city_win'
+                        int linha_clique_janela = event.y - getbegy(country_win);
+                        
+                        int offset_inicio_barra = 2 + 1; 
+                        
+                        // Calcula qual "degrau" da barra o usuário clicou (0 até max_display_items - 1)
+                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra
+                        if (linha_clique_barra >= 0 && linha_clique_barra < max_display_items) {
+                            
+                            // Calcula o limite máximo que o country_scroll_offset pode atingir
+                            int max_scroll_y = country_count - max_display_items;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (max_display_items > 1 && max_scroll_y > 0) {
+                                // Mapeia proporcionalmente a linha clicada para o novo offset de dados
+                                int novo_offset = (linha_clique_barra * max_scroll_y) / (max_display_items - 1);
+                                
+                                // Garante que o valor respeite as barreiras de limite do offset
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                // Atualiza o offset de rolagem
+                                country_scroll_offset = novo_offset;
+
+                                // 5. ATUALIZA A SELEÇÃO:
+                                // Nova seleção tenta manter o mesmo elemento relativo na tela
+                                selected_country_index = country_scroll_offset + posicao_relativa_tela;
+
+                                // Garante que o índice selecionado não passe do total de cidades cadastrado
+                                if (selected_country_index >= country_count) {
+                                    selected_country_index = country_count - 1;
+                                }
+                                if (selected_country_index < 0) {
+                                    selected_country_index = 0;
+                                }
+                            }
+                        }
+                    }
+                    // ========================================================
+                    // CASO B: O clique ocorreu no TEXTO de uma cidade
+                    // ========================================================
+                    else {
+                        int start_x_absoluto = getbegx(country_win);
+                        if (event.x >= start_x_absoluto && event.x < col_scrollbar_absoluta) {
+                            
+                            if (linha_clique_dados >= 0 && linha_clique_dados < max_display_items) {
+                                int indice_clicado = country_scroll_offset + linha_clique_dados;
+                                
+                                if (indice_clicado < country_count) {
+                                    // 1. Em qualquer clique (simples ou duplo), atualiza a seleção atual
+                                    selected_country_index = indice_clicado;
+
+                                    // 2. Verifica se foi um DUPLO CLIQUE
+                                    if (event.bstate & BUTTON1_DOUBLE_CLICKED) {
+                                        country_selected = 1;
+                                        
+                                        break; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        
+    
+            case 10: // Enter
+                country_selected = 1;
+                break;
+            case 27: // ESC
+                // Cleanup and return
+                free_string_array(countries, country_count);
+                delwin(country_win);
+                delwin(country_shadow);
+                close_database(db);
+                return 0;
+                break;
+        
+        }
+    }
+    
+    // Get the selected country
+    const char *selected_country_name = countries[selected_country_index];
+    snprintf(country_chart, 100, "%s", selected_country_name);
+    
+    close_database(db);
+    
+    free_string_array(countries, country_count);
+    delwin(country_win);
+    delwin(country_shadow);
+
+    return 1;
+}
+
+
 int load_city_coordinates(char *city_chart, char *country_chart, char *state_chart, char *tz_iana_chart, double *tz_offset_chart, double *lat, double *lon, double *elev) {
 
     sqlite3 *db;

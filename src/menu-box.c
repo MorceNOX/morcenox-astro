@@ -334,6 +334,7 @@ void set_data() {
 
     char chart_name[100];
     char location[100];
+    char country_code[10];
 
     DataNascimento dt;
     DateEdition ed = selecionar_data();
@@ -454,8 +455,35 @@ void set_data() {
                     if (cdc) {
                         char *pais_detectado = ZDHelperSimpleLookupString(cdc, lat, lon);                       
                                               
-                        snprintf(COUNTRY, sizeof(COUNTRY), "%s", pais_detectado);
-                        
+                        if (pais_detectado){
+                            snprintf(COUNTRY, sizeof(COUNTRY), "%s", pais_detectado);
+                            get_country_code(pais_detectado, country_code);
+                        }
+                        else {
+                            show_alert_popup(_("Country not found!"), _("Please, verify the coordinates!"));
+
+                            strncpy(CITY, city_bkp, 100);
+                            strncpy(COUNTRY, country_bkp, 100);
+                            strncpy(STATE, state_bkp, 100);
+                            strncpy(TZ_IANA, tz_iana_bkp, 100);
+                            TZ_OFFSET = tz_offset_bkp;
+                            YY = yy_bkp;
+                            MM = mm_bkp;
+                            DD = dd_bkp;
+                            HH = hh_bkp;
+                            MIN = min_bkp;
+                            SEC = sec_bkp;
+                            GENDER = gender_bkp;
+                            snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Data have not been changed."));
+
+                            ZDHelperSimpleLookupStringFree(pais_detectado);
+                            ZDCloseDatabase(cdc);
+
+                            ativar_arrasto_mouse();
+                            flushinp();
+
+                            return;
+                        }
                         show_alert_popup(_("Country:"), COUNTRY);
                         ZDHelperSimpleLookupStringFree(pais_detectado);               
                     }
@@ -463,7 +491,7 @@ void set_data() {
 
                     CidadeVizinha viz = {0};
 
-                    if (buscar_cidade_mais_proxima(lat, lon, &viz)) {
+                    if (get_data_from_nearest_city(lat, lon, country_code, &viz)) {
                         snprintf(STATE, sizeof(STATE), "%s", viz.state);
                         ELEV = viz.elev;
 

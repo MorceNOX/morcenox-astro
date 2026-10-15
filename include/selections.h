@@ -85,6 +85,7 @@ int set_tz();
 int set_dst();
 int select_location_type(char *type);
 void set_location_name(char *chart_name, size_t max_length);
+int select_country(char *country_chart);
 void set_country(char *location_name, size_t max_length);
 void set_state(char *location_name, size_t max_length);
 void set_chart_name(char *chart_name, size_t max_length);

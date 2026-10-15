@@ -93,6 +93,8 @@ int reconstruir_indice_cidades(sqlite3 *db) {
         "DROP INDEX IF EXISTS idx_coordenadas;",
 
         "CREATE INDEX IF NOT EXISTS idx_coordenadas ON cities (lat, lon);",
+
+        "CREATE INDEX IF NOT EXISTS idx_coordenadas_pais ON cities (lat, lon, country_code);",
         
         "COMMIT;"
     };
@@ -151,6 +153,14 @@ int configurar_banco(sqlite3 *db) {
     const char* sql_index3 = "CREATE INDEX IF NOT EXISTS idx_coordenadas ON cities (lat, lon);";
 
     if (sqlite3_exec(db, sql_index3, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
+    const char* sql_index4 = "CREATE INDEX IF NOT EXISTS idx_coordenadas_pais ON cities (lat, lon, country_code);";
+
+    if (sqlite3_exec(db, sql_index4, NULL, NULL, &zErrMsg) != SQLITE_OK) {
         fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
         return 0;
@@ -241,7 +251,7 @@ int prepare_statement(sqlite3 *db, const char *sql, sqlite3_stmt **stmt) {
 
 
 
-int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, CidadeVizinha *resultado) {
+int buscar_cidade_mais_proxima_pais(double lat_busca, double lon_busca, double raio_km, char *cod_pais_iso, CidadeVizinha *resultado) {
     sqlite3 *db;
     sqlite3_stmt *stmt;
 
@@ -252,9 +262,75 @@ int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, CidadeVizinha
     }
     
     // 1. Criação da Bounding Box (Filtro rápido de ~50km de margem)
-    double margem_lat = 50.0 / 111.0; 
+    double margem_lat = raio_km / 111.0; 
     // Ajusta a margem de longitude com base na latitude atual para evitar distorções perto dos polos
-    double margem_lon = 50.0 / (111.0 * cos(lat_busca * M_PI / 180.0)); 
+    double margem_lon = raio_km / (111.0 * cos(lat_busca * M_PI / 180.0)); 
+
+    double lat_min = lat_busca - margem_lat;
+    double lat_max = lat_busca + margem_lat;
+    double lon_min = lon_busca - margem_lon;
+    double lon_max = lon_busca + margem_lon;
+
+    // 2. Query SQL Otimizada com Haversine nativo do SQLite
+    const char *sql = 
+        "SELECT state, elev, "
+        "       (6371 * acos("
+        "           cos(radians(?1)) * cos(radians(lat)) * "
+        "           cos(radians(lon) - radians(?2)) + "
+        "           sin(radians(?1)) * sin(radians(lat))"
+        "       )) AS distancia_km "
+        "FROM cities "
+        "WHERE lat BETWEEN ?3 AND ?4 " // Filtro rápido usando índices (Bounding Box)
+        "  AND lon BETWEEN ?5 AND ?6 "
+        "  AND country_code = ?7 "
+        "ORDER BY distancia_km ASC "
+        "LIMIT 1;";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao preparar query: %s\n", sqlite3_errmsg(db));
+        return 0;
+    }
+
+    // 3. Vincula os parâmetros (Binds) de forma segura
+    sqlite3_bind_double(stmt, 1, lat_busca);
+    sqlite3_bind_double(stmt, 2, lon_busca);
+    sqlite3_bind_double(stmt, 3, lat_min);
+    sqlite3_bind_double(stmt, 4, lat_max);
+    sqlite3_bind_double(stmt, 5, lon_min);
+    sqlite3_bind_double(stmt, 6, lon_max);
+    sqlite3_bind_text(stmt, 7, cod_pais_iso, -1, SQLITE_STATIC);
+
+    // 4. Executa a busca
+    int sucesso = 0;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        snprintf(resultado->state, sizeof(resultado->state), "%s", (const char*)sqlite3_column_text(stmt, 0));
+        
+        resultado->elev = sqlite3_column_double(stmt, 1);
+        
+        resultado->distance_km = sqlite3_column_double(stmt, 2);
+
+        sucesso = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    return sucesso; // Retorna 1 se achou uma cidade próxima, 0 se não houver nenhuma no quadrado de 50km
+}
+
+
+int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, double raio_km, CidadeVizinha *resultado) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in buscar_cidade_mais_proxima\n");
+        return 0;
+    }
+    
+    // 1. Criação da Bounding Box (Filtro rápido de ~50km de margem)
+    double margem_lat = raio_km / 111.0; 
+    // Ajusta a margem de longitude com base na latitude atual para evitar distorções perto dos polos
+    double margem_lon = raio_km / (111.0 * cos(lat_busca * M_PI / 180.0)); 
 
     double lat_min = lat_busca - margem_lat;
     double lat_max = lat_busca + margem_lat;
@@ -304,6 +380,81 @@ int buscar_cidade_mais_proxima(double lat_busca, double lon_busca, CidadeVizinha
     return sucesso; // Retorna 1 se achou uma cidade próxima, 0 se não houver nenhuma no quadrado de 50km
 }
 
+
+
+int get_data_from_nearest_city(double lat_busca, double lon_busca, char *pais, CidadeVizinha *resultado) {
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 25, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 25km!"), _("Trying 50km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 50, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 50km!"), _("Trying 75km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 75, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 75km!"), _("Trying 100km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 100, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 100km!"), _("Trying 300km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 300, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 300km!"), _("Trying 1000km."));
+    if (buscar_cidade_mais_proxima_pais(lat_busca, lon_busca, 1000, pais, resultado)) {
+        return 1;
+    }
+
+    show_alert_popup(_("No city found in 1000km!"), "");
+
+    return 0;
+}
+
+
+int get_country_code(char *country, char *country_code) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    int rc;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in get_country_code\n");
+        return 0;
+    }
+    const char *sql = "SELECT country_code FROM cities "
+                      "WHERE country = ? "
+                      "GROUP BY country_code;";
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+    if (rc != SQLITE_OK) {
+        show_alert_popup(_("Failed prepare statement!"), sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return 0;
+    }
+
+    sqlite3_bind_text(stmt, 1, country, -1, SQLITE_STATIC);
+    
+    int found = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {            
+        const char *code = (const char*)sqlite3_column_text(stmt, 0);
+        snprintf(country_code, 100, "%s", code);
+        found = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    close_database(db);
+    
+    return found;
+
+}
 
 
 int save_city() {

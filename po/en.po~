@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 18:57-0300\n"
+"POT-Creation-Date: 2026-10-14 22:23-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -60,7 +60,7 @@ msgid "Planetary"
 msgstr ""
 
 #: src/almuten.c:612 src/directions.c:2420 src/directions.c:3365
-#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:3710
+#: src/draw-chart.c:2214 src/draw-chart.c:4709 src/selections.c:3729
 msgid "Day"
 msgstr "Day"
 
@@ -70,7 +70,7 @@ msgid "Night"
 msgstr ""
 
 #: src/almuten.c:612 src/draw-chart.c:2214 src/draw-chart.c:4709
-#: src/draw-chart.c:4737 src/selections.c:4019
+#: src/draw-chart.c:4737 src/selections.c:4038
 msgid "Hour"
 msgstr "Hour"
 
@@ -880,31 +880,75 @@ msgstr ""
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr ""
 
-#: src/db-utils.c:325
+#: src/db-utils.c:380
+msgid "No city found in 25km!"
+msgstr ""
+
+#: src/db-utils.c:380
+msgid "Trying 50km."
+msgstr ""
+
+#: src/db-utils.c:385
+msgid "No city found in 50km!"
+msgstr ""
+
+#: src/db-utils.c:385
+msgid "Trying 75km."
+msgstr ""
+
+#: src/db-utils.c:390
+msgid "No city found in 75km!"
+msgstr ""
+
+#: src/db-utils.c:390
+msgid "Trying 100km."
+msgstr ""
+
+#: src/db-utils.c:395
+msgid "No city found in 100km!"
+msgstr ""
+
+#: src/db-utils.c:395
+msgid "Trying 300km."
+msgstr ""
+
+#: src/db-utils.c:400
+msgid "No city found in 300km!"
+msgstr ""
+
+#: src/db-utils.c:400
+msgid "Trying 1000km."
+msgstr ""
+
+#: src/db-utils.c:405
+msgid "No city found in 1000km!"
+msgstr ""
+
+#: src/db-utils.c:428 src/db-utils.c:466
 #, fuzzy
 msgid "Failed prepare statement!"
 msgstr "Failed to prepare statement:"
 
-#: src/db-utils.c:336 src/selections.c:3359
+#: src/db-utils.c:477 src/selections.c:3359
 msgid "city"
 msgstr ""
 
-#: src/db-utils.c:357
+#: src/db-utils.c:498
 #, fuzzy
 msgid "Failed prepare saving city! (prepare insert)"
 msgstr "Failed saving chart!"
 
-#: src/db-utils.c:384
+#: src/db-utils.c:525
 #, fuzzy
 msgid "Failed saving city! (bind insert)"
 msgstr "Failed saving chart!"
 
-#: src/db-utils.c:390
+#: src/db-utils.c:531
 #, fuzzy
 msgid "Failed saving city! (step)"
 msgstr "Failed saving chart!"
 
-#: src/db-utils.c:395
+#: src/db-utils.c:536
 #, fuzzy
 msgid "City saved!"
 msgstr "Chart saved!"
@@ -960,7 +1004,7 @@ msgstr ""
 msgid "Age"
 msgstr "Age"
 
-#: src/directions.c:2418 src/directions.c:3363 src/selections.c:3708
+#: src/directions.c:2418 src/directions.c:3363 src/selections.c:3727
 msgid "Year"
 msgstr "Year"
 
@@ -2911,234 +2955,243 @@ msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
 
-#: src/menu-box.c:405
+#: src/menu-box.c:406
 msgid "Do you want to enter the coordinates of the location?"
 msgstr ""
 
-#: src/menu-box.c:448
+#: src/menu-box.c:449
 #, fuzzy
 msgid "Timezone:"
 msgstr " Time "
 
-#: src/menu-box.c:459
+#: src/menu-box.c:463
+#, fuzzy
+msgid "Country not found!"
+msgstr "Chart not found!"
+
+#: src/menu-box.c:463
+msgid "Please, verify the coordinates!"
+msgstr ""
+
+#: src/menu-box.c:477 src/menu-box.c:528 src/menu-box.c:544 src/menu-box.c:560
+msgid "Data have not been changed."
+msgstr "Data have not been changed."
+
+#: src/menu-box.c:487
 #, fuzzy
 msgid "Country:"
 msgstr "Country"
 
-#: src/menu-box.c:472
+#: src/menu-box.c:500
 msgid "State:"
 msgstr ""
 
-#: src/menu-box.c:473
+#: src/menu-box.c:501
 #, fuzzy
 msgid "Elevation:"
 msgstr "Location: "
 
-#: src/menu-box.c:500 src/menu-box.c:516 src/menu-box.c:532
-msgid "Data have not been changed."
-msgstr "Data have not been changed."
-
-#: src/menu-box.c:560
+#: src/menu-box.c:588
 #, fuzzy
 msgid "City could not be saved!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:561 src/menu-box.c:581 src/menu-box.c:613
+#: src/menu-box.c:589 src/menu-box.c:609 src/menu-box.c:641
 #, c-format
 msgid "Chart not saved!"
 msgstr "Chart not saved!"
 
-#: src/menu-box.c:578
+#: src/menu-box.c:606
 msgid "Are you sure you want to SAVE the chart"
 msgstr "Are you sure you want to SAVE the chart"
 
-#: src/menu-box.c:642
+#: src/menu-box.c:670
 #, fuzzy
 msgid "Failed to prepare load statement. Chart not saved!"
 msgstr "Failed to prepare statement:"
 
-#: src/menu-box.c:659
+#: src/menu-box.c:687
 #, fuzzy
 msgid "Failed to insert. Chart not saved!"
 msgstr "Failed to prepare statement:"
 
-#: src/menu-box.c:683
+#: src/menu-box.c:711
 msgid "Failed to bind insert statement. Chart not saved!"
 msgstr ""
 
-#: src/menu-box.c:692
+#: src/menu-box.c:720
 #, fuzzy
 msgid "Failed saving chart (step)!"
 msgstr "Failed saving chart!"
 
-#: src/menu-box.c:697
+#: src/menu-box.c:725
 msgid "Chart saved!"
 msgstr "Chart saved!"
 
-#: src/menu-box.c:742 src/menu-box.c:1166
+#: src/menu-box.c:770 src/menu-box.c:1194
 msgid "No charts available."
 msgstr "No charts available."
 
-#: src/menu-box.c:822
+#: src/menu-box.c:850
 msgid "Select Chart to Delete"
 msgstr "Select Chart to Delete"
 
-#: src/menu-box.c:1097
+#: src/menu-box.c:1125
 msgid "Error deleting chart."
 msgstr "Error deleting chart."
 
-#: src/menu-box.c:1109
+#: src/menu-box.c:1137
 msgid "Chart deleted successfully."
 msgstr "Chart deleted successfully."
 
-#: src/menu-box.c:1249
+#: src/menu-box.c:1277
 msgid "Select Chart to Load"
 msgstr "Select Chart to Load"
 
-#: src/menu-box.c:1561
+#: src/menu-box.c:1589
 msgid "Chart not found!"
 msgstr "Chart not found!"
 
-#: src/menu-box.c:1872
+#: src/menu-box.c:1900
 msgid "Location: "
 msgstr "Location: "
 
-#: src/menu-box.c:1880
+#: src/menu-box.c:1908
 msgid "┃ Date/Time: "
 msgstr "┃ Date/Time: "
 
-#: src/menu-box.c:1888
+#: src/menu-box.c:1916
 msgid "┃ Dst: "
 msgstr "┃ Dst: "
 
-#: src/menu-box.c:1892 src/selections.c:5991 src/selections.c:6141
+#: src/menu-box.c:1920 src/selections.c:6010 src/selections.c:6160
 msgid "Yes "
 msgstr "Yes "
 
-#: src/menu-box.c:1892 src/selections.c:5990 src/selections.c:6144
+#: src/menu-box.c:1920 src/selections.c:6009 src/selections.c:6163
 msgid "No  "
 msgstr "No  "
 
-#: src/menu-box.c:1892 src/selections.c:5989
+#: src/menu-box.c:1920 src/selections.c:6008
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:1896
+#: src/menu-box.c:1924
 msgid "┃ Gen: "
 msgstr "┃ Gen: "
 
-#: src/menu-box.c:2101
+#: src/menu-box.c:2129
 #, c-format
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:2459
+#: src/menu-box.c:2487
 #, fuzzy
 msgid "Are you sure you want to OPEN this link?"
 msgstr "Are you sure you want to SAVE the chart"
 
-#: src/menu-box.c:2725
+#: src/menu-box.c:2753
 msgid "Help file could not be loaded!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:2729 src/menu-box.c:2916
+#: src/menu-box.c:2757 src/menu-box.c:2944
 msgid "Help"
 msgstr "Help"
 
-#: src/menu-box.c:2747
+#: src/menu-box.c:2775
 msgid "Topics file could not be loaded!"
 msgstr "Topics file could not be loaded."
 
-#: src/menu-box.c:2751 src/menu-box.c:2917
+#: src/menu-box.c:2779 src/menu-box.c:2945
 msgid "Technical Topics"
 msgstr "Technical Topics"
 
-#: src/menu-box.c:2762
+#: src/menu-box.c:2790
 msgid "Settings unchanged!"
 msgstr "Settings unchanged!"
 
-#: src/menu-box.c:2797
+#: src/menu-box.c:2825
 msgid "Settings updated!"
 msgstr "Settings updated!"
 
-#: src/menu-box.c:2908
+#: src/menu-box.c:2936
 msgid "Quick Chart"
 msgstr "Quick Chart"
 
-#: src/menu-box.c:2908
+#: src/menu-box.c:2936
 msgid "View the chart for the current moment in the default city."
 msgstr "View the chart for the current moment in the default city."
 
-#: src/menu-box.c:2909
+#: src/menu-box.c:2937
 msgid "New Chart"
 msgstr "New Chart"
 
-#: src/menu-box.c:2909
+#: src/menu-box.c:2937
 msgid "Set the data to load a new chart."
 msgstr "Set the data to load a new chart."
 
-#: src/menu-box.c:2910
+#: src/menu-box.c:2938
 msgid "Load Chart"
 msgstr "Load Chart"
 
-#: src/menu-box.c:2910
+#: src/menu-box.c:2938
 msgid "Load a previously saved chart."
 msgstr "Load a previously saved chart."
 
-#: src/menu-box.c:2911
+#: src/menu-box.c:2939
 msgid "Save the Chart"
 msgstr "Save the Chart"
 
-#: src/menu-box.c:2911
+#: src/menu-box.c:2939
 msgid "Save the current chart."
 msgstr "Save the current chart."
 
-#: src/menu-box.c:2912
+#: src/menu-box.c:2940
 msgid "Delete Chart"
 msgstr "Delete Chart"
 
-#: src/menu-box.c:2912
+#: src/menu-box.c:2940
 msgid "Delete a previously saved chart."
 msgstr "Delete a previously saved chart."
 
-#: src/menu-box.c:2913
+#: src/menu-box.c:2941
 msgid "Display Chart"
 msgstr "Display Chart"
 
-#: src/menu-box.c:2913
+#: src/menu-box.c:2941
 msgid "Display the current chart."
 msgstr "Display the current chart."
 
-#: src/menu-box.c:2914
+#: src/menu-box.c:2942
 msgid "Change the Default Location"
 msgstr "Change the Default Location"
 
-#: src/menu-box.c:2914
+#: src/menu-box.c:2942
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Select a new city as default for the Quick Chart."
 
-#: src/menu-box.c:2915
+#: src/menu-box.c:2943
 msgid "Settings"
 msgstr "Settings"
 
-#: src/menu-box.c:2915
+#: src/menu-box.c:2943
 msgid "Modify the default settings."
 msgstr "Modify the default settings."
 
-#: src/menu-box.c:2916
+#: src/menu-box.c:2944
 msgid "See the help window for this application."
 msgstr "See the help window for this application."
 
-#: src/menu-box.c:2917
+#: src/menu-box.c:2945
 #, fuzzy
 msgid "Some technical topics used in this program."
 msgstr "Technical topics used in this program."
 
-#: src/menu-box.c:2918
+#: src/menu-box.c:2946
 msgid "Exit"
 msgstr "Exit"
 
-#: src/menu-box.c:2918
+#: src/menu-box.c:2946
 msgid "Exit the program."
 msgstr "Exit the program."
 
@@ -3674,18 +3727,18 @@ msgstr "  CONFIRM  "
 #: src/selections.c:2241 src/selections.c:2252 src/selections.c:3111
 #: src/selections.c:3183 src/selections.c:3192 src/selections.c:3214
 #: src/selections.c:3223 src/selections.c:3296 src/selections.c:3306
-#: src/selections.c:3410 src/selections.c:3482 src/selections.c:3491
-#: src/selections.c:3513 src/selections.c:3522 src/selections.c:3595
-#: src/selections.c:3605 src/selections.c:3732 src/selections.c:3799
-#: src/selections.c:3808 src/selections.c:3832 src/selections.c:3841
-#: src/selections.c:3917 src/selections.c:3927 src/selections.c:4045
-#: src/selections.c:4123 src/selections.c:4132 src/selections.c:4157
-#: src/selections.c:4166 src/selections.c:4242 src/selections.c:4252
-#: src/selections.c:4371 src/selections.c:4456 src/selections.c:4465
-#: src/selections.c:4489 src/selections.c:4498 src/selections.c:4574
-#: src/selections.c:4584 src/selections.c:4700 src/selections.c:4785
-#: src/selections.c:4794 src/selections.c:4818 src/selections.c:4827
-#: src/selections.c:4903 src/selections.c:4913
+#: src/selections.c:3429 src/selections.c:3501 src/selections.c:3510
+#: src/selections.c:3532 src/selections.c:3541 src/selections.c:3614
+#: src/selections.c:3624 src/selections.c:3751 src/selections.c:3818
+#: src/selections.c:3827 src/selections.c:3851 src/selections.c:3860
+#: src/selections.c:3936 src/selections.c:3946 src/selections.c:4064
+#: src/selections.c:4142 src/selections.c:4151 src/selections.c:4176
+#: src/selections.c:4185 src/selections.c:4261 src/selections.c:4271
+#: src/selections.c:4390 src/selections.c:4475 src/selections.c:4484
+#: src/selections.c:4508 src/selections.c:4517 src/selections.c:4593
+#: src/selections.c:4603 src/selections.c:4719 src/selections.c:4804
+#: src/selections.c:4813 src/selections.c:4837 src/selections.c:4846
+#: src/selections.c:4922 src/selections.c:4932
 #, fuzzy
 msgid "[  CANCEL  ]"
 msgstr "  CANCEL  "
@@ -3832,11 +3885,11 @@ msgstr "Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."
 msgid "years"
 msgstr "years"
 
-#: src/selections.c:2811 src/selections.c:3120 src/selections.c:3419
+#: src/selections.c:2811 src/selections.c:3120 src/selections.c:3438
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
-#: src/selections.c:2812 src/selections.c:3121 src/selections.c:3420
+#: src/selections.c:2812 src/selections.c:3121 src/selections.c:3439
 msgid "[ESC] to cancel."
 msgstr "[ESC] to cancel."
 
@@ -3845,15 +3898,15 @@ msgid " Gender Selection "
 msgstr " Gender Selection "
 
 #: src/selections.c:3100 src/selections.c:3156 src/selections.c:3165
-#: src/selections.c:3263 src/selections.c:3272 src/selections.c:3399
-#: src/selections.c:3455 src/selections.c:3464 src/selections.c:3562
-#: src/selections.c:3571 src/selections.c:3721 src/selections.c:3769
-#: src/selections.c:3778 src/selections.c:3883 src/selections.c:3892
-#: src/selections.c:4034 src/selections.c:4093 src/selections.c:4102
-#: src/selections.c:4208 src/selections.c:4217 src/selections.c:4360
-#: src/selections.c:4426 src/selections.c:4435 src/selections.c:4540
-#: src/selections.c:4549 src/selections.c:4689 src/selections.c:4755
-#: src/selections.c:4764 src/selections.c:4869 src/selections.c:4878
+#: src/selections.c:3263 src/selections.c:3272 src/selections.c:3418
+#: src/selections.c:3474 src/selections.c:3483 src/selections.c:3581
+#: src/selections.c:3590 src/selections.c:3740 src/selections.c:3788
+#: src/selections.c:3797 src/selections.c:3902 src/selections.c:3911
+#: src/selections.c:4053 src/selections.c:4112 src/selections.c:4121
+#: src/selections.c:4227 src/selections.c:4236 src/selections.c:4379
+#: src/selections.c:4445 src/selections.c:4454 src/selections.c:4559
+#: src/selections.c:4568 src/selections.c:4708 src/selections.c:4774
+#: src/selections.c:4783 src/selections.c:4888 src/selections.c:4897
 #, fuzzy
 msgid "[  CONFIRM  ]"
 msgstr "  CONFIRM  "
@@ -3920,192 +3973,192 @@ msgstr ""
 msgid "village"
 msgstr ""
 
-#: src/selections.c:3393
+#: src/selections.c:3412
 #, fuzzy
 msgid " Location Type Selection "
 msgstr " Target Age Selection "
 
-#: src/selections.c:3426
+#: src/selections.c:3445
 #, fuzzy
 msgid "Location Type"
 msgstr "Location: "
 
-#: src/selections.c:3687
+#: src/selections.c:3706
 msgid " Date "
 msgstr " Date "
 
-#: src/selections.c:3691 src/selections.c:4007 src/selections.c:4333
-#: src/selections.c:4662
+#: src/selections.c:3710 src/selections.c:4026 src/selections.c:4352
+#: src/selections.c:4681
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr "Use [←↓↑→] to ajust. [Enter] confirm."
 
-#: src/selections.c:3692 src/selections.c:4008 src/selections.c:4334
-#: src/selections.c:4663
+#: src/selections.c:3711 src/selections.c:4027 src/selections.c:4353
+#: src/selections.c:4682
 msgid "[ESC] Cancel."
 msgstr "[ESC] Cancel."
 
-#: src/selections.c:3709
+#: src/selections.c:3728
 msgid "Month"
 msgstr "Month"
 
-#: src/selections.c:4003
+#: src/selections.c:4022
 msgid " Time "
 msgstr " Time "
 
-#: src/selections.c:4020 src/selections.c:4346 src/selections.c:4675
+#: src/selections.c:4039 src/selections.c:4365 src/selections.c:4694
 msgid "Min"
 msgstr "Min"
 
-#: src/selections.c:4021 src/selections.c:4347 src/selections.c:4676
+#: src/selections.c:4040 src/selections.c:4366 src/selections.c:4695
 msgid "Sec"
 msgstr "Sec"
 
-#: src/selections.c:4329
+#: src/selections.c:4348
 msgid " Longitude "
 msgstr ""
 
-#: src/selections.c:4345 src/selections.c:4674
+#: src/selections.c:4364 src/selections.c:4693
 msgid "Degree"
 msgstr ""
 
-#: src/selections.c:4658
+#: src/selections.c:4677
 msgid " Latitude "
 msgstr ""
 
-#: src/selections.c:5006
+#: src/selections.c:5025
 #, fuzzy
 msgid " Location's Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:5020
+#: src/selections.c:5039
 #, fuzzy
 msgid "Enter the name of the location (max"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:5021 src/selections.c:5225 src/selections.c:5430
-#: src/selections.c:6234 src/selections.c:6442
+#: src/selections.c:5040 src/selections.c:5244 src/selections.c:5449
+#: src/selections.c:6253 src/selections.c:6461
 msgid "characters)"
 msgstr "characters)"
 
-#: src/selections.c:5142
+#: src/selections.c:5161
 msgid "Somewhere"
 msgstr ""
 
-#: src/selections.c:5210
+#: src/selections.c:5229
 msgid " Confirm State Name "
 msgstr ""
 
-#: src/selections.c:5224
+#: src/selections.c:5243
 #, fuzzy
 msgid "Enter the name of the State (max"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:5346
+#: src/selections.c:5365
 msgid "Some State"
 msgstr ""
 
-#: src/selections.c:5415
+#: src/selections.c:5434
 msgid " Confirm Country Name "
 msgstr ""
 
-#: src/selections.c:5429
+#: src/selections.c:5448
 #, fuzzy
 msgid "Enter the name of the Country (max"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:5551
+#: src/selections.c:5570
 #, fuzzy
 msgid "Some Country"
 msgstr "Select Country"
 
-#: src/selections.c:5614
+#: src/selections.c:5633
 msgid " Elevation "
 msgstr ""
 
-#: src/selections.c:5625 src/selections.c:5839 src/selections.c:5841
+#: src/selections.c:5644 src/selections.c:5858 src/selections.c:5860
 msgid "Press [Enter] to save"
 msgstr "Press [Enter] to save"
 
-#: src/selections.c:5627 src/selections.c:5844
+#: src/selections.c:5646 src/selections.c:5863
 msgid "Press [ESC] to cancel"
 msgstr "Press [ESC] to cancel"
 
-#: src/selections.c:5628 src/selections.c:5845
+#: src/selections.c:5647 src/selections.c:5864
 msgid "Value: "
 msgstr "Value: "
 
-#: src/selections.c:5823
+#: src/selections.c:5842
 msgid " Enter TZ Offset "
 msgstr " Enter TZ Offset "
 
-#: src/selections.c:5837
+#: src/selections.c:5856
 msgid "Error: Max -12 to +14"
 msgstr "Error: Max -12 to +14"
 
-#: src/selections.c:6042
+#: src/selections.c:6061
 msgid " Select DST "
 msgstr " Select DST "
 
-#: src/selections.c:6219
+#: src/selections.c:6238
 msgid " Exporting To .csv File "
 msgstr ""
 
-#: src/selections.c:6233
+#: src/selections.c:6252
 msgid "Enter the file name (max"
 msgstr ""
 
-#: src/selections.c:6355
+#: src/selections.c:6374
 #, fuzzy
 msgid "primary_directions"
 msgstr "Location: "
 
-#: src/selections.c:6427
+#: src/selections.c:6446
 msgid " Chart's Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:6441
+#: src/selections.c:6460
 msgid "Enter a name for your chart (max"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:6563
+#: src/selections.c:6582
 msgid "Unnamed Chart"
 msgstr "Unnamed Chart"
 
-#: src/selections.c:6806
+#: src/selections.c:6825
 msgid " Select a Topic "
 msgstr " Select a Topic "
 
-#: src/selections.c:7111
+#: src/selections.c:7131 src/selections.c:7457
 msgid "Select Country"
 msgstr "Select Country"
 
-#: src/selections.c:7113
+#: src/selections.c:7133 src/selections.c:7459
 msgid "Country"
 msgstr "Country"
 
-#: src/selections.c:7411
+#: src/selections.c:7757
 msgid "Select City in"
 msgstr "Select City in"
 
-#: src/selections.c:7413
+#: src/selections.c:7759
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/selections.c:7677
+#: src/selections.c:8023
 msgid "Failed to prepare statement:"
 msgstr "Failed to prepare statement:"
 
-#: src/selections.c:7724
+#: src/selections.c:8070
 msgid "Warning: City not found in database."
 msgstr "Warning: City not found in database."
 
-#: src/selections.c:7766
+#: src/selections.c:8112
 msgid "Default city has not changed"
 msgstr "Default city has not changed"
 
-#: src/selections.c:7828
+#: src/selections.c:8174
 msgid "Default city has changed"
 msgstr "Default city has changed"
 
@@ -5663,10 +5716,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Chart data have been set."
 #~ msgstr "Chart data have been changed."
-
-#, fuzzy
-#~ msgid "City not found?"
-#~ msgstr "Chart not found!"
 
 #, fuzzy
 #~ msgid "Are you sure you want to SAVE this location"

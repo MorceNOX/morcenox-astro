@@ -460,15 +460,19 @@ As caixas de seleção aparecem na seguinte sequência:
 
 5. Cidade (Selecione da lista rolável; o Estado/Condado/Província é exibido na 2ª coluna para ajudar a distinguir cidades homônimas).
 
-6. Fuso Horário (TZ) (Exibe o fuso horário da cidade). Na verdade, isso é exibido apenas para referência, porque o programa sempre calcula o fuso horário correto para a cidade selecionada.
+6. Fuso Horário (TZ) (Exibe o fuso horário da cidade). Na verdade, isso é exibido apenas para referência, porque o programa sempre calcula o fuso horário correto para a cidade selecionada. (Esta opção tornou-se obsoleta da versão v1.40.0 em diante, e não será exibida).
 
-7. HdV (Horário de Verão: escolha entre Sim, Não ou Automático. Se for Automático, o aplicativo insere o intervalo correto de HdV para a data específica, se aplicável).
+7. HdV (Horário de Verão: escolha entre Sim, Não ou Automático. Se for Automático, o aplicativo insere o intervalo correto de HdV para a data específica, se aplicável). (Esta opção tornou-se obsoleta da versão v1.40.0 em diante, e não será exibida).
 
 Nome do Mapa (Digite um nome para seu novo mapa). O nome do mapa atual aparecerá por padrão. Você pode manter esse nome para sobrescrever o mapa atual com novos dados ou selecionar outro nome para obter um novo mapa.
 
 Os valores são selecionados usando as teclas de seta e <ENTER> para confirmar.
 
 Você pode pressionar a tecla <ESC> em qualquer caixa para cancelar a edição.
+
+Se a sua cidade ou local não for encontrado no passo 5, você pode fechar a janela de seleção de cidade ou de país; o sistema solicitará então que você insira as coordenadas manualmente.
+ 
+Basta inserir a longitude e a latitude nos diálogos correspondentes para que o sistema identifique o país e o fuso horário corretos para essas coordenadas. O sistema também calculará uma altitude aproximada. Nas telas seguintes, você deverá inserir o nome do local e selecionar o seu tipo, bem como confirmar ou ajustar o valor da altitude. Por fim, você informará o nome do mapa, e ele será exibido na roda astrológica.
 
 Após definir os dados, lembre-se de salvar o mapa. Se você fechar o aplicativo sem salvar, ou se abrir o Mapa Rápido, os dados serão perdidos. Para salvar volte ao Menu Principal e selecione a opção para salvar mapa.
 
@@ -489,8 +493,6 @@ Salve os dados do mapa atual no banco de dados.
 Um diálogo perguntará sobre o nome do mapa. Você pode preservar o atual ou definir um novo.
 
 Se você estiver tentando salvar o novo mapa após inserir as coordenadas manualmente, o sistema tentará salvar a nova localização antes de salvar o mapa. Se tudo tiver sido feito corretamente, a nova localização será salva, assim como o novo mapa.
-
-Se a sua cidade ou local não for encontrado no passo 5, você pode fechar a janela de seleção de cidade ou de país; o sistema solicitará então que você insira as coordenadas manualmente. Basta inserir a longitude e a latitude nos diálogos correspondentes para que o sistema identifique o país e o fuso horário corretos para essas coordenadas. O sistema também calculará uma altitude aproximada. Nas telas seguintes, você deverá inserir o nome do local e selecionar o seu tipo, bem como confirmar ou ajustar o valor da altitude. Por fim, você informará o nome do mapa, e ele será exibido na roda astrológica.
 
 Essa opção também pode ser usada para salvar o mapa carregado atual com um nome diferente (assim você pode excluir ou não o anterior).
 
