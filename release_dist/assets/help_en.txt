@@ -208,19 +208,21 @@ Press Q or ESC to return to the main menu.
         
     • M  - Menu Actions
     
-    • F1 - Data Info 
+    • F1 or i - Data Info 
        
-    • F2 - Planet Positions and Dignities 
+    • F2 - Planet Positions and Dignities
+    
+        - F2 - Positions and Calculated Data of the Planets 
        
-        - F2 - Accidental Dignities Details
+        - F3 - Accidental Dignities Details
         
-        - F3 - Strength
+        - F4 - Strength
         
-        - F4 - Planetary Energy Profile
+        - F5 - Planetary Energy Profile
         
     • F3 - Aspects
     
-        - F3 - Parallel & Contra-parallel aspects
+        - F3 - Parallel & Contra-parallel Aspects
         
         - F4 - Aspects by Sign
         
@@ -246,7 +248,7 @@ Press Q or ESC to return to the main menu.
     
     • F9 - Annual Profections
     
-        F2 - Annual Profections Table
+        - F2 - Annual Profections Table
     
     • F12 - Firdaria
     

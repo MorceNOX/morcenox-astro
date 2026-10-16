@@ -207,15 +207,17 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • M  - Menu de Ações
 
-• F1 - Dados do Mapa
+• F1 ou i - Dados do Mapa
    
-• F2 - Posições e Dignidades dos Planetas 
+• F2 - Posições e Dignidades dos Planetas
+
+    - F2 - Posições e Dados Calculados dos Planetas 
    
-    - F2 - Detalhes das Dignidades Acidentais
+    - F3 - Detalhes das Dignidades Acidentais
     
-    - F3 - Força
+    - F4 - Força
     
-    - F4 - Perfil de Energia Planetária
+    - F5 - Perfil de Energia Planetária
     
 • F3 - Aspectos
 
@@ -245,7 +247,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F9 - Profecções Anuais
 
-    F2 - Tabela de Profecções Anuais
+    - F2 - Tabela de Profecções Anuais
 
 • F12 - Firdária
 
@@ -349,29 +351,31 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Visão Geral:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Este aplicativo foi projetado para ser seu companheiro astrológico. Aqui, você pode calcular e visualizar mapas astrológicos, ver o mapa de trânsito atual e acessar tabelas e painéis para auxiliar na análise aprofundada e na interpretação completa do horóscopo.
+Este aplicativo foi projetado para ser seu companheiro astrológico. Aqui, você pode calcular e visualizar mapas astrológicos, ver o mapa de trânsito atual e acessar tabelas, painéis e textos para auxiliar na análise aprofundada e na interpretação completa do horóscopo.
 
 Você pode ampliar e reduzir os mapas, movê-los pela tela e usar o modo de animação para visualizar os movimentos passados e futuros de planetas e outros objetos celestes. Você pode até controlar o ritmo da animação!
 
 A navegação é feita inteiramente por meio do mouse, das teclas de seta, teclas de função, menus e atalhos intuitivos — tudo dentro do seu terminal.
 
-Os módulos fornecem mapas, tabelas e painéis, acessíveis via teclas de função e numéricas, que contêm todos os dados que você precisa para fazer boas interpretações e também previsões.
+Os módulos fornecem mapas, tabelas, painéis e textos, acessíveis via teclas de função e numéricas, e contêm todos os dados que você precisa para fazer boas interpretações e também previsões.
 
 Os textos são diretos e objetivos, mas completos para orientá-lo através dos mapas e tabelas. A codificação de cores é também usada em todos os lugares para ajudá-lo a interpretar rapidamente o significado dos dados.
 
 Também usamos cores dentro do mapa para diferenciar os corpos celestes de acordo com seus tipos e pontos matemáticos.
 
-Todos os cálculos são realizados à luz da Astrologia Clássica, embora também exibamos os planetas externos e seus relacionamentos com todos os outros corpos no mapa e nas tabelas. O uso dessas adições modernas é inteiramente sua preferência.
+Todos os cálculos são realizados à luz da Astrologia Clássica, embora também exibamos os planetas externos e seus relacionamentos com todos os outros corpos no mapa e nas tabelas. O uso ou não dessas adições modernas é inteiramente por sua preferência.
 
-Além disso, você pode acessar configurações para configurar seus mapas de acordo com vários sistemas da Astrologia Clássica. Você também pode definir uma cidade padrão para gerar mapas rápidos para sua localização e hora atuais.
+Além disso, você pode acessar opções para configurar seus mapas de acordo com vários sistemas da Astrologia Clássica. Você também pode definir uma cidade padrão para gerar mapas rápidos para sua localização e hora atuais.
 
 O núcleo do aplicativo foi projetado para garantir precisão em todos os cálculos e oferecer o mais vasto escopo possível, tornando-o uma ferramenta astrológica extremamente útil para qualquer astrólogo, de estudantes aos mais experientes.
 
-A interface foi projetada para oferecer eficiência e beleza; a maioria das ações requer apenas um ou dois toques de tecla, e o sistema de cores exibe informações relevantes em todos os módulos.
+A interface foi projetada para oferecer eficiência e beleza; por isso usamos cores vibrantes, e a maioria das ações requer apenas um ou dois cliques ou toques de tecla, e o sistema de cores exibe informações relevantes em todos os módulos.
 
 Para salvar um mapa personalizado, basta inserir os dados e selecionar a opção de salvar no menu principal.
 
-Para visualizar e interagir com os módulos de ação, use as teclas de função ou numéricas ao pressionar a roda do mapa, ou a tecla [M] para abrir o menu de ações e escolher o desejado.
+Quando um novo mapa é carregado com base nos dados digitados, ele é imediatamente exibido, mas não é salvo automaticamente; para isso, basta voltar à tela anterior e selecionar a opção "Salvar" no menu principal.
+
+Para visualizar e interagir com os módulos de ação, use as teclas de função ou numéricas na tela da roda do mapa, ou a tecla [M] para abrir o menu de ações e escolher o módulo desejado.
 
 Algumas tabelas e painéis têm mais opções acessíveis enquanto estão abertos.
 

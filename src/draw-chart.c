@@ -2192,9 +2192,19 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     mvwprintw(stdscr, 0, col_fechar, "[");
     mvwprintw(stdscr, 0, col_fechar + 2, "]");
 
-    wattron(stdscr, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(stdscr, A_BOLD);
     mvwprintw(stdscr, 0, col_fechar + 1, "✖");
     wattroff(stdscr, A_BOLD);
+
+    if (!mapa_retorno) wattron(stdscr, COLOR_PAIR(60) | A_ITALIC);
+    else {
+        wattron(stdscr, COLOR_PAIR(61) | A_ITALIC);
+    }
+    mvwprintw(stdscr, 0, col_fechar - 19, "MorceNOX™ ASTRO");
+    if (!mapa_retorno) wattroff(stdscr, COLOR_PAIR(60) | A_ITALIC);
+    else {
+        wattroff(stdscr, COLOR_PAIR(61) | A_ITALIC);
+    }
     
     if (zoom_factor <= 1.5) {
         attron(A_BOLD);
@@ -6085,6 +6095,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(57, COLOR_BLACK, 232);
         init_pair(58, COLOR_WHITE, COLOR_BLACK);
         init_pair(59, 242, COLOR_BLACK);
+        init_pair(60, 25, 18);
+        init_pair(61, 61, 54); // magenta
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -6160,7 +6172,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(56, 232, 91); // dark, magenta
         init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
         init_pair(58, 242, COLOR_WHITE); 
-        init_pair(59, 242, COLOR_CYAN); 
+        init_pair(59, 242, COLOR_CYAN);
+        init_pair(60, 31, 25); // amarelo / azul
+        init_pair(61, 97, 91); // magenta, magenta
     }
     
     FLAGS = 0;
@@ -8854,6 +8868,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     flushinp();
                 }
                 break;
+            case 'i':
+            case 'I':
             case KEY_F(1):
                 desativar_arrasto_mouse();
                 display_table_data(
