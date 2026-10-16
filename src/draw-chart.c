@@ -9026,6 +9026,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 if (animated) {
                     local_time->tm_sec += anim_interval;
                     timegm(local_time);
+                    if (QUICK_CHART) {
+                        YY = local_time->tm_year + 1900;
+                        MM = local_time->tm_mon + 1;
+                        DD = local_time->tm_mday;
+                        HH = local_time->tm_hour;
+                        MIN = local_time->tm_min;
+                        SEC = local_time->tm_sec;
+                    }
                 }
                 break;              
                 

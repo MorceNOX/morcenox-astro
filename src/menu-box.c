@@ -1834,9 +1834,9 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         // Version
         char version_str[30];
         snprintf(version_str, 30, "v%s", VERSION);
-        attron(COLOR_PAIR(33) | A_BOLD);
-        mvwprintw(stdscr, term_h - 6, term_w - strlen(version_str) - 3, version_str);
-        attroff(COLOR_PAIR(33) | A_BOLD);
+        attron(COLOR_PAIR(17) | A_BOLD);
+        mvwprintw(stdscr, term_h - 7, term_w - strlen(version_str) - 3, version_str);
+        attroff(COLOR_PAIR(17) | A_BOLD);
         
         wnoutrefresh(stdscr);
         *delay = 0;
@@ -2129,6 +2129,8 @@ void call_chart_now() {
 
     snprintf(CHART_NAME, 100, _("Here And Now"));
 
+    QUICK_CHART = true;
+
     chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
 
@@ -2157,6 +2159,8 @@ void call_chart() {
     double tz_offset = (double)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;   
 
     tz_offset = tz_offset + dst_offset;
+
+    QUICK_CHART = false;
 
     chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
 }
@@ -2892,6 +2896,7 @@ int main() {
         init_pair(14, COLOR_RED, COLOR_BLUE);
         init_pair(15, COLOR_BLUE, 208); // orange
         init_pair(16, COLOR_BLUE, 95);
+        init_pair(17, COLOR_BLUE, 36);
             
         if (DARK_MODE) {
             init_pair(13, COLOR_WHITE, COLOR_BLACK);

@@ -51,6 +51,7 @@ double LON = -46.5333;
 double ELEV = 774.0;
 
 bool USAR_COORDENADAS = false;
+bool QUICK_CHART = false;
 
 char CHART_NAME[100] = "NewChart";
 char MESSAGE[100] = "";

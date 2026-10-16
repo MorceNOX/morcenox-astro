@@ -84,7 +84,7 @@ extern double LON;
 extern double ELEV;
 
 extern bool USAR_COORDENADAS;
-
+extern bool QUICK_CHART;
 
 extern char CHART_NAME[100];
 extern char MESSAGE[100];

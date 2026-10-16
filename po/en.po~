@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 21:12-0300\n"
+"POT-Creation-Date: 2026-10-15 21:56-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1402,7 +1402,7 @@ msgstr ""
 msgid "Aspect: / *| Speed: ]/[ | Quit: Q "
 msgstr ""
 
-#: src/draw-chart.c:2241 src/draw-chart.c:9073 src/draw-chart.c:9084
+#: src/draw-chart.c:2241 src/draw-chart.c:9081 src/draw-chart.c:9092
 #, fuzzy
 msgid "[    MENU    ]"
 msgstr "    NO    "
@@ -2486,134 +2486,134 @@ msgstr ""
 msgid "Cusp %d"
 msgstr ""
 
-#: src/draw-chart.c:9220 src/draw-chart.c:9251
+#: src/draw-chart.c:9235 src/draw-chart.c:9266
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:9221 src/draw-chart.c:9252
+#: src/draw-chart.c:9236 src/draw-chart.c:9267
 msgid "02. Astrological Positions"
 msgstr ""
 
-#: src/draw-chart.c:9222 src/draw-chart.c:9253
+#: src/draw-chart.c:9237 src/draw-chart.c:9268
 msgid "03. Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:9223 src/draw-chart.c:9254
+#: src/draw-chart.c:9238 src/draw-chart.c:9269
 msgid "04. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:9224 src/draw-chart.c:9255
+#: src/draw-chart.c:9239 src/draw-chart.c:9270
 msgid "05. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:9225 src/draw-chart.c:9256
+#: src/draw-chart.c:9240 src/draw-chart.c:9271
 msgid "06. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:9226 src/draw-chart.c:9257
+#: src/draw-chart.c:9241 src/draw-chart.c:9272
 #, fuzzy
 msgid "07. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:9227 src/draw-chart.c:9258
+#: src/draw-chart.c:9242 src/draw-chart.c:9273
 msgid "08. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:9228 src/draw-chart.c:9259
+#: src/draw-chart.c:9243 src/draw-chart.c:9274
 #, fuzzy
 msgid "09. Declination Aspects"
 msgstr "Location: "
 
-#: src/draw-chart.c:9229 src/draw-chart.c:9260
+#: src/draw-chart.c:9244 src/draw-chart.c:9275
 msgid "10. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:9230 src/draw-chart.c:9261
+#: src/draw-chart.c:9245 src/draw-chart.c:9276
 msgid "11. Aspects to Antiscia"
 msgstr ""
 
-#: src/draw-chart.c:9231 src/draw-chart.c:9262
+#: src/draw-chart.c:9246 src/draw-chart.c:9277
 msgid "12. Aspects to Contrantiscia"
 msgstr ""
 
-#: src/draw-chart.c:9232 src/draw-chart.c:9263
+#: src/draw-chart.c:9247 src/draw-chart.c:9278
 msgid "13. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:9233 src/draw-chart.c:9264
+#: src/draw-chart.c:9248 src/draw-chart.c:9279
 msgid "14. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:9234
+#: src/draw-chart.c:9249
 msgid "15. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9235
+#: src/draw-chart.c:9250
 msgid "16. Mind Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9236
+#: src/draw-chart.c:9251
 #, fuzzy
 msgid "17. Primary Motivation"
 msgstr "Location: "
 
-#: src/draw-chart.c:9237
+#: src/draw-chart.c:9252
 msgid "18. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9238
+#: src/draw-chart.c:9253
 msgid "19. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9239
+#: src/draw-chart.c:9254
 msgid "20. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:9240
+#: src/draw-chart.c:9255
 msgid "21. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:9241
+#: src/draw-chart.c:9256
 msgid "22. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:9242
+#: src/draw-chart.c:9257
 msgid "23. Vital Threats: The Anareta"
 msgstr ""
 
-#: src/draw-chart.c:9243
+#: src/draw-chart.c:9258
 #, fuzzy
 msgid "24. Primary Directions"
 msgstr "Location: "
 
-#: src/draw-chart.c:9244
+#: src/draw-chart.c:9259
 #, fuzzy
 msgid "25. Prymary Directions to Arabic Parts"
 msgstr "Location: "
 
-#: src/draw-chart.c:9245
+#: src/draw-chart.c:9260
 #, fuzzy
 msgid "26. Solar Revolution"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:9265
+#: src/draw-chart.c:9280
 msgid "15. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9266
+#: src/draw-chart.c:9281
 msgid "16. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9267
+#: src/draw-chart.c:9282
 msgid "17. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:9268
+#: src/draw-chart.c:9283
 msgid "18. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:9269
+#: src/draw-chart.c:9284
 msgid "19. Annual Transits & Radical Projections"
 msgstr ""
 
@@ -3077,113 +3077,113 @@ msgstr "┃ Gen: "
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:2488
+#: src/menu-box.c:2492
 #, fuzzy
 msgid "Are you sure you want to OPEN this link?"
 msgstr "Are you sure you want to SAVE the chart"
 
-#: src/menu-box.c:2754
+#: src/menu-box.c:2758
 msgid "Help file could not be loaded!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:2758 src/menu-box.c:2945
+#: src/menu-box.c:2762 src/menu-box.c:2949
 msgid "Help"
 msgstr "Help"
 
-#: src/menu-box.c:2776
+#: src/menu-box.c:2780
 msgid "Topics file could not be loaded!"
 msgstr "Topics file could not be loaded."
 
-#: src/menu-box.c:2780 src/menu-box.c:2946
+#: src/menu-box.c:2784 src/menu-box.c:2950
 msgid "Technical Topics"
 msgstr "Technical Topics"
 
-#: src/menu-box.c:2791
+#: src/menu-box.c:2795
 msgid "Settings unchanged!"
 msgstr "Settings unchanged!"
 
-#: src/menu-box.c:2826
+#: src/menu-box.c:2830
 msgid "Settings updated!"
 msgstr "Settings updated!"
 
-#: src/menu-box.c:2937
+#: src/menu-box.c:2941
 msgid "Quick Chart"
 msgstr "Quick Chart"
 
-#: src/menu-box.c:2937
+#: src/menu-box.c:2941
 msgid "View the chart for the current moment in the default city."
 msgstr "View the chart for the current moment in the default city."
 
-#: src/menu-box.c:2938
+#: src/menu-box.c:2942
 msgid "New Chart"
 msgstr "New Chart"
 
-#: src/menu-box.c:2938
+#: src/menu-box.c:2942
 msgid "Set the data to load a new chart."
 msgstr "Set the data to load a new chart."
 
-#: src/menu-box.c:2939
+#: src/menu-box.c:2943
 msgid "Load Chart"
 msgstr "Load Chart"
 
-#: src/menu-box.c:2939
+#: src/menu-box.c:2943
 msgid "Load a previously saved chart."
 msgstr "Load a previously saved chart."
 
-#: src/menu-box.c:2940
+#: src/menu-box.c:2944
 msgid "Save the Chart"
 msgstr "Save the Chart"
 
-#: src/menu-box.c:2940
+#: src/menu-box.c:2944
 msgid "Save the current chart."
 msgstr "Save the current chart."
 
-#: src/menu-box.c:2941
+#: src/menu-box.c:2945
 msgid "Delete Chart"
 msgstr "Delete Chart"
 
-#: src/menu-box.c:2941
+#: src/menu-box.c:2945
 msgid "Delete a previously saved chart."
 msgstr "Delete a previously saved chart."
 
-#: src/menu-box.c:2942
+#: src/menu-box.c:2946
 msgid "Display Chart"
 msgstr "Display Chart"
 
-#: src/menu-box.c:2942
+#: src/menu-box.c:2946
 msgid "Display the current chart."
 msgstr "Display the current chart."
 
-#: src/menu-box.c:2943
+#: src/menu-box.c:2947
 msgid "Change the Default Location"
 msgstr "Change the Default Location"
 
-#: src/menu-box.c:2943
+#: src/menu-box.c:2947
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Select a new city as default for the Quick Chart."
 
-#: src/menu-box.c:2944
+#: src/menu-box.c:2948
 msgid "Settings"
 msgstr "Settings"
 
-#: src/menu-box.c:2944
+#: src/menu-box.c:2948
 msgid "Modify the default settings."
 msgstr "Modify the default settings."
 
-#: src/menu-box.c:2945
+#: src/menu-box.c:2949
 msgid "See the help window for this application."
 msgstr "See the help window for this application."
 
-#: src/menu-box.c:2946
+#: src/menu-box.c:2950
 #, fuzzy
 msgid "Some technical topics used in this program."
 msgstr "Technical topics used in this program."
 
-#: src/menu-box.c:2947
+#: src/menu-box.c:2951
 msgid "Exit"
 msgstr "Exit"
 
-#: src/menu-box.c:2947
+#: src/menu-box.c:2951
 msgid "Exit the program."
 msgstr "Exit the program."
 
