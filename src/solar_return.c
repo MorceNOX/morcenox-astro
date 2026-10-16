@@ -341,11 +341,11 @@ void processar_confronto_natal_revolucao(
 }
 
 
-void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects) {
+int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects) {
     
     double idade_padrao = obter_idade_padrao_mapa_double();
     double idade_escolhida = selecionar_idade_visual_fracionada(idade_padrao);
-    if (idade_escolhida < 0) return; // Usuário cancelou
+    if (idade_escolhida < 0) return -1; // Usuário cancelou
 
     // 2. Cria variáveis LOCAIS para armazenar o local do Retorno Solar
     char cidade_retorno[100];
@@ -359,7 +359,7 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
     
     if (!show_confirm_yesno(CITY, _("Keep the same city"))) {    
         if (!load_city_coordinates(cidade_retorno, country_retorno, state_retorno, tz_iana_retorno, &tz_offset_retorno, &lat, &lon, &elev)) {
-            return;
+            return -1;
         }
     }
     else {
@@ -442,6 +442,8 @@ void disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps
         num_objects,
         idade_escolhida
     );
+
+    return 1;
 
 }
 

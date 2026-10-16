@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 19:56-0300\n"
+"POT-Creation-Date: 2026-10-15 21:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,8 +94,8 @@ msgstr ""
 msgid " Almuten Figuris Spiritual Guide "
 msgstr ""
 
-#: src/almuten.c:798 src/almuten.c:1359 src/solar_return.c:509
-#: src/solar_return.c:1458
+#: src/almuten.c:798 src/almuten.c:1359 src/solar_return.c:511
+#: src/solar_return.c:1460
 msgid " [↓↑|JK: Scroll | Q|ESC: Return to Chart] "
 msgstr ""
 
@@ -113,13 +113,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/almuten.c:836 src/solar_return.c:553
+#: src/almuten.c:836 src/solar_return.c:555
 msgid ""
 "CO-REGENCY DETECTED: Spiritual Conjunction\n"
 "\n"
 msgstr ""
 
-#: src/almuten.c:841 src/solar_return.c:558
+#: src/almuten.c:841 src/solar_return.c:560
 #, c-format
 msgid ""
 "Your chart presents a rare cosmic occurrence: a shared throne. Multiple "
@@ -997,8 +997,8 @@ msgstr ""
 #: src/draw-chart.c:617 src/draw-chart.c:634 src/draw-chart.c:6210
 #: src/draw-chart.c:7113 src/draw-chart.c:7135 src/firdaria.c:101
 #: src/hyleg.c:341 src/hyleg.c:489 src/profections.c:613
-#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
-#: src/solar_return.c:1708
+#: src/solar_return.c:1324 src/solar_return.c:1493 src/solar_return.c:1552
+#: src/solar_return.c:1710
 msgid "Mars"
 msgstr ""
 
@@ -1006,15 +1006,15 @@ msgstr ""
 #: src/draw-chart.c:619 src/draw-chart.c:636 src/draw-chart.c:6208
 #: src/draw-chart.c:7115 src/draw-chart.c:7137 src/firdaria.c:103
 #: src/hyleg.c:343 src/hyleg.c:489 src/profections.c:619
-#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1550
-#: src/solar_return.c:1708
+#: src/solar_return.c:1324 src/solar_return.c:1493 src/solar_return.c:1552
+#: src/solar_return.c:1710
 msgid "Saturn"
 msgstr ""
 
 #: src/directions.c:2670 src/directions.c:3616 src/draw-chart.c:437
 #: src/draw-chart.c:624 src/draw-chart.c:641 src/draw-chart.c:1592
 #: src/draw-chart.c:7120 src/draw-chart.c:7139 src/firdaria.c:105
-#: src/solar_return.c:1491 src/solar_return.c:1550 src/solar_return.c:1708
+#: src/solar_return.c:1493 src/solar_return.c:1552 src/solar_return.c:1710
 msgid "South Node"
 msgstr ""
 
@@ -1022,8 +1022,8 @@ msgstr ""
 #: src/draw-chart.c:618 src/draw-chart.c:635 src/draw-chart.c:6209
 #: src/draw-chart.c:7114 src/draw-chart.c:7136 src/firdaria.c:102
 #: src/hyleg.c:342 src/hyleg.c:486 src/profections.c:618
-#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
-#: src/solar_return.c:1711
+#: src/solar_return.c:1324 src/solar_return.c:1493 src/solar_return.c:1555
+#: src/solar_return.c:1713
 msgid "Jupiter"
 msgstr ""
 
@@ -1031,15 +1031,15 @@ msgstr ""
 #: src/draw-chart.c:616 src/draw-chart.c:633 src/draw-chart.c:6205
 #: src/draw-chart.c:7112 src/draw-chart.c:7134 src/firdaria.c:100
 #: src/hyleg.c:340 src/hyleg.c:486 src/profections.c:614
-#: src/solar_return.c:1322 src/solar_return.c:1491 src/solar_return.c:1553
-#: src/solar_return.c:1711
+#: src/solar_return.c:1324 src/solar_return.c:1493 src/solar_return.c:1555
+#: src/solar_return.c:1713
 msgid "Venus"
 msgstr ""
 
 #: src/directions.c:2679 src/directions.c:3625 src/draw-chart.c:434
 #: src/draw-chart.c:623 src/draw-chart.c:640 src/draw-chart.c:1594
 #: src/draw-chart.c:7119 src/draw-chart.c:7138 src/firdaria.c:104
-#: src/solar_return.c:1491 src/solar_return.c:1553 src/solar_return.c:1711
+#: src/solar_return.c:1493 src/solar_return.c:1555 src/solar_return.c:1713
 msgid "North Node"
 msgstr ""
 
@@ -1192,7 +1192,7 @@ msgid "Directions metadata exported to file:"
 msgstr ""
 
 #: src/draw-chart.c:404 src/draw-chart.c:6204 src/firdaria.c:97 src/hyleg.c:337
-#: src/profections.c:617 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:617 src/solar_return.c:1324 src/solar_return.c:1493
 msgid "Sun"
 msgstr ""
 
@@ -1202,29 +1202,29 @@ msgid "Sol"
 msgstr ""
 
 #: src/draw-chart.c:407 src/draw-chart.c:6207 src/firdaria.c:98 src/hyleg.c:338
-#: src/profections.c:616 src/solar_return.c:1322 src/solar_return.c:1491
+#: src/profections.c:616 src/solar_return.c:1324 src/solar_return.c:1493
 msgid "Moon"
 msgstr ""
 
 #: src/draw-chart.c:410 src/draw-chart.c:615 src/draw-chart.c:632
 #: src/draw-chart.c:6206 src/draw-chart.c:7111 src/draw-chart.c:7133
 #: src/firdaria.c:99 src/hyleg.c:339 src/profections.c:615
-#: src/solar_return.c:1322 src/solar_return.c:1491
+#: src/solar_return.c:1324 src/solar_return.c:1493
 msgid "Mercury"
 msgstr ""
 
 #: src/draw-chart.c:425 src/draw-chart.c:620 src/draw-chart.c:637
-#: src/draw-chart.c:1604 src/draw-chart.c:7116 src/solar_return.c:1491
+#: src/draw-chart.c:1604 src/draw-chart.c:7116 src/solar_return.c:1493
 msgid "Uranus"
 msgstr ""
 
 #: src/draw-chart.c:428 src/draw-chart.c:621 src/draw-chart.c:638
-#: src/draw-chart.c:1603 src/draw-chart.c:7117 src/solar_return.c:1491
+#: src/draw-chart.c:1603 src/draw-chart.c:7117 src/solar_return.c:1493
 msgid "Neptune"
 msgstr ""
 
 #: src/draw-chart.c:431 src/draw-chart.c:622 src/draw-chart.c:639
-#: src/draw-chart.c:1605 src/draw-chart.c:7118 src/solar_return.c:1491
+#: src/draw-chart.c:1605 src/draw-chart.c:7118 src/solar_return.c:1493
 msgid "Pluto"
 msgstr ""
 
@@ -1356,7 +1356,7 @@ msgstr ""
 msgid "Aspect: / *| Speed: ]/[ | Quit: Q "
 msgstr ""
 
-#: src/draw-chart.c:2241 src/draw-chart.c:9069 src/draw-chart.c:9080
+#: src/draw-chart.c:2241 src/draw-chart.c:9073 src/draw-chart.c:9084
 msgid "[    MENU    ]"
 msgstr ""
 
@@ -2214,13 +2214,13 @@ msgstr ""
 msgid "the Night"
 msgstr ""
 
-#: src/draw-chart.c:5187 src/draw-chart.c:5250 src/solar_return.c:598
+#: src/draw-chart.c:5187 src/draw-chart.c:5250 src/solar_return.c:600
 msgid ""
 "Structural Efficiency Verdict:\n"
 "\n"
 msgstr ""
 
-#: src/draw-chart.c:5195 src/draw-chart.c:5258 src/solar_return.c:605
+#: src/draw-chart.c:5195 src/draw-chart.c:5258 src/solar_return.c:607
 msgid ""
 " • HIGH OPERATIONAL CAPACITY (EXCELLENT CHAPTER):\n"
 "\n"
@@ -2247,7 +2247,7 @@ msgstr ""
 msgid "the night"
 msgstr ""
 
-#: src/draw-chart.c:5207 src/draw-chart.c:5270 src/solar_return.c:617
+#: src/draw-chart.c:5207 src/draw-chart.c:5270 src/solar_return.c:619
 msgid ""
 " • MODERATE OPERATIONAL CAPACITY (BALANCED CHAPTER):\n"
 "\n"
@@ -2267,7 +2267,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/draw-chart.c:5219 src/draw-chart.c:5282 src/solar_return.c:629
+#: src/draw-chart.c:5219 src/draw-chart.c:5282 src/solar_return.c:631
 msgid ""
 " • CRITICAL CAPACITY DRAIN (MUTED OR IMPEDED CHAPTER):\n"
 "\n"
@@ -2416,127 +2416,127 @@ msgstr ""
 msgid "Cusp %d"
 msgstr ""
 
-#: src/draw-chart.c:9214 src/draw-chart.c:9245
+#: src/draw-chart.c:9227 src/draw-chart.c:9258
 msgid "01. Chart Data Panel"
 msgstr ""
 
-#: src/draw-chart.c:9215 src/draw-chart.c:9246
+#: src/draw-chart.c:9228 src/draw-chart.c:9259
 msgid "02. Astrological Positions"
 msgstr ""
 
-#: src/draw-chart.c:9216 src/draw-chart.c:9247
+#: src/draw-chart.c:9229 src/draw-chart.c:9260
 msgid "03. Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:9217 src/draw-chart.c:9248
+#: src/draw-chart.c:9230 src/draw-chart.c:9261
 msgid "04. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:9218 src/draw-chart.c:9249
+#: src/draw-chart.c:9231 src/draw-chart.c:9262
 msgid "05. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:9219 src/draw-chart.c:9250
+#: src/draw-chart.c:9232 src/draw-chart.c:9263
 msgid "06. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:9220 src/draw-chart.c:9251
+#: src/draw-chart.c:9233 src/draw-chart.c:9264
 msgid "07. Houses"
 msgstr ""
 
-#: src/draw-chart.c:9221 src/draw-chart.c:9252
+#: src/draw-chart.c:9234 src/draw-chart.c:9265
 msgid "08. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:9222 src/draw-chart.c:9253
+#: src/draw-chart.c:9235 src/draw-chart.c:9266
 msgid "09. Declination Aspects"
 msgstr ""
 
-#: src/draw-chart.c:9223 src/draw-chart.c:9254
+#: src/draw-chart.c:9236 src/draw-chart.c:9267
 msgid "10. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:9224 src/draw-chart.c:9255
+#: src/draw-chart.c:9237 src/draw-chart.c:9268
 msgid "11. Aspects to Antiscia"
 msgstr ""
 
-#: src/draw-chart.c:9225 src/draw-chart.c:9256
+#: src/draw-chart.c:9238 src/draw-chart.c:9269
 msgid "12. Aspects to Contrantiscia"
 msgstr ""
 
-#: src/draw-chart.c:9226 src/draw-chart.c:9257
+#: src/draw-chart.c:9239 src/draw-chart.c:9270
 msgid "13. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:9227 src/draw-chart.c:9258
+#: src/draw-chart.c:9240 src/draw-chart.c:9271
 msgid "14. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:9228
+#: src/draw-chart.c:9241
 msgid "15. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9229
+#: src/draw-chart.c:9242
 msgid "16. Mind Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9230
+#: src/draw-chart.c:9243
 msgid "17. Primary Motivation"
 msgstr ""
 
-#: src/draw-chart.c:9231
+#: src/draw-chart.c:9244
 msgid "18. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9232
+#: src/draw-chart.c:9245
 msgid "19. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9233
+#: src/draw-chart.c:9246
 msgid "20. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:9234
+#: src/draw-chart.c:9247
 msgid "21. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:9235
+#: src/draw-chart.c:9248
 msgid "22. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:9236
+#: src/draw-chart.c:9249
 msgid "23. Vital Threats: The Anareta"
 msgstr ""
 
-#: src/draw-chart.c:9237
+#: src/draw-chart.c:9250
 msgid "24. Primary Directions"
 msgstr ""
 
-#: src/draw-chart.c:9238
+#: src/draw-chart.c:9251
 msgid "25. Prymary Directions to Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9239
+#: src/draw-chart.c:9252
 msgid "26. Solar Revolution"
 msgstr ""
 
-#: src/draw-chart.c:9259
+#: src/draw-chart.c:9272
 msgid "15. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9260
+#: src/draw-chart.c:9273
 msgid "16. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9261
+#: src/draw-chart.c:9274
 msgid "17. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:9262
+#: src/draw-chart.c:9275
 msgid "18. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:9263
+#: src/draw-chart.c:9276
 msgid "19. Annual Transits & Radical Projections"
 msgstr ""
 
@@ -4140,15 +4140,15 @@ msgstr ""
 msgid "%s - Solar Return (%d)"
 msgstr ""
 
-#: src/solar_return.c:488
+#: src/solar_return.c:490
 msgid " Radix Confrontation: Solar Return Integration "
 msgstr ""
 
-#: src/solar_return.c:532
+#: src/solar_return.c:534
 msgid "THE GOLDEN RADIX RULE: CONFRONTING THE LORD OF THE YEAR\n"
 msgstr ""
 
-#: src/solar_return.c:538
+#: src/solar_return.c:540
 msgid ""
 "According to Hellenistic and Medieval tradition, the Solar Return Almuten "
 "cannot be interpreted in a vacuum. Its promises are deeply filtered by its "
@@ -4157,35 +4157,35 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "SUN ☉"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "MOON ☾"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "MERCURY ☿"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "VENUS ♀"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "MARS ♂"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "JUPITER ♃"
 msgstr ""
 
-#: src/solar_return.c:548
+#: src/solar_return.c:550
 msgid "SATURN ♄"
 msgstr ""
 
-#: src/solar_return.c:564
+#: src/solar_return.c:566
 #, c-format
 msgid ""
 "Each co-regent have to be analyzed and confronted with the Lords of "
@@ -4194,13 +4194,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:578
+#: src/solar_return.c:580
 msgid ""
 "  [CHECK I] RADIX DIGNITY & STRUCTURAL EFFICIENCY FILTER\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:588
+#: src/solar_return.c:590
 #, c-format
 msgid ""
 "The Lord of the Year is the %s. In your Natal Chart, its base dignity score "
@@ -4209,7 +4209,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:610
+#: src/solar_return.c:612
 #, c-format
 msgid ""
 "This planet commands the year with magnificent backing from your birth "
@@ -4222,7 +4222,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:622
+#: src/solar_return.c:624
 #, c-format
 msgid ""
 "This planet holds average, stable ground in your baseline blueprint (%d%%).\n"
@@ -4234,7 +4234,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:634
+#: src/solar_return.c:636
 #, c-format
 msgid ""
 "WARNING: The Lord of the Year operates under extreme systemic debility "
@@ -4248,13 +4248,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:655
+#: src/solar_return.c:657
 msgid ""
 "  [CHECK II] RADIX HOUSE TRANSIT\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:657
+#: src/solar_return.c:659
 #, c-format
 msgid ""
 "The Solar Return Almuten is currently transiting through your NATAL HOUSE "
@@ -4262,14 +4262,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:662 src/solar_return.c:746 src/solar_return.c:799
-#: src/solar_return.c:863 src/solar_return.c:906
+#: src/solar_return.c:664 src/solar_return.c:748 src/solar_return.c:801
+#: src/solar_return.c:865 src/solar_return.c:908
 msgid ""
 "Interpretation:\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:668
+#: src/solar_return.c:670
 #, c-format
 msgid ""
 "The lens focuses strictly on your physical body, personal vitality, and "
@@ -4279,7 +4279,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:673
+#: src/solar_return.c:675
 #, c-format
 msgid ""
 "The core theme will revolve entirely around your personal resources, "
@@ -4289,7 +4289,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:677
+#: src/solar_return.c:679
 #, c-format
 msgid ""
 "The activation shifts attention to your immediate environment, daily "
@@ -4299,7 +4299,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:681
+#: src/solar_return.c:683
 #, c-format
 msgid ""
 "The spotlight falls deeply upon your private life, home environment, family "
@@ -4309,7 +4309,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:685
+#: src/solar_return.c:687
 #, c-format
 msgid ""
 "The cosmic current vitalizes your sectors of creative self-expression, "
@@ -4319,7 +4319,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:689
+#: src/solar_return.c:691
 #, c-format
 msgid ""
 "The planet activates the house of bodily challenges and daily labors. Focus "
@@ -4329,7 +4329,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:693
+#: src/solar_return.c:695
 #, c-format
 msgid ""
 "The planet activates the gateway of shared resources and deep "
@@ -4340,7 +4340,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:697
+#: src/solar_return.c:699
 #, c-format
 msgid ""
 "The planet activates the house of the unseen and self-undoing. The cosmic "
@@ -4351,7 +4351,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:701
+#: src/solar_return.c:703
 #, c-format
 msgid ""
 "The mirror of relationship is triggered, bringing your significant "
@@ -4361,7 +4361,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:705
+#: src/solar_return.c:707
 #, c-format
 msgid ""
 "The horizon widens toward higher education, long-distance journeys, legal "
@@ -4371,7 +4371,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:709
+#: src/solar_return.c:711
 #, c-format
 msgid ""
 "The cosmic spotlight hits your professional destiny, career elevation, and "
@@ -4381,7 +4381,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:713
+#: src/solar_return.c:715
 #, c-format
 msgid ""
 "The lens energizes your network, long-term aspirations, community "
@@ -4391,7 +4391,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:718
+#: src/solar_return.c:720
 #, c-format
 msgid ""
 "This alignment directly activates the baseline promises of your radix, "
@@ -4400,13 +4400,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:737
+#: src/solar_return.c:739
 msgid ""
 "  [CHECK III] THE TIMELORD CO-ALIGNMENT\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:742
+#: src/solar_return.c:744
 #, c-format
 msgid ""
 " ✦ The current Profection Lord of the Year is: %s.\n"
@@ -4414,13 +4414,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:753
+#: src/solar_return.c:755
 msgid ""
 "CRITICAL YEAR CRITERIA MATCH: FATAL EVENTS AHEAD.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:758
+#: src/solar_return.c:760
 #, c-format
 msgid ""
 "The Lord of the Return is the EXACT same planet ruling your profection time "
@@ -4434,7 +4434,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:766
+#: src/solar_return.c:768
 #, c-format
 msgid ""
 "Standard Alignment. The Return Lord and the Profection Lord are operating "
@@ -4445,13 +4445,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:787
+#: src/solar_return.c:789
 msgid ""
 "  [CHECK IV] THE FIRDARIA CHRONOCRATOR ALIGNMENT\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:792
+#: src/solar_return.c:794
 #, c-format
 msgid ""
 " ✦ Current Firdaria Master Ruler: %s\n"
@@ -4460,14 +4460,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:806
+#: src/solar_return.c:808
 #, c-format
 msgid ""
 "MAJOR CHRONOCRATOR ALIGNMENT DETECTED.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:810
+#: src/solar_return.c:812
 #, c-format
 msgid ""
 "The Lord of the Year is also the supreme ruler of your current Firdaria "
@@ -4479,14 +4479,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:817
+#: src/solar_return.c:819
 #, c-format
 msgid ""
 "SUB-FIRDARIA ALIGNMENT DETECTED.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:821
+#: src/solar_return.c:823
 #, c-format
 msgid ""
 "The Lord of the Year coordinates directly with your current Firdaria sub-"
@@ -4498,7 +4498,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:827
+#: src/solar_return.c:829
 #, c-format
 msgid ""
 "Parallel Current. The Lord of the Year operates on a distinct energetic line "
@@ -4510,20 +4510,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:855
+#: src/solar_return.c:857
 msgid ""
 "  [CHECK V] SOLAR RETURN ASCENDANT PROJECTION\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:861
+#: src/solar_return.c:863
 #, c-format
 msgid ""
 "The Solar Return Ascendant falls into your NATAL HOUSE %d.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:869
+#: src/solar_return.c:871
 #, c-format
 msgid ""
 "A year of absolute self-empowerment. Your personal choices, physical "
@@ -4533,7 +4533,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:872
+#: src/solar_return.c:874
 #, c-format
 msgid ""
 "Focus on foundations, family, and home life. Events will deeply affect your "
@@ -4542,7 +4542,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:875
+#: src/solar_return.c:877
 #, c-format
 msgid ""
 "The year centers on partnerships, contracts, and legal matters. "
@@ -4552,7 +4552,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:878
+#: src/solar_return.c:880
 #, c-format
 msgid ""
 "A powerful professional window. Your career, public standing, and long-term "
@@ -4561,7 +4561,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:881
+#: src/solar_return.c:883
 #, c-format
 msgid ""
 "This house activation indicates that your immediate daily affairs, social "
@@ -4571,20 +4571,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:898
+#: src/solar_return.c:900
 msgid ""
 "  [CHECK VI] NATAL ASCENDANT PROJECTION IN SOLAR RETURN\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:904
+#: src/solar_return.c:906
 #, c-format
 msgid ""
 "Your Natal Ascendant falls into your SOLAR RETURN HOUSE %d.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:912
+#: src/solar_return.c:914
 #, c-format
 msgid ""
 "Total alignment. Your core identity acts with absolute clarity and "
@@ -4594,7 +4594,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:915
+#: src/solar_return.c:917
 #, c-format
 msgid ""
 "Your vital energy is heavily directed toward financial security and "
@@ -4604,7 +4604,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:918
+#: src/solar_return.c:920
 #, c-format
 msgid ""
 "Your mind and immediate expression are highlighted. Communication, short "
@@ -4614,7 +4614,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:921
+#: src/solar_return.c:923
 #, c-format
 msgid ""
 "An internal, reflective year. You are drawn to privacy, emotional security, "
@@ -4623,7 +4623,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:924
+#: src/solar_return.c:926
 #, c-format
 msgid ""
 "A highly expressive and creative period. Your vital drive seeks joy, "
@@ -4633,7 +4633,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:927
+#: src/solar_return.c:929
 #, c-format
 msgid ""
 "A year requiring duty, physical adjustment, or service. You will need to "
@@ -4643,7 +4643,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:930
+#: src/solar_return.c:932
 #, c-format
 msgid ""
 "Your identity is mirrored through others. You will find yourself adapting "
@@ -4653,7 +4653,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:933
+#: src/solar_return.c:935
 #, c-format
 msgid ""
 "A period of psychological crisis or deep transformation. You are dealing "
@@ -4663,7 +4663,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:936
+#: src/solar_return.c:938
 #, c-format
 msgid ""
 "Expansion of consciousness. Your personal focus shifts toward higher "
@@ -4673,7 +4673,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:939
+#: src/solar_return.c:941
 #, c-format
 msgid ""
 "High public visibility. Your personal actions are on display for the world "
@@ -4683,7 +4683,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:942
+#: src/solar_return.c:944
 #, c-format
 msgid ""
 "A year of alliances and aspirations. Your focus is placed on collective "
@@ -4692,7 +4692,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:945
+#: src/solar_return.c:947
 #, c-format
 msgid ""
 "A period of relative isolation or spiritual retreat. You operate behind the "
@@ -4702,7 +4702,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:948
+#: src/solar_return.c:950
 #, c-format
 msgid ""
 "Invalid house data calculated for the projection.\n"
@@ -4710,181 +4710,181 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:956
+#: src/solar_return.c:958
 msgid ""
 "The world demands immediate, independent action from you, forcing individual "
 "projects to the forefront"
 msgstr ""
 
-#: src/solar_return.c:957
+#: src/solar_return.c:959
 msgid ""
 "Financial matters, cash flow, and material security will be the central "
 "stage where events play out"
 msgstr ""
 
-#: src/solar_return.c:958
+#: src/solar_return.c:960
 msgid ""
 "Circumstances will force heavy communication, frequent local travel, or "
 "immediate family/peer interactions"
 msgstr ""
 
-#: src/solar_return.c:959
+#: src/solar_return.c:961
 msgid ""
 "External events shift drastically toward your domestic life, home, "
 "foundations, or family property"
 msgstr ""
 
-#: src/solar_return.c:960
+#: src/solar_return.c:962
 msgid ""
 "The environment opens up opportunities for creativity, speculation, "
 "children, or romance"
 msgstr ""
 
-#: src/solar_return.c:961
+#: src/solar_return.c:963
 msgid ""
 "The year brings heavy focus on labor obligations, health management, or "
 "addressing daily friction"
 msgstr ""
 
-#: src/solar_return.c:962
+#: src/solar_return.c:964
 msgid ""
 "Critical events will manifest through contracts, open confrontations, or "
 "important partnerships"
 msgstr ""
 
-#: src/solar_return.c:963
+#: src/solar_return.c:965
 msgid ""
 "Circumstances push you to deal with joint resources, legacy matters, deep "
 "psychological shifts, or debts"
 msgstr ""
 
-#: src/solar_return.c:964
+#: src/solar_return.c:966
 msgid ""
 "The outer world calls you toward long journeys, academic pursuits, legal "
 "matters, or philosophical changes"
 msgstr ""
 
-#: src/solar_return.c:965
+#: src/solar_return.c:967
 msgid ""
 "A massive spotlight is placed on your professional arena, public status, and "
 "career obligations"
 msgstr ""
 
-#: src/solar_return.c:966
+#: src/solar_return.c:968
 msgid ""
 "Events will actively involve your social circles, networks, benefactors, or "
 "long-term alliances"
 msgstr ""
 
-#: src/solar_return.c:967
+#: src/solar_return.c:969
 msgid ""
 "Circumstances will force you into the background, dealing with hidden "
 "matters, institutions, or isolation"
 msgstr ""
 
-#: src/solar_return.c:972
+#: src/solar_return.c:974
 msgid ""
 "you will face this with total autonomy, absolute vitality, hand clear "
 "personal alignment."
 msgstr ""
 
-#: src/solar_return.c:973
+#: src/solar_return.c:975
 msgid ""
 "your primary focus will be protecting your resources, asking 'what is this "
 "worth to me?'."
 msgstr ""
 
-#: src/solar_return.c:974
+#: src/solar_return.c:976
 msgid ""
 "your mind will operate at high speed, analyzing, learning, and sharing "
 "information constantly."
 msgstr ""
 
-#: src/solar_return.c:975
+#: src/solar_return.c:977
 msgid ""
 "you will respond by seeking emotional security, privacy, and anchoring "
 "yourself in your roots."
 msgstr ""
 
-#: src/solar_return.c:976
+#: src/solar_return.c:978
 msgid ""
 "your vital drive will demand joy, dramatic self-expression, and a desire to "
 "take risks."
 msgstr ""
 
-#: src/solar_return.c:977
+#: src/solar_return.c:979
 msgid ""
 "you will feel a strong call to service, requiring patience, physical "
 "discipline, and duty."
 msgstr ""
 
-#: src/solar_return.c:978
+#: src/solar_return.c:980
 msgid ""
 "you will constantly seek the mirror of the 'Other', adapting your identity "
 "to keep relationships balanced."
 msgstr ""
 
-#: src/solar_return.c:979
+#: src/solar_return.c:981
 msgid ""
 "you will experience an internal crisis or intense urge to transform and let "
 "go of what is dead."
 msgstr ""
 
-#: src/solar_return.c:980
+#: src/solar_return.c:982
 msgid ""
 "your consciousness will expand, looking at the big picture through faith, "
 "study, or exploration."
 msgstr ""
 
-#: src/solar_return.c:981
+#: src/solar_return.c:983
 msgid ""
 "your ego will drive you to be seen, aiming for authority, leadership, and "
 "public recognition."
 msgstr ""
 
-#: src/solar_return.c:982
+#: src/solar_return.c:984
 msgid ""
 "your energy will be poured into collective hopes, relying heavily on support "
 "from friends."
 msgstr ""
 
-#: src/solar_return.c:983
+#: src/solar_return.c:985
 msgid ""
 "you will feel internally drained or reflective, operating best from behind "
 "the scenes."
 msgstr ""
 
-#: src/solar_return.c:993
+#: src/solar_return.c:995
 msgid ""
 "  [CHECK VII] SYNTHESIS: THE CROSS PROJECTION\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1003
+#: src/solar_return.c:1005
 msgid ""
 "Astrological Synthesis for your Year:\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1013
+#: src/solar_return.c:1015
 #, c-format
 msgid ""
 "%s; however, %s\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1024
+#: src/solar_return.c:1026
 msgid "Context: "
 msgstr ""
 
-#: src/solar_return.c:1034
+#: src/solar_return.c:1036
 #, c-format
 msgid ""
 "An intensely focused year. Your environment and your psychological driveare "
 "perfectly aligned, accelerating results with very little inner friction."
 msgstr ""
 
-#: src/solar_return.c:1037
+#: src/solar_return.c:1039
 #, c-format
 msgid ""
 "A polarizing year. The tension between public obligations and the "
@@ -4892,35 +4892,35 @@ msgid ""
 "burnout."
 msgstr ""
 
-#: src/solar_return.c:1040
+#: src/solar_return.c:1042
 #, c-format
 msgid ""
 "A year of multi-layered experiences. You will need to learn how to balance "
 "theconcrete external demands of House %d with your inner needs in House %d."
 msgstr ""
 
-#: src/solar_return.c:1048
+#: src/solar_return.c:1050
 msgid ""
 "Error: Invalid house calculation data for synthesis mapping.\n"
 "\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1065
+#: src/solar_return.c:1067
 msgid ""
 "  [CONFRONTATION END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"
 msgstr ""
 
-#: src/solar_return.c:1437
+#: src/solar_return.c:1439
 msgid " Annual Transits & Radical Projections "
 msgstr ""
 
-#: src/solar_return.c:1477
+#: src/solar_return.c:1479
 msgid "ANNUAL TRANSITS OVER THE RADIX BLUEPRINT\n"
 msgstr ""
 
-#: src/solar_return.c:1485
+#: src/solar_return.c:1487
 msgid ""
 "The positions of the planets at the exact moment of your Solar Return act as "
 "a frozen layer of transits governing the next 12 months. Below is the "
@@ -4929,35 +4929,35 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1527
+#: src/solar_return.c:1529
 #, c-format
 msgid ""
 "[CRITICAL MONITOR] VITAL PROTECTION: TRANSITS OVER NATAL HYLEG (%s %s)\n"
 msgstr ""
 
-#: src/solar_return.c:1559
+#: src/solar_return.c:1561
 #, c-format
 msgid "[*] TRANSITING %s IS CONJUNCT YOUR NATAL HYLEG (%s) (Orb: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1567
+#: src/solar_return.c:1569
 #, c-format
 msgid ""
 "[VITAL ALERT] Saturn (Great Malefic) is constricting your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1572
+#: src/solar_return.c:1574
 msgid ""
 "This year promises severe depletion of vital energy, physical fatigue, or "
 "structural health tests. Rest, discipline, and caution are mandatory.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1578
+#: src/solar_return.c:1580
 msgid "[VITAL ALERT] Mars (Lesser Malefic) is overheating your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1582
+#: src/solar_return.c:1584
 msgid ""
 "High risk of acute inflammatory episodes, fevers, injuries, or sudden "
 "surgeries. Avoid reckless physical behavior and channel stress "
@@ -4965,22 +4965,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1588
+#: src/solar_return.c:1590
 msgid "[GREAT PROTECTOR] Jupiter is magnifying your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1592
+#: src/solar_return.c:1594
 msgid ""
 "Excellent providential protection. A year of physical recovery, expansion of "
 "vital forces, and an invisible protective shield against major crises.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1598
+#: src/solar_return.c:1600
 msgid "[LESSER BENEFIC] Venus is soothing your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1602
+#: src/solar_return.c:1604
 msgid ""
 "A period of physical ease, revitalization, and biochemical harmony. "
 "Excellent for aesthetic improvements, restorative treatments, and bodily "
@@ -4988,11 +4988,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1608
+#: src/solar_return.c:1610
 msgid "[AMPLIFIER] The North Node is expanding your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1612
+#: src/solar_return.c:1614
 msgid ""
 "A massive surge of physical ambition and vital drive. While it grants great "
 "evolutionary energy, guard against bodily overexcitation, nervous strain, or "
@@ -5000,11 +5000,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1618
+#: src/solar_return.c:1620
 msgid "[VITAL ALERT] The South Node is draining your Natal Hyleg!\n"
 msgstr ""
 
-#: src/solar_return.c:1622
+#: src/solar_return.c:1624
 msgid ""
 "High risk of sudden vitality leaks, unexplained fatigue, or lowered "
 "immunity. A crucial year to detoxify the physical body, release toxic "
@@ -5012,7 +5012,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1628
+#: src/solar_return.c:1630
 #, c-format
 msgid ""
 "The annual transit of %s brings daily focus and minor adjustments to your "
@@ -5020,7 +5020,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1640
+#: src/solar_return.c:1642
 msgid ""
 "No planetary conjunctions from the Solar Return are currently putting "
 "friction or direct pressure on your Natal Hyleg. Your vital root remains "
@@ -5028,17 +5028,17 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1657
+#: src/solar_return.c:1659
 #, c-format
 msgid "    %s  %s (Solar Return)"
 msgstr ""
 
-#: src/solar_return.c:1665
+#: src/solar_return.c:1667
 #, c-format
 msgid " • House Projection: Operating inside your NATAL HOUSE %d.\n"
 msgstr ""
 
-#: src/solar_return.c:1670
+#: src/solar_return.c:1672
 #, c-format
 msgid ""
 "This year, the physical affairs governed by your Natal House %d will be "
@@ -5047,16 +5047,16 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1677
+#: src/solar_return.c:1679
 msgid " • Active Radical Conjunctions:\n"
 msgstr ""
 
-#: src/solar_return.c:1717
+#: src/solar_return.c:1719
 #, c-format
 msgid "[*] TRANSITING %s IS CONJUNCT YOUR NATAL %s (Orbe: %.2f°)\n"
 msgstr ""
 
-#: src/solar_return.c:1723
+#: src/solar_return.c:1725
 #, c-format
 msgid ""
 "[CRITICAL] Saturn brings a strict reality check, heavy boundaries, "
@@ -5064,7 +5064,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1728
+#: src/solar_return.c:1730
 #, c-format
 msgid ""
 "[BENEFIC] Jupiter injects providential protection, sudden opportunities, "
@@ -5072,7 +5072,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1732
+#: src/solar_return.c:1734
 #, c-format
 msgid ""
 "[DYNAMISM] Mars triggers acute friction, conflicts, separation, or high "
@@ -5080,7 +5080,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1736
+#: src/solar_return.c:1738
 #, c-format
 msgid ""
 "[BENEFIC] Venus injects harmony, personal magnetism, ease, pleasure, and "
@@ -5088,7 +5088,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1740
+#: src/solar_return.c:1742
 #, c-format
 msgid ""
 "[BENEFIC] The North Node injects a powerful drive for growth, intense "
@@ -5097,7 +5097,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1744
+#: src/solar_return.c:1746
 #, c-format
 msgid ""
 "[CRITICAL] The South Node triggers energy drainage, necessary releases, "
@@ -5106,7 +5106,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1747
+#: src/solar_return.c:1749
 #, c-format
 msgid ""
 "This conjunction wakes up the natal potential of your %s, making its themes "
@@ -5114,13 +5114,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1757
+#: src/solar_return.c:1759
 msgid ""
 "No exact conjunctions detected over your natal planets within a 5° orb.\n"
 "\n"
 msgstr ""
 
-#: src/solar_return.c:1766
+#: src/solar_return.c:1768
 msgid ""
 "  [TRANSITS END] - Press 'Q' or ESC to return to the Solar Return "
 "interface.\n"

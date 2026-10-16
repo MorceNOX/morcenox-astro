@@ -8989,10 +8989,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(19):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
-                    disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects);
+                    if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects)) {
+                        saiu_retorno = true;
+                    } else {
+                        saiu_retorno = true;
+                    }
                     ativar_arrasto_mouse();
                     flushinp();
-                    saiu_retorno = true;
+                    
                 }                                
                 break; 
             case '8':
@@ -9180,10 +9184,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             *local_time = julian_day_para_struct_tm(julian_day);
 
             local_time->tm_hour += tz_offset;
+            local_time->tm_year = YY - 1900;
+            local_time->tm_mon = MM - 1;
+            local_time->tm_mday = DD;
+            local_time->tm_hour = HH;
+            local_time->tm_min = MIN;
+            local_time->tm_sec = SEC;
+
             timegm(local_time);
 
             bkgd(COLOR_PAIR(15) | FLAGS);
             erase();
+
+            saiu_retorno = false;
 
         }
 
@@ -9670,8 +9683,11 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 25:
             if (!ctx->mapa_retorno) {
-                disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects);
-                saiu_retorno = true;
+                if (disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects)) {
+                    saiu_retorno = true;
+                } else {
+                    saiu_retorno = true;
+                }              
             }
             break;
         default:
@@ -9684,9 +9700,20 @@ void open_menu_tables(ContextoMenu *ctx) {
         *ctx->local_time = julian_day_para_struct_tm(ctx->julian_day);
 
         ctx->local_time->tm_hour += ctx->tz_offset;
+        ctx->local_time->tm_year = YY - 1900;
+        ctx->local_time->tm_mon = MM - 1;
+        ctx->local_time->tm_mday = DD;
+        ctx->local_time->tm_hour = HH;
+        ctx->local_time->tm_min = MIN;
+        ctx->local_time->tm_sec = SEC;
+
         timegm(ctx->local_time);
 
         bkgd(COLOR_PAIR(15) | FLAGS);
+        erase();
+
+        saiu_retorno = false;
+
     }
 
     delwin(win);
