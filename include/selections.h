@@ -85,6 +85,7 @@ int set_elevation();
 int set_tz();
 int set_dst();
 int select_location_type(char *type);
+int set_location_filter(char *name, size_t max_length);
 int set_location_name(char *chart_name, size_t max_length);
 int select_country(char *country_chart);
 int set_country(char *location_name, size_t max_length);

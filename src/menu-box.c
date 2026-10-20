@@ -394,13 +394,34 @@ void set_data() {
 
     GENDER = gender_id;
 
-    double lat = 0.0, lon = 0.0, elev = 0.0;                                  
-    bool found_city = load_city_coordinates(CITY, COUNTRY, STATE, TZ_IANA, &TZ_OFFSET, &lat, &lon, &elev);
+    double lat = 0.0, lon = 0.0, elev = 0.0;
+    
+    bool cont = true;
+    bool found_city = false;
 
-    touchwin(stdscr);
-    wnoutrefresh(stdscr);
-    doupdate();
+    while (cont) {
+        found_city = load_city_coordinates(CITY, COUNTRY, STATE, TZ_IANA, &TZ_OFFSET, &lat, &lon, &elev);
 
+        touchwin(stdscr);
+        wnoutrefresh(stdscr);
+        doupdate();
+
+        if (!found_city) {
+            if (show_confirm_yesno("", _("Do you want to search the location again?"))) {
+                cont = true;
+                continue;
+            }
+            else {
+                cont = false;
+
+                touchwin(stdscr);
+                wnoutrefresh(stdscr);
+                doupdate();
+            }
+        } else {
+            cont = false;
+        }
+    }
     if (!found_city) {
         
         if (show_confirm_yesno("", _("Do you want to enter the coordinates of the location?"))) {
@@ -564,6 +585,12 @@ void set_data() {
        
     }
     else {
+        set_chart_name(chart_name, sizeof(chart_name));
+        snprintf(CHART_NAME, sizeof(CHART_NAME), "%s", chart_name);
+
+        touchwin(stdscr);
+        wnoutrefresh(stdscr);
+        doupdate();
 
         USAR_COORDENADAS = false;
 

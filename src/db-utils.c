@@ -759,6 +759,65 @@ void get_countries_from_db(char ***countries, int *count) {
     close_database(db);
 }
 
+
+
+void get_cities_from_db_filter(const char *country, char ***cities, char ***states, int *count, char *location) {
+     
+    sqlite3 *db;
+    int rc;
+    
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in get_cities_from_db\n");
+        return;
+    }
+    
+    const char *sql_select = "SELECT city, state FROM cities WHERE country = ? AND city LIKE ('%' || ? || '%') ORDER BY city COLLATE GLOBAL_SEM_ACENTO;";
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
+    
+    if (rc != SQLITE_OK) {
+        close_database(db);
+        *count = 0;
+        return;
+    }
+    
+    sqlite3_bind_text(stmt, 1, country, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, location, -1, SQLITE_TRANSIENT);
+    
+    // First pass: count rows
+    int row_count = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        row_count++;
+    }
+    
+    // Reset statement
+    sqlite3_reset(stmt);
+    
+    // Rebind and allocate array
+    sqlite3_bind_text(stmt, 1, country, -1, SQLITE_TRANSIENT);
+    *count = row_count;
+    *cities = malloc(row_count * sizeof(char*));
+    *states = malloc(row_count * sizeof(char*));
+    
+    // Second pass: fill array
+    int index = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        const char *city = (const char*)sqlite3_column_text(stmt, 0);
+        const char *state = (const char*)sqlite3_column_text(stmt, 1);
+        (*cities)[index] = strdup(city);
+        (*states)[index] = strdup(state);
+        index++;
+    }
+    
+    sqlite3_finalize(stmt);
+    close_database(db);
+}
+
+
+
+
+
 // Helper function to get cities from database for a specific country
 void get_cities_from_db(const char *country, char ***cities, char ***states, int *count) {
      

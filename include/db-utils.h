@@ -54,6 +54,7 @@ int get_coordinates(char *city, char *country, char *state, double *lat, double 
 int get_sign_properties(int sign, PrimitiveProperties *props);
 int get_planet_properties(int id, PrimitiveProperties *props);
 void get_cities_from_db(const char *country, char ***cities, char ***states, int *count);
+void get_cities_from_db_filter(const char *country, char ***cities, char ***states, int *count, char *location);
 void get_countries_from_db(char ***countries, int *count);
 int get_planet_orbis(int planet_ids[], double planet_orbis[], char planet_symbols[][10], int max_planets);
 int get_rulers(char *sign_symbol, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3); 

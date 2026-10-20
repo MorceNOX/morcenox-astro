@@ -805,6 +805,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
         wattroff(table_win, A_DIM);
     }
 
+    mvwprintw(table_win, table_height - 2, table_width - 50, _("        Press [F2] to Open The Profections Table"));
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart ─ F2 to Profections Table"));
     wnoutrefresh(table_win);
 
