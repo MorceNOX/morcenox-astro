@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 14:12-0300\n"
+"POT-Creation-Date: 2026-10-20 14:54-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -59,7 +59,7 @@ msgstr " Time "
 msgid "Planetary"
 msgstr ""
 
-#: src/almuten.c:612 src/directions.c:3936 src/directions.c:4902
+#: src/almuten.c:612 src/directions.c:3936 src/directions.c:4905
 #: src/draw-chart.c:2245 src/draw-chart.c:4747 src/selections.c:4097
 msgid "Day"
 msgstr "Day"
@@ -951,7 +951,7 @@ msgstr ""
 msgid "Mercury"
 msgstr "Mercury orb"
 
-#: src/directions.c:1315 src/directions.c:3991 src/directions.c:4951
+#: src/directions.c:1315 src/directions.c:3991 src/directions.c:4954
 #: src/draw-chart.c:425 src/draw-chart.c:628 src/draw-chart.c:645
 #: src/draw-chart.c:6226 src/draw-chart.c:7133 src/draw-chart.c:7155
 #: src/firdaria.c:100 src/hyleg.c:340 src/hyleg.c:486 src/profections.c:622
@@ -961,7 +961,7 @@ msgstr "Mercury orb"
 msgid "Venus"
 msgstr "Venus orb"
 
-#: src/directions.c:1318 src/directions.c:3981 src/directions.c:4941
+#: src/directions.c:1318 src/directions.c:3981 src/directions.c:4944
 #: src/draw-chart.c:428 src/draw-chart.c:629 src/draw-chart.c:646
 #: src/draw-chart.c:6231 src/draw-chart.c:7134 src/draw-chart.c:7156
 #: src/firdaria.c:101 src/hyleg.c:341 src/hyleg.c:489 src/profections.c:621
@@ -971,7 +971,7 @@ msgstr "Venus orb"
 msgid "Mars"
 msgstr "Mars orb"
 
-#: src/directions.c:1321 src/directions.c:3990 src/directions.c:4950
+#: src/directions.c:1321 src/directions.c:3990 src/directions.c:4953
 #: src/draw-chart.c:431 src/draw-chart.c:630 src/draw-chart.c:647
 #: src/draw-chart.c:6230 src/draw-chart.c:7135 src/draw-chart.c:7157
 #: src/firdaria.c:102 src/hyleg.c:342 src/hyleg.c:486 src/profections.c:626
@@ -981,7 +981,7 @@ msgstr "Mars orb"
 msgid "Jupiter"
 msgstr "Jupiter orb"
 
-#: src/directions.c:1324 src/directions.c:3982 src/directions.c:4942
+#: src/directions.c:1324 src/directions.c:3982 src/directions.c:4945
 #: src/draw-chart.c:434 src/draw-chart.c:631 src/draw-chart.c:648
 #: src/draw-chart.c:6229 src/draw-chart.c:7136 src/draw-chart.c:7158
 #: src/firdaria.c:103 src/hyleg.c:343 src/hyleg.c:489 src/profections.c:627
@@ -1012,7 +1012,7 @@ msgstr "Neptune orb"
 msgid "Pluto"
 msgstr "Pluto orb"
 
-#: src/directions.c:1336 src/directions.c:3992 src/directions.c:4952
+#: src/directions.c:1336 src/directions.c:3992 src/directions.c:4955
 #: src/draw-chart.c:446 src/draw-chart.c:635 src/draw-chart.c:652
 #: src/draw-chart.c:1606 src/draw-chart.c:7140 src/draw-chart.c:7159
 #: src/firdaria.c:104 src/solar_return.c:1493 src/solar_return.c:1555
@@ -1021,7 +1021,7 @@ msgid "North Node"
 msgstr ""
 
 #: src/directions.c:1339 src/directions.c:1396 src/directions.c:1409
-#: src/directions.c:3983 src/directions.c:4943 src/draw-chart.c:449
+#: src/directions.c:3983 src/directions.c:4946 src/draw-chart.c:449
 #: src/draw-chart.c:636 src/draw-chart.c:653 src/draw-chart.c:1604
 #: src/draw-chart.c:7141 src/draw-chart.c:7160 src/firdaria.c:105
 #: src/solar_return.c:1493 src/solar_return.c:1552 src/solar_return.c:1710
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid " Primary Directions "
 msgstr "Location: "
 
-#: src/directions.c:3882 src/directions.c:4842
+#: src/directions.c:3882 src/directions.c:4843
 msgid "Active Significator Target: "
 msgstr ""
 
@@ -1057,146 +1057,146 @@ msgstr ""
 msgid " [EMPHASIZED HYLEG]"
 msgstr ""
 
-#: src/directions.c:3890 src/directions.c:4858
+#: src/directions.c:3890 src/directions.c:4861
 msgid "Point not calculated in this chart"
 msgstr ""
 
-#: src/directions.c:3895 src/directions.c:4863
+#: src/directions.c:3895 src/directions.c:4866
 #, fuzzy
 msgid " │ Directions: "
 msgstr "Location: "
 
-#: src/directions.c:3923 src/directions.c:4888
+#: src/directions.c:3923 src/directions.c:4891
 msgid "Use [←/→] Signif. [↑/↓] Scroll"
 msgstr ""
 
-#: src/directions.c:3933 src/directions.c:4899 src/profections.c:233
+#: src/directions.c:3933 src/directions.c:4902 src/profections.c:233
 #: src/selections.c:2499 src/selections.c:2817
 msgid "Age"
 msgstr "Age"
 
-#: src/directions.c:3934 src/directions.c:4900 src/profections.c:234
+#: src/directions.c:3934 src/directions.c:4903 src/profections.c:234
 #: src/selections.c:4095
 msgid "Year"
 msgstr "Year"
 
-#: src/directions.c:3935 src/directions.c:4901
+#: src/directions.c:3935 src/directions.c:4904
 #, fuzzy
 msgid " Mo"
 msgstr "Moon orb"
 
-#: src/directions.c:3937 src/directions.c:4903
+#: src/directions.c:3937 src/directions.c:4906
 msgid "Directional Event"
 msgstr ""
 
-#: src/directions.c:3938 src/directions.c:4904
+#: src/directions.c:3938 src/directions.c:4907
 msgid "Arc"
 msgstr ""
 
-#: src/directions.c:3939 src/directions.c:4905
+#: src/directions.c:3939 src/directions.c:4908
 msgid "Sphere"
 msgstr ""
 
-#: src/directions.c:3940 src/directions.c:4906
+#: src/directions.c:3940 src/directions.c:4909
 #, fuzzy
 msgid "Motion"
 msgstr "Location: "
 
-#: src/directions.c:3941 src/directions.c:4907
+#: src/directions.c:3941 src/directions.c:4910
 msgid "Divisor"
 msgstr ""
 
-#: src/directions.c:3953 src/directions.c:4920
+#: src/directions.c:3953 src/directions.c:4923
 msgid "No directional contacts available for this specific point."
 msgstr ""
 
-#: src/directions.c:3971 src/directions.c:4931 src/draw-chart.c:3871
+#: src/directions.c:3971 src/directions.c:4934 src/draw-chart.c:3871
 msgid "Term"
 msgstr ""
 
-#: src/directions.c:4050 src/directions.c:5009
+#: src/directions.c:4050 src/directions.c:5012
 msgid "Direct"
 msgstr ""
 
-#: src/directions.c:4050 src/directions.c:5009
+#: src/directions.c:4050 src/directions.c:5012
 msgid "Converse"
 msgstr ""
 
-#: src/directions.c:4069 src/directions.c:5028
+#: src/directions.c:4069 src/directions.c:5031
 #, c-format
 msgid "Time Key: %s (1° of Equatorial Rotation = %6.4f Years). ε: Dynamic."
 msgstr ""
 
-#: src/directions.c:4072 src/directions.c:5031
+#: src/directions.c:4072 src/directions.c:5034
 #, c-format
 msgid "Time Key: %s (Dynamic). ε: Dynamic."
 msgstr ""
 
-#: src/directions.c:4078 src/directions.c:5037
+#: src/directions.c:4078 src/directions.c:5040
 msgid "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole)."
 msgstr ""
 
-#: src/directions.c:4080 src/directions.c:5039
+#: src/directions.c:4080 src/directions.c:5042
 msgid "Topocentric Method: Mundane (Continuous Local Poles)."
 msgstr ""
 
-#: src/directions.c:4082 src/directions.c:5041
+#: src/directions.c:4082 src/directions.c:5044
 msgid ""
 "Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane "
 "(Continuous Local Poles)."
 msgstr ""
 
-#: src/directions.c:4086 src/directions.c:5045
+#: src/directions.c:4086 src/directions.c:5048
 msgid ""
 "Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."
 msgstr ""
 
-#: src/directions.c:4088 src/directions.c:5047
+#: src/directions.c:4088 src/directions.c:5050
 msgid "Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."
 msgstr ""
 
-#: src/directions.c:4090 src/directions.c:5049
+#: src/directions.c:4090 src/directions.c:5052
 msgid ""
 "Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane "
 "(Proportional Semi-Arcs)."
 msgstr ""
 
 #: src/directions.c:4099 src/directions.c:4282 src/directions.c:4327
-#: src/directions.c:4409 src/directions.c:5058 src/directions.c:5241
-#: src/directions.c:5286 src/directions.c:5368 src/profections.c:310
+#: src/directions.c:4409 src/directions.c:5061 src/directions.c:5244
+#: src/directions.c:5289 src/directions.c:5371 src/profections.c:310
 #: src/profections.c:424 src/profections.c:468 src/profections.c:547
 msgid "Showing"
 msgstr ""
 
 #: src/directions.c:4102 src/directions.c:4285 src/directions.c:4330
-#: src/directions.c:4412 src/directions.c:5061 src/directions.c:5244
-#: src/directions.c:5289 src/directions.c:5371 src/profections.c:313
+#: src/directions.c:4412 src/directions.c:5064 src/directions.c:5247
+#: src/directions.c:5292 src/directions.c:5374 src/profections.c:313
 #: src/profections.c:427 src/profections.c:471 src/profections.c:550
 msgid "of"
 msgstr ""
 
 #: src/directions.c:4106 src/directions.c:4289 src/directions.c:4334
-#: src/directions.c:4416 src/directions.c:5065 src/directions.c:5248
-#: src/directions.c:5293 src/directions.c:5375
+#: src/directions.c:4416 src/directions.c:5068 src/directions.c:5251
+#: src/directions.c:5296 src/directions.c:5378
 #, fuzzy
 msgid ""
 "[↑/↓][PgUp/PgDn] Scroll │ [←/→] Change Target │ [C] Conv [D] Dir [A] All │ "
 "[Z] Zod [M] Mund [B] Both"
 msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
-#: src/directions.c:4109 src/directions.c:5068
+#: src/directions.c:4109 src/directions.c:5071
 msgid ""
 "Use [←/→] Change Target │ [C] Conv [D] Dir [A] All │ [Z] Zod [M] Mund [B] "
 "Both"
 msgstr ""
 
-#: src/directions.c:4111 src/directions.c:5070
+#: src/directions.c:4111 src/directions.c:5073
 msgid ""
 "Mundane Aspects: [1] (☌ ⚹ □ △ ☍ ∥ ∦ R∥ R∦)    │ [2] (☌ △ ☍ ∥ ∦ R∥ R∦)    │ "
 "[3] (☌ □ △ ☍ ∥ ∦ R∥ R∦) │ [4] (☌ ⚹ □ △ ☍ )"
 msgstr ""
 
-#: src/directions.c:4114 src/directions.c:5073
+#: src/directions.c:4114 src/directions.c:5076
 #, fuzzy
 msgid "Press ESC to return to chart ─ [P] Print to File"
 msgstr "Press [ESC] to cancel"
@@ -1214,57 +1214,57 @@ msgstr ""
 msgid " Primary Directions to Arabic Parts "
 msgstr "Location: "
 
-#: src/directions.c:5444
+#: src/directions.c:5447
 msgid "Error attempting to save directions to file!"
 msgstr ""
 
-#: src/directions.c:5450
+#: src/directions.c:5453
 #, c-format
 msgid ""
 "Age;Date;Promissor Glyph;Promissor Name;Event;Significator "
 "Glyph;Significator Name;Arc;Sphere;Motion;Divisor Glyph;Divisor Name\n"
 msgstr ""
 
-#: src/directions.c:5476
+#: src/directions.c:5479
 msgid "Directions exported to file:"
 msgstr ""
 
-#: src/directions.c:5489
+#: src/directions.c:5492
 msgid "Error attempting to save directions metadata to file!"
 msgstr ""
 
-#: src/directions.c:5495
+#: src/directions.c:5498
 #, fuzzy
 msgid "Primary Directions Calculation Method"
 msgstr "Location: "
 
-#: src/directions.c:5495
+#: src/directions.c:5498
 msgid "Tpocentric Method"
 msgstr ""
 
-#: src/directions.c:5495
-msgid "Placidus Proportional Semi-Arcs Method"
-msgstr ""
-
-#: src/directions.c:5496
-#, fuzzy
-msgid "Time Key"
-msgstr " Time "
-
-#: src/directions.c:5497
-msgid "Active Significator Target"
-msgstr ""
-
 #: src/directions.c:5498
-msgid "csv File:"
+msgid "Placidus Proportional Semi-Arcs Method"
 msgstr ""
 
 #: src/directions.c:5499
 #, fuzzy
+msgid "Time Key"
+msgstr " Time "
+
+#: src/directions.c:5500
+msgid "Active Significator Target"
+msgstr ""
+
+#: src/directions.c:5501
+msgid "csv File:"
+msgstr ""
+
+#: src/directions.c:5502
+#, fuzzy
 msgid "Total Directions:"
 msgstr "Location: "
 
-#: src/directions.c:5504
+#: src/directions.c:5507
 msgid "Directions metadata exported to file:"
 msgstr ""
 
@@ -3685,7 +3685,7 @@ msgid "[↑/↓][PgUp/PgDn] Scroll"
 msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
 #: src/profections.c:323
-msgid "(☠️) Critical Years = Years of Alcochoden Return."
+msgid "( ☠️  ) Critical Years = Years of Alcochoden Return."
 msgstr ""
 
 #: src/profections.c:324

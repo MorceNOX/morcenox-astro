@@ -8077,7 +8077,7 @@ int select_topic(char *file, int max_width) {
     wattroff(win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(175);
+    mouseinterval(188);
         
     while (!topic_selected) {
 
@@ -8372,7 +8372,7 @@ int select_country(char *country_chart) {
     wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
     
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(175);
+    mouseinterval(188);
 
     int country_selected = 0;
     int key;
@@ -8698,7 +8698,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     wattroff(country_win, COLOR_PAIR(22) | A_BOLD);
     
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(175);
+    mouseinterval(188);
 
     int country_selected = 0;
     int key;
@@ -9001,7 +9001,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
     //wattroff(city_win, COLOR_PAIR(22) | A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(175);
+    mouseinterval(188);
 
     // Clear and draw shadow
     werase(city_shadow);

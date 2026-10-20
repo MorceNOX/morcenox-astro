@@ -126,11 +126,6 @@ int obter_dias_do_mes(int mes, int ano) {
 
 
 
-
-
-
-
-
 // DIREÇÕES MUNDANAS
 
 /**
@@ -295,7 +290,7 @@ double calcular_posicao_mundana_placidus(double ra, double ramc, SemiArcos sa, d
 /**
  * Injeta as constantes mundanas absolutas com base no número da casa (1 a 12)
  * @param house_number Número da casa de 1 a 12 (1=Asc, 4=IC, 7=Dsc, 10=MC)
- * @param astro Ponteiro para a estrutura do seu objeto
+ * @param astro Ponteiro para a estrutura do objeto
  */
 void injetar_constantes_mundanas_por_casa(int house_number, Promissor *astro) {
     // Valores padrão neutros para eixos fixos locais
@@ -400,24 +395,6 @@ void calcular_paralelos_mundanos_conversa(Promissor *sig, Promissor *prom, doubl
     *cp_converso = fabs((prom->hd * sa_sig_oposto) - sig->md);    
 }
 
-
-// /**
-//  * Calcula o Arco de Paralelo Rapto e Contra-Paralelo Rapto (Método de Regiomontanus/Placidus)
-//  */
-// void calcular_paralelos_rapto(Promissor *sig, Promissor *prom, double *arco_rapto, double *arco_contra_rapto) {
-//     double sa_sig_uso = (sig->md <= sig->sa.sad) ? sig->sa.sad : sig->sa.san;
-//     double sa_prom_uso = (prom->md <= prom->sa.sad) ? prom->sa.sad : prom->sa.san;
-    
-//     // Equação do Paralelo Rapto Puro
-//     double numerador_rapto = (prom->md * sa_sig_uso) - (sig->md * sa_prom_uso);
-//     double denominador = sa_sig_uso + sa_prom_uso;
-    
-//     *arco_rapto = (denominador > 1e-6) ? fabs(numerador_rapto / denominador) : 0.0;
-    
-//     // Equação do Contra-Paralelo Rapto
-//     double numerador_contra = (prom->md * sa_sig_uso) + (sig->md * sa_prom_uso);
-//     *arco_contra_rapto = (denominador > 1e-6) ? fabs(numerador_contra / denominador) : 0.0;
-// }
 
 
 void calcular_paralelos_rapto(Promissor *sig, Promissor *prom, double *arco_rapto, double *arco_contra_rapto) {
@@ -1257,7 +1234,7 @@ double calcular_ao_do(double ra, double dec, double latitude_geo, int calcular_o
 
 
 
-// Retorna o ID da Swiss Ephemeris baseado no nome do objeto do seu software
+// Retorna o ID da Swiss Ephemeris baseado no nome do objeto do software
 // Retorna -1 para pontos que não possuem nós orbitais (Ângulos, Fortuna, etc.)
 int obter_swiss_ephemeris_id(const char *object) {
     if (strcmp(object, "☉") == 0) {
@@ -1509,7 +1486,7 @@ double descobrir_idade_por_arco_kepler(double tjd_ut_natal, double arco_alvo) {
 
 /**
  * Retorna o valor CHAVE dinâmico para o Arco Solar Verdadeiro.
- * Uso no seu código: double chave = obter_chave_arco_solar(tjd_natal, arco);
+ * Uso no código: double chave = obter_chave_arco_solar(tjd_natal, arco);
  *                    double idade = arco / chave;
  */
 double obter_chave_arco_solar(double tjd_ut_natal, double arco_alvo) {
@@ -1599,7 +1576,7 @@ double obter_chave_arco_solar_ultra_fast(double tjd_ut_natal, double arco_alvo) 
         return velocidade_natal;
     }
 
-    // 4. Retorna a chave equivalente para manter seu código funcionando por divisão
+    // 4. Retorna a chave equivalente para manter código funcionando por divisão
     return arco_alvo / idade_estimada_dias;
 }
 
@@ -1713,9 +1690,9 @@ double encontrar_chave_por_arco_solar_ra_FAST(double jd_natal, double arco_direc
     
     if (dias_de_progressao > 0.0) {
         // CORREÇÃO DA FRAÇÃO DA CHAVE:
-        // Como o seu motor principal faz: d->idade_evento = arco / CHAVE;
+        // Como o motor principal faz: d->idade_evento = arco / CHAVE;
         // E depois faz: dias_decorridos = d->idade_evento * 365.242199;
-        // Nós devolvemos a CHAVE perfeitamente calibrada para neutralizar o ano tropical do seu motor pai!
+        // Nós devolvemos a CHAVE perfeitamente calibrada para neutralizar o ano tropical do motor pai!
         double idade_anos_reais = dias_de_progressao; 
         return arco_direcao / idade_anos_reais;
     }
@@ -1843,7 +1820,7 @@ double encontrar_chave_por_arco_solar_ra_OTIMIZADA(double jd_natal, double arco_
     double dias_de_progressao = jd_progredido_estimado - jd_natal;
     
     if (dias_de_progressao > 0.0) {
-        // Devolve o fator calibrado que mata o ano tropical do seu motor principal
+        // Devolve o fator calibrado que mata o ano tropical do motor principal
         return arco_direcao / dias_de_progressao;
     }
     
@@ -1869,7 +1846,7 @@ double encontrar_chave_por_arco_solar_ra_OTIMIZADA(double jd_natal, double arco_
 
 // /**
 //  * Retorna o valor CHAVE dinâmico para a lógica de Kepler.
-//  * Uso no seu código: double chave = obter_chave_kepler(tjd_natal, arco);
+//  * Uso no código: double chave = obter_chave_kepler(tjd_natal, arco);
 //  *                    double idade = arco / chave;
 //  */
 // double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
@@ -1954,7 +1931,7 @@ static double normalizar_diferenca_ra(double atual, double natal) {
 /**
  * Calcula a Chave Dinâmica de Placidus (True Solar Arc em Ascensão Reta)
  * @param tjd_ut_natal Dia Juliano do nascimento (Tempo Universal)
- * @param arco_alvo O arco equatorial calculado pelo seu motor de direções primárias
+ * @param arco_alvo O arco equatorial calculado pelo motor de direções primárias
  * @return O fator de conversão (Chave) em Graus por Ano
  */
 double obter_chave_placidus_ra(double tjd_ut_natal, double arco_alvo) {
@@ -2060,7 +2037,7 @@ double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
     }
 
     // Retorna a chave dinâmica ajustada (Graus por Ano)
-    // Multiplicando qualquer arco do seu motor por esta chave, você terá a idade exata em anos
+    // Multiplicando qualquer arco do motor por esta chave, você terá a idade exata em anos
     return arco_alvo / dias_estimados;
 }
 
@@ -2262,7 +2239,6 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             }
                             if (ja_salvo) continue;
 
-                            // Preenchimento mantendo seus ponteiros originais intactos para o color-coding
                             LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
                             d->sentido = s;
 
@@ -2276,7 +2252,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             d->promissor_type = prom[p].type;
                             d->arco_graus = arco;
 
-                            // 1. Obter a chave/fator do sistema usando suas macros estáticas
+                            // 1. Obter a chave/fator do sistema usando macros estáticas
                             double CHAVE = get_time_key(TIME_KEY, jd, arco);
                             if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
@@ -2393,7 +2369,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     d->promissor_type = prom[p].type;
                     d->arco_graus = arco;
 
-                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
+                    // 1. Obter a chave/fator do sistema usando macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
                     if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
@@ -2590,7 +2566,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             d->promissor_type = prom[p].type;
                             d->arco_graus = arco;
 
-                            // 1. Obter a chave/fator do sistema usando suas macros estáticas
+                            // 1. Obter a chave/fator do sistema usando macros estáticas
                             double CHAVE = get_time_key(TIME_KEY, jd, arco);
                             if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
@@ -2717,7 +2693,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
 
-                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
+                    // 1. Obter a chave/fator do sistema usando macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
                     if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
@@ -2765,7 +2741,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     // Usa o valor 2 (SE_KEEP_GREG_CAL fictício) para transição automática Juliano/Gregoriano de 1582
                     swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
 
-                    // 5. Alimenta a sua estrutura LinhaDirecao com a precisão mecânica da biblioteca
+                    // 5. Alimenta a estrutura LinhaDirecao com a precisão mecânica da biblioteca
                     d->ano_calendario = ano_c;
                     d->mes_calendario = mes_c;
                     d->dia_calendario = dia_c;
@@ -3389,7 +3365,7 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                     
                     d->arco_graus = arco;
                     
-                    // 1. Obter a chave/fator do sistema usando suas macros estáticas
+                    // 1. Obter a chave/fator do sistema usando macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
                     if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
@@ -4255,10 +4231,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // O seu offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
+                        // O offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
                         // Assumindo estrutura padrão: Seta Cima na linha 6, Canal da Barra da 7 até max, Seta Baixo no fim.
                         int linha_seta_cima = 6;
-                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a sua seta de baixo estiver em outra linha
+                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a seta de baixo estiver em outra linha
                         int offset_inicio_barra = 6 + 1; 
                         int altura_canal_barra = max_linhas_exibicao - 1;
 
@@ -4839,7 +4815,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         if (scroll_offset < 0) scroll_offset = 0;
 
         // --- RENDERIZAÇÃO DO CABEÇALHO FIXO ---
+        wattron(table_win, A_BOLD);
         mvwprintw(table_win, 2, 4, _("Active Significator Target: "));
+        wattroff(table_win, A_BOLD);
+
         wattron(table_win, A_BOLD | COLOR_PAIR(8));
         // if (idx_atual_calculo != -1) {
 
@@ -5214,10 +5193,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // O seu offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
+                        // O offset_y passado na função foi 6. As setas estão posicionadas nas extremidades.
                         // Assumindo estrutura padrão: Seta Cima na linha 6, Canal da Barra da 7 até max, Seta Baixo no fim.
                         int linha_seta_cima = 6;
-                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a sua seta de baixo estiver em outra linha
+                        int linha_seta_baixo = 6 + max_linhas_exibicao; // Ajuste se a seta de baixo estiver em outra linha
                         int offset_inicio_barra = 6 + 1; 
                         int altura_canal_barra = max_linhas_exibicao - 1;
 
