@@ -3878,7 +3878,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         }
         if (scroll_offset < 0) scroll_offset = 0;
 
+        wattron(table_win, A_BOLD);
         mvwprintw(table_win, 2, 4, _("Active Significator Target: "));
+        wattroff(table_win, A_BOLD);
+
         wattron(table_win, A_BOLD | COLOR_PAIR(8));
         if (idx_atual_calculo != -1) {
             wprintw(table_win, "%s %s", sig[idx_atual_calculo].object, sig[idx_atual_calculo].object_name);
@@ -3888,8 +3891,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         }
         wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
-        wattron(table_win, A_ITALIC);
+        wattron(table_win, A_ITALIC | A_BOLD);
         wprintw(table_win, _(" │ Directions: "));
+        wattroff(table_win, A_BOLD);
+
         wattron(table_win, A_BOLD | COLOR_PAIR(7));
         if (tipo == 0) {
             wprintw(table_win, "Zod");            

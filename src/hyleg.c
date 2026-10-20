@@ -1191,6 +1191,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     wattroff(table_win, COLOR_PAIR(6)); 
 
     // Notas de Literatura Astrológica Tradicional (Lilly / Ptolomeu)
+    wattroff(table_win, A_BOLD);
     wattron(table_win, A_DIM);
     mvwprintw(table_win, table_height - 4, 4, _("Note: The Anareta represents the geometric source of physical or metabolic risk."));
     mvwprintw(table_win, table_height - 3, 4, _("Its activation requires explicit conjunctions or hostile primary directions."));

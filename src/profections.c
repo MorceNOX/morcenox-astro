@@ -46,7 +46,7 @@ int obter_regente_trad(int id_signo) {
 }
 
 
-void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento) {
+void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento, int anos_alcochoden) {
     int ano_natal, mes_n, dia_n, hora_n, min_n;
     double sec_n;
     
@@ -80,6 +80,8 @@ void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double l
         p->senhor_ano_id    = obter_regente_trad(p->signo_id);
         p->senhor_ano_nome  = obter_nome_planeta_por_id(p->senhor_ano_id);
         p->senhor_ano_glifo = obter_glifo_planeta_por_id(p->senhor_ano_id);
+
+        p->anos_alcochoden = anos_alcochoden;
     }
 }
 
@@ -225,7 +227,7 @@ void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_prof
         wattroff(table_win, COLOR_PAIR(13));
 
         // 1. CALIBRAÇÃO DAS COLUNAS ADAPTADA PARA PROFECÇÕES
-        int col_idade = 0, col_ano = 16, col_casa = 26, col_signo = 44, col_senhor = 80;
+        int col_idade = 0, col_ano = 16, col_casa = 26, col_signo = 44, col_senhor = 80, col_caveira = 98;
 
         wattron(table_win, A_BOLD | COLOR_PAIR(13));
         mvwprintw(table_win, 5, col_idade + 4, _("Age")); 
@@ -233,6 +235,7 @@ void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_prof
         mvwprintw(table_win, 5, col_casa + 4, _("Activated House"));
         mvwprintw(table_win, 5, col_signo + 4, _("Profected Sign")); 
         mvwprintw(table_win, 5, col_senhor + 4, _("Lord of the Year"));
+        mvwprintw(table_win, 5, col_caveira + 4, _("Critical Year?"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(13));
 
         wattron(table_win, COLOR_PAIR(13));
@@ -282,6 +285,10 @@ void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_prof
                 // Exibe o Senhor do Ano (Glifo + Nome Traduzido) capturado das suas funções
                 mvwprintw(scroll_pad, row_pad, col_senhor, "%s  %s", p->senhor_ano_glifo, p->senhor_ano_nome);
 
+                wattron(scroll_pad, COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+                mvwprintw(scroll_pad, row_pad, col_caveira, "%s", (p->idade % p->anos_alcochoden == 0) ? " ☠️  " : "");
+                wattroff(scroll_pad, COLOR_PAIR(11) | A_REVERSE | A_BOLD);
+
                 wattroff(scroll_pad, par_cor_ativo | atributo_extra);
 
                 wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
@@ -313,6 +320,7 @@ void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_prof
         
         // Rodapé descritivo focado em profecções tradicionais
         wattron(table_win, A_ITALIC);
+        mvwprintw(table_win, table_height - 8, 4, _("( ☠️  ) Critical Years = Years of Alcochoden Return."));
         mvwprintw(table_win, table_height - 7, 4, _("Profection System: Sign-by-Sign (Traditional Wheel) ─ 1 Sign = 1 Year"));
         wattroff(table_win, A_ITALIC);
 
@@ -831,7 +839,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
         }
         else if (ch == KEY_F(2)) {
             LinhaProfecao tabela[121];
-            gerar_tabela_profecoes_anuais(tabela, 121, cusps[1], jd);
+            gerar_tabela_profecoes_anuais(tabela, 121, cusps[1], jd, anos_alcochoden);
             exibir_janela_tabela_profecoes(tabela, 121, idade, prof.glifo_senhor, prof.nome_senhor);
 
             touchwin(shadow_win);

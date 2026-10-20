@@ -38,9 +38,10 @@ typedef struct {
     const char *senhor_ano_nome;  // Suporta o retorno de obter_nome_planeta_por_id()
     const char *senhor_ano_glifo; // Suporta o retorno de obter_glifo_planeta_por_id()
     double longitude_asc_prof;
+    int anos_alcochoden;
 } LinhaProfecao;
 
-void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento);
+void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento, int anos_alcochoden);
 void exibir_janela_tabela_profecoes(LinhaProfecao *cronograma_prof, int qtd_profecoes, int idade, char *glifo_senhor, char *nome_senhor);
 DadosProfeccao calcular_profeccao_anual(double asc_longitude, int idade_atual);
 void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, ChartObject *obj, int num_objects, double jd);
