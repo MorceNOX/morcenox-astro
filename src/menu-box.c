@@ -1935,7 +1935,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         wattron(bar_win, COLOR_PAIR(12));
         if (strcmp(MESSAGE, "") != 0) {
-            wattron(bar_win, A_BLINK);
+            wattron(bar_win, A_BOLD);
         }
         
         // === CÁLCULO DA MENSAGEM COM RETICÊNCIAS ===
@@ -1947,7 +1947,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
         wattron(bar_win, COLOR_PAIR(12));
         if (strcmp(MESSAGE, "") != 0) {
-            wattron(bar_win, A_BLINK);
+            wattron(bar_win, A_BOLD);
         }
 
         char *msg_para_exibir = (strcmp(MESSAGE, "") == 0) ? options[*highlight].text : MESSAGE;

@@ -152,6 +152,7 @@ Termo tabela_termos_ptolomeu[12][5] = {
 
 
 const char *sagittarius[] = {
+    "   ",
     "▗▚ ",
     "▘▌▘",
     "▄▙▖",
@@ -159,6 +160,7 @@ const char *sagittarius[] = {
 };
 
 const char *taurus[] = {
+    "     ",
     "▝▖  ▞",
     " ▞▀▀▖",
     "▐   ▐",
@@ -170,10 +172,12 @@ const char *aries[] = {
     "      ",
     "▞▀▖▞▀▖",
     "  ▐   ",
-    "  ▐   "
+    "  ▐   ",
+    "      "
 };
 
 const char *gemini[] = {
+    "     ",
     "▄▄▄▄▖",
     " ▌ ▌ ",
     " ▌ ▌ ",
@@ -181,6 +185,7 @@ const char *gemini[] = {
 };
 
 const char *leo[] = {
+    "     ",
     " ▞▀▀▖",
     "▞▚  ▞",
     "▚▞ ▐ ",
@@ -189,6 +194,7 @@ const char *leo[] = {
 
 
 const char *pisces[] = {
+    "     ",
     "▝▖  ▞",
     "▗▟▄▟▄",
     " ▞ ▝▖",
@@ -200,42 +206,48 @@ const char *aquarius[] = {
     "     ",
     "▞▚▞▚▞",
     "     ",
-    "▞▚▞▚▞"
+    "▞▚▞▚▞",
+    "     "
 };
 
 const char *cancer[] = {
     "     ",
     "▞▜▀▀ ",
     "▚▞ ▞▚",
-    " ▄▄▙▞"
+    " ▄▄▙▞",
+    "     "
 };
 
 const char *libra[] = {
     "    ",
     " ▞▚ ",
     "▀▀▀▀",
-    "▀▀▀▀"
+    "▀▀▀▀",
+    "     "
 };
 
 const char *scorpio[] = {
     "    ",
     "▛▚▀▖",
     "▌▐ ▌",
-    "▘▝ ▚"
+    "▘▝ ▚",
+    "    "
 };
 
 const char *virgo[] = {
     "     ",
     "▛▚▀▞▚",
     "▌▐ ▌▞",
-    "▘▝ ▜ "
+    "▘▝ ▜ ",
+    "     "
 };
 
 const char *capricorn__[] = {
     "     ",
     "▚▗▜▞▚",
     " ▘ ▚▞",
-    "   ▞ "
+    "   ▞ ",
+    "     "
 };
 
 const char *capricorn[] = {
@@ -243,7 +255,7 @@ const char *capricorn[] = {
     "▚▗▜▞▚ ",
     " ▌ ▚▞ ",
     "   ▞  ",
-    "      "
+    "      ",
 };
 
 
@@ -1955,7 +1967,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                       float current_scale, float aspect_ratio, int n, int asc) {
     
     
-    float radius = 16.0 * current_scale;
+    float radius = 16.5 * current_scale;
     int offset = 0 * n;    
     
     for (int i = 75 + 270 + asc, k = 0; i < 435 + 270 + asc; i += 30, k++) {
@@ -1963,7 +1975,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
         int y = (int)(display_center_y + radius * sin(angle));
         int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
         
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < 5; j++) {
             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
                 if ( (k + offset) % 12 == 0 ) {
                     
@@ -4312,13 +4324,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         SemiArcos sa = calcular_semi_arcos(lat, plots[i].declination);
 
         (void)ramc;
-        // int acima = verificar_se_acima_horizonte(plots[i].ra, para_radianos(plots[i].declination), ramc, para_radianos(lat)); 
-        // double sa = __calcular_semi_arco(para_radianos(plots[i].declination), para_radianos(lat), acima);
-
-        // char sa_pos = ' ';
-        // if (acima) sa_pos = 'D';
-        // else       sa_pos = 'N';
-
+        
         mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", sa.sad);
         mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
        
@@ -4353,10 +4359,9 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wattroff(table_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(table_win);
 
-    doupdate();
-
     // Renderiza a primeira foto da PAD na tela
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+    doupdate();
 
     int ch;
     int running = 1;
