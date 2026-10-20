@@ -172,7 +172,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Main Menu
 <hr>
-<img width="2560" height="1600" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/e4a85689-b9b8-41f5-bf34-00c7e8094cc9" />
+<img width="2560" height="1539" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/a5f2df5f-e4a8-426d-af30-58573f4c8ad5" />
 <hr>
 
 ### The Chart Wheel
