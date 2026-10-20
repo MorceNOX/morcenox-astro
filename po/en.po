@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 12:03-0300\n"
+"POT-Creation-Date: 2026-10-20 12:42-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -707,7 +707,7 @@ msgstr ""
 
 #: src/arabic_parts.c:414 src/arabic_parts.c:932 src/draw-chart.c:3763
 #: src/draw-chart.c:4562 src/draw-chart.c:5692 src/firdaria.c:464
-#: src/hyleg.c:844 src/hyleg.c:1199 src/mind.c:331
+#: src/hyleg.c:844 src/hyleg.c:1200 src/mind.c:331
 #, fuzzy
 msgid "Press ESC to return to chart"
 msgstr "Press [ESC] to cancel"
@@ -2771,7 +2771,7 @@ msgstr ""
 msgid "Almuten Figuris (Chart Ruler)"
 msgstr ""
 
-#: src/hyleg.c:330 src/hyleg.c:1117
+#: src/hyleg.c:330 src/hyleg.c:1118
 msgid "Almuten of Hylegiacal Points"
 msgstr ""
 
@@ -2892,70 +2892,70 @@ msgstr ""
 msgid " Vital Threats: The Anareta "
 msgstr ""
 
-#: src/hyleg.c:1072
+#: src/hyleg.c:1073
 msgid "                Target Hyleg: "
 msgstr ""
 
-#: src/hyleg.c:1075
+#: src/hyleg.c:1076
 msgid "☉ Sun"
 msgstr ""
 
-#: src/hyleg.c:1076
+#: src/hyleg.c:1077
 #, fuzzy
 msgid "☾ Moon"
 msgstr "Moon orb"
 
-#: src/hyleg.c:1077
+#: src/hyleg.c:1078
 msgid "ASC (Ascendant Degree)"
 msgstr ""
 
-#: src/hyleg.c:1078
+#: src/hyleg.c:1079
 msgid "SAN (Syzygy Ante-Nativitatem)"
 msgstr ""
 
-#: src/hyleg.c:1079
+#: src/hyleg.c:1080
 msgid "🝴 Part of Fortune"
 msgstr ""
 
-#: src/hyleg.c:1096 src/hyleg.c:1098
+#: src/hyleg.c:1097 src/hyleg.c:1099
 msgid "Almuten Figuris Protector"
 msgstr ""
 
-#: src/hyleg.c:1123
+#: src/hyleg.c:1124
 msgid "      8th House Sign & Ruler: "
 msgstr ""
 
-#: src/hyleg.c:1135
+#: src/hyleg.c:1136
 msgid "THE CHOSEN ANARETA (Interfector): "
 msgstr ""
 
-#: src/hyleg.c:1145 src/hyleg.c:1181
+#: src/hyleg.c:1146 src/hyleg.c:1182
 msgid "Calculated Threat Score: "
 msgstr ""
 
-#: src/hyleg.c:1147
+#: src/hyleg.c:1148
 msgid "Points"
 msgstr ""
 
-#: src/hyleg.c:1178
+#: src/hyleg.c:1179
 msgid "None Active"
 msgstr ""
 
-#: src/hyleg.c:1183
+#: src/hyleg.c:1184
 msgid "0 Points"
 msgstr ""
 
-#: src/hyleg.c:1184
+#: src/hyleg.c:1185
 msgid "No severe planetary afflictions targeting the vital points."
 msgstr ""
 
-#: src/hyleg.c:1194
+#: src/hyleg.c:1195
 msgid ""
 "Note: The Anareta represents the geometric source of physical or metabolic "
 "risk."
 msgstr ""
 
-#: src/hyleg.c:1195
+#: src/hyleg.c:1196
 msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""

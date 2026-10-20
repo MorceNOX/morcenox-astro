@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 11:57-0300\n"
+"POT-Creation-Date: 2026-10-20 12:03-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1130,7 +1130,7 @@ msgstr "Falha ao salvar cidade (step)!"
 msgid "City saved!"
 msgstr "Cidade salva!"
 
-#: src/directions.c:641 src/directions.c:3440 src/directions.c:5964
+#: src/directions.c:641 src/directions.c:3440
 msgid "Mundane"
 msgstr "Mundana"
 
@@ -1412,11 +1412,11 @@ msgstr "Lote da Fortuna"
 msgid " Primary Directions to Arabic Parts "
 msgstr " Direções Primárias às Partes Árabes "
 
-#: src/directions.c:5733
+#: src/directions.c:5439
 msgid "Error attempting to save directions to file!"
 msgstr "Erro ao tentar salvar direções para arquivo!"
 
-#: src/directions.c:5739
+#: src/directions.c:5445
 #, c-format
 msgid ""
 "Age;Date;Promissor Glyph;Promissor Name;Event;Significator "
@@ -1426,43 +1426,43 @@ msgstr ""
 "Significador;Nome do Significador;Arco;Esfera;Direção;Glifo do Divisor;Nome "
 "do Divisor\n"
 
-#: src/directions.c:5765
+#: src/directions.c:5471
 msgid "Directions exported to file:"
 msgstr "Direções exportadas para arquivo:"
 
-#: src/directions.c:5778
+#: src/directions.c:5484
 msgid "Error attempting to save directions metadata to file!"
 msgstr "Erro ao tentar salvar metadados das direções para arquivo!"
 
-#: src/directions.c:5784
+#: src/directions.c:5490
 msgid "Primary Directions Calculation Method"
 msgstr "Método de Cálculo das Direções Primárias"
 
-#: src/directions.c:5784
+#: src/directions.c:5490
 msgid "Tpocentric Method"
 msgstr "Métodp Topocêntrico"
 
-#: src/directions.c:5784
+#: src/directions.c:5490
 msgid "Placidus Proportional Semi-Arcs Method"
 msgstr "Método Placidus Semi-Arcos Proporcionais"
 
-#: src/directions.c:5785
+#: src/directions.c:5491
 msgid "Time Key"
 msgstr "Chave de Tempo"
 
-#: src/directions.c:5786
+#: src/directions.c:5492
 msgid "Active Significator Target"
 msgstr "Significador Ativo Alvo"
 
-#: src/directions.c:5787
+#: src/directions.c:5493
 msgid "csv File:"
 msgstr "Arquivo csv"
 
-#: src/directions.c:5788
+#: src/directions.c:5494
 msgid "Total Directions:"
 msgstr "Quantidade de Direções:"
 
-#: src/directions.c:5793
+#: src/directions.c:5499
 msgid "Directions metadata exported to file:"
 msgstr "Metadados exportados para arquivo:"
 

@@ -1069,6 +1069,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     int id_regente_c8 = obter_regente_tradicional(signo_casa8);
 
     // 2. RENDERIZAÇÃO DO CABEÇALHO DA INTERFACE CORRIGIDA
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 4, _("                Target Hyleg: "));
     wattron(table_win, A_BOLD | COLOR_PAIR(8));
     

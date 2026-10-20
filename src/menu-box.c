@@ -2934,7 +2934,7 @@ int main() {
 
         }
         init_pair(31, COLOR_BLUE, COLOR_YELLOW);
-        init_pair(32, COLOR_BLUE, 82);
+        init_pair(32, COLOR_BLUE, 52);
         init_pair(33, COLOR_BLUE, 17);
     
 
