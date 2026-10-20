@@ -2896,7 +2896,7 @@ int main() {
         init_pair(14, COLOR_RED, COLOR_BLUE);
         init_pair(15, COLOR_BLUE, 208); // orange
         init_pair(16, COLOR_BLUE, 95);
-        init_pair(17, COLOR_BLUE, 36);
+        init_pair(17, COLOR_BLUE, 29);
             
         if (DARK_MODE) {
             init_pair(13, COLOR_WHITE, COLOR_BLACK);

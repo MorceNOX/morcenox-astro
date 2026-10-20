@@ -2130,13 +2130,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                 int eh_paralelo = (a == 8 || a == 9);
 
                 if (eh_paralelo) {
-                    int calcular_paralelo = 0;
-                    if (sentido == 2 && s == 0) calcular_paralelo = 1;
-                    if (sentido == 0 && s == 0) calcular_paralelo = 1;
-                    if (sentido == 1 && s == 1) calcular_paralelo = 1;
-                
-                    if (!calcular_paralelo) continue;
-
+                    
                     double dec_alvo_paralelo = (a == 8) ? dec_sig : -dec_sig;
                     double obl = get_obliquidade(jd);
 
@@ -2200,9 +2194,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             int ja_salvo = 0;
                             for (int m = 0; m < *qtd_direcoes; m++) {
                                 if (lista_resultado[m].sentido == s &&
-                                    strcmp(lista_resultado[m].promissor_name, prom[p].object_name) == 0 &&
-                                    strcmp(lista_resultado[m].aspecto_symbol, simbolos_aspectos[a]) == 0 &&
-                                    fabs(lista_resultado[m].arco_graus - arco) < 0.005) {
+                                    lista_resultado[m].promissor_id == prom[p].id &&
+                                    lista_resultado[m].aspecto_id == a &&
+                                    fabs(lista_resultado[m].arco_graus - arco) < 0.001) {
                                     ja_salvo = 1; break;
                                 }
                             }
@@ -2309,6 +2303,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                 double oa_prom = ra_aspecto - (asin(sin_ad_prom_polo) * 180.0 / M_PI);
 
                 arco = (s == 0) ? (oa_prom - oa_sig) : (oa_sig - oa_prom);
+                
                 if (arco < 0) arco += 360.0;
                 arco = fmod(arco, 360.0);
                 if (arco > 180.0) arco = 360.0 - arco;
@@ -2317,9 +2312,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     int ja_salvo = 0;
                     for (int m = 0; m < *qtd_direcoes; m++) {
                         if (lista_resultado[m].sentido == s &&
-                            strcmp(lista_resultado[m].promissor_name, prom[p].object_name) == 0 &&
-                            strcmp(lista_resultado[m].aspecto_symbol, simbolos_aspectos[a]) == 0 &&
-                            fabs(lista_resultado[m].arco_graus - arco) < 0.005) {
+                            lista_resultado[m].promissor_id == prom[p].id &&
+                            lista_resultado[m].aspecto_id == a &&
+                            fabs(lista_resultado[m].arco_graus - arco) < 0.001) {
                             ja_salvo = 1; break;
                         }
                     }
