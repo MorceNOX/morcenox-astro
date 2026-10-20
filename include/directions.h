@@ -52,6 +52,28 @@ typedef enum {
 } TipoDirecaoEnum;
 
 
+#define RAD_TO_DEG (180.0 / M_PI)
+#define DEG_TO_RAD (M_PI / 180.0)
+
+/**
+ * Estrutura para retornar ambos os semi-arcos calculados
+ */
+typedef struct {
+    double sad; // Semi-Arco Diurno (em graus)
+    double san; // Semi-Arco Noturno (em graus)
+} SemiArcos;
+
+
+typedef struct {
+    double ra;
+    double dec;
+    SemiArcos sa;
+    double md;
+    double hd;
+    double pm; // Posição Mundana de Placidus (0° a 360°)
+} DadosAstro;
+
+
 typedef struct {
     int id;
     char object[10];
@@ -67,6 +89,10 @@ typedef struct {
     int house_fim;
     int type;
     double house_pos;
+    SemiArcos sa;
+    double md;
+    double hd;
+    double pm; // Posição Mundana de Placidus (0° a 360°)
 } Promissor;
 
 typedef struct {
@@ -74,6 +100,7 @@ typedef struct {
     char promissor_name[64]; // O planeta que se move (ex: "Mars")
     char promissor_glifo[10];
     int promissor_type;
+    int aspecto_id;
     char aspecto_symbol[10]; // ☌, ⚹, □, △, ☍
     char significador_name[20]; // O ponto receptor parado (ex: "Moon" [Hyleg])
     char significador_glifo[10];
@@ -87,8 +114,13 @@ typedef struct {
     int sentido;        // 0 = Direct; 1 = Converse
     char divisor_name[64];
     char divisor_gliph[10];
+    SemiArcos sig_sa;
+    double sig_md;
+    double sig_hd;
+    double sig_pm;
 } LinhaDirecao;
 
+SemiArcos calcular_semi_arcos(double latitude_geo, double declinacao);
 double get_time_key(int key, double jd, double arco);
 const char* get_key_name(int key);
 double get_obliquidade(double jd);

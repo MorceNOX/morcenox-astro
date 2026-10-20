@@ -66,7 +66,7 @@
 #endif
 
 // Funções matemáticas utilitárias para conversão
-static double para_radianos(double graus) { return graus * M_PI / 180.0; }
+//static double para_radianos(double graus) { return graus * M_PI / 180.0; }
 //static double para_graus(double radianos) { return radianos * 180.0 / M_PI; }
 
 
@@ -4228,13 +4228,14 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 24, _("House"));
-    mvwprintw(table_win, 2, 35, _("Speed"));
-    mvwprintw(table_win, 2, 45, _("Longitude"));
-    mvwprintw(table_win, 2, 59, _("Latitude"));
-    mvwprintw(table_win, 2, 74, _("Declination"));
-    mvwprintw(table_win, 2, 88, _("Right Ascension"));
-    mvwprintw(table_win, 2, 109, _("Semi-Arc"));
+    mvwprintw(table_win, 2, 22, _("House"));
+    mvwprintw(table_win, 2, 33, _("Speed"));
+    mvwprintw(table_win, 2, 40, _("Longitude"));
+    mvwprintw(table_win, 2, 52, _("Latitude"));
+    mvwprintw(table_win, 2, 64, _("Declination"));
+    mvwprintw(table_win, 2, 78, _("Right Ascension"));
+    mvwprintw(table_win, 2, 95, _("Semi-Arc (Day)"));
+    mvwprintw(table_win, 2, 114, _("Semi-Arc (Night)"));
            
     wattron(table_win, COLOR_PAIR(13));
     wmove(table_win, 3, 2);
@@ -4250,14 +4251,10 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 30, c_lon = 44, c_lat = 57, c_dec = 74, c_ra = 91, c_sa = 107;
+    int c_obj = 0, c_pos = 8, c_hse = 20, c_spd = 28, c_lon = 39, c_lat = 50, c_dec = 64, c_ra = 81, c_sad = 97, c_san = 118;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-        // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
-        //     (!show_modern_planets && (i >= 13 && i <= 14))) {
-        //     continue;
-        // }
-
+        
         PlanetRowData data = matrix->rows[i];
 
         // 1. Objeto / Planeta
@@ -4311,14 +4308,19 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
             mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", plots[i].ra);
         }
 
-        int acima = verificar_se_acima_horizonte(plots[i].ra, para_radianos(plots[i].declination), ramc, para_radianos(lat)); 
-        double sa = __calcular_semi_arco(para_radianos(plots[i].declination), para_radianos(lat), acima);
 
-        char sa_pos = ' ';
-        if (acima) sa_pos = 'D';
-        else       sa_pos = 'N';
+        SemiArcos sa = calcular_semi_arcos(lat, plots[i].declination);
 
-        mvwprintw(scroll_pad, row_pad, c_sa, "%8.4f(%c)", sa, sa_pos);
+        (void)ramc;
+        // int acima = verificar_se_acima_horizonte(plots[i].ra, para_radianos(plots[i].declination), ramc, para_radianos(lat)); 
+        // double sa = __calcular_semi_arco(para_radianos(plots[i].declination), para_radianos(lat), acima);
+
+        // char sa_pos = ' ';
+        // if (acima) sa_pos = 'D';
+        // else       sa_pos = 'N';
+
+        mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", sa.sad);
+        mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
        
         wattroff(scroll_pad, A_BOLD);
 

@@ -533,6 +533,43 @@ int comparar_directions_por_idade(const void *a, const void *b) {
 }
 
 
+
+int comparar_directions_por_idade_aspecto(const void *a, const void *b) {
+    // 1. Converte os ponteiros void para ponteiros da sua struct
+    const LinhaDirecao *objA = (const LinhaDirecao *)a;
+    const LinhaDirecao *objB = (const LinhaDirecao *)b;
+
+    // 2. Compara os valores double evitando erros de precisão no retorno int
+    if (objA->idade_evento < objB->idade_evento) return -1;
+    if (objA->idade_evento > objB->idade_evento) return 1;
+
+    if (objA->aspecto_id < objB->aspecto_id) return -1;
+    if (objA->aspecto_id > objB->aspecto_id) return 1;
+    return 0; // Caso sejam iguais
+}
+
+
+
+int comparar_directions_por_idade_promissor_aspecto(const void *a, const void *b) {
+    // 1. Converte os ponteiros void para ponteiros da sua struct
+    const LinhaDirecao *objA = (const LinhaDirecao *)a;
+    const LinhaDirecao *objB = (const LinhaDirecao *)b;
+
+    // 2. Compara os valores double evitando erros de precisão no retorno int
+    if (objA->idade_evento < objB->idade_evento) return -1;
+    if (objA->idade_evento > objB->idade_evento) return 1;
+
+    if (objA->promissor_id < objB->promissor_id) return -1;
+    if (objA->promissor_id > objB->promissor_id) return 1;
+
+    if (objA->aspecto_id < objB->aspecto_id) return -1;
+    if (objA->aspecto_id > objB->aspecto_id) return 1;
+
+    return 0; // Caso sejam iguais
+}
+
+
+
 int comparar_directions_por_idade_tipo_termo(const void *a, const void *b) {
     const LinhaDirecao *objA = (const LinhaDirecao *)a;
     const LinhaDirecao *objB = (const LinhaDirecao *)b;
