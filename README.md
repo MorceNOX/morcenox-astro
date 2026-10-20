@@ -197,12 +197,12 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04a-primary_directions_table" src="https://github.com/user-attachments/assets/80ea2243-198c-4574-aeec-f0e34abc4085" />
+<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/1cbd9544-4eaa-498c-a4e2-9f0277ac8dcd" />
 <hr>
 
 ### Firdaria
 <hr>
-<img width="2560" height="1600" alt="12-firdaria" src="https://github.com/user-attachments/assets/a89e23f2-3396-4207-9b32-ee1ce8e49328" />
+<img width="2560" height="1600" alt="12-firdaria" src="https://github.com/user-attachments/assets/0dfcd33a-9651-4f70-b7b5-e55c2bd5bd4a" />
 <hr>
 
 ### Energy Profile Chart
