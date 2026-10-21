@@ -21,6 +21,6 @@
 
 const char *get_motivation(int sign);
 const char *get_planet_motivation_modifier(int planet_id);
-void display_motivation(PlotObject *plots, int *house_rulers);
+void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matrix);
 
 #endif

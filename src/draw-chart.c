@@ -9032,7 +9032,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '0':
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
-                    display_motivation(plots, house_rulers);
+                    display_motivation(plots, house_rulers, &matrix);
                     ativar_arrasto_mouse();
                     flushinp();
                 }
@@ -9643,7 +9643,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 16:
             if (!ctx->mapa_retorno) {
-                display_motivation(ctx->plots, ctx->house_rulers);
+                display_motivation(ctx->plots, ctx->house_rulers, &ctx->matrix);
             } else {           
                 display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal, ctx->obj_natal);
             }

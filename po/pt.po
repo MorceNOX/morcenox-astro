@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 18:13-0300\n"
+"POT-Creation-Date: 2026-10-21 02:00-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1681,28 +1681,28 @@ msgid "Pisces"
 msgstr "Peixes"
 
 #: src/draw-chart.c:2601 src/draw-chart.c:2605 src/draw-chart.c:2609
-#: src/motivation.c:232 src/temperament.c:71 src/temperament.c:661
+#: src/motivation.c:429 src/temperament.c:71 src/temperament.c:661
 #: src/temperament.c:667 src/temperament.c:680 src/temperament.c:698
 #, c-format
 msgid "Fire"
 msgstr "Fogo"
 
 #: src/draw-chart.c:2602 src/draw-chart.c:2606 src/draw-chart.c:2610
-#: src/motivation.c:236 src/temperament.c:74 src/temperament.c:662
+#: src/motivation.c:433 src/temperament.c:74 src/temperament.c:662
 #: src/temperament.c:670 src/temperament.c:686 src/temperament.c:706
 #, c-format
 msgid "Earth"
 msgstr "Terra"
 
 #: src/draw-chart.c:2603 src/draw-chart.c:2607 src/draw-chart.c:2611
-#: src/motivation.c:241 src/temperament.c:73 src/temperament.c:655
+#: src/motivation.c:437 src/temperament.c:73 src/temperament.c:655
 #: src/temperament.c:669 src/temperament.c:679 src/temperament.c:694
 #, c-format
 msgid "Air"
 msgstr "Ar"
 
 #: src/draw-chart.c:2604 src/draw-chart.c:2608 src/draw-chart.c:2612
-#: src/motivation.c:246 src/temperament.c:72 src/temperament.c:656
+#: src/motivation.c:442 src/temperament.c:72 src/temperament.c:656
 #: src/temperament.c:668 src/temperament.c:685 src/temperament.c:702
 #, c-format
 msgid "Water"
@@ -3282,7 +3282,7 @@ msgstr ""
 
 #: src/menu-box.c:410
 msgid "Do you want to search the location again?"
-msgstr "Você quer procurar pela localização novamente?"
+msgstr "Você quer procurar pela localidade novamente?"
 
 #: src/menu-box.c:427
 msgid "Do you want to enter the coordinates of the location?"
@@ -3440,7 +3440,7 @@ msgstr "Mapa Rápido"
 
 #: src/menu-box.c:2969
 msgid "View the chart for the current moment in the default city."
-msgstr "Veja o mapa para o presente momento na localização padrão."
+msgstr "Veja o mapa para o presente momento na localidade padrão."
 
 #: src/menu-box.c:2970
 msgid "New Chart"
@@ -3484,7 +3484,7 @@ msgstr "Exibir o mapa que está aberto."
 
 #: src/menu-box.c:2975
 msgid "Change the Default Location"
-msgstr "Mudar a Localização Padrão"
+msgstr "Mudar a Localidade Padrão"
 
 #: src/menu-box.c:2975
 msgid "Select a new city as default for the Quick Chart."
@@ -3728,55 +3728,228 @@ msgstr "Regente do Pensamento: "
 msgid "Psychological Profile & Disposition:"
 msgstr "Perfil Psicológico & Disposição:"
 
-#: src/motivation.c:36
-msgid "Immediate action, pioneering, and personal conquest."
-msgstr "Ação imediata, pioneirismo e conquista pessoal."
-
-#: src/motivation.c:37
-msgid "Material security, comfort, and sensory stability."
-msgstr "Segurança material, conforto e estabilidade sensorial."
-
 #: src/motivation.c:38
-msgid "Curiosity, communication, and mental stimulation."
-msgstr "Curiosidade, comunicação e estímulo mental."
-
-#: src/motivation.c:39
-msgid "Belonging, emotional protection, and deep roots."
-msgstr "Pertencimento, proteção emocional e raízes profundas."
-
-#: src/motivation.c:40
-msgid "Recognition, creative expression, and validation."
-msgstr "Reconhecimento, expressão criativa e validação."
-
-#: src/motivation.c:41
-msgid "Utility, order, and continuous improvement."
-msgstr "Utilidade, ordem e melhoria contínua."
-
-#: src/motivation.c:42
-msgid "Harmony, relational balance, and social justice."
-msgstr "Harmonia, equilíbrio relacional e justiça social."
-
-#: src/motivation.c:43
-msgid "Depth, psychological transformation, and hidden truths."
-msgstr "Profundidade, transformação psicológica e verdades ocultas."
-
-#: src/motivation.c:44
-msgid "Expansion, freedom, and seeking ultimate meaning."
-msgstr "Expansão, liberdade e a busca pelo sentido último."
+msgid ""
+"Active, direct, outward-flowing, and projective (doing energy). Tend to "
+"process experiences externally through action, speech, and social "
+"engagement. Quick to initiate, take risks, and pursue goals with direct "
+"force. Heavily driven by logic, concepts, big-picture visions, and tangible "
+"results."
+msgstr ""
+"Ativo, direto, voltado para o exterior e projetivo (energia de ação). Tende "
+"a processar experiências externamente por meio de ações, fala e interação "
+"social. Tem facilidade para tomar a iniciativa, assumir riscos e buscar "
+"objetivos com força direta. É fortemente orientado pela lógica, conceitos, "
+"visões de conjunto e resultados tangíveis."
 
 #: src/motivation.c:45
-msgid "Tangible achievement, status, and building legacy."
-msgstr "Conquista tangível, status e construção de um legado."
+msgid ""
+"Receptive, stable, inward-flowing, and nurturing (being energy). Tend to "
+"process experiences quietly, internally, and deeply before responding. Draw "
+"things toward them rather than forcing action; focus on sustaining, "
+"containing, and stabilizing. Guided by feeling-based wisdom, sensory "
+"tangible reality, empathy, and subtle nuances."
+msgstr ""
+"Receptivos, estáveis, voltados para o interior e acolhedores (energia de "
+"'ser'). Tendem a processar experiências de forma silenciosa, interna e "
+"profunda antes de responder. Atraem as coisas para si, em vez de forçar a "
+"ação; concentram-se em sustentar, conter e estabilizar. Guiados por uma "
+"sabedoria baseada no sentir, pela realidade sensorial tangível, pela empatia "
+"e por nuances sutis."
 
-#: src/motivation.c:46
-msgid "Innovation, collective freedom, and social progress."
-msgstr "Inovação, liberdade coletiva e progresso social."
+#: src/motivation.c:57
+msgid ""
+"Vitality, inspiration, and enthusiasm. Motivated by personal growth, "
+"excitement, and a desire to create or lead. Quick to act on instincts, "
+"highly competitive, and fiercely independent. Highly expressive but can be "
+"impatient, impulsive, or quick-tempered."
+msgstr ""
+"Vitalidade, inspiração e entusiasmo. Motivado pelo crescimento pessoal, pelo "
+"entusiasmo e pelo desejo de criar ou liderar. Tende a agir rapidamente "
+"conforme os instintos, é altamente competitivo e extremamente independente. "
+"Muito expressivo, mas pode ser impaciente, impulsivo ou de temperamento "
+"explosivo."
 
-#: src/motivation.c:47
-msgid "Mystical union, compassion, and spiritual transcendence."
-msgstr "União mística, compaixão e transcendência espiritual."
+#: src/motivation.c:62
+msgid ""
+"Stability, practicality, and physical reality. Focused on material security, "
+"tangible results, and long-term structures. Approach life through logic, "
+"method, and sensory experience. Highly disciplined and patient, though they "
+"can sometimes resist change or become overly rigid."
+msgstr ""
+"Estabilidade, praticidade e realidade física. Foco em segurança material, "
+"resultados tangíveis e estruturas de longo prazo. Encaram a vida por meio da "
+"lógica, do método e da experiência sensorial. São altamente disciplinados e "
+"pacientes, embora, às vezes, possam resistir a mudanças ou tornar-se "
+"excessivamente rígidos."
 
-#: src/motivation.c:56
+#: src/motivation.c:67
+msgid ""
+"Intellect, communication, and social connection. Motivated by ideas, "
+"information, mental stimulation, and abstract concepts. Focus heavily on "
+"relationships, community dynamics, and objective observation. Skilled at "
+"seeing multiple perspectives, though they can sometimes become detached or "
+"overly intellectual."
+msgstr ""
+"Intelecto, comunicação e conexão social. Motivados por ideias, informações, "
+"estímulo mental e conceitos abstratos. Focam bastante em relacionamentos, "
+"dinâmicas comunitárias e observação objetiva. Têm facilidade em enxergar "
+"múltiplas perspectivas, embora, por vezes, possam se tornar distantes ou "
+"excessivamente intelectuais."
+
+#: src/motivation.c:72
+msgid ""
+"Emotion, intuition, and psychic sensitivity. Guided by emotional "
+"undercurrents, empathy, and a strong sense of intuition. Seek deep emotional "
+"bonds and security, highly attuned to the moods of others. Highly creative "
+"and spiritually inclined, but susceptible to absorbing outside energies or "
+"becoming moody."
+msgstr ""
+"Emoção, intuição e sensibilidade psíquica. Guiado por correntes emocionais "
+"subjacentes, empatia e um forte senso de intuição. Busca laços emocionais "
+"profundos e segurança, mantendo-se altamente sintonizado com o estado de "
+"espírito dos outros. É muito criativo e tem inclinação espiritual, mas é "
+"suscetível a absorver energias externas ou a sofrer oscilações de humor."
+
+#: src/motivation.c:85
+msgid ""
+"Initiative and assertiveness. Forward momentum, leadership, and crisis "
+"management."
+msgstr "Iniciativa e assertividade. Impulso, liderança e gestão de crises."
+
+#: src/motivation.c:86
+msgid "Stability. Endurance, focus, concentration, and resistance to change."
+msgstr ""
+"Estabilidade. Resistência, foco, concentração e resistência a mudanças."
+
+#: src/motivation.c:87
+msgid ""
+"Adaptability. Flexibility, transition, synthesis, and resourcefulness. "
+"Prepared for change."
+msgstr ""
+"Adaptabilidade. Flexibilidade, transição, síntese e desenvoltura.Preparado "
+"para mudanças."
+
+#: src/motivation.c:97
+msgid ""
+"Immediate action, pioneering, and personal conquest. Initiates with raw "
+"action, courage, and impulse. It is the spark that starts the fire."
+msgstr ""
+"Ação imediata, pioneirismo e conquista pessoal. Começa com açãobruta, "
+"coragem e impulso. É a faísca que dá início ao fogo."
+
+#: src/motivation.c:98
+msgid ""
+"Material security, comfort, and sensory stability. Sustains through physical "
+"comfort, patience, and routine. It is deeply stubborn and anchored in "
+"physical security."
+msgstr ""
+"Segurança material, conforto e estabilidade sensorial. Sustenta-se por meio "
+"do conforto físico, da paciência e da rotina. É profundamente obstinado e "
+"está ancorado na segurança física."
+
+#: src/motivation.c:99
+msgid ""
+"Curiosity, communication, and mental stimulation. Adapts through continuous "
+"learning, communication, and multitasking. It easily shifts from one thought "
+"or conversation to another."
+msgstr ""
+"Curiosidade, comunicação e estimulação mental. Adapta-se por meio de "
+"aprendizado contínuo, comunicação e multitarefa. Transita facilmente de um "
+"pensamento ou conversa para outro."
+
+#: src/motivation.c:100
+msgid ""
+"Belonging, emotional protection, and deep roots. Initiates through emotional "
+"connection, protection, and nurturing. It leads with the heart to establish "
+"a secure home base."
+msgstr ""
+"Pertencimento, proteção emocional e raízes profundas. Tem início por meio da "
+"conexão emocional, da proteção e do acolhimento. É guiado pelo coração para "
+"estabelecer uma base segura."
+
+#: src/motivation.c:101
+msgid ""
+"Recognition, creative expression, and validation. Sustains through loyal "
+"passion, creative expression, and self-expression. It keeps the fire burning "
+"steadily with pride and warmth."
+msgstr ""
+"Reconhecimento, expressão criativa e validação. Sustenta-se por meio de uma "
+"paixão leal, expressão criativa e autoexpressão. Mantém o fogo aceso de "
+"forma constante, com orgulho e calor."
+
+#: src/motivation.c:102
+msgid ""
+"Utility, order, and continuous improvement. Adapts through daily "
+"adjustments, problem-solving, and service. It refines details, organizes "
+"physical chaos, and stays highly resourceful."
+msgstr ""
+"Utilidade, ordem e melhoria contínua. Adapta-se por meio de ajustes diários, "
+"resolução de problemas e prestação de serviços. Aperfeiçoa detalhes, "
+"organiza o caos físico e mantém uma grande capacidade de encontrar soluções."
+
+#: src/motivation.c:103
+msgid ""
+"Harmony, relational balance, and social justice. Initiates through social "
+"connection, justice, and partnerships. It actively creates balance, ideas, "
+"and harmony between people."
+msgstr ""
+"Harmonia, equilíbrio relacional e justiça social. Manifesta-se por meio da "
+"conexão social, da justiça e de parcerias. Promove ativamente o equilíbrio, "
+"o surgimento de ideias e a harmonia entre as pessoas."
+
+#: src/motivation.c:104
+msgid ""
+"Depth, psychological transformation, and hidden truths. Sustains through "
+"deep emotional intensity, willpower, and psychological truth. It holds onto "
+"feelings tightly, offering ultimate loyalty or deep secrecy."
+msgstr ""
+"Profundidade, transformação psicológica e verdades ocultas. Sustenta-se por "
+"meio de uma intensa carga emocional, força de vontade e verdade psicológica. "
+"Apega-se firmemente aos sentimentos, oferecendo lealdade absoluta ou um "
+"profundo segredo."
+
+#: src/motivation.c:105
+msgid ""
+"Expansion, freedom, and seeking ultimate meaning. Adapts through "
+"exploration, philosophy, and freedom. It scatters its fiery inspiration "
+"across a wide horizon, always seeking the next big truth."
+msgstr ""
+"Expansão, liberdade e a busca pelo sentido último. Adapta-se por meio da "
+"exploração, da filosofia e da liberdade. Espalha sua inspiração ígnea por um "
+"horizonte amplo, sempre em busca da próxima grande verdade."
+
+#: src/motivation.c:106
+msgid ""
+"Tangible achievement, status, and building legacy. Initiates through "
+"material ambition, structure, and hard work. It builds the foundation for "
+"long-term, tangible success."
+msgstr ""
+"Conquista tangível, status e a construção de um legado. Tem início por meio "
+"da ambição material, da estrutura e do trabalho árduo. Estabelece a base "
+"para um sucesso tangível a longo prazo."
+
+#: src/motivation.c:107
+msgid ""
+"Innovation, collective freedom, and social progress. Sustains through "
+"ideological conviction, group ideals, and intellectual principles. It holds "
+"firmly to its vision for the future or society."
+msgstr ""
+"Inovação, liberdade coletiva e progresso social. Sustenta-se por meio de "
+"convicção ideológica, ideais de grupo e princípios intelectuais. Mantém-se "
+"firme em sua visão para o futuro ou para a sociedade."
+
+#: src/motivation.c:108
+msgid ""
+"Mystical union, compassion, and spiritual transcendence. Adapts through "
+"empathy, imagination, and spiritual dissolution. It is fluid like the ocean, "
+"easily blending its emotional boundaries with the universe."
+msgstr ""
+"União mística, compaixão e transcendência espiritual. Adapta-se por meio da "
+"empatia, da imaginação e da dissolução espiritual. É fluido como o oceano, "
+"fundindo facilmente seus limites emocionais com o universo."
+
+#: src/motivation.c:117
 msgid ""
 "The Sun centralizes the motivation in the self, in the quest for personal "
 "brilliance, leadership, pride and visibility."
@@ -3784,7 +3957,7 @@ msgstr ""
 "O Sol centraliza a motivação no eu, na busca pelo brilho pessoal, pela "
 "liderança, pelo orgulho e pela visibilidade."
 
-#: src/motivation.c:57
+#: src/motivation.c:118
 msgid ""
 "The Moon turns the motivation highly fluctuating, guided by humors, instinct "
 "of protection, memory and emotional attachment."
@@ -3792,7 +3965,7 @@ msgstr ""
 "A Lua torna a motivação altamente oscilante, guiada por humores, pelo "
 "instinto de proteção, pela memória e pelo apego emocional."
 
-#: src/motivation.c:58
+#: src/motivation.c:119
 msgid ""
 "Mercury filters the motivation by logic, intelectualization, necessity of "
 "communication, analysis and data processing."
@@ -3800,7 +3973,7 @@ msgstr ""
 "Mercúrio filtra a motivação por meio da lógica, da intelectualização, da "
 "necessidade de comunicação, da análise e do processamento de dados."
 
-#: src/motivation.c:59
+#: src/motivation.c:120
 msgid ""
 "Venus shifts the quest towards the pleasure, aesthetics, partnership, "
 "financial gain or social validation."
@@ -3808,7 +3981,7 @@ msgstr ""
 "Vênus direciona a busca para o prazer, a estética, a parceria, o ganho "
 "financeiro ou a validação social."
 
-#: src/motivation.c:60
+#: src/motivation.c:121
 msgid ""
 "Mars adds urgency, competitiveness, a need to win, haste, and a focus on "
 "direct action."
@@ -3816,7 +3989,7 @@ msgstr ""
 "Marte acrescenta urgência, competitividade, necessidade de vencer, pressa e "
 "foco na ação direta."
 
-#: src/motivation.c:61
+#: src/motivation.c:122
 msgid ""
 "Jupiter amplifies the motivation with idealism, excesses, quest for wisdom, "
 "luck or dogmatism."
@@ -3824,7 +3997,7 @@ msgstr ""
 "Júpiter amplifica a motivação com idealismo, excessos, busca por sabedoria, "
 "sorte ou dogmatismo."
 
-#: src/motivation.c:62
+#: src/motivation.c:123
 msgid ""
 "Saturn imposes limits, slowness, a sense of duty, a need for structure, fear "
 "of failure, and maturity."
@@ -3832,113 +4005,252 @@ msgstr ""
 "Saturno impõe limites, lentidão, senso de dever, necessidade de estrutura, "
 "medo do fracasso e maturidade."
 
-#: src/motivation.c:71
+#: src/motivation.c:132
 msgid "personal identity, vitality, and core temperament"
 msgstr "identidade pessoal, vitalidade e temperamento essencial"
 
-#: src/motivation.c:72
+#: src/motivation.c:133
 msgid "material wealth, personal finances, and livelihood"
 msgstr "riqueza material, finanças pessoais e meios de subsistência"
 
-#: src/motivation.c:73
+#: src/motivation.c:134
 msgid "the immediate environment, siblings, and short travels"
 msgstr "o ambiente imediato, irmãos e viagens curtas"
 
-#: src/motivation.c:74
+#: src/motivation.c:135
 msgid "ancestry, parental heritage, real estate, and private foundations"
 msgstr "ascendência, herança familiar, imóveis e fundações privadas"
 
-#: src/motivation.c:75
+#: src/motivation.c:136
 msgid "creative expression, children, pleasures, and speculation"
 msgstr "expressão criativa, crianças, prazeres e especulação"
 
-#: src/motivation.c:76
+#: src/motivation.c:137
 msgid "physical illness, daily labor, and subordinate relationships"
 msgstr "doença física, trabalho cotidiano e relações de subordinação"
 
-#: src/motivation.c:77
+#: src/motivation.c:138
 msgid "partnerships, marriage, public adversaries, and contracts"
 msgstr "parcerias, casamento, inimigos declarados e contratos"
 
-#: src/motivation.c:78
+#: src/motivation.c:139
 msgid "inheritances, psychological transformations, and shared resources"
 msgstr "heranças, transformações psicológicas e recursos compartilhados"
 
-#: src/motivation.c:79
+#: src/motivation.c:140
 msgid "higher knowledge, philosophy, worldview, and long-distance journeys"
 msgstr ""
 "conhecimento superior, filosofia, cosmovisão e viagens de longa distância"
 
-#: src/motivation.c:80
+#: src/motivation.c:141
 msgid "professional career, social status, and public reputation"
 msgstr "carreira profissional, status social e reputação pública"
 
-#: src/motivation.c:81
+#: src/motivation.c:142
 msgid "alliances, supportive networks, friendships, and long-term hopes"
 msgstr "alianças, redes de apoio, amizades e esperanças de longo prazo"
 
-#: src/motivation.c:82
+#: src/motivation.c:143
 msgid "hidden challenges, self-undoing, isolation, and confinement"
 msgstr "desafios ocultos, autodestruição, isolamento e confinamento"
 
-#: src/motivation.c:120
+#: src/motivation.c:153
+msgid "Core identity, ego, life purpose, vital energy, conscious will"
+msgstr ""
+"Identidade central, ego, propósito de vida, energia vital, vontade consciente"
+
+#: src/motivation.c:156
+msgid ""
+"Emotional inner world, intuition, subconscious habits, instinctual needs for "
+"comfort and security, memories, sense of safety"
+msgstr ""
+"Mundo interior emocional, intuição, hábitos subconscientes, necessidades "
+"instintivas de conforto e segurança, memórias, sensação de segurança"
+
+#: src/motivation.c:159
+msgid ""
+"Communication, intellect, learning style, logical reasoning, the mind, "
+"communication style, how one processes and share information"
+msgstr ""
+"Comunicação, intelecto, estilo de aprendizagem, raciocínio lógico, a mente, "
+"estilo de comunicação, a forma como se processam e compartilham informações"
+
+#: src/motivation.c:162
+msgid ""
+"Love, relationships, beauty, aesthetics, what is valuable for the person, "
+"financial habits"
+msgstr ""
+"Amor, relacionamentos, beleza, estética, o que é valioso para a pessoa, "
+"hábitos financeiros"
+
+#: src/motivation.c:165
+msgid "Drive, ambition, physical energy, aggression, passion"
+msgstr "Determinação, ambição, energia física, agressividade, paixão"
+
+#: src/motivation.c:168
+msgid "Luck, abundance, wisdom, philosophical expansion"
+msgstr "Sorte, abundância, sabedoria, expansão filosófica"
+
+#: src/motivation.c:171
+msgid ""
+"Discipline, boundaries, responsibility, fears, life lessons. The "
+"\"taskmaster\" that rules discipline, responsibility, limitations, and the "
+"lessons one learns through hard work"
+msgstr ""
+"Disciplina, limites, responsabilidade, medos, lições de vida. O \"rigoroso "
+"mestre\" que rege a disciplina, a responsabilidade, as limitações e as "
+"lições que se aprendem por meio do trabalho árduo"
+
+#: src/motivation.c:174
+msgid ""
+"Rebellion, innovation, sudden change, freedom, genius, individuation, "
+"breakthroughs"
+msgstr ""
+"Rebelião, inovação, mudança repentina, liberdade, genialidade, individuação, "
+"avanços"
+
+#: src/motivation.c:177
+msgid ""
+"Dreams, illusion, spirituality, creativity, escapism, psychic intuition, "
+"spiritual dissolution"
+msgstr ""
+"Sonhos, ilusão, espiritualidade, criatividade, escapismo, intuição psíquica, "
+"dissolução espiritual"
+
+#: src/motivation.c:180
+msgid ""
+"Transformation, power, death, rebirth, subconscious shadows, hidden truths, "
+"power dynamics"
+msgstr ""
+"Transformação, poder, morte, renascimento, sombras do subconsciente, "
+"verdades ocultas, dinâmicas de poder"
+
+#: src/motivation.c:183
+msgid ""
+"It acts like a magnifying glass or a funnel, swelling and increasing the "
+"quantity of the conditions it touches. It exaggerates the traits of the "
+"zodiac sign and brings intense activity, hunger, or focus to the affairs of "
+"that specific house. If conjunct a planet, it expands that planet's power"
+msgstr ""
+"Ele atua como uma lupa ou um funil, ampliando e aumentando a intensidade das "
+"condições com as quais entra em contato. Ele exagera as características do "
+"signo do zodíaco e traz intensa atividade, avidez ou foco para os assuntos "
+"daquela casa específica. Se estiver em conjunção com um planeta, ele expande "
+"o poder desse planeta"
+
+#: src/motivation.c:186
+msgid ""
+"It acts like a drain, a filter, or a point of release, shrinking and "
+"emptying the conditions it touches. It minimizes or devalues the traits of "
+"the zodiac sign and indicates an area of life (the house) where things are "
+"drained, sacrificed, or let go. If conjunct a planet, it weakens, eclipses, "
+"or \"purges\" that planet's expression"
+msgstr ""
+"Atua como um dreno, um filtro ou um ponto de escoamento, reduzindo e "
+"esvaziando as condições com as quais entra em contato. Minimiza ou "
+"desvaloriza as características do signo do zodíaco e indica uma área da vida "
+"(a casa) na qual as coisas são drenadas, sacrificadas ou deixadas de lado. "
+"Se estiver em conjunção com um planeta, enfraquece, eclipsa ou 'purga' a "
+"expressão desse planeta"
+
+#: src/motivation.c:224
 msgid " Primary Motivation "
 msgstr " Motivação Primária "
 
-#: src/motivation.c:151
+#: src/motivation.c:292
 msgid "Sign of Ascendant:"
 msgstr "Signo do Ascendente:"
 
-#: src/motivation.c:172
+#: src/motivation.c:318
+msgid "The Main Characteristics of The Motivation:"
+msgstr "As Principais Características da Motivação:"
+
+#: src/motivation.c:336
 msgid "The Core Motivation:"
 msgstr "A Motivação Principal:"
 
-#: src/motivation.c:186
+#: src/motivation.c:346
+msgid "Influences by Presence:"
+msgstr "Influências por Presença:"
+
+#: src/motivation.c:350
+msgid "No planets in the Ascendant (House 1)."
+msgstr "Não há planetas no Ascendente (Casa 1)."
+
+#: src/motivation.c:353
+msgid ""
+"The following planets are sharing their influences to the Core "
+"Motivativation by presence in the House 1.\n"
+"\n"
+msgstr ""
+"Os seguintes planetas compartilham suas influências à Motivação Principal "
+"por sua presença na Casa 1.\n"
+"\n"
+
+#: src/motivation.c:366
+msgid "Influences by Aspect:"
+msgstr "Influências por Aspecto:"
+
+#: src/motivation.c:370
+msgid "No planets aspecting the Ascendant."
+msgstr "Não há planetas aspectando o Ascendente."
+
+#: src/motivation.c:373
+msgid ""
+"The following planets are aspecting the Ascendant and sharing their "
+"influences to the Core Motivativation.\n"
+"\n"
+msgstr ""
+"Os seguintes planetas estão aspectando o Ascendente e por isso compartilham "
+"suas influências sobre a Motivação Principal.\n"
+"\n"
+
+#: src/motivation.c:386
 msgid "Ruler of The Ascendant"
 msgstr "Regente do Ascendente"
 
-#: src/motivation.c:216
+#: src/motivation.c:413
 msgid "Sign of the Ruler"
 msgstr "Signo do Regente"
 
-#: src/motivation.c:233
+#: src/motivation.c:430
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 "Essa motivação é impulsionada por energia assertiva, dinamismo e liderança,"
 
-#: src/motivation.c:234
+#: src/motivation.c:431
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr "infundindo na motivação central paixão e uma busca vital por expansão."
 
-#: src/motivation.c:237
+#: src/motivation.c:434
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 "Essa motivação se baseia no pragmatismo, no foco constante e na deliberação,"
 
-#: src/motivation.c:238
+#: src/motivation.c:435
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 "direcionando a motivação central para resultados tangíveis e estabilidade "
 "material."
 
-#: src/motivation.c:242
+#: src/motivation.c:438
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 "Essa motivação é canalizada para a versatilidade intelectual e a síntese "
 "lógica,"
 
-#: src/motivation.c:243
+#: src/motivation.c:439
 msgid "and social exchange, occasionally spreading the core motivation across "
 msgstr "e a troca social, ocasionalmente distribuindo a motivação central por "
 
-#: src/motivation.c:244
+#: src/motivation.c:440
 msgid "varied interests."
 msgstr "interesses variados."
 
-#: src/motivation.c:247
+#: src/motivation.c:443
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
@@ -3946,23 +4258,23 @@ msgstr ""
 "Essa motivação é moldada pela fluidez emocional, intuição e profundidade "
 "psicológica,"
 
-#: src/motivation.c:248
+#: src/motivation.c:444
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 "tornando a motivação central altamente adaptável a correntes internas e "
 "externas."
 
-#: src/motivation.c:256
+#: src/motivation.c:452
 msgid "House of the Ruler"
 msgstr "Casa do Regente"
 
-#: src/motivation.c:269
+#: src/motivation.c:465
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 "Áreas da vida nas quais a Motivação Principal é aplicada ou direcionada:"
 
-#: src/motivation.c:293
+#: src/motivation.c:489
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The raw "
@@ -3973,7 +4285,7 @@ msgstr ""
 "prima e as circunstâncias para satisfazer essa motivação serão extraídas "
 "fundamentalmente dos assuntos de %s (Casa %d)."
 
-#: src/motivation.c:302
+#: src/motivation.c:498
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The fuel, "
@@ -3985,7 +4297,7 @@ msgstr ""
 "são fornecidos por uma matriz dupla: os assuntos de %s (Casa %d) e %s (Casa "
 "%d)."
 
-#: src/motivation.c:317
+#: src/motivation.c:513
 msgid " Press ESC to return to chart | [↓↑] Scroll "
 msgstr " Pressione Q ou ESC para retornar - [↓↑] para rolar "
 
@@ -6864,6 +7176,42 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Immediate action, pioneering, and personal conquest."
+#~ msgstr "Ação imediata, pioneirismo e conquista pessoal."
+
+#~ msgid "Material security, comfort, and sensory stability."
+#~ msgstr "Segurança material, conforto e estabilidade sensorial."
+
+#~ msgid "Curiosity, communication, and mental stimulation."
+#~ msgstr "Curiosidade, comunicação e estímulo mental."
+
+#~ msgid "Belonging, emotional protection, and deep roots."
+#~ msgstr "Pertencimento, proteção emocional e raízes profundas."
+
+#~ msgid "Recognition, creative expression, and validation."
+#~ msgstr "Reconhecimento, expressão criativa e validação."
+
+#~ msgid "Utility, order, and continuous improvement."
+#~ msgstr "Utilidade, ordem e melhoria contínua."
+
+#~ msgid "Harmony, relational balance, and social justice."
+#~ msgstr "Harmonia, equilíbrio relacional e justiça social."
+
+#~ msgid "Depth, psychological transformation, and hidden truths."
+#~ msgstr "Profundidade, transformação psicológica e verdades ocultas."
+
+#~ msgid "Expansion, freedom, and seeking ultimate meaning."
+#~ msgstr "Expansão, liberdade e a busca pelo sentido último."
+
+#~ msgid "Tangible achievement, status, and building legacy."
+#~ msgstr "Conquista tangível, status e construção de um legado."
+
+#~ msgid "Innovation, collective freedom, and social progress."
+#~ msgstr "Inovação, liberdade coletiva e progresso social."
+
+#~ msgid "Mystical union, compassion, and spiritual transcendence."
+#~ msgstr "União mística, compaixão e transcendência espiritual."
 
 #~ msgid " Filter Selection "
 #~ msgstr " Filtro para Seleção "

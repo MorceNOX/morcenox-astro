@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 18:12-0300\n"
+"POT-Creation-Date: 2026-10-21 01:58-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1491,28 +1491,28 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2601 src/draw-chart.c:2605 src/draw-chart.c:2609
-#: src/motivation.c:232 src/temperament.c:71 src/temperament.c:661
+#: src/motivation.c:431 src/temperament.c:71 src/temperament.c:661
 #: src/temperament.c:667 src/temperament.c:680 src/temperament.c:698
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2602 src/draw-chart.c:2606 src/draw-chart.c:2610
-#: src/motivation.c:236 src/temperament.c:74 src/temperament.c:662
+#: src/motivation.c:435 src/temperament.c:74 src/temperament.c:662
 #: src/temperament.c:670 src/temperament.c:686 src/temperament.c:706
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2603 src/draw-chart.c:2607 src/draw-chart.c:2611
-#: src/motivation.c:241 src/temperament.c:73 src/temperament.c:655
+#: src/motivation.c:439 src/temperament.c:73 src/temperament.c:655
 #: src/temperament.c:669 src/temperament.c:679 src/temperament.c:694
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2604 src/draw-chart.c:2608 src/draw-chart.c:2612
-#: src/motivation.c:246 src/temperament.c:72 src/temperament.c:656
+#: src/motivation.c:444 src/temperament.c:72 src/temperament.c:656
 #: src/temperament.c:668 src/temperament.c:685 src/temperament.c:702
 #, c-format
 msgid "Water"
@@ -3395,215 +3395,424 @@ msgstr ""
 msgid "Psychological Profile & Disposition:"
 msgstr ""
 
-#: src/motivation.c:36
-msgid "Immediate action, pioneering, and personal conquest."
-msgstr ""
-
-#: src/motivation.c:37
-msgid "Material security, comfort, and sensory stability."
-msgstr ""
-
 #: src/motivation.c:38
-msgid "Curiosity, communication, and mental stimulation."
-msgstr ""
-
-#: src/motivation.c:39
-msgid "Belonging, emotional protection, and deep roots."
-msgstr ""
-
-#: src/motivation.c:40
-msgid "Recognition, creative expression, and validation."
-msgstr ""
-
-#: src/motivation.c:41
-msgid "Utility, order, and continuous improvement."
-msgstr ""
-
-#: src/motivation.c:42
-msgid "Harmony, relational balance, and social justice."
-msgstr ""
-
-#: src/motivation.c:43
-msgid "Depth, psychological transformation, and hidden truths."
-msgstr ""
-
-#: src/motivation.c:44
-msgid "Expansion, freedom, and seeking ultimate meaning."
+msgid ""
+"Active, direct, outward-flowing, and projective (doing energy). Tend to "
+"process experiences externally through action, speech, and social "
+"engagement. Quick to initiate, take risks, and pursue goals with direct "
+"force. Heavily driven by logic, concepts, big-picture visions, and tangible "
+"results."
 msgstr ""
 
 #: src/motivation.c:45
-msgid "Tangible achievement, status, and building legacy."
+msgid ""
+"Receptive, stable, inward-flowing, and nurturing (being energy). Tend to "
+"process experiences quietly, internally, and deeply before responding. Draw "
+"things toward them rather than forcing action; focus on sustaining, "
+"containing, and stabilizing. Guided by feeling-based wisdom, sensory "
+"tangible reality, empathy, and subtle nuances."
 msgstr ""
 
-#: src/motivation.c:46
-msgid "Innovation, collective freedom, and social progress."
+#: src/motivation.c:57
+msgid ""
+"Vitality, inspiration, and enthusiasm. Motivated by personal growth, "
+"excitement, and a desire to create or lead. Quick to act on instincts, "
+"highly competitive, and fiercely independent. Highly expressive but can be "
+"impatient, impulsive, or quick-tempered."
 msgstr ""
 
-#: src/motivation.c:47
-msgid "Mystical union, compassion, and spiritual transcendence."
+#: src/motivation.c:62
+msgid ""
+"Stability, practicality, and physical reality. Focused on material security, "
+"tangible results, and long-term structures. Approach life through logic, "
+"method, and sensory experience. Highly disciplined and patient, though they "
+"can sometimes resist change or become overly rigid."
 msgstr ""
 
-#: src/motivation.c:56
+#: src/motivation.c:67
+msgid ""
+"Intellect, communication, and social connection. Motivated by ideas, "
+"information, mental stimulation, and abstract concepts. Focus heavily on "
+"relationships, community dynamics, and objective observation. Skilled at "
+"seeing multiple perspectives, though they can sometimes become detached or "
+"overly intellectual."
+msgstr ""
+
+#: src/motivation.c:72
+msgid ""
+"Emotion, intuition, and psychic sensitivity. Guided by emotional "
+"undercurrents, empathy, and a strong sense of intuition. Seek deep emotional "
+"bonds and security, highly attuned to the moods of others. Highly creative "
+"and spiritually inclined, but susceptible to absorbing outside energies or "
+"becoming moody."
+msgstr ""
+
+#: src/motivation.c:85
+msgid ""
+"Initiative and assertiveness. Forward momentum, leadership, and crisis "
+"management."
+msgstr ""
+
+#: src/motivation.c:86
+msgid "Stability. Endurance, focus, concentration, and resistance to change."
+msgstr ""
+
+#: src/motivation.c:87
+msgid ""
+"Adaptability. Flexibility, transition, synthesis, and resourcefulness. "
+"Prepared for change."
+msgstr ""
+
+#: src/motivation.c:97
+msgid ""
+"Immediate action, pioneering, and personal conquest. Initiates with raw "
+"action, courage, and impulse. It is the spark that starts the fire."
+msgstr ""
+
+#: src/motivation.c:98
+msgid ""
+"Material security, comfort, and sensory stability. Sustains through physical "
+"comfort, patience, and routine. It is deeply stubborn and anchored in "
+"physical security."
+msgstr ""
+
+#: src/motivation.c:99
+msgid ""
+"Curiosity, communication, and mental stimulation. Adapts through continuous "
+"learning, communication, and multitasking. It easily shifts from one thought "
+"or conversation to another."
+msgstr ""
+
+#: src/motivation.c:100
+msgid ""
+"Belonging, emotional protection, and deep roots. Initiates through emotional "
+"connection, protection, and nurturing. It leads with the heart to establish "
+"a secure home base."
+msgstr ""
+
+#: src/motivation.c:101
+msgid ""
+"Recognition, creative expression, and validation. Sustains through loyal "
+"passion, creative expression, and self-expression. It keeps the fire burning "
+"steadily with pride and warmth."
+msgstr ""
+
+#: src/motivation.c:102
+msgid ""
+"Utility, order, and continuous improvement. Adapts through daily "
+"adjustments, problem-solving, and service. It refines details, organizes "
+"physical chaos, and stays highly resourceful."
+msgstr ""
+
+#: src/motivation.c:103
+msgid ""
+"Harmony, relational balance, and social justice. Initiates through social "
+"connection, justice, and partnerships. It actively creates balance, ideas, "
+"and harmony between people."
+msgstr ""
+
+#: src/motivation.c:104
+msgid ""
+"Depth, psychological transformation, and hidden truths. Sustains through "
+"deep emotional intensity, willpower, and psychological truth. It holds onto "
+"feelings tightly, offering ultimate loyalty or deep secrecy."
+msgstr ""
+
+#: src/motivation.c:105
+msgid ""
+"Expansion, freedom, and seeking ultimate meaning. Adapts through "
+"exploration, philosophy, and freedom. It scatters its fiery inspiration "
+"across a wide horizon, always seeking the next big truth."
+msgstr ""
+
+#: src/motivation.c:106
+msgid ""
+"Tangible achievement, status, and building legacy. Initiates through "
+"material ambition, structure, and hard work. It builds the foundation for "
+"long-term, tangible success."
+msgstr ""
+
+#: src/motivation.c:107
+msgid ""
+"Innovation, collective freedom, and social progress. Sustains through "
+"ideological conviction, group ideals, and intellectual principles. It holds "
+"firmly to its vision for the future or society."
+msgstr ""
+
+#: src/motivation.c:108
+msgid ""
+"Mystical union, compassion, and spiritual transcendence. Adapts through "
+"empathy, imagination, and spiritual dissolution. It is fluid like the ocean, "
+"easily blending its emotional boundaries with the universe."
+msgstr ""
+
+#: src/motivation.c:117
 msgid ""
 "The Sun centralizes the motivation in the self, in the quest for personal "
 "brilliance, leadership, pride and visibility."
 msgstr ""
 
-#: src/motivation.c:57
+#: src/motivation.c:118
 msgid ""
 "The Moon turns the motivation highly fluctuating, guided by humors, instinct "
 "of protection, memory and emotional attachment."
 msgstr ""
 
-#: src/motivation.c:58
+#: src/motivation.c:119
 msgid ""
 "Mercury filters the motivation by logic, intelectualization, necessity of "
 "communication, analysis and data processing."
 msgstr ""
 
-#: src/motivation.c:59
+#: src/motivation.c:120
 msgid ""
 "Venus shifts the quest towards the pleasure, aesthetics, partnership, "
 "financial gain or social validation."
 msgstr ""
 
-#: src/motivation.c:60
+#: src/motivation.c:121
 msgid ""
 "Mars adds urgency, competitiveness, a need to win, haste, and a focus on "
 "direct action."
 msgstr ""
 
-#: src/motivation.c:61
+#: src/motivation.c:122
 msgid ""
 "Jupiter amplifies the motivation with idealism, excesses, quest for wisdom, "
 "luck or dogmatism."
 msgstr ""
 
-#: src/motivation.c:62
+#: src/motivation.c:123
 msgid ""
 "Saturn imposes limits, slowness, a sense of duty, a need for structure, fear "
 "of failure, and maturity."
 msgstr ""
 
-#: src/motivation.c:71
+#: src/motivation.c:132
 msgid "personal identity, vitality, and core temperament"
 msgstr ""
 
-#: src/motivation.c:72
+#: src/motivation.c:133
 msgid "material wealth, personal finances, and livelihood"
 msgstr ""
 
-#: src/motivation.c:73
+#: src/motivation.c:134
 msgid "the immediate environment, siblings, and short travels"
 msgstr ""
 
-#: src/motivation.c:74
+#: src/motivation.c:135
 msgid "ancestry, parental heritage, real estate, and private foundations"
 msgstr ""
 
-#: src/motivation.c:75
+#: src/motivation.c:136
 msgid "creative expression, children, pleasures, and speculation"
 msgstr ""
 
-#: src/motivation.c:76
+#: src/motivation.c:137
 msgid "physical illness, daily labor, and subordinate relationships"
 msgstr ""
 
-#: src/motivation.c:77
+#: src/motivation.c:138
 msgid "partnerships, marriage, public adversaries, and contracts"
 msgstr ""
 
-#: src/motivation.c:78
+#: src/motivation.c:139
 msgid "inheritances, psychological transformations, and shared resources"
 msgstr ""
 
-#: src/motivation.c:79
+#: src/motivation.c:140
 msgid "higher knowledge, philosophy, worldview, and long-distance journeys"
 msgstr ""
 
-#: src/motivation.c:80
+#: src/motivation.c:141
 msgid "professional career, social status, and public reputation"
 msgstr ""
 
-#: src/motivation.c:81
+#: src/motivation.c:142
 msgid "alliances, supportive networks, friendships, and long-term hopes"
 msgstr ""
 
-#: src/motivation.c:82
+#: src/motivation.c:143
 msgid "hidden challenges, self-undoing, isolation, and confinement"
 msgstr ""
 
-#: src/motivation.c:120
-msgid " Primary Motivation "
+#: src/motivation.c:153
+msgid "Core identity, ego, life purpose, vital energy, conscious will"
 msgstr ""
 
-#: src/motivation.c:151
-msgid "Sign of Ascendant:"
+#: src/motivation.c:156
+msgid ""
+"Emotional inner world, intuition, subconscious habits, instinctual needs for "
+"comfort and security, memories, sense of safety"
 msgstr ""
 
-#: src/motivation.c:172
-msgid "The Core Motivation:"
+#: src/motivation.c:159
+msgid ""
+"Communication, intellect, learning style, logical reasoning, the mind, "
+"communication style, how one processes and share information"
+msgstr ""
+
+#: src/motivation.c:162
+msgid ""
+"Love, relationships, beauty, aesthetics, what is valuable for the person, "
+"financial habits"
+msgstr ""
+
+#: src/motivation.c:165
+msgid "Drive, ambition, physical energy, aggression, passion"
+msgstr ""
+
+#: src/motivation.c:168
+msgid "Luck, abundance, wisdom, philosophical expansion"
+msgstr ""
+
+#: src/motivation.c:171
+msgid ""
+"Discipline, boundaries, responsibility, fears, life lessons. The "
+"\"taskmaster\" that rules discipline, responsibility, limitations, and the "
+"lessons one learns through hard work"
+msgstr ""
+
+#: src/motivation.c:174
+msgid ""
+"Rebellion, innovation, sudden change, freedom, genius, individuation, "
+"breakthroughs"
+msgstr ""
+
+#: src/motivation.c:177
+msgid ""
+"Dreams, illusion, spirituality, creativity, escapism, psychic intuition, "
+"spiritual dissolution"
+msgstr ""
+
+#: src/motivation.c:180
+msgid ""
+"Transformation, power, death, rebirth, subconscious shadows, hidden truths, "
+"power dynamics"
+msgstr ""
+
+#: src/motivation.c:183
+msgid ""
+"It acts like a magnifying glass or a funnel, swelling and increasing the "
+"quantity of the conditions it touches. It exaggerates the traits of the "
+"zodiac sign and brings intense activity, hunger, or focus to the affairs of "
+"that specific house. If conjunct a planet, it expands that planet's power"
 msgstr ""
 
 #: src/motivation.c:186
+msgid ""
+"It acts like a drain, a filter, or a point of release, shrinking and "
+"emptying the conditions it touches. It minimizes or devalues the traits of "
+"the zodiac sign and indicates an area of life (the house) where things are "
+"drained, sacrificed, or let go. If conjunct a planet, it weakens, eclipses, "
+"or \"purges\" that planet's expression"
+msgstr ""
+
+#: src/motivation.c:224
+msgid " Primary Motivation "
+msgstr ""
+
+#: src/motivation.c:292
+msgid "Sign of Ascendant:"
+msgstr ""
+
+#: src/motivation.c:318
+msgid "The Main Characteristics of The Motivation:"
+msgstr ""
+
+#: src/motivation.c:336
+msgid "The Core Motivation:"
+msgstr ""
+
+#: src/motivation.c:346
+msgid "Influences by Presence:"
+msgstr ""
+
+#: src/motivation.c:350
+msgid "No planets in the Ascendant (House 1)."
+msgstr ""
+
+#: src/motivation.c:353
+msgid ""
+"The following planets are sharing their influences to the Core "
+"Motivativation by presence in the House 1.\n"
+"\n"
+msgstr ""
+
+#: src/motivation.c:368
+msgid "Influences by Aspect:"
+msgstr ""
+
+#: src/motivation.c:372
+msgid "No planets aspecting the Ascendant."
+msgstr ""
+
+#: src/motivation.c:375
+msgid ""
+"The following planets are aspecting the Ascendant and sharing their "
+"influences to the Core Motivativation.\n"
+"\n"
+msgstr ""
+
+#: src/motivation.c:388
 msgid "Ruler of The Ascendant"
 msgstr ""
 
-#: src/motivation.c:216
+#: src/motivation.c:415
 msgid "Sign of the Ruler"
 msgstr ""
 
-#: src/motivation.c:233
+#: src/motivation.c:432
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 
-#: src/motivation.c:234
+#: src/motivation.c:433
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr ""
 
-#: src/motivation.c:237
+#: src/motivation.c:436
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 
-#: src/motivation.c:238
+#: src/motivation.c:437
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 
-#: src/motivation.c:242
+#: src/motivation.c:440
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 
-#: src/motivation.c:243
+#: src/motivation.c:441
 msgid "and social exchange, occasionally spreading the core motivation across "
 msgstr ""
 
-#: src/motivation.c:244
+#: src/motivation.c:442
 msgid "varied interests."
 msgstr ""
 
-#: src/motivation.c:247
+#: src/motivation.c:445
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
 msgstr ""
 
-#: src/motivation.c:248
+#: src/motivation.c:446
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 
-#: src/motivation.c:256
+#: src/motivation.c:454
 msgid "House of the Ruler"
 msgstr ""
 
-#: src/motivation.c:269
+#: src/motivation.c:467
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 
-#: src/motivation.c:293
+#: src/motivation.c:491
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The raw "
@@ -3611,7 +3820,7 @@ msgid ""
 "fundamentally from the affairs of %s (House %d)."
 msgstr ""
 
-#: src/motivation.c:302
+#: src/motivation.c:500
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The fuel, "
@@ -3619,7 +3828,7 @@ msgid ""
 "matrix: the affairs of %s (House %d) and %s (House %d)."
 msgstr ""
 
-#: src/motivation.c:317
+#: src/motivation.c:515
 #, fuzzy
 msgid " Press ESC to return to chart | [↓↑] Scroll "
 msgstr "Press [ESC] to cancel"
@@ -4165,7 +4374,7 @@ msgid " Latitude "
 msgstr ""
 
 #: src/selections.c:5384
-msgid " Text to Serch For "
+msgid " Text to Search For "
 msgstr ""
 
 #: src/selections.c:5413
