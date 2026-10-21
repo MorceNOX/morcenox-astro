@@ -4320,8 +4320,18 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
             mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", plots[i].ra);
         }
 
-
-        SemiArcos sa = calcular_semi_arcos(lat, plots[i].declination);
+        SemiArcos sa = {0};
+        if (i == P_ASC - object_diff || i == P_DC - object_diff) {
+            sa.sad = 90.0;
+            sa.san = 90.0;
+        }
+        else if (i == P_MC - object_diff || i == P_IC - object_diff) {
+            sa.sad = 0.0;
+            sa.san = 0.0;
+        }
+        else {
+            sa = calcular_semi_arcos(lat, plots[i].declination);
+        }
 
         (void)ramc;
         
@@ -6374,7 +6384,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
-    timeout(TIMEOUT); // This will make getch() wait for 1 second max
+    timeout(0); // This will make getch() wait for 1 second max
     
     while (running) {
         int max_y, max_x;
@@ -6558,8 +6568,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // 11. Lot of Fortune
 
-        double fortuna;
-        double spirit;
+        double fortuna = 0.0;
+        double spirit = 0.0;
         //if (mapa_diurno(hsol)) {
         if (MAPA_DIURNO) {
             fortuna = ascendant + planet_longitudes[1] - planet_longitudes[0];
@@ -7115,11 +7125,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             (int)planet_longitudes[8] / 30,
             (int)planet_longitudes[9] / 30,
             (int)planet_longitudes[10] / 30,
+            (int)south_node / 30,
             (int)fortuna / 30,
             (int)SAN / 30,
             (int)ascendant / 30,
             (int)mc / 30,
-            (int)south_node / 30,
             (int)descendant / 30,
             (int)ic / 30,
             (int)vertex / 30
@@ -7138,11 +7148,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             {8, planet_longitudes[8], "♆", _("Neptune"), get_sign(sign[8]), d8, m8, (speed[8] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[8], cusps), speed[8], rising_times[8], set_times[8], mid_times[8], planet_declinations[8], planet_latitudes[8], planet_ra[8], planet_houses[8]},
             {9, planet_longitudes[9], "⯓", _("Pluto"), get_sign(sign[9]), d9, m9, (speed[9] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[9], cusps), speed[9], rising_times[9], set_times[9], mid_times[9], planet_declinations[9], planet_latitudes[9], planet_ra[9], planet_houses[9]},
             {10, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10], planet_latitudes[10], planet_ra[10], planet_houses[10]},
-            {11, south_node, "☋", _("South Node"), get_sign(sign[15]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
-            {12, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[11]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
-            {13, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
-            {14, ascendant, "AC", _("Ascendant"), get_sign(sign[13]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
-            {15, mc, "MC", _("Midheaven"), get_sign(sign[14]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
+            {11, south_node, "☋", _("South Node"), get_sign(sign[11]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
+            {12, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[12]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
+            {13, SAN, san, _("SAN"), get_sign(sign[13]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
+            {14, ascendant, "AC", _("Ascendant"), get_sign(sign[14]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
+            {15, mc, "MC", _("Midheaven"), get_sign(sign[15]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
             {16, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[16], planet_latitudes[16], planet_ra[16], planet_houses[16]},
             {17, ic, "IC", _("Nadir"), get_sign(sign[17]), dm, mm, "", (char *)get_house_roman(ic, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[17], planet_latitudes[17], planet_ra[17], planet_houses[17]},
             {18, vertex, "🜊", _("Vertex"), get_sign(sign[18]), dv, mv, "", (char *)get_house_roman(vertex, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[18], planet_latitudes[18], planet_ra[18], planet_houses[18]}
@@ -7157,11 +7167,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             {5, planet_longitudes[5], "♃", _("Jupiter"), get_sign(sign[5]), d5, m5, (speed[5] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[5], cusps), speed[5], rising_times[5], set_times[5], mid_times[5], planet_declinations[5], planet_latitudes[5], planet_ra[5], planet_houses[5]},
             {6, planet_longitudes[6], "♄", _("Saturn"), get_sign(sign[6]), d6, m6, (speed[6] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[6], cusps), speed[6], rising_times[6], set_times[6], mid_times[6], planet_declinations[6], planet_latitudes[6], planet_ra[6], planet_houses[6]},
             {7, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10], planet_latitudes[10], planet_ra[10], planet_houses[10]},
-            {8, south_node, "☋", _("South Node"), get_sign(sign[15]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
-            {9, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[11]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
-            {10, SAN, san, _("SAN"), get_sign(sign[12]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
-            {11, ascendant, "AC", _("Ascendant"), get_sign(sign[13]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
-            {12, mc, "MC", _("Midheaven"), get_sign(sign[14]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
+            {8, south_node, "☋", _("South Node"), get_sign(sign[11]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
+            {9, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[12]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
+            {10, SAN, san, _("SAN"), get_sign(sign[13]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
+            {11, ascendant, "AC", _("Ascendant"), get_sign(sign[14]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
+            {12, mc, "MC", _("Midheaven"), get_sign(sign[15]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
             {13, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[16], planet_latitudes[16], planet_ra[16], planet_houses[16]},
             {14, ic, "IC", _("Nadir"), get_sign(sign[17]), dm, mm, "", (char *)get_house_roman(ic, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[17], planet_latitudes[17], planet_ra[17], planet_houses[17]},
             {15, vertex, "🜊", _("Vertex"), get_sign(sign[18]), dv, mv, "", (char *)get_house_roman(vertex, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[18], planet_latitudes[18], planet_ra[18], planet_houses[18]}
@@ -9237,6 +9247,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         free(house_ruler_str);
         //free(moon_temperament);
 
+        timeout(TIMEOUT);
 
     }
 

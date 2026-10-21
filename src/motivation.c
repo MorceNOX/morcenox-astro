@@ -347,7 +347,8 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
     wattroff(pad, COLOR_PAIR(6) | A_BOLD);
 
     if (qtd_planetas_casa1 == 0) {
-        mvwprintw(pad, row_pad++, 6, _("No planets in the Ascendant (House 1)."));
+        mvwprintw(pad, row_pad + 1, 6, _("No planets in the Ascendant (House 1)."));
+        row_pad++;
     }
     else {
         row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are sharing their influences to the Core Motivativation by presence in the House 1.\n\n"));   
@@ -363,11 +364,13 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
     row_pad += 2;
 
     wattron(pad, COLOR_PAIR(6) | A_BOLD);
-    mvwprintw(pad, row_pad++, 6, _("Influences by Aspect:"));
+    mvwprintw(pad, row_pad + 1, 6, _("Influences by Aspect:"));
     wattroff(pad, COLOR_PAIR(6) | A_BOLD);
+    row_pad += 2;
 
     if (qtd_asp == 0) {
-        mvwprintw(pad, row_pad++, 6, _("No planets aspecting the Ascendant."));
+        mvwprintw(pad, row_pad + 1, 6, _("No planets aspecting the Ascendant."));
+        row_pad++;
     }
     else {
         row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are aspecting the Ascendant and sharing their influences to the Core Motivativation.\n\n"));   
@@ -506,8 +509,23 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
     wattron(pad, A_ITALIC);
     row_pad += print_text_multiline(pad, row_pad + 2, 6, 80, influence);
     
-    row_pad++;
+    row_pad += 2;
     wattroff(pad, A_ITALIC);
+
+    wattron(pad, COLOR_PAIR(6) | A_BOLD);
+    mvwprintw(pad, row_pad + 1, 6, _("Mundane condition of the Ruler:"));
+    wattroff(pad, COLOR_PAIR(6) | A_BOLD);
+
+    row_pad++;
+
+    int h = romanToInt(plots[ruler - 1].house);
+    if (h % 3 == 0) {
+        row_pad += print_text_multiline(pad, row_pad + 2, 6, 80, _("The ruler is cadent. Therefore, he/she cannot produce or create things. Your Motivation is supposed to be fullfilled by passivity."));
+    } else {
+        row_pad += print_text_multiline(pad, row_pad + 2, 6, 80, _("The ruler is not cadent. Therefore, he/she can produce or create things. Your Motivation is supposed to be fullfilled by production or creation."));
+    }
+
+    row_pad += 2;
 
     
     mvwprintw(table_win, table_height - 1, 2, _(" Press ESC to return to chart | [↓↑] Scroll "));

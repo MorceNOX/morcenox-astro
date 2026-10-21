@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 01:58-0300\n"
+"POT-Creation-Date: 2026-10-21 08:00-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1491,28 +1491,28 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2601 src/draw-chart.c:2605 src/draw-chart.c:2609
-#: src/motivation.c:431 src/temperament.c:71 src/temperament.c:661
+#: src/motivation.c:432 src/temperament.c:71 src/temperament.c:661
 #: src/temperament.c:667 src/temperament.c:680 src/temperament.c:698
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2602 src/draw-chart.c:2606 src/draw-chart.c:2610
-#: src/motivation.c:435 src/temperament.c:74 src/temperament.c:662
+#: src/motivation.c:436 src/temperament.c:74 src/temperament.c:662
 #: src/temperament.c:670 src/temperament.c:686 src/temperament.c:706
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2603 src/draw-chart.c:2607 src/draw-chart.c:2611
-#: src/motivation.c:439 src/temperament.c:73 src/temperament.c:655
+#: src/motivation.c:440 src/temperament.c:73 src/temperament.c:655
 #: src/temperament.c:669 src/temperament.c:679 src/temperament.c:694
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2604 src/draw-chart.c:2608 src/draw-chart.c:2612
-#: src/motivation.c:444 src/temperament.c:72 src/temperament.c:656
+#: src/motivation.c:445 src/temperament.c:72 src/temperament.c:656
 #: src/temperament.c:668 src/temperament.c:685 src/temperament.c:702
 #, c-format
 msgid "Water"
@@ -2500,134 +2500,134 @@ msgstr ""
 msgid "Cusp %d"
 msgstr ""
 
-#: src/draw-chart.c:9258 src/draw-chart.c:9289
+#: src/draw-chart.c:9259 src/draw-chart.c:9290
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:9259 src/draw-chart.c:9290
+#: src/draw-chart.c:9260 src/draw-chart.c:9291
 msgid "02. Astrological Positions"
 msgstr ""
 
-#: src/draw-chart.c:9260 src/draw-chart.c:9291
+#: src/draw-chart.c:9261 src/draw-chart.c:9292
 msgid "03. Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:9261 src/draw-chart.c:9292
+#: src/draw-chart.c:9262 src/draw-chart.c:9293
 msgid "04. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:9262 src/draw-chart.c:9293
+#: src/draw-chart.c:9263 src/draw-chart.c:9294
 msgid "05. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:9263 src/draw-chart.c:9294
+#: src/draw-chart.c:9264 src/draw-chart.c:9295
 msgid "06. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:9264 src/draw-chart.c:9295
+#: src/draw-chart.c:9265 src/draw-chart.c:9296
 #, fuzzy
 msgid "07. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:9265 src/draw-chart.c:9296
+#: src/draw-chart.c:9266 src/draw-chart.c:9297
 msgid "08. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:9266 src/draw-chart.c:9297
+#: src/draw-chart.c:9267 src/draw-chart.c:9298
 #, fuzzy
 msgid "09. Declination Aspects"
 msgstr "Location: "
 
-#: src/draw-chart.c:9267 src/draw-chart.c:9298
+#: src/draw-chart.c:9268 src/draw-chart.c:9299
 msgid "10. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:9268 src/draw-chart.c:9299
+#: src/draw-chart.c:9269 src/draw-chart.c:9300
 msgid "11. Aspects to Antiscia"
 msgstr ""
 
-#: src/draw-chart.c:9269 src/draw-chart.c:9300
+#: src/draw-chart.c:9270 src/draw-chart.c:9301
 msgid "12. Aspects to Contrantiscia"
 msgstr ""
 
-#: src/draw-chart.c:9270 src/draw-chart.c:9301
+#: src/draw-chart.c:9271 src/draw-chart.c:9302
 msgid "13. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:9271 src/draw-chart.c:9302
+#: src/draw-chart.c:9272 src/draw-chart.c:9303
 msgid "14. Hylegiacal & Figuris Almuten"
 msgstr ""
 
-#: src/draw-chart.c:9272
+#: src/draw-chart.c:9273
 msgid "15. Temperament Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9273
+#: src/draw-chart.c:9274
 msgid "16. Mind Analysis"
 msgstr ""
 
-#: src/draw-chart.c:9274
+#: src/draw-chart.c:9275
 #, fuzzy
 msgid "17. Primary Motivation"
 msgstr "Location: "
 
-#: src/draw-chart.c:9275
+#: src/draw-chart.c:9276
 msgid "18. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9276
+#: src/draw-chart.c:9277
 msgid "19. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9277
+#: src/draw-chart.c:9278
 msgid "20. Annual Profections"
 msgstr ""
 
-#: src/draw-chart.c:9278
+#: src/draw-chart.c:9279
 msgid "21. Firdaria"
 msgstr ""
 
-#: src/draw-chart.c:9279
+#: src/draw-chart.c:9280
 msgid "22. Vital Chronocrators: Life Givers"
 msgstr ""
 
-#: src/draw-chart.c:9280
+#: src/draw-chart.c:9281
 msgid "23. Vital Threats: The Anareta"
 msgstr ""
 
-#: src/draw-chart.c:9281
+#: src/draw-chart.c:9282
 #, fuzzy
 msgid "24. Primary Directions"
 msgstr "Location: "
 
-#: src/draw-chart.c:9282
+#: src/draw-chart.c:9283
 #, fuzzy
 msgid "25. Prymary Directions to Arabic Parts"
 msgstr "Location: "
 
-#: src/draw-chart.c:9283
+#: src/draw-chart.c:9284
 #, fuzzy
 msgid "26. Solar Revolution"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:9303
+#: src/draw-chart.c:9304
 msgid "15. Planetary Hours"
 msgstr ""
 
-#: src/draw-chart.c:9304
+#: src/draw-chart.c:9305
 msgid "16. Arabic Parts"
 msgstr ""
 
-#: src/draw-chart.c:9305
+#: src/draw-chart.c:9306
 msgid "17. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
-#: src/draw-chart.c:9306
+#: src/draw-chart.c:9307
 msgid "18. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
-#: src/draw-chart.c:9307
+#: src/draw-chart.c:9308
 msgid "19. Annual Transits & Radical Projections"
 msgstr ""
 
@@ -3732,14 +3732,14 @@ msgstr ""
 msgid "No planets in the Ascendant (House 1)."
 msgstr ""
 
-#: src/motivation.c:353
+#: src/motivation.c:354
 msgid ""
 "The following planets are sharing their influences to the Core "
 "Motivativation by presence in the House 1.\n"
 "\n"
 msgstr ""
 
-#: src/motivation.c:368
+#: src/motivation.c:367
 msgid "Influences by Aspect:"
 msgstr ""
 
@@ -3747,72 +3747,72 @@ msgstr ""
 msgid "No planets aspecting the Ascendant."
 msgstr ""
 
-#: src/motivation.c:375
+#: src/motivation.c:376
 msgid ""
 "The following planets are aspecting the Ascendant and sharing their "
 "influences to the Core Motivativation.\n"
 "\n"
 msgstr ""
 
-#: src/motivation.c:388
+#: src/motivation.c:389
 msgid "Ruler of The Ascendant"
 msgstr ""
 
-#: src/motivation.c:415
+#: src/motivation.c:416
 msgid "Sign of the Ruler"
 msgstr ""
 
-#: src/motivation.c:432
+#: src/motivation.c:433
 msgid "This drive is animated by assertive energy, dynamism, and leadership,"
 msgstr ""
 
-#: src/motivation.c:433
+#: src/motivation.c:434
 msgid ""
 "infusing the core motivation with passion and a vital quest for expansion."
 msgstr ""
 
-#: src/motivation.c:436
+#: src/motivation.c:437
 msgid "This drive is anchored by pragmatism, enduring focus, and deliberation,"
 msgstr ""
 
-#: src/motivation.c:437
+#: src/motivation.c:438
 msgid ""
 "steering the core motivation toward tangible results and material stability."
 msgstr ""
 
-#: src/motivation.c:440
+#: src/motivation.c:441
 msgid ""
 "This drive is channeled into intellectual versatility, logical synthesis,"
 msgstr ""
 
-#: src/motivation.c:441
+#: src/motivation.c:442
 msgid "and social exchange, occasionally spreading the core motivation across "
 msgstr ""
 
-#: src/motivation.c:442
+#: src/motivation.c:443
 msgid "varied interests."
 msgstr ""
 
-#: src/motivation.c:445
+#: src/motivation.c:446
 msgid ""
 "This drive is shaped by emotional fluidity, intuition, and psychological "
 "depth,"
 msgstr ""
 
-#: src/motivation.c:446
+#: src/motivation.c:447
 msgid ""
 "rendering the core motivation highly adaptable to inner and outer currents."
 msgstr ""
 
-#: src/motivation.c:454
+#: src/motivation.c:455
 msgid "House of the Ruler"
 msgstr ""
 
-#: src/motivation.c:467
+#: src/motivation.c:468
 msgid "Areas of life where the Primary Motivation is applied or directed:"
 msgstr ""
 
-#: src/motivation.c:491
+#: src/motivation.c:492
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The raw "
@@ -3820,7 +3820,7 @@ msgid ""
 "fundamentally from the affairs of %s (House %d)."
 msgstr ""
 
-#: src/motivation.c:500
+#: src/motivation.c:501
 #, c-format
 msgid ""
 "The native's primary drives are directed toward %s (House %d). The fuel, "
@@ -3828,7 +3828,23 @@ msgid ""
 "matrix: the affairs of %s (House %d) and %s (House %d)."
 msgstr ""
 
-#: src/motivation.c:515
+#: src/motivation.c:516
+msgid "Mundane condition of the Ruler:"
+msgstr ""
+
+#: src/motivation.c:523
+msgid ""
+"The ruler is cadent. Therefore, he/she cannot produce or create things. Your "
+"Motivation is supposed to be fullfilled by passivity."
+msgstr ""
+
+#: src/motivation.c:525
+msgid ""
+"The ruler is not cadent. Therefore, he/she can produce or create things. "
+"Your Motivation is supposed to be fullfilled by production or creation."
+msgstr ""
+
+#: src/motivation.c:531
 #, fuzzy
 msgid " Press ESC to return to chart | [↓↑] Scroll "
 msgstr "Press [ESC] to cancel"
