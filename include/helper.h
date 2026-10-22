@@ -51,6 +51,8 @@ int comparar_zodiac_por_longitude(const void *a, const void *b);
 int comparar_directions_por_idade(const void *a, const void *b);
 int comparar_directions_por_idade_aspecto(const void *a, const void *b);
 int comparar_directions_por_idade_promissor_aspecto(const void *a, const void *b);
+int comparar_directions_por_idade_sentido_promissor_aspecto(const void *a, const void *b);
+int comparar_directions_por_idade_tipo_sentido_promissor_aspecto(const void *a, const void *b);
 int comparar_directions_por_idade_tipo_termo(const void *a, const void *b);
 int comparar_directions_por_idade_termo_temp(const void *a, const void *b);
 int comparar_directions_por_idade_termo_temp_tipo_sentido(const void *a, const void *b);

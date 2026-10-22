@@ -351,7 +351,7 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
         row_pad++;
     }
     else {
-        row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are sharing their influences to the Core Motivativation by presence in the House 1.\n\n"));   
+        row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are sharing their influences to the Core Motivativation by presence in the House 1:\n\n"));   
     }
 
     for (int i = 0; i < qtd_planetas_casa1; i++) {
@@ -373,7 +373,7 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
         row_pad++;
     }
     else {
-        row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are aspecting the Ascendant and sharing their influences to the Core Motivativation.\n\n"));   
+        row_pad += print_text_multiline(pad, row_pad + 1, 6, 80, _("The following planets are aspecting the Ascendant and sharing their influences to the Core Motivativation:\n\n"));   
     }
         
     for (int i = 0; i < qtd_asp; i++) {

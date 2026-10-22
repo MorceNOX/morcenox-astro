@@ -3992,7 +3992,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     row_pad++;
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
-    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close - F2 Positions - F3 Dignities - F4 Strength - F5 Energy Profile - [↓↑/JK] Scroll"));
+    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close ─ F2 Celestial Measurements ─ F3 Dignities ─ F4 Strength ─ F5 Energy Profile ─ [↓↑/JK] Scroll"));
     
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL
@@ -4013,7 +4013,6 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     doupdate();
 
-    // Renderiza a primeira foto da PAD na tela
     prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
 
     int ch;
@@ -4021,10 +4020,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
         
         if (ch == KEY_F(2)) {
-            // Abre sua tela de detalhes das dignidades
             display_positions(plots, matrix, ramc, lat);
             
-            // Restaura as molduras fixas da tabela principal
             touchwin(stdscr);
             wnoutrefresh(stdscr);
             touchwin(shadow_win); 
@@ -4034,14 +4031,11 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
             doupdate();
 
-            // REDESENHO CRÍTICO DA PAD: Força o ncurses a recolocar as linhas da tabela na tela
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
         else if (ch == KEY_F(3)) {
-            // Abre sua tela de detalhes das dignidades
             display_dignities(plots, dig, strength_planets);
             
-            // Restaura as molduras fixas da tabela principal
             touchwin(stdscr);
             wnoutrefresh(stdscr);
             touchwin(shadow_win); 
@@ -4051,11 +4045,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
             doupdate();
 
-            // REDESENHO CRÍTICO DA PAD: Força o ncurses a recolocar as linhas da tabela na tela
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
         else if (ch == KEY_F(4)) {
-            // Abre sua tabela de forças limpa (passando as variáveis que vieram por parâmetro)
             display_force(plots, dig, strength_planets);
             
             touchwin(stdscr);
@@ -4067,11 +4059,9 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
             doupdate();
             
-            // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
         else if (ch == KEY_F(5)) {
-            // Abre o novo perfil gráfico com barras horizontais (█)
             display_planetary_energy_profile(plots, strength_planets);
 
             touchwin(stdscr);
@@ -4083,7 +4073,6 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
             doupdate();
             
-            // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
         }
         else {
@@ -4175,7 +4164,6 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         }
     }
     
-    // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
     delwin(scroll_pad);
     delwin(shadow_win);
     delwin(table_win);
@@ -4195,7 +4183,6 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    // Dimensionamento responsivo da janela física externa
     int table_height = 24;
     if (table_height > max_y - 2) table_height = max_y - 2;
     int table_width = max_x - 5;
@@ -4217,20 +4204,18 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     box(table_win, 0, 0);
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
-    // Cabeçalho Fixo na Janela de Borda (Não rola)
     wattron(table_win, A_BOLD);
-    const char *title = _("Astrological Positions Table");
+    const char *title = _(" Spherical Measurements of the Sky ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
-    // 2. Desenha o botão [X] no canto superior direito
     int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
 
-    wattron(table_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 0, col_fechar, "[");
     mvwprintw(table_win, 0, col_fechar + 2, "]");
     wattroff(table_win, COLOR_PAIR(13));
 
-    wattron(table_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD);
     mvwprintw(table_win, 0, col_fechar + 1, "✖");
     wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
@@ -4239,13 +4224,13 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
-    mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 22, _("House"));
-    mvwprintw(table_win, 2, 33, _("Speed"));
-    mvwprintw(table_win, 2, 40, _("Longitude"));
-    mvwprintw(table_win, 2, 52, _("Latitude"));
-    mvwprintw(table_win, 2, 64, _("Declination"));
-    mvwprintw(table_win, 2, 78, _("Right Ascension"));
+    mvwprintw(table_win, 2, 10, _("Zod. Long."));
+    mvwprintw(table_win, 2, 22, _("House Pos."));
+    mvwprintw(table_win, 2, 35, _("Speed"));
+    mvwprintw(table_win, 2, 42, _("Longitude"));
+    mvwprintw(table_win, 2, 54, _("Latitude"));
+    mvwprintw(table_win, 2, 66, _("Declination"));
+    mvwprintw(table_win, 2, 79, _("Right Ascension"));
     mvwprintw(table_win, 2, 95, _("Semi-Arc (Day)"));
     mvwprintw(table_win, 2, 114, _("Semi-Arc (Night)"));
            
@@ -4263,16 +4248,16 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 20, c_spd = 28, c_lon = 39, c_lat = 50, c_dec = 64, c_ra = 81, c_sad = 97, c_san = 118;
+    int c_obj = 0, c_pos = 8, c_hse = 19, c_spd = 30, c_lon = 41, c_lat = 52, c_dec = 66, c_ra = 82, c_sad = 97, c_san = 118;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         
         PlanetRowData data = matrix->rows[i];
 
         // 1. Objeto / Planeta
+        wattron(scroll_pad, A_BOLD);
         mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", plots[i].object);
-        //wattroff(scroll_pad, A_BOLD);
-        
+                
         // 2. Coordenadas Básicas
         if (get_visual_width(plots[i].degree) == 2) {
             mvwprintw(scroll_pad, row_pad, c_pos + 1, "%s", plots[i].degree);
@@ -4286,7 +4271,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         if (data.house_color_pair > 0) {
             wattron(scroll_pad, COLOR_PAIR(data.house_color_pair));
         }
-        mvwprintw(scroll_pad, row_pad, c_hse + 1, "%s", plots[i].house);
+        mvwprintw(scroll_pad, row_pad, c_hse + 1, "%8.4f", plots[i].house_pos);
         if (data.house_color_pair > 0) {
             wattroff(scroll_pad, COLOR_PAIR(data.house_color_pair));
         }
@@ -4300,6 +4285,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
             wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
         }
 
+        wattron(scroll_pad, COLOR_PAIR(62));
         mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", plots[i].longitude);
 
         if (isnan(plots[i].latitude)) {
@@ -4339,6 +4325,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
        
         wattroff(scroll_pad, A_BOLD);
+        wattroff(scroll_pad, COLOR_PAIR(62));
 
         wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
         wmove(scroll_pad, row_pad + 1, c_obj);
@@ -6114,6 +6101,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(59, 242, COLOR_BLACK);
         init_pair(60, 25, 18);
         init_pair(61, 61, 54); // magenta
+        init_pair(62, 57, 223);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -6192,6 +6180,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(59, 242, COLOR_CYAN);
         init_pair(60, 31, 25); // amarelo / azul
         init_pair(61, 97, 91); // magenta, magenta
+        init_pair(62, 57, 223);
     }
     
     FLAGS = 0;
@@ -6474,14 +6463,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // 1. Loop to calculate the planetary positions
 
         char house_system_pd = house_system;
-        if (house_system == 'E' || house_system == 'W' || house_system == 'M') {
-            if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-                house_system_pd = 'T';
-            }
-            else {
-                house_system_pd = 'P';
-            }
-        }
+        // if (house_system == 'E' || house_system == 'W' || house_system == 'M') {
+        //     if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+        //         house_system_pd = 'T';
+        //     }
+        //     else {
+        //         house_system_pd = 'P';
+        //     }
+        // }
 
         for (int i = 0; i < 11; i++) {
             if (swe_calc_ut(julian_day, planets[i], FLAGS_ecliptic, x2, err) < 0) {
@@ -6605,6 +6594,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
+        for (int i = 14; i < 19; i++) {
+            x_sn[0] = planet_longitudes[i];
+            x_sn[1] = planet_latitudes[i];
+
+            planet_houses[i] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
+        }
 
 
         // 5. Transformação EM MASSA para Coordenadas Equatoriais (RA e Dec)
@@ -9267,7 +9262,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     // 1. Definição estática das diversas opções de funções
     const char *opcoes1[] = {
         _("01. Chart Data Panel"),
-        _("02. Astrological Positions"),
+        _("02. Spherical Measurements of the Sky"),
         _("03. Dignities & Rulerships"),        
         _("04. Accidental Dignities"),
         _("05. Strength of the Planets"),
@@ -9298,7 +9293,7 @@ void open_menu_tables(ContextoMenu *ctx) {
 
     const char *opcoes2[] = {
         _("01. Chart Data Panel"),
-        _("02. Astrological Positions"),
+        _("02. Spherical Measurements of the Sky"),
         _("03. Dignities & Rulerships"),        
         _("04. Accidental Dignities"),
         _("05. Strength of the Planets"),

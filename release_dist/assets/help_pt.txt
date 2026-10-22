@@ -71,9 +71,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 ⯓ Plutão
 
-☊ Nó Norte
+☊ Nodo Norte
 
-☋ Nó Sul
+☋ Nodo Sul
 
 🝴 Parte de Fortuna
 
@@ -117,6 +117,10 @@ s Aspecto Separativo
 ∥ Paralelo
 
 ∦ Contra-Paralelo
+
+R∥ Paralelo-Rapto
+
+R∦ Contra-Paralelo-Rapto
 
 
 
@@ -211,7 +215,7 @@ Pressione Q ou ESC para retornar ao menu principal.
    
 • F2 - Posições e Dignidades dos Planetas
 
-    - F2 - Posições e Dados Calculados dos Planetas 
+    - F2 - Medidas Esféricas do Céu 
    
     - F3 - Detalhes das Dignidades Acidentais
     
@@ -239,7 +243,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F7 - Almuten
 
-    i - Interpretação Figuris do Almuten 
+    i - Interpretação do Almuten Figuris
 
 • F8 - Temperamento do Nativo
 
@@ -251,7 +255,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F12 - Firdária
 
-• F13 (shift+F1) ou 1 - Cronocratores Vitais (Hyleg & Alcochoden)
+• F13 (shift+F1) ou 1 - Cronocratas Vitais (Hyleg & Alcochoden)
 
 • F14 (shift+F2) ou 2 - Anareta (Destruidor da Vida)
 
@@ -267,13 +271,13 @@ Pressione Q ou ESC para retornar ao menu principal.
    
    d - Deletar a Parte Selecionada
    
-   x - Aspectos dos Planetas aos Partes Árabes
+   x - Aspectos dos Planetas às Partes Árabes
 
 • F18 (shift+F6) ou 6 - Análise Mental
 
-• F19 (shift+F7) ou 7 - Carta Solar Revolução
+• F19 (shift+F7) ou 7 - Carta da Revolução Solar
 
-    C - Confrontação Radix: Integração Solar Return
+    C - Confrontação Radix: Integração Revolução Solar
     
     T - Trânsitos Anuais
     
@@ -310,6 +314,8 @@ Pressione Q ou ESC para retornar ao menu principal.
 • R - Resetar Zoom e Pan
 
 • D - Exibir Decanatos
+
+• B - Exibir Termos
 
 • H - Exibir Limites das Casas
 
@@ -433,16 +439,16 @@ O Menu Principal oferece comandos para gerenciar os mapas astrológicos e as con
 
 A Barra de Status exibe a localização (cidade), o horário, o gênero (M para Masculino, F para Feminino e N para Neutro) e o status do horário de verão (HdV) do mapa astrológico atual. Assim, você pode identificar facilmente se o seu mapa permanece ativo ou não.
 
-Ao iniciar o aplicativo, o mapa exibido será um mapa novo, gerado para a localização padrão e o horário atual. Esse mapa inicial não é salvo no banco de dados automaticamente. Para salvá-lo — ou para salvar ou duplicar qualquer outro mapa —, você deve estar nesta tela inicial e selecionar a opção "Salvar Mapa" no Menu Principal, pressionando <ENTER> ou clicando duas vezes nessa opção.
+No início do programa, o mapa ativo será um mapa novo, gerado para a localização padrão e o horário atual. Esse mapa inicial não é salvo no banco de dados automaticamente. Para salvá-lo — ou para salvar ou duplicar qualquer outro mapa —, você deve estar nesta tela inicial e selecionar a opção "Salvar Mapa" no Menu Principal, pressionando <ENTER> ou clicando duas vezes nessa opção.
 
 
 Opções disponíveis no Menu Principal:
 
 
-• Mapa Rápido: Visualizar mapa para o horário e local atual
+• Mapa Rápido: Visualizar mapa para o horário e localidade atual
 ───────────────────────────────────────────────────────────────────
 
-Exibe a roda do mapa para o horário atual (agora) e o local padrão pré-selecionado. O mapa é animado e atualiza a cada segundo.
+Exibe a roda do mapa para o horário atual (agora) e a localidade padrão pré-selecionado. O mapa é animado e atualiza a cada segundo.
 
 Ao selecionar esta opção, o mapa carregado anteriormente é substituído pelo novo mapa rápido. Se você não o salvou, perdeu-o.
 
@@ -464,7 +470,7 @@ As caixas de seleção aparecem na seguinte sequência:
 
 4. País (Selecione da lista rolável).
 
-5. Cidade (Selecione da lista rolável; o Estado/Condado/Província é exibido na 2ª coluna para ajudar a distinguir cidades homônimas).
+5. Cidade (Digite um fragmento do nome da localidade desejada e selecione da lista rolável que aparecerá em seguida, filtrada pelo fragmento de texto digitado; o Estado/Condado/Província é exibido na 2ª coluna para ajudar a distinguir cidades homônimas).
 
 6. Fuso Horário (TZ) (Exibe o fuso horário da cidade). Na verdade, isso é exibido apenas para referência, porque o programa sempre calcula o fuso horário correto para a cidade selecionada. (Esta opção tornou-se obsoleta da versão v1.40.0 em diante, e não será exibida).
 
@@ -478,17 +484,17 @@ Você pode pressionar a tecla <ESC> em qualquer caixa para cancelar a edição.
 
 Se a sua cidade ou local não for encontrado no passo 5, você pode fechar a janela de seleção de cidade ou de país; o sistema solicitará então que você insira as coordenadas manualmente.
  
-Basta inserir a longitude e a latitude nos diálogos correspondentes para que o sistema identifique o país e o fuso horário corretos para essas coordenadas. O sistema também calculará uma altitude aproximada. Nas telas seguintes, você deverá inserir o nome do local e selecionar o seu tipo, bem como confirmar ou ajustar o valor da altitude. Por fim, você informará o nome do mapa, e ele será exibido na roda astrológica.
+Basta inserir a longitude e a latitude nos diálogos correspondentes para que o sistema identifique o país e o fuso horário corretos para essas coordenadas. O sistema também calculará uma altitude aproximada. Nas telas seguintes, você deverá inserir o nome da localidade e selecionar o seu tipo, bem como confirmar ou ajustar o valor da altitude. Por fim, você informará o nome do mapa, e ele será exibido na roda astrológica.
 
 Após definir os dados, lembre-se de salvar o mapa. Se você fechar o aplicativo sem salvar, ou se abrir o Mapa Rápido, os dados serão perdidos. Para salvar volte ao Menu Principal e selecione a opção para salvar mapa.
 
-O Mapa Rápido sobrescreverá os dados selecionados pelo horário e local atuais.
+O Mapa Rápido sobrescreverá os dados selecionados pelo horário e localidade atuais.
 
 
 • Carregar Mapa: Carregar um mapa previamente salvo
 ───────────────────────────────────────────────────────────────────
 
-Role por uma lista de seus mapas salvos e selecione um para carregar. O mapa escolhido se tornará o "mapa atual".
+Role por uma lista de seus mapas salvos e selecione um para carregar. O mapa escolhido se tornará o "mapa atual". Você pode selecionar com [ENTER] ou um duplo-clique.
 
 
 • Salvar Mapa: Salvar o mapa atual
@@ -498,7 +504,7 @@ Salve os dados do mapa atual no banco de dados.
 
 Um diálogo perguntará sobre o nome do mapa. Você pode preservar o atual ou definir um novo.
 
-Se você estiver tentando salvar o novo mapa após inserir as coordenadas manualmente, o sistema tentará salvar a nova localização antes de salvar o mapa. Se tudo tiver sido feito corretamente, a nova localização será salva, assim como o novo mapa.
+Se você estiver tentando salvar o novo mapa após inserir as coordenadas manualmente, o sistema tentará salvar a nova localidade antes de salvar o mapa. Se tudo tiver sido feito corretamente, a nova localidade será salva no banco de dados, assim como o novo mapa.
 
 Essa opção também pode ser usada para salvar o mapa carregado atual com um nome diferente (assim você pode excluir ou não o anterior).
 
@@ -883,7 +889,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • Posições de planetas e objetos por signo e casa;
 
-• Declinação, velocidade e direção do movimento;
+• Velocidade e direção do movimento;
 
 • Orientalidade relacionada à posição do Sol;
 
@@ -894,11 +900,13 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Recepção mútua: 
 Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
-Ao pressionar F2 novamente, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
+Pressionando-se F2, você verá as Medidas Equatoriais e Locais, que são dados astronômicos calculados que refletem exatamente como estavam os planetaas e outros pontos no exato momento do nascimento (o horário do mapa ativo). Os antigos chamavam tais dados de medidas esféricas do cèu, e por isso nós adotamos essa descrição como o nome da nossa tabela de medidas.
 
-F3 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
+Ao pressionar F3, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
-F4 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
+F4 mostra a força de cada planeta no mapa, baseada em suas dignidades e relevância.
+
+F5 mostra o Perfil de Energia Planetária, um gráfico de barras que exibe de forma visual a força e a relevância de cada planeta (também pressionando [8] na tela da Roda do Mapa).
 
 Ao escolher pelo Menu de Ações, esses submódulos estão disponíveis como opções independentes.
 
@@ -990,8 +998,17 @@ Use [↓↑] para deslizar a tabela.
 
 
 
-• Detalhes das Dignidades Acidentais
+• Medidas Astronômicas do Céu
 (F2 na Tabela de Dignidades)
+───────────────────────────────────────────────────────────────────
+
+Esta tabela exibe dados astronômicos equatoriais e locais dos planetaas no exato horário do corrente mapa.
+
+
+
+
+• Detalhes das Dignidades Acidentais
+(F3 na Tabela de Dignidades)
 ───────────────────────────────────────────────────────────────────
 
 Você pode ver as condições acidentais de todos
@@ -1022,7 +1039,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 9
 
-• A Força dos Planetas (F3 na Tabela de Dignidades)
+• A Força dos Planetas (F4 na Tabela de Dignidades)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Aqui exibimos a pontuação de cada planeta em suas dignidades essenciais e acidentais, bem como sua força baseada no escore e no peso atribuído pela relevância do planeta.
@@ -1612,7 +1629,7 @@ Todas as direções exibidas são:
 
 A) Para o método Placidus (o padrão descrito por Ptolomeu):
 
-    1) Zodiacais, com latitude real calculada pelo métodp Bianchini e obliquidade dinâmica, e 
+    1) Zodiacais, com latitude real calculada pelo método Bianchini e obliquidade dinâmica, e 
     
     2) Mundanas proporcionais aos Semi-Arcos. 
     
@@ -1638,7 +1655,7 @@ As chaves de tempo disponíveiss são as seguintes:
     
     6) Kepler (Chave Dinâmica), e
     
-    7) Arco Solar Equatorial Verdadeiro.
+    7) Arco Solar Equatorial Verdadeiro (Chave Dinâmica, também conhecida por Chave Dinâmica de Placidus por RA).
 
 A tabela também exibe, por padrão, direções zodiacais e mundanas em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] e pelas mundanas pressionando [M], e [B] para exibir ambas.
 
@@ -1676,8 +1693,6 @@ Os Divisores são os regentes dos termos das Direções Zodiacais Diretas e Conv
 Nas direções zodiacais conversas, um termo entra em vigor quando seu final é atingido pelo significador.
 
 No menu de configurações você pode selecionar a chave de tempo a ser utilizada para calcular a idade e a data dos eventos. Estão disponíveis 4 (quatro) chaves estáticas: Naibod, Cardan, Ptolomeu e Placidus; e 3 (três) chaves dinâmicas: Arco Solar Eclíptico Verdadeiro, ou em Longitude (arco solar zodiacal), Kepler e Arco Solar Equatorial Verdadeiro, ou em Ascenção Reta (chave dinâmica de Plácidus).
-
-O motor leva em consideração o sistema de casas atual (selecionado pelo usuário) para calcular o arco das direções mundanas, o que é válido para qualquer sistema baseado em quadrantes. Portanto, se o sistema de casas em uso não for baseado em quadrantes (isto é, E – Casas Iguais, W – Signos Inteiros e M – Morinus), o aplicativo recorrerá automaticamente ao sistema P – Placidus, ou T - Polich/Page Topocêntrico, caso o método de cálculo Topocêntrico esteja selecionado para o cálculo das direções, mas apenas para o cálculo das direções primárias mundanas. As casas nos demais módulos respeitarão a seleção do usuário.
 
 Você pode exportar as direções para um arquivo .csv pressionando [P]. Uma caixa de diálogo solicitará o nome do arquivo e, em seguida, dois arquivos serão gerados com o mesmo nome, porém com extensões diferentes: 1) um arquivo .csv, contendo as direções, e 2) um arquivo .info, contendo informações sobre as direções exportadas.
 
