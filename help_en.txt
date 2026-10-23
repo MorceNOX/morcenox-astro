@@ -384,6 +384,8 @@ Whenever you wish you can open this help screen and see immediately the keys and
 
 This application is developed in C, utilizing the ncurses library for visual elements and the Swiss Ephemeris for astronomical calculations. This ensures a fast, solid, and accurate system that is precise and visually appealing, even within a terminal environment.
 
+For accurate charts and tables, all astronomical calculations are performed based on the topocentric system, taking into account the coordinates of the location for the loaded map.
+
 All data is stored in an SQLite database provided by this application.
 
 We utilize an up-to-date free database of cities provided by https://github.com/dr5hn/countries-states-cities-database, which we have enhanced with structural improvements using the pytz (timezonefinder) and srtm libraries to better serve the application's needs (These libraries were only used to enhance the application's database during the development phase. They are not used by the program and you don't need to install them).

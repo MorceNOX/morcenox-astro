@@ -389,6 +389,8 @@ Sempre que desejar, você pode abrir esta tela de ajuda e ver imediatamente as t
 
 Este aplicativo é desenvolvido em C, utilizando a biblioteca ncurses para elementos visuais e o Swiss Ephemeris para cálculos astronômicos. Isso garante um sistema rápido, sólido e preciso que é visualmente atraente, mesmo dentro de um ambiente de terminal.
 
+Para garantir a precisão dos dados apresentados, todos os cálculos astronômicos são realizados com base no sistema topocêntrico, considerando as coordenadas da localidade do mapa carregado.
+
 Todos os dados são armazenados em um banco de dados SQLite fornecido por este aplicativo.
 
 Utilizamos um banco de dados atualizado e gratuito de cidades fornecido por https://github.com/dr5hn/countries-states-cities-database, que aprimoramos com melhorias estruturais usando as bibliotecas pytz (timezonefinder) e srtm para servir melhor às necessidades do aplicativo (Essas bibliotecas foram apenas usadas para aprimorar o banco de dados durante a fase de desenvolvimento. Elas não são usadas pelo programa e você não precisa instalá-las).
