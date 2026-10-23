@@ -21,7 +21,7 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Multi-Chart Support:** Generate Natal (Radix) charts, Solar Return (Annual) charts, and real-time  charts.
 * **Solar Return Engine:** A sophisticated "Radix Confrontation" system that cross-examines the annual chart against the birth chart via seven distinct checkpoints (Almuten, House Transits, Time-Lord Co-Alignment, etc.). It also verifies the transits of the planets against the natal (radical) positions, including the Arabic Parts.
 * **Time-Lord Techniques:** Built-in modules for **Firdaria**, **Annual Profections**, and **Vital Chronocrators** (Hyleg & Alcochoden).
-* **Primary Directions:** Precise calculation of Direct and Converse directions for planets, angles and Arabic Parts using several time keys for both, *zodiacal with latitude* and *mundane proportional to semi-arc*.
+* **Primary Directions:** Precise calculation of Direct and Converse directions for planets, angles and Arabic Parts using several time keys and three methods for both, *zodiacal with latitude* and *mundane*.
 * **Arabic Parts:** Create, edit, and manage a custom collection of Arabic Parts, with automated aspect calculation.
 * **Anareta & Vital Threats:** Identify potential physical risks and vital threats based on the 8th house ruler and the Anareting planet.
 
