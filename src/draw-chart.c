@@ -916,7 +916,7 @@ double get_sun_altitude(double tjd_ut, double lat, double lon, double elev) {
     double delta_t = swe_deltat(tjd_ut);
     double tjd_et = tjd_ut + delta_t;
 
-    int flag = SEFLG_SWIEPH | SEFLG_EQUATORIAL;
+    int flag = SEFLG_SWIEPH | SEFLG_EQUATORIAL | SEFLG_TOPOCTR;
 
     // 2. Calcular a posição do Sol usando o tempo orbital exato (tjd_et)
     if (swe_calc(tjd_et, SE_SUN, flag, xx, serr) < 0) {
@@ -1012,10 +1012,10 @@ double get_sun_moon_diff(double jd) {
     double x2[6];
     char err[256];
     // We need the longitudes of both Sun and Moon
-    swe_calc_ut(jd, SE_SUN, SEFLG_SPEED, x2, err);
+    swe_calc_ut(jd, SE_SUN, SEFLG_SPEED | SEFLG_TOPOCTR, x2, err);
     double sun_long = x2[0];
     
-    swe_calc_ut(jd, SE_MOON, SEFLG_SPEED, x2, err);
+    swe_calc_ut(jd, SE_MOON, SEFLG_SPEED | SEFLG_TOPOCTR, x2, err);
     double moon_long = x2[0];
     
     return normalize_angle(sun_long - moon_long);
@@ -5794,30 +5794,49 @@ void format_event_time(double jd, double offset, char *dest, size_t size_of_dest
         return;
     }
     
-    int y, m, d;
-    double h;
+    int y, m, d, h, min;
+    double sec;
     
     // 1. Aplica o fuso horário diretamente no Dia Juliano antes da conversão
     double local_jd = jd + (offset / 24.0);
     
     // 2. Converte para a data e hora local
-    swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
+    //swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
+    swe_jdut1_to_utc(local_jd, 2, &y, &m, &d, &h, &min, &sec);
     
     // 3. Arredondamento matemático dos segundos (evita que 05:44:59.99 apareça como 05:44:59)
     // Adicionamos meio milissegundo (0.5 / 3600000.0) para estabilizar a exibição
-    h += 0.5 / 3600000.0;
-    if (h >= 24.0) {
-        h -= 24.0;
-    }
+    // h += 0.5 / 3600000.0;
+    // if (h >= 24.0) {
+    //     h -= 24.0;
+    // }
 
     // 4. Extração matemática de horas, minutos e segundos
-    int hours = (int)h;
-    int minutes = (int)((h - hours) * 60.0);
-    double sec_decimal = (((h - hours) * 60.0) - minutes) * 60.0;
-    int seconds = (int)sec_decimal;
+    // int hours = (int)h;
+    // int minutes = (int)((h - hours) * 60.0);
+    // double sec_decimal = (((h - hours) * 60.0) - minutes) * 60.0;
+    // int seconds = (int)sec_decimal;
     
     // 5. Formata a string de saída com segurança (Ex: "06:45:23")
-    snprintf(dest, size_of_dest, "%02d:%02d:%02d", hours, minutes, seconds);
+
+    int secs = (int)(sec + 0.5);
+
+    // Tratamento de estouro de segundos (se der 60, vira 0 e soma 1 minuto)
+    if (secs >= 60) {
+        secs = 0;
+        min++;
+        if (min >= 60) {
+            min = 0;
+            h++;
+            // Nota: Se as horas estourarem (>=24), a função timegm() abaixo 
+            // corrige os dias, meses e anos automaticamente para nós.
+        }
+    }
+
+
+
+
+    snprintf(dest, size_of_dest, "%02d:%02d:%02d", h, min, secs);
 }
 
 
@@ -5897,7 +5916,7 @@ int calc_declination_ra_point(double jd, double longitude, double *ra_out, doubl
     char serr[256];
     
     // Calcular a Obliqüidade da Eclíptica para este momento (SE_ECL_NUT)
-    if (swe_calc_ut(jd, SE_ECL_NUT, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
         printf("Erro ao calcular obliqüidade: %s\n", serr);
         return 0;
     }
@@ -5926,7 +5945,7 @@ double calc_declination_mathematical_point(double jd, double longitude) {
     char serr[256];
     
     // Calcular a Obliqüidade da Eclíptica para este momento (SE_ECL_NUT)
-    if (swe_calc_ut(jd, SE_ECL_NUT, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
         printf("Erro ao calcular obliqüidade: %s\n", serr);
         return NAN; // Retorna "Not a Number" em vez de 1.0 em caso de erro
     }
@@ -5954,7 +5973,7 @@ int obter_coordenadas_termo(double longitude_termo, double jd_natal, double *ra_
     char serr[256];
 
     // 1. Obtém a obliquidade da eclíptica do nascimento
-    if (swe_calc_ut(jd_natal, SE_ECL_NUT, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd_natal, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
         return 0; // Erro
     }
     double eps = x_nut[0];
@@ -6405,6 +6424,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                                   (utc_time->tm_min / 60.0) + 
                                   (utc_time->tm_sec / 3600.0);
 
+
+        swe_set_topo(lon, lat, elev);
+
+
         // 6. Calcular o Julian Day correto em UT/UTC
         julian_day = swe_julday(utc_time->tm_year + 1900, 
                                 utc_time->tm_mon + 1, 
@@ -6414,9 +6437,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-        swe_set_topo(lon, lat, elev);
-
-       
+            
 
 
         // 2. Calculate Ascendant, MC and houses

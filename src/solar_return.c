@@ -33,6 +33,7 @@
 #include "firdaria.h"
 #include "profections.h"
 #include "hyleg.h"
+#include "directions.h"
 
 
 struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horario_destino) {
@@ -46,7 +47,7 @@ struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horari
     double jd_local = jd_revolucao_ut + (fuso_horario_destino / 24.0);
 
     /* 2. Extrai os dados civis a partir do JD já localizado */
-    swe_jdut1_to_utc(jd_local, SE_GREG_CAL, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
+    swe_jdut1_to_utc(jd_local, 2, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
 
     /* 3. Arredondamento e preenchimento da struct tm */
     int segundos = (int)(segundos_decimal + 0.5);
@@ -60,7 +61,7 @@ struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horari
     t_local.tm_isdst = -1; 
 
     /* 4. Normaliza os dias da semana/ano sem alterar o fuso */
-    mktime(&t_local); 
+    timegm(&t_local); 
 
     return t_local;
 }
@@ -74,10 +75,10 @@ double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecio
     char err_msg[256]; 
     
     // Flags padrões do sistema
-    int32 iflag = SEFLG_SPEED | SEFLG_SWIEPH; 
+    int32 iflag = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
 
     // Descobre a data civil de nascimento em UTC
-    swe_revjul(jd_nascimento, SE_GREG_CAL, &ano, &mes, &dia, &hora);
+    swe_revjul(jd_nascimento, 2, &ano, &mes, &dia, &hora);
     
     // Projeta o ano alvo da Revolução Solar
     int ano_rev = ano + idade_selecionada;
@@ -166,13 +167,13 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
     
     // SEFLG_SPEED: Obrigatório para velocidade.
     // SEFLG_SWIEPH: Tenta usar os arquivos de alta precisão da AstroDienst se disponíveis.
-    int32_t flags = SEFLG_SPEED | SEFLG_SWIEPH; 
+    int32_t flags = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
 
     // 1. Obter a longitude solar exata do nascimento
     if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
         // Se falhar por falta de arquivos físicos de efemérides do século passado,
         // tenta rodar com o modelo analítico de Moshier (nativo da biblioteca).
-        flags = SEFLG_SPEED | SEFLG_MOSEPH;
+        flags = SEFLG_SPEED | SEFLG_MOSEPH | SEFLG_TOPOCTR;
         if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
             fprintf(stderr, "Erro crítico ao calcular Sol do nascimento: %s\n", err_msg);
             return -1.0;
@@ -182,7 +183,7 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
     // 2. Estimar o Dia Juliano alvo aproximado
     // Em mapas muito antigos, a duração do ano trópico desvia levemente.
-    double jd_calculado = jd_nascimento + (idade_selecionada * 365.242199);
+    double jd_calculado = jd_nascimento + (idade_selecionada * obter_ano_tropical_dinamico(jd_nascimento));
 
     // --- SALVAGUARDA HISTÓRICA ---
     // Verifica se a estimativa inicial não caiu no mês/ano errado devido a desvios históricos
@@ -202,7 +203,7 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
 
     // 3. Refinar o momento usando o método de Newton-Raphson (Alta Precisão)
     const double TOLERANCIA = 1e-7; // Equivalente a milissegundos de tempo
-    const int MAX_ITERACOES = 15;
+    const int MAX_ITERACOES = 30;
     int iteracoes = 0;
     double erro = 1.0;
 
@@ -266,14 +267,14 @@ void processar_confronto_natal_revolucao(
     double eps_rev;
 
     // 1. OBLIQUIDADE DO NASCIMENTO (Para o Almuten)
-    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH | SEFLG_TOPOCTR, xx, serr) >= 0) {
         eps_natal = xx[0]; 
     } else {
         eps_natal = 23.439291; 
     }
 
     // 2. OBLIQUIDADE DA REVOLUÇÃO (Para o Ascendente do Ano)
-    if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+    if (swe_calc_ut(jd_revolucao_ut, SE_ECL_NUT, SEFLG_SWIEPH | SEFLG_TOPOCTR, xx, serr) >= 0) {
         eps_rev = xx[0]; 
     } else {
         eps_rev = 23.439291; 

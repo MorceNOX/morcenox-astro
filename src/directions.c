@@ -57,7 +57,7 @@ double get_obliquidade(double jd) {
     double eps;
 
     // 1. OBLIQUIDADE DO MAPA
-    if (swe_calc_ut(jd, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+    if (swe_calc_ut(jd, SE_ECL_NUT, SEFLG_SWIEPH | SEFLG_TOPOCTR, xx, serr) >= 0) {
         eps = xx[0]; 
     } else {
         eps = OBLIQUIDADE; 
@@ -590,12 +590,12 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
@@ -947,12 +947,12 @@ int calc_zodiacal_directions(Promissor *sig, int idx_alvo, LinhaDirecao *lista_r
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
@@ -1583,7 +1583,7 @@ double obter_chave_arco_solar_ultra_fast(double tjd_ut_natal, double arco_alvo) 
 double obter_chave_arco_solar_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
     double x2[6];
     char serr[256];
-    int32 iflag = SEFLG_SPEED;
+    int32 iflag = SEFLG_SPEED | SEFLG_TOPOCTR;
 
     // 1. Posição natal do Sol
     swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
@@ -1831,95 +1831,6 @@ double encontrar_chave_por_arco_solar_ra_OTIMIZADA(double jd_natal, double arco_
 
 
 
-
-// // Função auxiliar interna para simular o arco gerado pela velocidade do Sol
-// static double calcular_arco_kepler_interno(double tjd_ut_natal, double idade_anos) {
-//     double x2[6];
-//     char serr[256];
-//     int32 iflag = SEFLG_SPEED;
-    
-//     double tjd_ut_atual = tjd_ut_natal + (idade_anos * obter_ano_tropical_dinamico(tjd_ut_natal));
-//     swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr);
-    
-//     return x2[3] * idade_anos; // Velocidade instantânea do dia * anos acumulados
-// }
-
-// /**
-//  * Retorna o valor CHAVE dinâmico para a lógica de Kepler.
-//  * Uso no código: double chave = obter_chave_kepler(tjd_natal, arco);
-//  *                    double idade = arco / chave;
-//  */
-// double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
-//     double limite_inferior = 0.0;
-//     double limite_superior = 120.0;
-//     double idade_estimada = 0.0;
-
-//     // Busca interna da idade correspondente ao arco sob as leis de Kepler
-//     for (int i = 0; i < 50; i++) {
-//         idade_estimada = (limite_inferior + limite_superior) / 2.0;
-        
-//         double arco_estimado = calcular_arco_kepler_interno(tjd_ut_natal, idade_estimada);
-        
-//         if (fabs(arco_estimado - arco_alvo) < 1e-8) break;
-
-//         if (arco_estimado > arco_alvo) limite_superior = idade_estimada;
-//         else limite_inferior = idade_estimada;
-//     }
-
-//     // Evita divisão por zero para arcos nulos
-//     if (idade_estimada < 1e-6) {
-//         double x2[6];
-//         char serr[256];
-//         swe_calc_ut(tjd_ut_natal, SE_SUN, SEFLG_SPEED, x2, serr);
-//         return x2[3];
-//     }
-
-//     // Retorna a Chave Equivalente para fechar com a sua equação matemática
-//     return arco_alvo / idade_estimada;
-// }
-
-
-
-// double obter_chave_kepler_ultra_rapida(double tjd_ut_natal, double arco_alvo) {
-//     double x2[6];
-//     char serr[256];
-//     int32 iflag = SEFLG_SPEED;
-
-//     // 1. Estimativa inicial rápida em dias (1 dia = 1 ano)
-//     double dias_estimados = arco_alvo / 0.98564733;
-
-//     // 2. Método de Newton-Raphson
-//     for (int i = 0; i < 3; i++) {
-//         // CORREÇÃO: Varre as efemérides no passo secundário correto (dias desde o natal)
-//         double tjd_ut_atual = tjd_ut_natal + dias_estimados;
-        
-//         if (swe_calc_ut(tjd_ut_atual, SE_SUN, iflag, x2, serr) < 0) {
-//             break; 
-//         }
-
-//         double velocidade_sol = x2[3]; 
-        
-//         // Na lógica de Kepler: Arco = Velocidade do Dia * Tempo decorrido (em anos)
-//         // Como mapeamos 1 dia = 1 ano para o trânsito, o tempo decorrido é dias_estimados
-//         double arco_estimado = velocidade_sol * dias_estimados;
-//         double erro = arco_estimado - arco_alvo;
-
-//         dias_estimados -= erro / velocidade_sol;
-//     }
-
-//     if (dias_estimados < 1e-6) {
-//         swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x2, serr);
-//         return x2[3]; 
-//     }
-
-//     // Retorna a chave calibrada para fechar perfeitamente com a equação do motor pai
-//     double idade_anos_reais = dias_estimados;
-//     return arco_alvo / idade_anos_reais;
-// }
-
-
-
-
 // Função auxiliar para tratar a passagem cíclica pelo ponto zero da Ascensão Reta (360° -> 0°)
 static double normalizar_diferenca_ra(double atual, double natal) {
     double diff = atual - natal;
@@ -1939,12 +1850,13 @@ double obter_chave_placidus_ra(double tjd_ut_natal, double arco_alvo) {
     char serr[256];
     
     // ATENÇÃO: Adicionamos SEFLG_EQUATORIAL para que o índice [0] seja RA e [3] seja a velocidade em RA
-    int32 iflag = SEFLG_SPEED | SEFLG_EQUATORIAL;
+    int32 iflag = SEFLG_SPEED | SEFLG_EQUATORIAL | SEFLG_TOPOCTR;
 
     // 1. Obter a Ascensão Reta (RA) e a velocidade em RA do Sol Natal
     if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
         return 0.98564733; // Fallback caso a efeméride falhe
     }
+    
     double ra_natal = x_natal[0];
     double vel_ra_natal = x_natal[3]; // Velocidade de variação da RA por dia
 
@@ -1982,11 +1894,6 @@ double obter_chave_placidus_ra(double tjd_ut_natal, double arco_alvo) {
 
 
 
-
-
-
-
-
 // Função auxiliar para normalizar diferenças de ângulos (evita problemas em 0° de Áries)
 double normalizar_diferenca_graus(double atual, double natal) {
     double diff = atual - natal;
@@ -1998,7 +1905,7 @@ double normalizar_diferenca_graus(double atual, double natal) {
 double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
     double x_natal[6], x_atual[6];
     char serr[256];
-    int32 iflag = SEFLG_SPEED;
+    int32 iflag = SEFLG_SPEED | SEFLG_TOPOCTR;
 
     // 1. Obter a posição (Longitude) e velocidade iniciais do Sol Natal
     if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
@@ -2275,12 +2182,12 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
                             else if (TIME_KEY == TIME_KEY_KEPLER) {
-                                d->idade_evento = arco * CHAVE;
+                                d->idade_evento = arco / CHAVE;
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
                             else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                                d->idade_evento = arco * CHAVE;
+                                d->idade_evento = arco / CHAVE;
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
@@ -2392,12 +2299,12 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
@@ -2589,12 +2496,12 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
                             else if (TIME_KEY == TIME_KEY_KEPLER) {
-                                d->idade_evento = arco * CHAVE;
+                                d->idade_evento = arco / CHAVE;
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
                             else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                                d->idade_evento = arco * CHAVE;
+                                d->idade_evento = arco / CHAVE;
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
@@ -2716,12 +2623,12 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
@@ -3004,10 +2911,10 @@ double calcular_cota_dinamica_sistema(double house_pos) {
 
 
 // NOVA FUNÇÃO: Conversão Zodiacal COMPLETA (Com Latitude Eclíptica β)
-void converter_zodiacal_com_latitude(double longitude, double latitude_ecliptica, double *ra, double *dec) {
+void converter_zodiacal_com_latitude(double jd, double longitude, double latitude_ecliptica, double *ra, double *dec) {
     double lam = para_radianos(longitude);          // λ
     double bet = para_radianos(latitude_ecliptica); // β
-    double eps = para_radianos(OBLIQUIDADE);         // ε
+    double eps = para_radianos(get_obliquidade(jd));         // ε
     
     // 1. Cálculo da Declinação (δ)
     double sin_dec = sin(bet) * cos(eps) + cos(bet) * sin(eps) * sin(lam);
@@ -3388,12 +3295,12 @@ int calcular_direcoes_mundanas_geral(Promissor *sig, int idx_alvo, LinhaDirecao 
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
                     else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco * CHAVE;
+                        d->idade_evento = arco / CHAVE;
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }

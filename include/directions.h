@@ -124,6 +124,7 @@ SemiArcos calcular_semi_arcos(double latitude_geo, double declinacao);
 double get_time_key(int key, double jd, double arco);
 const char* get_key_name(int key);
 double get_obliquidade(double jd);
+double obter_ano_tropical_dinamico(double jd_natal);
 int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, double ramc, double lat_geo_rad);
 double __calcular_semi_arco(double dec_rad, double lat_rad, int esta_acima);
 double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);
