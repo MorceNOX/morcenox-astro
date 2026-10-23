@@ -271,7 +271,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 
 void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, double lat, double lon, double elev, PlotObject *plots, char *season,
     int sanYear, int sanMon, int sanDay, double sanHour, char *sunrise_time, char *sunset_time, char *next_sunrise_time,
-    char *city, char *country, const char* phase, char *temperament,
+    char *city, char *country, const char* phase, char *temperament, double ramc,
     int last_hr, int last_min, double last_sec, char *chart_name, int gender_id, double idade);
 
 void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets, double ramc, double lat);

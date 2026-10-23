@@ -2350,8 +2350,9 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     // Draw the outer circle filled
     attron(COLOR_PAIR(19) | FLAGS);
-    draw_circle_filled(display_center_y, display_center_x, 9, aspect_ratio, current_scale, L" ");
+    draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
     attroff(COLOR_PAIR(19) | FLAGS);
+    
 
     // shadow
     if (mapa_retorno) attron(COLOR_PAIR(56));
@@ -2366,7 +2367,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
     draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
     if (dark_mode) attroff(COLOR_PAIR(52) | FLAGS);
-
+    wnoutrefresh(stdscr);
 
     //Draw the outer boundary using a light shade block
     // int asc = (int)cusps[1];
@@ -2390,7 +2391,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 41 : 41; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 8.0 * current_scale; r <= 19.75 * current_scale; r += 0.25) {
+    for (float r = 8.0 * current_scale; r <= 19.75 * current_scale; r += 0.125) {
         for (int i = 0 + asc; i < 360 + asc; i++) {
             
             int indice_relativo = i - (asc);
@@ -2418,7 +2419,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-   
+    wnoutrefresh(stdscr);
 
     if (house_div) {
         draw_cusps_div(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
@@ -3604,7 +3605,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 
 void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, double lat, double lon, double elev, PlotObject *plots, char *season,
     int sanYear, int sanMon, int sanDay, double sanHour, char *sunrise_time, char *sunset_time, char *next_sunrise_time,
-    char *city, char *country, const char* phase, char *temperament,
+    char *city, char *country, const char* phase, char *temperament, double ramc,
     int last_hr, int last_min, double last_sec, char *chart_name, int gender_id, double idade) {
     
         // Create a new window for the table
@@ -3685,7 +3686,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     }
     mvwprintw(table_win, 10, 2, _("Location:")); 
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 10, 12, "%s, %s", city, country);
+    mvwprintw(table_win, 10, 15, "%s, %s", city, country);
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 14, 2, _("Time: "));
     wattroff(table_win, A_BOLD);
@@ -3693,8 +3694,28 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 15, 2, _("Julian Day: "));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 15, 15, "%f", jd);
+    mvwprintw(table_win, 15, 15, "%.15f", jd);
     wattron(table_win, A_BOLD);
+
+    char st[16] = "--:--:--";
+    formatar_tempo_sideral(ramc, st);
+
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 17, 2, _("Sidereal Time: "));
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 17, 17, "%s", st);
+    wattron(table_win, A_BOLD);
+
+    char ob[16];
+    formatar_dms(get_obliquidade(jd), ob);
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 19, 2, _("Obliquity of Ecliptic:"));
+    wattroff(table_win, A_BOLD);
+    mvwprintw(table_win, 19, 28, "%s", ob);
+    wattron(table_win, A_BOLD);
+
     mvwprintw(table_win, 11, 2, "Lat:");  
     mvwprintw(table_win, 11, 15, ", Lon:     ");
     mvwprintw(table_win, 11, 30, ", Elev:     ");
@@ -3703,48 +3724,48 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     mvwprintw(table_win, 11, 22, "%.4f", lon);
     mvwprintw(table_win, 11, 38, "%.4f", elev);
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 10, 55, _("Sunrise:"));
+    mvwprintw(table_win, 12, 55, _("Sunrise:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 10, 72, "%s", sunrise_time);
+    mvwprintw(table_win, 12, 72, "%s", sunrise_time);
     wattroff(table_win, A_BOLD);
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 11, 55, _("Sunset:"));
+    mvwprintw(table_win, 13, 55, _("Sunset:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 11, 72, "%s", sunset_time);
+    mvwprintw(table_win, 13, 72, "%s", sunset_time);
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 12, 55, _("Next Sunrise:"));
+    mvwprintw(table_win, 14, 55, _("Next Sunrise:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 12, 72, "%s", next_sunrise_time);
+    mvwprintw(table_win, 14, 72, "%s", next_sunrise_time);
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 14, 55, _("Local Apparent Solar Time:"));
+    mvwprintw(table_win, 16, 55, _("Local Apparent Solar Time:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 14, 86, "%02d:%02d:%07.4f", last_hr, last_min, last_sec);
+    mvwprintw(table_win, 16, 86, "%02d:%02d:%07.4f", last_hr, last_min, last_sec);
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 16, 55, _("Moon Phase:"));
+    mvwprintw(table_win, 18, 55, _("Moon Phase:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 16, 68, "%s (%s)", phase, temperament);
+    mvwprintw(table_win, 18, 68, "%s (%s)", phase, temperament);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 17, 55, _("Syzygy Ante-Nativitatem (SAN):"));
+    mvwprintw(table_win, 19, 55, _("Syzygy Ante-Nativitatem (SAN):"));
     wattroff(table_win, A_BOLD);
 
     int san_h = (int)sanHour;
     int san_min = (int)((sanHour - san_h) * 60.0);
     double san_sec_decimal = (((sanHour - san_h) * 60.0) - san_min) * 60.0;
     int san_seconds = (int)san_sec_decimal;
-    mvwprintw(table_win, 17, 87, "%s %04d/%02d/%02d (%02d:%02d:%02d) Local", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
+    mvwprintw(table_win, 19, 87, "%s %04d/%02d/%02d (%02d:%02d:%02d) Local", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
 
     if (strcmp(plots[P_SAN - object_diff].object, "🌑") == 0) {
-        mvwprintw(table_win, 18, 55, _("Conjunctional pre-natal syzygy - New Moon"));
+        mvwprintw(table_win, 20, 55, _("Conjunctional pre-natal syzygy - New Moon"));
     }
     else {
-        mvwprintw(table_win, 18, 55, _("Preventional pre-natal syzygy - Full Moon"));
+        mvwprintw(table_win, 20, 55, _("Preventional pre-natal syzygy - Full Moon"));
     }
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 20, 55, _("Astrological Season:"));
+    mvwprintw(table_win, 22, 55, _("Astrological Season:"));
     wattroff(table_win, A_BOLD);
-    mvwprintw(table_win, 20, 76, _("%s (North Hemisphere)"), season);
+    mvwprintw(table_win, 22, 76, _("%s (North Hemisphere)"), season);
 
 
     //char *hsol = plots[0].house;
@@ -8908,7 +8929,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 display_table_data(
                     mapa_retorno, julian_day, local_time, lat, lon, elev, plots, season_fmt,
                     sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, next_sunrise_time, city, country, 
-                    phase, moon_temperament, last_hr, last_min, last_sec, chart_name, gender_id, idade
+                    phase, moon_temperament, armc, last_hr, last_min, last_sec, chart_name, gender_id, idade
                 );
                 ativar_arrasto_mouse();
                 flushinp();         
@@ -9608,7 +9629,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_table_data(
                 ctx->mapa_retorno, ctx->julian_day, ctx->local_time, ctx->lat, ctx->lon, ctx->elev, ctx->plots, ctx->season_fmt,
                 ctx->sanYear, ctx->sanMon, ctx->sanDay, ctx->sanHour, ctx->sunrise_time, ctx->sunset_time, ctx->next_sunrise_time, ctx->city, ctx->country, 
-                ctx->phase, ctx->moon_temperament, ctx->last_hr, ctx->last_min, ctx->last_sec, ctx->chart_name, ctx->gender_id, ctx->idade
+                ctx->phase, ctx->moon_temperament, ctx->armc, ctx->last_hr, ctx->last_min, ctx->last_sec, ctx->chart_name, ctx->gender_id, ctx->idade
             );
             break;
         case 1:

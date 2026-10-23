@@ -23,6 +23,78 @@
 #include "number_helper.h"
 
 
+
+/**
+ * Converte a RAMC em Tempo Sideral Local (LST) e formata como string HH:MM:SS
+ * @param ramc Ascensão Reta do Meio do Céu em graus decimais
+ * @param out_str Buffer de char para retornar a string formatada (mínimo 9 bytes)
+ */
+void formatar_tempo_sideral(double ramc, char *out_str) {
+    // 1. Converte graus para horas decimais (360 graus = 24 horas)
+    double horas_decimais = ramc / 15.0;
+    
+    // Normalização de segurança entre 0h e 24h
+    horas_decimais = fmod(horas_decimais, 24.0);
+    if (horas_decimais < 0.0) horas_decimais += 24.0;
+    
+    // 2. Extração de Horas, Minutos e Segundos
+    int horas = (int)horas_decimais;
+    
+    double minutos_decimais = (horas_decimais - horas) * 60.0;
+    int minutos = (int)minutos_decimais;
+    
+    // Arredondamento clássico para os segundos
+    double segundos = (minutos_decimais - minutos) * 60.0;
+    int seg_inteiros = (int)round(segundos);
+    
+    // Trata estouro de arredondamento (ex: 59.999s -> 60s)
+    if (seg_inteiros >= 60) {
+        seg_inteiros = 0;
+        minutos++;
+        if (minutos >= 60) {
+            minutos = 0;
+            horas++;
+            if (horas >= 24) horas = 0;
+        }
+    }
+    
+    // formata com zeros à esquerda (ex: 03:05:09)
+    sprintf(out_str, "%02d:%02d:%02d", horas, minutos, seg_inteiros);
+}
+
+/**
+ * Converte um valor decimal em Graus, Minutos e Segundos e formata como string
+ * @param valor_decimal Valor da obliquidade (ex: 23.439291)
+ * @param out_str Buffer de char para retornar (mínimo 16 bytes)
+ */
+void formatar_dms(double valor_decimal, char *out_str) {
+    int graus = (int)valor_decimal;
+    
+    double minutos_decimais = (valor_decimal - graus) * 60.0;
+    int minutos = (int)minutos_decimais;
+    
+    double segundos = (minutos_decimais - minutos) * 60.0;
+    int seg_inteiros = (int)round(segundos);
+    
+    if (seg_inteiros >= 60) {
+        seg_inteiros = 0;
+        minutos++;
+        if (minutos >= 60) {
+            minutos = 0;
+            graus++;
+        }
+    }
+    
+    // Formato clássico: 23° 26' 21"
+    sprintf(out_str, "%02d° %02d' %02d\"", graus, minutos, seg_inteiros);
+}
+
+
+
+
+
+
+
 // Função que converte GMS (inteiros) para Graus Decimais (double)
 double get_decimal_degrees(Grau c) {
     // 1. Identifica se a coordenada é negativa pelo campo dos graus

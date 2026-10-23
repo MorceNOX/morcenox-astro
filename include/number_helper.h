@@ -31,6 +31,8 @@ typedef struct {
     int sec;
 } Hora;
 
+void formatar_tempo_sideral(double ramc, char *out_str);
+void formatar_dms(double valor_decimal, char *out_str);
 double get_decimal_degrees(Grau c);
 void get_degree_str(double grauDecimal, char* resultado);
 Hora get_fmt_hour(double h);
