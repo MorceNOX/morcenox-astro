@@ -170,6 +170,84 @@ SemiArcos calcular_semi_arcos(double latitude_geo, double declinacao) {
 
 
 
+/**
+ * Projeta e calcula a Posição Mundana Proporcional pelo Método de REGIOMONTANUS (0° a 360°)
+ * Esta função integra-se ao processar_astro mantendo o mesmo padrão.
+ */
+double calcular_posicao_mundana_regiomontanus(double ra, double dec, double ramc, double lat_geo, double *out_md, double *out_hd) {
+    // 1. Calcula a menor Distância Meridiana (MD) em relação ao Meio do Céu
+    double md_mc = fabs(ra - ramc);
+    if (md_mc > 180.0) md_mc = 360.0 - md_mc;
+    
+    double lat_rad = lat_geo * DEG_TO_RAD;
+    double dec_rad = dec * DEG_TO_RAD;
+    double md_rad  = md_mc * DEG_TO_RAD;
+    
+    // 2. EQUAÇÃO DO POLO DE REGIOMONTANUS
+    // tan(Polo) = tan(Latitude) * sin(Distância Meridiana)
+    double tan_polo = tan(lat_rad) * sin(md_rad);
+    double polo_rad = atan(tan_polo);
+    
+    // 3. Diferença Ascensional sob o Polo de Regiomontanus
+    double argumento_ad = tan(polo_rad) * tan(dec_rad);
+    double ad_regio = 0.0;
+    if (argumento_ad < 1.0 && argumento_ad > -1.0) {
+        ad_regio = asin(argumento_ad) * RAD_TO_DEG;
+    } else {
+        ad_regio = (argumento_ad >= 1.0) ? 90.0 : -90.0;
+    }
+    
+    // Identifica se o astro está no Hemisfério Oriental ou Ocidental para aplicar a regra de sinais do AD
+    double diff_ramc = ra - ramc;
+    while (diff_ramc < -180.0) diff_ramc += 360.0;
+    while (diff_ramc > 180.0)  diff_ramc -= 360.0;
+    int e_oriental = (diff_ramc < 0.0) ? 1 : 0;
+    
+    // Determina se está acima ou abaixo do horizonte oblíquo
+    int esta_acima = (md_mc <= (90.0 + ad_regio)) ? 1 : 0;
+    
+    double hd_regio = 0.0;
+    
+    // A Distância Horária em Regiomontanus incorpora a diferença ascensional diretamente na triseção do equador
+    if (esta_acima) {
+        // Para o hemisfério superior, a regra clássica combina a MD com a AD do Polo
+        hd_regio = (md_mc + ad_regio) / 90.0;
+        *out_md = md_mc;
+    } else {
+        // Para o hemisfério inferior, calcula em relação ao Fundo do Céu (IC)
+        double ra_ic = ramc + 180.0;
+        if (ra_ic >= 360.0) ra_ic -= 360.0;
+        double md_ic = fabs(ra - ra_ic);
+        if (md_ic > 180.0) md_ic = 360.0 - md_ic;
+        
+        double tan_polo_ic = tan(lat_rad) * sin(md_ic * DEG_TO_RAD);
+        double polo_ic_rad = atan(tan_polo_ic);
+        double ad_regio_ic = asin(tan(polo_ic_rad) * tan(dec_rad)) * RAD_TO_DEG;
+        
+        hd_regio = (md_ic - ad_regio_ic) / 90.0;
+        *out_md = md_ic;
+    }
+    
+    if (hd_regio < 0.0) hd_regio = 0.0;
+    *out_hd = hd_regio;
+    
+    // Mapeamento final no círculo de casas (0 a 360) idêntico ao que você já usa
+    double pm = 0.0;
+    if (esta_acima) {
+        pm = e_oriental ? (270.0 + (hd_regio * 90.0)) : (270.0 - (hd_regio * 90.0));
+    } else {
+        pm = e_oriental ? (0.0 + (hd_regio * 90.0)) : (180.0 - (hd_regio * 90.0));
+    }
+    
+    pm = fmod(pm, 360.0);
+    if (pm < 0.0) pm += 360.0;
+    return pm;
+}
+
+
+
+
+
 
 double calcular_posicao_mundana_topocentrica(double ra, double dec, double ramc, double lat_geo, double *out_md, double *out_hd) {
     // 1. Calcula a menor Distância Meridiana (MD) em relação ao Meio do Céu (Meridiano)
@@ -348,6 +426,9 @@ int processar_astro(double ramc, double lat_geo, Promissor *astro) {
     else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
         astro->pm = calcular_posicao_mundana_topocentrica(astro->ra, astro->declination, ramc, lat_geo, &astro->md, &astro->hd);
     }
+    else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+        astro->pm = calcular_posicao_mundana_regiomontanus(astro->ra, astro->declination, ramc, lat_geo, &astro->md, &astro->hd);
+    }
 
     return 0;
 }
@@ -364,6 +445,23 @@ void calcular_paralelos_mundanos_topocentrico(Promissor *sig, Promissor *prom, i
         *arco_cp = fabs(md_alvo - prom->md); 
     } 
     else if (s == 1) { // CONVERSA
+        double md_alvo = prom->hd * 90.0;
+        *arco_p = fabs(md_alvo - sig->md);
+        *arco_cp = fabs(md_alvo - sig->md);
+    }
+}
+
+
+
+void calcular_paralelos_mundanos_regiomontanus(Promissor *sig, Promissor *prom, int s, double *arco_p, double *arco_cp) {
+    // Se o sentido for Direto (s == 0), o Promissor assume a proporção horária do Significador
+    // Se o sentido for Converso (s == 1), o Significador assume a proporção horária do Promissor
+    if (s == 0) { 
+        double md_alvo = sig->hd * 90.0;
+        *arco_p = fabs(md_alvo - prom->md);
+        *arco_cp = fabs(md_alvo - prom->md); // Mesma simetria equatorial linear
+    } 
+    else if (s == 1) { 
         double md_alvo = prom->hd * 90.0;
         *arco_p = fabs(md_alvo - sig->md);
         *arco_cp = fabs(md_alvo - sig->md);
@@ -399,7 +497,7 @@ void calcular_paralelos_mundanos_conversa(Promissor *sig, Promissor *prom, doubl
 
 void calcular_paralelos_rapto(Promissor *sig, Promissor *prom, double *arco_rapto, double *arco_contra_rapto) {
     
-    if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+    if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO || METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
         // MATEMÁTICA TOPOCÊNTRICA PURA (Polich-Page)
         // O rapto ocorre na linha média exata das distâncias meridianas
         *arco_rapto = fabs(prom->md - sig->md) / 2.0;
@@ -475,6 +573,9 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                         else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                             arco = dist_direta;
                         }
+                        else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+                            arco = dist_direta;
+                        }
                     }
                     else if (s == 1) {
                         double pm_alvo_converso = prom->pm + desvios_mundanos[a]; 
@@ -492,6 +593,10 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                         else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                             arco = dist_conversa;
                         }
+                        
+                        else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+                            arco = dist_conversa;
+                        }
                     }
                 }
                 else if (a == 8 || a == 9) {
@@ -504,6 +609,9 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                         else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                             calcular_paralelos_mundanos_topocentrico(sig, prom, s, &p_direto, &cp_direto);
                         }
+                        else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+                            calcular_paralelos_mundanos_regiomontanus(sig, prom, s, &p_direto, &cp_direto);
+                        }
                         if (a == 8) arco = p_direto;
                         else        arco = cp_direto;
                     }
@@ -515,6 +623,9 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                         }
                         else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                             calcular_paralelos_mundanos_topocentrico(sig, prom, s, &p_converso, &cp_converso);
+                        }
+                        else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+                            calcular_paralelos_mundanos_regiomontanus(sig, prom, s, &p_converso, &cp_converso);
                         }
                         if (a == 8) arco = p_converso;
                         else        arco = cp_converso;
@@ -588,18 +699,7 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                     }
                     else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
-                    }
-                    else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                    }
-                    else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                    }
-                    else {                                
+                    }else {                                
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
@@ -1950,6 +2050,83 @@ double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
 
 
 
+double obter_chave_solar_birthday_longitude(double tjd_ut_natal, double arco_direcao) {
+    double x_natal[6], x_aniversario[6];
+    char serr[256];
+    
+    // Mantém a flag topocêntrica que você usa no resto do programa
+    int32 iflag = SEFLG_SPEED | SEFLG_TOPOCTR; 
+
+    // 1. Calcula a Longitude Natal do Sol
+    if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
+        return 0.98564733;
+    }
+    double lon_natal = x_natal[0];
+
+    // 2. Descobre o ano cheio estimado para o evento
+    int anos_vida = (int)(arco_direcao / 0.98564733);
+    if (anos_vida < 1) anos_vida = 1; // Proteção para o primeiro ano de vida
+
+    // 3. Calcula a posição do Sol exatamente no dia do aniversário (1 dia = 1 ano)
+    double tjd_aniversario = tjd_ut_natal + (double)anos_vida;
+    if (swe_calc_ut(tjd_aniversario, SE_SUN, iflag, x_aniversario, serr) < 0) {
+        return 0.98564733;
+    }
+    double lon_aniversario = x_aniversario[0];
+
+    // 4. Calcula o arco total percorrido pelo Sol até aquele aniversário
+    double delta_lon = lon_aniversario - lon_natal;
+    while (delta_lon < -180.0) delta_lon += 360.0;
+    while (delta_lon > 180.0)  delta_lon -= 360.0;
+
+    // 5. Retorna a taxa média travada para aquele ano específico de vida
+    return fabs(delta_lon) / (double)anos_vida;
+}
+
+
+
+
+/**
+ * Calcula a Chave Dinâmica Solar Birthday RA (Ajuste anual travado em Ascensão Reta)
+ * @param tjd_ut_natal Dia Juliano do nascimento (Tempo Universal)
+ * @param arco_direcao O arco calculado pelo motor de direções primárias
+ * @return O fator de conversão (Chave) anual travado em Graus por Ano
+ */
+double obter_chave_solar_birthday_ra(double tjd_ut_natal, double arco_direcao) {
+    double x_natal[6], x_aniversario[6];
+    char serr[256];
+    
+    // Força a Swiss Ephemeris a extrair RA [0] e velocidade [3] com a paralaxe topocêntrica
+    int32 iflag = SEFLG_SPEED | SEFLG_EQUATORIAL | SEFLG_TOPOCTR;
+
+    // 1. Calcula a Ascensão Reta (RA) Natal do Sol
+    if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
+        return 0.98564733; // Fallback caso a efeméride falhe
+    }
+    double ra_natal = x_natal[0];
+
+    // 2. Descobre o ano cheio estimado para o evento (Chute inicial baseado na velocidade média)
+    int anos_vida = (int)(arco_direcao / 0.98564733);
+    if (anos_vida < 1) anos_vida = 1; // Proteção estrita para o primeiro ano de vida
+
+    // 3. Calcula a posição do Sol exatamente no dia do aniversário secundário (1 dia = 1 ano)
+    double tjd_aniversario = tjd_ut_natal + (double)anos_vida;
+    if (swe_calc_ut(tjd_aniversario, SE_SUN, iflag, x_aniversario, serr) < 0) {
+        return 0.98564733;
+    }
+    double ra_aniversario = x_aniversario[0];
+
+    // 4. Calcula o arco total em Ascensão Reta percorrido pelo Sol até aquele aniversário
+    double delta_ra = ra_aniversario - ra_natal;
+    
+    // Trata estritamente a descontinuidade circular do ponto zero (360° -> 0°)
+    while (delta_ra < -180.0) delta_ra += 360.0;
+    while (delta_ra > 180.0)  delta_ra -= 360.0;
+
+    // 5. Retorna a taxa média fixada para aquele ano inteiro de vida (Graus / Ano)
+    return fabs(delta_ra) / (double)anos_vida;
+}
+
 
 
 
@@ -2181,22 +2358,11 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
-                            else if (TIME_KEY == TIME_KEY_KEPLER) {
-                                d->idade_evento = arco / CHAVE;
-                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                            }
-                            else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                                d->idade_evento = arco / CHAVE;
-                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                            }
                             else {                                
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
                             }
                     
-                            // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                             double jd_evento = jd + dias_decorridos;
                             
                             int ano_c, mes_c, dia_c, hora_c, min_c;
@@ -2211,27 +2377,33 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             if (*qtd_direcoes >= 600) goto fim_calculo;
                         }
                     }
-                    continue; // Pula o resto do loop de aspectos longitudinais para este planeta
+                    continue;
                 }
-
-
 
                 // --- OUTROS 8 ASPECTOS LONGITUDINAIS TOPOCÊNTRICOS ---
-                double lon_aspecto;
+                double lon_aspecto = 0.0;
+
                 if (s == 0) {
-                    lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
+                    // Direta: Avança a partir do início do promissor/termo
+                    lon_aspecto = prom[p].longitude + angulos_aspectos[a];
                 } else if (prom[p].type == PROM_TERM && s == 1) {
-                    lon_aspecto = fmod(prom[p].longitude_fim - angulos_aspectos[a], 360.0);
+                    // Conversa de Termo: Recua a partir da fronteira final (fim)
+                    lon_aspecto = prom[p].longitude_fim - angulos_aspectos[a];
                 } else {
-                    lon_aspecto = fmod(prom[p].longitude - angulos_aspectos[a], 360.0);
+                    // Conversa de Planetas: Recua a partir da posição natal
+                    lon_aspecto = prom[p].longitude - angulos_aspectos[a];
                 }
+
+                // Normalização matemática estrita e limpa para o círculo de 0° a 360° em C
                 lon_aspecto = fmod(lon_aspecto, 360.0);
                 if (lon_aspecto < 0.0) lon_aspecto += 360.0;
 
                 double lat_calculada = calcular_latitude_dinamica_bianchini(jd, prom[p].object_name, lon_aspecto, prom[p].type);
 
                 double xx[3], xequat[3];
-                xx[0] = lon_aspecto; xx[1] = lat_calculada; xx[2] = 1.0;
+                xx[0] = lon_aspecto; 
+                xx[1] = lat_calculada; 
+                xx[2] = 1.0;
                 swe_cotrans(xx, xequat, -get_obliquidade(jd));
                 double ra_aspecto = xequat[0];
                 double dec_aspecto = xequat[1];
@@ -2276,11 +2448,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     d->promissor_type = prom[p].type;
                     d->arco_graus = arco;
 
-                    // 1. Obter a chave/fator do sistema usando macros estáticas
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
                     if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
 
-                    // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
                     d->idade_evento = arco / CHAVE;
             
                     double dias_decorridos = 0.0;
@@ -2298,22 +2468,11 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                     }
-                    else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                    }
-                    else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                    }
                     else {                                
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                         dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
             
-                    // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
 
                     int ano_c, mes_c, dia_c, hora_c, min_c;
@@ -2350,10 +2509,9 @@ fim_calculo:
 
             // Se o mesmo planeta, no mesmo sentido (Direto/Converso), atingir o mesmo arco geométrico...
             if (mesmo_promissor && mesmo_sentido && arco_identico) {
-                continue; // Ignora o d1 (duplicado)
+                continue;
             }
 
-            // Se não for duplicado, movemos o ponteiro de gravação
             i_valido++;
             if (i_valido != i_atual) {
                 lista_resultado[i_valido] = *d1;
@@ -2364,6 +2522,329 @@ fim_calculo:
     }
     return *qtd_direcoes;
 }
+
+
+
+
+int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, 
+                                              double jd, int sentido, Promissor *prom, int total_promissores,
+                                              double ramc, double lat_geografica, int *qtd_direcoes, bool is_part) {
+    
+    int object_diff = show_modern_planets ? 0 : 3;
+    double angulos_aspectos[] = {0.0, 60.0, -60.0, 90.0, -90.0, 120.0, -120.0, 180.0, 999.9, 999.9};
+    char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
+    int total_aspects = 10;
+
+    // 1. Extrair os dados equatoriais natais do Significador Fixo
+    double ra_sig = sig[idx_alvo].ra;
+    double dec_sig = sig[idx_alvo].declination;
+    double lat_geo_rad = lat_geografica * M_PI / 180.0;
+    
+    // Calcula a Distância Meridiana (DM) natal do Significador em relação ao Meio do Céu
+    double diff_sig = ra_sig - ramc;
+    while (diff_sig > 180.0)  diff_sig -= 360.0;
+    while (diff_sig < -180.0) diff_sig += 360.0;
+    double dm_sig = fabs(diff_sig);
+    double dm_sig_rad = dm_sig * M_PI / 180.0;
+    
+    // =========================================================================
+    // MODIFICAÇÃO CRÍTICA: EQUAÇÃO DO POLO DE REGIOMONTANUS ZODIACAL
+    // tan(Polo) = tan(Latitude) * sin(Distância Meridiana)
+    // Substitui a Posição Horária Placidus/Topocêntrica pela projeção do círculo máximo
+    // =========================================================================
+    double tan_polo_sig = tan(lat_geo_rad) * sin(dm_sig_rad);
+
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+
+    for (int p = 0; p < total_promissores; p++) {
+        if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
+        else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if (!is_part) {
+            if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
+        }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
+        
+        for (int s = 0; s < 2; s++) {
+            if (s == 0 && sentido == 1) continue;
+            if (s == 1 && sentido == 0) continue;
+                        
+            for (int a = 0; a < total_aspects; a++) {
+                if (prom[p].type == PROM_TERM && a > 0) break;
+
+                double arco = 0.0;
+                int eh_paralelo = (a == 8 || a == 9);
+
+                if (eh_paralelo) {
+                    double dec_alvo_paralelo = (a == 8) ? dec_sig : -dec_sig;
+                    double obl = get_obliquidade(jd);
+
+                    // 1. Extraindo as coordenadas equatoriais natais reais do Promissor
+                    double xx_prom[3], xequat_prom[3];
+                    xx_prom[0] = prom[p].longitude;
+                    xx_prom[1] = calcular_latitude_dinamica_bianchini(jd, prom[p].object_name, prom[p].longitude, prom[p].type);
+                    xx_prom[2] = 1.0;
+                    swe_cotrans(xx_prom, xequat_prom, -obl);
+                    
+                    double ra_natal_prom  = xequat_prom[0];
+                    double dec_natal_prom = xequat_prom[1];
+
+                    // 2. Intersecção da Eclíptica pura com a declinação alvo do Significador
+                    double sin_lon = sin(dec_alvo_paralelo * M_PI / 180.0) / sin(obl * M_PI / 180.0);
+                    if (fabs(sin_lon) > 1.0) continue; 
+                    
+                    double lon_raiz1 = asin(sin_lon) * 180.0 / M_PI;
+                    if (lon_raiz1 < 0) lon_raiz1 += 360.0;
+                    double lon_raiz2 = fmod(180.0 - lon_raiz1 + 360.0, 360.0);
+
+                    double xx_alvo[3], xequat_alvo[3];
+                    double lon_cortes[2] = {lon_raiz1, lon_raiz2};
+
+                    for (int k = 0; k < 2; k++) {
+                        xx_alvo[0] = lon_cortes[k]; 
+                        xx_alvo[1] = 0.0; 
+                        xx_alvo[2] = 1.0;
+                        swe_cotrans(xx_alvo, xequat_alvo, -obl);
+                        
+                        double ra_aspecto  = xequat_alvo[0];
+                        double dec_aspecto = dec_alvo_paralelo;
+
+                        // 3. MOTOR DE REGIOMONTANUS AMARRADO AO POLO DO SIGNIFICADOR
+                        // As Distâncias Ascensionais (AD) agora rodam sob o plano polar de Regiomontanus
+                        double sin_ad_sig_polo  = tan(dec_natal_prom * M_PI / 180.0) * tan_polo_sig;
+                        double sin_ad_prom_polo = tan(dec_aspecto * M_PI / 180.0) * tan_polo_sig;
+                        
+                        if (fabs(sin_ad_sig_polo) > 1.0)  sin_ad_sig_polo  = (sin_ad_sig_polo > 0)  ? 1.0 : -1.0;
+                        if (fabs(sin_ad_prom_polo) > 1.0) sin_ad_prom_polo = (sin_ad_prom_polo > 0) ? 1.0 : -1.0;
+
+                        double oa_sig_ficticio = ra_natal_prom - (asin(sin_ad_sig_polo) * 180.0 / M_PI);
+                        double oa_prom         = ra_aspecto    - (asin(sin_ad_prom_polo) * 180.0 / M_PI);
+
+                        arco = (s == 0) ? (oa_prom - oa_sig_ficticio) : (oa_sig_ficticio - oa_prom);
+                        
+                        if (arco < 0) arco += 360.0;
+                        arco = fmod(arco, 360.0);
+                        if (arco > 180.0) arco = 360.0 - arco;
+
+                        // [O bloco interno de gravação do LinhaDirecao permanece 100% idêntico aqui]
+                        // (Garante a consistência de tempo, calendários UTC e chaves macros)
+                        if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
+                            // Filtro contra ecos internos do próprio planeta
+                            int ja_salvo = 0;
+                            for (int m = 0; m < *qtd_direcoes; m++) {
+                                if (lista_resultado[m].sentido == s &&
+                                    lista_resultado[m].promissor_id == prom[p].id &&
+                                    lista_resultado[m].aspecto_id == a &&
+                                    fabs(lista_resultado[m].arco_graus - arco) < 0.001) {
+                                    ja_salvo = 1; break;
+                                }
+                            }
+                            if (ja_salvo) continue;
+
+                            LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
+                            d->sentido = s;
+
+                            d->promissor_id = p;
+                            d->aspecto_id = a;
+                            strcpy(d->promissor_name, prom[p].object_name);
+                            strcpy(d->promissor_glifo, prom[p].object);
+                            strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
+                            strcpy(d->significador_name, sig[idx_alvo].object_name);
+                            strcpy(d->significador_glifo, sig[idx_alvo].object);
+                            d->promissor_type = prom[p].type;
+                            d->arco_graus = arco;
+
+                            // 1. Obter a chave/fator do sistema usando macros estáticas
+                            double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                            if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                            // 2. CÁLCULO UNIFICADO DA IDADE DO EVENTO (Em anos decimais contínuos)
+                            d->idade_evento = arco / CHAVE;
+                    
+                            double dias_decorridos = 0.0;
+
+                            // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                            if (TIME_KEY == TIME_KEY_NAIBOD) {
+                                dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_CARDANO) {
+                                dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                            }
+                            else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                                dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                            }
+                            else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                                dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                            }
+                            else {                                
+                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
+                            }
+                    
+                            double jd_evento = jd + dias_decorridos;
+                            
+                            int ano_c, mes_c, dia_c, hora_c, min_c;
+                            double sec_c;
+                            swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+
+                            d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
+                            strcpy(d->tipo_direcao, "Zodiacal");
+                            d->tipo_direcao_id = DIRECAO_ZODIACAL;
+
+                            (*qtd_direcoes)++;
+                            if (*qtd_direcoes >= 600) goto fim_calculo;
+                        }
+                    }
+                    continue;
+                }
+
+                // --- OUTROS 8 ASPECTOS LONGITUDINAIS DE REGIOMONTANUS ---
+                double lon_aspecto = 0.0;
+
+                if (s == 0) {
+                    // Direta: Avança a partir do início do promissor/termo
+                    lon_aspecto = prom[p].longitude + angulos_aspectos[a];
+                } else if (prom[p].type == PROM_TERM && s == 1) {
+                    // Conversa de Termo: Recua a partir da fronteira final (fim)
+                    lon_aspecto = prom[p].longitude_fim - angulos_aspectos[a];
+                } else {
+                    // Conversa de Planetas: Recua a partir da posição natal
+                    lon_aspecto = prom[p].longitude - angulos_aspectos[a];
+                }
+
+                // Normalização matemática estrita e limpa para o círculo de 0° a 360° em C
+                lon_aspecto = fmod(lon_aspecto, 360.0);
+                if (lon_aspecto < 0.0) lon_aspecto += 360.0;
+
+
+                double lat_calculada = calcular_latitude_dinamica_bianchini(jd, prom[p].object_name, lon_aspecto, prom[p].type);
+
+                double xx[3], xequat[3];
+                xx[0] = lon_aspecto; 
+                xx[1] = lat_calculada; 
+                xx[2] = 1.0;
+                swe_cotrans(xx, xequat, -get_obliquidade(jd));
+                double ra_aspecto = xequat[0];
+                double dec_aspecto = xequat[1];
+
+                // Ascensão Oblíqua sob o Polo de Regiomontanus do Significador
+
+                double sin_ad_sig_polo  = tan(dec_sig * M_PI / 180.0) * tan_polo_sig;
+                double sin_ad_prom_polo = tan(dec_aspecto * M_PI / 180.0) * tan_polo_sig;
+
+                if (fabs(sin_ad_sig_polo) > 1.0)  sin_ad_sig_polo  = (sin_ad_sig_polo > 0)  ? 1.0 : -1.0;
+                if (fabs(sin_ad_prom_polo) > 1.0) sin_ad_prom_polo = (sin_ad_prom_polo > 0) ? 1.0 : -1.0;
+
+                double oa_sig  = ra_sig - (asin(sin_ad_sig_polo) * 180.0 / M_PI);
+                double oa_prom = ra_aspecto - (asin(sin_ad_prom_polo) * 180.0 / M_PI);
+
+                arco = (s == 0) ? (oa_prom - oa_sig) : (oa_sig - oa_prom);
+                
+                if (arco < 0) arco += 360.0;
+                arco = fmod(arco, 360.0);
+
+                if (arco > 180.0) arco = 360.0 - arco;
+
+                if (arco > 0.001 && arco <= MAX_AGE * 1.05) {
+                    int ja_salvo = 0;
+                    for (int m = 0; m < *qtd_direcoes; m++) {
+                        if (lista_resultado[m].sentido == s &&
+                            lista_resultado[m].promissor_id == prom[p].id &&
+                            lista_resultado[m].aspecto_id == a &&
+                            fabs(lista_resultado[m].arco_graus - arco) < 0.001) {
+                            ja_salvo = 1; break;
+                        }
+                    }
+                    if (ja_salvo) continue;
+
+                    LinhaDirecao *d = &lista_resultado[*qtd_direcoes];
+                    d->sentido = s;
+
+                    d->promissor_id = p;
+                    d->aspecto_id = a;
+                    strcpy(d->promissor_name, prom[p].object_name);
+                    strcpy(d->promissor_glifo, prom[p].object);
+                    strcpy(d->aspecto_symbol, simbolos_aspectos[a]);
+                    strcpy(d->significador_name, sig[idx_alvo].object_name);
+                    strcpy(d->significador_glifo, sig[idx_alvo].object);
+                    d->promissor_type = prom[p].type;
+                    d->arco_graus = arco;
+
+                    double CHAVE = get_time_key(TIME_KEY, jd, arco);
+                    if (CHAVE <= 0.0) CHAVE = NAIBOD_KEY; 
+
+                    d->idade_evento = arco / CHAVE;
+            
+                    double dias_decorridos = 0.0;
+
+                    // 3. FORK DE TRATAMENTO DE TEMPO COM PRECISÃO DE ACORDO COM CADA MACRO
+                    if (TIME_KEY == TIME_KEY_NAIBOD) {
+                        dias_decorridos = d->idade_evento * 365.256363004; // Inverso exato de NAIBOD_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_CARDANO) {
+                        dias_decorridos = d->idade_evento * 364.847162454; // Inverso exato de CARDANO_KEY
+                    }
+                    else if (TIME_KEY == TIME_KEY_PTOLEMY) {
+                        dias_decorridos = d->idade_evento * 365.0;         // Ano Civil de Ptolomeu
+                    }
+                    else if (TIME_KEY == TIME_KEY_PLACIDUS) {
+                        dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
+                    }
+                    else {                                
+                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
+                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
+                    }
+            
+                    double jd_evento = jd + dias_decorridos;
+
+                    int ano_c, mes_c, dia_c, hora_c, min_c;
+                    double sec_c;
+                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+
+                    d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
+                    strcpy(d->tipo_direcao, "Zodiacal");
+                    d->tipo_direcao_id = DIRECAO_ZODIACAL;
+                    
+                    (*qtd_direcoes)++;
+                    if (*qtd_direcoes >= 600) goto fim_calculo;
+                }
+            }
+        }
+    }
+
+fim_calculo:
+    qsort(lista_resultado, *qtd_direcoes, sizeof(LinhaDirecao), comparar_directions_por_idade);
+
+    if (*qtd_direcoes > 1) {
+        int i_valido = 0;
+
+        for (int i_atual = 1; i_atual < *qtd_direcoes; i_atual++) {
+            // Mudança sutil: Comparamos o atual com o último elemento que aceitamos como válido
+            LinhaDirecao *d0 = &lista_resultado[i_valido];
+            LinhaDirecao *d1 = &lista_resultado[i_atual];
+
+            bool mesmo_promissor = (d0->promissor_id == d1->promissor_id);
+            bool mesmo_sentido   = (d0->sentido == d1->sentido);
+            
+            double delta_arco = fabs(d1->arco_graus - d0->arco_graus);
+            bool arco_identico = (delta_arco < 0.0001); // Use um epsilon pequeno explícito (ex: 0.0001)
+
+            if (mesmo_promissor && mesmo_sentido && arco_identico) {
+                continue;
+            }
+
+            i_valido++;
+            if (i_valido != i_atual) {
+                lista_resultado[i_valido] = *d1;
+            }
+        }
+
+        *qtd_direcoes = i_valido + 1;
+    }
+    return *qtd_direcoes;
+}
+
 
 
 
@@ -2495,16 +2976,6 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                                 dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
                             }
-                            else if (TIME_KEY == TIME_KEY_KEPLER) {
-                                d->idade_evento = arco / CHAVE;
-                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                            }
-                            else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                                d->idade_evento = arco / CHAVE;
-                                double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                                dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                            }
                             else {                                
                                 double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
                                 dias_decorridos = d->idade_evento * ano_tropical_epoca;
@@ -2528,24 +2999,22 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             if (qtd_direcoes >= 600) goto fim_calculo;
                         }
                     }
-                    continue; // Pula o resto do loop padrão de aspectos longitudinais para não duplicar dados!
+                    continue;
                 }
+                double lon_aspecto = 0.0;
 
-                // --- LOGICA ORIGINAL PARA OS OUTROS 5 ASPECTOS (a < 5) ---
-
-                double lon_aspecto; // = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
-                
                 if (s == 0) {
-                    lon_aspecto = fmod(prom[p].longitude + angulos_aspectos[a], 360.0);
-                } 
-                else if (prom[p].type == PROM_TERM && s == 1) {
-                    lon_aspecto = fmod(prom[p].longitude_fim - angulos_aspectos[a], 360.0);
-                }
-                else {
-                    lon_aspecto = fmod(prom[p].longitude - angulos_aspectos[a], 360.0);
+                    // Direta: Avança a partir do início do promissor/termo
+                    lon_aspecto = prom[p].longitude + angulos_aspectos[a];
+                } else if (prom[p].type == PROM_TERM && s == 1) {
+                    // Conversa de Termo: Recua a partir da fronteira final (fim)
+                    lon_aspecto = prom[p].longitude_fim - angulos_aspectos[a];
+                } else {
+                    // Conversa de Planetas: Recua a partir da posição natal
+                    lon_aspecto = prom[p].longitude - angulos_aspectos[a];
                 }
 
-                // Normalização estrita da longitude alvo (0 a 360)
+                // Normalização matemática estrita e limpa para o círculo de 0° a 360° em C
                 lon_aspecto = fmod(lon_aspecto, 360.0);
                 if (lon_aspecto < 0.0) lon_aspecto += 360.0;
 
@@ -2621,16 +3090,6 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     }
                     else if (TIME_KEY == TIME_KEY_PLACIDUS) {
                         dias_decorridos = d->idade_evento * 365.25;        // Ano Juliano Eclesiástico
-                    }
-                    else if (TIME_KEY == TIME_KEY_KEPLER) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
-                    }
-                    else if (TIME_KEY == TIME_KEY_TRUE_SOLAR_ARC_RA) {
-                        d->idade_evento = arco / CHAVE;
-                        double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
-                        dias_decorridos = d->idade_evento * ano_tropical_epoca;
                     }
                     else {                                
                         double ano_tropical_epoca = obter_ano_tropical_dinamico(jd);                        
@@ -2810,27 +3269,29 @@ double __calcular_distancia_meridiana(double ra_planeta, double ramc, int esta_a
 
 double get_time_key(int key, double jd, double arco) {
     switch(key) {
-        case TIME_KEY_NAIBOD:                   return NAIBOD_KEY;
-        case TIME_KEY_CARDANO:                  return CARDANO_KEY;
-        case TIME_KEY_PTOLEMY:                  return PTOLEMY_KEY;
-        case TIME_KEY_PLACIDUS:                 return PLACIDUS_KEY;
-        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
-        case TIME_KEY_KEPLER:                   return obter_chave_kepler(jd, arco); //obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return obter_chave_placidus_ra(jd, arco); //encontrar_chave_por_arco_solar_ra_FAST(jd, arco);
-        default:                                return NAIBOD_KEY;
+        case TIME_KEY_NAIBOD:                            return NAIBOD_KEY;
+        case TIME_KEY_CARDANO:                           return CARDANO_KEY;
+        case TIME_KEY_PTOLEMY:                           return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:                          return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return obter_chave_solar_birthday_longitude(jd, arco); //obter_chave_arco_solar_ultra_rapida(jd, arco); //obter_chave_arco_solar(jd, arco);           
+        case TIME_KEY_KEPLER:                            return obter_chave_kepler(jd, arco); //obter_chave_kepler_ultra_rapida(jd, arco); //obter_chave_kepler(jd, arco);
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return obter_chave_placidus_ra(jd, arco);
+        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return obter_chave_solar_birthday_ra(jd, arco);
+        default:                                         return NAIBOD_KEY;
     }
 }
 
 
 double get_key(int key) {
     switch(key) {
-        case TIME_KEY_NAIBOD:                   return NAIBOD_KEY;
-        case TIME_KEY_CARDANO:                  return CARDANO_KEY;
-        case TIME_KEY_PTOLEMY:                  return PTOLEMY_KEY;
-        case TIME_KEY_PLACIDUS:                 return PLACIDUS_KEY;
-        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return -1.0;           
-        case TIME_KEY_KEPLER:                   return -1.0;
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return -1.0;
+        case TIME_KEY_NAIBOD:                            return NAIBOD_KEY;
+        case TIME_KEY_CARDANO:                           return CARDANO_KEY;
+        case TIME_KEY_PTOLEMY:                           return PTOLEMY_KEY;
+        case TIME_KEY_PLACIDUS:                          return PLACIDUS_KEY;
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return -1.0;           
+        case TIME_KEY_KEPLER:                            return -1.0;
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return -1.0;
+        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return -1.0;
         default: return NAIBOD_KEY;
     }
 }
@@ -2838,13 +3299,14 @@ double get_key(int key) {
 
 const char* get_key_name(int key) {
     switch(key) {
-        case TIME_KEY_NAIBOD:                   return "Naibod";
-        case TIME_KEY_CARDANO:                  return _("Cardano");
-        case TIME_KEY_PTOLEMY:                  return _("Ptolemy");
-        case TIME_KEY_PLACIDUS:                 return "Placidus";
-        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE: return _("True Solar Ecliptical Arc");           
-        case TIME_KEY_KEPLER:                   return "Kepler";
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:        return _("True Solar Equatorial Arc");
+        case TIME_KEY_NAIBOD:                            return "Naibod";
+        case TIME_KEY_CARDANO:                           return _("Cardano");
+        case TIME_KEY_PTOLEMY:                           return _("Ptolemy");
+        case TIME_KEY_PLACIDUS:                          return "Placidus";
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return _("True Solar Ecliptical Arc (Birthday)");           
+        case TIME_KEY_KEPLER:                            return _("True Solar Ecliptical Arc");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return _("True Solar Equatorial Arc");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return _("True Solar Equatorial Arc (Birthday)");
         default: return "Naibod";
     }
 }
@@ -3569,22 +4031,24 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
         }
-        else {
+        else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
             qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, PART_DIRECTIONS);
         }
-        //qtd_direcoes_asc = calc_zodiacal_directions(&sig[indices_significadores[3]], indices_significadores[3], cronograma_asc, jd, ramc, lat, 2, prom, PART_DIRECTIONS);
-
+        else {
+            qtd_direcoes_asc = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
+        }
 
         if (tipo != 1) {
             memset(cronograma_z, 0, sizeof(cronograma_z));
             if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                 qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
             }
-            else {
+            else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
                 qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
             }
-            //qtd_direcoes_zod = calc_zodiacal_directions(&sig[idx_atual_calculo], idx_atual_calculo, cronograma_z, jd, ramc, lat, sentido, prom, PART_DIRECTIONS);
-
+            else {
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+            }
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));            
@@ -3964,13 +4428,21 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             } else {
                 mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
-        } else {
+        } else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
             if (tipo == 0) {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
+            }
+        } else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Zodiacal (Oblique Ascensions under the Significator's Pole)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Mundane (Equator Trisection via Circles of Position)."));
+            } else {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Zodiacal (OA under Sig. Pole) + Mundane (Equator Trisection via Circles of Position)."));
             }
         }
         
@@ -4513,22 +4985,24 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
             qtd_direcoes_for = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
         }
-        else {
+        else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
             qtd_direcoes_for = calcular_direcoes_zodiacais_geral(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, PART_DIRECTIONS);
         }
-        //qtd_direcoes_for = calc_zodiacal_directions(&sig[indices_significadores[idx_fortuna]], indices_significadores[idx_fortuna], cronograma_for, jd, ramc, lat, 2, prom, PART_DIRECTIONS);
-
+        else {
+            qtd_direcoes_for = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
+        }
 
         if (tipo != 1) {
             memset(cronograma_z, 0, sizeof(cronograma_z));
             if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
                 qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
             }
-            else {
+            else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
                 qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
             }
-            //qtd_direcoes_zod = calc_zodiacal_directions(&sig[idx_atual_calculo], idx_atual_calculo, cronograma_z, jd, ramc, lat, sentido, prom, PART_DIRECTIONS);
-
+            else {
+                qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+            }
         }
         if (tipo != 0) {   
             memset(cronograma_m, 0, sizeof(cronograma_m));            
@@ -4926,13 +5400,21 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             } else {
                 mvwprintw(table_win, table_height - 7, 4, _("Topocentric Method: Zodiacal (Oblique Ascensions under the Pole) + Mundane (Continuous Local Poles)."));
             }
-        } else {
+        } else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
             if (tipo == 0) {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat. Bianchini Method)."));
             } else if (tipo == 1) {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Mundane (Proportional Semi-Arcs In Mundo)."));
             } else {
                 mvwprintw(table_win, table_height - 7, 4, _("Placidus Method: Zodiacal (Ecliptic Projection w/ Lat.) + Mundane (Proportional Semi-Arcs)."));
+            }
+        } else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+            if (tipo == 0) {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Zodiacal (Oblique Ascensions under the Significator's Pole)."));
+            } else if (tipo == 1) {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Mundane (Equator Trisection via Circles of Position)."));
+            } else {
+                mvwprintw(table_win, table_height - 7, 4, _("Regiomontanus Method: Zodiacal (OA under Sig. Pole) + Mundane (Equator Trisection via Circles of Position)."));
             }
         }
         

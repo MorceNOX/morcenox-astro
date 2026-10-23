@@ -407,8 +407,8 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
     dst_offset = (double)obter_segundos_dst_na_data(tz_iana_retorno, tempo_retorno.tm_year + 1900, tempo_retorno.tm_mon + 1, tempo_retorno.tm_mday, tempo_retorno.tm_hour, tempo_retorno.tm_min) / 3600; 
 
     tz_offset_retorno += dst_offset;
-    // 4. Dispara a sua função chart de forma recursiva passando os dados locais do retorno
-    // O seu parâmetro 'chart_name' receberá o 'novo_nome_chart'
+    // 4. Dispara a função chart de forma recursiva passando os dados locais do retorno
+    // O parâmetro 'chart_name' receberá o 'novo_nome_chart'
     chart(
         &tempo_local, 
         lat, 
@@ -493,14 +493,14 @@ void abrir_janela_confronto_natal_revolucao(
     wattroff(border_win, A_BOLD);
     
     // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(border_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(border_win) - 4;
 
-    wattron(border_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    wattron(border_win, COLOR_PAIR(13));
     mvwprintw(border_win, 0, col_fechar, "[");
     mvwprintw(border_win, 0, col_fechar + 2, "]");
     wattroff(border_win, COLOR_PAIR(13));
 
-    wattron(border_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD);
     mvwprintw(border_win, 0, col_fechar + 1, "✖");
     wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
 
@@ -1353,7 +1353,7 @@ void get_natal_houses_rev_planets(double jd_natal, double *rev_longitudes, doubl
     // 2. CALCULAR A OBLIQUIDADE DA ECLÍPTICA DO NATAL (Eps)
     // A função swe_house_pos exige a obliquidade do mapa referencial (Radix)
     // Usamos uma data padrão ou calculamos para capturar o Eps natal exato
-    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH, xx, serr) >= 0) {
+    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_SWIEPH | SEFLG_TOPOCTR, xx, serr) >= 0) {
         eps_natal = xx[0]; 
     } else {
         eps_natal = 23.439291; // Valor padrão de salvaguarda

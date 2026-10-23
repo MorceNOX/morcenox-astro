@@ -583,7 +583,7 @@ You can set:
      You can choose if the 3 modern planets will be part or not of your charts. But remember that we do not include dignities by domicile for these planets.
      
    • Time Key for calculating the age and date of Primary Direction events:
-     Here you can select one of the 7 (seven) available time keys—4 (four) static and 3 (three) dynamic.
+     Here you can select one of the 8 (eight) available time keys—4 (four) static and 4 (four) dynamic.
 
    • Antiscia/Contra-antiscia as Promissors in Primary Directions:
      You can choose "yes" or "no" to include the Antiscion and Contra-antiscion of the base promissors—namely the planets, lunar nodes, and the Part of Fortune—in the list of promissors, along with their respective aspects.
@@ -591,9 +591,11 @@ You can set:
    • Primary Direction Arc Calculation Method:
      Choose between:
 
-     1 - Placidus Proportional Semi-Arc, and
+     1 - Placidus Proportional Semi-Arc,
 
-     2 - Topocentric
+     2 - Topocentric, and
+     
+     3 - Regiomontanus.
      
      
    • Interface Language: 
@@ -1678,6 +1680,12 @@ B) For the Topocentric method (the most modern, the Polich/Page Topocentric meth
     1) Zodiacal with latitude, calculated via oblique ascensions under the pole, and
 
     2) Mundane, calculated via continuous local poles.
+    
+C) For the Regiomontanus method (used by Traditional School):
+
+    1) Zodiacal with latitude, calculated via oblique ascension under the Significator Pole, and
+    
+    2) Mundane, calculated via Equator Trisection via Circles of Position.
 
 Both Zodiacal and Mundane directions—regardless of the calculation system—use the time key selected by the user in the application's settings menu.
 
@@ -1691,11 +1699,13 @@ The available time keys are as follows:
 
     4) Placidus (1 year = 0.986389°);
 
-    5) True Ecliptical Solar Arc (Dynamic Key—i.e., the arc size varies annually according to a specific formula);
+    5) True Ecliptical Solar Arc - Birthday (Dynamic Key—i.e., the arc size varies annually according to a specific formula);
 
-    6) Kepler (Dynamic Key); and
+    6) Kepler: True Ecliptical Solar Arc (Dynamic Key);
 
-    7) True Equatorial Solar Arc.
+    7) Placidus RA: True Equatorial Solar Arc (Dynamic Key), and
+    
+    8) True Equatorial Solar Arc - Birthday (Dynamic Key)
 
 The table also displays, by default, Zodiacal and Mundane directions altogether. You can filter by Zodiacal by pressing [Z] and Mundane only by pressing [M]. Press [B] to see both of them.
 

@@ -79,7 +79,7 @@ bool consider_modern_planets_rulling;
 
 int terms_system = 0;
 
-int TIME_KEY = TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE;
+int TIME_KEY = TIME_KEY_NAIBOD;
 int ANT_PROM = false;
 
 int FLAGS = 0;

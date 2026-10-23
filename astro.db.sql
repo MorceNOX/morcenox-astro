@@ -203480,7 +203480,8 @@ INSERT INTO "old_cities" ("city","city_ascii","lat","lng","elev","country","iso2
 INSERT INTO "orientality" ("id","name") VALUES (1,'Oriental'),
  (2,'Occidental');
 INSERT INTO "pd_arc_calc" ("id","name") VALUES (1,'Placidus Semi-Arc Proportional'),
- (2,'Topocentric');
+ (2,'Topocentric'),
+ (3,'Regiomontanus');
 INSERT INTO "pd_aspects_latitude" ("id","aspects") VALUES (1,'☌ ⚹ □ △ ☍ ∥ ∦'),
  (2,'☌ ⚹ □ △ ☍'),
  (3,'☌ ☍ ∥ ∦'),
@@ -203547,9 +203548,10 @@ INSERT INTO "time_keys" ("id","name","type","value") VALUES (1,'Naibod',1,0.9856
  (2,'Cardano',1,0.986666679822222),
  (3,'Ptolemy',1,1.0),
  (4,'Placidus',1,0.986388888888889),
- (5,'True Solar Arc in Longitude',2,0.0),
- (6,'Kepler',2,0.0),
- (7,'True Solar Arc in Right Ascension',2,0.0);
+ (5,'True Solar Arc in Longitude Birthday',2,0.0),
+ (6,'Kepler (True Solar Arc in Longitude)',2,0.0),
+ (7,'True Solar Arc in Right Ascension',2,0.0),
+ (8,'True Solar Arc in Right Ascension Birthday',2,0.0);
 INSERT INTO "triplicity_rulers" ("id","system","element","ruler1","ruler2","ruler3") VALUES (1,1,1,1,5,6),
  (2,1,2,6,2,5),
  (3,1,3,7,4,3),

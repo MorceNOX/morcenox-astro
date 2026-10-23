@@ -1402,7 +1402,7 @@ OptionsEdition select_options() {
                     }
                 }
 
-                const char *key_text = _("Time Key of Primary Direction");
+                const char *key_text = _("Time Key (Prim. Directions)");
                 mvwprintw(win, 23, 2, " ◦ %s: %s ", key_text, time_key_name);
             }
             else if (i == 19) {

@@ -582,7 +582,7 @@ Obs.2: Os números das casas no círculo menor da roda do
   Você pode escolher se os 3 planetas modernos farão parte ou não dos seus mapas. Mas lembre-se que não incluímos dignidades por domicílio para esses planetas.
   
 • Chave de Tempo para calcular a idade e a data dos eventos das Direções Primárias:
-  Aqui você pode selecionar uma entre as 7 (sete) chaves de tempo disponíveis, sendo 4 (quatro) estáticas e 3 (três) dinâmicas.
+  Aqui você pode selecionar uma entre as 8 (oito) chaves de tempo disponíveis, sendo 4 (quatro) estáticas e 4 (quatro) dinâmicas.
 
 • Antíscia/Contrantíscia como Promissores nas Direções Primárias:
   Você pode escolher entre sim e não, para que o Antíscia e o Contrantíscia dos promissores base, ou seja, dos planetas, dos nodos lunares e da parte da fortuna, também sejam incluídos no rol de promissores, incluindo-se os respectivos aspectos.
@@ -590,9 +590,11 @@ Obs.2: Os números das casas no círculo menor da roda do
 • Método de Cálculo do Arco das Direções Primárias:
   Escolha entre: 
   
-  1 - Placidus Semi-Arc Proportional ou Placidus Semi-Arco Proporcional, e
+  1 - Placidus Semi-Arc Proportional ou Placidus Semi-Arco Proporcional,
   
-  2 - Topocêntrico
+  2 - Topocêntrico, e
+  
+  3 - Regiomontanus
 
 • Idioma da Interface: 
   Escolha entre Inglês e Português o idioma dos elementos da interface (o nome dos países estará sempre em Inglês).
@@ -1639,7 +1641,13 @@ B) Para o método Topocêntrico (o mais moderno e atual, o modelo Topocêntrico 
 
     1) Zodiacais com latitude, calculadas por Ascensões Oblíquas sob o Polo, e
     
-    2) Mundanas, calculadas por Polos Locais Contínuos.  
+    2) Mundanas, calculadas por Polos Locais Contínuos.
+    
+C) Para o método Regiomontanus (o método da Escola Tradicional):
+
+    1) Zodiacais com latitude, calculadas por Ascensões Oblíquas sob o Polo do Significador, e
+    
+    2) Mundanas, calculadas por Trisecção do Equador via Círculos de Posição.
 
 Ambas, Zodiacais e Mundanas, independentemente do sistema de cálculo, utilizam a chave temporal selecionada pelo usuário no menu de configurações da aplicação.
 
@@ -1653,11 +1661,13 @@ As chaves de tempo disponíveiss são as seguintes:
     
     4) Placidus (1 ano = 0,986389°);
     
-    5) Arco Solar Eclíptico Verdadeiro (Chave Dinâmica, ou seja, o tamanho do arco por ano varia para cada ano, conforme fórmula específica);
+    5) Arco Solar Eclíptico Verdadeiro - Aniverário (Chave Dinâmica, ou seja, o tamanho do arco por ano varia para cada ano, conforme fórmula específica);
     
-    6) Kepler (Chave Dinâmica), e
+    6) Kepler: Arco Solar Eclíptico Verdadeiro (Chave Dinâmica),
     
-    7) Arco Solar Equatorial Verdadeiro (Chave Dinâmica, também conhecida por Chave Dinâmica de Placidus por RA).
+    7) Placidus RA: Arco Solar Equatorial Verdadeiro (Chave Dinâmica), e
+    
+    8) Arco Solar Equatorial Verdadeiro - Aniversário (Chave Dinâmica).
 
 A tabela também exibe, por padrão, direções zodiacais e mundanas em conjunto. Você pode filtrar pelas zodiacais pressionando [Z] e pelas mundanas pressionando [M], e [B] para exibir ambas.
 

@@ -135,6 +135,7 @@ double obter_chave_arco_solar_ultra_fast(double tjd_ut_natal, double arco_alvo);
 double calcular_arco_kepler_para_idade(double tjd_ut_natal, double idade_anos);
 double descobrir_idade_por_arco_kepler(double tjd_ut_natal, double arco_alvo);
 double obter_chave_kepler(double tjd_ut_natal, double arco_alvo);
+double obter_chave_solar_birthday_longitude(double tjd_ut_natal, double arco_direcao);
 double calcular_ra(double longitude, double declinacao, double jd);
 int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, double jd, int sentido, Promissor *prom, bool is_part);
 void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom);
