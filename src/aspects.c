@@ -1492,14 +1492,15 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
         if (ants[i].type != ant_type) continue;
 
         int degree = (int)fmod(ants[i].longitude, 30);
+        int min = (int)((ants[i].longitude - (int)ants[i].longitude) * 60);
         const char *sign_str = get_sign((int)(ants[i].longitude / 30));
-        char text[10];
-        snprintf(text, 10, "%d%s", degree, sign_str); 
+        char text[15];
+        snprintf(text, 15, "%2d%s%02d", degree, sign_str, min); 
 
         wattron(aspects_win, A_BOLD);
-        mvwprintw(aspects_win, 2, 6 + 6 * index, ants[i].object);
+        mvwprintw(aspects_win, 2, 6 + 7 * index, ants[i].object);
         wattroff(aspects_win, A_BOLD);
-        mvwprintw(aspects_win, 3, 6 + 6 * index, text);
+        mvwprintw(aspects_win, 3, 5 + 7 * index, text);
 
         index++;
     }
@@ -1516,7 +1517,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     // 4. Desenho das Linhas Verticais
     for (int i = 0; i < ((12 - object_diff) * 2); i++) {
         for (int j = 0; j < (num_ants) + 1; j++) {
-            mvwprintw(pad, 2 + i, 2 + 6 * j, "│");
+            mvwprintw(pad, 2 + i, 2 + 7 * j, "│");
         }
     }
 
@@ -1524,10 +1525,10 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < (num_ants); j++) {
             if (i == 0) {
-                mvwprintw(aspects_win, 4, 4 + 6 * j, "┼─────┼");              
+                mvwprintw(aspects_win, 4, 4 + 7 * j, "┼──────┼");              
             }
             else {
-                mvwprintw(pad, 1 + 2 * i, 2 + 6 * j, "┼─────┼");
+                mvwprintw(pad, 1 + 2 * i, 2 + 7 * j, "┼──────┼");
             }
             
         }
@@ -1574,7 +1575,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                 }
 
                 // Desenha o Símbolo Astrológico do Aspecto
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * index, "  %s  ", cell.symbol);
+                mvwprintw(pad, 2 + 2 * i, 3 + 7 * index, "  %s   ", cell.symbol);
                 
                 // Desativa os atributos do símbolo
                 if (cell.is_bold) wattroff(pad, A_BOLD); else wattroff(pad, A_DIM);
@@ -1582,12 +1583,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
 
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
                 char ag[8] = "";
-                snprintf(ag, 8, "%5.2f", cell.angle);
+                snprintf(ag, 8, " %5.2f", cell.angle);
 
                 if (cell.is_reverse && DARK_MODE) {
                     wattron(pad, COLOR_PAIR(35));
                 }
-                mvwprintw(pad, 3 + 2 * i, 3 + 6 * index, ag);
+                mvwprintw(pad, 3 + 2 * i, 3 + 7 * index, ag);
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
 
                 if (cell.is_reverse) {
@@ -1609,7 +1610,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
             }
             else {
                 wattron(pad, COLOR_PAIR(10) | A_DIM);
-                mvwprintw(pad, 2 + 2 * i, 3 + 6 * index, "░░░░░"); 
+                mvwprintw(pad, 2 + 2 * i, 3 + 7 * index, "░░░░░░"); 
                 wattroff(pad, COLOR_PAIR(10) | A_DIM);
             }
 

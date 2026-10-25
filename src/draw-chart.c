@@ -5995,7 +5995,7 @@ int calc_declination_ra_point(double jd, double longitude, double *ra_out, doubl
     char serr[256];
     
     // Calcular a Obliqüidade da Eclíptica para este momento (SE_ECL_NUT)
-    if (swe_calc_ut(jd, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd, SE_ECL_NUT, SEFLG_TOPOCTR, x_nut, serr) < 0) {
         printf("Erro ao calcular obliqüidade: %s\n", serr);
         return 0;
     }
@@ -6024,7 +6024,7 @@ double calc_declination_mathematical_point(double jd, double longitude) {
     char serr[256];
     
     // Calcular a Obliqüidade da Eclíptica para este momento (SE_ECL_NUT)
-    if (swe_calc_ut(jd, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd, SE_ECL_NUT, SEFLG_TOPOCTR, x_nut, serr) < 0) {
         printf("Erro ao calcular obliqüidade: %s\n", serr);
         return NAN; // Retorna "Not a Number" em vez de 1.0 em caso de erro
     }
@@ -6052,7 +6052,7 @@ int obter_coordenadas_termo(double longitude_termo, double jd_natal, double *ra_
     char serr[256];
 
     // 1. Obtém a obliquidade da eclíptica do nascimento
-    if (swe_calc_ut(jd_natal, SE_ECL_NUT | SEFLG_TOPOCTR, 0, x_nut, serr) < 0) {
+    if (swe_calc_ut(jd_natal, SE_ECL_NUT, SEFLG_TOPOCTR, x_nut, serr) < 0) {
         return 0; // Erro
     }
     double eps = x_nut[0];
@@ -6550,7 +6550,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // 3. Calcula a obliquidade da eclíptica para o julian_day atual
         double eps[6];
 
-        if (swe_calc_ut(julian_day, SE_ECL_NUT, 0, eps, serr) < 0) {
+        if (swe_calc_ut(julian_day, SE_ECL_NUT, SEFLG_TOPOCTR, eps, serr) < 0) {
             printf("Error calculating ecliptic obliquity: %s\n", serr);
             return 1;
         }
@@ -6644,7 +6644,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             tipo_san = SAN_PREVENCIONAL;
         }
         
-        if (swe_calc_ut(jdSAN, SE_MOON, SEFLG_SPEED, x2, err) < 0) {
+        if (swe_calc_ut(jdSAN, SE_MOON, SEFLG_SPEED | SEFLG_TOPOCTR, x2, err) < 0) {
             printf("Error calculating planet %d: %s\n", SE_MOON, err);
             return 1;
         }
@@ -7005,7 +7005,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             geopos[1] = lat;
             geopos[2] = elev;
     
-            int epheflag = SEFLG_SWIEPH;
+            int epheflag = SEFLG_SWIEPH | SEFLG_TOPOCTR;
             int rsmi = SE_CALC_RISE;
     
             double tret;
@@ -7030,7 +7030,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             double tret;
             char serr[256];
             // Calculamos usando o ID do Nodo Norte (planets[10]) na latitude invertida
-            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH, SE_CALC_RISE, geopos_espelho, 0, 0, &tret, serr);
+            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH | SEFLG_TOPOCTR, SE_CALC_RISE, geopos_espelho, 0, 0, &tret, serr);
             if (result != ERR) {
                 double rise_hours = (tret - jd) * 24.0 + 12.0; // Soma 12 horas
                 if (rise_hours >= 24.0) rise_hours -= 24.0;    // Normaliza para o intervalo do dia
@@ -7049,7 +7049,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             geopos[1] = lat;
             geopos[2] = elev;
     
-            int epheflag = SEFLG_SWIEPH;
+            int epheflag = SEFLG_SWIEPH | SEFLG_TOPOCTR;
             int rsmi = SE_CALC_SET;
     
             double tret;
@@ -7074,7 +7074,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             double tret;
             char serr[256];
             // Calculamos usando o ID do Nodo Norte (planets[10]) na latitude invertida
-            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH, SE_CALC_SET, geopos_espelho, 0, 0, &tret, serr);
+            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH | SEFLG_TOPOCTR, SE_CALC_SET, geopos_espelho, 0, 0, &tret, serr);
             if (result != ERR) {
                 double set_hours = (tret - jd) * 24.0 + 12.0; // Soma 12 horas
                 if (set_hours >= 24.0) set_hours -= 24.0;     // Normaliza para o intervalo do dia
@@ -7094,7 +7094,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             geopos[1] = lat;
             geopos[2] = elev;
     
-            int epheflag = SEFLG_SWIEPH;
+            int epheflag = SEFLG_SWIEPH | SEFLG_TOPOCTR;
             int rsmi = SE_CALC_MTRANSIT;
     
             double tret;
@@ -7119,7 +7119,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             double tret;
             char serr[256];
             // O Meio do Céu do Nodo Sul é o Nadir (SE_CALC_ITRANSIT) do Nodo Norte
-            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH, SE_CALC_ITRANSIT, geopos, 0, 0, &tret, serr);
+            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH | SEFLG_TOPOCTR, SE_CALC_ITRANSIT, geopos, 0, 0, &tret, serr);
             if (result != ERR) {
                 mid_times[11] = (tret - jd) * 24.0;
             }

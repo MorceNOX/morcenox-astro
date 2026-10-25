@@ -1502,7 +1502,7 @@ double obter_chave_placidus_ra(double tjd_ut_natal, double arco_alvo) {
     char serr[256];
     
     // ATENÇÃO: Adicionamos SEFLG_EQUATORIAL para que o índice [0] seja RA e [3] seja a velocidade em RA
-    int32 iflag = SEFLG_SPEED | SEFLG_EQUATORIAL;
+    int32 iflag = SEFLG_SPEED | SEFLG_EQUATORIAL | SEFLG_TOPOCTR;
 
     // 1. Obter a Ascensão Reta (RA) e a velocidade em RA do Sol Natal
     if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
@@ -1557,7 +1557,7 @@ double normalizar_diferenca_graus(double atual, double natal) {
 double obter_chave_kepler(double tjd_ut_natal, double arco_alvo) {
     double x_natal[6], x_atual[6];
     char serr[256];
-    int32 iflag = SEFLG_SPEED;
+    int32 iflag = SEFLG_SPEED | SEFLG_TOPOCTR;
 
     // 1. Obter a posição (Longitude) e velocidade iniciais do Sol Natal
     if (swe_calc_ut(tjd_ut_natal, SE_SUN, iflag, x_natal, serr) < 0) {
@@ -1606,7 +1606,6 @@ double obter_chave_solar_birthday_longitude(double tjd_ut_natal, double arco_dir
     double x_natal[6], x_aniversario[6];
     char serr[256];
     
-    // Mantém a flag topocêntrica que você usa no resto do programa
     int32 iflag = SEFLG_SPEED | SEFLG_TOPOCTR; 
 
     // 1. Calcula a Longitude Natal do Sol
