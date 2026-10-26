@@ -1,5 +1,5 @@
 # MorceNOX™ ASTRO
-<img width="866" height="509" alt="logo" src="https://github.com/user-attachments/assets/8637c001-e555-4bbf-a43f-0300769773c0" />
+<img width="866" height="509" alt="MorceNOX-ASTRO-logo-brushify" src="https://github.com/user-attachments/assets/dac76a5f-a066-4379-b9b2-723ac52e989a" />
 
 **Your advanced, terminal-based astrological companion.**
 
