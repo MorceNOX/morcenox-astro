@@ -3730,7 +3730,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, A_DIM);
-    mvwprintw(table_win, 6, 2, "─────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
+    mvwprintw(table_win, 6, 2, "─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_DIM);
 
     wattron(table_win, A_BOLD);
@@ -3811,15 +3811,16 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     mvwprintw(table_win, 17, 55, _("Syzygy Ante-Nativitatem:"));
     wattroff(table_win, A_BOLD);
 
-    wattron(table_win, A_UNDERLINE);
     mvwprintw(table_win, 17, 80, "%s %s %s'", plots[P_SAN - object_diff].degree, plots[P_SAN - object_diff].sign, plots[P_SAN - object_diff].min);
-    wattroff(table_win, A_UNDERLINE);
 
     int san_h = (int)sanHour;
     int san_min = (int)((sanHour - san_h) * 60.0);
     double san_sec_decimal = (((sanHour - san_h) * 60.0) - san_min) * 60.0;
     int san_seconds = (int)san_sec_decimal;
+    
+    if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattron(table_win, A_REVERSE);
     mvwprintw(table_win, 18, 80, "%s %04d/%02d/%02d (%02d:%02d:%02d) Local", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
+    if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattroff(table_win, A_REVERSE);
 
     if (strcmp(plots[P_SAN - object_diff].object, "🌑") == 0) {
         mvwprintw(table_win, 19, 80, _("Conjunctional pre-natal syzygy - New Moon"));
@@ -3854,10 +3855,17 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     wattron(table_win, A_BOLD);
     //if (mapa_diurno(hsol)) {
     if (MAPA_DIURNO_CIVIL) {
-        mvwprintw(table_win, 7, 55, "%s", _("Diurnal chart"));    
+        mvwprintw(table_win, 7, 55, "%s", _("Diurnal chart (Civil time)"));    
     }
     else {
-        mvwprintw(table_win, 7, 55, "%s", _("Nocturnal chart"));    
+        mvwprintw(table_win, 7, 55, "%s", _("Nocturnal chart (Civil time)"));    
+    }
+
+    if (MAPA_DIURNO_GEOMETRICO) {
+        mvwprintw(table_win, 7, 87, "%s", _("Diurnal chart (Astronomical time)"));    
+    }
+    else {
+        mvwprintw(table_win, 7, 87, "%s", _("Nocturnal chart (Astronomical time)"));    
     }
 
     mvwprintw(table_win, 8, 55, "%s", (gender_id == 1)?_("Masculine chart"):((gender_id == 2)?_("Feminine chart"):_("Neuter gender chart")));    

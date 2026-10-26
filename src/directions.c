@@ -442,19 +442,13 @@ int processar_astro(double ramc, double lat_geo, Promissor *astro) {
 void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
     (void)ra_asc;
     char serr[256];
-    double obl; // Obliquidade da eclíptica
+    double obl;
 
-    // 1. Obter a obliquidade verdadeira
     obl = get_obliquidade(jd);
 
-    // 2. Calcular a Ascensão Oblíqua do Ascendente (AO Asc)
-    double aoasc = normalize360(ramc + 90.0);
-
-    // 3. Determinar a Posição Horária e se o Sol e Lua estão acima/abaixo do horizonte
-    // Para calcular a AO/DO real de Placidus, precisamos saber o arco correto.
     double lat_rad = lat * M_PI / 180.0;
-    
-    // --- Ajuste do SOL ---
+
+    // --- CÁLCULO TRIDIMENSIONAL DO SOL ---
     double sol_md = fabs(sol->ra - ramc);
     if (sol_md > 180.0) sol_md = 360.0 - sol_md;
     double sol_dec_rad = sol->declination * M_PI / 180.0;
@@ -466,76 +460,82 @@ void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, 
     double val_sol = tan(sol_dec_rad) * tan(lat_rad);
     if (fabs(val_sol) <= 1.0) adsun = asin(val_sol) * 180.0 / M_PI;
 
-    // Determina a Ascensão Oblíqua (AO) ou Descensão Oblíqua (DO) real do Sol baseado no quadrante
-    double ao_do_sol;
+    // NORMALIZAÇÃO DA PERSPECTIVA HORIZONTALE (Leste vs Oeste)
     double sol_diff = sol->ra - ramc;
     if (sol_diff < 0.0) sol_diff += 360.0;
     int sol_leste = (sol_diff > 180.0) ? 1 : 0;
 
-    if (sol_acima) {
-        ao_do_sol = sol_leste ? (sol->ra - adsun) : (sol->ra + adsun); // AO no leste, DO no oeste
+    double ao_do_sol;
+    if (sol_leste) {
+        // No Leste, calculamos a Ascensão Oblíqua pura (AO)
+        ao_do_sol = sol->ra - adsun;
     } else {
-        ao_do_sol = sol_leste ? (sol->ra + adsun) : (sol->ra - adsun); // Mudança para abaixo do horizonte
+        // No Oeste, calculamos a Descensão Oblíqua pura (DO) e normalizamos na mesma referência
+        ao_do_sol = sol->ra + adsun - 180.0;
     }
     ao_do_sol = normalize360(ao_do_sol);
 
-    // --- Ajuste da LUA ---
+
+    // --- CÁLCULO TRIDIMENSIONAL DA LUA (VERSÃO LIMPA) ---
     double lua_md = fabs(lua->ra - ramc);
     if (lua_md > 180.0) lua_md = 360.0 - lua_md;
+    
     double lua_dec_rad = lua->declination * M_PI / 180.0;
-    double lua_cos_h = -tan(lat_rad) * tan(lua_dec_rad);
-    double lua_sad = (lua_cos_h >= 1.0) ? 0.0 : (lua_cos_h <= -1.0) ? 180.0 : acos(lua_cos_h) * 180.0 / M_PI;
-    int lua_acima = (lua_md <= lua_sad) ? 1 : 0;
 
     double admoon = 0.0;
     double val_lua = tan(lua_dec_rad) * tan(lat_rad);
     if (fabs(val_lua) <= 1.0) admoon = asin(val_lua) * 180.0 / M_PI;
 
-    double ao_do_lua;
     double lua_diff = lua->ra - ramc;
     if (lua_diff < 0.0) lua_diff += 360.0;
     int lua_leste = (lua_diff > 180.0) ? 1 : 0;
 
-    if (lua_acima) {
-        ao_do_lua = lua_leste ? (lua->ra - admoon) : (lua->ra + admoon);
+    double ao_do_lua;
+    if (lua_leste) {
+        ao_do_lua = lua->ra - admoon;
     } else {
-        ao_do_lua = lua_leste ? (lua->ra + admoon) : (lua->ra - admoon);
+        ao_do_lua = lua->ra + admoon - 180.0;
     }
     ao_do_lua = normalize360(ao_do_lua);
 
-    // 4. Calcular a RA da Fortuna Mundana respeitando se o mapa é Diurno ou Noturno
-    int mapa_diurno = sol_acima; // Diurno se o Sol está acima do horizonte
+
+    // --- EQUAÇÃO DA FORTUNA MUNDANA ---
+    // Em Placidus estrito, a linha de horizonte referencial (Ascendente) opera em 0 de Ascensão Oblíqua Local.
+    int mapa_diurno = sol_acima;
 
     if (mapa_diurno) {
-        fortune_m->ra = normalize360(aoasc + ao_do_lua - ao_do_sol);
+        fortune_m->ra = normalize360(ramc + 90.0 + ao_do_lua - ao_do_sol);
     } else {
-        fortune_m->ra = normalize360(aoasc + ao_do_sol - ao_do_lua);
+        fortune_m->ra = normalize360(ramc + 90.0 + ao_do_sol - ao_do_lua);
     }
 
-    // 5. Preservar a declinação da Lua
+    // Herança de Declinação Clássica
     fortune_m->declination = lua->declination;
 
-    // 6. Conversão Equatorial -> Eclíptica (Ajustado com sinal negativo na obliquidade se exigido pela swe_cotrans)
+    // --- CONVERSÃO PARA COORDENADAS ECLÍPTICAS ---
     double xin[3], xout[3];
     xin[0] = fortune_m->ra;
     xin[1] = fortune_m->declination;
     xin[2] = 1.0;
 
-    // Passagem da obliquidade. Se a função interna inverter o sinal, passe -obl
-    swe_cotrans(xin, xout, -obl); 
+    // A Swiss Ephemeris usa sinal positivo (+) se estiver convertendo Equat -> Ecl
+    swe_cotrans(xin, xout, obl); 
 
     fortune_m->longitude = normalize360(xout[0]);
-    // Nota: O Morinus armazena a latitude eclíptica resultante da conversão direta, sem zerar
-    fortune_m->latitude = xout[1]; 
+    
+    // CORREÇÃO 1: Forçar latitude a zero estabiliza as frações de Placidus
+    fortune_m->latitude = 0.0; 
 
-    // 7. CALCULAR A CASA DE PLACIDUS ATUALIZADA
-    double xpin_fortune[6] = { fortune_m->longitude, fortune_m->latitude, 1.0, 0.0, 0.0, 0.0 };
+    // --- EXTRAÇÃO DA CASA COM A SWISS EPHEMERIS ---
+    // CORREÇÃO 2: Garantir que xpin contenha estritamente a latitude zerada
+    double xpin_fortune[6] = { fortune_m->longitude, 0.0, 1.0, 0.0, 0.0, 0.0 };
+    
     double fortune_hpos = swe_house_pos(ramc, lat, obl, HOUSE_SYSTEM, xpin_fortune, serr); 
     
     fortune_m->house_pos = fortune_hpos;
     fortune_m->house = (int)floor(fortune_hpos);
 
-    // 8. Variáveis secundárias da struct para manter integridade
+    // --- VARIÁVEIS SECUNDÁRIAS DE ESTRUTURA ---
     fortune_m->md = fabs(fortune_m->ra - ramc);
     if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
 
@@ -553,320 +553,6 @@ void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, 
     double sa_fortune = (fortune_hpos >= 7.0 && fortune_hpos < 13.0) ? fortune_m->sa.sad : fortune_m->sa.san;
     fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-void calcular_sistema_casas_placidus(Promissor *p, int esta_acima, int quadrante_leste) {
-    // Converte a proporção (0.0 a 1.0) em graus mundanos de quadrante (0 a 90)
-    double graus_mundanos = p->pm * 90.0;
-    double posicao_casa_continua = 0.0;
-
-    if (esta_acima) {
-        if (quadrante_leste) { // Quadrante Superior Leste: Casas 12, 11, 10
-            posicao_casa_continua = 12.0 - (graus_mundanos / 30.0);
-        } else { // Quadrante Superior Oeste: Casas 10, 9, 8
-            posicao_casa_continua = 9.0 + (graus_mundanos / 30.0);
-        }
-    } else {
-        if (quadrante_leste) { // Quadrante Inferior Leste: Casas 1, 2, 3
-            posicao_casa_continua = 1.0 + (graus_mundanos / 30.0);
-        } else { // Quadrante Inferior Oeste: Casas 4, 5, 6
-            posicao_casa_continua = 4.0 - (graus_mundanos / 30.0);
-        }
-    }
-
-    // Normalização das casas entre 1.0 e 12.99
-    if (posicao_casa_continua < 1.0)  posicao_casa_continua += 12.0;
-    if (posicao_casa_continua >= 13.0) posicao_casa_continua -= 12.0;
-
-    p->house_pos = posicao_casa_continua;
-    p->house = (int)floor(posicao_casa_continua);
-}
-
-
-// void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
-//     // 1. Distâncias Meridianas (MD)
-//     sol->md = fabs(sol->ra - ramc);
-//     if (sol->md > 180.0) sol->md = 360.0 - sol->md;
-
-//     lua->md = fabs(lua->ra - ramc);
-//     if (lua->md > 180.0) lua->md = 360.0 - lua->md;
-
-//     // 2. Semi-Arcos
-//     sol->sa = calcular_semi_arcos(lat, sol->declination);
-//     lua->sa = calcular_semi_arcos(lat, lua->declination);
-
-//     double sa_sol = (sol->md <= sol->sa.sad) ? sol->sa.sad : sol->sa.san;
-//     double sa_lua = (lua->md <= lua->sa.sad) ? lua->sa.sad : lua->sa.san;
-
-//     // 3. Proporções Mundanas (pm)
-//     sol->pm = (sa_sol > 0.0) ? (sol->md / sa_sol) : 0.0;
-//     lua->pm = (sa_lua > 0.0) ? (lua->md / sa_lua) : 0.0;
-
-//     // 4. Ascensão Reta (RA) da Fortuna
-//     int sol_esta_acima = (sol->md <= sol->sa.sad) ? 1 : 0;
-//     if (sol_esta_acima) {
-//         fortune_m->ra = ra_asc + lua->ra - sol->ra;
-//     } else {
-//         fortune_m->ra = ra_asc + sol->ra - lua->ra;
-//     }
-
-//     while (fortune_m->ra < 0.0)   fortune_m->ra += 360.0;
-//     while (fortune_m->ra >= 360.0) fortune_m->ra -= 360.0;
-
-//     double eps = get_obliquidade(jd);
-
-//     // 5. CONVERSÃO EQUATORIAL -> ECLÍPTICA (Calculando Longitude e Declinação Real)
-//     // Usando as fórmulas clássicas de conversão de coordenadas com Latitude Eclíptica = 0
-//     double ra_rad = para_radianos(fortune_m->ra);
-//     double eps_rad = para_radianos(eps); // eps: Obliquidade da Eclíptica (Ex: ~23.4392)
-
-//     // Encontrando a Longitude Eclíptica (λ)
-//     double lon_rad = atan2(sin(ra_rad) * cos(eps_rad), cos(ra_rad));
-//     fortune_m->longitude = para_graus(lon_rad);
-//     if (fortune_m->longitude < 0.0) fortune_m->longitude += 360.0;
-//     fortune_m->latitude = 0.0; // Assumindo órbita eclíptica padrão para o lote
-
-//     // Encontrando a Declinação exata (δ) baseada na nova Longitude
-//     double dec_rad = asin(sin(lon_rad) * sin(eps_rad));
-//     fortune_m->declination = para_graus(dec_rad);
-
-//     // 6. CÁLCULO MUNDANO E CASAS DA FORTUNA
-//     fortune_m->sa = calcular_semi_arcos(lat, fortune_m->declination);
-    
-//     fortune_m->md = fabs(fortune_m->ra - ramc);
-//     if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
-    
-//     // Verificações de quadrante espacial
-//     int fortune_esta_acima = (fortune_m->md <= fortune_m->sa.sad) ? 1 : 0;
-//     double sa_fortune = fortune_esta_acima ? fortune_m->sa.sad : fortune_m->sa.san;
-//     fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
-
-//     // Determina se está a Leste ou Oeste do Meridiano para achar a Casa correta
-//     double diff_ramc = fortune_m->ra - ramc;
-//     if (diff_ramc < 0.0) diff_ramc += 360.0;
-//     int quadrante_leste = (diff_ramc > 180.0) ? 1 : 0;
-
-//     // Chamada limpa sem o parâmetro ramc
-//     calcular_sistema_casas_placidus(fortune_m, fortune_esta_acima, quadrante_leste);
-// }
-
-
-
-/**
- * Calcula a Posição Mundana (0° a 360°) da Parte da Fortuna Mundana
- * @param pm_sol Posição Mundana do Sol natal (calculada pelo seu motor)
- * @param pm_lua Posição Mundana da Lua natal
- * @param sol_esta_acima 1 se o mapa for Diurno, 0 se for Noturno
- * @return A Posição Mundana (PM) final da Fortuna (0° a 360°)
- */
-double calcular_parte_fortuna_mundana(double pm_sol, double pm_lua, int sol_esta_acima) {
-    double pm_asc = 0.0; // Por definição, a PM do Ascendente no bypass é sempre 0.0°
-    double pm_fortuna_mundana = 0.0;
-
-    if (sol_esta_acima) {
-        // Diurno: Asc + Lua - Sol
-        pm_fortuna_mundana = pm_asc + pm_lua - pm_sol;
-    } else {
-        // Noturno: Asc + Sol - Lua (Fórmula tradicional de reversão)
-        pm_fortuna_mundana = pm_asc + pm_sol - pm_lua;
-    }
-
-    // Normalização circular estrita para o círculo de casas de 0 a 360 graus
-    pm_fortuna_mundana = fmod(pm_fortuna_mundana, 360.0);
-    if (pm_fortuna_mundana < 0.0) {
-        pm_fortuna_mundana += 360.0;
-    }
-
-    return pm_fortuna_mundana;
-}
-
-
-/**
- * Realiza a trigonometria esférica reversa para descobrir a RA e DEC de uma Posição Mundana
- */
-void calcular_coordenadas_equatoriais_reversas(double pm, double ramc, double lat_geo, double *out_ra, double *out_dec) {
-    double lat_rad = lat_geo * DEG_TO_RAD;
-    
-    // 1. Descobrir o Quadrante e a Distância Horária (HD) a partir da PM (0 a 360)
-    double hd = 0.0;
-    int quadrante = 0; // 1=Casas 1-3, 2=Casas 4-6, 3=Casas 7-9, 4=Casas 10-12
-    
-    if (pm >= 0.0 && pm < 90.0)   { quadrante = 1; hd = pm / 90.0; }
-    else if (pm >= 90.0 && pm < 180.0) { quadrante = 2; hd = (180.0 - pm) / 90.0; }
-    else if (pm >= 180.0 && pm < 270.0) { quadrante = 3; hd = (pm - 180.0) / 90.0; }
-    else { quadrante = 4; hd = (360.0 - pm) / 90.0; }
-
-    // 2. Distância Meridiana Equatorial Equivalente (Linear em Regiomontanus/Topocêntrico)
-    double md_alvo = hd * 90.0;
-    double md_rad = md_alvo * DEG_TO_RAD;
-
-    // 3. Calcula a Ascensão Reta (RA) projetando o hemisfério oriental ou ocidental
-    double ra_calc = 0.0;
-    if (quadrante == 1 || quadrante == 4) { // Oriental (Leste)
-        ra_calc = ramc - md_alvo;
-    } else { // Ocidental (Oeste)
-        ra_calc = ramc + md_alvo;
-    }
-    ra_calc = fmod(ra_calc + 360.0, 360.0);
-
-    // 4. EQUAÇÃO INVERSA DO POLO: Extrai a Declinação (δ) correspondente
-    // Em Regiomontanus/Topocêntrico: tan(Polo) = tan(Lat) * sin(MD)
-    // Para achar a declinação na linha da casa: sin(AD) = tan(Polo) * tan(dec)
-    // No limite do horizonte oblíquo interceptado:
-    double tan_polo = tan(lat_rad) * sin(md_rad);
-    double dec_rad = 0.0;
-    
-    if (fabs(tan_polo) > 1e-6) {
-        // Relação esférica reversa para o plano equatorial do local
-        dec_rad = atan(sin(md_rad) / tan_polo); 
-    } else {
-        dec_rad = 0.0; // Caso esteja exatamente em cima da linha do equador
-    }
-
-    // Ajuste de sinais geográficos para o hemisfério norte/sul
-    if (quadrante == 2 || quadrante == 3) {
-        dec_rad = -dec_rad;
-    }
-    if (lat_geo < 0.0) {
-        dec_rad = -dec_rad; // Inverte para o Hemisfério Sul
-    }
-
-    *out_ra = ra_calc;
-    *out_dec = dec_rad * RAD_TO_DEG;
-}
-
-
-
-/**
- * Inicializa e calcula todas as coordenadas da Parte da Fortuna Mundana
- */
-void carregar_parte_fortuna_mundana(Promissor *sol, Promissor *lua, double jd, double ramc, double lat_geo, Promissor *fortuna_m) {
-    double obliquidade = get_obliquidade(jd);
-
-    // 1. Identifica se o mapa é Diurno ou Noturno pela Posição Mundana do Sol
-    // Se o Sol estiver entre 180° e 360° mundanos, ele está ACIMA do horizonte
-    int sol_esta_acima = (sol->pm >= 180.0 && sol->pm <= 360.0) ? 1 : 0;
-
-    // 2. Calcula a Posição Mundana (PM) da Fortuna Mundana
-    double pm_asc = 0.0;
-    double pm_fm = 0.0;
-    if (sol_esta_acima) {
-        pm_fm = pm_asc + lua->pm - sol->pm;
-    } else {
-        pm_fm = pm_asc + sol->pm - lua->pm;
-    }
-    pm_fm = fmod(pm_fm + 720.0, 360.0);
-
-    // Preenche os metadados estruturais do seu objeto
-    fortuna_m->id = 99; // ID único interno para ela
-    strcpy(fortuna_m->object, "🜨");
-    strcpy(fortuna_m->object_name, _("Mundane Part of Fortune"));
-    fortuna_m->type = PROM_PART; 
-    fortuna_m->pm = pm_fm;
-
-    // 3. Calcula a Casa (.house) e a Distância Horária (.hd) mundanas exatas
-    fortuna_m->house = ((int)(pm_fm / 30.0)) + 1;
-    // Ajusta a correspondência astrológica de casas (ex: Quadrante 4 começa na Casa 10)
-    // Mapeamento linear direto do círculo de casas de 30 em 30 graus
-    if (pm_fm >= 0.0 && pm_fm < 90.0)        fortuna_m->house = (int)(pm_fm / 30.0) + 1;   // Casas 1, 2, 3
-    else if (pm_fm >= 90.0 && pm_fm < 180.0)  fortuna_m->house = (int)(pm_fm / 30.0) + 1;   // Casas 4, 5, 6
-    else if (pm_fm >= 180.0 && pm_fm < 270.0) fortuna_m->house = (int)(pm_fm / 30.0) + 1;   // Casas 7, 8, 9
-    else                                      fortuna_m->house = (int)(pm_fm / 30.0) + 1;   // Casas 10, 11, 12
-
-    // 4. Executa a Trigonometria Reversa para achar RA e Declinação
-    double ra_reversa = 0.0, dec_reversa = 0.0;
-    calcular_coordenadas_equatoriais_reversas(pm_fm, ramc, lat_geo, &ra_reversa, &dec_reversa);
-    fortuna_m->ra = ra_reversa;
-    fortuna_m->declination = dec_reversa;
-
-    // 5. CONVERSÃO REVERSA PARA O ZODÍACO (Equador -> Eclíptica) via swe_cotrans
-    double xin[3], xout[3];
-    xin[0] = ra_reversa;
-    xin[1] = dec_reversa;
-    xin[2] = 1.0;
-    
-    // Passa-se a obliquidade com sinal POSITIVO para desfazer a rotação equatorial
-    swe_cotrans(xin, xout, obliquidade);
-    
-    fortuna_m->longitude = xout[0]; // <--- Longitude Eclíptica convertida!
-    fortuna_m->latitude  = xout[1]; // Latitude Eclíptica mundana gerada
-
-    // 6. Recalcula as Distâncias Meridianas (MD) e Horárias (HD) de checagem nativa
-    double diff_ra = ra_reversa - ramc;
-    while (diff_ra > 180.0)  diff_ra -= 360.0;
-    while (diff_ra < -180.0) diff_ra += 360.0;
-    fortuna_m->md = fabs(diff_ra);
-    
-    // Injeta os semi-arcos fixos de eixos locais para a sua tabela
-    fortuna_m->sa.sad = 90.0;
-    fortuna_m->sa.san = 90.0;
-    fortuna_m->hd = fortuna_m->md / 90.0;
-
-    // =========================================================================
-    // CÁLCULO NATIVO DA POSIÇÃO DECIMAL POR CASA (Substitui a swe_house_pos)
-    // =========================================================================
-    int casa_base = fortuna_m->house; // Ex: 10, 11, 2...
-    double posicao_na_casa = 0.0;
-
-    // A Distância Horária (hd) varia de 0.0 (Meridiano: Casas 10 e 4) a 1.0 (Horizonte: Casas 1 e 7)
-    // Cada quadrante mundano caminha de forma diferente em relação às cúspides:
-
-    switch (casa_base) {
-        // Quadrante 4: Casas 10, 11, 12 (Do MC ao Ascendente)
-        // A hd cresce do MC (0.0) em direção ao Horizonte (1.0)
-        case 10: posicao_na_casa = (fortuna_m->hd * 3.0); break;       // hd vai de 0.00 a 0.33
-        case 11: posicao_na_casa = 1.0 + ((fortuna_m->hd - 1.0/3.0) * 3.0); break; // hd vai de 0.33 a 0.66
-        case 12: posicao_na_casa = 2.0 + ((fortuna_m->hd - 2.0/3.0) * 3.0); break; // hd vai de 0.66 a 1.00
-        
-        // Quadrante 1: Casas 1, 2, 3 (Do Ascendente ao Fundo do Céu)
-        // A hd decresce do Horizonte (1.0) em direção ao IC (0.0)
-        case 1:  posicao_na_casa = (1.0 - fortuna_m->hd) * 3.0; break;
-        case 2:  posicao_na_casa = 1.0 + ((1.0/3.0 - fortuna_m->hd) * 3.0); break;
-        case 3:  posicao_na_casa = 2.0 + ((2.0/3.0 - fortuna_m->hd) * 3.0); break;
-
-        // Quadrante 2: Casas 4, 5, 6 (Do Fundo do Céu ao Descendente)
-        // A hd cresce do IC (0.0) em direção ao Horizonte (1.0)
-        case 4:  posicao_na_casa = (fortuna_m->hd * 3.0); break;
-        case 5:  posicao_na_casa = 1.0 + ((fortuna_m->hd - 1.0/3.0) * 3.0); break;
-        case 6:  posicao_na_casa = 2.0 + ((fortuna_m->hd - 2.0/3.0) * 3.0); break;
-
-        // Quadrante 3: Casas 7, 8, 9 (Do Descendente ao Meio do Céu)
-        // A hd decresce do Horizonte (1.0) em direção ao MC (0.0)
-        case 7:  posicao_na_casa = (1.0 - fortuna_m->hd) * 3.0; break;
-        case 8:  posicao_na_casa = 1.0 + ((1.0/3.0 - fortuna_m->hd) * 3.0); break;
-        case 9:  posicao_na_casa = 2.0 + ((2.0/3.0 - fortuna_m->hd) * 3.0); break;
-        
-        default: posicao_na_casa = 0.0; break;
-    }
-
-    // Junta a parte inteira da casa com a fração percorrida dentro dela
-    // Se ela andou 5 graus em uma casa de 30 graus, a fração dará ~0.1666
-    double fracao_dentro_da_casa = fmod(posicao_na_casa, 1.0);
-    if (fracao_dentro_da_casa < 0.0) fracao_dentro_da_casa += 1.0;
-
-    fortuna_m->house_pos = (double)casa_base + fracao_dentro_da_casa;
-
-
-    
-}
-
-
-
-
-
-
-
-
 
 
 
