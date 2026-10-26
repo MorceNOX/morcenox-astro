@@ -556,8 +556,8 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     // --- CÁLCULO CIENTÍFICO DAS PORCENTAGENS DOS 4 TEMPERAMENTOS ---
     float peso_sanguineo  = (float)score.total_quente * score.total_umido;
     float peso_colerico   = (float)score.total_quente * score.total_seco;
-    float peso_fleumatico  = (float)score.total_frio   * score.total_umido;
-    float peso_melancolico = (float)score.total_frio   * score.total_seco;
+    float peso_fleumatico  = (float)score.total_frio  * score.total_umido;
+    float peso_melancolico = (float)score.total_frio  * score.total_seco;
 
     float soma_total_pesos = peso_sanguineo + peso_colerico + peso_fleumatico + peso_melancolico;
     if (soma_total_pesos == 0) {
@@ -633,6 +633,9 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     int eixo_calor = score.total_quente - score.total_frio;
     int eixo_umidade = score.total_umido - score.total_seco;
 
+    bool balanced_temperament = (abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0);
+
+
     wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 24, 4, "────────────────────────────────────────────────────────────────────────────────────");
     wattroff(table_win, COLOR_PAIR(13));
@@ -662,7 +665,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
             snprintf(element2, 10, _("Earth"));
         } else {
             wattron(table_win, COLOR_PAIR(13));
-            wprintw(table_win, _("ABSOLUTE BALANCE (Quadrapartite)"));
+            wprintw(table_win, _("ABSOLUTE BALANCE (Quadripartite)"));
 
             snprintf(element1, 10, _("Fire"));
             snprintf(element2, 10, _("Water"));
@@ -738,6 +741,12 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     // Desliga todos os atributos e cores de uma só vez de forma segura no ncurses
     wattroff(table_win, A_BOLD | COLOR_PAIR(32) | COLOR_PAIR(7) | COLOR_PAIR(31) | COLOR_PAIR(11) | COLOR_PAIR(8) | COLOR_PAIR(12) | COLOR_PAIR(13) | COLOR_PAIR(21) | A_REVERSE);
 
+    if (balanced_temperament) {
+        wattron(table_win, COLOR_PAIR(11) | A_BOLD | A_BLINK); 
+        mvwprintw(table_win, table_height - 3, 4, _("Your temperament is virtually an ABSOLUTE BALANCE (Quadripartite)"));
+        wattroff(table_win, COLOR_PAIR(11) | A_BOLD | A_BLINK); 
+    }
+
     /* ATUALIZADO: Mensagem amigável avisando da nova funcionalidade */
     mvwprintw(table_win, table_height - 1, 2, _("Press [i] for Full Text Interpretation | ESC/q to Return"));
     wnoutrefresh(table_win);
@@ -796,6 +805,9 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
 
 void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTemperamento *lista, int eixo_calor, int eixo_umidade) {
+    
+    bool balanced_temperament = (abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0);
+
     int p_max_y, p_max_x;
     getmaxyx(stdscr, p_max_y, p_max_x); 
 
@@ -879,6 +891,19 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     line_count += 2;
 
     wprintw(pad, "            %s: %d  │  %s: %d\n\n\n", _("Heat Axis"), eixo_calor, _("Moisture Axis"), eixo_umidade);
+    
+
+    if (balanced_temperament) {
+        wattron(pad, COLOR_PAIR(11) | A_BOLD | A_ITALIC); 
+        wprintw(pad, "\n\n");
+        wprintw(pad, _("Your temperament is virtually an ABSOLUTE BALANCE (Quadripartite).\n"));
+        line_count += print_split_lines(pad, _("Even so, there are dominant characteristics, but all the properties exert a significant influence on the final temperament."), MAX_LINE_WIDTH);
+        wprintw(pad, "\n\n");
+        wattroff(pad, COLOR_PAIR(11) | A_BOLD | A_ITALIC); 
+    }
+
+    line_count += 5;
+
     wattron(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, _("  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"));
     line_count += 2;
@@ -886,8 +911,7 @@ void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTempera
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     line_count += 2;
-
-    
+        
     // 1. CASO DE EMPATE NO CALOR (Eixo Calor == 0)
     if (eixo_calor == 0) {
         if (eixo_umidade > 0) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 10:27-0300\n"
+"POT-Creation-Date: 2026-10-26 11:31-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1474,29 +1474,29 @@ msgid "Pisces"
 msgstr ""
 
 #: src/draw-chart.c:2620 src/draw-chart.c:2624 src/draw-chart.c:2628
-#: src/motivation.c:432 src/temperament.c:71 src/temperament.c:661
-#: src/temperament.c:667 src/temperament.c:680 src/temperament.c:698
+#: src/motivation.c:432 src/temperament.c:71 src/temperament.c:664
+#: src/temperament.c:670 src/temperament.c:683 src/temperament.c:701
 #, c-format
 msgid "Fire"
 msgstr ""
 
 #: src/draw-chart.c:2621 src/draw-chart.c:2625 src/draw-chart.c:2629
-#: src/motivation.c:436 src/temperament.c:74 src/temperament.c:662
-#: src/temperament.c:670 src/temperament.c:686 src/temperament.c:706
+#: src/motivation.c:436 src/temperament.c:74 src/temperament.c:665
+#: src/temperament.c:673 src/temperament.c:689 src/temperament.c:709
 #, c-format
 msgid "Earth"
 msgstr ""
 
 #: src/draw-chart.c:2622 src/draw-chart.c:2626 src/draw-chart.c:2630
-#: src/motivation.c:440 src/temperament.c:73 src/temperament.c:655
-#: src/temperament.c:669 src/temperament.c:679 src/temperament.c:694
+#: src/motivation.c:440 src/temperament.c:73 src/temperament.c:658
+#: src/temperament.c:672 src/temperament.c:682 src/temperament.c:697
 #, c-format
 msgid "Air"
 msgstr ""
 
 #: src/draw-chart.c:2623 src/draw-chart.c:2627 src/draw-chart.c:2631
-#: src/motivation.c:445 src/temperament.c:72 src/temperament.c:656
-#: src/temperament.c:668 src/temperament.c:685 src/temperament.c:702
+#: src/motivation.c:445 src/temperament.c:72 src/temperament.c:659
+#: src/temperament.c:671 src/temperament.c:688 src/temperament.c:705
 #, c-format
 msgid "Water"
 msgstr ""
@@ -5505,97 +5505,111 @@ msgstr ""
 msgid "🏆 Winner"
 msgstr ""
 
-#: src/temperament.c:641
+#: src/temperament.c:644
 msgid "Dominant Temperament: "
 msgstr ""
 
-#: src/temperament.c:653
+#: src/temperament.c:656
 msgid "SANGUINE-PHLEGMATIC MIX (Balanced Temp)"
 msgstr ""
 
-#: src/temperament.c:659
+#: src/temperament.c:662
 msgid "CHOLERIC-MELANCHOLIC MIX (Balanced Temp)"
 msgstr ""
 
-#: src/temperament.c:665
-msgid "ABSOLUTE BALANCE (Quadrapartite)"
+#: src/temperament.c:668
+msgid "ABSOLUTE BALANCE (Quadripartite)"
 msgstr ""
 
-#: src/temperament.c:677
+#: src/temperament.c:680
 msgid "SANGUINE-CHOLERIC MIX (Hot / Balanced Moisture)"
 msgstr ""
 
-#: src/temperament.c:683
+#: src/temperament.c:686
 msgid "PHLEGMATIC-MELANCHOLIC MIX (Cold / Balanced Moisture)"
 msgstr ""
 
-#: src/temperament.c:693
+#: src/temperament.c:696
 msgid "SANGUINE (Hot & Wet - 🜁 Air Element)"
 msgstr ""
 
-#: src/temperament.c:697
+#: src/temperament.c:700
 msgid "CHOLERIC (Hot & Dry - 🜂 Fire Element)"
 msgstr ""
 
-#: src/temperament.c:701
+#: src/temperament.c:704
 msgid "PHLEGMATIC (Cold & Wet - 🜄 Water Element)"
 msgstr ""
 
-#: src/temperament.c:705
+#: src/temperament.c:708
 msgid "MELANCHOLIC (Cold & Dry - 🜃 Earth Element)"
 msgstr ""
 
-#: src/temperament.c:742
+#: src/temperament.c:746
+msgid "Your temperament is virtually an ABSOLUTE BALANCE (Quadripartite)"
+msgstr ""
+
+#: src/temperament.c:751
 msgid "Press [i] for Full Text Interpretation | ESC/q to Return"
 msgstr ""
 
-#: src/temperament.c:825
+#: src/temperament.c:837
 msgid " Temperament Detailed Analysis "
 msgstr ""
 
-#: src/temperament.c:847
+#: src/temperament.c:859
 msgid " [↓↑|JK: Scroll │ Q|ESC: Return] "
 msgstr ""
 
-#: src/temperament.c:867
+#: src/temperament.c:879
 msgid "  1. RAW SCORE SUMMARY\n"
 msgstr ""
 
-#: src/temperament.c:875
+#: src/temperament.c:887
 msgid "Hot"
 msgstr ""
 
-#: src/temperament.c:876
+#: src/temperament.c:888
 msgid "Cold"
 msgstr ""
 
-#: src/temperament.c:877
+#: src/temperament.c:889
 msgid "Moist"
 msgstr ""
 
-#: src/temperament.c:878
+#: src/temperament.c:890
 msgid "Dry"
 msgstr ""
 
-#: src/temperament.c:881
+#: src/temperament.c:893
 msgid "Heat Axis"
 msgstr ""
 
-#: src/temperament.c:881
+#: src/temperament.c:893
 msgid "Moisture Axis"
 msgstr ""
 
-#: src/temperament.c:883
+#: src/temperament.c:899
+msgid "Your temperament is virtually an ABSOLUTE BALANCE (Quadripartite).\n"
+msgstr ""
+
+#: src/temperament.c:900
+msgid ""
+"Even so, there are dominant characteristics, but all the properties exert a "
+"significant influence on the final temperament."
+msgstr ""
+
+#: src/temperament.c:908
 msgid "  2. STRUCTURAL TEMPERAMENT DYNAMICS\n"
 msgstr ""
 
-#: src/temperament.c:895
+#: src/temperament.c:919
 msgid ""
 "SANGUINE-PHLEGMATIC MIX (The Moist Overload / Balanced Temperature)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:899
+#: src/temperament.c:923
 msgid ""
 "Your vital energy functions in perfect thermal equilibrium, blending Air and "
 "Water.\n"
@@ -5606,15 +5620,15 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:907 src/temperament.c:934 src/temperament.c:960
-#: src/temperament.c:991 src/temperament.c:1019 src/temperament.c:1049
-#: src/temperament.c:1076 src/temperament.c:1102 src/temperament.c:1128
+#: src/temperament.c:931 src/temperament.c:958 src/temperament.c:984
+#: src/temperament.c:1015 src/temperament.c:1043 src/temperament.c:1073
+#: src/temperament.c:1100 src/temperament.c:1126 src/temperament.c:1152
 msgid ""
 "Characteristics:\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:912
+#: src/temperament.c:936
 msgid ""
 " •   Highly Adaptable and Empathetic.\n"
 "Plastic, receptive, and relationally oriented. Dominated by moisture, which "
@@ -5635,13 +5649,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:922
+#: src/temperament.c:946
 msgid ""
 "CHOLERIC-MELANCHOLIC MIX (The Dry Overload / Balanced Temperature)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:926
+#: src/temperament.c:950
 msgid ""
 "Your active forces exist in a state of controlled thermal poise, blending "
 "Fire and Earth.\n"
@@ -5653,7 +5667,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:939
+#: src/temperament.c:963
 msgid ""
 " •   Intensely Focused and Rigid.\n"
 "Decisive, highly structured, and uncompromising. Dominated by dryness, which "
@@ -5674,13 +5688,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:948
+#: src/temperament.c:972
 msgid ""
 "ABSOLUTE BALANCE (Quadripartite Temperament)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:952
+#: src/temperament.c:976
 msgid ""
 "Your chart reflects the rare, ideal geometric balance of all four humors.\n"
 "Fire, Water, Air, and Earth converge into perfect cosmic proportion.\n"
@@ -5691,7 +5705,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:965
+#: src/temperament.c:989
 msgid ""
 " •   Centered and Universally Poised.\n"
 "An exceptionally rare configuration where Hot, Cold, Moist, and Dry hold "
@@ -5713,13 +5727,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:978
+#: src/temperament.c:1002
 msgid ""
 "SANGUINE-CHOLERIC MIX (The Hot Overload / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:982
+#: src/temperament.c:1006
 msgid ""
 "An expressive, warm, and highly action-oriented signature blending Air and "
 "Fire.\n"
@@ -5732,7 +5746,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:996
+#: src/temperament.c:1020
 msgid ""
 " •   Dynamic and High-Velocity.\n"
 "Intensely active, highly communicative, and quick-witted. Driven by a "
@@ -5753,13 +5767,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1006
+#: src/temperament.c:1030
 msgid ""
 "PHLEGMATIC-MELANCHOLIC MIX (The Cold Overload / Balanced Moisture)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1010
+#: src/temperament.c:1034
 msgid ""
 "A calm, deeply introspective, and self-protective constitution blending "
 "Water and Earth.\n"
@@ -5771,7 +5785,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1024
+#: src/temperament.c:1048
 msgid ""
 " •   Reserved and Introspective.\n"
 "Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
@@ -5792,13 +5806,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1038
+#: src/temperament.c:1062
 msgid ""
 "SANGUINE (Hot & Wet - Air 🜁 Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1042
+#: src/temperament.c:1066
 msgid ""
 "Your psychological engine revolves around communication, expansion, and "
 "mental fluidity. You absorb external impressions instantly and possess an "
@@ -5808,7 +5822,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1054
+#: src/temperament.c:1078
 msgid ""
 " •   Versatile and adaptable.\n"
 "Deeply reflective, quiet, and deliberate. Dominated by coldness, which pulls "
@@ -5829,13 +5843,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1065
+#: src/temperament.c:1089
 msgid ""
 "CHOLERIC (Hot & Dry - Fire 🜂 Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1069
+#: src/temperament.c:1093
 msgid ""
 "Your core essence is driven by swift, active, and result-oriented single-"
 "minded impulses. You possess an innate leadership spark, extreme courage "
@@ -5845,7 +5859,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1081
+#: src/temperament.c:1105
 msgid ""
 " •   Enthusiasm, energy, and quick action.\n"
 "Rigid, insensitive, impatient.\n"
@@ -5862,13 +5876,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1091
+#: src/temperament.c:1115
 msgid ""
 "PHLEGMATIC (Cold & Wet - Water 🜄 Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1095
+#: src/temperament.c:1119
 msgid ""
 "You embody a stable, welcoming, and peacekeeping emotional constitution. You "
 "operate through deep empathy, automatic diplomatic mediation, and a steady, "
@@ -5878,7 +5892,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1107
+#: src/temperament.c:1131
 msgid ""
 " •   Sensitive, reserved, introverted.\n"
 "Plasticity and adaptability. Emotional motivation, subjective and volatile. "
@@ -5896,13 +5910,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1117
+#: src/temperament.c:1141
 msgid ""
 "MELANCHOLIC (Cold & Dry - Earth 🜃 Element)\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1121
+#: src/temperament.c:1145
 msgid ""
 "Your nature is built on structural caution, real-world pragmatism, and "
 "profound reflection. An exceptional asset for deep analysis, long-term "
@@ -5912,7 +5926,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1133
+#: src/temperament.c:1157
 msgid ""
 " •   Reflection, concentration. \n"
 "Reserved and moderate in their outward expression. Not very exuberant in "
@@ -5931,26 +5945,26 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1167
+#: src/temperament.c:1191
 msgid ""
 "SECONDARY INFLUENCES & NUANCES\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1171
+#: src/temperament.c:1195
 msgid ""
 "Although your core template is defined above, your psychiatric map shows "
 "other active forces adding layers to your behavior:\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1180
+#: src/temperament.c:1204
 msgid ""
 " ✦ Sanguine Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1182
+#: src/temperament.c:1206
 msgid ""
 "Adds an overlay of communicative ease, adaptability, and cognitive "
 "curiosity. This softens any rigid boundaries or stagnation imposed by your "
@@ -5958,26 +5972,26 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1189
+#: src/temperament.c:1213
 msgid ""
 " ✦ Choleric Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1191
+#: src/temperament.c:1215
 msgid ""
 "Injects raw drive, sharp focus on execution, and a natural urgency to fix "
 "problems. It sharpens a passive baseline into a highly proactive mindset.\n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1198
+#: src/temperament.c:1222
 msgid ""
 " ✦ Phlegmatic Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1200
+#: src/temperament.c:1224
 msgid ""
 "Acts as a natural thermal and emotional ballast, introducing diplomatic "
 "mediation, structural patience, and a steady pace that protects you from "
@@ -5985,13 +5999,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1207
+#: src/temperament.c:1231
 msgid ""
 " ✦ Melancholic Influence: \n"
 "\n"
 msgstr ""
 
-#: src/temperament.c:1209
+#: src/temperament.c:1233
 msgid ""
 "Confers analytical depth, long-term organization skills, and a realistic "
 "sense of caution. It ensures your impulses are grounded in real-world "
@@ -5999,14 +6013,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/temperament.c:1224
+#: src/temperament.c:1248
 msgid "  3. RANKED DISTRIBUTION DATA\n"
 msgstr ""
 
-#: src/temperament.c:1232
+#: src/temperament.c:1256
 msgid "Rank"
 msgstr ""
 
-#: src/temperament.c:1242
+#: src/temperament.c:1266
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
