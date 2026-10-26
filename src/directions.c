@@ -438,6 +438,230 @@ int processar_astro(double ramc, double lat_geo, Promissor *astro) {
 
 
 
+
+void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
+    (void)ra_asc;
+    char serr[256];
+    double obl; // Obliquidade da eclíptica
+
+    // 1. Obter a obliquidade verdadeira
+    obl = get_obliquidade(jd);
+
+    // 2. Calcular a Ascensão Oblíqua do Ascendente (AO Asc)
+    double aoasc = normalize360(ramc + 90.0);
+
+    // 3. Determinar a Posição Horária e se o Sol e Lua estão acima/abaixo do horizonte
+    // Para calcular a AO/DO real de Placidus, precisamos saber o arco correto.
+    double lat_rad = lat * M_PI / 180.0;
+    
+    // --- Ajuste do SOL ---
+    double sol_md = fabs(sol->ra - ramc);
+    if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+    double sol_dec_rad = sol->declination * M_PI / 180.0;
+    double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+    double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+    int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+
+    double adsun = 0.0;
+    double val_sol = tan(sol_dec_rad) * tan(lat_rad);
+    if (fabs(val_sol) <= 1.0) adsun = asin(val_sol) * 180.0 / M_PI;
+
+    // Determina a Ascensão Oblíqua (AO) ou Descensão Oblíqua (DO) real do Sol baseado no quadrante
+    double ao_do_sol;
+    double sol_diff = sol->ra - ramc;
+    if (sol_diff < 0.0) sol_diff += 360.0;
+    int sol_leste = (sol_diff > 180.0) ? 1 : 0;
+
+    if (sol_acima) {
+        ao_do_sol = sol_leste ? (sol->ra - adsun) : (sol->ra + adsun); // AO no leste, DO no oeste
+    } else {
+        ao_do_sol = sol_leste ? (sol->ra + adsun) : (sol->ra - adsun); // Mudança para abaixo do horizonte
+    }
+    ao_do_sol = normalize360(ao_do_sol);
+
+    // --- Ajuste da LUA ---
+    double lua_md = fabs(lua->ra - ramc);
+    if (lua_md > 180.0) lua_md = 360.0 - lua_md;
+    double lua_dec_rad = lua->declination * M_PI / 180.0;
+    double lua_cos_h = -tan(lat_rad) * tan(lua_dec_rad);
+    double lua_sad = (lua_cos_h >= 1.0) ? 0.0 : (lua_cos_h <= -1.0) ? 180.0 : acos(lua_cos_h) * 180.0 / M_PI;
+    int lua_acima = (lua_md <= lua_sad) ? 1 : 0;
+
+    double admoon = 0.0;
+    double val_lua = tan(lua_dec_rad) * tan(lat_rad);
+    if (fabs(val_lua) <= 1.0) admoon = asin(val_lua) * 180.0 / M_PI;
+
+    double ao_do_lua;
+    double lua_diff = lua->ra - ramc;
+    if (lua_diff < 0.0) lua_diff += 360.0;
+    int lua_leste = (lua_diff > 180.0) ? 1 : 0;
+
+    if (lua_acima) {
+        ao_do_lua = lua_leste ? (lua->ra - admoon) : (lua->ra + admoon);
+    } else {
+        ao_do_lua = lua_leste ? (lua->ra + admoon) : (lua->ra - admoon);
+    }
+    ao_do_lua = normalize360(ao_do_lua);
+
+    // 4. Calcular a RA da Fortuna Mundana respeitando se o mapa é Diurno ou Noturno
+    int mapa_diurno = sol_acima; // Diurno se o Sol está acima do horizonte
+
+    if (mapa_diurno) {
+        fortune_m->ra = normalize360(aoasc + ao_do_lua - ao_do_sol);
+    } else {
+        fortune_m->ra = normalize360(aoasc + ao_do_sol - ao_do_lua);
+    }
+
+    // 5. Preservar a declinação da Lua
+    fortune_m->declination = lua->declination;
+
+    // 6. Conversão Equatorial -> Eclíptica (Ajustado com sinal negativo na obliquidade se exigido pela swe_cotrans)
+    double xin[3], xout[3];
+    xin[0] = fortune_m->ra;
+    xin[1] = fortune_m->declination;
+    xin[2] = 1.0;
+
+    // Passagem da obliquidade. Se a função interna inverter o sinal, passe -obl
+    swe_cotrans(xin, xout, -obl); 
+
+    fortune_m->longitude = normalize360(xout[0]);
+    // Nota: O Morinus armazena a latitude eclíptica resultante da conversão direta, sem zerar
+    fortune_m->latitude = xout[1]; 
+
+    // 7. CALCULAR A CASA DE PLACIDUS ATUALIZADA
+    double xpin_fortune[6] = { fortune_m->longitude, fortune_m->latitude, 1.0, 0.0, 0.0, 0.0 };
+    double fortune_hpos = swe_house_pos(ramc, lat, obl, HOUSE_SYSTEM, xpin_fortune, serr); 
+    
+    fortune_m->house_pos = fortune_hpos;
+    fortune_m->house = (int)floor(fortune_hpos);
+
+    // 8. Variáveis secundárias da struct para manter integridade
+    fortune_m->md = fabs(fortune_m->ra - ramc);
+    if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
+
+    double dec_rad = fortune_m->declination * M_PI / 180.0;
+    double cos_h = -tan(lat_rad) * tan(dec_rad);
+    if (cos_h >= 1.0) {
+        fortune_m->sa.sad = 0.0; fortune_m->sa.san = 180.0;
+    } else if (cos_h <= -1.0) {
+        fortune_m->sa.sad = 180.0; fortune_m->sa.san = 0.0;
+    } else {
+        fortune_m->sa.sad = acos(cos_h) * 180.0 / M_PI;
+        fortune_m->sa.san = 180.0 - fortune_m->sa.sad;
+    }
+
+    double sa_fortune = (fortune_hpos >= 7.0 && fortune_hpos < 13.0) ? fortune_m->sa.sad : fortune_m->sa.san;
+    fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void calcular_sistema_casas_placidus(Promissor *p, int esta_acima, int quadrante_leste) {
+    // Converte a proporção (0.0 a 1.0) em graus mundanos de quadrante (0 a 90)
+    double graus_mundanos = p->pm * 90.0;
+    double posicao_casa_continua = 0.0;
+
+    if (esta_acima) {
+        if (quadrante_leste) { // Quadrante Superior Leste: Casas 12, 11, 10
+            posicao_casa_continua = 12.0 - (graus_mundanos / 30.0);
+        } else { // Quadrante Superior Oeste: Casas 10, 9, 8
+            posicao_casa_continua = 9.0 + (graus_mundanos / 30.0);
+        }
+    } else {
+        if (quadrante_leste) { // Quadrante Inferior Leste: Casas 1, 2, 3
+            posicao_casa_continua = 1.0 + (graus_mundanos / 30.0);
+        } else { // Quadrante Inferior Oeste: Casas 4, 5, 6
+            posicao_casa_continua = 4.0 - (graus_mundanos / 30.0);
+        }
+    }
+
+    // Normalização das casas entre 1.0 e 12.99
+    if (posicao_casa_continua < 1.0)  posicao_casa_continua += 12.0;
+    if (posicao_casa_continua >= 13.0) posicao_casa_continua -= 12.0;
+
+    p->house_pos = posicao_casa_continua;
+    p->house = (int)floor(posicao_casa_continua);
+}
+
+
+// void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
+//     // 1. Distâncias Meridianas (MD)
+//     sol->md = fabs(sol->ra - ramc);
+//     if (sol->md > 180.0) sol->md = 360.0 - sol->md;
+
+//     lua->md = fabs(lua->ra - ramc);
+//     if (lua->md > 180.0) lua->md = 360.0 - lua->md;
+
+//     // 2. Semi-Arcos
+//     sol->sa = calcular_semi_arcos(lat, sol->declination);
+//     lua->sa = calcular_semi_arcos(lat, lua->declination);
+
+//     double sa_sol = (sol->md <= sol->sa.sad) ? sol->sa.sad : sol->sa.san;
+//     double sa_lua = (lua->md <= lua->sa.sad) ? lua->sa.sad : lua->sa.san;
+
+//     // 3. Proporções Mundanas (pm)
+//     sol->pm = (sa_sol > 0.0) ? (sol->md / sa_sol) : 0.0;
+//     lua->pm = (sa_lua > 0.0) ? (lua->md / sa_lua) : 0.0;
+
+//     // 4. Ascensão Reta (RA) da Fortuna
+//     int sol_esta_acima = (sol->md <= sol->sa.sad) ? 1 : 0;
+//     if (sol_esta_acima) {
+//         fortune_m->ra = ra_asc + lua->ra - sol->ra;
+//     } else {
+//         fortune_m->ra = ra_asc + sol->ra - lua->ra;
+//     }
+
+//     while (fortune_m->ra < 0.0)   fortune_m->ra += 360.0;
+//     while (fortune_m->ra >= 360.0) fortune_m->ra -= 360.0;
+
+//     double eps = get_obliquidade(jd);
+
+//     // 5. CONVERSÃO EQUATORIAL -> ECLÍPTICA (Calculando Longitude e Declinação Real)
+//     // Usando as fórmulas clássicas de conversão de coordenadas com Latitude Eclíptica = 0
+//     double ra_rad = para_radianos(fortune_m->ra);
+//     double eps_rad = para_radianos(eps); // eps: Obliquidade da Eclíptica (Ex: ~23.4392)
+
+//     // Encontrando a Longitude Eclíptica (λ)
+//     double lon_rad = atan2(sin(ra_rad) * cos(eps_rad), cos(ra_rad));
+//     fortune_m->longitude = para_graus(lon_rad);
+//     if (fortune_m->longitude < 0.0) fortune_m->longitude += 360.0;
+//     fortune_m->latitude = 0.0; // Assumindo órbita eclíptica padrão para o lote
+
+//     // Encontrando a Declinação exata (δ) baseada na nova Longitude
+//     double dec_rad = asin(sin(lon_rad) * sin(eps_rad));
+//     fortune_m->declination = para_graus(dec_rad);
+
+//     // 6. CÁLCULO MUNDANO E CASAS DA FORTUNA
+//     fortune_m->sa = calcular_semi_arcos(lat, fortune_m->declination);
+    
+//     fortune_m->md = fabs(fortune_m->ra - ramc);
+//     if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
+    
+//     // Verificações de quadrante espacial
+//     int fortune_esta_acima = (fortune_m->md <= fortune_m->sa.sad) ? 1 : 0;
+//     double sa_fortune = fortune_esta_acima ? fortune_m->sa.sad : fortune_m->sa.san;
+//     fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
+
+//     // Determina se está a Leste ou Oeste do Meridiano para achar a Casa correta
+//     double diff_ramc = fortune_m->ra - ramc;
+//     if (diff_ramc < 0.0) diff_ramc += 360.0;
+//     int quadrante_leste = (diff_ramc > 180.0) ? 1 : 0;
+
+//     // Chamada limpa sem o parâmetro ramc
+//     calcular_sistema_casas_placidus(fortune_m, fortune_esta_acima, quadrante_leste);
+// }
+
+
+
 /**
  * Calcula a Posição Mundana (0° a 360°) da Parte da Fortuna Mundana
  * @param pm_sol Posição Mundana do Sol natal (calculada pelo seu motor)
@@ -2957,6 +3181,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int idx_south_node = -1;
     int idx_dc = -1;
     int idx_ic = -1;
+    int idx_fortuna_m = NUM_OBJECTS - object_diff;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         if (sig[i].id == P_ASC - object_diff) idx_asc = i;
@@ -2972,11 +3197,15 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             if (sig[i].id == P_URANUS) idx_uranus = i;
             else if (sig[i].id == P_NEPTUNE) idx_neptune = i;
             else if (sig[i].id == P_PLUTO) idx_pluto = i;
+            else if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
+            else if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
+            else if (sig[i].id == P_DC - object_diff) idx_dc = i;
+            else if (sig[i].id == P_IC - object_diff) idx_ic = i;  
         }
         else if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
         else if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
         else if (sig[i].id == P_DC - object_diff) idx_dc = i;
-        else if (sig[i].id == P_IC - object_diff) idx_ic = i; 
+        else if (sig[i].id == P_IC - object_diff) idx_ic = i;                
     }
 
     if (!mapa_retorno) {
@@ -3017,20 +3246,22 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         indices_significadores[16] = idx_south_node;
         indices_significadores[17] = idx_dc;
         indices_significadores[18] = idx_ic;
+        indices_significadores[19] = idx_fortuna_m;
     } else {
         indices_significadores[12] = idx_north_node;
         indices_significadores[13] = idx_south_node;
         indices_significadores[14] = idx_dc;
         indices_significadores[15] = idx_ic;
+        indices_significadores[16] = idx_fortuna_m;
     }
     
 
 
     for (int i = 1; i <= 12; i++) {
         if (show_modern_planets) {
-            indices_significadores[18 + i] = idx_ic + i;
+            indices_significadores[19 + i] = idx_fortuna_m + i;
         } else {
-            indices_significadores[15 + i] = idx_ic + i;
+            indices_significadores[16 + i] = idx_fortuna_m + i;
         }
     }
 
@@ -3949,7 +4180,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             house_system_pd = 'T';
         }
         else {
-            house_system_pd = 'P';
+            house_system_pd = HOUSE_SYSTEM;
         }
     }
 

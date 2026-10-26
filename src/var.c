@@ -71,7 +71,8 @@ const char *ZD_DATABASE_COUNTRY_PATH = NULL;
 
 sqlite3 *global_db = NULL;
 
-bool MAPA_DIURNO;
+bool MAPA_DIURNO_GEOMETRICO = true;
+bool MAPA_DIURNO_CIVIL = true;
 int GENDER = 3;
 
 bool show_modern_planets;

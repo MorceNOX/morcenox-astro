@@ -505,7 +505,7 @@ int calcular_almuten_figuris(PontosHylegiacos pontos, PlotObject *plots, AspectM
 
 
 void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_matriz, int week_day, int planetary_hour, bool mapa_retorno) {
-    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12));
     int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
     // Calcular as dimensões da nova janela
@@ -609,11 +609,11 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, row + 2, 5, "%s %s(%d)/%s(%d): ", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour);
+    mvwprintw(table_win, row + 2, 5, "%s %s(%d)/%s(%d): ", _("Planetary"), (MAPA_DIURNO_CIVIL)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour);
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(8) | A_BOLD);
-    wprintw(table_win, "%s / %s", planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
+    wprintw(table_win, "%s / %s", planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
     wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
 
     // ────────────────────────────────────────────────────────────────────────────────

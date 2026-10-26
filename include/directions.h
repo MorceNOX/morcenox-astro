@@ -36,7 +36,7 @@
 #define DIRECT 0
 #define CONVERSE 1
 
-#define TOTAL_SIGNIFICADORES 31
+#define TOTAL_SIGNIFICADORES 32
 
 //#define NAIBOD_KEY  1.014561666311 //1.014646  // Chave de Naibod: graus equatoriais por ano de vida
 #define NAIBOD_KEY   0.985647358005769
@@ -126,10 +126,12 @@ const char* get_key_name(int key);
 double get_obliquidade(double jd);
 double obter_ano_tropical_dinamico(double jd_natal);
 
+void calc_swe_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double armc, double lat, double jd, Promissor *fortune_m);
+void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m);
 void carregar_parte_fortuna_mundana(Promissor *sol, Promissor *lua, double jd, double ramc, double lat_geo, Promissor *fortuna_m);
 void calcular_coordenadas_equatoriais_reversas(double pm, double ramc, double lat_geo, double *out_ra, double *out_dec);
 double calcular_parte_fortuna_mundana(double pm_sol, double pm_lua, int sol_esta_acima);
-
+void calcular_coordenadas_equatoriais_reversas(double pm, double ramc, double lat_geo, double *out_ra, double *out_dec);
 int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, double ramc, double lat_geo_rad);
 double __calcular_semi_arco(double dec_rad, double lat_rad, int esta_acima);
 double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);

@@ -105,7 +105,8 @@ extern const char *ZD_DATABASE_TIMEZONE_PATH;
 extern const char *ZD_DATABASE_COUNTRY_PATH;
 
 
-extern bool MAPA_DIURNO;
+extern bool MAPA_DIURNO_GEOMETRICO;
+extern bool MAPA_DIURNO_CIVIL;
 extern int GENDER;
 
 extern bool show_modern_planets;

@@ -1908,7 +1908,7 @@ void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_
     int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
 
     if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
-        int day_regent = get_hour_regent(week_day, (MAPA_DIURNO)?0:12);
+        int day_regent = get_hour_regent(week_day, (MAPA_DIURNO_CIVIL)?0:12);
         int hour_regent = get_hour_regent(week_day, planetary_hour);
 
         for (int j = 0; j < 6; j++) {
@@ -2242,7 +2242,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         
         mvprintw(2, max_x - 39, "%s %s: %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
         mvprintw(3, max_x - 35, "%s: %s", _("Moon Phase"), phase);
-        mvprintw(5, max_x - 35, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
+        mvprintw(5, max_x - 35, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO_CIVIL)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
         
         mvprintw(7, max_x - 24, "%s: %02d:%02d:%02.0f", _("Sun Clock"), last_hr, last_min, last_sec);
         
@@ -2351,7 +2351,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         if (mapa_retorno) add_n = 0;
 
         for (int i = 0; i < 5; i++) {
-            if (MAPA_DIURNO) {
+            if (MAPA_DIURNO_CIVIL) {
                 mvprintw(LINES - (10 + add_n) + i, 7, "%s", sol_ascii[i]);
             } else {
                 mvprintw(LINES - (10 + add_n) + i, 7, "%s", lua_ascii[i]);
@@ -2634,8 +2634,12 @@ char *get_sign_element_name(int n) {
 }
 
 
-bool mapa_diurno() {
-    return MAPA_DIURNO;
+bool mapa_diurno_civil() {
+    return MAPA_DIURNO_CIVIL;
+}
+
+bool mapa_diurno_geometrico() {
+    return MAPA_DIURNO_GEOMETRICO;
 }
 
 int diff_sign(int signA, int signB) {
@@ -3849,7 +3853,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     //char *hsol = plots[0].house;
     wattron(table_win, A_BOLD);
     //if (mapa_diurno(hsol)) {
-    if (MAPA_DIURNO) {
+    if (MAPA_DIURNO_CIVIL) {
         mvwprintw(table_win, 7, 55, "%s", _("Diurnal chart"));    
     }
     else {
@@ -3905,7 +3909,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
 
  
 
-void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets, double ramc, double lat, Promissor *fortuna_m) {
+void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets, double ramc, double lat, double jd, Promissor *fortuna_m) {
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -4151,7 +4155,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     while ((ch = wgetch(table_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
         
         if (ch == KEY_F(2)) {
-            display_positions(plots, matrix, ramc, lat, fortuna_m);
+            display_positions(plots, matrix, ramc, lat, jd, fortuna_m);
             
             touchwin(stdscr);
             wnoutrefresh(stdscr);
@@ -4309,19 +4313,24 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
 
 
-void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc, double lat, Promissor *fortuna_m) {
+void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc, double lat, double jd, Promissor *fortuna_m) {
+    (void)ramc;
+    (void)lat;
+    (void)jd;
+    // Promissor sol = {0};
+    // Promissor lua = {0};
 
-    //char str_lon_formatada[32];
-    // char str_ra_formatada[16];
-    // char str_dec_formatada[16];
+    // sol.ra = plots[0].ra;
+    // sol.declination = plots[0].declination;
 
-    // //formatar_dms(fortuna_m->longitude, str_lon_formatada);
-    // formatar_tempo_sideral(fortuna_m->ra, str_ra_formatada); // Converte RA em HH:MM:SS
-    // formatar_dms(fortuna_m->declination, str_dec_formatada);
+    // lua.ra = plots[1].ra;
+    // lua.declination = plots[1].declination;
 
+    int object_diff = show_modern_planets ? 0 : 3;
 
+    // double ra_asc = plots[P_ASC - object_diff].ra;
 
-
+    // calc_mundane_lot_of_fortune(&sol, &lua, ra_asc, ramc, lat, jd, fortuna_m);
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -4333,8 +4342,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
 
-    int object_diff = show_modern_planets ? 0 : 3;
-    
+       
     WINDOW *table_win = newwin(table_height, table_width, start_y, start_x);
     WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
     
@@ -4351,7 +4359,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     const char *title = _(" Spherical Measurements of the Sky ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
-    int col_fechar = getmaxx(table_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(table_win) - 4;
 
     wattron(table_win, COLOR_PAIR(13));
     mvwprintw(table_win, 0, col_fechar, "[");
@@ -4492,8 +4500,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
             sa = calcular_semi_arcos(lat, plots[i].declination);
         }
 
-        (void)ramc;
-        
+       
         mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", sa.sad);
         mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
        
@@ -4508,29 +4515,61 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         row_pad += 2;
     }
 
-    // mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", fortuna_m->object);
-    // mvwprintw(scroll_pad, row_pad, c_pos + 1, "%2d°", (int)fmod(fortuna_m->longitude, 30));
-    // mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", get_sign((int)(fortuna_m->longitude / 30)));
-    // mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'", (int)((fortuna_m->longitude - (int)fortuna_m->longitude) * 60.0));
-    // mvwprintw(scroll_pad, row_pad, c_hse + 1, "%8.4f", fortuna_m->house_pos);
-    // mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", fortuna_m->longitude);
-    // mvwprintw(scroll_pad, row_pad, c_lat, "%8.4f", fortuna_m->latitude);
-    // mvwprintw(scroll_pad, row_pad, c_dec, "%8.4f", fortuna_m->declination);
-    // mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", fortuna_m->ra);
+    int degree = (int)fmod(fortuna_m->longitude, 30.0);
 
-    // SemiArcos sa = calcular_semi_arcos(lat, fortuna_m->declination);
+    // 1. Pega apenas a fração decimal do grau
+    double graus_decimais = fortuna_m->longitude;
+    double fracao_grau = graus_decimais - (int)graus_decimais;
 
-    // mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", sa.sad);
-    // mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
+    // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+    double minutos_decimais = fracao_grau * 60.0;
+    int min = (int)minutos_decimais;
+    
+    double segundos_decimais = (minutos_decimais - min) * 60.0;
+    int seg = (int)round(segundos_decimais);
 
-    // row_pad += 2;
+    // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+    if (seg >= 60) {
+        seg = 0;
+        min++;
+        if (min >= 60) {
+            min = 0;
+            degree++;
+            
+            // TRAVA EXTRA DE BORDA DO SIGNO:
+            // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+            // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+            if (degree >= 30) {
+                degree = 29;
+                min = 59;
+                seg = 59;
+            }
+        }
+    }
 
-    // mvwprintw(scroll_pad, row_pad, 2, "(*)%s = %s", fortuna_m->object, fortuna_m->object_name);
-    // row_pad++;
-    (void)fortuna_m;
+    wattron(scroll_pad, COLOR_PAIR(62));
+    mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", fortuna_m->object);
+    mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
+    mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", get_sign((int)(fortuna_m->longitude / 30)));
+    mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d", min, seg);
+    mvwprintw(scroll_pad, row_pad, c_hse + 1, "%8.4f", fortuna_m->house_pos);
+    mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", fortuna_m->longitude);
+    mvwprintw(scroll_pad, row_pad, c_lat, "%8.4f", fortuna_m->latitude);
+    mvwprintw(scroll_pad, row_pad, c_dec, "%8.4f", fortuna_m->declination);
+    mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", fortuna_m->ra);
 
+    mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", fortuna_m->sa.sad);
+    mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", fortuna_m->sa.san);
+    wattroff(scroll_pad, COLOR_PAIR(62));
+
+    wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+    wmove(scroll_pad, row_pad + 1, c_obj);
+    whline(scroll_pad, ACS_HLINE, table_width - 4);
+    wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
     row_pad++;
+    mvwprintw(table_win, table_height - 2, 2, "(*)%s = %s.", fortuna_m->object, fortuna_m->object_name);
+
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to return - [↓↑/JK] Scroll"));
@@ -4934,15 +4973,15 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     mvwprintw(table_win, row + 4, 4, "%s: %.4f (%s)", _("  Hour length (Day)"), daytime_hour, hour_len1);
     mvwprintw(table_win, row + 5, 4, "%s: %.4f (%s)", _("Hour length (Night)"), nighttime_hour, hour_len2);
 
-    const char *regent_day_str = planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12)];
+    const char *regent_day_str = planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12)];
     const char *regent_hour_str = planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)];
 
-    mvwprintw(table_win, row + 9, 4, "%s %s(%d)/%s(%d): %s / %s", _("Chart's Planetary"), (MAPA_DIURNO)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, regent_day_str, regent_hour_str);
+    mvwprintw(table_win, row + 9, 4, "%s %s(%d)/%s(%d): %s / %s", _("Chart's Planetary"), (MAPA_DIURNO_CIVIL)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, regent_day_str, regent_hour_str);
     
     
     const char **ascii_art = get_planet_ascii_by_gliph((char *)regent_day_str);
             
-    if (MAPA_DIURNO ) {
+    if (MAPA_DIURNO_CIVIL ) {
        wattron(table_win, COLOR_PAIR(8));
     }
     else {
@@ -4965,9 +5004,9 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     mvwprintw(table_win, row + 8, 72, "%s", ascii_art1[4]);
     mvwprintw(table_win, row + 9, 72, "%s", ascii_art1[5]);
 
-    mvwprintw(table_win, row + 10, 63, "%s   %s", (MAPA_DIURNO)?_(" Day"):_("Night"), (MAPA_DIURNO)?_("  Hour"):_("Hour"));
+    mvwprintw(table_win, row + 10, 63, "%s   %s", (MAPA_DIURNO_CIVIL)?_(" Day"):_("Night"), (MAPA_DIURNO_CIVIL)?_("  Hour"):_("Hour"));
        
-    if (MAPA_DIURNO ) {
+    if (MAPA_DIURNO_CIVIL) {
         wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
      }
      else {
@@ -4991,7 +5030,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
         
         /* GATILHO: Se pressionar 'i', abre o relatório corrido */
         if (ch == 'i' || ch == 'I') {
-            int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+            int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12));
             int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
             int strength_reg_day = strength_planets[regente_dia - 1];
@@ -5128,7 +5167,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
 
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
     wattron(pad, A_BOLD | COLOR_PAIR(15));
-    wprintw(pad, _("  1. REGENT OF THE %s: %s  \n"), (MAPA_DIURNO) ? _("DAY") : _("NIGHT"), regent_day_str);
+    wprintw(pad, _("  1. REGENT OF THE %s: %s  \n"), (MAPA_DIURNO_CIVIL) ? _("DAY") : _("NIGHT"), regent_day_str);
     wattroff(pad, A_BOLD | COLOR_PAIR(15));
     wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n\n");
     
@@ -5383,14 +5422,14 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
     int pontos_finais_exibicao_day = (int)ceil(((double)strength_reg_day * weights[regente_dia]) / 10.0);
 
     wattron(pad, A_BOLD); 
-    wprintw(pad, _(" • REGENT OF %s: ( %s )\n\n"), (MAPA_DIURNO)?_("THE DAY"):_("THE NIGHT"), regent_day_str);
+    wprintw(pad, _(" • REGENT OF %s: ( %s )\n\n"), (MAPA_DIURNO_CIVIL)?_("THE DAY"):_("THE NIGHT"), regent_day_str);
     wattroff(pad, A_BOLD);
 
     line_count += 2;
 
     snprintf(str, 512, _("The base dignity score of the Regent of %s is: %d.\n"
                     "Its relative cosmic efficiency is: %d%% (Resulting in %d Net Strength Points).\n\n"), 
-            (MAPA_DIURNO)?_("the Day"):_("the Night"), dig_reg_day, strength_reg_day, pontos_finais_exibicao_day);
+            (MAPA_DIURNO_CIVIL)?_("the Day"):_("the Night"), dig_reg_day, strength_reg_day, pontos_finais_exibicao_day);
     
     line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
     wattron(pad, A_BOLD); 
@@ -5410,7 +5449,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
         snprintf(str, 512, _("This planet commands %s with magnificent backing.\n"
                         "Because its cosmic efficiency is highly abundant (%d%%), it acts as an honored\n"
                         "and powerful executive. The promises of this planet will manifest with clarity,\n"
-                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO)?_("the day"):_("the night"), strength_reg_day);
+                        "bringing structural progress, sudden expansion, and minimal friction.\n\n\n"), (MAPA_DIURNO_CIVIL)?_("the day"):_("the night"), strength_reg_day);
     } 
     else if (strength_reg_day >= 35) {
         wattron(pad, A_BOLD | COLOR_PAIR(8)); // Moderado / Azul
@@ -5435,7 +5474,7 @@ void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const c
                         "Even though it governs this time stream, it lacks the raw vital\n"
                         "resources to fulfill its promises easily. The sectors it triggers this day will demand\n"
                         "intense adjustments, manifesting through chronic delays, heavy exhaustion,\n"
-                        "administrative blocks, or the feeling of working against a locked door.\n\n\n"), (MAPA_DIURNO)?_("the Day"):_("the Night"), strength_reg_day);
+                        "administrative blocks, or the feeling of working against a locked door.\n\n\n"), (MAPA_DIURNO_CIVIL)?_("the Day"):_("the Night"), strength_reg_day);
     }
 
     line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
@@ -6584,6 +6623,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool running = true;
 
     bool backup_mapa_diurno = false;
+    bool backup_mapa_diurno_geo = false;
 
      
 
@@ -6705,6 +6745,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             planet_houses[i] = house_pos;
         }
 
+        MAPA_DIURNO_GEOMETRICO = (planet_houses[0] >= 7.0 && planet_houses[0] < 13.0);
+        backup_mapa_diurno_geo = MAPA_DIURNO_GEOMETRICO;
+
         double south_node = normalize360(planet_longitudes[10] - 180);
         planet_longitudes[11] = south_node;
         planet_latitudes[11] = -planet_latitudes[10];
@@ -6780,7 +6823,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double fortuna = 0.0;
         double spirit = 0.0;
         //if (mapa_diurno(hsol)) {
-        if (MAPA_DIURNO) {
+        if (MAPA_DIURNO_GEOMETRICO) {
             fortuna = ascendant + planet_longitudes[1] - planet_longitudes[0];
             spirit = ascendant + planet_longitudes[0] - planet_longitudes[1];
         } else {
@@ -6932,13 +6975,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
             
-        backup_mapa_diurno = MAPA_DIURNO;
+        backup_mapa_diurno = MAPA_DIURNO_CIVIL;
 
         // Definir MAPA_DIURNO com base no LAST ou na Solução Polar
         if (REGIAO_POLAR) {
-            MAPA_DIURNO = (SOL_PERMANENTE) ? TRUE : FALSE;
+            MAPA_DIURNO_CIVIL = (SOL_PERMANENTE) ? TRUE : FALSE;
         } else {
-            MAPA_DIURNO = (last_hours >= last_rise && last_hours < last_set) ? TRUE : FALSE;
+            MAPA_DIURNO_CIVIL = (last_hours >= last_rise && last_hours < last_set) ? TRUE : FALSE;
         }
         
 
@@ -6956,7 +6999,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // IGNORA ajustes de madrugada se for polar, para não quebrar a baliza 0-24h fixa
         if (!REGIAO_POLAR) {
-            if (!MAPA_DIURNO && hour < riseHour) {
+            if (!MAPA_DIURNO_CIVIL && hour < riseHour) {
                 current_rise = prev_riseHour;
                 current_set = prev_setHour;
                 next_rise = riseHour;
@@ -8089,7 +8132,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
             row->sect_match = false;
-            if (MAPA_DIURNO) {
+            if (MAPA_DIURNO_GEOMETRICO) {
                 if ((planet_sect == 1 && house_s > 6) || (planet_sect == 2 && house_s < 7 && i != 1) || i == 0) {
                     row->sect_match = true;
                 }
@@ -8348,7 +8391,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         int id_almuten_ref = 0;
         ResultadoAlcochoden alco = {"None", "", 0, "None", 0};
-        int regente_dia = converter_codigo_planeta(get_hour_regent(week_day, (MAPA_DIURNO)?0:12));
+        int regente_dia = converter_codigo_planeta(get_hour_regent(week_day, (MAPA_DIURNO_CIVIL)?0:12));
         int regente_hora = converter_codigo_planeta(get_hour_regent(week_day, planetary_hour));
         
         // 1. Antes do laço do teclado começar, calcule os dados base de expectativa vital:
@@ -8543,9 +8586,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
         Promissor fortuna_m = {0};
-        //carregar_parte_fortuna_mundana(&sig[0], &sig[1], julian_day, armc, lat, &fortuna_m);
+        snprintf(fortuna_m.object, 10, "%s", "🜨");
+        snprintf(fortuna_m.object_name, 30, "%s", _("Mundane Part of Fortune"));
 
+        double ra_asc = plots[P_ASC - object_diff].ra;
+        calc_mundane_lot_of_fortune(&sig[0], &sig[1], ra_asc, armc, lat, julian_day, &fortuna_m);
 
+        sig[sig_id] = fortuna_m;
+        sig[sig_id].id = sig_id;
+
+        sig_id++;        
 
         char *hc;
         for (int i = 1; i <= 12; i++) {
@@ -8553,7 +8603,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(sig[sig_id].object, 10, "%s", hc);
             snprintf(sig[sig_id].object_name, 30, _("Cusp %d"), i);
 
-            sig[sig_id].id = plots[P_IC - object_diff].id + i;
+            sig[sig_id].id = sig_id; //plots[P_IC - object_diff].id + i + 1;
             sig[sig_id].longitude = cusps[i];
             sig[sig_id].latitude = 0.0;
             sig[sig_id].house_pos = (double)i;
@@ -8574,6 +8624,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             sig_id++;
         }
         free(hc);
+
 
         // DEBUG
         // terminate_database();
@@ -9173,7 +9224,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     wnoutrefresh(stdscr);
                 } 
                 
-                display_table(plots, &planet_matrix, dig, strength_planets, armc, lat, &fortuna_m);
+                display_table(plots, &planet_matrix, dig, strength_planets, armc, lat, julian_day, &fortuna_m);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;    
@@ -9371,7 +9422,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     } 
                     
-                    if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects)) {
+                    if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO_GEOMETRICO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects)) {
                         saiu_retorno = true;
                     } else {
                         saiu_retorno = true;
@@ -9616,7 +9667,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     }
 
-    MAPA_DIURNO = backup_mapa_diurno;
+    MAPA_DIURNO_CIVIL = backup_mapa_diurno;
+    MAPA_DIURNO_GEOMETRICO = backup_mapa_diurno_geo;
 
     desativar_arrasto_mouse();
 
@@ -9961,10 +10013,10 @@ void open_menu_tables(ContextoMenu *ctx) {
             );
             break;
         case 1:
-            display_positions(ctx->plots, &ctx->planet_matrix, ctx->armc, ctx->lat, &ctx->fortuna_m);            
+            display_positions(ctx->plots, &ctx->planet_matrix, ctx->armc, ctx->lat, ctx->julian_day, &ctx->fortuna_m);            
             break;
         case 2:
-            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets, ctx->armc, ctx->lat, &ctx->fortuna_m);
+            display_table(ctx->plots, &ctx->planet_matrix, ctx->dig, ctx->strength_planets, ctx->armc, ctx->lat, ctx->julian_day, &ctx->fortuna_m);
             break;
         case 3:
             display_dignities(ctx->plots, ctx->dig, ctx->strength_planets);
@@ -10090,7 +10142,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 25:
             if (!ctx->mapa_retorno) {
-                if (disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects)) {
+                if (disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO_GEOMETRICO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects)) {
                     saiu_retorno = true;
                 } else {
                     saiu_retorno = true;

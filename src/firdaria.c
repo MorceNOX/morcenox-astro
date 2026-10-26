@@ -267,7 +267,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     //double tempo_calculo = (idade_selecionada == idade_padrao) ? hoje_fracao : (double)idade_selecionada;
 
     // ATUALIZADO: Agora passamos 'tempo_calculo' (double) em vez de 'idade_selecionada' (int)
-    RelatorioFirdaria fird = processar_dados_firdaria(idade_selecionada, MAPA_DIURNO);
+    RelatorioFirdaria fird = processar_dados_firdaria(idade_selecionada, MAPA_DIURNO_GEOMETRICO);
     
 
 
@@ -304,7 +304,7 @@ void display_firdaria(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *
     wattroff(table_win, A_BOLD | COLOR_PAIR(7));
 
 
-    wprintw(table_win, " | %s: %s", _("Sect"), MAPA_DIURNO ? _("DIURNAL (Sun)") : _("NOCTURNAL (Moon)"));
+    wprintw(table_win, " | %s: %s", _("Sect"), MAPA_DIURNO_GEOMETRICO ? _("DIURNAL (Sun)") : _("NOCTURNAL (Moon)"));
 
     wattron(table_win, A_BOLD | COLOR_PAIR(13)); 
     mvwprintw(table_win, 4, 4, _("CURRENT MAJOR LORD: "));

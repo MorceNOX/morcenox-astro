@@ -120,7 +120,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     // ────────────────────────────────────────────────────────────────────────
     // ABORDAGEM DIURNA (Prioridade: Sol -> Lua -> Almuten (Sol, SAN, Asc) -> Almuten Figuris -> Asc ou Fortuna)
     // ────────────────────────────────────────────────────────────────────────
-    if (MAPA_DIURNO) {
+    if (MAPA_DIURNO_GEOMETRICO) {
         // Criterio 1: O Sol em lugar hylegíaco
         if (is_lugar_hylegiaco(casa_sol)) {
             int rulers[7];
@@ -252,7 +252,7 @@ int get_hyleg(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *aspecto_
     int qtd_san = get_almuten_multiplo(points, qtd_points, res_san, aspecto_matriz, pontos, plots);
 
     if (qtd_san > 0) { 
-        int luminar = (MAPA_DIURNO)?0:1;
+        int luminar = (MAPA_DIURNO_GEOMETRICO)?0:1;
         int tem_aspecto = 0;
         int id_candidato_san = -1;
         int casa_almuten_san = 0;   
@@ -505,7 +505,7 @@ ResultadoHyleg get_resultado_hyleg(PontosHylegiacos pontos, PlanetDignities *dig
     
     ResultadoHyleg h;
 
-    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12));
     int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
     int id_almuten_ref = 0;
@@ -618,7 +618,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
 
     int line_count = 0;
 
-    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12));
     int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
     
@@ -650,7 +650,7 @@ void display_life_givers(PontosHylegiacos pontos, PlanetDignities *dig, PlotObje
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 4, _("Sect of the Chart: "));
     wattron(table_win, A_BOLD);
-    if (MAPA_DIURNO) {
+    if (MAPA_DIURNO_GEOMETRICO) {
         wattron(table_win, COLOR_PAIR(15) | A_BOLD | A_REVERSE); // Amarelo para o Dia
         wprintw(table_win, _("DIURNAL"));
         wattroff(table_win, COLOR_PAIR(15) | A_BOLD | A_REVERSE);
@@ -1038,7 +1038,7 @@ void display_anareta(PlotObject *plots, AspectMatrix *matrix, PlanetDignities *d
     mouseinterval(100);
 
 
-    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO)?0:12));
+    int regente_dia = converter_codigo_planeta(get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12));
     int regente_hora = converter_codigo_planeta(get_hour_regent(week_day - 1, planetary_hour - 1));
 
 

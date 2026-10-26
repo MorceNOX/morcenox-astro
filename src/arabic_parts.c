@@ -99,7 +99,7 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
         int id_personal, id_sig, id_trigger;
         //char pp[20], sig[20], trig[20];
 
-        if (MAPA_DIURNO) {
+        if (MAPA_DIURNO_GEOMETRICO) {
             id_personal = sqlite3_column_int(stmt, 4);
             id_sig      = sqlite3_column_int(stmt, 5);
             id_trigger  = sqlite3_column_int(stmt, 6);
@@ -233,7 +233,7 @@ void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
         // Cabeçalho de Status Fixo
         mvwprintw(table_win, 2, 4, _("Current Chart Parameters: "));
         wattron(table_win, A_BOLD | COLOR_PAIR(15));
-        wprintw(table_win, "%s", MAPA_DIURNO ? _("Diurnal Formulae") : _("Nocturnal Formulae"));
+        wprintw(table_win, "%s", MAPA_DIURNO_GEOMETRICO ? _("Diurnal Formulae") : _("Nocturnal Formulae"));
         wprintw(table_win, " | %s: %s", _("Gender"), (GENDER == 1) ? _("Masculine") : (GENDER == 2) ? _("Feminine") : _("Neuter"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(15));
 
@@ -808,7 +808,7 @@ void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cu
         // Cabeçalho de Status Fixo
         mvwprintw(table_win, 2, 4, _("Current Chart Parameters: "));
         wattron(table_win, A_BOLD | COLOR_PAIR(15));
-        wprintw(table_win, "%s", MAPA_DIURNO ? _("Diurnal Formulae") : _("Nocturnal Formulae"));
+        wprintw(table_win, "%s", MAPA_DIURNO_GEOMETRICO ? _("Diurnal Formulae") : _("Nocturnal Formulae"));
         wprintw(table_win, " | %s: %s", _("Gender"), (GENDER == 1) ? _("Masculine") : (GENDER == 2) ? _("Feminine") : _("Neuter"));
         wattroff(table_win, A_BOLD | COLOR_PAIR(15));
 
