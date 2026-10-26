@@ -12,7 +12,7 @@ MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological eng
 Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
 
 <hr>
-<img width="2560" height="1600" alt="02-chart_wheel_windowed" src="https://github.com/user-attachments/assets/a8aa12b3-458a-4bd8-a566-11c580450714" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/60a5f7db-cb88-47cb-97d0-6262297ac320" />
 <hr>
 
 ## 🌌 Key Features
@@ -172,16 +172,21 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Main Menu
 <hr>
+
 <img width="2560" height="1539" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/a5f2df5f-e4a8-426d-af30-58573f4c8ad5" />
+
 <hr>
 
 ### The Chart Wheel
 <hr>
-<img width="2560" height="1539" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/1501387a-0449-43fd-bce0-a90e8c180734" />
+
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/7fa71905-c5ec-4de4-9491-e2eb5cfc5c1d" />
+
+<img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/2538c65c-36c8-4acb-b80a-4d36cd2be9af" />
 
 <img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/1351ff44-3f31-4bc2-b045-e07ef6e516fc" />
 
-<img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/f212e5d2-2c94-4d60-8c77-340e657f6c67" />
+<img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/83f6597b-1a99-4b39-b900-aea1bb8c242c" />
 
 <img width="2560" height="1539" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/170cd625-9be4-44e5-aa37-96d8aa7a6c26" />
 
@@ -192,53 +197,83 @@ Here are some screenshots of the application. You can have an idea of what you e
 
 ### Aspects Table
 <hr>
+
 <img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/77b082fd-0a7c-461d-aecf-33b95a53acd4" />
+
+<img width="2560" height="1600" alt="03b-aspects_table" src="https://github.com/user-attachments/assets/030530d0-adc8-45c4-a6f7-e71df34b2c79" />
+
+<img width="2560" height="1600" alt="03c-parallel_aspects_table" src="https://github.com/user-attachments/assets/1b6d5b6b-895f-4648-816e-117da9167009" />
+
+<img width="2560" height="1600" alt="03a-aspects_antissia" src="https://github.com/user-attachments/assets/7e5a1a9b-cbf7-421c-bb7f-998b25830ad3" />
+
 <hr>
 
 ### Primary Directions
 <hr>
-<img width="2560" height="1600" alt="04-primary_directions_table" src="https://github.com/user-attachments/assets/1cbd9544-4eaa-498c-a4e2-9f0277ac8dcd" />
+
+<img width="2560" height="1600" alt="04b-primary_directions_table" src="https://github.com/user-attachments/assets/f861727f-9b56-4ae4-a627-a8ccb3a9aa53" />
+
 <hr>
 
 ### Firdaria
 <hr>
+
 <img width="2560" height="1600" alt="12-firdaria" src="https://github.com/user-attachments/assets/0dfcd33a-9651-4f70-b7b5-e55c2bd5bd4a" />
+
 <hr>
 
 ### Energy Profile Chart
 <hr>
+
 <img width="2560" height="1600" alt="07-energy_profile_RS" src="https://github.com/user-attachments/assets/3a572fab-9fb6-4920-b78c-bd8a71a6301d" />
+
 <img width="2560" height="1600" alt="07a-energy_profile_chart" src="https://github.com/user-attachments/assets/ed1311d6-9301-48cc-9826-1c94c360d6bf" />
+
 <hr>
 
 ### Temperament Chart
 <hr>
+
 <img width="2560" height="1600" alt="09a-temperament_chart" src="https://github.com/user-attachments/assets/02479101-34c8-4fb6-ab9f-70ea9e580a7d" />
+
+<img width="2560" height="1600" alt="09a-temperament_chart" src="https://github.com/user-attachments/assets/0776e0fa-63e8-4359-b723-e2dae60ab2f4" />
+
 <hr>
 
 ### Temperament Interpretation
 <hr>
+
 <img width="2560" height="1600" alt="09a-temperament_interpretation" src="https://github.com/user-attachments/assets/77cf7624-9b49-479c-8e13-5b5d76488193" />
+
+<img width="2560" height="1600" alt="09a-temperament_interpretation" src="https://github.com/user-attachments/assets/94d814bf-1999-4f86-bbd5-98537bb2a7c4" />
+
 <hr>
 
 ### Solar Return Chart
 <hr>
+
 <img width="2560" height="1600" alt="06-solar_return_chart" src="https://github.com/user-attachments/assets/e67bb184-fc01-498c-8165-6ea6f243c76a" />
+
 <hr>
 
 ### Solar Return Radix Confrontation
 <hr>
+
 <img width="2560" height="1600" alt="06b-solar_return_radix_confrontation" src="https://github.com/user-attachments/assets/5a702582-b173-4d89-a39b-c4b51d8ca547" />
 <hr>
 
 ### Solar Return Transit Projection
 <hr>
+
 <img width="2560" height="1600" alt="06a-solar_return_transit_projection" src="https://github.com/user-attachments/assets/ddd44ceb-3ab7-4b75-b2d7-ecfbe04493b4" />
+
 <hr>
 
 ### Planetary Hours
 <hr>
+
 <img width="2560" height="1600" alt="10-planetary_hours" src="https://github.com/user-attachments/assets/56ffff4e-410d-45ed-aef2-cc02b5f4cb2e" />
+
 <hr>
 
 ## Licenses
