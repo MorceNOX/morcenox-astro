@@ -411,40 +411,42 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
         object_diff = 3;
     }
 
-    WINDOW *decl_win = newwin(table_height, table_width, start_y, start_x);
-    WINDOW *decl_shadow = newwin(table_height, table_width, start_y + 1, start_x + 1);
+    WINDOW *aspects_win = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *aspects_shadow = newwin(table_height, table_width, start_y + 1, start_x + 1);
     
-    werase(decl_shadow);
-    wattron(decl_shadow, COLOR_PAIR(9));
-    box(decl_shadow, 0, 0);
-    wattroff(decl_shadow, COLOR_PAIR(9));
-    wnoutrefresh(decl_shadow);
+    werase(aspects_shadow);
+    wattron(aspects_shadow, COLOR_PAIR(9));
+    box(aspects_shadow, 0, 0);
+    wattroff(aspects_shadow, COLOR_PAIR(9));
+    wnoutrefresh(aspects_shadow);
 
-    box(decl_win, 0, 0);
-    wbkgd(decl_win, COLOR_PAIR(6) | FLAGS);
+    box(aspects_win, 0, 0);
+    wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
 
-    wattron(decl_win, A_BOLD);
+    wattron(aspects_win, A_BOLD);
     const char *title = _("Parallel & Contra-Parallel");
-    mvwprintw(decl_win, 0, (table_width - get_visual_width(title)) / 2, title);
+    mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(decl_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(aspects_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
 
-    wattron(decl_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
-    mvwprintw(decl_win, 0, col_fechar, "[");
-    mvwprintw(decl_win, 0, col_fechar + 2, "]");
-    wattroff(decl_win, COLOR_PAIR(13));
+    wattron(aspects_win, COLOR_PAIR(13)); // Cor padrão para os colchetes
+    mvwprintw(aspects_win, 0, col_fechar, "[");
+    mvwprintw(aspects_win, 0, col_fechar + 2, "]");
+    wattroff(aspects_win, COLOR_PAIR(13));
 
-    wattron(decl_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
-    mvwprintw(decl_win, 0, col_fechar + 1, "✖");
-    wattroff(decl_win, COLOR_PAIR(13) | A_BOLD);
-    wnoutrefresh(decl_win);
+    wattron(aspects_win, COLOR_PAIR(13) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    mvwprintw(aspects_win, 0, col_fechar + 1, "✖");
+    wattroff(aspects_win, COLOR_PAIR(13) | A_BOLD);
+    wnoutrefresh(aspects_win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
+
+    drag_and_drop_on();
     
-    int max_linhas_dados = (table_height / 2) * 2 - 7;
+    int max_linhas_dados_visiveis = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -452,9 +454,9 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     
     // 1. Cabeçalhos Superiores (Símbolos dos Planetas)
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-        wattron(decl_win, A_BOLD);
-        mvwprintw(decl_win, 2, 6 + 4 * i, plots[i].object);
-        wattroff(decl_win, A_BOLD);
+        wattron(aspects_win, A_BOLD);
+        mvwprintw(aspects_win, 2, 6 + 4 * i, plots[i].object);
+        wattroff(aspects_win, A_BOLD);
     }
 
     // 2. Cabeçalhos Laterais (Símbolos dos Planetas)
@@ -475,7 +477,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     for (int i = 0; i < 12 - object_diff + 1; i++) {
         for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
             if (i == 0) {
-                mvwprintw(decl_win, 3, 4 + 4 * j, "┼───┼");
+                mvwprintw(aspects_win, 3, 4 + 4 * j, "┼───┼");
             }
             else {
                 mvwprintw(pad, 0 + 2 * i, 2 + 4 * j, "┼───┼");
@@ -550,45 +552,39 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
             row_pad = 3 + 2 * i;
         }
     }
+    row_pad += 2;
+
+    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
+
+    // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-    wattron(decl_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados, 3);
-    wattroff(decl_win, COLOR_PAIR(28) | flag);
+    wattron(aspects_win, COLOR_PAIR(28) | flag);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+    wattroff(aspects_win, COLOR_PAIR(28) | flag);
+    wnoutrefresh(aspects_win);
 
-    mvwprintw(decl_win, table_height - 3, 6, _("(*) Numbers = angular difference in degrees"));
-    mvwprintw(decl_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
-    wnoutrefresh(decl_win);
+    mvwaddstr(aspects_win, 4, table_width - 2, "▲");
+    mvwaddstr(aspects_win, 4 + max_linhas_dados_visiveis + 1, table_width - 2, "▼");
+    
+    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     doupdate();
 
-    
-
-    // Vincula o teclado à PAD virtual
-    keypad(decl_win, TRUE);
-    nodelay(decl_win, FALSE);
-
-    // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-
+    keypad(aspects_win, TRUE);
     int ch;
     int running = 1;
-    while ((ch = wgetch(decl_win)) != 27 && ch != 'q' && ch != 'Q' && running) {   
-        
+    while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
         switch (ch) {
-            case KEY_UP: 
-            case 'k': 
-            case 'K':
+            case KEY_UP: case 'k': case 'K':
                 if (offset_y > 0) offset_y -= 2;
                 break;
-                
-            case KEY_DOWN: 
-            case 'j': 
-            case 'J':
+            case KEY_DOWN: case 'j': case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
 
@@ -596,79 +592,217 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
                     // Coordenadas do clique convertidas para o plano local da janela
-                    int linha_clique_janela = event.y - getbegy(decl_win);
-                    int col_clique_janela = event.x - getbegx(decl_win);
+                    int linha_clique_janela = event.y - getbegy(aspects_win);
+                    int col_clique_janela = event.x - getbegx(aspects_win);
                     
                     // Define matematicamente a caixa de clique do botão fechar
-                    int col_inicio_fechar = getmaxx(decl_win) - 4;
+                    int col_inicio_fechar = getmaxx(aspects_win) - 4;
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // ROTEAMENTO: O clique acertou o botão [X]?
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            
-                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            break; // Sai do switch do mouse e fecha a janela
                         }
                     }
 
                     // 1. Descobre a coluna onde a barra é desenhada
-                    int col_scrollbar_absoluta = getbegx(decl_win) + (getmaxx(decl_win) - 2);
+                    int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
 
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
+                        // Definição das posições verticais (Seta de Cima é linha 1, Canal inicia na linha 2)
+                        int linha_seta_cima = 4;
                         int offset_inicio_barra = 4; 
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        int linha_seta_baixo = offset_inicio_barra + max_linhas_dados_visiveis + 1; // Linha logo após o canal
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
-                            
-                            int max_scroll_y = row_pad - max_linhas_dados;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                        int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
-                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
-                                int novo_offset = (int)(proporcao * max_scroll_y);
-                                
-                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y > 1) {
+                                        offset_y -= 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    }
+
+                                    napms(80); // Velocidade confortável das setas
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y < max_scroll_y - 1) {
+                                        offset_y += 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+
+                                    napms(80);
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DO PAD (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(aspects_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (max_linhas_dados_visiveis - 1) > 0) {
+                                linha_trilho_atual = (offset_y * (max_linhas_dados_visiveis - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou sobre o trilho existente, ativa o modo de arrasto relativo
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int pad_line_pos_original = offset_y;
+
+                            while (1) {
+                                int novo_offset = offset_y;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado na movimentação da mão
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        novo_offset = pad_line_pos_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte de página)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                        if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        }
+                                    }
+                                }
+
                                 novo_offset = (novo_offset / 2) * 2;
 
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
-                                offset_y = novo_offset;
+                                if (offset_y != novo_offset) {
+                                    offset_y = novo_offset;
+                                    
+                                    // Redesenho imediato
+                                    int flag = 0;
+                                    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                    wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                    wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                    wnoutrefresh(aspects_win);
+                                    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                    doupdate();
+                                }
+    
+    
+                                // Se for um clique estático fora do trilho, encerra o loop na hora
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+                                napms(10); // Rastreamento fino de arrasto
+                                int ch_check = wgetch(aspects_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(aspects_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(aspects_win, FALSE);
                         }
                     }
                 }
                 break;
             }
+            break;
         }
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
-        wattron(decl_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(decl_win, offset_y, row_pad, max_linhas_dados, 3);
-        wattroff(decl_win, COLOR_PAIR(28) | flag);
-
-        wnoutrefresh(decl_win);
+        wattron(aspects_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+        wnoutrefresh(aspects_win);
+    
+        // Atualiza os frames da PAD na tela após o movimento de subida/descida
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
-     
     }
-    
-    // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
+        
     delwin(pad);
-    delwin(decl_shadow);
-    delwin(decl_win);
+    delwin(aspects_shadow);
+    delwin(aspects_win);
+    
+    touchwin(stdscr); 
     refresh();
-}
 
+    drag_and_drop_off();
+}
 
 
 void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix_decl, AntObject *ants, int num_ants) {
@@ -717,10 +851,12 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     wnoutrefresh(aspects_win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
 
-    int max_linhas_dados = (table_height / 2) * 2 - 7;
+    drag_and_drop_on();
+
+    int max_linhas_dados_visiveis = (table_height / 2) * 2 - 7;
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -842,35 +978,34 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             row_pad = 3 + 2 * i;
         }
     }
+    row_pad += 2;
+
+    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
+    mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antiscia - F6 Contrantiscia - [↓↑| Scroll"));
+
+    // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
-
-    mvwprintw(aspects_win, table_height - 3, 6, _("(*) Numbers = angular distance in degrees"));
-    mvwprintw(aspects_win, table_height - 1, 2, _(" ESC return - F3 Parallel/Contra-parallel - F4 Aspects by Sign - F5 Antiscia - F6 Contrantiscia - [↓↑| Scroll"));
     wnoutrefresh(aspects_win);
+
+    mvwaddstr(aspects_win, 4, table_width - 2, "▲");
+    mvwaddstr(aspects_win, 4 + max_linhas_dados_visiveis + 1, table_width - 2, "▼");
+    
+    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     doupdate();
 
-    
-
-    // Vincula o teclado à PAD virtual
     keypad(aspects_win, TRUE);
-    nodelay(aspects_win, FALSE);
-
-    // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-        
         if (ch == KEY_F(3)) {
             display_declination_aspects(plots, matrix_decl);
             
@@ -917,19 +1052,14 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         }
         else {
-            // Se não foi nenhuma tecla de função, processa a rolagem vertical do texto
             switch (ch) {
-                case KEY_UP: 
-                case 'k': 
-                case 'K':
+                case KEY_UP: case 'k': case 'K':
                     if (offset_y > 0) offset_y -= 2;
                     break;
-                    
-                case KEY_DOWN: 
-                case 'j': 
-                case 'J':
+                case KEY_DOWN: case 'j': case 'J':
                     if (offset_y < max_scroll_y) offset_y += 2;
                     break;
+
                 case KEY_MOUSE: {
                     MEVENT event;
                     if (getmouse(&event) == OK) {
@@ -940,58 +1070,194 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
                         // Define matematicamente a caixa de clique do botão fechar
                         int col_inicio_fechar = getmaxx(aspects_win) - 4;
                         int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
-    
+
                         // ========================================================
-                        // ROTEAMENTO: O clique acertou o botão [X]?
+                        // NOVO ROTEAMENTO: O clique acertou o botão [X]?
                         // ========================================================
                         if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                             if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                                 running = 0;
-                                // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                                //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                                break; // Sai do switch do mouse e fecha a janela
                             }
                         }
-    
+
                         // 1. Descobre a coluna onde a barra é desenhada
                         int col_scrollbar_absoluta = getbegx(aspects_win) + (getmaxx(aspects_win) - 2);
-    
+
                         // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                         if (event.x == col_scrollbar_absoluta) {
                             
-                            // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
+                            // Definição das posições verticais (Seta de Cima é linha 1, Canal inicia na linha 2)
+                            int linha_seta_cima = 4;
                             int offset_inicio_barra = 4; 
-                            int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
-    
-                            // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                            if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
-                                
-                                int max_scroll_y = row_pad - max_linhas_dados;
-                                if (max_scroll_y < 0) max_scroll_y = 0;
-    
-                                if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                    // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
-                                    float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
-                                    int novo_offset = (int)(proporcao * max_scroll_y);
-                                    
-                                    // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                            int linha_seta_baixo = offset_inicio_barra + max_linhas_dados_visiveis + 1; // Linha logo após o canal
+
+                            int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            // ========================================================
+                            // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM CONTÍNUA
+                            // ========================================================
+                            if (linha_clique_janela == linha_seta_cima) {
+                                if (event.bstate & BUTTON1_PRESSED) {
+                                    nodelay(aspects_win, TRUE);
+                                    while (1) {
+                                        if (offset_y > 1) {
+                                            offset_y -= 2;
+
+                                            // Redesenho imediato do Pad e da Scrollbar
+                                            int flag = 0;
+                                            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                            wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                            desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                            wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                            wnoutrefresh(aspects_win);
+                                            prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                            doupdate();
+                                        }
+
+                                        napms(80); // Velocidade confortável das setas
+
+                                        int ch_check = wgetch(aspects_win);
+                                        if (ch_check == KEY_MOUSE) {
+                                            MEVENT check_event;
+                                            if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    nodelay(aspects_win, FALSE);
+                                }
+                            }
+
+                            // ========================================================
+                            // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM CONTÍNUA
+                            // ========================================================
+                            else if (linha_clique_janela == linha_seta_baixo) {
+                                if (event.bstate & BUTTON1_PRESSED) {
+                                    nodelay(aspects_win, TRUE);
+                                    while (1) {
+                                        if (offset_y < max_scroll_y - 1) {
+                                            offset_y += 2;
+
+                                            // Redesenho imediato do Pad e da Scrollbar
+                                            int flag = 0;
+                                            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                            wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                            desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                            wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                            wnoutrefresh(aspects_win);
+                                            prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                            doupdate();
+                                        } else {
+                                            break;
+                                        }
+
+                                        napms(80);
+
+                                        int ch_check = wgetch(aspects_win);
+                                        if (ch_check == KEY_MOUSE) {
+                                            MEVENT check_event;
+                                            if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    nodelay(aspects_win, FALSE);
+                                }
+                            }
+
+                            // ========================================================
+                            // C: TRILHO DO PAD (CLIQUE E ARRASTO SEM SALTO)
+                            // ========================================================
+                            else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                                nodelay(aspects_win, TRUE);
+
+                                // Calcula de forma reversa a posição visual exata do indicador do trilho
+                                int linha_trilho_atual = 0;
+                                if (max_scroll_y > 0 && (max_linhas_dados_visiveis - 1) > 0) {
+                                    linha_trilho_atual = (offset_y * (max_linhas_dados_visiveis - 1)) / max_scroll_y;
+                                }
+                                int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                                // Se clicou sobre o trilho existente, ativa o modo de arrasto relativo
+                                int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                                int linha_inicial_mouse = linha_clique_janela;
+                                int pad_line_pos_original = offset_y;
+
+                                while (1) {
+                                    int novo_offset = offset_y;
+                                    int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                    if (modo_arrasto_trilho) {
+                                        // Arrasto relativo baseado na movimentação da mão
+                                        int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                        if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                            int delta_scroll = (delta_mouse * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                            novo_offset = pad_line_pos_original + delta_scroll;
+                                        }
+                                    } else {
+                                        // Clique absoluto fora do trilho (teleporte de página)
+                                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                            if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                                novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                            }
+                                        }
+                                    }
+
                                     novo_offset = (novo_offset / 2) * 2;
-    
+
                                     if (novo_offset < 0) novo_offset = 0;
                                     if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
-    
-                                    // Atualiza a posição de rolagem do PAD de forma segura e alinhada
-                                    offset_y = novo_offset;
+
+                                    if (offset_y != novo_offset) {
+                                        offset_y = novo_offset;
+                                        
+                                        // Redesenho imediato
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    }
+        
+        
+                                    // Se for um clique estático fora do trilho, encerra o loop na hora
+                                    if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                        break;
+                                    }
+                                    napms(10); // Rastreamento fino de arrasto
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK) {
+                                            if (check_event.bstate & BUTTON1_RELEASED) {
+                                                break;
+                                            }
+                                            linha_clique_janela = check_event.y - getbegy(aspects_win);
+                                        }
+                                    } else if (ch_check != ERR) {
+                                        ungetch(ch_check);
+                                        break;
+                                    }
                                 }
+                                nodelay(aspects_win, FALSE);
                             }
                         }
                     }
                     break;
                 }
-        
+                break;
             }
             if (DARK_MODE) flag |= A_DIM | A_REVERSE;
             wattron(aspects_win, COLOR_PAIR(28) | flag);
-            desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+            desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
             wattroff(aspects_win, COLOR_PAIR(28) | flag);
             wnoutrefresh(aspects_win);
         
@@ -1000,13 +1266,15 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             doupdate();
         }
     }
-    
-    // CLEAN UP: Desaloca todas as janelas do escopo e devolve o controle para a stdscr limpa
+        
     delwin(pad);
     delwin(aspects_shadow);
     delwin(aspects_win);
+    
     touchwin(stdscr); 
     refresh();
+
+    drag_and_drop_off();
 }
 
 
@@ -1127,11 +1395,12 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     wnoutrefresh(aspects_win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
 
+    drag_and_drop_on();
 
-    int max_linhas_dados = (table_height / 2) * 2 - 7;
+    int max_linhas_dados_visiveis = table_height - 8; 
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -1245,45 +1514,41 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
         }
     }
 
+    row_pad += 2;
+
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
+
+    // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
-
-    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
     wnoutrefresh(aspects_win);
+
+    mvwaddstr(aspects_win, 4, table_width - 2, "▲");
+    mvwaddstr(aspects_win, 4 + max_linhas_dados_visiveis + 1, table_width - 2, "▼");
+    
+    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     doupdate();
 
-    
-    // Vincula o teclado à PAD virtual
     keypad(aspects_win, TRUE);
-    nodelay(aspects_win, FALSE);
-
-    // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-                 
         switch (ch) {
-            case KEY_UP: 
-            case 'k': 
-            case 'K':
+            case KEY_UP: case 'k': case 'K':
                 if (offset_y > 0) offset_y -= 2;
                 break;
-                
-            case KEY_DOWN: 
-            case 'j': 
-            case 'J':
+            case KEY_DOWN: case 'j': case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
+
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
@@ -1296,13 +1561,12 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // ROTEAMENTO: O clique acertou o botão [X]?
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            break; // Sai do switch do mouse e fecha a janela
                         }
                     }
 
@@ -1312,51 +1576,193 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
+                        // Definição das posições verticais (Seta de Cima é linha 1, Canal inicia na linha 2)
+                        int linha_seta_cima = 4;
                         int offset_inicio_barra = 4; 
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        int linha_seta_baixo = offset_inicio_barra + max_linhas_dados_visiveis + 1; // Linha logo após o canal
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
-                            
-                            int max_scroll_y = row_pad - max_linhas_dados;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                        int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
-                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
-                                int novo_offset = (int)(proporcao * max_scroll_y);
-                                
-                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y > 1) {
+                                        offset_y -= 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    }
+
+                                    napms(80); // Velocidade confortável das setas
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y < max_scroll_y - 1) {
+                                        offset_y += 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+
+                                    napms(80);
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DO PAD (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(aspects_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (max_linhas_dados_visiveis - 1) > 0) {
+                                linha_trilho_atual = (offset_y * (max_linhas_dados_visiveis - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou sobre o trilho existente, ativa o modo de arrasto relativo
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int pad_line_pos_original = offset_y;
+
+                            while (1) {
+                                int novo_offset = offset_y;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado na movimentação da mão
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        novo_offset = pad_line_pos_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte de página)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                        if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        }
+                                    }
+                                }
+
                                 novo_offset = (novo_offset / 2) * 2;
 
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
-                                offset_y = novo_offset;
+                                if (offset_y != novo_offset) {
+                                    offset_y = novo_offset;
+                                    
+                                    // Redesenho imediato
+                                    int flag = 0;
+                                    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                    wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                    wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                    wnoutrefresh(aspects_win);
+                                    prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                    doupdate();
+                                }
+    
+    
+                                // Se for um clique estático fora do trilho, encerra o loop na hora
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+                                napms(10); // Rastreamento fino de arrasto
+                                int ch_check = wgetch(aspects_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(aspects_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(aspects_win, FALSE);
                         }
                     }
                 }
                 break;
             }
+            break;
         }
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
         wattroff(aspects_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(aspects_win);
-       
+    
+        // Atualiza os frames da PAD na tela após o movimento de subida/descida
         prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
     }
-    
+        
     delwin(pad);
     delwin(aspects_shadow);
     delwin(aspects_win);
+    
     touchwin(stdscr); 
     refresh();
+
+    drag_and_drop_off();
 }
 
 
@@ -1477,10 +1883,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     wnoutrefresh(aspects_win);
 
 
-    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED, NULL);
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
     mouseinterval(100);
 
-    int max_linhas_dados = (table_height / 2) * 2 - 7;
+    drag_and_drop_on();
+
+    int max_linhas_dados_visiveis = table_height - 8; 
     WINDOW *pad = newpad(40, table_width - 4);
     wbkgd(pad, COLOR_PAIR(13) | FLAGS);
 
@@ -1618,48 +2026,42 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
             index++;
         }
     }
-    //row_pad++;
+    if (row_pad % 2 == 1) row_pad++; 
 
+    mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
+    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
+
+    // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
     int offset_y = 0;
-    int max_scroll_y = row_pad - max_linhas_dados;
+    int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
     int flag = 0;
     if (DARK_MODE) flag |= A_DIM | A_REVERSE;
     wattron(aspects_win, COLOR_PAIR(28) | flag);
-    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
     wattroff(aspects_win, COLOR_PAIR(28) | flag);
     wnoutrefresh(aspects_win);
 
-    mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
-    mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
-    wnoutrefresh(aspects_win);
+    mvwaddstr(aspects_win, 4, table_width - 2, "▲");
+    mvwaddstr(aspects_win, 4 + max_linhas_dados_visiveis + 1, table_width - 2, "▼");
+    
+    prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
 
     doupdate();
 
-    // Vincula o teclado à PAD virtual
     keypad(aspects_win, TRUE);
-    nodelay(aspects_win, FALSE);
-
-    // Renderiza a primeira foto da PAD na tela
-    prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
-
     int ch;
     int running = 1;
     while ((ch = wgetch(aspects_win)) != 27 && ch != 'q' && ch != 'Q' && running) {
-                        
         switch (ch) {
-            case KEY_UP: 
-            case 'k': 
-            case 'K':
+            case KEY_UP: case 'k': case 'K':
                 if (offset_y > 0) offset_y -= 2;
                 break;
-                
-            case KEY_DOWN: 
-            case 'j': 
-            case 'J':
+            case KEY_DOWN: case 'j': case 'J':
                 if (offset_y < max_scroll_y) offset_y += 2;
                 break;
+
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
@@ -1672,13 +2074,12 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                     int col_fim_fechar = col_inicio_fechar + 3; // Abrange '[X]'
 
                     // ========================================================
-                    // ROTEAMENTO: O clique acertou o botão [X]?
+                    // NOVO ROTEAMENTO: O clique acertou o botão [X]?
                     // ========================================================
                     if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
                         if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
                             running = 0;
-                            // Limpa e deleta as janelas aqui se necessário, ou dê um return direto
-                            //return; // 🌟 Trocado break por return para evitar repintura fantasma ao fechar
+                            break; // Sai do switch do mouse e fecha a janela
                         }
                     }
 
@@ -1688,49 +2089,191 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
                     // 2. Verifica se o clique do mouse ocorreu exatamente na coluna da barra de rolagem
                     if (event.x == col_scrollbar_absoluta) {
                         
-                        // 🌟 CORREÇÃO 1: Removida a linha "int linha_clique_janela = ..." duplicada daqui
+                        // Definição das posições verticais (Seta de Cima é linha 1, Canal inicia na linha 2)
+                        int linha_seta_cima = 4;
                         int offset_inicio_barra = 4; 
-                        int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                        int linha_seta_baixo = offset_inicio_barra + max_linhas_dados_visiveis + 1; // Linha logo após o canal
 
-                        // 4. Verifica se o clique ocorreu dentro dos limites verticais da barra de rolagem
-                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados) {
-                            
-                            int max_scroll_y = row_pad - max_linhas_dados;
-                            if (max_scroll_y < 0) max_scroll_y = 0;
+                        int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
 
-                            if (max_linhas_dados > 1 && max_scroll_y > 0) {
-                                // 🌟 CORREÇÃO 2: Uso de float para evitar truncamento e erro de arredondamento
-                                float proporcao = (float)linha_clique_barra / (float)(max_linhas_dados - 1);
-                                int novo_offset = (int)(proporcao * max_scroll_y);
-                                
-                                // 🌟 CORREÇÃO 3: Sincroniza com o passo de 2 em 2 linhas da sua tabela
+                        // ========================================================
+                        // A: CLIQUE NA SETA PARA CIMA (▲) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y > 1) {
+                                        offset_y -= 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    }
+
+                                    napms(80); // Velocidade confortável das setas
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // B: CLIQUE NA SETA PARA BAIXO (▼) - ROLAGEM CONTÍNUA
+                        // ========================================================
+                        else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(aspects_win, TRUE);
+                                while (1) {
+                                    if (offset_y < max_scroll_y - 1) {
+                                        offset_y += 2;
+
+                                        // Redesenho imediato do Pad e da Scrollbar
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                        wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(aspects_win);
+                                        prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+
+                                    napms(80);
+
+                                    int ch_check = wgetch(aspects_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(aspects_win, FALSE);
+                            }
+                        }
+
+                        // ========================================================
+                        // C: TRILHO DO PAD (CLIQUE E ARRASTO SEM SALTO)
+                        // ========================================================
+                        else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(aspects_win, TRUE);
+
+                            // Calcula de forma reversa a posição visual exata do indicador do trilho
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (max_linhas_dados_visiveis - 1) > 0) {
+                                linha_trilho_atual = (offset_y * (max_linhas_dados_visiveis - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+
+                            // Se clicou sobre o trilho existente, ativa o modo de arrasto relativo
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int pad_line_pos_original = offset_y;
+
+                            while (1) {
+                                int novo_offset = offset_y;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    // Arrasto relativo baseado na movimentação da mão
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        novo_offset = pad_line_pos_original + delta_scroll;
+                                    }
+                                } else {
+                                    // Clique absoluto fora do trilho (teleporte de página)
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                        if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                        }
+                                    }
+                                }
+
                                 novo_offset = (novo_offset / 2) * 2;
 
                                 if (novo_offset < 0) novo_offset = 0;
                                 if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
 
-                                // Atualiza a posição de rolagem do PAD de forma segura e alinhada
-                                offset_y = novo_offset;
+                                if (offset_y != novo_offset) {
+                                    offset_y = novo_offset;
+                                    
+                                    // Redesenho imediato
+                                    int flag = 0;
+                                    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                    wattron(aspects_win, COLOR_PAIR(28) | flag);
+                                    desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
+                                    wattroff(aspects_win, COLOR_PAIR(28) | flag);
+
+                                    wnoutrefresh(aspects_win);
+                                    prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+                                    doupdate();
+                                }
+    
+    
+                                // Se for um clique estático fora do trilho, encerra o loop na hora
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+                                napms(10); // Rastreamento fino de arrasto
+                                int ch_check = wgetch(aspects_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(aspects_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
                             }
+                            nodelay(aspects_win, FALSE);
                         }
                     }
                 }
                 break;
             }
+            break;
         }
         if (DARK_MODE) flag |= A_DIM | A_REVERSE;
         wattron(aspects_win, COLOR_PAIR(28) | flag);
-        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados, 3);
+        desenhar_scrollbar(aspects_win, offset_y, row_pad, max_linhas_dados_visiveis, 4);
         wattroff(aspects_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(aspects_win);
-
+    
+        // Atualiza os frames da PAD na tela após o movimento de subida/descida
         prefresh(pad, offset_y + 2, 0, start_y + 5, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
         doupdate();
     }
-    
+        
     delwin(pad);
     delwin(aspects_shadow);
     delwin(aspects_win);
+    
     touchwin(stdscr); 
     refresh();
+
+    drag_and_drop_off();
 }

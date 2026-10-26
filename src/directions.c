@@ -460,7 +460,7 @@ void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, 
     double val_sol = tan(sol_dec_rad) * tan(lat_rad);
     if (fabs(val_sol) <= 1.0) adsun = asin(val_sol) * 180.0 / M_PI;
 
-    // NORMALIZAÇÃO DA PERSPECTIVA HORIZONTALE (Leste vs Oeste)
+    // NORMALIZAÇÃO DA PERSPECTIVA HORIZONTAL (Leste vs Oeste)
     double sol_diff = sol->ra - ramc;
     if (sol_diff < 0.0) sol_diff += 360.0;
     int sol_leste = (sol_diff > 180.0) ? 1 : 0;
@@ -476,7 +476,7 @@ void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, 
     ao_do_sol = normalize360(ao_do_sol);
 
 
-    // --- CÁLCULO TRIDIMENSIONAL DA LUA (VERSÃO LIMPA) ---
+    // --- CÁLCULO TRIDIMENSIONAL DA LUA ---
     double lua_md = fabs(lua->ra - ramc);
     if (lua_md > 180.0) lua_md = 360.0 - lua_md;
     
