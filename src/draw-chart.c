@@ -2296,9 +2296,18 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     if (zoom_factor <= 1.5) {
         attron(A_BOLD);
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-            int sign = (int)(plots[i].longitude / 30);
-            int degree = (int)plots[i].longitude % 30 ;
-            int min = (int)((plots[i].longitude - (int)plots[i].longitude) * 60);
+            int sign = (int)floor(plots[i].longitude / 30);
+            int degree = (int)fmod(plots[i].longitude, 30);
+            int min = (int)round((plots[i].longitude - (int)plots[i].longitude) * 60);
+
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                }
+            }
 
             const char *sign_str = get_sign(sign);
             
@@ -2318,9 +2327,18 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     if (zoom_factor <= 1.5) {
         attron(A_BOLD);
         for (int j = 1; j <= 12; j++) {
-            int sign = (int)(cusps[j] / 30);
-            int degree = (int)cusps[j] % 30 ;
-            int min = (int)((cusps[j] - (int)cusps[j]) * 60);
+            int sign = (int)floor(cusps[j] / 30);
+            int degree = (int)fmod(cusps[j], 30);
+            int min = (int)round((cusps[j] - (int)cusps[j]) * 60);
+
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                }
+            }
 
             const char *sign_str = get_sign(sign);
 
@@ -3243,26 +3261,55 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         mvwprintw(scroll_pad, row, 2, "%s", plots[i].object);
         //wattroff(scroll_pad, A_BOLD);
         
-        // 2. Coordenadas Básicas
-        if (get_visual_width(plots[i].degree) == 2) {
-            mvwprintw(scroll_pad, row, 9, "%s", plots[i].degree);
+        int degree = (int)fmod(plots[i].longitude, 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = plots[i].longitude;
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
         }
-        else { 
-            mvwprintw(scroll_pad, row, 8, "%s", plots[i].degree);
-        }
-        mvwprintw(scroll_pad, row, 12, "%s", plots[i].sign);
-        mvwprintw(scroll_pad, row, 15, "%s'", plots[i].min);
+
+        // 4. Coordenadas Básicas
+        mvwprintw(scroll_pad, row, 8, "%2d°", degree);
+        mvwprintw(scroll_pad, row, 8 + 4, "%s", plots[i].sign);
+
+        // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
+        mvwprintw(scroll_pad, row, 8 + 7, "%02d'%02d\"", min, seg);
         
         // 3. Pontuações de Dignidade (Essencial e Acidental)
-        if (dig[i].essential > 0) {
+        if (dig[i].essential >= 0) {
             wattron(scroll_pad, COLOR_PAIR(8));
         } else if (dig[i].essential < 0) {
             wattron(scroll_pad, COLOR_PAIR(11));
         }        
-        mvwprintw(scroll_pad, row, 23, "%+2d", dig[i].essential);
+        mvwprintw(scroll_pad, row, 24, "%+2d", dig[i].essential);
         wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11));
 
-        if (dig[i].accidental > 0) {
+        if (dig[i].accidental >= 0) {
             wattron(scroll_pad, COLOR_PAIR(8));
         } else if (dig[i].accidental < 0) {
             wattron(scroll_pad, COLOR_PAIR(11));
@@ -3271,12 +3318,20 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
         wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11));
 
         // 4. Movimento (1 = Direto, 0 = Estacionário, -1 = Retrógrado)
-        if (i < 12 - object_diff) {
-            if (dig[i].row.movement == -1) wattron(scroll_pad, COLOR_PAIR(11));
-            else if (dig[i].row.movement == 1) wattron(scroll_pad, COLOR_PAIR(8));
+        if (i < 12 - object_diff && i > 1) {
+            if (dig[i].row.movement == -1) {
+                wattron(scroll_pad, COLOR_PAIR(11));
+            }
+            else if (dig[i].row.movement == 1) {
+                wattron(scroll_pad, COLOR_PAIR(8));
+            }
+            else {
+                wattron(scroll_pad, COLOR_PAIR(7));
+            }
 
-            mvwprintw(scroll_pad, row, 34, (dig[i].row.movement == 1) ? "Dir" : (dig[i].row.movement == 0) ? "Est" : "Ret");
-            wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11));
+            mvwprintw(scroll_pad, row, 34, (dig[i].row.movement == 1) ? "Dir" : (dig[i].row.movement == 0) ? _("Sta") : "Ret");
+            
+            wattroff(scroll_pad, COLOR_PAIR(8) | COLOR_PAIR(11) | COLOR_PAIR(7));
         }
         
         // 5. Velocidade (1 = Fast, 0 = Mean, -1 = Slow)
@@ -3900,30 +3955,30 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 23, _("House"));
-    mvwprintw(table_win, 2, 29, _("Mov"));
-    mvwprintw(table_win, 2, 34, _("Speed"));
-    mvwprintw(table_win, 2, 41, _("Dignity"));
-    mvwprintw(table_win, 2, 65, _("Gen/Sect/Quad"));
-    mvwprintw(table_win, 2, 80, _("Orient"));
+    mvwprintw(table_win, 2, 26, _("House"));
+    mvwprintw(table_win, 2, 32, _("Mov"));
+    mvwprintw(table_win, 2, 37, _("Speed"));
+    mvwprintw(table_win, 2, 44, _("Dignity"));
+    mvwprintw(table_win, 2, 68, _("Gen/Sect/Quad"));
+    mvwprintw(table_win, 2, 83, _("Orient"));
 
     wattron(table_win, COLOR_PAIR(40) | A_DIM);
-    mvwprintw(table_win, 2, 88, _("Dec"));
+    mvwprintw(table_win, 2, 91, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(12) | A_DIM);
-    mvwprintw(table_win, 2, 93, _("Term"));
+    mvwprintw(table_win, 2, 96, _("Term"));
     wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
-    mvwprintw(table_win, 2, 100, _("Trip"));
+    mvwprintw(table_win, 2, 103, _("Trip"));
     wattroff(table_win, COLOR_PAIR(7) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(8) | A_DIM);        
-    mvwprintw(table_win, 2, 108, _("Dom/Ex"));
+    mvwprintw(table_win, 2, 111, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 116, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 119, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -3940,8 +3995,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 20, c_mov = 27, c_spd =30, c_dig = 39;
-    int c_sq = 64, c_ori = 78, c_dec_t = 86, c_trm = 91, c_tri = 96, c_rul = 106, c_mut = 112;
+    int c_obj = 0, c_pos = 8, c_hse = 23, c_mov = 30, c_spd = 33, c_dig = 42;
+    int c_sq = 67, c_ori = 81, c_dec_t = 89, c_trm = 94, c_tri = 99, c_rul = 109, c_mut = 115;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
@@ -3956,14 +4011,44 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", plots[i].object);
         //wattroff(scroll_pad, A_BOLD);
         
-        // 2. Coordenadas Básicas
-        if (get_visual_width(plots[i].degree) == 2) {
-            mvwprintw(scroll_pad, row_pad, c_pos + 1, "%s", plots[i].degree);
-        } else { 
-            mvwprintw(scroll_pad, row_pad, c_pos, "%s", plots[i].degree);
+        int degree = (int)fmod(plots[i].longitude, 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = plots[i].longitude;
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
         }
+
+        // 4. Coordenadas Básicas
+        mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
         mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
-        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%s'", plots[i].min);
+
+        // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
+        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d\"", min, seg);
                        
         // 4. Casa com cor condicional
         if (data.house_color_pair > 0) {
@@ -3979,15 +4064,17 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
         mvwprintw(scroll_pad, row_pad, c_mov, "%s", plots[i].retrograde);
         wattroff(scroll_pad, COLOR_PAIR(11));
 
-        // 3. Velocidade com cor condicional
-        if (data.speed_color_pair > 0) {
-            wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        if (i < 12 - object_diff) {
+            // 3. Velocidade com cor condicional
+            if (data.speed_color_pair > 0) {
+                wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+            }
+            mvwprintw(scroll_pad, row_pad, c_spd, "%7.3f", plots[i].speed);
+            if (data.speed_color_pair > 0) {
+                wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+            }
         }
-        mvwprintw(scroll_pad, row_pad, c_spd, "%7.3f", plots[i].speed);
-        if (data.speed_color_pair > 0) {
-            wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
-        }
-        
+            
         // 6. Dignidades Essenciais
         wattron(scroll_pad, COLOR_PAIR(data.dignity_color_pair));
         mvwprintw(scroll_pad, row_pad, c_dig, "%s", data.dignity_str);
@@ -4281,14 +4368,14 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Zod. Long."));
-    mvwprintw(table_win, 2, 22, _("House Pos."));
-    mvwprintw(table_win, 2, 35, _("Speed"));
-    mvwprintw(table_win, 2, 42, _("Longitude"));
-    mvwprintw(table_win, 2, 54, _("Latitude"));
-    mvwprintw(table_win, 2, 66, _("Declination"));
-    mvwprintw(table_win, 2, 79, _("Right Ascension"));
-    mvwprintw(table_win, 2, 95, _("Semi-Arc (Day)"));
-    mvwprintw(table_win, 2, 114, _("Semi-Arc (Night)"));
+    mvwprintw(table_win, 2, 25, _("House Pos."));
+    mvwprintw(table_win, 2, 38, _("Speed"));
+    mvwprintw(table_win, 2, 45, _("Longitude"));
+    mvwprintw(table_win, 2, 57, _("Latitude"));
+    mvwprintw(table_win, 2, 69, _("Declination"));
+    mvwprintw(table_win, 2, 82, _("Right Ascension"));
+    mvwprintw(table_win, 2, 98, _("Semi-Arc (Day)"));
+    mvwprintw(table_win, 2, 117, _("Semi-Arc (Night)"));
            
     wattron(table_win, COLOR_PAIR(13));
     wmove(table_win, 3, 2);
@@ -4304,7 +4391,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 19, c_spd = 30, c_lon = 41, c_lat = 52, c_dec = 66, c_ra = 82, c_sad = 97, c_san = 118;
+    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 33, c_lon = 44, c_lat = 55, c_dec = 69, c_ra = 85, c_sad = 100, c_san = 118;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         
@@ -4314,14 +4401,44 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         wattron(scroll_pad, A_BOLD);
         mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", plots[i].object);
                 
-        // 2. Coordenadas Básicas
-        if (get_visual_width(plots[i].degree) == 2) {
-            mvwprintw(scroll_pad, row_pad, c_pos + 1, "%s", plots[i].degree);
-        } else { 
-            mvwprintw(scroll_pad, row_pad, c_pos, "%s", plots[i].degree);
+        int degree = (int)fmod(plots[i].longitude, 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = plots[i].longitude;
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
         }
+
+        // 4. Coordenadas Básicas
+        mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
         mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
-        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%s'", plots[i].min);
+
+        // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
+        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d\"", min, seg);
         
         // 4. Casa com cor condicional
         if (data.house_color_pair > 0) {
@@ -5651,9 +5768,12 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     getmaxyx(stdscr, max_y, max_x);
     
     int table_height = 30;
-    int table_width = max_x - 30 > 100 ? max_x - 30 : 100;
+    if (table_height > max_y - 2) table_height = max_y - 2;
+    int table_width = max_x - 5;
+
     int start_y = (max_y - table_height) / 2;
-    int start_x = (max_x- table_width) / 2;
+    int start_x = (max_x - table_width) / 2;
+
 
     int object_diff = 0;
     if (show_modern_planets) {
@@ -6199,7 +6319,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(59, 242, COLOR_BLACK);
         init_pair(60, 25, 18);
         init_pair(61, 61, 54); // magenta
-        init_pair(62, 57, 223);
+        init_pair(62, 60, 223);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -6278,7 +6398,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(59, 242, COLOR_CYAN);
         init_pair(60, 31, 25); // amarelo / azul
         init_pair(61, 97, 91); // magenta, magenta
-        init_pair(62, 57, 223);
+        init_pair(62, 60, 223);
     }
     
     FLAGS = 0;
@@ -7174,60 +7294,60 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         snprintf(dv, sizeof(dv), "%d°", (int)vertex % 30);
 
         char m0[12];
-        snprintf(m0, sizeof(m0), "%02d", (int)((planet_longitudes[0] - ((int)planet_longitudes[0])) * 60.0));
+        snprintf(m0, sizeof(m0), "%02d", (int)round((planet_longitudes[0] - ((int)planet_longitudes[0])) * 60.0));
         char m1[12];
-        snprintf(m1, sizeof(m1), "%02d", (int)((planet_longitudes[1] - ((int)planet_longitudes[1])) * 60.0));
+        snprintf(m1, sizeof(m1), "%02d", (int)round((planet_longitudes[1] - ((int)planet_longitudes[1])) * 60.0));
         char m2[12];
-        snprintf(m2, sizeof(m2), "%02d", (int)((planet_longitudes[2] - ((int)planet_longitudes[2])) * 60.0));
+        snprintf(m2, sizeof(m2), "%02d", (int)round((planet_longitudes[2] - ((int)planet_longitudes[2])) * 60.0));
         char m3[12];
-        snprintf(m3, sizeof(m3), "%02d", (int)((planet_longitudes[3] - ((int)planet_longitudes[3])) * 60.0));
+        snprintf(m3, sizeof(m3), "%02d", (int)round((planet_longitudes[3] - ((int)planet_longitudes[3])) * 60.0));
         char m4[12];
-        snprintf(m4, sizeof(m4), "%02d", (int)((planet_longitudes[4] - ((int)planet_longitudes[4])) * 60.0));
+        snprintf(m4, sizeof(m4), "%02d", (int)round((planet_longitudes[4] - ((int)planet_longitudes[4])) * 60.0));
         char m5[12];
-        snprintf(m5, sizeof(m5), "%02d", (int)((planet_longitudes[5] - ((int)planet_longitudes[5])) * 60.0));
+        snprintf(m5, sizeof(m5), "%02d", (int)round((planet_longitudes[5] - ((int)planet_longitudes[5])) * 60.0));
         char m6[12];
-        snprintf(m6, sizeof(m6), "%02d", (int)((planet_longitudes[6] - ((int)planet_longitudes[6])) * 60.0));
+        snprintf(m6, sizeof(m6), "%02d", (int)round((planet_longitudes[6] - ((int)planet_longitudes[6])) * 60.0));
         char m7[12];
-        snprintf(m7, sizeof(m7), "%02d", (int)((planet_longitudes[7] - ((int)planet_longitudes[7])) * 60.0));
+        snprintf(m7, sizeof(m7), "%02d", (int)round((planet_longitudes[7] - ((int)planet_longitudes[7])) * 60.0));
         char m8[12];
-        snprintf(m8, sizeof(m8), "%02d", (int)((planet_longitudes[8] - ((int)planet_longitudes[8])) * 60.0));
+        snprintf(m8, sizeof(m8), "%02d", (int)round((planet_longitudes[8] - ((int)planet_longitudes[8])) * 60.0));
         char m9[12];
-        snprintf(m9, sizeof(m9), "%02d", (int)((planet_longitudes[9] - ((int)planet_longitudes[9])) * 60.0));
+        snprintf(m9, sizeof(m9), "%02d", (int)round((planet_longitudes[9] - ((int)planet_longitudes[9])) * 60.0));
         char m10[12];
-        snprintf(m10, sizeof(m10), "%02d", (int)((planet_longitudes[10] - ((int)planet_longitudes[10])) * 60.0));
+        snprintf(m10, sizeof(m10), "%02d", (int)round((planet_longitudes[10] - ((int)planet_longitudes[10])) * 60.0));
 
         char mf[12];
-        snprintf(mf, sizeof(mf), "%02d", (int)((fortuna - ((int)fortuna)) * 60.0));
+        snprintf(mf, sizeof(mf), "%02d", (int)round((fortuna - ((int)fortuna)) * 60.0));
         char ma[12];
-        snprintf(ma, sizeof(ma), "%02d", (int)((ascendant - ((int)ascendant)) * 60.0));
+        snprintf(ma, sizeof(ma), "%02d", (int)round((ascendant - ((int)ascendant)) * 60.0));
         char mm[12];
-        snprintf(mm, sizeof(mm), "%02d", (int)((mc - ((int)mc)) * 60.0));
+        snprintf(mm, sizeof(mm), "%02d", (int)round((mc - ((int)mc)) * 60.0));
         char ms[12];
-        snprintf(ms, sizeof(ms), "%02d", (int)((SAN - ((int)SAN)) * 60.0));
+        snprintf(ms, sizeof(ms), "%02d", (int)round((SAN - ((int)SAN)) * 60.0));
         char mv[12];
-        snprintf(mv, sizeof(mv), "%02d", (int)((vertex - ((int)vertex)) * 60.0));
+        snprintf(mv, sizeof(mv), "%02d", (int)round((vertex - ((int)vertex)) * 60.0));
 
 
         int sign[19] = {
-            (int)planet_longitudes[0] / 30,
-            (int)planet_longitudes[1] / 30,
-            (int)planet_longitudes[2] / 30,
-            (int)planet_longitudes[3] / 30,
-            (int)planet_longitudes[4] / 30,
-            (int)planet_longitudes[5] / 30,
-            (int)planet_longitudes[6] / 30,
-            (int)planet_longitudes[7] / 30,
-            (int)planet_longitudes[8] / 30,
-            (int)planet_longitudes[9] / 30,
-            (int)planet_longitudes[10] / 30,
-            (int)south_node / 30,
-            (int)fortuna / 30,
-            (int)SAN / 30,
-            (int)ascendant / 30,
-            (int)mc / 30,
-            (int)descendant / 30,
-            (int)ic / 30,
-            (int)vertex / 30
+            (int)floor(planet_longitudes[0] / 30),
+            (int)floor(planet_longitudes[1] / 30),
+            (int)floor(planet_longitudes[2] / 30),
+            (int)floor(planet_longitudes[3] / 30),
+            (int)floor(planet_longitudes[4] / 30),
+            (int)floor(planet_longitudes[5] / 30),
+            (int)floor(planet_longitudes[6] / 30),
+            (int)floor(planet_longitudes[7] / 30),
+            (int)floor(planet_longitudes[8] / 30),
+            (int)floor(planet_longitudes[9] / 30),
+            (int)floor(planet_longitudes[10] / 30),
+            (int)floor(south_node / 30),
+            (int)floor(fortuna / 30),
+            (int)floor(SAN / 30),
+            (int)floor(ascendant / 30),
+            (int)floor(mc / 30),
+            (int)floor(descendant / 30),
+            (int)floor(ic / 30),
+            (int)floor(vertex / 30)
         };
 
         
@@ -7317,24 +7437,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             dig[i].row.mut_reception_asp = 0;
         }
 
-        int retro[14 - object_diff];
-        for (int i = 0; i < 14 - object_diff; i++) {
-            retro[i] = (strcmp(plots[i].retrograde, "℞") == 0) ? 1 : 0;
-        }
-
-        
-        for (int i = 0; i < 12 - object_diff; i++) {
-            if (retro[i]) {
-                dig[i].accidental -= 5;
-                dig[i].row.movement = -1;
-            } 
-            else if (plots[i].speed > 0.0) {
-                if (plots[i].id > 1) {
-                    dig[i].accidental += 4;
-                }
-                dig[i].row.movement = 1;
-            }
-        }
+       
 
 
         // 16. Calculate Aspects
@@ -7343,7 +7446,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int feral[12 - object_diff];
         int vazio_de_curso[12 - object_diff];
 
-        
+        int retro[12 - object_diff];
+        for (int i = 0; i < 12 - object_diff; i++) {
+            retro[i] = (strcmp(plots[i].retrograde, "℞") == 0) ? 1 : 0;
+        }
+
         matrix = calculate_aspects(plots, planet_orbis, dig, feral, vazio_de_curso, retro);
      
 
@@ -7548,16 +7655,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             double mean_speed;
             
             get_planet_speed(plots[i].object, &mean_speed);
-            // if (plots[i].id == 13 - object_diff) {
-            //     get_planet_speed(plots[P_LUNA].object, &mean_speed);   
-            // }
 
-            int fast[14 - object_diff];
+            int fast[12 - object_diff];
+
+            // define 8% of the mean speed = stationary
+            double speed_zero = speed_abs * 0.08;
 
             row->speed_color_pair = 0;
             if (i < 12 - object_diff) {
                 snprintf(row->speed_str, 15, "%8.4f", plots[i].speed);
-                if (speed_abs > mean_speed) {
+                if (speed_abs <= speed_zero) {
+                    row->speed_color_pair = 6;
+                }
+                else if (speed_abs > speed_zero && speed_abs > mean_speed) {
                     row->speed_color_pair = 8;
 
                     if (i < 12 - object_diff) {
@@ -7565,7 +7675,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         dig[i].row.fast = 1;
                     }
                 }
-                else if (speed_abs < mean_speed) {
+                else if (speed_abs > speed_zero && speed_abs < mean_speed) {
                     row->speed_color_pair = 11;
                     if (i < 12 - object_diff) {
                         fast[i] = -1;
@@ -7584,14 +7694,45 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
+            
+    
+            
+            if (i < 12 - object_diff) {
+                if (retro[i]) {
+                    dig[i].accidental -= 5;
+
+                    if (speed_abs <= speed_zero) {
+                        dig[i].row.movement = 0;
+                    }
+                    else {
+                        dig[i].row.movement = -1;
+                    }
+                } 
+                else if (plots[i].speed > 0.0 && speed_abs > speed_zero) {
+                    if (plots[i].id > 1) {
+                        dig[i].accidental += 4;                        
+                    }
+                    dig[i].row.movement = 1;
+                }
+                else if (speed_abs <= speed_zero) {
+                    dig[i].row.movement = 0;
+                }
+            }
+
+
+
+
+
+
+            
 
             if (i < 12 - object_diff) {
-                if (fast[i]) {
+                if (fast[i] > 0) {
                     dig[i].accidental +=2;
                 }
                 else if (fast[i] < 0) {
                     dig[i].accidental -=2;
-                }
+                }                
             }
 
            

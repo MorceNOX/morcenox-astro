@@ -165,6 +165,8 @@ R∦ Contra-Paralelo-Rapto
 
 Dir - Movimento Direto
 
+Est - Movimento Estacionário
+
 BN - Aspecto Benefico
 
 ML - Aspecto Malefico

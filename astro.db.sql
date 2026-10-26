@@ -153370,7 +153370,7 @@ INSERT INTO "house_system" ("id","name") VALUES ('B','Alcabitius'),
  ('O','Porphyry'),
  ('P','Placidus'),
  ('R','Regiomontanus'),
- ('T','Polich/Page (Topocentric)'),
+ ('T','Polich/Page Topocentric'),
  ('W','Whole Sign');
 INSERT INTO "houses" ("id","latin_title","title","position","latitude","longitude","meaning","quadrant") VALUES (1,'Vita','Self',1,'N','E','The native’s physical body, temperament, personal identity',4),
  (2,'Lucrum','Wealth',2,'N','E','Wealth, personal finances, moveable possessions',4),

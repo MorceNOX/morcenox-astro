@@ -110,13 +110,18 @@ CA Contrantiscium
 
 ☍  Opposition
 
-a  Applicative Aspect 
+a  Applying Aspect 
 
 s  Separative Aspect 
 
 ∥  Paralell
 
 ∦  Contra-Paralell
+
+R∥  Rapt-Paralell
+
+R∦  Rapt-Contra-Paralell
+
 
 
 
@@ -160,6 +165,8 @@ s  Separative Aspect
 ℞ or Ret - Retrograde Movement
 
 Dir - Direct Movement
+
+Sta - Stationary Movement
 
 BN -  Benefic Aspect 
 
