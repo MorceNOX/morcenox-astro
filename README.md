@@ -7,6 +7,8 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Terminal](https://img.shields.io/badge/Platform-Terminal-lightgrey.svg)](https://en.wikipedia.org/wiki/Terminal)
 
+A Traditional Astrology application running in your terminal! Calculate your birth chart or quickly visualize the chart for the moment. See the planetary hours table and choose the best time to carry out an activity. Know your mental and temperament analysis, navigate into your past and future events in a Primary Directions table, and many more!
+
 MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological engine designed for the terminal environment. Built with C and the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical astrological charts, from Natal and Solar Revolution to advanced time-lord techniques like Firdaria and Primary Directions.
 
 Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
