@@ -1716,6 +1716,74 @@ void draw_cusps(int radius_multiplier, int object_count,
     
 }
 
+void draw_houses_shaded(int radius_start_multiplier, int radius_end_multiplier, 
+                        double *cusps, int house_count, 
+                        int display_center_y, int display_center_x, 
+                        float current_scale, float aspect_ratio,
+                        int color_pair_even, int color_pair_odd) {
+    (void)house_count;
+    
+    // Converte os multiplicadores em raios reais baseados na escala atual
+    float r_start = radius_start_multiplier * current_scale;
+    float r_end = radius_end_multiplier * current_scale;
+    
+    // A rotação do mapa baseia-se no Ascendente (Cúspide 1)
+    double asc = cusps[1];
+
+    // Iterar por todas as 12 casas astrológicas
+    for (int h = 1; h <= 12; h++) {
+        double cusp_start = cusps[h];
+        double cusp_end = (h == 12) ? cusps[1] : cusps[h + 1];
+        
+        // 1. Calcula a distância real em graus zodiacais entre o início e o fim da casa
+        // Isso elimina qualquer problema na transição de 360° para 0° na Casa 12
+        double diff_zodiacal = cusp_end - cusp_start;
+        if (diff_zodiacal < 0.0) {
+            diff_zodiacal += 360.0;
+        }
+
+        // 2. Converte a cúspide inicial para o ângulo de tela (em graus)
+        double angle_start_deg = 180.0 - (cusp_start - asc);
+        
+        // 3. O ângulo final na tela será exatamente o inicial menos a diferença zodiacal
+        // (Subtraímos porque o sentido horário da tela é o oposto do zodíaco anti-horário)
+        double angle_end_deg = angle_start_deg - diff_zodiacal;
+
+        // Garante que o loop funcione ordenando corretamente o menor ângulo antes do maior
+        double min_angle = (angle_start_deg < angle_end_deg) ? angle_start_deg : angle_end_deg;
+        double max_angle = (angle_start_deg < angle_end_deg) ? angle_end_deg : angle_start_deg;
+
+        // Alterna o par de cores dependendo se a casa é par ou ímpar
+        int par_cor_atual = (h % 2 == 0) ? color_pair_even : color_pair_odd;
+        
+        // Ativa a cor correspondente com A_REVERSE para preencher o fundo do caractere de espaço
+        attron(COLOR_PAIR(par_cor_atual));
+
+        // Varre todos os ângulos contidos dentro desta casa específica
+        // Incremento de 0.25 para garantir densidade máxima sem "gaps" mesmo em escalas grandes
+        for (double a = min_angle; a <= max_angle; a += 0.25) {
+            double angle_rad = a * M_PI / 180.0;
+            
+            // Varre do Raio Inicial ao Raio Final para preencher a fatia
+            for (float r = r_start; r <= r_end; r += 0.5f) {
+                int y = (int)(display_center_y + r * sin(angle_rad));
+                int x = (int)(display_center_x + aspect_ratio * r * cos(angle_rad));
+                
+                // Validação de limites da tela do ncurses
+                if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
+                    safe_mvprintw_clip(y, x, " ");
+                }
+            }
+        }
+
+        // Desativa a cor da casa atual antes de ir para a próxima
+        attroff(COLOR_PAIR(par_cor_atual));
+    }
+}
+
+
+
+
 
 
 void draw_cusps_div(int object_count, 
@@ -1726,7 +1794,7 @@ void draw_cusps_div(int object_count,
     int asc = (int)cusps[1];
     (void)n;
     
-    for (float radius = 8.0 * current_scale; radius < 20 * current_scale; radius++ ) {   
+    for (float radius = 6.5 * current_scale; radius < 20 * current_scale; radius++ ) {   
         
         int imin;
         int imax;
@@ -1815,7 +1883,7 @@ void draw_cusps_div_axis(int object_count,
 
     attron(A_BOLD);
 
-    for (float radius = 8.0 * current_scale; radius < 20 * current_scale; radius++ ) {    
+    for (float radius = 6.5 * current_scale; radius < 20 * current_scale; radius += 0.5 ) {    
         //float radius = r * current_scale;
         
         int imin;
@@ -1896,6 +1964,106 @@ void draw_cusps_div_axis(int object_count,
     attroff(A_BOLD);     
 }
 
+// void draw_cusps_div_axis(int object_count, 
+//                 double *cusps, int n, 
+//                 int display_center_y, int display_center_x, 
+//                 float current_scale, float aspect_ratio,
+//                 int color_pair_even, int color_pair_odd) {
+    
+//     int asc = (int)cusps[1];
+//     (void)n;
+
+//     attron(A_BOLD);
+
+//     // O loop agora inicia em 7.0 para cobrir toda a faixa interna solicitada
+//     for (float radius = 7.0f * current_scale; radius < 20.0f * current_scale; radius++) {    
+        
+//         int imin;
+//         int imax;
+//         if (fmod(cusps[1], 30) < 15) {
+//             imin = -75;
+//             imax = 285;
+//         }
+//         else {
+//             imin = -105;
+//             imax = 255; 
+//         }
+
+//         // Determina em qual região de raio o traço atual se encontra
+//         int regiao_interna = (radius >= 7.0f * current_scale && radius <= 15.0f * current_scale) ? 1 : 0;
+
+//         for (int i = imin; i < imax; i++) {
+//             float angle = i * PI / 180.0;
+//             int y = (int)(display_center_y + radius * sin(angle));
+//             int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+            
+//             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+//                 for (int j = 1; j <= object_count; j += 3) {
+//                     if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+//                         i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+//                         i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                    
+//                         // 1. GERENCIAMENTO DINÂMICO DE CORES POR REGIAO DE RAIO
+//                         if (regiao_interna) {
+//                             // Do raio 7 ao 15: Respeita a cor alternada das casas (j indica o número da casa/cúspide)
+//                             if (j % 2 == 0) {
+//                                 attron(COLOR_PAIR(color_pair_even));
+//                             } else {
+//                                 attron(COLOR_PAIR(color_pair_odd));
+//                             }
+//                         } else {
+//                             // Do raio 16 ao 20: Mantém a sua lógica original baseada nas cores dos signos
+//                             int sign = (int)(cusps[j] / 30);
+//                             if (sign % 2 == 1) {
+//                                 attron(COLOR_PAIR(1));                            
+//                             }
+//                             else {
+//                                 attron(COLOR_PAIR(46));                            
+//                             }
+//                         }
+                        
+//                         // 2. DESENHO DOS CARACTERES DOS EIXOS
+//                         if (j == 1 || j == 4 || j == 7 || j == 10) {            
+//                             if (angle <= -1.79) {
+//                                 safe_mvprintw_clip(y, x, "⧹");  
+//                             } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
+//                                 safe_mvprintw_clip(y, x-1, "▕▎");                            
+//                             } else if (angle <= -0.8 || angle >= 4.93) {
+//                                 safe_mvprintw_clip(y, x, "⧸");  
+//                             } else if (angle <= -0.2) {
+//                                 safe_mvprintw_clip(y, x, "▄▀");  
+//                             } else if (angle <= 0.2) {
+//                                 safe_mvprintw_clip(y-1, x, "▁▁");
+//                                 safe_mvprintw_clip(y,   x, "▔▔");
+//                             } else if (angle <= 0.95) {
+//                                 safe_mvprintw_clip(y, x, "▀▄");  
+//                             } else if (angle < 1.35) {
+//                                 safe_mvprintw_clip(y, x, "⧹"); 
+//                             } else if (angle < 1.79) {
+//                                 safe_mvprintw_clip(y, x, "▕▎");                            
+//                             } else if (angle < 2.30) {
+//                                 safe_mvprintw_clip(y, x, "⧸");  
+//                             } else if (angle < 2.99) {
+//                                 safe_mvprintw_clip(y, x, "▄▀");  
+//                             } else if (angle <= 3.25) {
+//                                 safe_mvprintw_clip(y,   x, "▁▁");
+//                                 safe_mvprintw_clip(y+1, x, "▔▔");
+//                             } else if (angle <= 4.1) {
+//                                 safe_mvprintw_clip(y, x, "▀▄");  
+//                             } else {
+//                                 safe_mvprintw_clip(y, x, "⧹"); 
+//                             }
+//                         }
+
+//                         // Desativa todos os possíveis pares de cores utilizados para evitar vazamento de atributos
+//                         attroff(COLOR_PAIR(1) | COLOR_PAIR(46) | COLOR_PAIR(color_pair_even) | COLOR_PAIR(color_pair_odd));
+//                     }                
+//                 }
+//             }
+//         }
+//     }
+//     attroff(A_BOLD);     
+// }
 
 
 void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_y, int display_center_x, 
@@ -1967,7 +2135,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                       float current_scale, float aspect_ratio, int n, int asc) {
     
     
-    float radius = 16.5 * current_scale;
+    float radius = 17 * current_scale;
     int offset = 0 * n;    
     
     for (int i = 75 + 270 + asc, k = 0; i < 435 + 270 + asc; i += 30, k++) {
@@ -2383,7 +2551,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     if (dark_mode) attron(COLOR_PAIR(52) | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
-    draw_circle_points(display_center_y, display_center_x, 7, aspect_ratio, current_scale, L"▒");
+    draw_circle_points(display_center_y, display_center_x, 6, aspect_ratio, current_scale, L"▒");
     if (dark_mode) attroff(COLOR_PAIR(52) | FLAGS);
     wnoutrefresh(stdscr);
 
@@ -2409,7 +2577,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 41 : 41; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 8.0 * current_scale; r <= 19.75 * current_scale; r += 0.125) {
+    for (float r = 7.0 * current_scale; r <= 19.75 * current_scale; r += 0.125) {
         for (int i = 0 + asc; i < 360 + asc; i++) {
             
             int indice_relativo = i - (asc);
@@ -2436,7 +2604,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
+    //draw_houses_shaded(7, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 63, 64);
+
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    //draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio, 63, 64);
     wnoutrefresh(stdscr);
 
     if (house_div) {
@@ -2445,7 +2616,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     }
 
     // Draw house numbers
-    draw_cusps(7, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    draw_cusps(6, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
     draw_cusps(20, 12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
     
     
@@ -7061,6 +7232,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(60, 25, 18);
         init_pair(61, 61, 54); // magenta
         init_pair(62, 60, 223);
+
+        init_pair(63, COLOR_WHITE, COLOR_BACK_DARK_1);
+        init_pair(64, COLOR_WHITE, COLOR_BACK_DARK_2);
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1);
@@ -7140,6 +7314,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(60, 31, 25); // amarelo / azul
         init_pair(61, 97, 91); // magenta, magenta
         init_pair(62, 60, 223);
+
+        init_pair(63, COLOR_BLACK, 194);
+        init_pair(64, COLOR_BLACK, 193);
     }
     
     FLAGS = 0;
@@ -9870,9 +10047,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 ativar_arrasto_mouse();
                 flushinp();
 
-                touchwin(stdscr);
-                wnoutrefresh(stdscr);
-                doupdate();
                 break;
             case 'p':
             case 'P':
@@ -10263,10 +10437,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             ativar_arrasto_mouse();
                             flushinp();
 
-                            clear(); 
-                            touchwin(stdscr);
-                            wnoutrefresh(stdscr);
-                            doupdate();
                             break; 
                         }
                     }
@@ -10363,7 +10533,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             free(house_ruler_str[k]);
         }
         free(house_ruler_str);
-        //free(moon_temperament);
 
         timeout(TIMEOUT);
 
@@ -10375,7 +10544,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     desativar_arrasto_mouse();
 
     swe_close();
-    //endwin();
 
     return 0;
 }
