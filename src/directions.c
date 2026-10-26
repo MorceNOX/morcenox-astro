@@ -1708,46 +1708,6 @@ double calcular_ra(double longitude, double declinacao, double jd) {
 
 
 
-
-// // Busca numérica robusta baseada no objeto do promissor e sua curva de Bianchini
-// double encontrar_longitude_promissor_por_dec(double dec_alvo, double jd, char* obj_prom, double limite_inf, double limite_sup) {
-//     double lon_min = limite_inf;
-//     double lon_max = limite_sup;
-//     double lon_mid = (lon_min + lon_max) / 2.0;
-//     double obl = -get_obliquidade(jd);
-//     int max_iter = 40;
-
-//     for (int i = 0; i < max_iter; i++) {
-//         lon_mid = (lon_min + lon_max) / 2.0;
-//         double lat = calcular_latitude_dinamica_bianchini(jd, obj_prom, lon_mid, );
-        
-//         double xx[3] = {lon_mid, lat, 1.0};
-//         double xequat[3];
-//         swe_cotrans(xx, xequat, obl);
-        
-//         double dec_calc = xequat[1]; // Declinação calculada no modelo equatorial
-
-//         if (fabs(dec_calc - dec_alvo) < 0.00001) break;
-
-//         // Como a curva com latitude varia, testamos a derivada local para ajustar os limites
-//         double lat_ajuste = calcular_latitude_dinamica_bianchini(jd, obj_prom, lon_mid + 0.01);
-//         double xx_ajuste[3] = {lon_mid + 0.01, lat_ajuste, 1.0};
-//         double xequat_ajuste[3];
-//         swe_cotrans(xx_ajuste, xequat_ajuste, obl);
-        
-//         int ascendente = (xequat_ajuste[1] > dec_calc);
-
-//         if ((dec_calc < dec_alvo && ascendente) || (dec_calc > dec_alvo && !ascendente)) {
-//             lon_min = lon_mid;
-//         } else {
-//             lon_max = lon_mid;
-//         }
-//     }
-//     return lon_mid;
-// }
-
-
-
 int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, LinhaDirecao *lista_resultado, 
                                             double jd, int sentido, Promissor *prom, int total_promissores,
                                             double ramc, double lat_geografica, int *qtd_direcoes, bool is_part) {
