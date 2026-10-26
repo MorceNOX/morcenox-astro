@@ -9065,7 +9065,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'c':
             case 'C':
                 if (mapa_retorno) {
-                    desativar_arrasto_mouse();                      
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
                     processar_confronto_natal_revolucao(
                         qtd_almuten_rev,
                         almuten_rev,
@@ -9104,7 +9108,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     break;
             case 'm':
             case 'M':            
-                desativar_arrasto_mouse();                      
+                desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                }                 
                 open_menu_tables(&ctx);
                 ativar_arrasto_mouse();
                 flushinp();
@@ -9116,7 +9124,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'p':
             case 'P':
                 if (mapa_retorno) {
-                    desativar_arrasto_mouse();                      
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                                         
                     display_arabic_parts_solar_natal_confrontation(obj, cusps, total_objects, cusps_natal, obj_natal);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9125,7 +9138,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 't':
             case 'T':
                 if (mapa_retorno) {
-                    desativar_arrasto_mouse();                      
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                                        
                     process_revolution_transits(jd_natal, planet_longitudes, planet_latitudes, armc_natal, lat_natal, house_system, tipo_h_natal, idx_hyleg_natal, longitudes_natal, cusps_natal, obj_natal, total_obj_natal);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9135,6 +9153,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'I':
             case KEY_F(1):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_table_data(
                     mapa_retorno, julian_day, local_time, lat, lon, elev, plots, season_fmt,
                     sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, next_sunrise_time, city, country, 
@@ -9145,6 +9168,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 break;
             case KEY_F(2):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_table(plots, &planet_matrix, dig, strength_planets, armc, lat, &fortuna_m);
                 ativar_arrasto_mouse();
                 flushinp();
@@ -9152,30 +9180,55 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case 'x':
             case KEY_F(3):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_aspects(plots, &matrix, &matrix_decl, ants, num_ants);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
             case KEY_F(4):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_hours(week_day + 1, hours, planetary_hour + 1, daytime_hour, nighttime_hour, strength_planets, dig);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
             case KEY_F(5):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_rising_times(plots, tz_offset);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
             case KEY_F(6):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_houses(cusps, pHouse, house_ruler_str, house_system_str);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
             case KEY_F(7):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_almutens(pontos_calculados, plots, &matrix, week_day + 1, planetary_hour + 1, mapa_retorno);
                 ativar_arrasto_mouse();
                 flushinp();
@@ -9183,6 +9236,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(8):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_temperament(plots, &matrix, phase_id, season_id, week_day + 1, planetary_hour + 1);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9191,6 +9249,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(9):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_profections(plots, alco.anos_concedidos, cusps, obj, total_objects, julian_day);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9199,6 +9262,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(12):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_firdaria(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, regente_dia, regente_hora, tipo_san);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9208,6 +9276,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(13):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_life_givers(pontos_calculados, dig, plots, &matrix, week_day + 1, planetary_hour + 1, tipo_san);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9217,6 +9290,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(14):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_anareta(plots, &matrix, dig, pontos_calculados, signo_da_casa_8, week_day + 1, planetary_hour + 1, tipo_san);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9226,6 +9304,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(15):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_primary_directions(plots, sig, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, tipo_san, dig, armc, lat, prom);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9235,6 +9318,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(16):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_primary_directions_parts(prom, nome_anareta, nome_senhor_da_casa8, obj, total_objects, cusps, julian_day, armc, lat);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9243,6 +9331,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '5':
             case KEY_F(17):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_arabic_parts(obj, cusps, total_objects);
                 ativar_arrasto_mouse();
                 flushinp();
@@ -9251,6 +9344,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(18):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_natal_mind_analysis(
                         mercurio,
                         lua,
@@ -9268,6 +9366,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case KEY_F(19):
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects)) {
                         saiu_retorno = true;
                     } else {
@@ -9281,6 +9384,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '8':
             case KEY_F(20):
                 desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
                 display_planetary_energy_profile(plots, strength_planets);
                 ativar_arrasto_mouse();
                 flushinp();
@@ -9288,6 +9396,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             case '0':
                 if (!mapa_retorno) {
                     desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    
                     display_motivation(plots, house_rulers, &matrix);
                     ativar_arrasto_mouse();
                     flushinp();
@@ -9355,6 +9468,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         
                         // 1. TRATA O MOMENTO DE PRESSIONAR (Independente)
                         if (mouse_event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            
+                            if (animated) {
+                                mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                                wnoutrefresh(stdscr);
+                            } 
+                            
                             mvprintw(LINES - 6, max_x - 17, "              ");
                             attron(COLOR_PAIR(26) | A_BOLD);                            
                             mvprintw(LINES - 5, max_x - 16, _("[    MENU    ]"));
