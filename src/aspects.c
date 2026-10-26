@@ -1014,6 +1014,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             touchwin(aspects_win);  // Marca a janela da tabela para atualização total
             wrefresh(aspects_win);
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(4)) {
             AspectMatrix matrix_sign = {0}; 
@@ -1026,6 +1027,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             touchwin(aspects_win);
             wrefresh(aspects_win);
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(5)) {
             AspectMatrix matrix_ants = {0}; 
@@ -1038,6 +1040,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             touchwin(aspects_win);
             wrefresh(aspects_win);
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(6)) {
             AspectMatrix matrix_ants = {0}; 
@@ -1050,6 +1053,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
             touchwin(aspects_win);
             wrefresh(aspects_win);
             prefresh(pad, offset_y + 1, 0, start_y + 4, start_x + 2, start_y + table_height - 4, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else {
             switch (ch) {

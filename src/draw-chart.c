@@ -3820,6 +3820,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(4)) {
             display_planetary_energy_profile(plots, strength_planets);
@@ -3835,6 +3836,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
             
             // REDESENHO CRÍTICO DA PAD
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else {
             // Se não foi nenhuma tecla de função, processa a rolagem vertical do texto
@@ -4581,6 +4583,8 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             doupdate();
 
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(3)) {
             display_dignities(plots, dig, strength_planets);
@@ -4595,6 +4599,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             doupdate();
 
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(4)) {
             display_force(plots, dig, strength_planets);
@@ -4609,6 +4614,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             doupdate();
             
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else if (ch == KEY_F(5)) {
             display_planetary_energy_profile(plots, strength_planets);
@@ -4623,6 +4629,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
             doupdate();
             
             prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+            drag_and_drop_on();
         }
         else {
             // Se não foi nenhuma tecla de função, processa a rolagem vertical do texto
