@@ -14,7 +14,7 @@ MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological eng
 Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
 
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/60a5f7db-cb88-47cb-97d0-6262297ac320" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/4ed47dbc-d74a-4d20-8923-1e53fa8c19f6" />
 <hr>
 
 ## 🌌 Key Features
@@ -182,27 +182,18 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### The Chart Wheel
 <hr>
 
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/7fa71905-c5ec-4de4-9491-e2eb5cfc5c1d" />
+<img width="2560" height="1600" alt="02a-chart_wheel_example2" src="https://github.com/user-attachments/assets/390d0ab1-ed6f-45c7-82b9-78426f2c9485" />
 
-<img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/2538c65c-36c8-4acb-b80a-4d36cd2be9af" />
+<img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/09071b05-dc95-4f32-9dd3-dfe858b83a76" />
 
-<img width="2560" height="1600" alt="02a-chart_wheel_house_divisions" src="https://github.com/user-attachments/assets/1351ff44-3f31-4bc2-b045-e07ef6e516fc" />
+<img width="2560" height="1600" alt="02d-chart_wheel_zoomed2" src="https://github.com/user-attachments/assets/2821abc6-8e6f-4c0f-9779-a0735de5d42d" />
 
-<img width="2560" height="1600" alt="02c-chart_wheel_menu" src="https://github.com/user-attachments/assets/83f6597b-1a99-4b39-b900-aea1bb8c242c" />
-
-<img width="2560" height="1539" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/170cd625-9be4-44e5-aa37-96d8aa7a6c26" />
-
-<img width="2560" height="1539" alt="02d-chart_wheel_zoomed2" src="https://github.com/user-attachments/assets/3313faf2-4e37-4b60-b9b0-0383ba2bc2ab" />
-
-<img width="2560" height="1600" alt="02b-chart_wheel_city_selection_rs" src="https://github.com/user-attachments/assets/08abfa61-e6a8-4dc8-a50a-aad6c8754d62" />
 <hr>
 
 ### Aspects Table
 <hr>
 
-<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/77b082fd-0a7c-461d-aecf-33b95a53acd4" />
-
-<img width="2560" height="1600" alt="03b-aspects_table" src="https://github.com/user-attachments/assets/030530d0-adc8-45c4-a6f7-e71df34b2c79" />
+<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/ce3e0f8b-df08-4439-a161-ce2c3fef9456" />
 
 <img width="2560" height="1600" alt="03c-parallel_aspects_table" src="https://github.com/user-attachments/assets/1b6d5b6b-895f-4648-816e-117da9167009" />
 
