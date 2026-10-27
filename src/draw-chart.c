@@ -1605,7 +1605,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                         strcmp(plots[j].object_name, _("Vertex")) == 0 ||
                         strcmp(plots[j].object_name, _("North Node")) == 0) {
 
-                        if ((int)((plots[j].longitude / 30)) % 2 == 1) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                             attron(COLOR_PAIR(16) | A_BOLD);
                         }
                         else {
@@ -1616,7 +1616,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                             strcmp(plots[j].object_name, _("Uranus")) == 0 ||
                             strcmp(plots[j].object_name, _("Pluto")) == 0) {
                         if (show_modern_planets) {
-                            if ((int)((plots[j].longitude / 30)) % 2 == 1) {
+                            if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                                 attron(COLOR_PAIR(17) | A_BOLD);
                             }
                             else {
@@ -1630,7 +1630,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                         
                     }
                     else {
-                        if ((int)((plots[j].longitude / 30)) % 2 == 1) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                             attron(COLOR_PAIR(18) | A_BOLD);
                         }
                         else {
@@ -1658,7 +1658,9 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                     attroff(COLOR_PAIR(16) | A_BOLD);
                     attroff(COLOR_PAIR(17) | A_BOLD);
                     attroff(COLOR_PAIR(18) | A_BOLD);
-                    attroff(COLOR_PAIR(10) | A_BOLD);
+                    attroff(COLOR_PAIR(47) | A_BOLD);
+                    attroff(COLOR_PAIR(48) | A_BOLD);
+                    attroff(COLOR_PAIR(49) | A_BOLD);
                 }
             }
         }
@@ -1873,114 +1875,22 @@ void draw_cusps_div(int object_count,
     }
 }
 
-void draw_cusps_div_axis(int object_count, 
-                double *cusps, int n, 
-                int display_center_y, int display_center_x, 
-                float current_scale, float aspect_ratio) {
-    
-    int asc = (int)cusps[1];
-    (void)n;
-
-    attron(A_BOLD);
-
-    for (float radius = 6.5 * current_scale; radius < 20 * current_scale; radius += 0.5 ) {    
-        //float radius = r * current_scale;
-        
-        int imin;
-        int imax;
-        if (fmod(cusps[1], 30) < 15 ) {
-            imin = -75;
-            imax = 285;
-        }
-        else {
-            imin = -105;
-            imax = 255; 
-        }
-
-        for (int i = imin; i < imax; i++) {
-            float angle = i * PI / 180.0;
-            int y = (int)(display_center_y + radius * sin(angle));
-            int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
-            
-            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
-                for (int j = 1; j <= object_count; j += 3) {
-                    if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
-                        i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
-                        i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
-                                                    
-                        int sign = (int)(cusps[j] / 30);
-
-                        if (sign % 2 == 1) {
-                            attron(COLOR_PAIR(1));                            
-                        }
-                        else {
-                            attron(COLOR_PAIR(46));                            
-                        }
-                        
-                            // Draw the appropriate text
-                        if (j == 1 || j == 4 || j == 7 || j == 10) {            
-                            if (angle <= -1.79) {
-                                safe_mvprintw_clip(y, x, "⧹");  // casa 11 // ⧹⧸
-                            } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-                                //mvaddstr(y, x, "▎"); // casa 10
-                                safe_mvprintw_clip(y, x-1, "▕▎");                            
-                            } else if (angle <= -0.8 || angle >= 4.93) {
-                                safe_mvprintw_clip(y, x, "⧸");  // casa 9
-                            } else if (angle <= -0.2) {
-                                safe_mvprintw_clip(y, x, "▄▀");  // casa 8
-                            } else if (angle <= 0.2) {
-                                //mvaddstr(y, x, "▔");  // casa 7
-                                safe_mvprintw_clip(y-1, x, "▁▁");
-                                safe_mvprintw_clip(y,   x, "▔▔");
-                            } else if (angle <= 0.95) {
-                                safe_mvprintw_clip(y, x, "▀▄");  // casa 6
-                            } else if (angle < 1.35) {
-                                safe_mvprintw_clip(y, x, "⧹"); // casa 5
-                            } else if (angle < 1.79) {
-                                //mvaddstr(y, x, "▕");  // casa 4
-                                safe_mvprintw_clip(y, x, "▕▎");                            
-                            } else if (angle < 2.30) {
-                                safe_mvprintw_clip(y, x, "⧸");  // casa 3
-                            } else if (angle < 2.99) {
-                                safe_mvprintw_clip(y, x, "▄▀");  // casa 2
-                            } else if (angle <= 3.25) {
-                                //mvaddstr(y, x, "▁");  // casa 1
-                                safe_mvprintw_clip(y,   x, "▁▁");
-                                safe_mvprintw_clip(y+1, x, "▔▔");
-
-                            } else if (angle <= 4.1) {
-                                safe_mvprintw_clip(y, x, "▀▄");  // casa 12
-                            } else {
-                                safe_mvprintw_clip(y, x, "⧹"); // casa 11
-                            }
-                        }
-
-                        attroff(COLOR_PAIR(1) | COLOR_PAIR(46));
-                    }                
-                }
-            }
-        }
-    }
-    attroff(A_BOLD);     
-}
-
 // void draw_cusps_div_axis(int object_count, 
 //                 double *cusps, int n, 
 //                 int display_center_y, int display_center_x, 
-//                 float current_scale, float aspect_ratio,
-//                 int color_pair_even, int color_pair_odd) {
+//                 float current_scale, float aspect_ratio) {
     
 //     int asc = (int)cusps[1];
 //     (void)n;
 
 //     attron(A_BOLD);
 
-//     // O loop agora inicia em 7.0 para cobrir toda a faixa interna solicitada
-//     for (float radius = 7.0f * current_scale; radius < 20.0f * current_scale; radius++) {    
+//     for (float radius = 6.5 * current_scale; radius < 20 * current_scale; radius += 0.5 ) {    
+//         //float radius = r * current_scale;
         
 //         int imin;
 //         int imax;
-//         if (fmod(cusps[1], 30) < 15) {
+//         if (fmod(cusps[1], 30) < 15 ) {
 //             imin = -75;
 //             imax = 285;
 //         }
@@ -1988,9 +1898,6 @@ void draw_cusps_div_axis(int object_count,
 //             imin = -105;
 //             imax = 255; 
 //         }
-
-//         // Determina em qual região de raio o traço atual se encontra
-//         int regiao_interna = (radius >= 7.0f * current_scale && radius <= 15.0f * current_scale) ? 1 : 0;
 
 //         for (int i = imin; i < imax; i++) {
 //             float angle = i * PI / 180.0;
@@ -2003,60 +1910,54 @@ void draw_cusps_div_axis(int object_count,
 //                         i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
 //                         i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
                                                     
-//                         // 1. GERENCIAMENTO DINÂMICO DE CORES POR REGIAO DE RAIO
-//                         if (regiao_interna) {
-//                             // Do raio 7 ao 15: Respeita a cor alternada das casas (j indica o número da casa/cúspide)
-//                             if (j % 2 == 0) {
-//                                 attron(COLOR_PAIR(color_pair_even));
-//                             } else {
-//                                 attron(COLOR_PAIR(color_pair_odd));
-//                             }
-//                         } else {
-//                             // Do raio 16 ao 20: Mantém a sua lógica original baseada nas cores dos signos
-//                             int sign = (int)(cusps[j] / 30);
-//                             if (sign % 2 == 1) {
-//                                 attron(COLOR_PAIR(1));                            
-//                             }
-//                             else {
-//                                 attron(COLOR_PAIR(46));                            
-//                             }
+//                         int sign = (int)(cusps[j] / 30);
+
+//                         if (sign % 2 == 1) {
+//                             attron(COLOR_PAIR(1));                            
+//                         }
+//                         else {
+//                             attron(COLOR_PAIR(46));                            
 //                         }
                         
-//                         // 2. DESENHO DOS CARACTERES DOS EIXOS
+//                             // Draw the appropriate text
 //                         if (j == 1 || j == 4 || j == 7 || j == 10) {            
 //                             if (angle <= -1.79) {
-//                                 safe_mvprintw_clip(y, x, "⧹");  
+//                                 safe_mvprintw_clip(y, x, "⧹");  // casa 11 // ⧹⧸
 //                             } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
+//                                 //mvaddstr(y, x, "▎"); // casa 10
 //                                 safe_mvprintw_clip(y, x-1, "▕▎");                            
 //                             } else if (angle <= -0.8 || angle >= 4.93) {
-//                                 safe_mvprintw_clip(y, x, "⧸");  
+//                                 safe_mvprintw_clip(y, x, "⧸");  // casa 9
 //                             } else if (angle <= -0.2) {
-//                                 safe_mvprintw_clip(y, x, "▄▀");  
+//                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 8
 //                             } else if (angle <= 0.2) {
+//                                 //mvaddstr(y, x, "▔");  // casa 7
 //                                 safe_mvprintw_clip(y-1, x, "▁▁");
 //                                 safe_mvprintw_clip(y,   x, "▔▔");
 //                             } else if (angle <= 0.95) {
-//                                 safe_mvprintw_clip(y, x, "▀▄");  
+//                                 safe_mvprintw_clip(y, x, "▀▄");  // casa 6
 //                             } else if (angle < 1.35) {
-//                                 safe_mvprintw_clip(y, x, "⧹"); 
+//                                 safe_mvprintw_clip(y, x, "⧹"); // casa 5
 //                             } else if (angle < 1.79) {
+//                                 //mvaddstr(y, x, "▕");  // casa 4
 //                                 safe_mvprintw_clip(y, x, "▕▎");                            
 //                             } else if (angle < 2.30) {
-//                                 safe_mvprintw_clip(y, x, "⧸");  
+//                                 safe_mvprintw_clip(y, x, "⧸");  // casa 3
 //                             } else if (angle < 2.99) {
-//                                 safe_mvprintw_clip(y, x, "▄▀");  
+//                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 2
 //                             } else if (angle <= 3.25) {
+//                                 //mvaddstr(y, x, "▁");  // casa 1
 //                                 safe_mvprintw_clip(y,   x, "▁▁");
 //                                 safe_mvprintw_clip(y+1, x, "▔▔");
+
 //                             } else if (angle <= 4.1) {
-//                                 safe_mvprintw_clip(y, x, "▀▄");  
+//                                 safe_mvprintw_clip(y, x, "▀▄");  // casa 12
 //                             } else {
-//                                 safe_mvprintw_clip(y, x, "⧹"); 
+//                                 safe_mvprintw_clip(y, x, "⧹"); // casa 11
 //                             }
 //                         }
 
-//                         // Desativa todos os possíveis pares de cores utilizados para evitar vazamento de atributos
-//                         attroff(COLOR_PAIR(1) | COLOR_PAIR(46) | COLOR_PAIR(color_pair_even) | COLOR_PAIR(color_pair_odd));
+//                         attroff(COLOR_PAIR(1) | COLOR_PAIR(46));
 //                     }                
 //                 }
 //             }
@@ -2064,6 +1965,107 @@ void draw_cusps_div_axis(int object_count,
 //     }
 //     attroff(A_BOLD);     
 // }
+
+void draw_cusps_div_axis(int object_count, 
+                double *cusps, int n, 
+                int display_center_y, int display_center_x, 
+                float current_scale, float aspect_ratio,
+                int color_pair_even, int color_pair_odd) {
+    
+    int asc = (int)cusps[1];
+    (void)n;
+
+    attron(A_BOLD);
+
+    // O loop agora inicia em 7.0 para cobrir toda a faixa interna solicitada
+    for (float radius = 7.0f * current_scale; radius < 20.0f * current_scale; radius++) {    
+        
+        int imin;
+        int imax;
+        if (fmod(cusps[1], 30) < 15) {
+            imin = -75;
+            imax = 285;
+        }
+        else {
+            imin = -105;
+            imax = 255; 
+        }
+
+        // Determina em qual região de raio o traço atual se encontra
+        int regiao_interna = (radius >= 7.0f * current_scale && radius <= 15.0f * current_scale) ? 1 : 0;
+
+        for (int i = imin; i < imax; i++) {
+            float angle = i * PI / 180.0;
+            int y = (int)(display_center_y + radius * sin(angle));
+            int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
+            
+            if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
+                for (int j = 1; j <= object_count; j += 3) {
+                    if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
+                        i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
+                                                    
+                        // 1. GERENCIAMENTO DINÂMICO DE CORES POR REGIAO DE RAIO
+                        if (regiao_interna) {
+                            // Do raio 7 ao 15: Respeita a cor alternada das casas (j indica o número da casa/cúspide)
+                            if (j % 2 == 0) {
+                                attron(COLOR_PAIR(color_pair_even));
+                            } else {
+                                attron(COLOR_PAIR(color_pair_odd));
+                            }
+                        } else {
+                            // Do raio 16 ao 20: Mantém a sua lógica original baseada nas cores dos signos
+                            int sign = (int)(cusps[j] / 30);
+                            if (sign % 2 == 1) {
+                                attron(COLOR_PAIR(1));                            
+                            }
+                            else {
+                                attron(COLOR_PAIR(46));                            
+                            }
+                        }
+                        
+                        // 2. DESENHO DOS CARACTERES DOS EIXOS
+                        if (j == 1 || j == 4 || j == 7 || j == 10) {            
+                            if (angle <= -1.79) {
+                                safe_mvprintw_clip(y, x, "⧹");  
+                            } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
+                                safe_mvprintw_clip(y, x-1, "▕▎");                            
+                            } else if (angle <= -0.8 || angle >= 4.93) {
+                                safe_mvprintw_clip(y, x, "⧸");  
+                            } else if (angle <= -0.2) {
+                                safe_mvprintw_clip(y, x, "▄▀");  
+                            } else if (angle <= 0.2) {
+                                safe_mvprintw_clip(y-1, x, "▁▁");
+                                safe_mvprintw_clip(y,   x, "▔▔");
+                            } else if (angle <= 0.95) {
+                                safe_mvprintw_clip(y, x, "▀▄");  
+                            } else if (angle < 1.35) {
+                                safe_mvprintw_clip(y, x, "⧹"); 
+                            } else if (angle < 1.79) {
+                                safe_mvprintw_clip(y, x, "▕▎");                            
+                            } else if (angle < 2.30) {
+                                safe_mvprintw_clip(y, x, "⧸");  
+                            } else if (angle < 2.99) {
+                                safe_mvprintw_clip(y, x, "▄▀");  
+                            } else if (angle <= 3.25) {
+                                safe_mvprintw_clip(y,   x, "▁▁");
+                                safe_mvprintw_clip(y+1, x, "▔▔");
+                            } else if (angle <= 4.1) {
+                                safe_mvprintw_clip(y, x, "▀▄");  
+                            } else {
+                                safe_mvprintw_clip(y, x, "⧹"); 
+                            }
+                        }
+
+                        // Desativa todos os possíveis pares de cores utilizados para evitar vazamento de atributos
+                        attroff(COLOR_PAIR(1) | COLOR_PAIR(46) | COLOR_PAIR(color_pair_even) | COLOR_PAIR(color_pair_odd));
+                    }                
+                }
+            }
+        }
+    }
+    attroff(A_BOLD);     
+}
 
 
 void draw_day_hour_regents(int week_day, int planetary_hour, int display_center_y, int display_center_x, 
@@ -2249,13 +2251,13 @@ void draw_decans(int display_center_y, int display_center_x,
         if (y >= 0 && y < LINES && x >= 0 && x < COLS) {
             int sign = k / 3;
 
-            if (sign % 2 == 0) attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
-            else attron(COLOR_PAIR(48) | FLAGS | A_BOLD);
+            if (sign % 2 == 0) attron(COLOR_PAIR(65) | FLAGS | A_BOLD);
+            else attron(COLOR_PAIR(66) | FLAGS | A_BOLD);
             
             safe_mvprintw_clip(y, x, planet_regent_symbols[decans_to_print[(k) % 36]]);
 
-            if (sign % 2 == 0) attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
-            else attroff(COLOR_PAIR(48) | FLAGS | A_BOLD);
+            if (sign % 2 == 0) attroff(COLOR_PAIR(65) | FLAGS | A_BOLD);
+            else attroff(COLOR_PAIR(66) | FLAGS | A_BOLD);
         }        
     }
 }
@@ -2295,13 +2297,13 @@ void draw_terms(int radius_multiplier, int object_count,
                     i == (180 - (longitudes[j] - asc) % 360) - 360) {
 
                     int sign = (longitudes[j]) / 30 + 1;
-                    if (sign % 2 == 0) attron(COLOR_PAIR(17) | FLAGS | A_BOLD);
-                    else attron(COLOR_PAIR(48) | FLAGS | A_BOLD);
+                    if (sign % 2 == 0) attron(COLOR_PAIR(65) | FLAGS | A_BOLD);
+                    else attron(COLOR_PAIR(66) | FLAGS | A_BOLD);
                     
                     safe_mvprintw_clip(y, x , text[j]);
 
-                    if (sign % 2 == 0) attroff(COLOR_PAIR(17) | FLAGS | A_BOLD);
-                    else attroff(COLOR_PAIR(48) | FLAGS | A_BOLD);
+                    if (sign % 2 == 0) attroff(COLOR_PAIR(65) | FLAGS | A_BOLD);
+                    else attroff(COLOR_PAIR(66) | FLAGS | A_BOLD);
                                     
                 }
             }
@@ -2416,13 +2418,11 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         
 
         if (mapa_retorno) {
-            mvprintw(LINES - 5, 1, _("Divisions = Zodiac Signs"));
             mvprintw(LINES - 4, 1, _("Radix Confrontation: C | Annual Transits: T "));
             mvprintw(LINES - 3, 1, _("Anim: A | Parts Radix Confrontation: P ")); 
         }
         else {
-            mvprintw(LINES - 5, 1, _("Divisions = Zodiac Signs"));
-            mvprintw(LINES - 3, 1, _("Anim: A    | Menu: M "));
+            mvprintw(LINES - 3, 1, _("Anim: A ␣  | Menu: M "));
         }
         mvprintw(LINES - 2, 1,       "Zoom: + -  | Pan: ←↓→↑ 🖰| Reset: R ");
         mvprintw(LINES - 1, 1, _("Aspect: / *| Speed: ]/[ | Quit: Q "));
@@ -2573,8 +2573,8 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     int asc = (int)cusps[1];
 
-    int par_tom_A = dark_mode ? 19 : 19; 
-    int par_tom_B = dark_mode ? 41 : 41; 
+    int par_tom_A = dark_mode ? 1 : 1; 
+    int par_tom_B = dark_mode ? 46 : 46; 
 
     // Camada de Fundo: Desenha as fatias primeiro
     for (float r = 7.0 * current_scale; r <= 19.75 * current_scale; r += 0.125) {
@@ -2604,10 +2604,10 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
-    //draw_houses_shaded(7, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 63, 64);
+    draw_houses_shaded(7, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
 
-    draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
-    //draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio, 63, 64);
+    //draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
+    draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
     wnoutrefresh(stdscr);
 
     if (house_div) {
@@ -5881,11 +5881,12 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
        
     if (MAPA_DIURNO_CIVIL) {
         wattroff(table_win, COLOR_PAIR(8) | A_BOLD);
-     }
-     else {
-         wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
-     }
+    }
+    else {
+        wattroff(table_win, COLOR_PAIR(7) | A_BOLD);
+    }
     
+    mvwprintw(table_win, table_height - 2, table_width - 50, _("        Press [i] to Open Interpretation Window"));
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart | [i] for interpretation."));
     
     // Refresh the window
@@ -7115,8 +7116,14 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
+#define COLOR_BACK_1_SIGN  217
+#define COLOR_BACK_2_SIGN  181
+
 #define COLOR_BACK_1  218 //218 //147 //219 //219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
 #define COLOR_BACK_2  182 //217 //141 //217 //218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
+
+#define COLOR_BACK_DARK_1_SIGN 237
+#define COLOR_BACK_DARK_2_SIGN 238
 
 #define COLOR_BACK_DARK_1 234
 #define COLOR_BACK_DARK_2 235
@@ -7155,21 +7162,25 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     use_default_colors();
 
     if (dark_mode) {
-        init_pair(1, COLOR_WHITE, COLOR_BACK_DARK_1);
-        init_pair(46, COLOR_WHITE, COLOR_BACK_DARK_2);
+        init_pair(1, COLOR_WHITE, COLOR_BACK_DARK_1_SIGN);
+        init_pair(46, COLOR_WHITE, COLOR_BACK_DARK_2_SIGN);
 
-        init_pair(2, COLOR_RED, COLOR_BACK_DARK_1);
-        init_pair(42, COLOR_RED, COLOR_BACK_DARK_2);
+        init_pair(2, COLOR_RED, COLOR_BACK_DARK_1_SIGN);
+        init_pair(42, COLOR_RED, COLOR_BACK_DARK_2_SIGN);
 
-        init_pair(3, COLOR_GREEN, COLOR_BACK_DARK_1);
-        init_pair(43, COLOR_GREEN, COLOR_BACK_DARK_2);
+        init_pair(3, COLOR_GREEN, COLOR_BACK_DARK_1_SIGN);
+        init_pair(43, COLOR_GREEN, COLOR_BACK_DARK_2_SIGN);
 
-        init_pair(4, COLOR_YELLOW, COLOR_BACK_DARK_1);
-        init_pair(44, COLOR_YELLOW, COLOR_BACK_DARK_2);
+        init_pair(4, COLOR_YELLOW, COLOR_BACK_DARK_1_SIGN);
+        init_pair(44, COLOR_YELLOW, COLOR_BACK_DARK_2_SIGN);
 
-        init_pair(5, 33, COLOR_BACK_DARK_1);
-        init_pair(45, 33, COLOR_BACK_DARK_2);
+        init_pair(5, 33, COLOR_BACK_DARK_1_SIGN);
+        init_pair(45, 33, COLOR_BACK_DARK_2_SIGN);
 
+        init_pair(65, COLOR_MAGENTA, COLOR_BACK_DARK_1_SIGN);
+        init_pair(66, COLOR_MAGENTA, COLOR_BACK_DARK_2_SIGN);
+
+        
         init_pair(6, COLOR_WHITE, COLOR_BLACK);
         init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
         init_pair(8, 33, COLOR_BLACK); // blue
@@ -7237,21 +7248,26 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(64, COLOR_WHITE, COLOR_BACK_DARK_2);
     } 
     else {
-        init_pair(1, COLOR_BLACK, COLOR_BACK_1);
-        init_pair(46, COLOR_BLACK, COLOR_BACK_2);
+        init_pair(1, COLOR_BLACK, COLOR_BACK_1_SIGN);
+        init_pair(46, COLOR_BLACK, COLOR_BACK_2_SIGN);
 
-        init_pair(2, 196, COLOR_BACK_1); // red
-        init_pair(42, 196, COLOR_BACK_2); // red
+        init_pair(2, 196, COLOR_BACK_1_SIGN); // red
+        init_pair(42, 196, COLOR_BACK_2_SIGN); // red
 
-        init_pair(3, 28, COLOR_BACK_1); // verde
-        init_pair(43, 28, COLOR_BACK_2); // verde
+        init_pair(3, 28, COLOR_BACK_1_SIGN); // verde
+        init_pair(43, 28, COLOR_BACK_2_SIGN); // verde
 
-        init_pair(4, 136, COLOR_BACK_1); // amarelo
-        init_pair(44, 136, COLOR_BACK_2); // amarelo
+        init_pair(4, 136, COLOR_BACK_1_SIGN); // amarelo
+        init_pair(44, 136, COLOR_BACK_2_SIGN); // amarelo
 
-        init_pair(5, 21, COLOR_BACK_1); // azul
-        init_pair(45, 21, COLOR_BACK_2); // azul
+        init_pair(5, 21, COLOR_BACK_1_SIGN); // azul
+        init_pair(45, 21, COLOR_BACK_2_SIGN); // azul
 
+        init_pair(65, 199, COLOR_BACK_1_SIGN); // magenta
+        init_pair(66, 199, COLOR_BACK_2_SIGN); // magenta
+
+        
+        
         init_pair(6, COLOR_BLACK, 223);
         init_pair(7, COLOR_MAGENTA, 223); // magenta
         init_pair(8, 21, 223); // azul
@@ -7267,6 +7283,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(14, COLOR_WHITE, COLOR_BLACK);
         init_pair(15, 226, 25); // amarelo / azul
 
+
+
         init_pair(16, COLOR_BLACK, COLOR_BACK_1);
         init_pair(47, COLOR_BLACK, COLOR_BACK_2);
 
@@ -7275,6 +7293,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         init_pair(18, 21, COLOR_BACK_1); // azul
         init_pair(49, 21, COLOR_BACK_2); // azul
+
 
         init_pair(19, COLOR_BACK_1, COLOR_BACK_1); // branco/cinza claro
         init_pair(20, COLOR_WHITE, COLOR_BLUE);

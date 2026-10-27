@@ -679,6 +679,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     wattroff(table_win, A_BOLD);
 
     // Instruções de encerramento da janela
+    mvwprintw(table_win, table_height - 2, table_width - 50, _("        Press [i] to Open Interpretation Window"));
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart - [i] to open interpretation window"));
     
     wnoutrefresh(table_win);

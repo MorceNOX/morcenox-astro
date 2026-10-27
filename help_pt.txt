@@ -662,9 +662,13 @@ A tela do mapa também exibe informações detalhadas enquanto mostra a roda e o
 
 Logo abaixo dos dados principais podemos ver os horários do nascer e do pôr do sol, bem como a duração das horas diurna e noturna.
 
-A roda é dividida em 12 segmentos ou fatias, exibidas em cores alternadas, cada uma representando um signo.
+A roda é dividida, no seu círculo mais externo, em 12 segmentos ou fatias, exibidas em cores alternadas, cada uma representando um signo do zodíaco.
 
 Os símbolos dos 12 signos do zodíaco são exibidos proeminentemente em arte ASCII, cada um dentro da sua respectiva fatia da roda astrológica.
+
+Abaixo dos signos, há um círculo mais interno também dividido em 12 fatias ou segmentos, representando as casas.
+
+Os planetas e outros corpos celestes estão devidamente plotados dentro desses casas, cada um com seu glifo e a indicação de sua posição por graus e minutos dentro do respectivo signo, além do símbolo indicando movimento retrógrado, se aplicável.
 
 Os dois eixos principais, Horizonte (Ascendente/Descendente) e Meridiano (Meio-do-Céu/Fundo-do-Céu) são, também, exibidos em destaque na roda do mapa.
 
@@ -675,8 +679,6 @@ Você também pode visualizar os regentes dos termos ao pressionar a tecla [B]. 
 São cinco termos por signo e seus graus variam conforme o sistema de termos previamente definido nas configurações do programa.
 
 Dessa forma, é possível visualizar graficamente os regentes por termo ou decanato de um planeta ou outro ponto dentro da roda.
-
-Abaixo do símbolo dos signos, os planetas e pontos giram com a roda astrológica, cada um dentro de seu respectivo signo, exibindo seu glifo, seu ângulo (grau e minuto) e o sinal de retrógrado (se aplicável). 
 
 Do 3º nível de zoom em diante, o símbolo do respectivo signo também aparecerá para cada planeta (ou ponto), sendo exibido no espaço do meio entre o grau e o minuto.
 

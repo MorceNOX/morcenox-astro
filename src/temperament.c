@@ -633,7 +633,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     int eixo_calor = score.total_quente - score.total_frio;
     int eixo_umidade = score.total_umido - score.total_seco;
 
-    bool balanced_temperament = (eixo_calor + eixo_umidade == 0) || ((abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0));
+    bool balanced_temperament = ((abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0));
 
 
     wattron(table_win, COLOR_PAIR(13));
@@ -748,6 +748,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     }
 
     /* ATUALIZADO: Mensagem amigável avisando da nova funcionalidade */
+    mvwprintw(table_win, table_height - 2, table_width - 50, _("        Press [i] to Open Interpretation Window"));
     mvwprintw(table_win, table_height - 1, 2, _("Press [i] for Full Text Interpretation | ESC/q to Return"));
     wnoutrefresh(table_win);
 
@@ -806,7 +807,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
 
 void abrir_janela_interpretacao_temperamento(ScoreTemperament score, ItemTemperamento *lista, int eixo_calor, int eixo_umidade) {
     
-    bool balanced_temperament = (eixo_calor + eixo_umidade == 0) || ((abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0));
+    bool balanced_temperament = ((abs(eixo_calor - eixo_umidade) == 1) && (eixo_calor == 0 || eixo_umidade == 0));
 
     int p_max_y, p_max_x;
     getmaxyx(stdscr, p_max_y, p_max_x); 

@@ -671,7 +671,11 @@ The chart screen also displays detailed information while showing the wheel and 
 
 Just below the main data, we can see the sunrise and sunset times, as well as the duration of daylight and nighttime hours.
 
-The wheel is divided into 12 segments representing the signs. The 12 zodiac sign symbols are displayed prominently using ASCII art each one in its respective segment.
+The wheel is divided in the outer circle into 12 coloured segments, which represent the zodiac signs. The 12 zodiac sign symbols are displayed prominently using ASCII art, each one in its respective segment.
+
+Below the signs divisions are another circle also divided into 12 segments, which represent the houses.
+
+The planets and other bodies are plotted inside the houses segments, each one showing its glyph and its position by degree and minutes inside the respective sign, and the retrograde symbol, if applicable.
 
 The two main axes — Horizon (Ascendant/Descendant) and Meridian (Midheaven/Imum Coeli) — are also prominently displayed on the chart wheel.
 
@@ -684,8 +688,6 @@ Each term ruler is drawn in the beggining of its term.
 There are five terms by sign and their degrees vary according to the chosen system, which can be managed in the program settings.
 
 This way you can graphically see the rulers by term and decan of a body in the chart wheel.
-
-Below the sign symbols, planets and points rotate within the astrological wheel, each one inside its respective sign, displaying its glyph, its angle (degree and minutes), and the retrograde symbol (if applicable). 
 
 From zoom level 3 onwards, the symbol of the corresponding sign will also appear for each planet (or point), being positioned at the space between the degree and the minute.
 
