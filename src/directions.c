@@ -32,7 +32,6 @@
 #include "directions.h"
 #include "draw-chart.h"
 #include "hyleg.h"
-#include "arabic_parts.h"
 
 #ifndef SE_KEEP_GREG_CAL
 #define SE_KEEP_GREG_CAL 2 /* 0 = Juliano, 1 = Gregoriano, 2 = Misto automático */
@@ -434,6 +433,202 @@ int processar_astro(double ramc, double lat_geo, Promissor *astro) {
 }
 
 
+
+double ra_2_long(double ra, double e) {
+    if (ra == 90 || ra == 270) return ra;
+
+    double x = atan(tan(ra * DEG_TO_RAD) / cos(e * DEG_TO_RAD)) * RAD_TO_DEG;
+
+    if (ra < 0) ra += 360;
+    if (ra > 360) ra -= 360;
+
+    if (ra >= 0 && ra < 90) return x;
+    if (ra > 90 && ra < 270) return x + 180;
+    if (ra > 270 && ra < 360) return x + 360;
+
+    return 0.0;
+}
+
+
+double long_2_dec(double lon, double e) {
+    return asin(sin(lon * DEG_TO_RAD) * sin(e * DEG_TO_RAD)) * RAD_TO_DEG;
+}
+
+double long_lat_2_dec(double lon, double lat, double e) {
+    return asin(cos((e * DEG_TO_RAD) * sin(lat * DEG_TO_RAD)) + (sin(e * DEG_TO_RAD) * cos(lat * DEG_TO_RAD) * sin(lon * DEG_TO_RAD))) * RAD_TO_DEG;
+}
+
+
+void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
+    double obl = get_obliquidade(jd);
+    double lat_rad = lat * M_PI / 180.0;
+
+    double arc = 0.0;
+    double k = 0.0;
+    double t = 0.0;
+    double r = 0.0;
+
+    processar_astro(ramc, lat, pp);
+    processar_astro(ramc, lat, sig);
+    processar_astro(ramc, lat, trig);
+
+    //if (pp->pm == 0.0) show_alert_popup(pp->object, "zero pm");
+
+    arc = pp->pm + sig->pm - trig->pm;
+    
+    double ra_ic = ramc + 180.0;
+    if (arc < 180.0) {
+        r = ra_ic;
+        k = (arc - 90.0) / 90.0;
+        t = 1.0;
+        lot_m->ra = ra_ic + arc - 90.0;
+    }
+    else if (arc >= 180.0) {
+        r = ramc;
+        k = (arc -270.0) / 90.0;
+        t = -1.0;
+        lot_m->ra = ramc + arc - 270.0;
+    }
+
+    for (int i = 0; i < 10; i++) {    
+        lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+    }
+    lot_m->longitude = normalize360(ra_2_long(lot_m->ra, obl));
+    lot_m->declination = long_2_dec(lot_m->longitude, obl);
+ 
+    lot_m->latitude = 0.0; 
+
+    snprintf(lot_m->house, sizeof(lot_m->house), "%s", get_house_roman(lot_m->longitude, cusps));
+    int n_house = get_house(lot_m->longitude, cusps);;
+    lot_m->house_pos = (double)n_house + normalize360(lot_m->longitude - cusps[n_house]) / normalize360(cusps[(n_house == 12) ? 1 : n_house + 1] - cusps[n_house]);
+
+    lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+
+    lot_m->md = fabs(lot_m->ra - ramc);
+    if (lot_m->md > 180.0) lot_m->md = 360.0 - lot_m->md;
+
+    double sa_lot = (lot_m->house_pos >= 7.0 && lot_m->house_pos < 13.0) ? lot_m->sa.sad : lot_m->sa.san;
+    lot_m->pm = (sa_lot > 0.0) ? (lot_m->md / sa_lot) : 0.0;
+}
+
+
+
+
+
+void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor *pp, bool flip, double ramc, double jd, double lat, double *cusps, Promissor *lot_m) {
+    double obl = get_obliquidade(jd);
+    double lat_rad = lat * M_PI / 180.0;
+
+    double sol_md = fabs(sol->ra - ramc);
+    if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+    double sol_dec_rad = sol->declination * M_PI / 180.0;
+    double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+    double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+    int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+
+    double arc = 0.0;
+    double k = 0.0;
+    double t = 0.0;
+    double r = 0.0;
+
+    processar_astro(ramc, lat, pp);
+    processar_astro(ramc, lat, sig);
+    processar_astro(ramc, lat, trig);
+
+    if (flip && sol_acima) {
+        arc = pp->pm + sig->pm - trig->pm;
+    } else if (flip && !sol_acima) {
+        arc = pp->pm + trig->pm - sig->pm;
+    } else if (!flip) {
+        arc = pp->pm + sig->pm - trig->pm;
+    }
+
+    double ra_ic = ramc + 180.0;
+    if (arc < 180.0) {
+        r = ra_ic;
+        k = (arc - 90.0) / 90.0;
+        t = 1.0;
+        lot_m->ra = ra_ic + arc - 90.0;
+    }
+    else if (arc >= 180.0) {
+        r = ramc;
+        k = (arc -270.0) / 90.0;
+        t = -1.0;
+        lot_m->ra = ramc + arc - 270.0;
+    }
+
+    for (int i = 0; i < 10; i++) {    
+        lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+    }
+    lot_m->longitude = normalize360(ra_2_long(lot_m->ra, obl));
+    lot_m->declination = long_2_dec(lot_m->longitude, obl);
+ 
+    lot_m->latitude = 0.0; 
+
+    lot_m->house = (int)get_house(lot_m->longitude, cusps);
+    lot_m->house_pos = (double)lot_m->house + normalize360(lot_m->longitude - cusps[lot_m->house]) / normalize360(cusps[(lot_m->house == 12) ? 1 : lot_m->house + 1] - cusps[lot_m->house]);
+
+    lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+}
+
+
+
+
+
+
+
+
+void calc_mundane_lof(Promissor *sol, Promissor *lua, double ramc, double jd, double lat, double *cusps, Promissor *fortune_m) {
+    double obl = get_obliquidade(jd);
+    double lat_rad = lat * M_PI / 180.0;
+    //char serr[256];
+
+    double sol_md = fabs(sol->ra - ramc);
+    if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+    double sol_dec_rad = sol->declination * M_PI / 180.0;
+    double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+    double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+    int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+    
+    double arc = 0.0;
+    double k = 0.0;
+    double t = 0.0;
+    double r = 0.0;
+
+    if (sol_acima) {
+        arc = lua->longitude - sol->longitude;
+    } else {
+        arc = sol->longitude - lua->longitude;
+    }
+    
+    double ra_ic = ramc + 180.0;
+    if (arc < 180.0) {
+        r = ra_ic;
+        k = (arc - 90.0) / 90.0;
+        t = 1.0;
+        fortune_m->ra = ra_ic + arc - 90.0;
+    }
+    else if (arc > 180.0) {
+        r = ramc;
+        k = (arc -270.0) / 90.0;
+        t = -1.0;
+        fortune_m->ra = ramc + arc - 270.0;
+    }
+
+    for (int i = 0; i < 10; i++) {    
+        fortune_m->ra = normalize360(r + k * acos(t * sin(fortune_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+    }
+    fortune_m->longitude = ra_2_long(fortune_m->ra, obl);
+    fortune_m->declination = long_2_dec(fortune_m->longitude, obl);
+
+
+    fortune_m->latitude = 0.0; 
+
+    fortune_m->house = (int)get_house(fortune_m->longitude, cusps);
+    fortune_m->house_pos = (double)fortune_m->house + normalize360(fortune_m->longitude - cusps[fortune_m->house]) / normalize360(cusps[(fortune_m->house == 12) ? 1 : fortune_m->house + 1] - cusps[fortune_m->house]);
+
+    fortune_m->sa = calcular_semi_arcos(lat, fortune_m->declination);
+}
 
 
 
@@ -1648,7 +1843,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
     double tan_polo_sig = tan(lat_geo_rad) * ph_sig;
 
     
-    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
 
 
     for (int p = 0; p < total_promissores; p++) {
@@ -1657,9 +1852,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        else {
-            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        }
+        // else {
+        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        // }
         
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -1975,7 +2170,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
     // =========================================================================
     double tan_polo_sig = tan(lat_geo_rad) * sin(dm_sig_rad);
 
-    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
 
     for (int p = 0; p < total_promissores; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
@@ -1983,9 +2178,9 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        else {
-            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        }
+        // else {
+        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        // }
         
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -2286,7 +2481,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
     int total_aspects = 10;
 
-    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
 
 
 
@@ -2296,9 +2491,9 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        else {
-            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        }
+        // else {
+        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        // }
 
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -2724,10 +2919,10 @@ const char* get_key_name(int key) {
         case TIME_KEY_CARDANO:                           return _("Cardano");
         case TIME_KEY_PTOLEMY:                           return _("Ptolemy");
         case TIME_KEY_PLACIDUS:                          return "Placidus";
-        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return _("True Solar Ecliptical Arc (Birthday)");           
-        case TIME_KEY_KEPLER:                            return _("True Solar Ecliptical Arc");
-        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return _("True Solar Equatorial Arc");
-        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return _("True Solar Equatorial Arc (Birthday)");
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return _("True Solar Arc in Longitude (Birthday)");           
+        case TIME_KEY_KEPLER:                            return _("True Solar Arc in Longitude");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return _("True Solar Arc in RA");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return _("True Solar Arc in RA (Birthday)");
         default: return "Naibod";
     }
 }
@@ -3835,9 +4030,9 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     
     keypad(table_win, TRUE); // Habilita o teclado para capturar as 4 setas
 
-    ArabicPartCalculada lista_partes[MAX_PARTS] = {0};
+    ArabicPartCalculadaDirections *lista_partes = (ArabicPartCalculadaDirections *)calloc(MAX_PARTS, sizeof(ArabicPartCalculadaDirections));
 
-    int qtd_partes = load_and_calculate_arabic_parts(obj, num_objects, cusps, lista_partes);
+    int qtd_partes = load_and_calculate_mundane_arabic_parts(obj, num_objects, cusps, ramc, lat, jd, lista_partes);
 
     int indices_significadores[qtd_partes];
     int idx_fortuna = 0;
@@ -3860,15 +4055,15 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     Promissor *sig = (Promissor *)calloc(qtd_partes, sizeof(Promissor));
 
 
-    char house_system_pd = HOUSE_SYSTEM;
-    if (HOUSE_SYSTEM == 'E' || HOUSE_SYSTEM == 'W' || HOUSE_SYSTEM == 'M') {
-        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-            house_system_pd = 'T';
-        }
-        else {
-            house_system_pd = HOUSE_SYSTEM;
-        }
-    }
+    //char house_system_pd = HOUSE_SYSTEM;
+    // if (HOUSE_SYSTEM == 'E' || HOUSE_SYSTEM == 'W' || HOUSE_SYSTEM == 'M') {
+    //     if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+    //         house_system_pd = 'T';
+    //     }
+    //     else {
+    //         house_system_pd = HOUSE_SYSTEM;
+    //     }
+    // }
 
     for (int i = 0; i < qtd_partes; i++) {
         char abrev[10];
@@ -3881,27 +4076,40 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         sig[i].longitude = lista_partes[i].longitude;            
         sig[i].latitude = 0.0; // Rigorosamente 0.0 na eclíptica
         
-        double xx_in[3], xx_out[3];
-        xx_in[0] = sig[i].longitude;
-        xx_in[1] = sig[i].latitude;
-        xx_in[2] = 1.0;
+        sig[i].declination = lista_partes[i].declination;
+        sig[i].ra = lista_partes[i].ra;
 
-        double true_obliquity = get_obliquidade(jd);
+        // double xx_in[3], xx_out[3];
+        // xx_in[0] = sig[i].longitude;
+        // xx_in[1] = sig[i].latitude;
+        // xx_in[2] = 1.0;
 
-        swe_cotrans(xx_in, xx_out, -true_obliquity);
-        sig[i].declination = xx_out[1];
-        sig[i].ra = xx_out[0];
+        // double true_obliquity = get_obliquidade(jd);
+
+        // swe_cotrans(xx_in, xx_out, -true_obliquity);
+        // sig[i].declination = xx_out[1];
+        // sig[i].ra = xx_out[0];
         
-        sig[i].house = get_house(sig[i].longitude, cusps);
-        sig[i].type = PROM_PART;
+        // sig[i].house = get_house(sig[i].longitude, cusps);
+        // sig[i].type = PROM_PART;
 
-        double x2[6];
-        char serr[256];
-        x2[0] = sig[i].longitude;
-        x2[1] = sig[i].latitude;
-        sig[i].house_pos = swe_house_pos(ramc, lat, true_obliquity, house_system_pd, x2, serr);        
+        // double x2[6];
+        // char serr[256];
+        // x2[0] = sig[i].longitude;
+        // x2[1] = sig[i].latitude;
+
+        sig[i].house = romanToInt(lista_partes[i].house);
+        sig[i].house_pos = lista_partes[i].house_pos; //swe_house_pos(ramc, lat, true_obliquity, house_system_pd, x2, serr);
+        sig[i].md = lista_partes[i].md;
+        sig[i].hd = lista_partes[i].ph;
+        sig[i].pm = lista_partes[i].pm;
+        sig[i].sa = lista_partes[i].sa;
+
+        //calc_mundane_lot(&prom[0], &lista_partes[i].sig_o, &lista_partes[i].trig_o, &lista_partes[i].pp_o, false, ramc, jd, lat, cusps, &sig[i]);
+
     }
 
+    free(lista_partes);
 
     int seletor_alvo_atual = 0; 
     int scroll_offset = 0; // Controla qual linha virtual será a primeira a aparecer na tela
@@ -4782,6 +4990,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         free(cronograma);
     }
+    free(sig);
     
     delwin(shadow_win);
     delwin(table_win);

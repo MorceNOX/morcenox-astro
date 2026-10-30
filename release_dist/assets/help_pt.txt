@@ -1728,6 +1728,8 @@ Idêntico ao módulo anterior, mas aqui calculamos e exibimos as direções apen
 
 Em um mapa masculino, apenas partes masculinas e neutras são exibidas; para mapas noturnos, as partes exibidas são calculadas de acordo com suas fórmulas noturnas.
 
+As Partes Árabes neste módulo são calculadas de acordo com as fórmulas das Posições Mundanas de Placidus para Partes Árabes. Portanto, as longitudes destas partes são diferentes das suas contrapartes eclípticas.
+
 O mesmo código de cores das direções gerais pode ser visto neste módulo.
 
 Essas direções também exibem um senhor-do-tempo, ou Divisor, que é o regente do atual termo cujos limites foram alcançados pela Parte da Fortuna direcionada, em vez do Ascendente, da mesma forma que ocorre com o Ascendente no módulo anterior de Direções Primárias.

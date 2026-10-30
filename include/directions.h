@@ -55,15 +55,6 @@ typedef enum {
 #define RAD_TO_DEG (180.0 / M_PI)
 #define DEG_TO_RAD (M_PI / 180.0)
 
-/**
- * Estrutura para retornar ambos os semi-arcos calculados
- */
-typedef struct {
-    double sad; // Semi-Arco Diurno (em graus)
-    double san; // Semi-Arco Noturno (em graus)
-} SemiArcos;
-
-
 typedef struct {
     double ra;
     double dec;
@@ -73,27 +64,6 @@ typedef struct {
     double pm; // Posição Mundana de Placidus (0° a 360°)
 } DadosAstro;
 
-
-typedef struct {
-    int id;
-    char object[10];
-    char object_name[64];
-    double longitude;
-    double latitude;
-    double ra;
-    int house;
-    double declination;
-    double longitude_fim;
-    double ra_fim;
-    double dec_fim;
-    int house_fim;
-    int type;
-    double house_pos;
-    SemiArcos sa;
-    double md;
-    double hd;
-    double pm; // Posição Mundana de Placidus (0° a 360°)
-} Promissor;
 
 typedef struct {
     int promissor_id;
@@ -126,12 +96,15 @@ const char* get_key_name(int key);
 double get_obliquidade(double jd);
 double obter_ano_tropical_dinamico(double jd_natal);
 
-void calc_swe_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double armc, double lat, double jd, Promissor *fortune_m);
+void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m);
+void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor *pp, bool flip, double ramc, double jd, double lat, double *cusps, Promissor *lot_m);
+void calc_mundane_lof(Promissor *sol, Promissor *lua, double ramc, double jd, double lat, double *cusps, Promissor *fortune_m);
 void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m);
 void carregar_parte_fortuna_mundana(Promissor *sol, Promissor *lua, double jd, double ramc, double lat_geo, Promissor *fortuna_m);
 void calcular_coordenadas_equatoriais_reversas(double pm, double ramc, double lat_geo, double *out_ra, double *out_dec);
 double calcular_parte_fortuna_mundana(double pm_sol, double pm_lua, int sol_esta_acima);
 void calcular_coordenadas_equatoriais_reversas(double pm, double ramc, double lat_geo, double *out_ra, double *out_dec);
+void injetar_constantes_mundanas_por_casa(int house_number, Promissor *astro);
 int verificar_se_acima_horizonte(double ra_planeta, double dec_planeta_rad, double ramc, double lat_geo_rad);
 double __calcular_semi_arco(double dec_rad, double lat_rad, int esta_acima);
 double _calcular_semi_arco(double dec_rad, double lat_geografica_rad, int acima_do_horizonte);

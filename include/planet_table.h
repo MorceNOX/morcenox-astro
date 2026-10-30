@@ -71,7 +71,11 @@ typedef struct {
 typedef struct {
     int id;
     double longitude;
+    double latitude;
+    double declination;
+    double ra;
     int house;
+    double house_pos;
     int type;
     char object[10];
     char object_name[30];
@@ -158,6 +162,39 @@ typedef struct {
     int temperature;
     int moisture;
 } PrimitiveProperties;
+
+/**
+ * Estrutura para retornar ambos os semi-arcos calculados
+ */
+typedef struct {
+    double sad; // Semi-Arco Diurno (em graus)
+    double san; // Semi-Arco Noturno (em graus)
+} SemiArcos;
+
+
+
+typedef struct {
+    int id;
+    char object[10];
+    char object_name[64];
+    double longitude;
+    double latitude;
+    double ra;
+    int house;
+    double declination;
+    double longitude_fim;
+    double ra_fim;
+    double dec_fim;
+    int house_fim;
+    int type;
+    double house_pos;
+    SemiArcos sa;
+    double md;
+    double hd;
+    double pm; // Posição Mundana de Placidus (0° a 360°)
+} Promissor;
+
+
 
 #define DOMICILE 2
 #define EXALTATION 1

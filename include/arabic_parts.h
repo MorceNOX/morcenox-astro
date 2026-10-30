@@ -34,6 +34,33 @@ typedef struct {
     char description[512];
 } ArabicPartFormula;
 
+
+
+typedef struct {
+    Promissor pp_o;
+    Promissor sig_o;
+    Promissor trig_o;
+    char name[64];
+    double longitude;
+    double latitude;
+    double declination;
+    double ra;
+    double pm;
+    double md;
+    double ph;
+    double house_pos;
+    SemiArcos sa;
+    char house[8];
+    char lord[10];
+    char link[10];
+    char link2[10];
+    char pp[20];
+    char sig[20];
+    char trig[20];
+    char description[512];
+} ArabicPartCalculadaDirections;
+
+
 typedef struct {
     char name[64];
     double longitude;
@@ -65,6 +92,7 @@ typedef struct {
 void get_part_abbreviation(char *name, char *abreviacao);
 double get_longitude_by_id(int id, int num_objects, ChartObject *obj);
 int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *cusps, ArabicPartCalculada *lista_resultado);
+int load_and_calculate_mundane_arabic_parts(ChartObject *obj, int num_objects, double *cusps, double ramc, double lat, double jd, ArabicPartCalculadaDirections *lista_resultado);
 void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects);
 void display_arabic_parts_solar_natal_confrontation(ChartObject *obj, double *cusps, int num_objects, double *cusps_natal, ChartObject *obj_natal);
 int obter_id_parte_por_nome(const char *name_lote);

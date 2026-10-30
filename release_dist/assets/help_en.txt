@@ -1769,6 +1769,8 @@ Identical to the previous module, but here we calculate and display the directio
 
 In a masculine chart only masculine and neutral parts are displayed; for nocturnal charts, the displayed parts are calculated according to their nocturnal formulae.
 
+The Arabic Parts in this module are calculated according to the Placidus Mundane Positions formulae. So their longitude here are different of their ecliptical counterparts.
+
 The same color coding of the general directions can be seen in this module.
 
 These directions also displays a time-lord, or Divisor, which is the regent of the current term whose boundaries were reached by the directed Part of Fortune, instead of the Ascendant, the same way it occurs with the Ascendant in the previous Primary Directions module.

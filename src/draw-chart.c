@@ -4393,9 +4393,9 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     double san_sec_decimal = (((sanHour - san_h) * 60.0) - san_min) * 60.0;
     int san_seconds = (int)san_sec_decimal;
     
-    if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattron(table_win, A_REVERSE);
+    //if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattron(table_win, A_REVERSE);
     mvwprintw(table_win, 18, 80, "%s %04d/%02d/%02d (%02d:%02d:%02d) Local", plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, san_h, san_min, san_seconds);
-    if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattroff(table_win, A_REVERSE);
+    //if (strcmp(plots[P_SAN - object_diff].object, "🌕") == 0) wattroff(table_win, A_REVERSE);
 
     if (strcmp(plots[P_SAN - object_diff].object, "🌑") == 0) {
         mvwprintw(table_win, 19, 80, _("Conjunctional pre-natal syzygy - New Moon"));
@@ -9350,6 +9350,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             for (int j = 0; j < NUM_OBJECTS; j++) {
                 if (obj[i].id == plotsA[j].id + 1 && obj[i].longitude == 0.0) {
                     obj[i].longitude = plotsA[j].longitude;
+                    obj[i].latitude = plotsA[j].latitude;
+                    obj[i].declination = plotsA[j].declination;
+                    obj[i].ra = plotsA[j].ra;
                     obj[i].house = get_house(plotsA[j].longitude, cusps);
                     break;
                 }
@@ -9487,8 +9490,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         snprintf(fortuna_m.object, 10, "%s", "🜨");
         snprintf(fortuna_m.object_name, 30, "%s", _("Mundane Part of Fortune"));
 
-        double ra_asc = plots[P_ASC - object_diff].ra;
-        calc_mundane_lot_of_fortune(&sig[0], &sig[1], ra_asc, armc, lat, julian_day, &fortuna_m);
+        fortuna_m.type = PROM_PART;
+
+        calc_mundane_lot(&sig[0], &sig[1], &sig[0], &sig[P_ASC - object_diff], true, armc, julian_day, lat, cusps, &fortuna_m);
 
         sig[sig_id] = fortuna_m;
         sig[sig_id].id = sig_id;
@@ -9518,7 +9522,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             sig[sig_id].ra = xequat[0];
             sig[sig_id].house = i;
             sig[sig_id].type = PROM_CUSP;
-            
+           
             sig_id++;
         }
         free(hc);

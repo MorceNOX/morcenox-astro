@@ -42,6 +42,50 @@ typedef unsigned int wint_t;
 #endif
 
 
+double get_latitude_by_id(int id, int num_objects, ChartObject *obj) {
+  
+    if (id >= 1 && id <= 7) {
+        return obj[id - 1].latitude;
+    }
+    
+    for (int i = 0; i < num_objects; i++) {        
+        if (obj[i].id == id) {
+            return obj[i].latitude;
+        }
+    }
+    return 0.0;
+}
+
+double get_declination_by_id(int id, int num_objects, ChartObject *obj) {
+  
+    if (id >= 1 && id <= 7) {
+        return obj[id - 1].declination;
+    }
+    
+    for (int i = 0; i < num_objects; i++) {        
+        if (obj[i].id == id) {
+            return obj[i].declination;
+        }
+    }
+    return 0.0;
+}
+
+double get_ra_by_id(int id, int num_objects, ChartObject *obj) {
+  
+    if (id >= 1 && id <= 7) {
+        return obj[id - 1].ra;
+    }
+    
+    for (int i = 0; i < num_objects; i++) {        
+        if (obj[i].id == id) {
+            return obj[i].ra;
+        }
+    }
+    return 0.0;
+}
+
+
+
 
 // Função utilitária para rastrear a longitude de um objeto pelo ID (1 a 16)
 double get_longitude_by_id(int id, int num_objects, ChartObject *obj) {
@@ -58,6 +102,59 @@ double get_longitude_by_id(int id, int num_objects, ChartObject *obj) {
     return 0.0;
 }
 
+
+
+
+
+double get_latitude_by_symbol(char *s, int num_objects, ChartObject *obj) {
+  
+    for (int i = 0; i < num_objects; i++) {        
+        if (strcmp(obj[i].object, s) == 0) {
+            return obj[i].latitude;
+        }
+    }
+    return 0.0;
+}
+
+double get_declination_by_symbol(char *s, int num_objects, ChartObject *obj) {
+  
+    for (int i = 0; i < num_objects; i++) {        
+        if (strcmp(obj[i].object, s) == 0) {
+            return obj[i].declination;
+        }
+    }
+    return 0.0;
+}
+
+double get_ra_by_symbol(char *s, int num_objects, ChartObject *obj) {
+  
+    for (int i = 0; i < num_objects; i++) {        
+        if (strcmp(obj[i].object, s) == 0) {
+            return obj[i].ra;
+        }
+    }
+    return 0.0;
+}
+
+
+
+
+// Função utilitária para rastrear a longitude de um objeto pelo ID (1 a 16)
+double get_longitude_by_symbol(char *s, int num_objects, ChartObject *obj) {
+  
+    for (int i = 0; i < num_objects; i++) {        
+        if (strcmp(obj[i].object, s) == 0) {
+            return obj[i].longitude;
+        }
+    }
+    return 0.0;
+}
+
+
+
+
+
+
 int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *cusps, ArabicPartCalculada *lista_resultado) {
     int qtd_partes = 0;
     sqlite3_stmt *stmt;
@@ -68,7 +165,7 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
             "ap.diurnal_personal_point, ap.diurnal_significator, ap.diurnal_trigger, "
             "ap.nocturnal_personal_point, ap.nocturnal_significator, ap.nocturnal_trigger, "
             "obj_d_pp.symbol, obj_d_sig.symbol, obj_d_trig.symbol, "
-            "obj_n_pp.symbol, obj_n_sig.symbol, obj_n_trig.symbol "
+            "obj_n_pp.symbol, obj_n_sig.symbol, obj_n_trig.symbol "            
         "FROM arabic_parts AS ap "
         "LEFT JOIN objects AS obj_d_pp   ON ap.diurnal_personal_point = obj_d_pp.id "
         "LEFT JOIN objects AS obj_d_sig  ON ap.diurnal_significator = obj_d_sig.id "
@@ -120,6 +217,7 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
         double lon_sig      = get_longitude_by_id(id_sig, num_objects, obj);
         double lon_trigger  = get_longitude_by_id(id_trigger, num_objects, obj);
 
+
         // Aritmética hermética: Parte = Personal + Significator - Trigger
         double total_lon = lon_personal + lon_sig - lon_trigger;
 
@@ -154,6 +252,186 @@ int load_and_calculate_arabic_parts(ChartObject *obj, int num_objects, double *c
     sqlite3_finalize(stmt);
     return qtd_partes; // Retorna o total de partes processadas de forma legítima
 }
+
+
+
+
+int load_and_calculate_mundane_arabic_parts(ChartObject *obj, int num_objects, double *cusps, double ramc, double lat, double jd, ArabicPartCalculadaDirections *lista_resultado) {
+    int qtd_partes = 0;
+    sqlite3_stmt *stmt;
+    
+    const char *query = 
+        "SELECT "
+            "ap.name, ap.description, ap.link, ap.link2, "
+            "ap.diurnal_personal_point, ap.diurnal_significator, ap.diurnal_trigger, "
+            "ap.nocturnal_personal_point, ap.nocturnal_significator, ap.nocturnal_trigger, "
+            "obj_d_pp.symbol, obj_d_sig.symbol, obj_d_trig.symbol, "
+            "obj_n_pp.symbol, obj_n_sig.symbol, obj_n_trig.symbol, "
+            "obj_d_pp.type, obj_d_sig.type, obj_d_trig.type, "
+            "obj_n_pp.type, obj_n_sig.type, obj_n_trig.type "
+        "FROM arabic_parts AS ap "
+        "LEFT JOIN objects AS obj_d_pp   ON ap.diurnal_personal_point = obj_d_pp.id "
+        "LEFT JOIN objects AS obj_d_sig  ON ap.diurnal_significator = obj_d_sig.id "
+        "LEFT JOIN objects AS obj_d_trig ON ap.diurnal_trigger = obj_d_trig.id "
+        "LEFT JOIN objects AS obj_n_pp   ON ap.nocturnal_personal_point = obj_n_pp.id "
+        "LEFT JOIN objects AS obj_n_sig  ON ap.nocturnal_significator = obj_n_sig.id "
+        "LEFT JOIN objects AS obj_n_trig ON ap.nocturnal_trigger = obj_n_trig.id "
+        "WHERE ap.gender_id = ?1 OR ap.gender_id = ?2;";
+
+    int rc = sqlite3_prepare_v2(global_db, query, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        return 0;
+    }
+
+    sqlite3_bind_int(stmt, 1, 3);
+    sqlite3_bind_int(stmt, 2, GENDER);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        ArabicPartCalculadaDirections *p = &lista_resultado[qtd_partes];
+        
+        // Coleta o nome e a descrição textuais
+        strcpy(p->name, (const char *)sqlite3_column_text(stmt, 0));
+        strcpy(p->description, (const char *)sqlite3_column_text(stmt, 1));
+        strcpy(p->link, (const char *)sqlite3_column_text(stmt, 2));
+        strcpy(p->link2, (const char *)sqlite3_column_text(stmt, 3));
+
+        // Seleção dinâmica dos fatores (Personal, Significator, Trigger) baseada na SEITA global
+        int id_personal, id_sig, id_trigger;
+        int pp_type, sig_type, trig_type;
+        //char pp[20], sig[20], trig[20];
+
+        if (MAPA_DIURNO_GEOMETRICO) {
+            id_personal = sqlite3_column_int(stmt, 4);
+            id_sig      = sqlite3_column_int(stmt, 5);
+            id_trigger  = sqlite3_column_int(stmt, 6);
+            strcpy(p->pp, (const char *)sqlite3_column_text(stmt, 10));
+            strcpy(p->sig, (const char *)sqlite3_column_text(stmt, 11));
+            strcpy(p->trig, (const char *)sqlite3_column_text(stmt, 12));
+            pp_type     = sqlite3_column_int(stmt, 16);
+            sig_type    = sqlite3_column_int(stmt, 17);
+            trig_type   = sqlite3_column_int(stmt, 18);
+        } else {
+            id_personal = sqlite3_column_int(stmt, 7);
+            id_sig      = sqlite3_column_int(stmt, 8);
+            id_trigger  = sqlite3_column_int(stmt, 9);
+            strcpy(p->pp, (const char *)sqlite3_column_text(stmt, 13));
+            strcpy(p->sig, (const char *)sqlite3_column_text(stmt, 14));
+            strcpy(p->trig, (const char *)sqlite3_column_text(stmt, 15));
+            pp_type     = sqlite3_column_int(stmt, 19);
+            sig_type    = sqlite3_column_int(stmt, 20);
+            trig_type   = sqlite3_column_int(stmt, 21);
+        }
+
+        switch (pp_type) {
+            case OBJ_PLANET:        p->pp_o.type = PROM_PLANET; break;
+            case OBJ_ANGLE:         p->pp_o.type = PROM_ANGLE; break;
+            case OBJ_POINT:         p->pp_o.type = PROM_POINT; break;
+            case OBJ_ARABIC_PART:   p->pp_o.type = PROM_PART; break;
+            case OBJ_ZODIAC_DEGREE: p->pp_o.type = PROM_POINT; break;
+            case OBJ_CUSP:          p->pp_o.type = PROM_CUSP; break;
+            case OBJ_FIXED_STAR:    p->pp_o.type = PROM_POINT; break;
+            case OBJ_DISPOSITOR:    p->pp_o.type = PROM_PLANET; break;
+        }
+
+        switch (sig_type) {
+            case OBJ_PLANET:        p->sig_o.type = PROM_PLANET; break;
+            case OBJ_ANGLE:         p->sig_o.type = PROM_ANGLE; break;
+            case OBJ_POINT:         p->sig_o.type = PROM_POINT; break;
+            case OBJ_ARABIC_PART:   p->sig_o.type = PROM_PART; break;
+            case OBJ_ZODIAC_DEGREE: p->sig_o.type = PROM_POINT; break;
+            case OBJ_CUSP:          p->sig_o.type = PROM_CUSP; break;
+            case OBJ_FIXED_STAR:    p->sig_o.type = PROM_POINT; break;
+            case OBJ_DISPOSITOR:    p->sig_o.type = PROM_PLANET; break;
+        }
+
+        switch (trig_type) {
+            case OBJ_PLANET:        p->trig_o.type = PROM_PLANET; break;
+            case OBJ_ANGLE:         p->trig_o.type = PROM_ANGLE; break;
+            case OBJ_POINT:         p->trig_o.type = PROM_POINT; break;
+            case OBJ_ARABIC_PART:   p->trig_o.type = PROM_PART; break;
+            case OBJ_ZODIAC_DEGREE: p->trig_o.type = PROM_POINT; break;
+            case OBJ_CUSP:          p->trig_o.type = PROM_CUSP; break;
+            case OBJ_FIXED_STAR:    p->trig_o.type = PROM_POINT; break;
+            case OBJ_DISPOSITOR:    p->trig_o.type = PROM_PLANET; break;
+        }
+
+        // Busca as longitudes físicas no seu array plots usando a função utilitária que criamos
+        double lon_personal = get_longitude_by_id(id_personal, num_objects, obj);
+        double lon_sig      = get_longitude_by_id(id_sig, num_objects, obj);
+        double lon_trigger  = get_longitude_by_id(id_trigger, num_objects, obj);
+
+        double lat_personal = get_latitude_by_id(id_personal, num_objects, obj);
+        double lat_sig      = get_latitude_by_id(id_sig, num_objects, obj);
+        double lat_trigger  = get_latitude_by_id(id_trigger, num_objects, obj);
+
+        double dec_personal = get_declination_by_id(id_personal, num_objects, obj);
+        double dec_sig      = get_declination_by_id(id_sig, num_objects, obj);
+        double dec_trigger  = get_declination_by_id(id_trigger, num_objects, obj);
+
+        double ra_personal = get_ra_by_id(id_personal, num_objects, obj);
+        double ra_sig      = get_ra_by_id(id_sig, num_objects, obj);
+        double ra_trigger  = get_ra_by_id(id_trigger, num_objects, obj);
+
+        p->pp_o.id = id_personal;
+        p->sig_o.id = id_sig;
+        p->trig_o.id = id_trigger;
+
+        p->pp_o.longitude = lon_personal;
+        p->sig_o.longitude = lon_sig;
+        p->trig_o.longitude = lon_trigger;
+
+        p->pp_o.latitude = lat_personal;
+        p->sig_o.latitude = lat_sig;
+        p->trig_o.latitude = lat_trigger;
+
+        p->pp_o.declination = dec_personal;
+        p->sig_o.declination = dec_sig;
+        p->trig_o.declination = dec_trigger;
+
+        p->pp_o.ra = ra_personal;
+        p->sig_o.ra = ra_sig;
+        p->trig_o.ra = ra_trigger;
+
+        p->pp_o.house = get_house(lon_personal, cusps);
+        p->sig_o.house = get_house(lon_sig, cusps);
+        p->trig_o.house = get_house(lon_trigger, cusps);
+
+        calc_mundane_part(&p->sig_o, &p->trig_o, &p->pp_o, ramc, jd, lat, cusps, p);
+
+        // char c_lon[50] = "";
+        // snprintf(c_lon, 50, "%8.4f", p->longitude);
+        // show_alert_popup(p->name, c_lon);
+
+        strcpy(p->house, (char *)get_house_roman(p->longitude, cusps));
+
+        int lord = 0;
+        int lord2 = 0;
+        get_ruler_dom_by_sign_id((int)floor(p->longitude / 30.0) + 1, &lord);
+        get_ruler_exalt_by_sign_id((int)floor(p->longitude / 30.0) + 1, &lord2, consider_modern_planets_rulling);
+        const char *lord_str = obter_glifo_planeta_por_id(lord);
+        const char *lord2_str = obter_glifo_planeta_por_id(lord2);
+
+        if (lord2 == 0) {
+            snprintf(p->lord, 8, "%s", lord_str);
+        }
+        else {
+            snprintf(p->lord, 8, "%s %s", lord_str, lord2_str);
+        }
+
+        
+
+        qtd_partes++;
+        if (qtd_partes >= MAX_PARTS) break; // Trava de segurança do buffer
+    }
+
+    sqlite3_finalize(stmt);
+    return qtd_partes; // Retorna o total de partes processadas de forma legítima
+}
+
+
+
+
+
 
 void display_arabic_parts(ChartObject *obj, double *cusps, int num_objects) {
     int max_y, max_x;
