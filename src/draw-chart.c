@@ -4415,16 +4415,16 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     snprintf(ep_str, sizeof(ep_str), "%2d° %s %02d'", (int)east_point % 30, get_sign((int)east_point / 30), (int)((east_point - ((int)east_point)) * 60.0));
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 23, 55, _("Vertex:"));
+    mvwprintw(table_win, 23, 55, _("Vertex: "));
     wattroff(table_win, A_BOLD);
 
-    mvwprintw(table_win, 23, 63, "%s", vertex_str);
+    wprintw(table_win, "%s", vertex_str);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, 24, 55, _("           East Point:"));
+    mvwprintw(table_win, 24, 55, _("East Point: "));
     wattroff(table_win, A_BOLD);
 
-    mvwprintw(table_win, 24, 78, "%s", ep_str);
+    wprintw(table_win, "%s", ep_str);
 
     //char *hsol = plots[0].house;
     wattron(table_win, A_BOLD);

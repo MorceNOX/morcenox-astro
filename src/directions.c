@@ -460,6 +460,69 @@ double long_lat_2_dec(double lon, double lat, double e) {
 
 
 
+
+// void calc_mundane_part_regiomontanus(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
+//     double obl = get_obliquidade(jd);
+//     double lat_rad = lat * M_PI / 180.0;
+
+//     double arc = 0.0;
+//     double j = 0.0;
+//     double h = 0.0;
+//     double w = 0.0;
+//     double m = 0.0;
+//     double z = 0.0;
+//     double r = 0.0;
+//     double x = 0.0;
+    
+//     processar_astro(ramc, lat, pp);
+//     processar_astro(ramc, lat, sig);
+//     processar_astro(ramc, lat, trig);
+
+//     arc = pp->pm + sig->longitude - trig->longitude;
+
+//     double ra_ic = ramc + 180.0;
+//     if (arc == 0.0) {
+//         lot_m->longitude = cusps[1];
+//     } 
+//     else if (arc == 90.0) {
+//         lot_m->longitude = cusps[4];    
+//     } 
+//     else if (arc == 180.0) {
+//         lot_m->longitude = cusps[7];
+//     }
+//     else (arc == 270.00)  {
+//         lot_m->longitude = cusps[10];
+//     }
+
+//     if (arc < 90.0) {
+//         j = arc;
+//     }
+//     else if (arc > 90.0 && arc < 180.0) {
+//         j = 180 - arc;
+//     }
+//     else if (arc > 180 && arc < 270) {
+//         j = arc - 180;
+//     }
+//     else if (arc > 270 && arc < 360) {
+//         j = 360 - arc;
+//     }
+
+//     h    = atan( tan(j * DEG_TO_RAD) * cos(lat_rad) ) * RAD_TO_DEG;
+//     w    = ramc - 90 - j;
+//     pole = asin( cos(h * DEG_TO_RAD) * sin(lat_rad) ) * RAD_TO_DEG;
+//     m    = atan( -tan(pole * DEG_TO_RAD) / cos(w * DEG_TO_RAD) ) * RAD_TO_DEG;
+
+//     x    = atan( cos(m * DEG_TO_RAD) * tan(w * DEG_TO_RAD) ) * RAD_TO_DEG; 
+
+//     if (w == 90) {
+//         r = atan(sin(obl * DEG_TO_RAD) * tan(pole * DEG_TO_RAD)) * RAD_TO_DEG;
+//     }
+
+
+// }
+
+
+
 // Placidus Mundane Positions for Mundane Arabic Parts (one formula: or diurnal, or nocturnal)
 void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
     double obl = get_obliquidade(jd);
@@ -3436,35 +3499,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         }
         wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
-        wattron(table_win, A_ITALIC | A_BOLD);
-        wprintw(table_win, _(" │ Directions: "));
-        wattroff(table_win, A_BOLD);
-
-        wattron(table_win, A_BOLD | COLOR_PAIR(7));
-        if (tipo == 0) {
-            wprintw(table_win, "Zod");            
-        }
-        else if (tipo == 1) {
-            wprintw(table_win, "Mund");            
-        }
-        else if (tipo == 2) {
-            wprintw(table_win, "Zod & Mund");            
-        }
-        wprintw(table_win, " │ ");
-
-        if (sentido == 0) {
-            wprintw(table_win, "Dir");            
-        }
-        else if (sentido == 1) {
-            wprintw(table_win, "Conv");            
-        }
-        else if (sentido == 2) {
-            wprintw(table_win, "Dir & Conv");            
-        }
-        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
-
-
-
+        
 
         int degree = (int)fmod(sig[idx_atual_calculo].longitude, 30.0);
 
@@ -3498,13 +3533,40 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             }
         }
 
-        wattron(table_win, A_BOLD);
         wprintw(table_win, " │ ");
+
+        wattron(table_win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
         wprintw(table_win, "%2d°%s%02d'%02d\"", degree, get_sign(sig[idx_atual_calculo].longitude / 30), min, seg);
+        wattroff(table_win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
+
+
+
+        wattron(table_win, A_ITALIC | A_BOLD);
+        wprintw(table_win, _(" │ Directions: "));
         wattroff(table_win, A_BOLD);
 
+        wattron(table_win, A_BOLD | COLOR_PAIR(7));
+        if (tipo == 0) {
+            wprintw(table_win, "Zod");            
+        }
+        else if (tipo == 1) {
+            wprintw(table_win, "Mund");            
+        }
+        else if (tipo == 2) {
+            wprintw(table_win, "Zod & Mund");            
+        }
+        wprintw(table_win, " │ ");
 
-
+        if (sentido == 0) {
+            wprintw(table_win, "Dir");            
+        }
+        else if (sentido == 1) {
+            wprintw(table_win, "Conv");            
+        }
+        else if (sentido == 2) {
+            wprintw(table_win, "Dir & Conv");            
+        }
+        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
 
 
 
@@ -4477,30 +4539,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
         }
         wattroff(table_win, A_BOLD | COLOR_PAIR(8));
 
-        wattron(table_win, A_ITALIC);
-        wprintw(table_win, _(" │ Directions: "));
-        wattron(table_win, A_BOLD | COLOR_PAIR(7));
-        if (tipo == 0) {
-            wprintw(table_win, "Zod");            
-        }
-        else if (tipo == 1) {
-            wprintw(table_win, "Mund");            
-        }
-        else if (tipo == 2) {
-            wprintw(table_win, "Zod & Mund");            
-        }
-        wprintw(table_win, " │ ");
-
-        if (sentido == 0) {
-            wprintw(table_win, "Dir");            
-        }
-        else if (sentido == 1) {
-            wprintw(table_win, "Conv");            
-        }
-        else if (sentido == 2) {
-            wprintw(table_win, "Dir & Conv");        
-        }
-        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
+        
 
 
 
@@ -4538,10 +4577,41 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             }
         }
 
-        wattron(table_win, A_BOLD);
         wprintw(table_win, " │ ");
+
+        wattron(table_win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
         wprintw(table_win, "%2d°%s%02d'%02d\"", degree, get_sign(sig[idx_atual_calculo].longitude / 30), min, seg);
-        wattroff(table_win, A_BOLD);
+        wattroff(table_win, COLOR_PAIR(8) | A_BOLD | A_REVERSE);
+
+
+
+        wattron(table_win, A_ITALIC);
+        wprintw(table_win, _(" │ Directions: "));
+        wattron(table_win, A_BOLD | COLOR_PAIR(7));
+        if (tipo == 0) {
+            wprintw(table_win, "Zod");            
+        }
+        else if (tipo == 1) {
+            wprintw(table_win, "Mund");            
+        }
+        else if (tipo == 2) {
+            wprintw(table_win, "Zod & Mund");            
+        }
+        wprintw(table_win, " │ ");
+
+        if (sentido == 0) {
+            wprintw(table_win, "Dir");            
+        }
+        else if (sentido == 1) {
+            wprintw(table_win, "Conv");            
+        }
+        else if (sentido == 2) {
+            wprintw(table_win, "Dir & Conv");        
+        }
+        wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
+
+
+
 
 
 

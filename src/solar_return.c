@@ -36,63 +36,72 @@
 #include "directions.h"
 
 
-struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horario_destino) {
-    int ano, mes, dia, horas, minutos;
-    double segundos_decimal;
-    struct tm t_local;
+struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horario_destino, struct tm *t_local) {
+    int ano, mes, dia; //, horas, minutos;
+    double horas;
+    //struct tm t_local;
 
     /* 1. Ajusta o Julian Day UTC para o Horário Local do destino
           Exemplo: Se o fuso for -3.0 (Brasília), subtrai 3 horas do JD.
           Se o fuso tiver horário de verão (+1h), passe -2.0 ao invés de -3.0 */
-    double jd_local = jd_revolucao_ut + (fuso_horario_destino / 24.0);
+    double jd_local = jd_revolucao_ut + (fuso_horario_destino / 24);
 
     /* 2. Extrai os dados civis a partir do JD já localizado */
-    swe_jdut1_to_utc(jd_local, 2, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
+    swe_revjul(jd_local, SE_GREG_CAL, &ano, &mes, &dia, &horas);
+    //swe_jdut1_to_utc(jd_local, 2, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
+
+    Hora h = get_fmt_hour(horas);
 
     /* 3. Arredondamento e preenchimento da struct tm */
-    int segundos = (int)(segundos_decimal + 0.5);
+    //int segundos = (int)(segundos_decimal + 0.5);
 
-    t_local.tm_year  = ano - 1900;
-    t_local.tm_mon   = mes - 1;
-    t_local.tm_mday  = dia;
-    t_local.tm_hour  = horas;
-    t_local.tm_min   = minutos;
-    t_local.tm_sec   = segundos;
-    t_local.tm_isdst = -1; 
+    t_local->tm_year  = ano - 1900;
+    t_local->tm_mon   = mes - 1;
+    t_local->tm_mday  = dia;
+    t_local->tm_hour  = h.hora;
+    t_local->tm_min   = h.min;
+    t_local->tm_sec   = h.sec;
+    t_local->tm_isdst = -1; 
 
     /* 4. Normaliza os dias da semana/ano sem alterar o fuso */
-    timegm(&t_local); 
+    timegm(t_local); 
 
-    return t_local;
+    return *t_local;
 }
 
 
 double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada, double sol_natal_exibido) {
-    int ano, mes, dia;
-    double hora;
+    int ano, mes, dia, hora, min;
+    double seg;
     
-    // CORREÇÃO: Declarado como array de strings para receber a mensagem de erro da SE
     char err_msg[256]; 
     
-    // Flags padrões do sistema
     int32 iflag = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
 
-    // Descobre a data civil de nascimento em UTC
-    swe_revjul(jd_nascimento, 2, &ano, &mes, &dia, &hora);
+    swe_jdut1_to_utc(jd_nascimento, 2, &ano, &mes, &dia, &hora, &min, &seg);
+
     
-    // Projeta o ano alvo da Revolução Solar
-    int ano_rev = ano + idade_selecionada;
+    double jd_estimado_ut = jd_nascimento + (obter_ano_tropical_dinamico(jd_nascimento) * idade_selecionada); //swe_julday(ano_rev, mes, dia, hora, SE_GREG_CAL);
 
-    // Cria a estimativa inicial no ano alvo
-    double jd_estimado_ut = swe_julday(ano_rev, mes, dia, hora, SE_GREG_CAL);
-
-    // Chamada oficial usando o ponteiro do array corrigido
     double jd_revolucao_ut = 0.0;
-    if ((jd_revolucao_ut = swe_solcross_ut(sol_natal_exibido, jd_estimado_ut, iflag, err_msg)) < 0) {
-        // Fallback de segurança caso a função da biblioteca falhe
-        return jd_estimado_ut;
-    }
+    jd_revolucao_ut = swe_solcross_ut(sol_natal_exibido, jd_estimado_ut, iflag, err_msg);
 
+    // 5. BLINDAGEM DE SEGURANÇA CONTRA SALTOS ANUAIS OU DE CALENDÁRIO
+    // Se a Swiss Ephemeris falhar ou retornar uma data bizarra (mais de 15 dias de erro),
+    // fazemos um refinamento iterativo local usando o próprio resultado como âncora de segurança.
+    if (jd_revolucao_ut < 0 || fabs(jd_revolucao_ut - jd_estimado_ut) > 10.0) {
+        // Recalcula usando o ano tropical dinâmico como palpite secundário de backup
+        double jd_backup = jd_nascimento + obter_ano_tropical_dinamico(jd_nascimento) * idade_selecionada;
+        double jd_tentativa = swe_solcross_ut(sol_natal_exibido, jd_backup, iflag, err_msg);
+        
+        if (jd_tentativa > 0) {
+            jd_revolucao_ut = jd_tentativa;
+        } else {
+            // Se tudo falhar, retorna a estimativa linear pura para não quebrar a aplicação
+            return jd_estimado_ut; 
+        }
+    }
+    
     return jd_revolucao_ut; 
 }
 
@@ -173,7 +182,7 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
     if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
         // Se falhar por falta de arquivos físicos de efemérides do século passado,
         // tenta rodar com o modelo analítico de Moshier (nativo da biblioteca).
-        flags = SEFLG_SPEED | SEFLG_MOSEPH | SEFLG_TOPOCTR;
+        flags = SEFLG_SPEED | SEFLG_MOSEPH;
         if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
             fprintf(stderr, "Erro crítico ao calcular Sol do nascimento: %s\n", err_msg);
             return -1.0;
@@ -185,25 +194,26 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
     // Em mapas muito antigos, a duração do ano trópico desvia levemente.
     double jd_calculado = jd_nascimento + (idade_selecionada * obter_ano_tropical_dinamico(jd_nascimento));
 
-    // --- SALVAGUARDA HISTÓRICA ---
-    // Verifica se a estimativa inicial não caiu no mês/ano errado devido a desvios históricos
-    // Fazemos um pré-ajuste grosseiro se o erro inicial for maior que 5 graus.
-    if (swe_calc_ut(jd_calculado, SE_SUN, flags, x2, err_msg) != ERR) {
-        double erro_grosseiro = x2[0] - lon_nascimento;
-        erro_grosseiro = fmod(erro_grosseiro, 360.0);
-        if (erro_grosseiro > 180.0)  erro_grosseiro -= 360.0;
-        if (erro_grosseiro < -180.0) erro_grosseiro += 360.0;
+    // // --- SALVAGUARDA HISTÓRICA ---
+    // // Verifica se a estimativa inicial não caiu no mês/ano errado devido a desvios históricos
+    // // Fazemos um pré-ajuste grosseiro se o erro inicial for maior que 5 graus.
+    // flags = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
+    // if (swe_calc_ut(jd_calculado, SE_SUN, flags, x2, err_msg) != ERR) {
+    //     double erro_grosseiro = x2[0] - lon_nascimento;
+    //     erro_grosseiro = fmod(erro_grosseiro, 360.0);
+    //     if (erro_grosseiro > 180.0)  erro_grosseiro -= 360.0;
+    //     if (erro_grosseiro < -180.0) erro_grosseiro += 360.0;
         
-        // Se a estimativa estiver desalinhada por mais de 5 graus (um erro de ~5 dias),
-        // ajustamos linearmente antes de entrar no refinamento fino.
-        if (fabs(erro_grosseiro) > 5.0) {
-            jd_calculado -= erro_grosseiro; // Ajuste inicial em dias aproximados
-        }
-    }
+    //     // Se a estimativa estiver desalinhada por mais de 5 graus (um erro de ~5 dias),
+    //     // ajustamos linearmente antes de entrar no refinamento fino.
+    //     if (fabs(erro_grosseiro) > 5.0) {
+    //         jd_calculado -= erro_grosseiro; // Ajuste inicial em dias aproximados
+    //     }
+    // }
 
     // 3. Refinar o momento usando o método de Newton-Raphson (Alta Precisão)
     const double TOLERANCIA = 1e-7; // Equivalente a milissegundos de tempo
-    const int MAX_ITERACOES = 30;
+    const int MAX_ITERACOES = 100;
     int iteracoes = 0;
     double erro = 1.0;
 
@@ -372,7 +382,7 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
         snprintf(state_retorno, 100, "%s", STATE);
     }
     
-    
+    //tz_offset_retorno = tz_offset_retorno / 3600;
 
     /* Roda o motor atualizado passando o double estável */
     RelatorioFirdaria fird = processar_dados_firdaria(idade_escolhida, mapa_diurno);
@@ -390,12 +400,12 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
 
     // 1. Calcula o Julian Day do Retorno Solar
     
-    double jd_retorno = calc_julian_day_retorno_solar(jd_natal, (int)floor(idade_escolhida));
+    double jd_retorno = calcular_julian_day_retorno_solar(jd_natal, (int)floor(idade_escolhida), obj_natal[0].longitude);
 
     // 2. Gera a struct tm compatível
     struct tm tempo_retorno = julian_day_para_struct_tm(jd_retorno);
     
-    struct tm tempo_local = obter_tempo_local_revolucao(jd_retorno, tz_offset_retorno);
+    struct tm tempo_local = obter_tempo_local_revolucao(jd_retorno, tz_offset_retorno, &tempo_local);
 
    
     // 3. Monta a string do nome do gráfico (Ex: "Retorno Solar 2026")
