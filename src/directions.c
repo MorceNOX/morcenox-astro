@@ -459,6 +459,8 @@ double long_lat_2_dec(double lon, double lat, double e) {
 }
 
 
+
+// Placidus Mundane Positions for Mundane Arabic Parts (one formula: or diurnal, or nocturnal)
 void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
     double obl = get_obliquidade(jd);
     double lat_rad = lat * M_PI / 180.0;
@@ -474,7 +476,7 @@ void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ra
 
     //if (pp->pm == 0.0) show_alert_popup(pp->object, "zero pm");
 
-    arc = pp->pm + sig->pm - trig->pm;
+    arc = pp->pm + sig->longitude - trig->longitude;
     
     double ra_ic = ramc + 180.0;
     if (arc < 180.0) {
@@ -514,7 +516,7 @@ void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ra
 
 
 
-
+// Placidus Mundane Positions for Mundane Lots (passes both formulae: diurnal and nocturnal and the code calculates the correct)
 void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor *pp, bool flip, double ramc, double jd, double lat, double *cusps, Promissor *lot_m) {
     double obl = get_obliquidade(jd);
     double lat_rad = lat * M_PI / 180.0;
@@ -536,11 +538,11 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
     processar_astro(ramc, lat, trig);
 
     if (flip && sol_acima) {
-        arc = pp->pm + sig->pm - trig->pm;
+        arc = pp->pm + sig->longitude - trig->longitude;
     } else if (flip && !sol_acima) {
-        arc = pp->pm + trig->pm - sig->pm;
+        arc = pp->pm + trig->longitude - sig->longitude;
     } else if (!flip) {
-        arc = pp->pm + sig->pm - trig->pm;
+        arc = pp->pm + sig->longitude - trig->longitude;
     }
 
     double ra_ic = ramc + 180.0;
@@ -578,176 +580,176 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
 
 
 
-void calc_mundane_lof(Promissor *sol, Promissor *lua, double ramc, double jd, double lat, double *cusps, Promissor *fortune_m) {
-    double obl = get_obliquidade(jd);
-    double lat_rad = lat * M_PI / 180.0;
-    //char serr[256];
+// void calc_mundane_lof(Promissor *sol, Promissor *lua, double ramc, double jd, double lat, double *cusps, Promissor *fortune_m) {
+//     double obl = get_obliquidade(jd);
+//     double lat_rad = lat * M_PI / 180.0;
+//     //char serr[256];
 
-    double sol_md = fabs(sol->ra - ramc);
-    if (sol_md > 180.0) sol_md = 360.0 - sol_md;
-    double sol_dec_rad = sol->declination * M_PI / 180.0;
-    double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
-    double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
-    int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+//     double sol_md = fabs(sol->ra - ramc);
+//     if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+//     double sol_dec_rad = sol->declination * M_PI / 180.0;
+//     double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+//     double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+//     int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
     
-    double arc = 0.0;
-    double k = 0.0;
-    double t = 0.0;
-    double r = 0.0;
+//     double arc = 0.0;
+//     double k = 0.0;
+//     double t = 0.0;
+//     double r = 0.0;
 
-    if (sol_acima) {
-        arc = lua->longitude - sol->longitude;
-    } else {
-        arc = sol->longitude - lua->longitude;
-    }
+//     if (sol_acima) {
+//         arc = lua->longitude - sol->longitude;
+//     } else {
+//         arc = sol->longitude - lua->longitude;
+//     }
     
-    double ra_ic = ramc + 180.0;
-    if (arc < 180.0) {
-        r = ra_ic;
-        k = (arc - 90.0) / 90.0;
-        t = 1.0;
-        fortune_m->ra = ra_ic + arc - 90.0;
-    }
-    else if (arc > 180.0) {
-        r = ramc;
-        k = (arc -270.0) / 90.0;
-        t = -1.0;
-        fortune_m->ra = ramc + arc - 270.0;
-    }
+//     double ra_ic = ramc + 180.0;
+//     if (arc < 180.0) {
+//         r = ra_ic;
+//         k = (arc - 90.0) / 90.0;
+//         t = 1.0;
+//         fortune_m->ra = ra_ic + arc - 90.0;
+//     }
+//     else if (arc > 180.0) {
+//         r = ramc;
+//         k = (arc -270.0) / 90.0;
+//         t = -1.0;
+//         fortune_m->ra = ramc + arc - 270.0;
+//     }
 
-    for (int i = 0; i < 10; i++) {    
-        fortune_m->ra = normalize360(r + k * acos(t * sin(fortune_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
-    }
-    fortune_m->longitude = ra_2_long(fortune_m->ra, obl);
-    fortune_m->declination = long_2_dec(fortune_m->longitude, obl);
-
-
-    fortune_m->latitude = 0.0; 
-
-    fortune_m->house = (int)get_house(fortune_m->longitude, cusps);
-    fortune_m->house_pos = (double)fortune_m->house + normalize360(fortune_m->longitude - cusps[fortune_m->house]) / normalize360(cusps[(fortune_m->house == 12) ? 1 : fortune_m->house + 1] - cusps[fortune_m->house]);
-
-    fortune_m->sa = calcular_semi_arcos(lat, fortune_m->declination);
-}
+//     for (int i = 0; i < 10; i++) {    
+//         fortune_m->ra = normalize360(r + k * acos(t * sin(fortune_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+//     }
+//     fortune_m->longitude = ra_2_long(fortune_m->ra, obl);
+//     fortune_m->declination = long_2_dec(fortune_m->longitude, obl);
 
 
+//     fortune_m->latitude = 0.0; 
+
+//     fortune_m->house = (int)get_house(fortune_m->longitude, cusps);
+//     fortune_m->house_pos = (double)fortune_m->house + normalize360(fortune_m->longitude - cusps[fortune_m->house]) / normalize360(cusps[(fortune_m->house == 12) ? 1 : fortune_m->house + 1] - cusps[fortune_m->house]);
+
+//     fortune_m->sa = calcular_semi_arcos(lat, fortune_m->declination);
+// }
 
 
 
-void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
-    (void)ra_asc;
-    char serr[256];
-    double obl;
-
-    obl = get_obliquidade(jd);
-
-    double lat_rad = lat * M_PI / 180.0;
-
-    // --- CÁLCULO TRIDIMENSIONAL DO SOL ---
-    double sol_md = fabs(sol->ra - ramc);
-    if (sol_md > 180.0) sol_md = 360.0 - sol_md;
-    double sol_dec_rad = sol->declination * M_PI / 180.0;
-    double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
-    double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
-    int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
-
-    double adsun = 0.0;
-    double val_sol = tan(sol_dec_rad) * tan(lat_rad);
-    if (fabs(val_sol) <= 1.0) adsun = asin(val_sol) * 180.0 / M_PI;
-
-    // NORMALIZAÇÃO DA PERSPECTIVA HORIZONTAL (Leste vs Oeste)
-    double sol_diff = sol->ra - ramc;
-    if (sol_diff < 0.0) sol_diff += 360.0;
-    int sol_leste = (sol_diff > 180.0) ? 1 : 0;
-
-    double ao_do_sol;
-    if (sol_leste) {
-        // No Leste, calculamos a Ascensão Oblíqua pura (AO)
-        ao_do_sol = sol->ra - adsun;
-    } else {
-        // No Oeste, calculamos a Descensão Oblíqua pura (DO) e normalizamos na mesma referência
-        ao_do_sol = sol->ra + adsun - 180.0;
-    }
-    ao_do_sol = normalize360(ao_do_sol);
 
 
-    // --- CÁLCULO TRIDIMENSIONAL DA LUA ---
-    double lua_md = fabs(lua->ra - ramc);
-    if (lua_md > 180.0) lua_md = 360.0 - lua_md;
+// void calc_mundane_lot_of_fortune(Promissor *sol, Promissor *lua, double ra_asc, double ramc, double lat, double jd, Promissor *fortune_m) {
+//     (void)ra_asc;
+//     char serr[256];
+//     double obl;
+
+//     obl = get_obliquidade(jd);
+
+//     double lat_rad = lat * M_PI / 180.0;
+
+//     // --- CÁLCULO TRIDIMENSIONAL DO SOL ---
+//     double sol_md = fabs(sol->ra - ramc);
+//     if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+//     double sol_dec_rad = sol->declination * M_PI / 180.0;
+//     double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+//     double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+//     int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+
+//     double adsun = 0.0;
+//     double val_sol = tan(sol_dec_rad) * tan(lat_rad);
+//     if (fabs(val_sol) <= 1.0) adsun = asin(val_sol) * 180.0 / M_PI;
+
+//     // NORMALIZAÇÃO DA PERSPECTIVA HORIZONTAL (Leste vs Oeste)
+//     double sol_diff = sol->ra - ramc;
+//     if (sol_diff < 0.0) sol_diff += 360.0;
+//     int sol_leste = (sol_diff > 180.0) ? 1 : 0;
+
+//     double ao_do_sol;
+//     if (sol_leste) {
+//         // No Leste, calculamos a Ascensão Oblíqua pura (AO)
+//         ao_do_sol = sol->ra - adsun;
+//     } else {
+//         // No Oeste, calculamos a Descensão Oblíqua pura (DO) e normalizamos na mesma referência
+//         ao_do_sol = sol->ra + adsun - 180.0;
+//     }
+//     ao_do_sol = normalize360(ao_do_sol);
+
+
+//     // --- CÁLCULO TRIDIMENSIONAL DA LUA ---
+//     double lua_md = fabs(lua->ra - ramc);
+//     if (lua_md > 180.0) lua_md = 360.0 - lua_md;
     
-    double lua_dec_rad = lua->declination * M_PI / 180.0;
+//     double lua_dec_rad = lua->declination * M_PI / 180.0;
 
-    double admoon = 0.0;
-    double val_lua = tan(lua_dec_rad) * tan(lat_rad);
-    if (fabs(val_lua) <= 1.0) admoon = asin(val_lua) * 180.0 / M_PI;
+//     double admoon = 0.0;
+//     double val_lua = tan(lua_dec_rad) * tan(lat_rad);
+//     if (fabs(val_lua) <= 1.0) admoon = asin(val_lua) * 180.0 / M_PI;
 
-    double lua_diff = lua->ra - ramc;
-    if (lua_diff < 0.0) lua_diff += 360.0;
-    int lua_leste = (lua_diff > 180.0) ? 1 : 0;
+//     double lua_diff = lua->ra - ramc;
+//     if (lua_diff < 0.0) lua_diff += 360.0;
+//     int lua_leste = (lua_diff > 180.0) ? 1 : 0;
 
-    double ao_do_lua;
-    if (lua_leste) {
-        ao_do_lua = lua->ra - admoon;
-    } else {
-        ao_do_lua = lua->ra + admoon - 180.0;
-    }
-    ao_do_lua = normalize360(ao_do_lua);
+//     double ao_do_lua;
+//     if (lua_leste) {
+//         ao_do_lua = lua->ra - admoon;
+//     } else {
+//         ao_do_lua = lua->ra + admoon - 180.0;
+//     }
+//     ao_do_lua = normalize360(ao_do_lua);
 
 
-    // --- EQUAÇÃO DA FORTUNA MUNDANA ---
-    // Em Placidus estrito, a linha de horizonte referencial (Ascendente) opera em 0 de Ascensão Oblíqua Local.
-    int mapa_diurno = sol_acima;
+//     // --- EQUAÇÃO DA FORTUNA MUNDANA ---
+//     // Em Placidus estrito, a linha de horizonte referencial (Ascendente) opera em 0 de Ascensão Oblíqua Local.
+//     int mapa_diurno = sol_acima;
 
-    if (mapa_diurno) {
-        fortune_m->ra = normalize360(ramc + 90.0 + ao_do_lua - ao_do_sol);
-    } else {
-        fortune_m->ra = normalize360(ramc + 90.0 + ao_do_sol - ao_do_lua);
-    }
+//     if (mapa_diurno) {
+//         fortune_m->ra = normalize360(ramc + 90.0 + ao_do_lua - ao_do_sol);
+//     } else {
+//         fortune_m->ra = normalize360(ramc + 90.0 + ao_do_sol - ao_do_lua);
+//     }
 
-    // Herança de Declinação Clássica
-    fortune_m->declination = lua->declination;
+//     // Herança de Declinação Clássica
+//     fortune_m->declination = lua->declination;
 
-    // --- CONVERSÃO PARA COORDENADAS ECLÍPTICAS ---
-    double xin[3], xout[3];
-    xin[0] = fortune_m->ra;
-    xin[1] = fortune_m->declination;
-    xin[2] = 1.0;
+//     // --- CONVERSÃO PARA COORDENADAS ECLÍPTICAS ---
+//     double xin[3], xout[3];
+//     xin[0] = fortune_m->ra;
+//     xin[1] = fortune_m->declination;
+//     xin[2] = 1.0;
 
-    // A Swiss Ephemeris usa sinal positivo (+) se estiver convertendo Equat -> Ecl
-    swe_cotrans(xin, xout, obl); 
+//     // A Swiss Ephemeris usa sinal positivo (+) se estiver convertendo Equat -> Ecl
+//     swe_cotrans(xin, xout, obl); 
 
-    fortune_m->longitude = normalize360(xout[0]);
+//     fortune_m->longitude = normalize360(xout[0]);
     
-    // CORREÇÃO 1: Forçar latitude a zero estabiliza as frações de Placidus
-    fortune_m->latitude = 0.0; 
+//     // CORREÇÃO 1: Forçar latitude a zero estabiliza as frações de Placidus
+//     fortune_m->latitude = 0.0; 
 
-    // --- EXTRAÇÃO DA CASA COM A SWISS EPHEMERIS ---
-    // CORREÇÃO 2: Garantir que xpin contenha estritamente a latitude zerada
-    double xpin_fortune[6] = { fortune_m->longitude, 0.0, 1.0, 0.0, 0.0, 0.0 };
+//     // --- EXTRAÇÃO DA CASA COM A SWISS EPHEMERIS ---
+//     // CORREÇÃO 2: Garantir que xpin contenha estritamente a latitude zerada
+//     double xpin_fortune[6] = { fortune_m->longitude, 0.0, 1.0, 0.0, 0.0, 0.0 };
     
-    double fortune_hpos = swe_house_pos(ramc, lat, obl, HOUSE_SYSTEM, xpin_fortune, serr); 
+//     double fortune_hpos = swe_house_pos(ramc, lat, obl, HOUSE_SYSTEM, xpin_fortune, serr); 
     
-    fortune_m->house_pos = fortune_hpos;
-    fortune_m->house = (int)floor(fortune_hpos);
+//     fortune_m->house_pos = fortune_hpos;
+//     fortune_m->house = (int)floor(fortune_hpos);
 
-    // --- VARIÁVEIS SECUNDÁRIAS DE ESTRUTURA ---
-    fortune_m->md = fabs(fortune_m->ra - ramc);
-    if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
+//     // --- VARIÁVEIS SECUNDÁRIAS DE ESTRUTURA ---
+//     fortune_m->md = fabs(fortune_m->ra - ramc);
+//     if (fortune_m->md > 180.0) fortune_m->md = 360.0 - fortune_m->md;
 
-    double dec_rad = fortune_m->declination * M_PI / 180.0;
-    double cos_h = -tan(lat_rad) * tan(dec_rad);
-    if (cos_h >= 1.0) {
-        fortune_m->sa.sad = 0.0; fortune_m->sa.san = 180.0;
-    } else if (cos_h <= -1.0) {
-        fortune_m->sa.sad = 180.0; fortune_m->sa.san = 0.0;
-    } else {
-        fortune_m->sa.sad = acos(cos_h) * 180.0 / M_PI;
-        fortune_m->sa.san = 180.0 - fortune_m->sa.sad;
-    }
+//     double dec_rad = fortune_m->declination * M_PI / 180.0;
+//     double cos_h = -tan(lat_rad) * tan(dec_rad);
+//     if (cos_h >= 1.0) {
+//         fortune_m->sa.sad = 0.0; fortune_m->sa.san = 180.0;
+//     } else if (cos_h <= -1.0) {
+//         fortune_m->sa.sad = 180.0; fortune_m->sa.san = 0.0;
+//     } else {
+//         fortune_m->sa.sad = acos(cos_h) * 180.0 / M_PI;
+//         fortune_m->sa.san = 180.0 - fortune_m->sa.sad;
+//     }
 
-    double sa_fortune = (fortune_hpos >= 7.0 && fortune_hpos < 13.0) ? fortune_m->sa.sad : fortune_m->sa.san;
-    fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
-}
+//     double sa_fortune = (fortune_hpos >= 7.0 && fortune_hpos < 13.0) ? fortune_m->sa.sad : fortune_m->sa.san;
+//     fortune_m->pm = (sa_fortune > 0.0) ? (fortune_m->md / sa_fortune) : 0.0;
+// }
 
 
 
@@ -1843,7 +1845,8 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
     double tan_polo_sig = tan(lat_geo_rad) * ph_sig;
 
     
-    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0 || strcmp(sig[idx_alvo].object, "🝴") == 0;
+
 
 
     for (int p = 0; p < total_promissores; p++) {
@@ -1852,9 +1855,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        // else {
-        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        // }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
         
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -2170,7 +2173,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
     // =========================================================================
     double tan_polo_sig = tan(lat_geo_rad) * sin(dm_sig_rad);
 
-    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0 || strcmp(sig[idx_alvo].object, "🝴") == 0;
 
     for (int p = 0; p < total_promissores; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
@@ -2178,9 +2181,9 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        // else {
-        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        // }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
         
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -2481,7 +2484,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     char *simbolos_aspectos[] = {"☌", "⚹", "⚹", "□", "□", "△", "△", "☍", "∥", "∦"};
     int total_aspects = 10;
 
-    //bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0;
+    bool sig_is_fortune = strcmp(sig[idx_alvo].object, "FOR") == 0 || strcmp(sig[idx_alvo].object, "🝴") == 0;
 
 
 
@@ -2491,9 +2494,9 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
-        // else {
-        //     if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
-        // }
+        else {
+            if (sig_is_fortune && (p == P_FORTUNA - object_diff)) continue;
+        }
 
         for (int s = 0; s < 2; s++) {
             if (s == 0 && sentido == 1) continue;
@@ -3014,8 +3017,9 @@ void converter_zodiacal_com_latitude(double jd, double longitude, double latitud
 
 
 
-void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom) {
-       
+void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix *matrix, PontosHylegiacos pontos, int regente_dia, int regente_hora, char *nome_anareta, char *nome_senhor_da_casa8, int tipo_h_natal, int idx_hyleg_natal, bool mapa_retorno, double jd, int tipo_san, PlanetDignities *dig, double ramc, double lat, Promissor *prom, ChartObject for_m) {
+    (void)for_m;
+    
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
@@ -3062,7 +3066,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int idx_south_node = -1;
     int idx_dc = -1;
     int idx_ic = -1;
-    int idx_fortuna_m = NUM_OBJECTS - object_diff;
+    int idx_vertex = -1;
+    //int idx_fortuna_m = NUM_OBJECTS - object_diff;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         if (sig[i].id == P_ASC - object_diff) idx_asc = i;
@@ -3081,7 +3086,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             else if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
             else if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
             else if (sig[i].id == P_DC - object_diff) idx_dc = i;
-            else if (sig[i].id == P_IC - object_diff) idx_ic = i;  
+            else if (sig[i].id == P_IC - object_diff) idx_ic = i;
+            else if (sig[i].id == P_VERTEX - object_diff) idx_vertex = i;  
         }
         else if (sig[i].id == P_NORTH_NODE - object_diff) idx_north_node = i;
         else if (sig[i].id == P_SOUTH_NODE - object_diff) idx_south_node = i;
@@ -3127,22 +3133,22 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         indices_significadores[16] = idx_south_node;
         indices_significadores[17] = idx_dc;
         indices_significadores[18] = idx_ic;
-        indices_significadores[19] = idx_fortuna_m;
+        indices_significadores[19] = idx_vertex; //idx_fortuna_m;
     } else {
         indices_significadores[12] = idx_north_node;
         indices_significadores[13] = idx_south_node;
         indices_significadores[14] = idx_dc;
         indices_significadores[15] = idx_ic;
-        indices_significadores[16] = idx_fortuna_m;
+        //indices_significadores[16] = idx_fortuna_m;
     }
     
 
 
     for (int i = 1; i <= 12; i++) {
         if (show_modern_planets) {
-            indices_significadores[19 + i] = idx_fortuna_m + i;
+            indices_significadores[19 + i] = idx_vertex + i;
         } else {
-            indices_significadores[16 + i] = idx_fortuna_m + i;
+            indices_significadores[15 + i] = idx_ic + i;
         }
     }
 
@@ -3458,8 +3464,54 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
 
 
+
+
+        int degree = (int)fmod(sig[idx_atual_calculo].longitude, 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = sig[idx_atual_calculo].longitude;
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
+        }
+
+        wattron(table_win, A_BOLD);
+        wprintw(table_win, " │ ");
+        wprintw(table_win, "%2d°%s%02d'%02d\"", degree, get_sign(sig[idx_atual_calculo].longitude / 30), min, seg);
+        wattroff(table_win, A_BOLD);
+
+
+
+
+
+
+
+
         wattron(table_win, A_DIM);
-        mvwprintw(table_win, 2, table_width - 33, _("Use [←/→] Signif. [↑/↓] Scroll"));               
+        mvwprintw(table_win, 2, table_width - 15, _("[←/→] Signif."));
         wattroff(table_win, A_DIM);
 
         wattron(table_win, COLOR_PAIR(13));
@@ -3505,14 +3557,23 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 bool eh_termo = d->promissor_type == PROM_TERM;
                 bool eh_antiscia = d->promissor_type == PROM_ANTISCIUM || d->promissor_type == PROM_CONTRANTISCIUM;
 
-                char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
+                char texto_evento[120];
+                if (d->aspecto_id == 10 || d->aspecto_id == 10) {
+                    snprintf(texto_evento, sizeof(texto_evento), " %s %s ← %s → %s ", 
+                        d->promissor_glifo, d->promissor_name,
+                        d->aspecto_symbol,
+                        d->significador_glifo
+                    );
+                }
+                else {
+                    snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
                          eh_termo ? _("Term") : "",
                          eh_termo ? " " : "",
                          d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                          d->significador_glifo
-                );              
+                    );
+                }
 
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0 || strcmp(d->aspecto_symbol, "R∦") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);
@@ -3742,11 +3803,11 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 }
                 break;
             case KEY_RIGHT:
-                seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff);
+                seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1));
                 scroll_offset = 0;
                 break;
             case KEY_LEFT:
-                seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES - object_diff) % (TOTAL_SIGNIFICADORES - object_diff);
+                seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1)) % (TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1));
                 scroll_offset = 0;
                 break;
             case KEY_DOWN:
@@ -4038,15 +4099,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     int idx_fortuna = 0;
 
     for (int i = 0; i < qtd_partes; i++) {
-        if (strstr(lista_partes[i].name, "Fortune") != NULL    ||
-            strstr(lista_partes[i].name, "Fortuna") != NULL    ||
-            strstr(lista_partes[i].name, _("Fortune")) != NULL ||
-            strstr(lista_partes[i].name, _("Part of Fortune")) != NULL ||
-            strstr(lista_partes[i].name, "Pars Fortunae") != NULL ||
-            strstr(lista_partes[i].name, _("Lot of Fortune")) != NULL ||
-            strstr(lista_partes[i].name, "Lot of Fortune") != NULL ||
-            strstr(lista_partes[i].name, "Lot da Fortuna") != NULL
-        ) {
+        if (strcmp(lista_partes[i].name, _("Part of Fortune")) == 0) {
             idx_fortuna = i;
         }
         indices_significadores[i] = i;
@@ -4445,12 +4498,56 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             wprintw(table_win, "Conv");            
         }
         else if (sentido == 2) {
-            wprintw(table_win, "Dir & Conv");            
+            wprintw(table_win, "Dir & Conv");        
         }
         wattroff(table_win, A_BOLD | A_ITALIC | COLOR_PAIR(7));
 
+
+
+
+
+        int degree = (int)fmod(sig[idx_atual_calculo].longitude, 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = sig[idx_atual_calculo].longitude;
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
+        }
+
+        wattron(table_win, A_BOLD);
+        wprintw(table_win, " │ ");
+        wprintw(table_win, "%2d°%s%02d'%02d\"", degree, get_sign(sig[idx_atual_calculo].longitude / 30), min, seg);
+        wattroff(table_win, A_BOLD);
+
+
+
+
         wattron(table_win, A_DIM);
-        mvwprintw(table_win, 2, table_width - 33, _("Use [←/→] Signif. [↑/↓] Scroll"));
+        mvwprintw(table_win, 2, table_width - 15, _("[←/→] Signif."));
         wattroff(table_win, A_DIM);
 
         wattron(table_win, COLOR_PAIR(13));
@@ -4491,14 +4588,24 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 bool eh_termo = d->promissor_type == PROM_TERM;
                 bool eh_antiscia = d->promissor_type == PROM_ANTISCIUM || d->promissor_type == PROM_CONTRANTISCIUM;
 
-                char texto_evento[100];
-                snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
+                char texto_evento[120];
+
+                if (d->aspecto_id == 10 || d->aspecto_id == 10) {
+                    snprintf(texto_evento, sizeof(texto_evento), " %s %s ← %s → %s ", 
+                        d->promissor_glifo, d->promissor_name,
+                        d->aspecto_symbol,
+                        d->significador_glifo
+                    );
+                }
+                else {
+                    snprintf(texto_evento, sizeof(texto_evento), " %s%s%s %s %s → %s ", 
                          eh_termo ? _("Term") : "",
                          eh_termo ? " " : "",
                          d->promissor_glifo, d->promissor_name,
                          (d->promissor_type == PROM_TERM)?"":d->aspecto_symbol,
                          d->significador_glifo
-                );
+                    );
+                }
 
                 bool eh_aspecto_tenso = (strcmp(d->aspecto_symbol, "□") == 0 || strcmp(d->aspecto_symbol, "☍") == 0 || strcmp(d->aspecto_symbol, "∦") == 0 || strcmp(d->aspecto_symbol, "R∦") == 0);
                 bool eh_conjuncao = (strcmp(d->aspecto_symbol, "☌") == 0);

@@ -257,7 +257,7 @@ void display_motivation(PlotObject *plots, int *house_rulers, AspectMatrix *matr
     for (int i = 0; i < 12 - object_diff; i++) {
         if (romanToInt(plots[i].house) == 1) {
             snprintf(planeta_na_casa1_glifo[qtd_planetas_casa1], 10, "%s", plots[i].object);
-            snprintf(planeta_na_casa1_nome[qtd_planetas_casa1], 10, "%s", plots[i].object_name);
+            snprintf(planeta_na_casa1_nome[qtd_planetas_casa1], 30, "%s", plots[i].object_name);
             qtd_planetas_casa1++;
         }
     }

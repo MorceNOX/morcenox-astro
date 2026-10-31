@@ -7415,6 +7415,18 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     }
 
 
+
+
+    ChartObject obj[100] = {0};
+    ChartObject obj_dir[100] = {0};
+   
+    int total_objects = get_chart_objects(obj);
+    get_chart_objects(obj_dir);
+
+
+
+
+
     
     // Carrega dados do banco (get_planet_orbis)
     int planet_ids[NUM_OBJECTS];
@@ -7525,7 +7537,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
      
 
-    int TIMEOUT = 985;
+    int TIMEOUT = 976; //974;
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
@@ -8189,84 +8201,145 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 
         // 15. Building the PlotObject
 
-        
-        
-        //double south_node_declination = -planet_declinations[10];
-        //double descendant_declination = -ascendant_declination;
-        //double ic_declination = -mc_declination;
+                               
+        // Declaração de todas as variáveis de strings originais mantidas
+        char d0[12], d1[12], d2[12], d3[12], d4[12], d5[12], d6[12], d7[12], d8[12], d9[12], d10[12];
+        char m0[12], m1[12], m2[12], m3[12], m4[12], m5[12], m6[12], m7[12], m8[12], m9[12], m10[12];
+        char df[12], da[12], dm[12], ds[12], dv[12];
+        char mf[12], ma[12], mm[12], ms[12], mv[12];
 
-        
-        
-        
+        // Variáveis temporárias para receber os cálculos numéricos estáveis
+        int g_calc, m_calc;
+        long total_minutos_inteiros;
+        long total_graus;
 
-        
-        char d0[12];
-        snprintf(d0, sizeof(d0), "%d°", (int)planet_longitudes[0] % 30);
-        char d1[12];
-        snprintf(d1, sizeof(d1), "%d°", (int)planet_longitudes[1] % 30);
-        char d2[12];
-        snprintf(d2, sizeof(d2), "%d°", (int)planet_longitudes[2] % 30);
-        char d3[12];
-        snprintf(d3, sizeof(d3), "%d°", (int)planet_longitudes[3] % 30);
-        char d4[12];
-        snprintf(d4, sizeof(d4), "%d°", (int)planet_longitudes[4] % 30);
-        char d5[12];
-        snprintf(d5, sizeof(d5), "%d°", (int)planet_longitudes[5] % 30);
-        char d6[12];
-        snprintf(d6, sizeof(d6), "%d°", (int)planet_longitudes[6] % 30);
-        char d7[12];
-        snprintf(d7, sizeof(d7), "%d°", (int)planet_longitudes[7] % 30);
-        char d8[12];
-        snprintf(d8, sizeof(d8), "%d°", (int)planet_longitudes[8] % 30);
-        char d9[12];
-        snprintf(d9, sizeof(d9), "%d°", (int)planet_longitudes[9] % 30);
-        char d10[12];
-        snprintf(d10, sizeof(d10), "%d°", (int)planet_longitudes[10] % 30);
-        
-        char df[12];
-        snprintf(df, sizeof(df), "%d°", (int)fortuna % 30);
-        char da[12];
-        snprintf(da, sizeof(da), "%d°", (int)ascendant % 30);
-        char dm[12];
-        snprintf(dm, sizeof(dm), "%d°", (int)mc % 30);
-        char ds[12];
-        snprintf(ds, sizeof(ds), "%d°", (int)SAN % 30);
-        char dv[12];
-        snprintf(dv, sizeof(dv), "%d°", (int)vertex % 30);
+        // =========================================================================
+        // PROCESSAMENTO DOS PLANETAS (Arredondamento e Separação de Graus/Minutos)
+        // =========================================================================
 
-        char m0[12];
-        snprintf(m0, sizeof(m0), "%02d", (int)round((planet_longitudes[0] - ((int)planet_longitudes[0])) * 60.0));
-        char m1[12];
-        snprintf(m1, sizeof(m1), "%02d", (int)round((planet_longitudes[1] - ((int)planet_longitudes[1])) * 60.0));
-        char m2[12];
-        snprintf(m2, sizeof(m2), "%02d", (int)round((planet_longitudes[2] - ((int)planet_longitudes[2])) * 60.0));
-        char m3[12];
-        snprintf(m3, sizeof(m3), "%02d", (int)round((planet_longitudes[3] - ((int)planet_longitudes[3])) * 60.0));
-        char m4[12];
-        snprintf(m4, sizeof(m4), "%02d", (int)round((planet_longitudes[4] - ((int)planet_longitudes[4])) * 60.0));
-        char m5[12];
-        snprintf(m5, sizeof(m5), "%02d", (int)round((planet_longitudes[5] - ((int)planet_longitudes[5])) * 60.0));
-        char m6[12];
-        snprintf(m6, sizeof(m6), "%02d", (int)round((planet_longitudes[6] - ((int)planet_longitudes[6])) * 60.0));
-        char m7[12];
-        snprintf(m7, sizeof(m7), "%02d", (int)round((planet_longitudes[7] - ((int)planet_longitudes[7])) * 60.0));
-        char m8[12];
-        snprintf(m8, sizeof(m8), "%02d", (int)round((planet_longitudes[8] - ((int)planet_longitudes[8])) * 60.0));
-        char m9[12];
-        snprintf(m9, sizeof(m9), "%02d", (int)round((planet_longitudes[9] - ((int)planet_longitudes[9])) * 60.0));
-        char m10[12];
-        snprintf(m10, sizeof(m10), "%02d", (int)round((planet_longitudes[10] - ((int)planet_longitudes[10])) * 60.0));
+        // Planeta 0
+        total_minutos_inteiros = (long)round(planet_longitudes[0] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d0, sizeof(d0), "%d°", g_calc);
+        snprintf(m0, sizeof(m0), "%02d", m_calc);
 
-        char mf[12];
-        snprintf(mf, sizeof(mf), "%02d", (int)round((fortuna - ((int)fortuna)) * 60.0));
-        char ma[12];
-        snprintf(ma, sizeof(ma), "%02d", (int)round((ascendant - ((int)ascendant)) * 60.0));
-        char mm[12];
-        snprintf(mm, sizeof(mm), "%02d", (int)round((mc - ((int)mc)) * 60.0));
-        char ms[12];
-        snprintf(ms, sizeof(ms), "%02d", (int)round((SAN - ((int)SAN)) * 60.0));
-        char mv[12];
-        snprintf(mv, sizeof(mv), "%02d", (int)round((vertex - ((int)vertex)) * 60.0));
+        // Planeta 1
+        total_minutos_inteiros = (long)round(planet_longitudes[1] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d1, sizeof(d1), "%d°", g_calc);
+        snprintf(m1, sizeof(m1), "%02d", m_calc);
+
+        // Planeta 2
+        total_minutos_inteiros = (long)round(planet_longitudes[2] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d2, sizeof(d2), "%d°", g_calc);
+        snprintf(m2, sizeof(m2), "%02d", m_calc);
+
+        // Planeta 3
+        total_minutos_inteiros = (long)round(planet_longitudes[3] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d3, sizeof(d3), "%d°", g_calc);
+        snprintf(m3, sizeof(m3), "%02d", m_calc);
+
+        // Planeta 4
+        total_minutos_inteiros = (long)round(planet_longitudes[4] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d4, sizeof(d4), "%d°", g_calc);
+        snprintf(m4, sizeof(m4), "%02d", m_calc);
+
+        // Planeta 5
+        total_minutos_inteiros = (long)round(planet_longitudes[5] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d5, sizeof(d5), "%d°", g_calc);
+        snprintf(m5, sizeof(m5), "%02d", m_calc);
+
+        // Planeta 6
+        total_minutos_inteiros = (long)round(planet_longitudes[6] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d6, sizeof(d6), "%d°", g_calc);
+        snprintf(m6, sizeof(m6), "%02d", m_calc);
+
+        // Planeta 7
+        total_minutos_inteiros = (long)round(planet_longitudes[7] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d7, sizeof(d7), "%d°", g_calc);
+        snprintf(m7, sizeof(m7), "%02d", m_calc);
+
+        // Planeta 8
+        total_minutos_inteiros = (long)round(planet_longitudes[8] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d8, sizeof(d8), "%d°", g_calc);
+        snprintf(m8, sizeof(m8), "%02d", m_calc);
+
+        // Planeta 9
+        total_minutos_inteiros = (long)round(planet_longitudes[9] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d9, sizeof(d9), "%d°", g_calc);
+        snprintf(m9, sizeof(m9), "%02d", m_calc);
+
+        // Planeta 10
+        total_minutos_inteiros = (long)round(planet_longitudes[10] * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        g_calc = (int)(total_graus % 30);
+        m_calc = (int)(total_minutos_inteiros % 60);
+        snprintf(d10, sizeof(d10), "%d°", g_calc);
+        snprintf(m10, sizeof(m10), "%02d", m_calc);
+
+
+        // =========================================================================
+        // PROCESSAMENTO DOS PONTOS ADICIONAIS
+        // =========================================================================
+
+        // Fortuna
+        total_minutos_inteiros = (long)round(fortuna * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        snprintf(df, sizeof(df), "%ld°", total_graus % 30);
+        snprintf(mf, sizeof(mf), "%02ld", total_minutos_inteiros % 60);
+
+        // Ascendente
+        total_minutos_inteiros = (long)round(ascendant * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        snprintf(da, sizeof(da), "%ld°", total_graus % 30);
+        snprintf(ma, sizeof(ma), "%02ld", total_minutos_inteiros % 60);
+
+        // MC
+        total_minutos_inteiros = (long)round(mc * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        snprintf(dm, sizeof(dm), "%ld°", total_graus % 30);
+        snprintf(mm, sizeof(mm), "%02ld", total_minutos_inteiros % 60);
+
+        // SAN
+        total_minutos_inteiros = (long)round(SAN * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        snprintf(ds, sizeof(ds), "%ld°", total_graus % 30);
+        snprintf(ms, sizeof(ms), "%02ld", total_minutos_inteiros % 60);
+
+        // Vertex
+        total_minutos_inteiros = (long)round(vertex * 60.0);
+        total_graus = total_minutos_inteiros / 60;
+        snprintf(dv, sizeof(dv), "%ld°", total_graus % 30);
+        snprintf(mv, sizeof(mv), "%02ld", total_minutos_inteiros % 60);
+
 
 
         int sign[19] = {
@@ -9342,10 +9415,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
         // Constrói o ChartObject
-        ChartObject obj[100] = {0};
-
-        int total_objects = get_chart_objects(obj);
-
         for (int i = 0; i < total_objects; i++) {
             for (int j = 0; j < NUM_OBJECTS; j++) {
                 if (obj[i].id == plotsA[j].id + 1 && obj[i].longitude == 0.0) {
@@ -9358,6 +9427,25 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 }
             }            
         }
+
+        for (int i = 0; i < total_objects; i++) {
+            for (int j = 0; j < NUM_OBJECTS; j++) {
+                if (obj_dir[i].id == plotsA[j].id + 1 && obj_dir[i].longitude == 0.0) {
+                    obj_dir[i].longitude = plotsA[j].longitude;
+                    obj_dir[i].latitude = plotsA[j].latitude;
+                    obj_dir[i].declination = plotsA[j].declination;
+                    obj_dir[i].ra = plotsA[j].ra;
+                    obj_dir[i].house = get_house(plotsA[j].longitude, cusps);
+                    break;
+                }
+            }            
+        }
+
+
+
+
+
+
         for (int i = 0; i < total_objects; i++) {
             if (obj[i].type == OBJ_DISPOSITOR) {
                 continue;
@@ -9374,6 +9462,25 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             if (strcmp(obj[i].object, "SPI") == 0) {
                 obj[i].longitude = spirit;
                 obj[i].house = get_house(spirit, cusps);
+            }
+        }
+
+        for (int i = 0; i < total_objects; i++) {
+            if (obj_dir[i].type == OBJ_DISPOSITOR) {
+                continue;
+            }
+            if (obj_dir[i].type == OBJ_ZODIAC_DEGREE) {
+                obj_dir[i].house = get_house(obj[i].longitude, cusps);
+            }
+            if (obj_dir[i].type == OBJ_CUSP) {
+                for (int j = 1; j <= 12; j++) {
+                    obj_dir[i + j - 1].longitude = cusps[j];
+                    obj_dir[i + j - 1].house = j;
+                }
+            }
+            if (strcmp(obj_dir[i].object, "SPI") == 0) {
+                obj_dir[i].longitude = spirit;
+                obj_dir[i].house = get_house(spirit, cusps);
             }
         }
                 
@@ -9399,7 +9506,34 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     }
                 }
             
-            }
+            }           
+            
+        }
+
+
+        for (int i = 0; i < total_objects; i++) {
+            if (obj_dir[i].type == OBJ_DISPOSITOR) {
+                int ref = obj_dir[i].object_ref;
+
+                for (int j = 0; j < total_objects; j++) {
+                    if (obj_dir[j].id == ref) {
+                        int sign = (int)(obj_dir[j].longitude / 30.0) + 1;
+                        int ruler = 0;
+
+                        get_ruler_dom_by_sign_id(sign, &ruler);
+
+                        for (int k = 0; k < 7; k++) {
+                            if (obj_dir[k].id == ruler) {
+                                obj_dir[i].longitude = obj_dir[k].longitude;
+                                obj_dir[i].house = get_house(obj_dir[k].longitude, cusps);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            
+            }           
             
         }
         // DEBUG
@@ -9462,6 +9596,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // Array de Significadores
         Promissor sig[50] = {0};
+
+        Promissor fortuna_m = {0};
+        snprintf(fortuna_m.object, 10, "%s", "🜨");
+        snprintf(fortuna_m.object_name, 30, "%s", _("Mundane Part of Fortune"));
+
+        fortuna_m.type = PROM_PART;
+
+        int idx_fortuna = 0;
         int sig_id = 0;
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             strcpy(sig[i].object, plots[i].object);
@@ -9479,25 +9621,46 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             } else if (strcmp(sig[i].object_name, "SAN") == 0) {
                 sig[i].type = PROM_POINT;
             } else if (strcmp(sig[i].object_name, _("Part of Fortune")) == 0) {
+                idx_fortuna = i;                
                 sig[i].type = PROM_PART;
             } else {
                 sig[i].type = PROM_ANGLE;
             }
             sig_id++;
         }
-
-        Promissor fortuna_m = {0};
-        snprintf(fortuna_m.object, 10, "%s", "🜨");
-        snprintf(fortuna_m.object_name, 30, "%s", _("Mundane Part of Fortune"));
-
-        fortuna_m.type = PROM_PART;
+        
+        
 
         calc_mundane_lot(&sig[0], &sig[1], &sig[0], &sig[P_ASC - object_diff], true, armc, julian_day, lat, cusps, &fortuna_m);
 
-        sig[sig_id] = fortuna_m;
-        sig[sig_id].id = sig_id;
+        
 
-        sig_id++;        
+        sig[idx_fortuna].longitude = fortuna_m.longitude;
+        sig[idx_fortuna].latitude = fortuna_m.latitude;
+        sig[idx_fortuna].declination = fortuna_m.declination;
+        sig[idx_fortuna].ra = fortuna_m.ra;
+        sig[idx_fortuna].house = fortuna_m.house;
+        sig[idx_fortuna].house_pos = fortuna_m.house_pos;
+
+
+
+        for (int i = 0; i < total_objects; i++) {
+            if (strcmp(obj_dir[i].object_name, _("Part of Fortune")) == 0) {
+                obj_dir[i].longitude = fortuna_m.longitude;
+                obj_dir[i].latitude = fortuna_m.latitude;
+                obj_dir[i].declination = fortuna_m.declination;
+                obj_dir[i].ra = fortuna_m.ra;
+                obj_dir[i].house = fortuna_m.house;
+                obj_dir[i].house_pos = fortuna_m.house_pos;
+                break;
+            }
+        }
+
+
+
+
+
+        //sig_id++;        
 
         char *hc;
         for (int i = 1; i <= 12; i++) {
@@ -9559,12 +9722,18 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             } else if (strcmp(prom[i].object_name, "SAN") == 0) {
                 prom[i].type = PROM_POINT;
             } else if (strcmp(prom[i].object_name, _("Part of Fortune")) == 0) {
+                prom[i].longitude = fortuna_m.longitude;
+                prom[i].latitude = fortuna_m.latitude;
+                prom[i].declination = fortuna_m.declination;
+                prom[i].ra = fortuna_m.ra;
+                prom[i].house_pos = fortuna_m.house_pos;
+                prom[i].house = fortuna_m.house;
                 prom[i].type = PROM_PART;
             }
 
             prom_id++;
         }
-
+        
         // adicionar os nodos
         // for (int i = 7; i < 12; i++) {
         //     if ((strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
@@ -9675,7 +9844,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[prom_id].id = prom_id;
 
             longitudes_ant[index_ant] = calcular_antiscia(plots[i].longitude);
-            //sign_ant[index_ant] = (int)(longitudes_ant[index_ant] / 30.0);
 
             prom[prom_id].longitude = longitudes_ant[index_ant];            
             prom[prom_id].latitude = 0.0; // Rigorosamente 0.0 na eclíptica
@@ -9705,6 +9873,24 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             ants[index_ant].house = prom[prom_id].house;
             snprintf(ants[index_ant].object, 10, "A-%s", plots[i].object);
             snprintf(ants[index_ant].object_name, 30, "Antiscium %s", plots[i].object_name);
+
+            // calcula o antíscio da Parte da Fortuna Mundana para promissores
+            if (strcmp(plots[i].object_name, _("Part of Fortune")) == 0) {
+                prom[prom_id].longitude = calcular_antiscia(fortuna_m.longitude);
+                xx_in[0] = prom[prom_id].longitude;
+                xx_in[1] = prom[prom_id].latitude;
+                xx_in[2] = 1.0;
+                swe_cotrans(xx_in, xx_out, -true_obliquity);
+                prom[prom_id].declination = xx_out[1];
+                prom[prom_id].ra = xx_out[0];
+                
+                prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
+                prom[prom_id].type = PROM_ANTISCIUM;
+
+                x_sn[0] = prom[prom_id].longitude;
+                x_sn[1] = prom[prom_id].latitude;
+                prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
+            }
 
             if (strcmp(plots[i].object_name, _("Ascendant")) == 0 || strcmp(plots[i].object_name, _("Descendant")) == 0 ||
                 strcmp(plots[i].object_name, _("Midheaven")) == 0 || strcmp(plots[i].object_name, _("Nadir")) == 0
@@ -9766,6 +9952,24 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             ants[target_idx].house = prom[prom_id].house;
             snprintf(ants[target_idx].object, 10, "CA-%s", plots[i].object);
             snprintf(ants[target_idx].object_name, 30, "Contrantiscium %s", plots[i].object_name);
+
+            // calcula o antíscio da Parte da Fortuna Mundana para promissores
+            if (strcmp(plots[i].object_name, _("Part of Fortune")) == 0) {
+                prom[prom_id].longitude = calcular_contra_antiscia(fortuna_m.longitude);
+                xx_in[0] = prom[prom_id].longitude;
+                xx_in[1] = prom[prom_id].latitude;
+                xx_in[2] = 1.0;
+                swe_cotrans(xx_in, xx_out, -true_obliquity);
+                prom[prom_id].declination = xx_out[1];
+                prom[prom_id].ra = xx_out[0];
+                
+                prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
+                prom[prom_id].type = PROM_ANTISCIUM;
+
+                x_sn[0] = prom[prom_id].longitude;
+                x_sn[1] = prom[prom_id].latitude;
+                prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
+            }
 
             if (strcmp(plots[i].object_name, _("Ascendant")) == 0 || strcmp(plots[i].object_name, _("Descendant")) == 0 ||
                 strcmp(plots[i].object_name, _("Midheaven")) == 0 || strcmp(plots[i].object_name, _("Nadir")) == 0
@@ -9933,7 +10137,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ctx.east_point = east_point;
 
         ctx.fortuna_m = fortuna_m;
-
+        ctx.obj_dir = obj_dir;
+        ctx.object_diff = object_diff;
         
 
         // Handle input with timeout
@@ -10259,7 +10464,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     } 
                     
-                    display_primary_directions(plots, sig, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, tipo_san, dig, armc, lat, prom);
+                    display_primary_directions(plots, sig, &matrix, pontos_calculados, regente_dia, regente_hora, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, mapa_retorno, julian_day, tipo_san, dig, armc, lat, prom, obj_dir[P_FORTUNA - object_diff]);
                     ativar_arrasto_mouse();
                     flushinp();
                 }
@@ -10273,7 +10478,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     } 
                     
-                    display_primary_directions_parts(prom, nome_anareta, nome_senhor_da_casa8, obj, total_objects, cusps, julian_day, armc, lat);
+                    display_primary_directions_parts(prom, nome_anareta, nome_senhor_da_casa8, obj_dir, total_objects, cusps, julian_day, armc, lat);
                     ativar_arrasto_mouse();
                     flushinp();
                 }
@@ -10547,6 +10752,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             bkgd(COLOR_PAIR(15) | FLAGS);
             erase();
+
+            total_objects = get_chart_objects(obj);
+            get_chart_objects(obj_dir);
 
             saiu_retorno = false;
 
@@ -11025,12 +11233,12 @@ void open_menu_tables(ContextoMenu *ctx) {
             break;
         case 23:
             if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom);
+                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom, ctx->obj_dir[P_FORTUNA - ctx->object_diff]);
             }
             break;
         case 24:
             if (!ctx->mapa_retorno) {
-                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
+                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj_dir, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
             }           
             break;
         case 25:
@@ -11060,6 +11268,9 @@ void open_menu_tables(ContextoMenu *ctx) {
         ctx->local_time->tm_sec = SEC;
 
         timegm(ctx->local_time);
+
+        ctx->total_objects = get_chart_objects(ctx->obj);
+        get_chart_objects(ctx->obj_dir);
 
         bkgd(COLOR_PAIR(15) | FLAGS);
         erase();

@@ -195,6 +195,8 @@ typedef struct {
     double east_point;
 
     Promissor fortuna_m;
+    ChartObject *obj_dir;
+    int object_diff;
 
 } ContextoMenu;
 
