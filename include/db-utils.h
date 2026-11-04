@@ -35,9 +35,11 @@ typedef struct {
 
 
 sqlite3* open_database();
+void persistir_no_disco();
 void close_database(sqlite3 *db);
 void terminate_database();
 int reconstruir_indice_cidades(sqlite3 *db);
+void recarregar_banco_na_ram();
 int configurar_banco(sqlite3 *db);
 void auto_vacuum(sqlite3 *db);
 void activate_foreign_keys(sqlite3 *db);
@@ -73,7 +75,7 @@ int get_season_id(int sign, int *season);
 int get_season_temperament(char *season, char **temperament);
 int get_season_temperament_by_season_id(int season_id, char **temperament);
 int get_planet_speed(char *planet_symbol, double *speed);
-int get_weights(double weights[50], bool show_modern_planets);
+int get_weights(double weights[100], bool show_modern_planets);
 int get_chart_objects(ChartObject obj[100]);
 int get_planet_orientality(char *planet_symbol, char **orientality);
 int get_house_system_name(char house_system_id, char **house_system_name);

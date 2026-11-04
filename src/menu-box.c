@@ -407,7 +407,7 @@ void set_data() {
         doupdate();
 
         if (!found_city) {
-            if (show_confirm_yesno("", _("Do you want to search the location again?"))) {
+            if (show_confirm_yesno(_("Location not found!"), _("Do you want to search for location again?"))) {
                 cont = true;
                 continue;
             }
@@ -424,7 +424,7 @@ void set_data() {
     }
     if (!found_city) {
         
-        if (show_confirm_yesno("", _("Do you want to enter the coordinates of the location?"))) {
+        if (show_confirm_yesno(_("To continue you have to enter the coordinates or restart the operation."), _("Do you want to enter the coordinates of the location?"))) {
 
             USAR_COORDENADAS = true;
 
@@ -599,7 +599,7 @@ void set_data() {
         ELEV = elev;
         TZ_OFFSET = obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
         DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
-
+        
         call_chart();
 
     }
@@ -610,16 +610,18 @@ void set_data() {
 
 
 void save_chart() {
-
     if (USAR_COORDENADAS) {
         if (!save_city()) {
-            show_alert_popup(_("City could not be saved!"), "");
+            show_alert_popup(_("City could not be saved!"), _("Chart not saved!"));
             snprintf(MESSAGE, sizeof(MESSAGE), _("Chart not saved!"));
             return;
         }
     }
+
     sqlite3 *db;
-    sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt_city = NULL;
+    sqlite3_stmt *stmt_ram = NULL;
+    sqlite3_stmt *stmt_disc = NULL;
     int rc;
 
     db = open_database();
@@ -630,131 +632,110 @@ void save_chart() {
 
     set_chart_name(CHART_NAME, sizeof(CHART_NAME));                                
 
-
     int confirm = show_confirm_yesno(CHART_NAME, _("Are you sure you want to SAVE the chart"));
-
     if (!confirm) {
         snprintf(MESSAGE, sizeof(MESSAGE), _("Chart not saved!"));
         return;
     }
 
-
-    const char *sql_load = "SELECT year, month, day, hour, min, sec, dst, tz_offset, country, state, city, city_id, dst_offset FROM charts WHERE chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
-    rc = sqlite3_prepare_v2(db, sql_load, -1, &stmt, NULL);
-    
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare load statement: %s\n", sqlite3_errmsg(db));
-        
-        sqlite3_close(db);
-        return;
-    }
-    
-    sqlite3_bind_text(stmt, 1, CHART_NAME, -1, SQLITE_STATIC);
-    
-    int found = 0;
+    // 1. BUSCA O CITY_ID (Rápido, rodando na RAM)
     int city_id = 0;
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        city_id = sqlite3_column_int(stmt, 11);
-        found = 1;
-    }
-    DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
-
-    const char *sql_select;
-    if (found) {
-        sql_select = "UPDATE charts SET chart_name = ?, year = ?, month = ?, day = ?, hour = ?, min = ?, sec = ?, dst = ?, tz_offset = ?, country = ?, state = ?, city = ?, dst_offset = ?, gender = ?, city_id = ? WHERE chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
-
-        rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
-
-        if (rc != SQLITE_OK) {
-            show_alert_popup(_("Chart not saved!"), sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return;
+    const char *sql_city = "SELECT id FROM main.cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO LIMIT 1;";
+    rc = sqlite3_prepare_v2(db, sql_city, -1, &stmt_city, NULL);
+    if (rc == SQLITE_OK) {
+        sqlite3_bind_text(stmt_city, 1, COUNTRY, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt_city, 2, STATE, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt_city, 3, CITY, -1, SQLITE_STATIC);
+        if (sqlite3_step(stmt_city) == SQLITE_ROW) {
+            city_id = sqlite3_column_int(stmt_city, 0);
         }
-
-        sqlite3_bind_text(stmt, 1, CHART_NAME, -1, SQLITE_STATIC);
-        sqlite3_bind_int(stmt, 2, YY);
-        sqlite3_bind_int(stmt, 3, MM);
-        sqlite3_bind_int(stmt, 4, DD);
-        sqlite3_bind_int(stmt, 5, HH);
-        sqlite3_bind_int(stmt, 6, MIN);
-        sqlite3_bind_double(stmt, 7, SEC);
-        sqlite3_bind_int(stmt, 8, DST);
-        sqlite3_bind_double(stmt, 9, TZ_OFFSET);
-        sqlite3_bind_text(stmt, 10, COUNTRY, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 11, STATE, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 12, CITY, -1, SQLITE_STATIC);
-        sqlite3_bind_double(stmt, 13, DST_OFFSET);
-        sqlite3_bind_int(stmt, 14, GENDER);
-        sqlite3_bind_int(stmt, 15, city_id);
-        sqlite3_bind_text(stmt, 16, CHART_NAME, -1, SQLITE_STATIC);
-    }
-    else {
-        const char *sql_load2 = "SELECT id FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
-        rc = sqlite3_prepare_v2(db, sql_load2, -1, &stmt, NULL);
-        
-        if (rc != SQLITE_OK) {
-            //fprintf(stderr, "Failed to prepare load statement: %s\n", sqlite3_errmsg(db));
-            show_alert_popup(_("Failed to prepare load statement. Chart not saved!"), sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return;
-        }
-                
-        sqlite3_bind_text(stmt, 1, COUNTRY, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 2, STATE, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 3, CITY, -1, SQLITE_STATIC);
-        city_id = 0;
-        if (sqlite3_step(stmt) == SQLITE_ROW) {
-            city_id = sqlite3_column_int(stmt, 0);
-        
-            sql_select = "INSERT INTO charts (chart_name, year, month, day, hour, min, sec, dst, tz_offset, country, state, city, dst_offset, gender, city_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?);";
-            rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
-
-            if (rc != SQLITE_OK) {
-                show_alert_popup(_("Failed to insert. Chart not saved!"), sqlite3_errmsg(db));
-                sqlite3_finalize(stmt);
-                sqlite3_close(db);
-                return;
-            }
-
-            sqlite3_bind_text(stmt, 1, CHART_NAME, -1, SQLITE_STATIC);
-            sqlite3_bind_int(stmt, 2, YY);
-            sqlite3_bind_int(stmt, 3, MM);
-            sqlite3_bind_int(stmt, 4, DD);
-            sqlite3_bind_int(stmt, 5, HH);
-            sqlite3_bind_int(stmt, 6, MIN);
-            sqlite3_bind_double(stmt, 7, SEC);
-            sqlite3_bind_int(stmt, 8, DST);
-            sqlite3_bind_double(stmt, 9, TZ_OFFSET);
-            sqlite3_bind_text(stmt, 10, COUNTRY, -1, SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 11, STATE, -1, SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 12, CITY, -1, SQLITE_STATIC);
-            sqlite3_bind_double(stmt, 13, DST_OFFSET);
-            sqlite3_bind_int(stmt, 14, GENDER);
-            
-            sqlite3_bind_int(stmt, 15, city_id);
-        }
-        else {
-            show_alert_popup(_("Failed to bind insert statement. Chart not saved!"), "");
-            sqlite3_finalize(stmt);
-            return;
-        }
+        sqlite3_finalize(stmt_city); // Finaliza imediatamente após usar!
     }
 
+    DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600.0;
 
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        show_alert_popup(_("Failed saving chart (step)!"), sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
+    // 2. CONECTA O ARQUIVO FÍSICO DO DISCO (Sem hardcoding)
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach);
+
+    // 3. O TRUQUE: O comando UPSERT Unificado (Serve para INSERT ou UPDATE automaticamente se o nome conflitar)
+    const char *sql_upsert_ram = 
+        "INSERT INTO main.charts (chart_name, year, month, day, hour, min, sec, dst, tz_offset, country, state, city, dst_offset, gender, city_id) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+        "ON CONFLICT(chart_name) DO UPDATE SET "
+        "year=excluded.year, month=excluded.month, day=excluded.day, hour=excluded.hour, min=excluded.min, sec=excluded.sec, "
+        "dst=excluded.dst, tz_offset=excluded.tz_offset, country=excluded.country, state=excluded.state, city=excluded.city, "
+        "dst_offset=excluded.dst_offset, gender=excluded.gender, city_id=excluded.city_id;";
+
+    const char *sql_upsert_disc = 
+        "INSERT INTO disco.charts (chart_name, year, month, day, hour, min, sec, dst, tz_offset, country, state, city, dst_offset, gender, city_id) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+        "ON CONFLICT(chart_name) DO UPDATE SET "
+        "year=excluded.year, month=excluded.month, day=excluded.day, hour=excluded.hour, min=excluded.min, sec=excluded.sec, "
+        "dst=excluded.dst, tz_offset=excluded.tz_offset, country=excluded.country, state=excluded.state, city=excluded.city, "
+        "dst_offset=excluded.dst_offset, gender=excluded.gender, city_id=excluded.city_id;";
+
+    // 4. PREPARA OS DOIS STATEMENTS DE ESCRITA SIMULTÂNEA
+    if (sqlite3_prepare_v2(db, sql_upsert_ram, -1, &stmt_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_upsert_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
+        show_alert_popup(_("Chart not saved! (Prepare error)"), sqlite3_errmsg(db));
+        if (stmt_ram) sqlite3_finalize(stmt_ram);
+        if (stmt_disc) sqlite3_finalize(stmt_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
         return;
     }
 
-    snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart saved!"));
+    // 5. LOOP DE BIND E EXECUÇÃO ESPELHADA (Passa os parâmetros uma única vez para os dois!)
+    int gravou_tudo = 1;
+    sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
 
-    sqlite3_finalize(stmt);
+    for (int i = 0; i < 2; i++) {
+        //if (!statements[i]) continue;
+
+        sqlite3_bind_text(statements[i], 1, CHART_NAME, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 2, YY);
+        sqlite3_bind_int(statements[i], 3, MM);
+        sqlite3_bind_int(statements[i], 4, DD);
+        sqlite3_bind_int(statements[i], 5, HH);
+        sqlite3_bind_int(statements[i], 6, MIN);
+        sqlite3_bind_double(statements[i], 7, SEC);
+        sqlite3_bind_int(statements[i], 8, DST);
+        sqlite3_bind_double(statements[i], 9, TZ_OFFSET);
+        sqlite3_bind_text(statements[i], 10, COUNTRY, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 11, STATE, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 12, CITY, -1, SQLITE_STATIC);
+        sqlite3_bind_double(statements[i], 13, DST_OFFSET);
+        sqlite3_bind_int(statements[i], 14, GENDER);
+        sqlite3_bind_int(statements[i], 15, city_id);
+
+        if (sqlite3_step(statements[i]) != SQLITE_DONE) {
+            gravou_tudo = 0;
+        }
+        
+    }
+
+    if (stmt_ram) sqlite3_finalize(stmt_ram);
+    if (stmt_disc) sqlite3_finalize(stmt_disc);
+
+    // CORREÇÃO CRUCIAL 2: Capturar erro do DETACH para diagnóstico no console
+    char *zErrMsg = NULL;
+    rc = sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        show_alert_popup(zErrMsg,"ERRO CRITICO: Nao foi possivel fechar o arquivo fisico (DETACH falhou)");
+        sqlite3_free(zErrMsg);
+    }
+
+    // 6. Resposta para a interface
+    if (gravou_tudo) {
+        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart saved!"));
+        show_alert_popup(_("Chart saved successfully!"), "");
+    } else {
+        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart not saved completely!"));
+        show_alert_popup(_("Failed saving chart to Disk!"), sqlite3_errmsg(db));
+    }
+
     close_database(db);
-
 }
 
 
@@ -1127,46 +1108,68 @@ void del_chart() {
     // Get the selected chart name
     const char *selected_chart_name = chart_names[selected_chart_index];
 
-    // Now load the full chart data
-    const char *sql_load = "DELETE FROM charts WHERE chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
-    rc = sqlite3_prepare_v2(db, sql_load, -1, &stmt, NULL);
+    // A. Conecta ao arquivo físico em disco
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach);
+
+    // B. Declaração e preparação dos comandos espelhados
+    const char *sql_del_ram  = "DELETE FROM main.charts WHERE chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
+    const char *sql_del_disc = "DELETE FROM disco.charts WHERE chart_name = ? COLLATE GLOBAL_SEM_ACENTO;";
     
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare load statement: %s\n", sqlite3_errmsg(db));
-        // Cleanup
-        for (int i = 0; i < row_count; i++) {
-            free(chart_names[i]);
-        }
+    sqlite3_stmt *stmt_ram = NULL;
+    sqlite3_stmt *stmt_disc = NULL;
+
+    if (sqlite3_prepare_v2(db, sql_del_ram, -1, &stmt_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_del_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
+        
+        fprintf(stderr, "Failed to prepare delete statements: %s\n", sqlite3_errmsg(db));
+        if (stmt_ram) sqlite3_finalize(stmt_ram);
+        if (stmt_disc) sqlite3_finalize(stmt_disc);
+        
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+
+        // Limpeza de janelas e memória ncurses
+        for (int i = 0; i < row_count; i++) free(chart_names[i]);
         free(chart_names);
         delwin(chart_win);
         delwin(chart_shadow);
-        sqlite3_finalize(stmt);
         close_database(db);
         return;
     }
     
-    sqlite3_bind_text(stmt, 1, selected_chart_name, -1, SQLITE_STATIC);
-    
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed deleting chart: %s\n", sqlite3_errmsg(db));
-        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Error deleting chart."));
+    // C. Loop de Bind e Execução simétrica
+    int sucesso = 1;
+    sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
+    for (int i = 0; i < 2; i++) {
+        if (!statements[i]) continue;
 
-        // Cleanup
-        for (int i = 0; i < row_count; i++) {
-            free(chart_names[i]);
+        sqlite3_bind_text(statements[i], 1, selected_chart_name, -1, SQLITE_STATIC);
+        
+        if (sqlite3_step(statements[i]) != SQLITE_DONE) {
+            fprintf(stderr, "Failed deleting chart on index %d: %s\n", i, sqlite3_errmsg(db));
+            sucesso = 0;
         }
+    }
+    
+    // D. Limpeza final de ponteiros do banco e liberação do arquivo físico
+    sqlite3_finalize(stmt_ram);
+    sqlite3_finalize(stmt_disc);
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+
+    if (!sucesso) {
+        snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Error deleting chart."));
+        for (int i = 0; i < row_count; i++) free(chart_names[i]);
         free(chart_names);
         delwin(chart_win);
         delwin(chart_shadow);
-        sqlite3_finalize(stmt);
+        close_database(db);
         return;
     }
+
     snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart deleted successfully."));
-    
-    sqlite3_finalize(stmt);
     close_database(db);
-    
+
     // Cleanup
     for (int i = 0; i < row_count; i++) {
         free(chart_names[i]);
@@ -1200,7 +1203,7 @@ void load_chart() {
     
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
+        
         sqlite3_close(db);
         return;
     }
@@ -1548,7 +1551,6 @@ void load_chart() {
         free(chart_names);
         delwin(chart_win);
         delwin(chart_shadow);
-        sqlite3_finalize(stmt);
         close_database(db);
         return;
     }
@@ -1617,6 +1619,7 @@ void load_chart() {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", _("Chart not found!"));
     }
     else {
+
         DST_OFFSET = obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;
         call_chart();
     }
@@ -2111,7 +2114,7 @@ void call_chart_now() {
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement in call_chart_now: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
-        exit(1);
+        return;
     }
 
     char city[100];

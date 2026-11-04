@@ -541,6 +541,19 @@ void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ra
 
     arc = pp->pm + sig->longitude - trig->longitude;
     
+    if (arc == 0.0) {
+        lot_m->longitude = cusps[1];
+    } 
+    else if (arc == 90.0) {
+        lot_m->longitude = cusps[4];    
+    } 
+    else if (arc == 180.0) {
+        lot_m->longitude = cusps[7];
+    }
+    else if (arc == 270.00)  {
+        lot_m->longitude = cusps[10];
+    }
+
     double ra_ic = ramc + 180.0;
     if (arc < 180.0) {
         r = ra_ic;
@@ -548,7 +561,7 @@ void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ra
         t = 1.0;
         lot_m->ra = ra_ic + arc - 90.0;
     }
-    else if (arc >= 180.0) {
+    else if (arc > 180.0) {
         r = ramc;
         k = (arc -270.0) / 90.0;
         t = -1.0;
@@ -608,6 +621,19 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
         arc = pp->pm + sig->longitude - trig->longitude;
     }
 
+    if (arc == 0.0) {
+        lot_m->longitude = cusps[1];
+    } 
+    else if (arc == 90.0) {
+        lot_m->longitude = cusps[4];    
+    } 
+    else if (arc == 180.0) {
+        lot_m->longitude = cusps[7];
+    }
+    else if (arc == 270.00)  {
+        lot_m->longitude = cusps[10];
+    }
+
     double ra_ic = ramc + 180.0;
     if (arc < 180.0) {
         r = ra_ic;
@@ -615,7 +641,7 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
         t = 1.0;
         lot_m->ra = ra_ic + arc - 90.0;
     }
-    else if (arc >= 180.0) {
+    else if (arc > 180.0) {
         r = ramc;
         k = (arc -270.0) / 90.0;
         t = -1.0;
@@ -887,7 +913,7 @@ void calcular_paralelos_rapto(Promissor *sig, Promissor *prom, double *arco_rapt
         *arco_contra_rapto = (prom->md + sig->md) / 2.0;
     } 
     else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
-        // MATEMÁTICA CLÁSSICA DE PLACIDUS (Código que você já tinha)
+        // MATEMÁTICA CLÁSSICA DE PLACIDUS
         double sa_sig_uso = (sig->md <= sig->sa.sad) ? sig->sa.sad : sig->sa.san;
         double sa_prom_uso = (prom->md <= prom->sa.sad) ? prom->sa.sad : prom->sa.san;
         
@@ -1088,9 +1114,11 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
             
-                    int ano_c, mes_c, dia_c, hora_c, min_c;
-                    double sec_c;
-                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    int ano_c, mes_c, dia_c; //hora_c, min_c;
+                    double hora_c;
+                    //double sec_c;
+                    //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
             
                     d->ano_calendario = ano_c;
                     d->mes_calendario = mes_c;
@@ -2047,9 +2075,11 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     
                             double jd_evento = jd + dias_decorridos;
                             
-                            int ano_c, mes_c, dia_c, hora_c, min_c;
-                            double sec_c;
-                            swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            int ano_c, mes_c, dia_c; //hora_c, min_c;
+                            double hora_c;
+                            //double sec_c;
+                            //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                             d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                             strcpy(d->tipo_direcao, "Zodiacal");
@@ -2157,9 +2187,11 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
             
                     double jd_evento = jd + dias_decorridos;
 
-                    int ano_c, mes_c, dia_c, hora_c, min_c;
-                    double sec_c;
-                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    int ano_c, mes_c, dia_c; //hora_c, min_c;
+                    double hora_c;
+                    //double sec_c;
+                    //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                     d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                     strcpy(d->tipo_direcao, "Zodiacal");
@@ -2366,9 +2398,11 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                     
                             double jd_evento = jd + dias_decorridos;
                             
-                            int ano_c, mes_c, dia_c, hora_c, min_c;
-                            double sec_c;
-                            swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            int ano_c, mes_c, dia_c; //hora_c, min_c;
+                            double hora_c;
+                            //double sec_c;
+                            //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                             d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                             strcpy(d->tipo_direcao, "Zodiacal");
@@ -2480,9 +2514,11 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
             
                     double jd_evento = jd + dias_decorridos;
 
-                    int ano_c, mes_c, dia_c, hora_c, min_c;
-                    double sec_c;
-                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    int ano_c, mes_c, dia_c; //hora_c, min_c;
+                    double hora_c;
+                    //double sec_c;
+                    //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                     d->ano_calendario = ano_c; d->mes_calendario = mes_c; d->dia_calendario = dia_c;
                     strcpy(d->tipo_direcao, "Zodiacal");
@@ -2666,9 +2702,11 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                             double jd_evento = jd + dias_decorridos;
         
-                            int ano_c, mes_c, dia_c, hora_c, min_c;
-                            double sec_c;
-                            swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            int ano_c, mes_c, dia_c; //hora_c, min_c;
+                            double hora_c;
+                            //double sec_c;
+                            //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                            swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                             d->ano_calendario = ano_c;
                             d->mes_calendario = mes_c;
@@ -2781,13 +2819,11 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     // 4. Projeção Estrita no Dia Juliano e Conversão UTC via Swiss Ephemeris
                     double jd_evento = jd + dias_decorridos;
 
-                    // 4. Devolve o Dia Juliano direto para o calendário misto histórico da Swiss Ephemeris
-                    int ano_c, mes_c, dia_c, hora_c, min_c;
-                    double sec_c;
-                    //char err_msg[256];
-
-                    // Usa o valor 2 (SE_KEEP_GREG_CAL fictício) para transição automática Juliano/Gregoriano de 1582
-                    swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    int ano_c, mes_c, dia_c; //hora_c, min_c;
+                    double hora_c;
+                    //double sec_c;
+                    //swe_jdut1_to_utc(jd_evento, 2, &ano_c, &mes_c, &dia_c, &hora_c, &min_c, &sec_c);
+                    swe_revjul(jd_evento, SE_GREG_CAL, &ano_c, &mes_c, &dia_c, &hora_c);
 
                     // 5. Alimenta a estrutura LinhaDirecao com a precisão mecânica da biblioteca
                     d->ano_calendario = ano_c;

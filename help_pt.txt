@@ -303,6 +303,8 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • } - Aumenta a velocidade da animação (em 1 segundo por segundo)
 
+• ENTER - Avança no tempo na Animação da Roda
+
 • + - Ampliar (Zoom In) 
 
 • - - Diminuir (Zoom Out) 

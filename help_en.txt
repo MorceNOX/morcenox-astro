@@ -305,6 +305,8 @@ Press Q or ESC to return to the main menu.
     
     • } - Increase the animation pace by 1 second
     
+    • ENTER - Speed up the Wheel's Animation
+    
     • + - Zoom In 
     
     • - - Zoom Out 

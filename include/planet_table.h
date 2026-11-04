@@ -49,6 +49,13 @@ typedef struct {
 
 
 typedef struct {
+    const char *symbol;
+    const char *name;
+    int is_planet;
+} PlotMetadata;
+
+
+typedef struct {
     int id;
     double longitude;
     char *object;

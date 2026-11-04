@@ -2140,71 +2140,87 @@ void form_arabic_part(ChartObject *obj, int num_objects, int part_id_edicao) {
     }
 
     if (salvar) {
-        sqlite3_stmt *stmt = NULL;
-        const char *sql_query = NULL;
-
-        // 1. Definimos a estrutura da query com os marcadores '?' no lugar dos valores
+        sqlite3 *db = global_db; // Usando a conexão aberta global
+        sqlite3_stmt *stmt_ram = NULL;
+        sqlite3_stmt *stmt_disc = NULL;
+        const char *sql_ram = NULL;
+        const char *sql_disc = NULL;
+            
+        // 1. Conecta o arquivo físico do disco dinamicamente de forma segura
+        char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+        sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+        sqlite3_free(sql_attach);
+    
+        // 2. Define as queries espelhadas para RAM (main) e DISCO (disco)
         if (part_id_edicao > 0) {
-            sql_query = "UPDATE arabic_parts SET name=?, gender_id=?, "
-                        "diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, "
-                        "nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, "
-                        "description=?, link=?, link2=? WHERE id=?;";
+            sql_ram  = "UPDATE main.arabic_parts SET name=?, gender_id=?, diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, description=?, link=?, link2=? WHERE id=?;";
+            sql_disc = "UPDATE disco.arabic_parts SET name=?, gender_id=?, diurnal_personal_point=?, diurnal_significator=?, diurnal_trigger=?, nocturnal_personal_point=?, nocturnal_significator=?, nocturnal_trigger=?, description=?, link=?, link2=? WHERE id=?;";
         } else {
-            sql_query = "INSERT INTO arabic_parts (name, gender_id, diurnal_personal_point, "
-                        "diurnal_significator, diurnal_trigger, nocturnal_personal_point, "
-                        "nocturnal_significator, nocturnal_trigger, description, link, link2) "
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            sql_ram  = "INSERT INTO main.arabic_parts (name, gender_id, diurnal_personal_point, diurnal_significator, diurnal_trigger, nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link, link2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            sql_disc = "INSERT INTO disco.arabic_parts (name, gender_id, diurnal_personal_point, diurnal_significator, diurnal_trigger, nocturnal_personal_point, nocturnal_significator, nocturnal_trigger, description, link, link2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         }
-
-        // 2. Compila a query no SQLite
-        int rc = sqlite3_prepare_v2(global_db, sql_query, -1, &stmt, NULL);
-        
-        if (rc == SQLITE_OK) {
-            // 3. Vincula os parâmetros (a contagem dos índices começa em 1)
+    
+        // 3. Prepara os dois statements e valida de forma independente
+        if (sqlite3_prepare_v2(db, sql_ram, -1, &stmt_ram, NULL) != SQLITE_OK ||
+            sqlite3_prepare_v2(db, sql_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
             
-            // TEXTOS: SQLITE_TRANSIENT faz o SQLite criar uma cópia interna segura da string
-            sqlite3_bind_text(stmt, 1, f_name, -1, SQLITE_TRANSIENT);
-            
-            // INTEIROS
-            sqlite3_bind_int(stmt, 2, f_gender);
-            sqlite3_bind_int(stmt, 3, f_d_personal);
-            sqlite3_bind_int(stmt, 4, f_d_sig);
-            sqlite3_bind_int(stmt, 5, f_d_trigger);
-            sqlite3_bind_int(stmt, 6, f_n_personal);
-            sqlite3_bind_int(stmt, 7, f_n_sig);
-            sqlite3_bind_int(stmt, 8, f_n_trigger);
-            
-            // TEXTOS
-            sqlite3_bind_text(stmt, 9, f_desc, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(stmt, 10, f_link, -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(stmt, 11, f_link2, -1, SQLITE_TRANSIENT);
-            
-            // Se for UPDATE, vincula o ID no 11º ponto de interrogação
-            if (part_id_edicao > 0) {
-                sqlite3_bind_int(stmt, 12, part_id_edicao);
-            }
-
-            // 4. Executa a query
-            rc = sqlite3_step(stmt);
-            if (rc != SQLITE_DONE) {
-                // Opcional: Tratar erro de execução aqui se rc não for SQLITE_DONE
-                fprintf(stderr, "Erro ao executar: %s\n", sqlite3_errmsg(global_db));
-                sqlite3_finalize(stmt);
-                delwin(shadow); 
-                delwin(win);
-                return;
-            }
-        } else {
-            // Opcional: Tratar erro de compilação da query aqui
-            fprintf(stderr, "Erro ao preparar: %s\n", sqlite3_errmsg(global_db));
+            fprintf(stderr, "Erro ao preparar queries das partes arabicas: %s\n", sqlite3_errmsg(db));
+            if (stmt_ram) sqlite3_finalize(stmt_ram);
+            if (stmt_disc) sqlite3_finalize(stmt_disc);
+            sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL); // Libera o disco antes de sair
             delwin(shadow); 
             delwin(win);
             return;
         }
-
-        sqlite3_finalize(stmt);
-
+    
+        // 4. Loop de Bind e Execução nas duas conexões sequencialmente
+        int sucesso = 1;
+        sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
+    
+        for (int i = 0; i < 2; i++) {
+            if (!statements[i]) continue;
+    
+            // TEXTOS:
+            sqlite3_bind_text(statements[i], 1, f_name, -1, SQLITE_TRANSIENT);
+            
+            // INTEIROS
+            sqlite3_bind_int(statements[i], 2, f_gender);
+            sqlite3_bind_int(statements[i], 3, f_d_personal);
+            sqlite3_bind_int(statements[i], 4, f_d_sig);
+            sqlite3_bind_int(statements[i], 5, f_d_trigger);
+            sqlite3_bind_int(statements[i], 6, f_n_personal);
+            sqlite3_bind_int(statements[i], 7, f_n_sig);
+            sqlite3_bind_int(statements[i], 8, f_n_trigger);
+            
+            // TEXTOS
+            sqlite3_bind_text(statements[i], 9, f_desc, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statements[i], 10, f_link, -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statements[i], 11, f_link2, -1, SQLITE_TRANSIENT);
+            
+            // Se for UPDATE, vincula o ID no 12º parâmetro
+            if (part_id_edicao > 0) {
+                sqlite3_bind_int(statements[i], 12, part_id_edicao);
+            }
+    
+            // Executa a query da iteração atual
+            if (sqlite3_step(statements[i]) != SQLITE_DONE) {
+                fprintf(stderr, "Erro ao executar no banco index %d: %s\n", i, sqlite3_errmsg(db));
+                sucesso = 0;
+            }
+        }
+    
+        // 5. Finalização e Desconexão Total do Arquivo Físico
+        sqlite3_finalize(stmt_ram);
+        sqlite3_finalize(stmt_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+    
+        if (!sucesso) {
+            delwin(shadow); 
+            delwin(win);
+            return;
+        }
     }
+    
         
     delwin(shadow); 
     delwin(win);
@@ -2954,8 +2970,8 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
 
     if (confirmado) {
         sqlite3 *db;
-        sqlite3_stmt *stmt;
-        int rc;
+        sqlite3_stmt *stmt_ram = NULL;
+        sqlite3_stmt *stmt_disc = NULL;
         
         db = open_database();
         if (!db) {
@@ -2964,37 +2980,60 @@ void deletar_parte_arabe_com_confirmacao(int id_banco_alvo, const char *nome_par
             delwin(conf_win);
             return;
         }
-
-        const char *sql_delete = "DELETE FROM arabic_parts WHERE id = ?;";
-        rc = sqlite3_prepare_v2(db, sql_delete, -1, &stmt, NULL);
-        
-        if (rc != SQLITE_OK) {
-            fprintf(stderr, "Failed to prepare delete statement: %s\n", sqlite3_errmsg(db));            
+    
+        // A. Conecta ao arquivo físico em disco de forma dinâmica
+        char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+        sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+        sqlite3_free(sql_attach);
+    
+        // B. Cria os comandos espelhados com escopos explícitos
+        const char *sql_delete_ram  = "DELETE FROM main.arabic_parts WHERE id = ?;";
+        const char *sql_delete_disc = "DELETE FROM disco.arabic_parts WHERE id = ?;";
+    
+        // C. Prepara e valida os statements de forma independente
+        if (sqlite3_prepare_v2(db, sql_delete_ram, -1, &stmt_ram, NULL) != SQLITE_OK ||
+            sqlite3_prepare_v2(db, sql_delete_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
+            
+            fprintf(stderr, "Failed to prepare delete statements: %s\n", sqlite3_errmsg(db));            
+            if (stmt_ram) sqlite3_finalize(stmt_ram);
+            if (stmt_disc) sqlite3_finalize(stmt_disc);
+            
+            sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL); // Libera o arquivo antes de sair
             delwin(conf_shadow);
             delwin(conf_win);
-            sqlite3_finalize(stmt);
-
             show_alert_popup(_("Failed deleting arabic part!"), nome_parte);
-
             return;
         }
         
-        sqlite3_bind_int(stmt, 1, id_banco_alvo);
-        
-        rc = sqlite3_step(stmt);
-        if (rc != SQLITE_DONE) {
-            fprintf(stderr, "Failed deleting arabic part: %s\n", sqlite3_errmsg(db));
+        // D. Executa a deleção simultaneamente nas duas tabelas
+        int sucesso = 1;
+        sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
+        for (int i = 0; i < 2; i++) {
+            if (!statements[i]) continue;
+            
+            sqlite3_bind_int(statements[i], 1, id_banco_alvo);
+            
+            if (sqlite3_step(statements[i]) != SQLITE_DONE) {
+                fprintf(stderr, "Failed deleting arabic part on index %d: %s\n", i, sqlite3_errmsg(db));
+                sucesso = 0;
+            }
+        }
+    
+        // E. Finalização e Desconexão do Arquivo Físico
+        sqlite3_finalize(stmt_ram);
+        sqlite3_finalize(stmt_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+    
+        if (!sucesso) {
             delwin(conf_shadow);
             delwin(conf_win);
-            sqlite3_finalize(stmt);
-
             show_alert_popup(_("Failed deleting arabic part!"), nome_parte);
-
             return;
         }
-
+    
         show_alert_popup(_("Arabic Part deleted successfully!"), nome_parte);
     }
+    
     
     delwin(conf_shadow);
     delwin(conf_win);

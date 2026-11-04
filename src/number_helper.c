@@ -142,7 +142,7 @@ void get_degree_str(double grauDecimal, char* resultado) {
 Hora get_fmt_hour(double h) {
     Hora hfmt = {0, 0, 0};
 
-    h += 0.5 / 3600000.0;
+    //h += 0.5 / 3600000.0;
 
     int hours = (int)h;
     int minutes = (int)((h - hours) * 60.0);

@@ -71,15 +71,15 @@ struct tm obter_tempo_local_revolucao(double jd_revolucao_ut, double fuso_horari
 
 
 double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada, double sol_natal_exibido) {
-    int ano, mes, dia, hora, min;
-    double seg;
+    int ano, mes, dia; //, hora, min;
+    double hora;
     
     char err_msg[256]; 
     
     int32 iflag = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
 
-    swe_jdut1_to_utc(jd_nascimento, 2, &ano, &mes, &dia, &hora, &min, &seg);
-
+    //swe_jdut1_to_utc(jd_nascimento, 2, &ano, &mes, &dia, &hora, &min, &seg);
+    swe_revjul(jd_nascimento, SE_GREG_CAL, &ano, &mes, &dia, &hora);
     
     double jd_estimado_ut = jd_nascimento + (obter_ano_tropical_dinamico(jd_nascimento) * idade_selecionada); //swe_julday(ano_rev, mes, dia, hora, SE_GREG_CAL);
 
@@ -106,62 +106,6 @@ double calcular_julian_day_retorno_solar(double jd_nascimento, int idade_selecio
 }
 
 
-
-// /**
-//  * Calcula o Dia Juliano exato do retorno solar (Revolução Solar) para uma determinada idade.
-//  * 
-//  * @param jd_nascimento      O Dia Juliano (UT) do momento do nascimento.
-//  * @param idade_selecionada  A idade para a qual deseja-se calcular o retorno.
-//  * @return                   O Dia Juliano (UT) do momento exato da Revolução Solar.
-//  */
-// double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada) {
-//     char err_msg[256];
-//     double x2[6];
-//     int32_t flags = SEFLG_SPEED; // Necessário para obter a velocidade do Sol
-
-//     // 1. Obter a longitude solar exata do nascimento
-//     if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
-//         fprintf(stderr, "Erro ao calcular Sol do nascimento: %s\n", err_msg);
-//         return -1.0; // Retorna erro caso falhe
-//     }
-//     double lon_nascimento = x2[0];
-
-//     // 2. Estimar o Dia Juliano alvo aproximado (Ano Trópico médio ~365.242199 dias)
-//     double jd_calculado = jd_nascimento + (idade_selecionada * 365.242199);
-
-//     // 3. Refinar o momento usando o método de Newton-Raphson
-//     const double TOLERANCIA = 1e-7; // Alta precisão (fração de segundos de arco)
-//     const int MAX_ITERACOES = 15;
-//     int iteracoes = 0;
-//     double erro = 1.0;
-
-//     while (fabs(erro) > TOLERANCIA && iteracoes < MAX_ITERACOES) {
-//         // Calcula a posição e a velocidade do Sol para o dia estimado atual
-//         if (swe_calc_ut(jd_calculado, SE_SUN, flags, x2, err_msg) == ERR) {
-//             fprintf(stderr, "Erro na iteração %d: %s\n", iteracoes, err_msg);
-//             return -1.0;
-//         }
-
-//         double lon_atual = x2[0];
-//         double velocidade_atual = x2[3]; // x2[3] contém a velocidade em graus por dia
-
-//         // Calcula a diferença angular (erro)
-//         erro = lon_atual - lon_nascimento;
-
-//         // Normaliza a diferença para o intervalo [-180, 180] para lidar com a virada de 360° para 0°
-//         erro = fmod(erro, 360.0);
-//         if (erro > 180.0) erro -= 360.0;
-//         if (erro < -180.0) erro += 360.0;
-
-//         // Ajusta o Dia Juliano: tempo = erro_angular / velocidade_angular
-//         jd_calculado -= erro / velocidade_atual;
-
-//         iteracoes++;
-//     }
-
-//     return jd_calculado;
-// }
-
 /**
  * Calcula o Dia Juliano exato do retorno solar (Revolução Solar) para qualquer período histórico.
  * Funciona perfeitamente para séculos passados, corrigindo variações temporais.
@@ -174,11 +118,8 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
     char err_msg[256];
     double x2[6];
     
-    // SEFLG_SPEED: Obrigatório para velocidade.
-    // SEFLG_SWIEPH: Tenta usar os arquivos de alta precisão da AstroDienst se disponíveis.
     int32_t flags = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
 
-    // 1. Obter a longitude solar exata do nascimento
     if (swe_calc_ut(jd_nascimento, SE_SUN, flags, x2, err_msg) == ERR) {
         // Se falhar por falta de arquivos físicos de efemérides do século passado,
         // tenta rodar com o modelo analítico de Moshier (nativo da biblioteca).
@@ -194,22 +135,22 @@ double calc_julian_day_retorno_solar(double jd_nascimento, int idade_selecionada
     // Em mapas muito antigos, a duração do ano trópico desvia levemente.
     double jd_calculado = jd_nascimento + (idade_selecionada * obter_ano_tropical_dinamico(jd_nascimento));
 
-    // // --- SALVAGUARDA HISTÓRICA ---
-    // // Verifica se a estimativa inicial não caiu no mês/ano errado devido a desvios históricos
-    // // Fazemos um pré-ajuste grosseiro se o erro inicial for maior que 5 graus.
-    // flags = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
-    // if (swe_calc_ut(jd_calculado, SE_SUN, flags, x2, err_msg) != ERR) {
-    //     double erro_grosseiro = x2[0] - lon_nascimento;
-    //     erro_grosseiro = fmod(erro_grosseiro, 360.0);
-    //     if (erro_grosseiro > 180.0)  erro_grosseiro -= 360.0;
-    //     if (erro_grosseiro < -180.0) erro_grosseiro += 360.0;
+    // --- SALVAGUARDA HISTÓRICA ---
+    // Verifica se a estimativa inicial não caiu no mês/ano errado devido a desvios históricos
+    // Fazemos um pré-ajuste grosseiro se o erro inicial for maior que 5 graus.
+    flags = SEFLG_SPEED | SEFLG_SWIEPH | SEFLG_TOPOCTR; 
+    if (swe_calc_ut(jd_calculado, SE_SUN, flags, x2, err_msg) != ERR) {
+        double erro_grosseiro = x2[0] - lon_nascimento;
+        erro_grosseiro = fmod(erro_grosseiro, 360.0);
+        if (erro_grosseiro > 180.0)  erro_grosseiro -= 360.0;
+        if (erro_grosseiro < -180.0) erro_grosseiro += 360.0;
         
-    //     // Se a estimativa estiver desalinhada por mais de 5 graus (um erro de ~5 dias),
-    //     // ajustamos linearmente antes de entrar no refinamento fino.
-    //     if (fabs(erro_grosseiro) > 5.0) {
-    //         jd_calculado -= erro_grosseiro; // Ajuste inicial em dias aproximados
-    //     }
-    // }
+        // Se a estimativa estiver desalinhada por mais de 5 graus (um erro de ~5 dias),
+        // ajustamos linearmente antes de entrar no refinamento fino.
+        if (fabs(erro_grosseiro) > 5.0) {
+            jd_calculado -= erro_grosseiro; // Ajuste inicial em dias aproximados
+        }
+    }
 
     // 3. Refinar o momento usando o método de Newton-Raphson (Alta Precisão)
     const double TOLERANCIA = 1e-7; // Equivalente a milissegundos de tempo
@@ -400,7 +341,7 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
 
     // 1. Calcula o Julian Day do Retorno Solar
     
-    double jd_retorno = calcular_julian_day_retorno_solar(jd_natal, (int)floor(idade_escolhida), obj_natal[0].longitude);
+    double jd_retorno = calc_julian_day_retorno_solar(jd_natal, (int)floor(idade_escolhida));
 
     // 2. Gera a struct tm compatível
     struct tm tempo_retorno = julian_day_para_struct_tm(jd_retorno);

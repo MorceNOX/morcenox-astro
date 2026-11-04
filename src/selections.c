@@ -859,6 +859,101 @@ ChartOptions load_default_options() {
 }
 
 
+
+
+int save_orbis_settings(double planet_orbis[], double parallel_orbis, double antissia_orbis) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt_plan_ram = NULL;
+    sqlite3_stmt *stmt_plan_disc = NULL;
+    sqlite3_stmt *stmt_prof_ram = NULL;
+    sqlite3_stmt *stmt_prof_disc = NULL;
+
+    db = open_database();
+    if (!db) return 0;
+
+    // 1. Conecta o arquivo físico do disco dinamicamente
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach);
+
+    // Queries espelhadas para os planetas
+    const char *sql_plan_ram  = "UPDATE main.planets SET orbis = ? WHERE id = ?;";
+    const char *sql_plan_disc = "UPDATE disco.planets SET orbis = ? WHERE id = ?;";
+
+    // Queries espelhadas para o perfil
+    const char *sql_prof_ram  = "UPDATE main.profiles SET parallel_orbis = ?, antissia_orb = ? WHERE profile = 'default';";
+    const char *sql_prof_disc = "UPDATE disco.profiles SET parallel_orbis = ?, antissia_orb = ? WHERE profile = 'default';";
+
+    // 2. Prepara todos os statements lógicos de forma independente
+    if (sqlite3_prepare_v2(db, sql_plan_ram, -1, &stmt_plan_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_plan_disc, -1, &stmt_plan_disc, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_prof_ram, -1, &stmt_prof_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_prof_disc, -1, &stmt_prof_disc, NULL) != SQLITE_OK) {
+        
+        fprintf(stderr, "Failed to prepare orbis statements: %s\n", sqlite3_errmsg(db));
+        if (stmt_plan_ram) sqlite3_finalize(stmt_plan_ram);
+        if (stmt_plan_disc) sqlite3_finalize(stmt_plan_disc);
+        if (stmt_prof_ram) sqlite3_finalize(stmt_prof_ram);
+        if (stmt_prof_disc) sqlite3_finalize(stmt_prof_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+        return 0;
+    }
+
+    int sucesso = 1;
+
+    // 3. Atualiza os 12 planetas na RAM e no Disco (Otimizado com sqlite3_reset)
+    sqlite3_stmt *plan_statements[2] = {stmt_plan_ram, stmt_plan_disc};
+    
+    for (int i = 0; i < 12; i++) {
+        // Lógica para o nodo sul
+        if (i == 11) planet_orbis[i] = planet_orbis[i - 1];
+
+        for (int j = 0; j < 2; j++) {
+            if (!plan_statements[j]) continue;
+
+            sqlite3_reset(plan_statements[j]); // Limpa a execução anterior de forma ultra rápida
+            sqlite3_bind_double(plan_statements[j], 1, planet_orbis[i]);
+            sqlite3_bind_int(plan_statements[j], 2, i + 1);
+
+            if (sqlite3_step(plan_statements[j]) != SQLITE_DONE) {
+                sucesso = 0;
+            }
+        }
+    }
+
+    // 4. Atualiza os dados de perfil (agrupados em uma única query para RAM e Disco)
+    sqlite3_stmt *prof_statements[2] = {stmt_prof_ram, stmt_prof_disc};
+    for (int j = 0; j < 2; j++) {
+        if (!prof_statements[j]) continue;
+        
+        sqlite3_bind_double(prof_statements[j], 1, parallel_orbis);
+        sqlite3_bind_double(prof_statements[j], 2, antissia_orbis);
+        
+        if (sqlite3_step(prof_statements[j]) != SQLITE_DONE) {
+            sucesso = 0;
+        }
+    }
+
+    // 5. Finaliza as estruturas e libera o arquivo físico do disco
+    sqlite3_finalize(stmt_plan_ram);
+    sqlite3_finalize(stmt_plan_disc);
+    sqlite3_finalize(stmt_prof_ram);
+    sqlite3_finalize(stmt_prof_disc);
+
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+    close_database(db);
+
+    return sucesso;
+}
+
+
+
+
+
+
+
+
+
 OptionsEdition select_options() {
     ChartOptions options = load_default_options();
 
@@ -1873,66 +1968,34 @@ OptionsEdition select_options() {
                 wattron(win, attr_confirm);
                 mvwprintw(win, w_height - 2, w_width - 27, _("[ CONFIRM  ]"));
                 wattroff(win, attr_confirm);
-
+            
                 wnoutrefresh(win);
                 doupdate();
-
                 napms(125); 
-
+            
                 wattron(win, attr_confirm);
                 mvwprintw(win, w_height - 3, w_width - 28, _("[ CONFIRM  ]"));
                 wattroff(win, attr_confirm);
-
+            
                 wattron(win, COLOR_PAIR(57));
                 mvwprintw(win, w_height - 3, w_width - 16, "▖");
                 mvwprintw(win, w_height - 2, w_width - 27,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                 wattroff(win, COLOR_PAIR(57));
-
+            
                 wnoutrefresh(win);
                 doupdate();
-
                 napms(125); 
-
-                // Update the database with new planet orbis values
-                db = open_database();
-                if (db) {
-                    for (int i = 0; i < 12; i++) {
-                        
-                        // for south node
-                        if (i == 11) planet_orbis[i] = planet_orbis[i - 1];
-                        
-                        const char *sql_update = "UPDATE planets SET orbis = ? WHERE id = ?";
-                        rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, NULL);
-                        if (rc == SQLITE_OK) {
-                            sqlite3_bind_double(stmt, 1, planet_orbis[i]);
-                            sqlite3_bind_int(stmt, 2, i + 1);
-                            sqlite3_step(stmt);
-                            sqlite3_finalize(stmt);
-                        }
-                    }
-
-                    const char *sql_update2 = "UPDATE profiles SET parallel_orbis = ? WHERE profile = 'default'";
-                    rc = sqlite3_prepare_v2(db, sql_update2, -1, &stmt, NULL);
-                    if (rc == SQLITE_OK) {
-                        sqlite3_bind_double(stmt, 1, parallel_orbis);
-                        sqlite3_step(stmt);
-                        sqlite3_finalize(stmt);
-                    }
-
-                    const char *sql_update3 = "UPDATE profiles SET antissia_orb = ? WHERE profile = 'default'";
-                    rc = sqlite3_prepare_v2(db, sql_update3, -1, &stmt, NULL);
-                    if (rc == SQLITE_OK) {
-                        sqlite3_bind_double(stmt, 1, antissia_orbis);
-                        sqlite3_step(stmt);
-                        sqlite3_finalize(stmt);
-                    }
-
-                    close_database(db);
+            
+                // CHAMA A FUNÇÃO ENCAPSULADA: Salva na RAM e no Disco de uma vez só!
+                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis)) {
+                    // Opcional: mostrar um alerta se falhar o salvamento
                 }
+            
                 options_confirmed = 1;
                 ed.options = options;
                 ed.changed = 1;
                 break;
+            
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
@@ -2051,67 +2114,32 @@ OptionsEdition select_options() {
                                 wattron(win, attr_confirm);
                                 mvwprintw(win, w_height - 2, w_width - 27, _("[ CONFIRM  ]"));
                                 wattroff(win, attr_confirm);
-
+                            
                                 wnoutrefresh(win);
                                 doupdate();
-    
                                 napms(125); 
-
+                            
                                 wattron(win, attr_confirm);
                                 mvwprintw(win, w_height - 3, w_width - 28, _("[ CONFIRM  ]"));
                                 wattroff(win, attr_confirm);
-
+                            
                                 wattron(win, COLOR_PAIR(57));
                                 mvwprintw(win, w_height - 3, w_width - 16, "▖");
                                 mvwprintw(win, w_height - 2, w_width - 27,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                                 wattroff(win, COLOR_PAIR(57));
-
-                                
-                                // Update the database with new planet orbis values
-                                db = open_database();
-                                if (db) {
-                                    for (int i = 0; i < 12; i++) {
-                                        
-                                        // for south node
-                                        if (i == 11) planet_orbis[i] = planet_orbis[i - 1];
-                                        
-                                        const char *sql_update = "UPDATE planets SET orbis = ? WHERE id = ?";
-                                        rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, NULL);
-                                        if (rc == SQLITE_OK) {
-                                            sqlite3_bind_double(stmt, 1, planet_orbis[i]);
-                                            sqlite3_bind_int(stmt, 2, i + 1);
-                                            sqlite3_step(stmt);
-                                            sqlite3_finalize(stmt);
-                                        }
-                                    }
-
-                                    const char *sql_update2 = "UPDATE profiles SET parallel_orbis = ? WHERE profile = 'default'";
-                                    rc = sqlite3_prepare_v2(db, sql_update2, -1, &stmt, NULL);
-                                    if (rc == SQLITE_OK) {
-                                        sqlite3_bind_double(stmt, 1, parallel_orbis);
-                                        sqlite3_step(stmt);
-                                        sqlite3_finalize(stmt);
-                                    }
-
-                                    const char *sql_update3 = "UPDATE profiles SET antissia_orb = ? WHERE profile = 'default'";
-                                    rc = sqlite3_prepare_v2(db, sql_update3, -1, &stmt, NULL);
-                                    if (rc == SQLITE_OK) {
-                                        sqlite3_bind_double(stmt, 1, antissia_orbis);
-                                        sqlite3_step(stmt);
-                                        sqlite3_finalize(stmt);
-                                    }
-
-                                    close_database(db);
+                            
+                                wnoutrefresh(win);
+                                doupdate();
+                                napms(125); 
+                            
+                                // CHAMA A FUNÇÃO ENCAPSULADA: Salva na RAM e no Disco de uma vez só!
+                                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis)) {
+                                    // Opcional: mostrar um alerta se falhar o salvamento
                                 }
+                            
                                 options_confirmed = 1;
                                 ed.options = options;
                                 ed.changed = 1;
-
-                                wnoutrefresh(win);
-                                doupdate();
-    
-                                napms(125);
-
                                 break;
                             }
                         }
@@ -5411,7 +5439,7 @@ int set_location_filter(char *name, size_t max_length) {
 
         wattron(win, COLOR_PAIR(22));
         const char *str1 = _("Enter location's name or a fragment to search for:");
-        mvwprintw(win, 3, 2, "%s:", str1);
+        mvwprintw(win, 3, 2, "%s", str1);
         wattroff(win, COLOR_PAIR(22));
 
         // Exibe a string usando a função de caracteres largos do ncursesw
@@ -5952,6 +5980,13 @@ int set_location_name(char *name, size_t max_length) {
                                     w_buffer[0] = L'\0';
                                     w_len = 0;
                                     confirmado = 1;
+
+                                    delwin(win);
+                                    delwin(shadow);
+                                    curs_set(0);
+                
+                                    return 0;
+
                                     break;
                                 }
                             }
@@ -6021,6 +6056,13 @@ int set_location_name(char *name, size_t max_length) {
                         w_buffer[0] = L'\0';
                         w_len = 0;
                         confirmado = 1;
+
+                        delwin(win);
+                        delwin(shadow);
+                        curs_set(0);
+    
+                        return 0;
+
                         break;
                     }
                     break;
@@ -6054,6 +6096,13 @@ int set_location_name(char *name, size_t max_length) {
                     w_buffer[0] = L'\0';
                     w_len = 0;
                     confirmado = 1;
+
+                    delwin(win);
+                    delwin(shadow);
+                    curs_set(0);
+
+                    return 0;
+
                     break;
                     
                 case 127: // Backspace emulado como DEL por terminais modernos
@@ -6337,6 +6386,12 @@ int set_state(char *name, size_t max_length) {
                                     w_buffer[0] = L'\0';
                                     w_len = 0;
                                     confirmado = 1;
+
+                                    delwin(win);
+                                    delwin(shadow);
+                                    curs_set(0);
+
+                                    return 0;
                                     break;
                                 }
                             }
@@ -6406,6 +6461,12 @@ int set_state(char *name, size_t max_length) {
                         w_buffer[0] = L'\0';
                         w_len = 0;
                         confirmado = 1;
+
+                        delwin(win);
+                        delwin(shadow);
+                        curs_set(0);
+
+                        return 0;
                         break;
                     }
                     break;
@@ -6439,6 +6500,12 @@ int set_state(char *name, size_t max_length) {
                     w_buffer[0] = L'\0';
                     w_len = 0;
                     confirmado = 1;
+
+                    delwin(win);
+                    delwin(shadow);
+                    curs_set(0);
+
+                    return 0;
                     break;
                     
                 case 127: // Backspace emulado como DEL por terminais modernos
@@ -6722,6 +6789,12 @@ int set_country(char *name, size_t max_length) {
                                     w_buffer[0] = L'\0';
                                     w_len = 0;
                                     confirmado = 1;
+
+                                    delwin(win);
+                                    delwin(shadow);
+                                    curs_set(0);
+
+                                    return 0;
                                     break;
                                 }
                             }
@@ -6791,6 +6864,12 @@ int set_country(char *name, size_t max_length) {
                         w_buffer[0] = L'\0';
                         w_len = 0;
                         confirmado = 1;
+
+                        delwin(win);
+                        delwin(shadow);
+                        curs_set(0);
+
+                        return 0;
                         break;
                     }
                     break;
@@ -6824,6 +6903,13 @@ int set_country(char *name, size_t max_length) {
                     w_buffer[0] = L'\0';
                     w_len = 0;
                     confirmado = 1;
+
+                    delwin(win);
+                    delwin(shadow);
+                    curs_set(0);
+
+                    return 0;
+
                     break;
                     
                 case 127: // Backspace emulado como DEL por terminais modernos

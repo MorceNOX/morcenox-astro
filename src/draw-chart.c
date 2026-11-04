@@ -2334,8 +2334,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     erase();
 
 
-    
-    
+   
         
     // Determine the maximum possible radius that fits in the terminal
     float max_r_y = (max_y / 2.0) - 0.0;
@@ -6906,15 +6905,15 @@ void format_event_time(double jd, double offset, char *dest, size_t size_of_dest
         return;
     }
     
-    int y, m, d, h, min;
-    double sec;
+    int y, m, d; //, h, min;
+    double h;
     
     // 1. Aplica o fuso horário diretamente no Dia Juliano antes da conversão
     double local_jd = jd + (offset / 24.0);
     
     // 2. Converte para a data e hora local
-    //swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
-    swe_jdut1_to_utc(local_jd, 2, &y, &m, &d, &h, &min, &sec);
+    swe_revjul(local_jd, SE_GREG_CAL, &y, &m, &d, &h);
+    //swe_jdut1_to_utc(local_jd, 2, &y, &m, &d, &h, &min, &sec);
     
     // 3. Arredondamento matemático dos segundos (evita que 05:44:59.99 apareça como 05:44:59)
     // Adicionamos meio milissegundo (0.5 / 3600000.0) para estabilizar a exibição
@@ -6931,24 +6930,26 @@ void format_event_time(double jd, double offset, char *dest, size_t size_of_dest
     
     // 5. Formata a string de saída com segurança (Ex: "06:45:23")
 
-    int secs = (int)(sec + 0.5);
-
-    // Tratamento de estouro de segundos (se der 60, vira 0 e soma 1 minuto)
-    if (secs >= 60) {
-        secs = 0;
-        min++;
-        if (min >= 60) {
-            min = 0;
-            h++;
-            // Nota: Se as horas estourarem (>=24), a função timegm() abaixo 
-            // corrige os dias, meses e anos automaticamente para nós.
-        }
-    }
 
 
+    // int secs = (int)(sec + 0.5);
+
+    // // Tratamento de estouro de segundos (se der 60, vira 0 e soma 1 minuto)
+    // if (secs >= 60) {
+    //     secs = 0;
+    //     min++;
+    //     if (min >= 60) {
+    //         min = 0;
+    //         h++;
+    //         // Nota: Se as horas estourarem (>=24), a função timegm() abaixo 
+    //         // corrige os dias, meses e anos automaticamente para nós.
+    //     }
+    // }
+    Hora hora = get_fmt_hour(h);
 
 
-    snprintf(dest, size_of_dest, "%02d:%02d:%02d", h, min, secs);
+
+    snprintf(dest, size_of_dest, "%02d:%02d:%02d", hora.hora, hora.min, hora.sec);
 }
 
 
@@ -6985,35 +6986,39 @@ double calc_solar_time(double julian_day, double ut_hours, double lon) {
 
 
 struct tm julian_day_para_struct_tm(double jd_retorno) {
-    int ano, mes, dia, horas, minutos;
-    double segundos_decimal;
+    // int ano, mes, dia, horas, minutos;
+    // double segundos_decimal;
+    int y, m, d; //, h, min;
+    double h;
     struct tm t_retorno;
 
     // SE_KEEP_GREG_CAL respeita a transição histórica de 1582
-    swe_jdut1_to_utc(jd_retorno, SE_KEEP_GREG_CAL, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
+    //swe_jdut1_to_utc(jd_retorno, SE_KEEP_GREG_CAL, &ano, &mes, &dia, &horas, &minutos, &segundos_decimal);
+    swe_revjul(jd_retorno, SE_GREG_CAL, &y, &m, &d, &h);
 
     // Arredonda os segundos com segurança
-    int segundos = (int)(segundos_decimal + 0.5);
+    //int segundos = (int)(segundos_decimal + 0.5);
 
     // Tratamento de estouro de segundos (se der 60, vira 0 e soma 1 minuto)
-    if (segundos >= 60) {
-        segundos = 0;
-        minutos++;
-        if (minutos >= 60) {
-            minutos = 0;
-            horas++;
-            // Nota: Se as horas estourarem (>=24), a função timegm() abaixo 
-            // corrige os dias, meses e anos automaticamente para nós.
-        }
-    }
+    // if (segundos >= 60) {
+    //     segundos = 0;
+    //     minutos++;
+    //     if (minutos >= 60) {
+    //         minutos = 0;
+    //         horas++;
+    //         // Nota: Se as horas estourarem (>=24), a função timegm() abaixo 
+    //         // corrige os dias, meses e anos automaticamente para nós.
+    //     }
+    // }
+    Hora hora = get_fmt_hour(h);
 
     /* Preenche a struct tm com as regras padrão do C */
-    t_retorno.tm_year  = ano - 1900;  /* Anos desde 1900 */
-    t_retorno.tm_mon   = mes - 1;     /* Meses de 0 a 11 */
-    t_retorno.tm_mday  = dia;
-    t_retorno.tm_hour  = horas;
-    t_retorno.tm_min   = minutos;
-    t_retorno.tm_sec   = segundos;
+    t_retorno.tm_year  = y - 1900;  /* Anos desde 1900 */
+    t_retorno.tm_mon   = m - 1;     /* Meses de 0 a 11 */
+    t_retorno.tm_mday  = d;
+    t_retorno.tm_hour  = hora.hora;
+    t_retorno.tm_min   = hora.min;
+    t_retorno.tm_sec   = hora.sec;
     t_retorno.tm_isdst = -1;          
 
     // Normaliza a struct (corrige possíveis estouros de horas/minutos causados pelo arredondamento)
@@ -7116,6 +7121,240 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
     return sign * 30.0 + tabela[sign][index - 1].grau_limite;
 }
 
+
+char* format_deg(double longitude, const char* format) {
+    long total_minutos = (long)round(longitude * 60.0);
+    int degrees = (int)(total_minutos / 60);
+    int minutes = (int)(total_minutos % 60);
+    
+
+    char buffer[16];
+    // Format: degree part (modulo 30 for zodiac) and minutes
+    snprintf(buffer, sizeof(buffer), format, degrees % 30, minutes);
+    return strdup(buffer); 
+
+}
+
+
+char* format_min(double longitude) {
+    long total_minutos = (long)round(longitude * 60.0);
+    int minutes = (int)(total_minutos % 60);
+    
+
+    char buffer[16];
+    snprintf(buffer, sizeof(buffer), "%02d", minutes);
+    return strdup(buffer);
+
+}
+
+
+void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitudes, double *speeds, double *rising, double *setting, double *mid, double *declin, double *lat, double *ra, double *houses, char *SAN, double *cusps) {
+    PlotMetadata meta[] = {
+        {"☉", _("Sol"), 1}, {"☾", _("Luna"), 1}, {"☿", _("Mercury"), 1},
+        {"♀", _("Venus"), 1}, {"♂", _("Mars"), 1}, {"♃", _("Jupiter"), 1},
+        {"♄", _("Saturn"), 1}, {"♅", _("Uranus"), 0}, {"♆", _("Neptune"), 0},
+        {"⯓", _("Pluto"), 0}, {"☊", _("North Node"), 1}, {"☋", _("South Node"), 1}
+    };
+
+    int idx = 0;
+
+    for (int i = 0; i < 12; i++) {
+        if (!show_modern_planets && !meta[i].is_planet) continue;
+
+        plots[idx].id = idx;
+        plots[idx].longitude = longitudes[i];
+        plots[idx].object = (char *)meta[i].symbol;
+        plots[idx].object_name = (char *)meta[i].name;
+        
+        // Calculate Sign
+        int sign_idx = (int)floor(longitudes[i] / 30);
+        plots[idx].sign = get_sign(sign_idx);
+        
+        // Formatting
+        plots[idx].degree = format_deg(longitudes[i], "%d°");
+        plots[idx].min = format_min(longitudes[i]);
+        
+        // Retrograde and House
+        plots[idx].retrograde = (speeds[i] >= 0 ? "" : "℞");
+        plots[idx].house = (char *)get_house_roman(longitudes[i], cusps);
+        
+        // Astronomical data
+        plots[idx].speed = speeds[i];
+        plots[idx].rising_time = rising[i];
+        plots[idx].setting_time = setting[i];
+        plots[idx].mid_time = mid[i];
+        plots[idx].declination = declin[i];
+        plots[idx].latitude = lat[i];
+        plots[idx].ra = ra[i];
+        plots[idx].house_pos = houses[i];
+
+        idx++;
+    }
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[12];
+    plots[idx].object = "🝴";
+    plots[idx].object_name = _("Part of Fortune");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[12] / 30));
+
+    plots[idx].degree = format_deg(longitudes[12], "%d°");
+    plots[idx].min = format_min(longitudes[12]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[12], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[12];
+    plots[idx].latitude = lat[12];
+    plots[idx].ra = ra[12];
+    plots[idx].house_pos = houses[12];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[13];
+    plots[idx].object = SAN;
+    plots[idx].object_name = _("SAN");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[13] / 30));
+
+    plots[idx].degree = format_deg(longitudes[13], "%d°");
+    plots[idx].min = format_min(longitudes[13]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[13], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[13];
+    plots[idx].latitude = lat[13];
+    plots[idx].ra = ra[13];
+    plots[idx].house_pos = houses[13];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[14];
+    plots[idx].object = "AC";
+    plots[idx].object_name = _("Ascendant");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[14] / 30));
+
+    plots[idx].degree = format_deg(longitudes[14], "%d°");
+    plots[idx].min = format_min(longitudes[14]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[14], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[14];
+    plots[idx].latitude = lat[14];
+    plots[idx].ra = ra[14];
+    plots[idx].house_pos = houses[14];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[15];
+    plots[idx].object = "MC";
+    plots[idx].object_name = _("Midheaven");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[15] / 30));
+
+    plots[idx].degree = format_deg(longitudes[15], "%d°");
+    plots[idx].min = format_min(longitudes[15]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[15], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[15];
+    plots[idx].latitude = lat[15];
+    plots[idx].ra = ra[15];
+    plots[idx].house_pos = houses[15];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[16];
+    plots[idx].object = "DC";
+    plots[idx].object_name = _("Descendant");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[16] / 30));
+
+    plots[idx].degree = format_deg(longitudes[16], "%d°");
+    plots[idx].min = format_min(longitudes[16]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[16], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[16];
+    plots[idx].latitude = lat[16];
+    plots[idx].ra = ra[16];
+    plots[idx].house_pos = houses[16];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[17];
+    plots[idx].object = "IC";
+    plots[idx].object_name = _("Nadir");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[17] / 30));
+
+    plots[idx].degree = format_deg(longitudes[17], "%d°");
+    plots[idx].min = format_min(longitudes[17]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[17], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[17];
+    plots[idx].latitude = lat[17];
+    plots[idx].ra = ra[17];
+    plots[idx].house_pos = houses[17];
+
+    idx++;
+
+    plots[idx].id = idx;
+    plots[idx].longitude = longitudes[18];
+    plots[idx].object = "🜊";
+    plots[idx].object_name = _("Vertex");
+
+    plots[idx].sign = get_sign((int)floor(longitudes[18] / 30));
+
+    plots[idx].degree = format_deg(longitudes[18], "%d°");
+    plots[idx].min = format_min(longitudes[18]);
+    plots[idx].retrograde = "";
+    plots[idx].house = (char *)get_house_roman(longitudes[18], cusps);
+    plots[idx].speed = 0.0;
+    plots[idx].rising_time = 0.0;
+    plots[idx].setting_time = 0.0;
+    plots[idx].mid_time = 0.0;
+    plots[idx].declination = declin[18];
+    plots[idx].latitude = lat[18];
+    plots[idx].ra = ra[18];
+    plots[idx].house_pos = houses[18];
+
+
+}
+
+
+
+
+
+
+
+
+
+
 #define COLOR_BACK_1_SIGN  217
 #define COLOR_BACK_2_SIGN  181
 
@@ -7130,7 +7369,8 @@ double get_longitude_term(int sign, int index, Termo tabela[12][5]) {
 
 int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
     int n = 1;
-    
+
+   
     // Adicione essas duas variáveis como STATIC no início da sua FUNÇÃO (ou globais) 
     // para que elas mantenham o valor guardado entre as iterações do loop:
     static clock_t ultimo_clique_tempo = 0;
@@ -7138,7 +7378,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     static int ultimo_clique_y = 0;
     
     bool dark_mode = (darkmode)?true:false;
-    //bButtonPressed = false;
 
     keypad(stdscr, TRUE); // Enable keypad for special keys
 
@@ -7237,7 +7476,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 18); // dark, blue
         init_pair(56, 232, 54); // dark, magenta
-        init_pair(57, COLOR_BLACK, 232);
+        init_pair(57, 243, 248);
         init_pair(58, COLOR_WHITE, COLOR_BLACK);
         init_pair(59, 242, COLOR_BLACK);
         init_pair(60, 25, 18);
@@ -7344,19 +7583,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     }
 
     
-       
-    //cbreak();
-    //noecho();
-    //curs_set(0); 
-    
-  
     char err[256];
     char serr[256];
     double x2[6];
     double cusps[13];
     double ascmc[10];
     double julian_day;
-    //double xx_equatorial[6];
+
     //int FLAGS_equatorial = SEFLG_SPEED | SEFLG_EQUATORIAL;
     int32 FLAGS_ecliptic = SEFLG_SPEED | SEFLG_TOPOCTR;
 
@@ -7549,35 +7782,29 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         int center_y = max_y / 2;
         int center_x = max_x / 2;
+
+
         
-        // =========================================================================
-        // PREPARAÇÃO: CONVERSÃO SEGURA PARA UTC
-        // =========================================================================
-        
-        // 1. Fazemos uma cópia de backup do horário local original do usuário
+        // 1. Converter time para UT        
         struct tm backup_local = *local_time;
 
-        // 2. timegm interpreta os dados locais como um timestamp Unix linear,
-        // ignorando completamente a variável de ambiente 'TZ' do seu servidor Linux.
-        time_t timestamp_puro = timegm(local_time); 
+        time_t timestamp_puro = timegm(local_time);
 
-        // 3. Subtraímos o tz_offset do local para obter o UTC real.
-        // Se tz_offset for -3.0 (Brasil), vira adição (- -3 = +3), gerando o UTC correto.
         time_t tempo_utc_timestamp = timestamp_puro - (time_t)(tz_offset * 3600.0);
-
-        // 4. Converte o timestamp UTC de volta para a estrutura isolada astronômica
         struct tm *utc_time = gmtime(&tempo_utc_timestamp);
-
-        // 5. Fração do dia em formato decimal UTC para a Swiss Ephemeris
         double hora_utc_decimal = utc_time->tm_hour + 
                                   (utc_time->tm_min / 60.0) + 
                                   (utc_time->tm_sec / 3600.0);
 
+        
 
+
+        // 2. Initialize topocentric system
         swe_set_topo(lon, lat, elev);
 
 
-        // 6. Calcular o Julian Day correto em UT/UTC
+
+        // 3. Calcular o Julian Day correto em UT/UTC
         julian_day = swe_julday(utc_time->tm_year + 1900, 
                                 utc_time->tm_mon + 1, 
                                 utc_time->tm_mday, 
@@ -7586,12 +7813,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-            
-
-
-        // 2. Calculate Ascendant, MC and houses
-        
-        //int result = swe_houses(julian_day, lat, lon, house_system, cusps, ascmc);
+        // 4. Calculate Ascendant, MC and houses        
         int result = swe_houses_ex(julian_day, FLAGS_ecliptic, lat, lon, house_system, cusps, ascmc);
         
         if (result == ERR || ((house_system == 'P' || house_system == 'B' || house_system == 'K') && (lat > 66.5 || lat < -66.5))) {            
@@ -7604,7 +7826,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 return 0;
             }
         }
-        ascendant = ascmc[0]; // SE_ASC is always stored at index 0 of ascmc
+        ascendant = ascmc[0];
         mc = ascmc[1];
         double vertex = ascmc[3];
         double armc = ascmc[2];
@@ -7615,33 +7837,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-        
-
-        // 3. Calcula a obliquidade da eclíptica para o julian_day atual
+        // 5. Calcula a obliquidade da eclíptica para o julian_day atual
         double eps[6];
-
         if (swe_calc_ut(julian_day, SE_ECL_NUT, SEFLG_TOPOCTR, eps, serr) < 0) {
             printf("Error calculating ecliptic obliquity: %s\n", serr);
             return 1;
         }
-        double true_obliquity = eps[0]; // eps[0] contém a obliquidade verdadeira
+        double true_obliquity = eps[0];
 
-
-
-
-
-        // 1. Loop to calculate the planetary positions
-
+        // deprecated code
         char house_system_pd = house_system;
-        // if (house_system == 'E' || house_system == 'W' || house_system == 'M') {
-        //     if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-        //         house_system_pd = 'T';
-        //     }
-        //     else {
-        //         house_system_pd = 'P';
-        //     }
-        // }
 
+
+
+        // 6. Loop to calculate the planetary positions                        
         for (int i = 0; i < 11; i++) {
             if (swe_calc_ut(julian_day, planets[i], FLAGS_ecliptic, x2, err) < 0) {
                 printf("Error calculating planet %d: %s\n", planets[i], err);
@@ -7655,9 +7864,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             planet_houses[i] = house_pos;
         }
 
+        // 7. Set the variable to indicate the sect of the chart
         MAPA_DIURNO_GEOMETRICO = (planet_houses[0] >= 7.0 && planet_houses[0] < 13.0);
         backup_mapa_diurno_geo = MAPA_DIURNO_GEOMETRICO;
 
+        
+        // 8. Set South Node positions
         double south_node = normalize360(planet_longitudes[10] - 180);
         planet_longitudes[11] = south_node;
         planet_latitudes[11] = -planet_latitudes[10];
@@ -7669,30 +7881,29 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         planet_houses[11] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
+        // 9. Fill the rest of the longitudes array
         planet_longitudes[14] = ascendant;
         planet_longitudes[15] = mc;
         planet_longitudes[16] = descendant;
         planet_longitudes[17] = ic;
         planet_longitudes[18] = vertex;
 
+        // 9. Fill the rest of the latitudes array (angles and Vertex has lat == 0)
         planet_latitudes[14] = 0.0;
         planet_latitudes[15] = 0.0;
         planet_latitudes[16] = 0.0;
         planet_latitudes[17] = 0.0;
         planet_latitudes[18] = 0.0;
 
+        
+        // 10. Calculate the Vertex house position
         x_sn[0] = vertex;
         x_sn[1] = planet_latitudes[18];
 
         planet_houses[18] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
-       
-
-
-
-
-        // 9. Calculate SAN (Syzygy Ante Nativitatem)
+        // 11. Calculate SAN (Syzygy Ante Nativitatem)
 
         double last_conj = find_last_astrological_event(julian_day, false);
         double last_opp  = find_last_astrological_event(julian_day, true);
@@ -7707,12 +7918,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         char san[10];
         
         if (last_conj > last_opp) {
-            snprintf(san, sizeof(san), "%s", "🌑"); // 
+            snprintf(san, sizeof(san), "%s", "🌑");
             jdSAN = last_conj;
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "🌕"); // ⛔︎
+            snprintf(san, sizeof(san), "%s", "🌕");
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }
@@ -7721,18 +7932,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             printf("Error calculating planet %d: %s\n", SE_MOON, err);
             return 1;
         }
-        SAN = x2[0]; // Armazena a longitude correta da SAN
+        SAN = x2[0];
         
-        //swe_revjul(jdSAN, SE_GREG_CAL, &sanYear, &sanMon, &sanDay, &sanHour);
         extract_local_datetime_from_jd(jdSAN, tz_offset, &sanYear, &sanMon, &sanDay, &sanHour);
 
 
 
-        // 11. Lot of Fortune
-
+        // 12. Lot of Fortune & Lot of Spirit
         double fortuna = 0.0;
         double spirit = 0.0;
-        //if (mapa_diurno(hsol)) {
+
         if (MAPA_DIURNO_GEOMETRICO) {
             fortuna = ascendant + planet_longitudes[1] - planet_longitudes[0];
             spirit = ascendant + planet_longitudes[0] - planet_longitudes[1];
@@ -7749,24 +7958,30 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         
         
+        // 13. Fill the rest of the longitudes array
         planet_longitudes[12] = fortuna;
         planet_longitudes[13] = SAN;
         
+        // 14. Fill the rest of the latitudes array (points have latitude == 0)
         planet_latitudes[12] = 0.0;
         planet_latitudes[13] = 0.0;
 
+        
+        // 15. Calculate house positions for the Fortune
         x_sn[0] = fortuna;
         x_sn[1] = planet_latitudes[12];
 
         planet_houses[12] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
+
+        // 16. Calculate the house position for the SAN
         x_sn[0] = SAN;
         x_sn[1] = planet_latitudes[13];
 
         planet_houses[13] = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
 
-
+        // 17. Calculate the house position for the Angles and Vertex
         for (int i = 14; i < 19; i++) {
             x_sn[0] = planet_longitudes[i];
             x_sn[1] = planet_latitudes[i];
@@ -7775,43 +7990,33 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
 
-        // 5. Transformação EM MASSA para Coordenadas Equatoriais (RA e Dec)
-        // Isso garante que os pontos derivados (Desc, IC, Nó Sul) tenham RA/Dec astronômicas perfeitas!
+        // 18. Transformação EM MASSA para Coordenadas Equatoriais (RA e Dec)
+        //     Isso garante que os pontos derivados (Desc, IC, Nó Sul) tenham RA/Dec astronômicas perfeitas!
         
         double xx_in[3], xx_out[3];
         for (int i = 0; i < 19; i++) {
             xx_in[0] = planet_longitudes[i];
             xx_in[1] = planet_latitudes[i];
-            xx_in[2] = 1.0; // Distance framework
+            xx_in[2] = 1.0;
             
-            // Correção aqui: usando -true_obliquity em vez de -eps
             swe_cotrans(xx_in, xx_out, -true_obliquity); 
             
-            planet_ra[i]           = xx_out[0]; // Salva a RA correta de cada um dos 19 pontos
-            planet_declinations[i] = xx_out[1]; // Salva a Declinação correta de cada um dos 19 pontos
+            planet_ra[i]           = xx_out[0];
+            planet_declinations[i] = xx_out[1];
         }
 
 
 
-
-
-
-        
-
-        // =========================================================================
-        // 6. Calculate Solar Time
-        // =========================================================================
+        // 19. Calculate Solar Time (LAST)
         double last_hours = calc_solar_time(julian_day, utc_time->tm_hour + utc_time->tm_min / 60.0 + utc_time->tm_sec / 3600.0, lon);
         
-        // Formatar saídas temporais do LAST
         int last_hr = (int)last_hours;
         int last_min = (int)((last_hours - last_hr) * 60.0);
         double last_sec = ((last_hours - last_hr) * 3600.0) - (last_min * 60.0);
 
         
         
-        // 7. Calculate the sunrise and sunset
-
+        // 20. Calculate the sunrise and sunset
         double jd = swe_julday(utc_time->tm_year + 1900, utc_time->tm_mon + 1, utc_time->tm_mday, 0.0, SE_GREG_CAL);
         
         double sunrise_jd = find_sun_event(jd, lat, lon, elev, true); // true para sunrise
@@ -7820,7 +8025,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         double prev_sunset_jd = find_sun_event(jd - 1.0, lat, lon, elev, false);
         double prev_sunrise_jd = find_sun_event(jd - 1.0, lat, lon, elev, true);
         
-        // strings para exibição
         char sunrise_time[16] = "--:--:--";
         char sunset_time[16] = "--:--:--";
         char next_sunrise_time[16] = "--:--:--";
@@ -7831,7 +8035,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         format_event_time(next_sunrise_jd, tz_offset, next_sunrise_time, sizeof(next_sunrise_time));
         format_event_time(prev_sunset_jd, tz_offset, prev_sunset_time, sizeof(prev_sunset_time));
                
-        // horas decimais
         double riseHour = get_hours_from_jd(sunrise_jd, tz_offset);
         double setHour = get_hours_from_jd(sunset_jd, tz_offset);
 
@@ -7841,9 +8044,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-        // =========================================================================
-        // TRATAMENTO PARA REGIÕES POLARES (ABORDAGEM ELEGANTE DE 2 HORAS POR HORA)
-        // =========================================================================
+        // 21. TRATAMENTO PARA REGIÕES POLARES (ABORDAGEM ELEGANTE DE 2 HORAS POR HORA)
         int y, m, d;
         double h;
         double last_rise, last_set;
@@ -7884,10 +8085,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             last_set = calc_solar_time(sunset_jd, h, lon);
         }
 
-            
+        
+        // 22. Definir MAPA_DIURNO com base no LAST ou na Solução Polar
         backup_mapa_diurno = MAPA_DIURNO_CIVIL;
 
-        // Definir MAPA_DIURNO com base no LAST ou na Solução Polar
         if (REGIAO_POLAR) {
             MAPA_DIURNO_CIVIL = (SOL_PERMANENTE) ? TRUE : FALSE;
         } else {
@@ -7897,7 +8098,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
         
-        // 8. Planetary hour
+        // 23. Planetary hours
         double current_rise = riseHour;
         double current_set = setHour;
         double next_rise = next_riseHour;
@@ -7935,9 +8136,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
         double hours[25];
 
-        // =========================================================================
-        // PREENCHIMENTO DO ARRAY CONTÍNUO COM TRATAMENTO DE HORAS INEXISTENTES (< 0)
-        // =========================================================================
         if (REGIAO_POLAR) {
             if (SOL_PERMANENTE) {
                 // Sol da Meia-Noite: As 12 horas diurnas ocupam as 24h do dia (2h cada)
@@ -8021,9 +8219,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
         }
 
-        // =========================================================================
-        // NORMALIZAÇÃO FINAL PARA EXIBIÇÃO NA INTERFACE (UI)
-        // =========================================================================
         if (REGIAO_POLAR) {
             if (SOL_PERMANENTE) {
                 nighttime_hour = 0.0; 
@@ -8043,18 +8238,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
 
-
-    
-        
-        
-        // calcular declinação da SAN
-
-        //double SAN_declination = calc_declination_mathematical_point(jdSAN, SAN);
-
-        
-        
-        // 10. Moon phase
-
+        // 24. Moon phase
         double angle = get_moon_phase_by_longitude(julian_day);
 
         int moon_phase_id = get_moon_phase_id(angle);
@@ -8062,13 +8246,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         int phase_id = get_moon_quarter(angle);
 
-       
-        
-        //double fortuna_declination = calc_declination_mathematical_point(julian_day, fortuna);
+               
 
-
-        // 12. Rising Times
-
+        // 25. Rising Times
         double rising_times[12];
         
         for (int i = 0; i < 11; i++) {
@@ -8111,8 +8291,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
         }
 
-        // 13. Set Times
-
+        // 26. Set Times
         double set_times[12];
         
         for (int i = 0; i < 11; i++) {
@@ -8156,8 +8335,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
 
-        // 14. Mid Upper Times
-
+        // 27. Mid Upper Times
         double mid_times[12];
         
         for (int i = 0; i < 11; i++) {
@@ -8198,213 +8376,22 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
         }
         
+
+
+
                 
-        // 15. Building the PlotObject
+        // 28. Building the PlotObject
 
-                               
-        // Declaração de todas as variáveis de strings originais mantidas
-        char d0[12], d1[12], d2[12], d3[12], d4[12], d5[12], d6[12], d7[12], d8[12], d9[12], d10[12];
-        char m0[12], m1[12], m2[12], m3[12], m4[12], m5[12], m6[12], m7[12], m8[12], m9[12], m10[12];
-        char df[12], da[12], dm[12], ds[12], dv[12];
-        char mf[12], ma[12], mm[12], ms[12], mv[12];
+        PlotObject plotsA[19];
+        populate_plots(plotsA, true, planet_longitudes, speed, rising_times, set_times, mid_times,
+                       planet_declinations, planet_latitudes, planet_ra, planet_houses,
+                       san, cusps);
 
-        // Variáveis temporárias para receber os cálculos numéricos estáveis
-        int g_calc, m_calc;
-        long total_minutos_inteiros;
-        long total_graus;
+        PlotObject plotsB[16];
+        populate_plots(plotsB, false, planet_longitudes, speed, rising_times, set_times, mid_times,
+                       planet_declinations, planet_latitudes, planet_ra, planet_houses,
+                       san, cusps);
 
-        // =========================================================================
-        // PROCESSAMENTO DOS PLANETAS (Arredondamento e Separação de Graus/Minutos)
-        // =========================================================================
-
-        // Planeta 0
-        total_minutos_inteiros = (long)round(planet_longitudes[0] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d0, sizeof(d0), "%d°", g_calc);
-        snprintf(m0, sizeof(m0), "%02d", m_calc);
-
-        // Planeta 1
-        total_minutos_inteiros = (long)round(planet_longitudes[1] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d1, sizeof(d1), "%d°", g_calc);
-        snprintf(m1, sizeof(m1), "%02d", m_calc);
-
-        // Planeta 2
-        total_minutos_inteiros = (long)round(planet_longitudes[2] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d2, sizeof(d2), "%d°", g_calc);
-        snprintf(m2, sizeof(m2), "%02d", m_calc);
-
-        // Planeta 3
-        total_minutos_inteiros = (long)round(planet_longitudes[3] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d3, sizeof(d3), "%d°", g_calc);
-        snprintf(m3, sizeof(m3), "%02d", m_calc);
-
-        // Planeta 4
-        total_minutos_inteiros = (long)round(planet_longitudes[4] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d4, sizeof(d4), "%d°", g_calc);
-        snprintf(m4, sizeof(m4), "%02d", m_calc);
-
-        // Planeta 5
-        total_minutos_inteiros = (long)round(planet_longitudes[5] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d5, sizeof(d5), "%d°", g_calc);
-        snprintf(m5, sizeof(m5), "%02d", m_calc);
-
-        // Planeta 6
-        total_minutos_inteiros = (long)round(planet_longitudes[6] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d6, sizeof(d6), "%d°", g_calc);
-        snprintf(m6, sizeof(m6), "%02d", m_calc);
-
-        // Planeta 7
-        total_minutos_inteiros = (long)round(planet_longitudes[7] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d7, sizeof(d7), "%d°", g_calc);
-        snprintf(m7, sizeof(m7), "%02d", m_calc);
-
-        // Planeta 8
-        total_minutos_inteiros = (long)round(planet_longitudes[8] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d8, sizeof(d8), "%d°", g_calc);
-        snprintf(m8, sizeof(m8), "%02d", m_calc);
-
-        // Planeta 9
-        total_minutos_inteiros = (long)round(planet_longitudes[9] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d9, sizeof(d9), "%d°", g_calc);
-        snprintf(m9, sizeof(m9), "%02d", m_calc);
-
-        // Planeta 10
-        total_minutos_inteiros = (long)round(planet_longitudes[10] * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        g_calc = (int)(total_graus % 30);
-        m_calc = (int)(total_minutos_inteiros % 60);
-        snprintf(d10, sizeof(d10), "%d°", g_calc);
-        snprintf(m10, sizeof(m10), "%02d", m_calc);
-
-
-        // =========================================================================
-        // PROCESSAMENTO DOS PONTOS ADICIONAIS
-        // =========================================================================
-
-        // Fortuna
-        total_minutos_inteiros = (long)round(fortuna * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        snprintf(df, sizeof(df), "%ld°", total_graus % 30);
-        snprintf(mf, sizeof(mf), "%02ld", total_minutos_inteiros % 60);
-
-        // Ascendente
-        total_minutos_inteiros = (long)round(ascendant * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        snprintf(da, sizeof(da), "%ld°", total_graus % 30);
-        snprintf(ma, sizeof(ma), "%02ld", total_minutos_inteiros % 60);
-
-        // MC
-        total_minutos_inteiros = (long)round(mc * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        snprintf(dm, sizeof(dm), "%ld°", total_graus % 30);
-        snprintf(mm, sizeof(mm), "%02ld", total_minutos_inteiros % 60);
-
-        // SAN
-        total_minutos_inteiros = (long)round(SAN * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        snprintf(ds, sizeof(ds), "%ld°", total_graus % 30);
-        snprintf(ms, sizeof(ms), "%02ld", total_minutos_inteiros % 60);
-
-        // Vertex
-        total_minutos_inteiros = (long)round(vertex * 60.0);
-        total_graus = total_minutos_inteiros / 60;
-        snprintf(dv, sizeof(dv), "%ld°", total_graus % 30);
-        snprintf(mv, sizeof(mv), "%02ld", total_minutos_inteiros % 60);
-
-
-
-        int sign[19] = {
-            (int)floor(planet_longitudes[0] / 30),
-            (int)floor(planet_longitudes[1] / 30),
-            (int)floor(planet_longitudes[2] / 30),
-            (int)floor(planet_longitudes[3] / 30),
-            (int)floor(planet_longitudes[4] / 30),
-            (int)floor(planet_longitudes[5] / 30),
-            (int)floor(planet_longitudes[6] / 30),
-            (int)floor(planet_longitudes[7] / 30),
-            (int)floor(planet_longitudes[8] / 30),
-            (int)floor(planet_longitudes[9] / 30),
-            (int)floor(planet_longitudes[10] / 30),
-            (int)floor(south_node / 30),
-            (int)floor(fortuna / 30),
-            (int)floor(SAN / 30),
-            (int)floor(ascendant / 30),
-            (int)floor(mc / 30),
-            (int)floor(descendant / 30),
-            (int)floor(ic / 30),
-            (int)floor(vertex / 30)
-        };
-
-        
-        PlotObject plotsA[] = {
-            {0, planet_longitudes[0], "☉", _("Sol"), get_sign(sign[0]), d0, m0, (speed[0] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[0], cusps), speed[0], rising_times[0], set_times[0], mid_times[0], planet_declinations[0], planet_latitudes[0], planet_ra[0], planet_houses[0]},
-            {1, planet_longitudes[1], "☾", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
-            {2, planet_longitudes[2], "☿", _("Mercury"), get_sign(sign[2]), d2, m2, (speed[2] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[2], cusps), speed[2], rising_times[2], set_times[2], mid_times[2], planet_declinations[2], planet_latitudes[2], planet_ra[2], planet_houses[2]},
-            {3, planet_longitudes[3], "♀", _("Venus"), get_sign(sign[3]), d3, m3, (speed[3] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[3], cusps), speed[3], rising_times[3], set_times[3], mid_times[3], planet_declinations[3], planet_latitudes[3], planet_ra[3], planet_houses[3]},
-            {4, planet_longitudes[4], "♂", _("Mars"), get_sign(sign[4]), d4, m4, (speed[4] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[4], cusps), speed[4], rising_times[4], set_times[4], mid_times[4], planet_declinations[4], planet_latitudes[4], planet_ra[4], planet_houses[4]},
-            {5, planet_longitudes[5], "♃", _("Jupiter"), get_sign(sign[5]), d5, m5, (speed[5] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[5], cusps), speed[5], rising_times[5], set_times[5], mid_times[5], planet_declinations[5], planet_latitudes[5], planet_ra[5], planet_houses[5]},
-            {6, planet_longitudes[6], "♄", _("Saturn"), get_sign(sign[6]), d6, m6, (speed[6] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[6], cusps), speed[6], rising_times[6], set_times[6], mid_times[6], planet_declinations[6], planet_latitudes[6], planet_ra[6], planet_houses[6]},
-            {7, planet_longitudes[7], "♅", _("Uranus"), get_sign(sign[7]), d7, m7, (speed[7] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[7], cusps), speed[7], rising_times[7], set_times[7], mid_times[7], planet_declinations[7], planet_latitudes[7], planet_ra[7], planet_houses[7]},
-            {8, planet_longitudes[8], "♆", _("Neptune"), get_sign(sign[8]), d8, m8, (speed[8] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[8], cusps), speed[8], rising_times[8], set_times[8], mid_times[8], planet_declinations[8], planet_latitudes[8], planet_ra[8], planet_houses[8]},
-            {9, planet_longitudes[9], "⯓", _("Pluto"), get_sign(sign[9]), d9, m9, (speed[9] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[9], cusps), speed[9], rising_times[9], set_times[9], mid_times[9], planet_declinations[9], planet_latitudes[9], planet_ra[9], planet_houses[9]},
-            {10, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10], planet_latitudes[10], planet_ra[10], planet_houses[10]},
-            {11, south_node, "☋", _("South Node"), get_sign(sign[11]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
-            {12, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[12]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
-            {13, SAN, san, _("SAN"), get_sign(sign[13]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
-            {14, ascendant, "AC", _("Ascendant"), get_sign(sign[14]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
-            {15, mc, "MC", _("Midheaven"), get_sign(sign[15]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
-            {16, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[16], planet_latitudes[16], planet_ra[16], planet_houses[16]},
-            {17, ic, "IC", _("Nadir"), get_sign(sign[17]), dm, mm, "", (char *)get_house_roman(ic, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[17], planet_latitudes[17], planet_ra[17], planet_houses[17]},
-            {18, vertex, "🜊", _("Vertex"), get_sign(sign[18]), dv, mv, "", (char *)get_house_roman(vertex, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[18], planet_latitudes[18], planet_ra[18], planet_houses[18]}
-        };
-
-        PlotObject plotsB[] = {
-            {0, planet_longitudes[0], "☉", _("Sol"), get_sign(sign[0]), d0, m0, (speed[0] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[0], cusps), speed[0], rising_times[0], set_times[0], mid_times[0], planet_declinations[0], planet_latitudes[0], planet_ra[0], planet_houses[0]},
-            {1, planet_longitudes[1], "☾", _("Luna"), get_sign(sign[1]), d1, m1, (speed[1] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[1], cusps), speed[1], rising_times[1], set_times[1], mid_times[1], planet_declinations[1], planet_latitudes[1], planet_ra[1], planet_houses[1]},
-            {2, planet_longitudes[2], "☿", _("Mercury"), get_sign(sign[2]), d2, m2, (speed[2] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[2], cusps), speed[2], rising_times[2], set_times[2], mid_times[2], planet_declinations[2], planet_latitudes[2], planet_ra[2], planet_houses[2]},
-            {3, planet_longitudes[3], "♀", _("Venus"), get_sign(sign[3]), d3, m3, (speed[3] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[3], cusps), speed[3], rising_times[3], set_times[3], mid_times[3], planet_declinations[3], planet_latitudes[3], planet_ra[3], planet_houses[3]},
-            {4, planet_longitudes[4], "♂", _("Mars"), get_sign(sign[4]), d4, m4, (speed[4] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[4], cusps), speed[4], rising_times[4], set_times[4], mid_times[4], planet_declinations[4], planet_latitudes[4], planet_ra[4], planet_houses[4]},
-            {5, planet_longitudes[5], "♃", _("Jupiter"), get_sign(sign[5]), d5, m5, (speed[5] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[5], cusps), speed[5], rising_times[5], set_times[5], mid_times[5], planet_declinations[5], planet_latitudes[5], planet_ra[5], planet_houses[5]},
-            {6, planet_longitudes[6], "♄", _("Saturn"), get_sign(sign[6]), d6, m6, (speed[6] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[6], cusps), speed[6], rising_times[6], set_times[6], mid_times[6], planet_declinations[6], planet_latitudes[6], planet_ra[6], planet_houses[6]},
-            {7, planet_longitudes[10], "☊", _("North Node"), get_sign(sign[10]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(planet_longitudes[10], cusps), speed[10], rising_times[10], set_times[10], mid_times[10], planet_declinations[10], planet_latitudes[10], planet_ra[10], planet_houses[10]},
-            {8, south_node, "☋", _("South Node"), get_sign(sign[11]), d10, m10, (speed[10] >= 0 ? "": "℞"), (char *)get_house_roman(south_node, cusps), speed[10], rising_times[11], set_times[11], mid_times[11], planet_declinations[11], planet_latitudes[11], planet_ra[11], planet_houses[11]},
-            {9, fortuna, "🝴", _("Part of Fortune"), get_sign(sign[12]), df, mf, "", (char *)get_house_roman(fortuna, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[12], planet_latitudes[12], planet_ra[12], planet_houses[12]},
-            {10, SAN, san, _("SAN"), get_sign(sign[13]), ds, ms, "", (char *)get_house_roman(SAN, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[13], planet_latitudes[13], planet_ra[13], planet_houses[13]},
-            {11, ascendant, "AC", _("Ascendant"), get_sign(sign[14]), da, ma, "", (char *)get_house_roman(ascendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[14], planet_latitudes[14], planet_ra[14], planet_houses[14]},
-            {12, mc, "MC", _("Midheaven"), get_sign(sign[15]), dm, mm, "", (char *)get_house_roman(mc, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[15], planet_latitudes[15], planet_ra[15], planet_houses[15]},
-            {13, descendant, "DC", _("Descendant"), get_sign(sign[16]), da, ma, "", (char *)get_house_roman(descendant, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[16], planet_latitudes[16], planet_ra[16], planet_houses[16]},
-            {14, ic, "IC", _("Nadir"), get_sign(sign[17]), dm, mm, "", (char *)get_house_roman(ic, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[17], planet_latitudes[17], planet_ra[17], planet_houses[17]},
-            {15, vertex, "🜊", _("Vertex"), get_sign(sign[18]), dv, mv, "", (char *)get_house_roman(vertex, cusps), 0.0, 0.0, 0.0, 0.0, planet_declinations[18], planet_latitudes[18], planet_ra[18], planet_houses[18]}
-        };
         
         PlotObject *plots;
         if (!show_modern_planets) {
@@ -8414,14 +8401,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             plots = plotsA;
         }
 
+        
+        
+        // 29. Create and initialize the dignities array 
         PlanetDignities dig[NUM_OBJECTS - object_diff];
 
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             if (i < 7) {
-                dig[i].id = i + 1;
+                dig[i].id = i + 1; // dignities of planets have ids 1 to 7
             }
             else {
-                dig[i].id = i + 1 + object_diff;
+                dig[i].id = i + 1 + object_diff; // normalize the ids according to the database 
             }
             
             dig[i].essential = 0;
@@ -8454,22 +8444,32 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
        
 
 
-        // 16. Calculate Aspects
+        // 30. Initialize the Aspects Matrix
+        AspectMatrix matrix = {0};
+        for (int i = 0; i < 19; i++) {
+            memset(matrix.grid[i], 0, sizeof(AspectCell));
+        }
 
-        AspectMatrix matrix = {0}; // Inicializa tudo zerado/falso
+
+        // 31. Create the feral and void of course arrays
         int feral[12 - object_diff];
         int vazio_de_curso[12 - object_diff];
 
+        // 32. Create and populate the retrograde array
         int retro[12 - object_diff];
         for (int i = 0; i < 12 - object_diff; i++) {
             retro[i] = (strcmp(plots[i].retrograde, "℞") == 0) ? 1 : 0;
         }
 
+        
+        // 33. Calculate aspects
         matrix = calculate_aspects(plots, planet_orbis, dig, feral, vazio_de_curso, retro);
      
+        
 
+        // Iteration through the objects to generate the dignities array
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-            // Cerco
+            // 34. Cerco
             if (plots[i].id != P_MARS && plots[i].id != P_SATURN) {
                 if (is_under_siege(plots[i].id, &matrix)) {
 
@@ -8478,7 +8478,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 }
             }
 
-            // Auxílio
+            // 35. Auxílio
             if (plots[i].id != P_VENUS && plots[i].id != P_JUPITER) {
                 if (is_under_assistance(plots[i].id, &matrix)) {
                     
@@ -8488,8 +8488,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-            // Aspectos com maléficos
-
+            // 36. Aspectos com maléficos
             if (plots[i].id != P_MARS) {
                 if (((matrix.grid[i][P_MARS].has_aspect || matrix.grid[P_MARS][i].has_aspect)) &&
                     (strstr(matrix.grid[i][P_MARS].symbol, "☌") || strstr(matrix.grid[P_MARS][i].symbol, "☌"))) {
@@ -8541,8 +8540,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-            // Aspectos com benéficos
-
+            // 37. Aspectos com benéficos
             if (plots[i].id != P_VENUS) {
                 if (((matrix.grid[i][P_VENUS].has_aspect || matrix.grid[P_VENUS][i].has_aspect)) &&
                     (strstr(matrix.grid[i][P_VENUS].symbol, "☌") || strstr(matrix.grid[P_VENUS][i].symbol, "☌"))) {
@@ -8596,8 +8594,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-            // Conjunção com nodos
-
+            // 38. Conjunção com nodos
             if (plots[i].id != P_NORTH_NODE - object_diff) {
                 if ((matrix.grid[i][P_NORTH_NODE - object_diff].has_aspect || matrix.grid[P_NORTH_NODE - object_diff][i].has_aspect) &&
                     (strstr(matrix.grid[i][P_NORTH_NODE - object_diff].symbol, "☌") || strstr(matrix.grid[P_NORTH_NODE - object_diff][i].symbol, "☌"))) {
@@ -8620,30 +8617,30 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
         
-        // 17. Declination Aspects
-
-        DeclMatrix matrix_decl = {0}; // Inicializa toda a estrutura com falsos/zeros
-        for (int i = 0; i < 30; i++) {
+        // 39. Initialize Declination Aspects Matrix
+        DeclMatrix matrix_decl = {0};
+        for (int i = 0; i < 19; i++) {
             memset(matrix_decl.grid[i], 0, sizeof(DeclCell));
         }
         
 
+        // 40. Calculate the declination aspects
         matrix_decl = calculate_declination_aspects(plots, decl_orbis);
 
-        
 
 
-        // 18. Table
 
+        // 41. Build the Planets Main Table
         PlanetTableMatrix planet_matrix = {0};
 
-        
+
+        // Iterate through the objects to calculate the dignities and to fill the main table
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             PlanetRowData *row = &planet_matrix.rows[i];
 
             double longitude_total = plots[i].longitude;
 
-            // Decan
+            // 42. Get the Decan ruler
             int ndec = get_decan(longitude_total);
             int decan_ruler = get_decan_ruler(ndec);
 
@@ -8652,19 +8649,19 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(row->decan, 10, "%s", rdec);
 
 
-            // Termo (Bounds)
+            // 43. Get the Term ruler
             int regente_do_termo = get_term_ruler(longitude_total);            
             
             char rterm[10];
             snprintf(rterm, sizeof(rterm), "%s", planet_regent_symbols[regente_do_termo]);
             snprintf(row->term, 10, "%s", rterm);
+                        
             
-            
-            
-            // Declinação
+            // 44. Fill the Declination field
             snprintf(row->decl_str, 15, "%6.2f", plots[i].declination);
 
-            // Velocidade e Cores
+
+            // 45. Fill the Speed and define the Colours
             double speed_abs = fabs(plots[i].speed);
             double mean_speed;
             
@@ -8672,9 +8669,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             int fast[12 - object_diff];
 
-            // define 8% of the mean speed = stationary
+            
+            // 46. Define 8% of the mean speed to consider the planet as stationary
             double speed_zero = speed_abs * 0.08;
 
+
+            // 47. Define if a planet is fast or slow
             row->speed_color_pair = 0;
             if (i < 12 - object_diff) {
                 snprintf(row->speed_str, 15, "%8.4f", plots[i].speed);
@@ -8708,9 +8708,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-            
-    
-            
+            // 48. Set the points for retrograde motion
             if (i < 12 - object_diff) {
                 if (retro[i]) {
                     dig[i].accidental -= 5;
@@ -8734,12 +8732,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-
-
-
-
-            
-
+            // 49. Set the points to direct motion
             if (i < 12 - object_diff) {
                 if (fast[i] > 0) {
                     dig[i].accidental +=2;
@@ -8750,7 +8743,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
            
-           
+            // 50. Set the points for Void of Course and Feral
             if (i < 12 - object_diff) {
                 
                 // se forem os nodos, não se aplica VoC nem Feral
@@ -8769,8 +8762,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 }                
             }
 
-            // Joy
-
+            // 51. Joy
             if (i < 7) {
                 if (get_house(plots[i].longitude, cusps) == get_planetary_joy(plots[i].id + 1) ) {
                     dig[i].row.joy = 1;
@@ -8789,7 +8781,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 }
             }
 
-            // Classificação de Cores das Casas
+            // 52. Classificação de Cores das Casas
             row->house_color_pair = 0;
             if (strcmp(plots[i].house, "VI") == 0 || strcmp(plots[i].house, "VIII") == 0 || strcmp(plots[i].house, "XII") == 0) {
                 row->house_color_pair = 11;
@@ -8804,7 +8796,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
             
-
+            // 53. Points for House position
             if (i < NUM_OBJECTS - object_diff) {
                 switch(get_house(plots[i].longitude, cusps)) {
                     case 1: dig[i].accidental += HOUSE_1_PT; break;
@@ -8824,7 +8816,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-            // Dignidades Essenciais Tradicionais
+            // 54. Dignidades Essenciais Tradicionais
             snprintf(row->dignity_str, 70, " ");
             row->dignity_color_pair = 0;
 
@@ -8982,7 +8974,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             }
 
 
-            // Recepção mútua
+            // 55. Recepção mútua
             if (i < 12 - object_diff) {    
                 snprintf(row->mutual_reception, 32, " ");
 
@@ -8996,23 +8988,51 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     
                     char *ruler_dom_de_j = NULL; // Quem rege o signo onde 'j' está hospedado
                     char *ruler_exal_de_j = NULL; // Quem exalta no signo onde 'j' está hospedado
+
+                    // char ruler_ter_de_i[10] = "";
+                    // char ruler_dec_de_i[10] = "";
+                    
+                    // char ruler_ter_de_j[10] = "";
+                    // char ruler_dec_de_j[10] = "";
                     
                     // 1. Descobre os donos da casa onde o Planeta I está pisando
                     get_sign_ruler_by_domicile(plots[i].sign, &ruler_dom_de_i);
                     get_sign_ruler_by_exaltation(plots[i].sign, &ruler_exal_de_i, consider_modern_planets_rulling);
+
+                    // int decan_ruleri = get_decan_ruler(get_decan(plots[i].longitude));
+                    // snprintf(ruler_dec_de_i, 10, "%s", planet_regent_symbols[decan_ruleri]);
+        
+                    // int regente_do_termoi = get_term_ruler(plots[i].longitude); 
+                    // snprintf(ruler_ter_de_i, 10, "%s", planet_regent_symbols[regente_do_termoi]);
+
+
                     
                     // 2. Descobre os donos da casa onde o Planeta J está pisando
                     get_sign_ruler_by_domicile(plots[j].sign, &ruler_dom_de_j);
                     get_sign_ruler_by_exaltation(plots[j].sign, &ruler_exal_de_j, consider_modern_planets_rulling);
+
+                    // int decan_rulerj = get_decan_ruler(get_decan(plots[j].longitude));
+                    // snprintf(ruler_dec_de_i, 10, "%s", planet_regent_symbols[decan_rulerj]);
+        
+                    // int regente_do_termoj = get_term_ruler(plots[j].longitude); 
+                    // snprintf(ruler_ter_de_i, 10, "%s", planet_regent_symbols[regente_do_termoj]);
+
+
                     
                     // 3. A VERDADEIRA RECEPÇÃO MÚTUA (CRUZADA):
                     // O Planeta J é dono do lugar onde o Planeta I está? 
                     int j_recebe_i = (ruler_dom_de_i && strcmp(plots[j].object, ruler_dom_de_i) == 0) || 
                                     (ruler_exal_de_i && strcmp(plots[j].object, ruler_exal_de_i) == 0);
+                                    //  ||
+                                    // (strcmp(plots[j].object, ruler_ter_de_i) == 0) ||
+                                    // (strcmp(plots[j].object, ruler_dec_de_i) == 0);
             
                     // O Planeta I é dono do lugar onde o Planeta J está?
                     int i_recebe_j = (ruler_dom_de_j && strcmp(plots[i].object, ruler_dom_de_j) == 0) || 
                                     (ruler_exal_de_j && strcmp(plots[i].object, ruler_exal_de_j) == 0);
+                                    //  ||
+                                    // (strcmp(plots[i].object, ruler_ter_de_j) == 0) ||
+                                    // (strcmp(plots[i].object, ruler_dec_de_j) == 0);
             
                     int ha_recepcao = j_recebe_i && i_recebe_j && strcmp(plots[i].sign, plots[j].sign) != 0;
             
@@ -9032,6 +9052,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             else if (ruler_exal_de_i && strcmp(plots[j].object, ruler_exal_de_i) == 0) {
                                 dig[i].accidental += 4;
                             }
+                            // else if (strcmp(plots[j].object, ruler_ter_de_i) == 0) {
+                            //     dig[i].accidental += 2;
+                            // }
+                            // else if (strcmp(plots[j].object, ruler_dec_de_i) == 0) {
+                            //     dig[i].accidental += 1;
+                            // }
 
                             snprintf(mut, 14, "{ %s %s }", plots[i].object, plots[j].object);
                             strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
@@ -9048,129 +9074,133 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             dig[i].row.mut_reception_asp = 0;
                         }
                     } 
-                    
-            
-                    // Liberação de memória segura dentro do laço
+          
                     if (ruler_dom_de_i) free(ruler_dom_de_i);
                     if (ruler_exal_de_i) free(ruler_exal_de_i);
                     if (ruler_dom_de_j) free(ruler_dom_de_j);
                     if (ruler_exal_de_j) free(ruler_exal_de_j);
                 }
-            }
-
-
-            // Lógica de Gênero
-            int planet_gen = -1, sign_gen = -1, quadrant_gen = -1;
-            get_planet_gender(plots[i].object, &planet_gen);
-            get_sign_gender(plots[i].sign, &sign_gen);
             
 
-            double sun_rising_time = plots[0].rising_time;
-            double sun_setting_time = plots[0].setting_time;
-            //if (sun_rise_plus_12 < 0.0) sun_rise_plus_12 += 24.0;
-            //if (sun_rise_plus_12 > 24.0) sun_rise_plus_12 -= 24.0;
 
-            if (i == 2) { // Mercúrio Condicional Oriental/Ocidental
-                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
-                    planet_gen = 1;
-                }
-                else {
-                    planet_gen = 2;
-                }
-            }
-            row->gender_match = (sign_gen == planet_gen);
-
-        
-            int house_s = get_house(plots[i].longitude, cusps);
-            
-            // Gender concerning to the quadrant
-            get_quadrant_gender(house_s, &quadrant_gen);
-            row->quadrant_match = (quadrant_gen == planet_gen);
-
-            // Lógica de Seita (Sect / Hayz parcial)
-            int planet_sect = -1;
-            
-            get_planet_sect(plots[i].object, &planet_sect);
-
-            
-            if (i == 2) { // Mercúrio Condicional Oriental/Ocidental
-                if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
-                    planet_sect = 1;
-                }
-                else {
-                    planet_sect = 2;
-                }
-            }
-
-            row->sect_match = false;
-            if (MAPA_DIURNO_GEOMETRICO) {
-                if ((planet_sect == 1 && house_s > 6) || (planet_sect == 2 && house_s < 7 && i != 1) || i == 0) {
-                    row->sect_match = true;
-                }
-            } else {
-                if ((planet_sect == 1 && house_s < 7 && i != 0) || (planet_sect == 2 && house_s > 6) || i == 1) {
-                    row->sect_match = true;
-                }
-            }
+                // 56. Lógica de Gênero
+                int planet_gen = -1, sign_gen = -1, quadrant_gen = -1;
 
 
-            int haym = 0;
-            int hayz = 0;
-            int hayz_extra = 0;
+                get_planet_gender(plots[i].object, &planet_gen);
+                get_sign_gender(plots[i].sign, &sign_gen);
+                
 
-            if (i < 7) {            
-                if (row->gender_match && row->sect_match) {
-                    hayz = 1;
-                    haym = 0;
-                    if (row->quadrant_match) {
-                        hayz_extra = 1;
-                    }             
-                }
-                else if (!row->gender_match && !row->sect_match) {
-                    hayz = -1;
-                    haym = 0;
-                }
-                else if (row->sect_match) {
-                    hayz = 0;
-                    haym = 1;
-                }
+                double sun_rising_time = plots[0].rising_time;
+                double sun_setting_time = plots[0].setting_time;
 
-                if (hayz == 1) {
-                    dig[i].accidental += 3;
-                    dig[i].row.hayz = 1;
-                    dig[i].row.haym = 0;
 
-                    if (hayz_extra) {
-                        dig[i].accidental += 2; 
-                        dig[i].row.hayz_extra = 1;
+                // Mercúrio Condicional Oriental/Ocidental
+                if (i == 2) {
+                    if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
+                        planet_gen = 1;
                     }
-                } 
-                else if (hayz == -1) {
-                    dig[i].accidental -= 2;
-                    dig[i].row.hayz = -1;
-                } 
-                else if (hayz == 0) {
-                    dig[i].row.hayz = 0;
+                    else {
+                        planet_gen = 2;
+                    }
+                }
+                row->gender_match = (sign_gen == planet_gen);
+
+            
+
+                // 57. Gender concerning to the quadrant
+                int house_s = get_house(plots[i].longitude, cusps);
+                            
+                get_quadrant_gender(house_s, &quadrant_gen);
+                row->quadrant_match = (quadrant_gen == planet_gen);
+
+
+
+                // 58. Lógica de Seita (Sect / Hayz parcial)
+                int planet_sect = -1;
+                
+                get_planet_sect(plots[i].object, &planet_sect);
+
+
+                // Mercúrio Condicional Oriental/Ocidental
+                if (i == 2) {
+                    if (plots[i].rising_time < sun_rising_time || plots[i].rising_time > sun_setting_time) {
+                        planet_sect = 1;
+                    }
+                    else {
+                        planet_sect = 2;
+                    }
                 }
 
-                if (haym) {
-                    dig[i].accidental += 2;
-                    dig[i].row.haym = 1;
+                row->sect_match = false;
+                if (MAPA_DIURNO_GEOMETRICO) {
+                    if ((planet_sect == 1 && house_s > 6) || (planet_sect == 2 && house_s < 7 && i != 1) || i == 0) {
+                        row->sect_match = true;
+                    }
+                } else {
+                    if ((planet_sect == 1 && house_s < 7 && i != 0) || (planet_sect == 2 && house_s > 6) || i == 1) {
+                        row->sect_match = true;
+                    }
                 }
-            }
 
-            //DEBUG
-            // terminate_database();
-            // endwin();
-            // for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-            //     fprintf(stderr, "%d %d %d\n", dig[i].id, dig[i].essential, dig[i].accidental);
-            // }        
-            // exit(1);
+
+                // 59. Hayz
+                int haym = 0;
+                int hayz = 0;
+                int hayz_extra = 0;
+
+                if (i < 7) {            
+                    if (row->gender_match && row->sect_match) {
+                        hayz = 1;
+                        haym = 0;
+                        if (row->quadrant_match) {
+                            hayz_extra = 1;
+                        }             
+                    }
+                    else if (!row->gender_match && !row->sect_match) {
+                        hayz = -1;
+                        haym = 0;
+                    }
+                    else if (row->sect_match) {
+                        hayz = 0;
+                        haym = 1;
+                    }
+
+                    if (hayz == 1) {
+                        dig[i].accidental += 3;
+                        dig[i].row.hayz = 1;
+                        dig[i].row.haym = 0;
+
+                        if (hayz_extra) {
+                            dig[i].accidental += 2; 
+                            dig[i].row.hayz_extra = 1;
+                        }
+                    } 
+                    else if (hayz == -1) {
+                        dig[i].accidental -= 2;
+                        dig[i].row.hayz = -1;
+                    } 
+                    else if (hayz == 0) {
+                        dig[i].row.hayz = 0;
+                    }
+
+                    if (haym) {
+                        dig[i].accidental += 2;
+                        dig[i].row.haym = 1;
+                    }
+                }
+                
+                //DEBUG
+                // terminate_database();
+                // endwin();
+                // for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
+                //     fprintf(stderr, "%d %d %d\n", dig[i].id, dig[i].essential, dig[i].accidental);
+                // }        
+                // exit(1);
                 
             
-            // Orientality
-
-            if (i < 12 - object_diff) {
+                // 60. Orientality
+                //if (i < 12 - object_diff) {
                 char *planet_orientality = " ";
                 char orientality_str[11];
 
@@ -9202,10 +9232,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 if (found) free(planet_orientality);
 
             }
-            
 
 
-            // Busca e Formatação dos Regentes (Lidando com os Ponteiros e Free com segurança)
+            // 61. The Rulers
             char *ruler = NULL;
             char *ruler2 = NULL;
             get_sign_ruler_by_domicile(plots[i].sign, &ruler);
@@ -9219,17 +9248,16 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
             if (ruler) free(ruler);
             if (ruler2) free(ruler2);
+
+            char istr[20];
+            snprintf(istr, 20, "%d", i);
+            //show_alert_popup("dentro do for", istr);
+
         }
+        
 
         
-        // Season and its temperament
-
-        // char *season = " ";
-        // int found_season = get_season(plots[0].sign, &season);
-
-        // char *season_temperament = " ";
-        // int found_temp = get_season_temperament(season, &season_temperament);
-
+        // 62. Season and its temperament
         int season_id = 0;
         get_season_id((int)(plots[0].longitude / 30) + 1, &season_id);
 
@@ -9249,10 +9277,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
                       
-        // Moon's temperament
-        
+        // 63. Moon's temperament        
         char moon_temperament[20];
-        //get_moon_temperament_by_phase_id(moon_phase_id, &moon_temperament);
 
         switch(moon_phase_id) {
             case 1:
@@ -9275,15 +9301,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-        // Strength of the Planets
-
+        // 64. Strength of the Planets
         int strength_planets[NUM_OBJECTS - object_diff];
         calcular_forca_planetas(dig, strength_planets, show_modern_planets);
 
         
 
-        // Cusps
-
+        // 65. Cusps
         char pHouse[12][100];
 
         for (int i = 0; i < 12; i++) {
@@ -9351,6 +9375,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // exit(1);
         
         
+        // 66. Hyleg, Alcochoden and Almuten
         PontosHylegiacos pontos_calculados = {
             plots[P_SOL].longitude,
             plots[P_LUNA].longitude,
@@ -9359,7 +9384,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             plots[P_SAN - object_diff].longitude
         };
         
-
         int id_almuten_ref = 0;
         ResultadoAlcochoden alco = {"None", "", 0, "None", 0};
         int regente_dia = converter_codigo_planeta(get_hour_regent(week_day, (MAPA_DIURNO_CIVIL)?0:12));
@@ -9388,20 +9412,15 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             tipo_h = tipo_h_natal;
             idx_objeto_h = idx_hyleg_natal;
         }
-
-        
-
-
-        
-        // Executa o cálculo e guarda na variável 'alco'        
+      
         alco = calcular_alcochoden(tipo_h, idx_objeto_h + 1, &matrix, plots, dig, regente_dia, regente_hora, pontos_calculados);
 
-              
+        
+        // 67. Anareta
         int signo_da_casa_8 = (int)(cusps[8] / 30) + 1;
 
         
         // para direções
-
         int id_senhor_da_casa8 = 0;
         get_ruler_dom_by_sign_id(signo_da_casa_8, &id_senhor_da_casa8);
         ResultadoAnareta anar = calcular_anareta(idx_objeto_h, &matrix, plots, dig, signo_da_casa_8);
@@ -9414,7 +9433,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
-        // Constrói o ChartObject
+        // 68. Constrói o ChartObject
         for (int i = 0; i < total_objects; i++) {
             for (int j = 0; j < NUM_OBJECTS; j++) {
                 if (obj[i].id == plotsA[j].id + 1 && obj[i].longitude == 0.0) {
@@ -9569,11 +9588,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
+        // 69. Mind
         DadosPlanetaMente mercurio = {3, dig[P_MERCURY].essential, dig[P_MERCURY].accidental, dig[P_MERCURY].row.combust};
         DadosPlanetaMente lua = {1, dig[P_LUNA].essential, dig[P_LUNA].accidental, dig[P_LUNA].row.combust};
 
 
-        // Almuten da revolução
+        // 70. Almuten da revolução
         int almuten_rev[12] = {0};
         int almuten_score_rev[12] = {0};
         int qtd_almuten_rev = 0;
@@ -9594,7 +9614,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
 
-        // Array de Significadores
+        // 71. Array de Significadores
         Promissor sig[50] = {0};
 
         Promissor fortuna_m = {0};
@@ -9630,7 +9650,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
         
-
+        // Mundane Part of Fortune
         calc_mundane_lot(&sig[0], &sig[1], &sig[0], &sig[P_ASC - object_diff], true, armc, julian_day, lat, cusps, &fortuna_m);
 
         
@@ -9657,10 +9677,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
 
-
-
-
-        //sig_id++;        
 
         char *hc;
         for (int i = 1; i <= 12; i++) {
@@ -9702,8 +9718,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // exit(1);
 
 
-        // criar Promissor objects array com as coordenadas dos 7 planetas, antiscia, contrantiscia e termos
-        // Array de Promissores
+        // 72. Array de Promissores
+        //     criar Promissor objects array com as coordenadas dos 7 planetas, antiscia, contrantiscia e termos
         Promissor prom[100] = {0};
         prom_id = 0;
 
@@ -9734,50 +9750,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom_id++;
         }
         
-        // adicionar os nodos
-        // for (int i = 7; i < 12; i++) {
-        //     if ((strcmp(plots[i].object_name, _("North Node")) == 0 || strcmp(plots[i].object_name, _("South Node")) == 0) ||
-        //         show_modern_planets        
-        // ) {
-                
-        //         snprintf(prom[i].object, 10, "%s", plots[i].object);
-        //         snprintf(prom[i].object_name, 30, "%s", plots[i].object_name);
-
-        //         prom[i].id = prom_id;
-        //         prom[i].longitude = plots[i].longitude;
-        //         prom[i].latitude = plots[i].latitude;
-        //         prom[i].declination = plots[i].declination;
-        //         prom[i].ra = plots[i].ra;
-        //         prom[i].house = get_house(plots[i].longitude, cusps);
-        //         prom[i].type = PROM_PLANET;
-
-        //         prom_id++;
-        //     }
-            
-        // }
-
-        // snprintf(prom[prom_id].object, 10, "%s", plots[P_FORTUNA - object_diff].object);
-        // snprintf(prom[prom_id].object_name, 30, "%s", plots[P_FORTUNA - object_diff].object_name);
-        // prom[prom_id].id = prom_id;
-        // prom[prom_id].longitude = plots[P_FORTUNA - object_diff].longitude;
-        // prom[prom_id].latitude = plots[P_FORTUNA - object_diff].latitude;
-        // prom[prom_id].declination = plots[P_FORTUNA - object_diff].declination;
-        // prom[prom_id].ra = plots[P_FORTUNA - object_diff].ra;
-        // prom[prom_id].house = get_house(plots[P_FORTUNA - object_diff].longitude, cusps);
-        // prom[prom_id].type = PROM_POINT;
-
-        // prom_id++;
-
+        
         double longitudes_termos[60] = {0};
         double ra_termos[60] = {0};
         double decl_termos[60] = {0};
 
         double longitudes_fim[60] = {0};
-        //double ra_fim[60] = {0};
-        //double decl_fim[60] = {0};
-
+        
         char termos_regentes[60][10];
-        //char regents_names[60][30];
         
         int index = 0;
 
@@ -9795,14 +9775,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     snprintf(termos_regentes[index], 10, "%s%s", get_sign(i), planet_regent_symbols[tabela_termos_ptolomeu[i][j].regente]);
                     snprintf(prom[prom_id + index].object_name, 30, "%s", planet_regent_names[tabela_termos_ptolomeu[i][j].regente]);          
                 }
-                //snprintf(regents_names[index], 30, "%s", planet_regent_names[tabela_termos_ptolomeu[i][j].regente]);          
 
             }
         }
 
         for (int i = 0; i < 60; i++, prom_id++) {
             obter_coordenadas_termo(longitudes_termos[i], julian_day, &ra_termos[i], &decl_termos[i]);
-            //obter_coordenadas_termo(longitudes_fim[i], julian_day, &ra_fim[i], &decl_fim[i]);
             snprintf(prom[prom_id].object, 10, "%s", termos_regentes[i]);            
 
             prom[prom_id].id = prom_id;  
@@ -9818,10 +9796,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
 
             prom[prom_id].longitude_fim = longitudes_fim[i];
-            //prom[prom_id].dec_fim = decl_fim[i];
-            //prom[prom_id].ra_fim = ra_fim[i];
-            //prom[prom_id].house_fim = get_house(longitudes_fim[i], cusps);
-
+            
             prom[prom_id].type = PROM_TERM;
         }
 
@@ -9829,7 +9804,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         AntObject ants[num_ants];
         
         double longitudes_ant[num_ants / 2];
-        //int sign_ant[num_ants / 2];
 
         int index_ant = 0;
         for (int i = 0; i < 18 - object_diff; i++) {
@@ -9838,7 +9812,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 continue;
             }
                 
-            // CORREÇÃO: Lemos plots[i] em vez de plots[index_ant] para garantir o alinhamento com o loop
             snprintf(prom[prom_id].object, 10, "A-%s", plots[i].object);
             snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
             prom[prom_id].id = prom_id;
@@ -9905,25 +9878,21 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
 
         double longitudes_cant[num_ants / 2];
-        //int sign_cant[num_ants / 2];
 
         int index_cant = 0;
-        int metade_ants = num_ants / 2; // Guardamos o deslocamento para evitar divisões repetidas no índice
+        int metade_ants = num_ants / 2;
         
         for (int i = 0; i < 18 - object_diff; i++) {
             if (strcmp(plots[i].object_name, _("SAN")) == 0) {
                 continue;
             }
 
-            // CORREÇÃO: Lemos plots[i] para manter a identidade estável do planeta
             snprintf(prom[prom_id].object, 10, "CA-%s", plots[i].object);
             snprintf(prom[prom_id].object_name, 30, "%s", plots[i].object_name);
             prom[prom_id].id = prom_id;
 
             longitudes_cant[index_cant] = calcular_contra_antiscia(plots[i].longitude);
-            // CORREÇÃO: Corrigido o nome do array de longitudes_ant para longitudes_cant e adicionado ponto e vírgula na linha abaixo
-            //sign_cant[index_cant] = (int)(longitudes_cant[index_cant] / 30.0);
-
+            
             prom[prom_id].longitude = longitudes_cant[index_cant];
             prom[prom_id].latitude = 0.0;
             
@@ -9995,10 +9964,9 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         // exit(1);
 
         
-        // Aries offset to draw the chart
+        // Aries offset to draw the chart (deprecated code)
         n = mod_a(13 - ((int)ascendant / 30), 12);
              
-        
         // Draw the chart
         draw_chart(center_y, center_x, max_y, max_x, aspect_ratio, zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
                    sanYear, sanMon, sanDay, sanHour, sunrise_time, sunset_time, city, country, 

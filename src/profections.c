@@ -47,11 +47,13 @@ int obter_regente_trad(int id_signo) {
 
 
 void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double lon_asc_natal, double jd_nascimento, int anos_alcochoden) {
-    int ano_natal, mes_n, dia_n, hora_n, min_n;
-    double sec_n;
+    int y, m, d; //, h, min;
+    double h;
     
     // Converte o JD de nascimento para descobrir o ano inicial
-    swe_jdut1_to_utc(jd_nascimento, 2, &ano_natal, &mes_n, &dia_n, &hora_n, &min_n, &sec_n);
+    //swe_jdut1_to_utc(jd_nascimento, 2, &ano_natal, &mes_n, &dia_n, &hora_n, &min_n, &sec_n);
+    swe_revjul(jd_nascimento, SE_GREG_CAL, &y, &m, &d, &h);
+
 
     // Encontra o signo natal do Ascendente (0 = Áries, 11 = Peixes)
     int signo_asc_natal = (int)(lon_asc_natal / 30.0);
@@ -60,7 +62,7 @@ void gerar_tabela_profecoes_anuais(LinhaProfecao *tabela, int max_anos, double l
         LinhaProfecao *p = &tabela[idade];
         
         p->idade = idade;
-        p->ano_calendario = ano_natal + idade; // No C puro: p->ano_calendario = ano_natal + idade;
+        p->ano_calendario = y + idade; // No C puro: p->ano_calendario = ano_natal + idade;
 
         // 1. CÁLCULO DA CASA E DO SIGNO PROSPECTADO (Sign-by-Sign)
         // Ciclo de 12 casas (Idade 0 = Casa 1, Idade 12 = Casa 1...)

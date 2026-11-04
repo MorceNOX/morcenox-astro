@@ -35,29 +35,142 @@
 
 #include "var.h" // Garante o acesso à variável global_db e ao DB_PATH
 
+
 sqlite3* open_database() {
-    // Se o banco já estiver aberto, retorna a conexão existente instantaneamente
     if (global_db != NULL) {
         return global_db;
     }
-    
-    // Primeira execução: abre o arquivo fisicamente no disco
-    int rc = sqlite3_open(DB_PATH, &global_db);
-  
+
+    sqlite3 *disk_db = NULL;
+    sqlite3 *mem_db = NULL;
+
+    // 1. Open the original database file from the disk
+    int rc = sqlite3_open(DB_PATH, &disk_db);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(global_db));
-        sqlite3_close(global_db);
-        global_db = NULL;
+        fprintf(stderr, "Cannot open disk database: %s\n", sqlite3_errmsg(disk_db));
+        if (disk_db) sqlite3_close(disk_db);
         return NULL;
     }
+
+    // 2. Open a new, empty database in RAM
+    rc = sqlite3_open(":memory:", &mem_db);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Cannot open in-memory database: %s\n", sqlite3_errmsg(mem_db));
+        sqlite3_close(disk_db);
+        return NULL;
+    }
+
+    // 3. Use the Backup API to copy disk content to RAM
+    sqlite3_backup *pBackup;
+    pBackup = sqlite3_backup_init(mem_db, "main", disk_db, "main");
+    
+    if (pBackup) {
+        // -1 copies the entire database in one step
+        rc = sqlite3_backup_step(pBackup, -1);
+        if (rc != SQLITE_OK && rc != SQLITE_DONE) {
+            fprintf(stderr, "Backup failed: %s\n", sqlite3_errmsg(mem_db));
+        }
+        sqlite3_backup_finish(pBackup);
+    }
+
+    // 4. Close the disk connection immediately
+    // We no longer need the file on disk once it's in RAM
+    sqlite3_close(disk_db);
+
+    // 5. Switch global_db to the RAM connection
+    global_db = mem_db;
+
+    // 6. Re-apply connection-specific settings
+    // Note: Custom collations (like ICU) and PRAGMAs must be re-applied 
+    // to the new connection because they are connection-specific, not file-specific.
     activate_foreign_keys(global_db);
     auto_vacuum(global_db);
     configurar_banco(global_db);
+
     if (REINDEX_DB) {
         reconstruir_indice_cidades(global_db);
     }
+
+    printf("Database successfully loaded into RAM.\n");
     return global_db;
 }
+
+
+void recarregar_banco_na_ram() {
+    if (global_db == NULL) return;
+
+    // 1. Fecha a conexão atual da RAM de forma bruta para limpar todos os ponteiros velhos
+    sqlite3_close(global_db);
+    global_db = NULL;
+
+    // 2. Chama a sua função open_database() original. 
+    // Como global_db está NULL, ela vai reabrir o arquivo físico do disco do zero
+    // e criar um espelho zerado, limpo e atualizado na memória RAM!
+    open_database();
+    
+    printf("Banco de dados RAM totalmente recarregado e sincronizado após INSERT.\n");
+}
+
+
+
+// Função auxiliar para sincronizar a RAM com o disco imediatamente
+void persistir_no_disco() {
+    if (global_db == NULL) return;
+    
+    sqlite3 *disk_db = NULL;
+    if (sqlite3_open(DB_PATH, &disk_db) == SQLITE_OK) {
+        sqlite3_backup *pBackup = sqlite3_backup_init(disk_db, "main", global_db, "main");
+        if (pBackup) {
+            sqlite3_backup_step(pBackup, -1);
+            sqlite3_backup_finish(pBackup);
+        }
+        sqlite3_close(disk_db);
+    }
+}
+
+
+
+int sincronizar_com_disco(sqlite3 *db, const char *sql_sync, void (*bind_func)(sqlite3_stmt*)) {
+    char *zErrMsg = 0;
+    int rc;
+
+    // 1. Monta e executa o ATTACH dinâmico baseado na sua política de zero hardcoding
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    rc = sqlite3_exec(db, sql_attach, NULL, NULL, &zErrMsg);
+    sqlite3_free(sql_attach); // Libera a memória imediatamente
+
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Erro ao conectar ao disco para sincronizar: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
+    // 2. Prepara o comando SQL de sincronização recebido por parâmetro
+    sqlite3_stmt *stmt_sync = NULL;
+    rc = sqlite3_prepare_v2(db, sql_sync, -1, &stmt_sync, NULL);
+    
+    if (rc == SQLITE_OK) {
+        // Se a chamada enviou uma função de bind (para evitar SQL Injection), nós a executamos aqui
+        if (bind_func != NULL) {
+            bind_func(stmt_sync);
+        }
+
+        // Executa a sincronização propriamente dita
+        rc = sqlite3_step(stmt_sync);
+        sqlite3_finalize(stmt_sync);
+    } else {
+        fprintf(stderr, "Erro ao preparar SQL de sincronização: %s\n", sqlite3_errmsg(db));
+    }
+
+    // 3. Garante o DETACH para liberar o arquivo físico no disco, aconteça o que acontecer
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+
+    return (rc == SQLITE_DONE || rc == SQLITE_OK);
+}
+
+
+
+
 
 void close_database(sqlite3 *db) {
     // Mantemos vazia para ignorar os fechamentos intermediários de cada query
@@ -65,7 +178,7 @@ void close_database(sqlite3 *db) {
 }
 
 void terminate_database() {
-    // Fecha de verdade no encerramento do programa (chame na sua main)
+    // Fecha de verdade no encerramento do programa (chamar na main)
     if (global_db != NULL) {
         sqlite3_close(global_db);
         global_db = NULL;
@@ -94,7 +207,25 @@ int reconstruir_indice_cidades(sqlite3 *db) {
 
         "CREATE INDEX IF NOT EXISTS idx_coordenadas ON cities (lat, lon);",
 
+        "DROP INDEX IF EXISTS idx_coordenadas_pais;",
+
         "CREATE INDEX IF NOT EXISTS idx_coordenadas_pais ON cities (lat, lon, country_code);",
+
+        "DROP INDEX IF EXISTS idx_planet_by_symbol;",
+
+        "CREATE INDEX IF NOT EXISTS idx_planet_by_symbol ON planets (symbol);",
+
+        "DROP INDEX IF EXISTS idx_sign_by_symbol;",
+
+        "CREATE INDEX IF NOT EXISTS idx_sign_by_symbol ON signs (symbol);",
+
+        "DROP INDEX IF EXISTS idx_country;",
+
+        "CREATE INDEX IF NOT EXISTS idx_country ON cities (country);",
+
+        "DROP INDEX IF EXISTS idx_country_state;",
+
+        "CREATE INDEX IF NOT EXISTS idx_country_state ON cities (country, state COLLATE GLOBAL_SEM_ACENTO);",
         
         "COMMIT;"
     };
@@ -112,8 +243,7 @@ int reconstruir_indice_cidades(sqlite3 *db) {
         }
     }
 
-    printf("Índice 'idx_city_search' excluído e reconstruído com sucesso!\n");
-    printf("Índice 'idx_chart_search' excluído e reconstruído com sucesso!\n");
+    printf("Índices excluídos e reconstruídos com sucesso!\n");
     return 1;
 }
 
@@ -166,7 +296,38 @@ int configurar_banco(sqlite3 *db) {
         return 0;
     }
 
-    //fprintf(stderr, "Colação GLOBAL_SEM_ACENTO ativada usando a biblioteca SQLite externa!\n");
+    const char* sql_index5 = "CREATE INDEX IF NOT EXISTS idx_planet_by_symbol ON planets (symbol);";
+
+    if (sqlite3_exec(db, sql_index5, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
+    const char* sql_index6 = "CREATE INDEX IF NOT EXISTS idx_sign_by_symbol ON signs (symbol);";
+
+    if (sqlite3_exec(db, sql_index6, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
+    const char* sql_index7 = "CREATE INDEX IF NOT EXISTS idx_country ON cities (country);";
+
+    if (sqlite3_exec(db, sql_index7, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
+    const char* sql_index8 = "CREATE INDEX IF NOT EXISTS idx_country_state ON cities (country, state COLLATE GLOBAL_SEM_ACENTO);";
+
+    if (sqlite3_exec(db, sql_index8, NULL, NULL, &zErrMsg) != SQLITE_OK) {
+        fprintf(stderr, "Erro ao criar índice: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 0;
+    }
+
     return 1;
 }
 
@@ -442,111 +603,151 @@ int get_country_code(char *country, char *country_code) {
 
 }
 
-
 int save_city() {
     sqlite3 *db;
-    sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt_select = NULL;
+    sqlite3_stmt *stmt_ram = NULL;
+    sqlite3_stmt *stmt_disco = NULL;
     int rc;
 
     db = open_database();
-    if (!db) {
-        fprintf(stderr, "Failed to open database in save_city\n");
-        return 0;
-    }
+    if (!db) return 0;
+
+    // Buscando dados do país/estado na RAM
     const char *sql = "SELECT country_id, country_code, state_id, state_code FROM cities "
-                      "WHERE country = ? AND state = ?;";
+                      "WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO LIMIT 1;";
 
-    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt_select, NULL);
     if (rc != SQLITE_OK) {
         show_alert_popup(_("Failed prepare statement!"), sqlite3_errmsg(db));
-        sqlite3_close(db);
         return 0;
     }
 
     char location_type[100];
-
-    set_elevation();
-    set_country(COUNTRY, sizeof(COUNTRY));
-    set_state(STATE, sizeof(STATE));
-    set_location_name(CITY, sizeof(CITY));
-    if (!select_location_type(location_type)) snprintf(location_type, 100, "%s", _("city"));
+    if (!set_elevation()) {
+        show_alert_popup(_("Operation canceled by user!"), "");
+        sqlite3_finalize(stmt_select);
+        return 0;
+    }
+    if (!set_country(COUNTRY, sizeof(COUNTRY))) {
+        show_alert_popup(_("Operation canceled by user!"), "");
+        sqlite3_finalize(stmt_select);
+        return 0;
+    }
+    if (!set_state(STATE, sizeof(STATE))) {
+        show_alert_popup(_("Operation canceled by user!"), "");
+        sqlite3_finalize(stmt_select);
+        return 0;
+    }
+    if (!set_location_name(CITY, sizeof(CITY))) {
+        show_alert_popup(_("Operation canceled by user!"), "");
+        sqlite3_finalize(stmt_select);
+        return 0;
+    }
+    if (!select_location_type(location_type)) {
+        show_alert_popup(_("Operation canceled by user!"), "");
+        sqlite3_finalize(stmt_select);
+        return 0;
+    }
 
     trim(COUNTRY);
     trim(STATE);
     trim(CITY);
 
-    sqlite3_bind_text(stmt, 1, COUNTRY, -1, SQLITE_STATIC); 
-    sqlite3_bind_text(stmt, 2, STATE, -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt_select, 1, COUNTRY, -1, SQLITE_STATIC); 
+    sqlite3_bind_text(stmt_select, 2, STATE, -1, SQLITE_STATIC);
 
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        int country_id = sqlite3_column_int(stmt, 0);
-        const char *country_code = (const char*)sqlite3_column_text(stmt, 1);
-        int state_id = sqlite3_column_int(stmt, 2);
-        const char *state_code = (const char*)sqlite3_column_text(stmt, 3);
+    int country_id = 0;
+    const char *country_code = NULL;
+    int state_id = 0;
+    const char *state_code = NULL;
 
-
-        const char *sql_ins = "INSERT INTO cities (city, country, country_id, country_code, state, state_id, state_code, type, lat, lon, elev, timezone, gmt_offset_standard, gmt_offset_secs) "
-                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        rc = sqlite3_prepare_v2(db, sql_ins, -1, &stmt, NULL);
-
-        if (rc != SQLITE_OK) {
-            show_alert_popup(_("Failed prepare saving city! (prepare insert)"), sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return 0;
-        }
-
-        int secs = (int)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN);
-        char gmt_str[10];
-        get_degree_str((double)secs / 3600.0, gmt_str);
-
-        sqlite3_bind_text(stmt, 1, CITY, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 2, COUNTRY, -1, SQLITE_STATIC);
-        sqlite3_bind_int(stmt, 3, country_id);
-        sqlite3_bind_text(stmt, 4, country_code, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 5, STATE, -1, SQLITE_STATIC);
-        sqlite3_bind_int(stmt, 6, state_id);
-        sqlite3_bind_text(stmt, 7, state_code, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 8, location_type, -1, SQLITE_STATIC);
-        
-        sqlite3_bind_double(stmt, 9, LAT);
-        sqlite3_bind_double(stmt, 10, LON);
-        sqlite3_bind_double(stmt, 11, ELEV);
-        sqlite3_bind_text(stmt, 12, TZ_IANA, -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 13, gmt_str, -1, SQLITE_STATIC);
-        sqlite3_bind_int(stmt, 14, secs);
-
-        rc = sqlite3_step(stmt);
-        if (rc != SQLITE_DONE) {
-            show_alert_popup(_("Failed saving city! (bind insert)"), sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            return 0;
-        }
-
+    // CORREÇÃO 1: É obrigatório dar o 'step' para poder ler as colunas!
+    if (sqlite3_step(stmt_select) == SQLITE_ROW) {
+        country_id = sqlite3_column_int(stmt_select, 0);
+        country_code = (const char*)sqlite3_column_text(stmt_select, 1);
+        state_id = sqlite3_column_int(stmt_select, 2);
+        state_code = (const char*)sqlite3_column_text(stmt_select, 3);
     } else {
-        show_alert_popup(_("Failed saving city! (step)"), sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
+        show_alert_popup(_("Failed saving city! (Country/State not found)"), "");
+        sqlite3_finalize(stmt_select);
         return 0;
-    } 
+    }
 
-    show_alert_popup(_("City saved!"), "");
+    // 1. Conecta o arquivo físico do disco dinamicamente (Sem hardcoding)
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach);
 
-    sqlite3_finalize(stmt);
+    // O mesmo comando SQL serve para a RAM (main) e para o DISCO (disco)
+    const char *sql_ins_ram   = "INSERT INTO main.cities (city, country, country_id, country_code, state, state_id, state_code, type, lat, lon, elev, timezone, gmt_offset_standard, gmt_offset_secs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    const char *sql_ins_disco = "INSERT INTO disco.cities (city, country, country_id, country_code, state, state_id, state_code, type, lat, lon, elev, timezone, gmt_offset_standard, gmt_offset_secs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    // 2. Prepara os dois statements lógicos
+    sqlite3_prepare_v2(db, sql_ins_ram, -1, &stmt_ram, NULL);
+    sqlite3_prepare_v2(db, sql_ins_disco, -1, &stmt_disco, NULL);
+
+    // CORREÇÃO 3: Removida a duplicação das variáveis de tempo
+    int secs = (int)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN);
+    char gmt_str[10];
+    get_degree_str((double)secs / 3600.0, gmt_str);
+
+    // 3. Aplica os BINDS nos dois statements sequencialmente (No mesmo lugar!)
+    sqlite3_stmt *statements[2] = {stmt_ram, stmt_disco};
+    for (int i = 0; i < 2; i++) {
+        if (!statements[i]) continue;
+        sqlite3_bind_text(statements[i], 1, CITY, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 2, COUNTRY, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 3, country_id);
+        sqlite3_bind_text(statements[i], 4, country_code, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 5, STATE, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 6, state_id);
+        sqlite3_bind_text(statements[i], 7, state_code, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 8, location_type, -1, SQLITE_STATIC);
+        sqlite3_bind_double(statements[i], 9, LAT);
+        sqlite3_bind_double(statements[i], 10, LON);
+        sqlite3_bind_double(statements[i], 11, ELEV);
+        sqlite3_bind_text(statements[i], 12, TZ_IANA, -1, SQLITE_STATIC);
+        sqlite3_bind_text(statements[i], 13, gmt_str, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 14, secs);
+    }
+
+    // 4. Executa na RAM e no Disco
+    int gravou_ram = (sqlite3_step(stmt_ram) == SQLITE_DONE);
+    int gravou_disco = (sqlite3_step(stmt_disco) == SQLITE_DONE);
+
+    // Finaliza os comandos de inserção
+    sqlite3_finalize(stmt_ram);
+    sqlite3_finalize(stmt_disco);
+    
+    // CORREÇÃO 2: Finaliza o comando de seleção inicial para evitar vazamento de memória
+    sqlite3_finalize(stmt_select);
+
+    // 5. Desconecta o disco imediatamente para liberar o arquivo físico
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+
+    if (gravou_ram && gravou_disco) {
+        show_alert_popup(_("City saved to RAM and Disk!"), "");
+    } else {
+        show_alert_popup(_("Failed to persist data correctly!"), sqlite3_errmsg(db));
+        return 0;
+    }
+
     close_database(db);
-
     return 1;
 }
 
 
-int get_coordinates(char *city, char *country, char *state, double *lat, double *lon, double *elev, double *tz_offset, char *tz_iana) {    
 
+
+int get_coordinates(char *city, char *country, char *state, double *lat, double *lon, double *elev, double *tz_offset, char *tz_iana) {    
     sqlite3 *db;
     sqlite3_stmt *stmt;
     int rc;
 
     db = open_database();
     if (!db) {
-        fprintf(stderr, "Failed to open database in get_lat_lon_elev\n");
+        fprintf(stderr, "Failed to open database in get_coordinates\n");
         return 0;
     }
 
@@ -555,7 +756,7 @@ int get_coordinates(char *city, char *country, char *state, double *lat, double 
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
+        close_database(db);
         return 0;
     }
 
@@ -564,15 +765,14 @@ int get_coordinates(char *city, char *country, char *state, double *lat, double 
     sqlite3_bind_text(stmt, 3, city, -1, SQLITE_STATIC);
   
     int found = 0;
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
         *lat = sqlite3_column_double(stmt, 0);
         *lon = sqlite3_column_double(stmt, 1);
         *elev = sqlite3_column_double(stmt, 2);
         const char *timezone = (const char*)sqlite3_column_text(stmt, 3);
-        *tz_offset = sqlite3_column_double(stmt, 4) / 3600;
+        *tz_offset = sqlite3_column_double(stmt, 4) / 3600.0;
         
-        snprintf(tz_iana, 100, "%s", timezone);        
-        
+        snprintf(tz_iana, 100, "%s", timezone ? timezone : "");        
         found = 1;
     }
 
@@ -580,7 +780,6 @@ int get_coordinates(char *city, char *country, char *state, double *lat, double 
     close_database(db);
     
     return found;
-
 }
 
 
@@ -626,8 +825,7 @@ int get_house_meaning(int house, char *meaning) {
 
 
 
-int get_planet_properties(int id, PrimitiveProperties *props) {
-    
+int get_planet_properties(int id, PrimitiveProperties *props) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -669,8 +867,7 @@ int get_planet_properties(int id, PrimitiveProperties *props) {
 
 
 
-int get_sign_properties(int sign, PrimitiveProperties *props) {
-    
+int get_sign_properties(int sign, PrimitiveProperties *props) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -768,7 +965,7 @@ void get_cities_from_db_filter(const char *country, char ***cities, char ***stat
     
     db = open_database();
     if (!db) {
-        fprintf(stderr, "Failed to open database in get_cities_from_db\n");
+        fprintf(stderr, "Failed to open database in get_cities_from_db_filter\n");
         return;
     }
     
@@ -925,7 +1122,6 @@ int get_planet_orbis(int planet_ids[], double planet_orbis[], char planet_symbol
 
 int get_rulers(char *sign_symbol, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3) {
     
-
     sqlite3 *db;
     sqlite3_stmt *stmt;
     int rc;
@@ -1026,7 +1222,6 @@ int get_rulers_by_lon(double longitude, bool consider_modern_planets_rulling, in
 
 
 int get_rulers_by_sign_id(int sign, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3) {
-    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1149,8 +1344,7 @@ int get_ruler_exalt_by_sign_id(int sign, int *n_ruler, bool consider_modern_plan
 
 
 
-int get_planet_gender(char *planet_symbol, int *gender_id) {
-    
+int get_planet_gender(char *planet_symbol, int *gender_id) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1189,8 +1383,7 @@ int get_planet_gender(char *planet_symbol, int *gender_id) {
 
 
 
-int get_quadrant_gender(int house, int *gender_id) {
-    
+int get_quadrant_gender(int house, int *gender_id) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1227,8 +1420,7 @@ int get_quadrant_gender(int house, int *gender_id) {
 }
 
 
-int get_default_gender() {
-    
+int get_default_gender() {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1237,6 +1429,7 @@ int get_default_gender() {
     db = open_database();
     if (!db) {
         fprintf(stderr, "Failed to open database in get_default_gender\n");
+        close_database(db);
         return 0;
     }
 
@@ -1245,7 +1438,6 @@ int get_default_gender() {
     
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        close_database(db);
         return 0;
     }
     
@@ -1269,8 +1461,7 @@ int get_default_gender() {
 
 
 
-int get_default_terms_system() {
-    
+int get_default_terms_system() {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1310,8 +1501,7 @@ int get_default_terms_system() {
 }
 
 
-int get_sign_gender(char *sign_symbol, int *gender_id) {
-    
+int get_sign_gender(char *sign_symbol, int *gender_id) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1348,8 +1538,7 @@ int get_sign_gender(char *sign_symbol, int *gender_id) {
 }
 
 
-int get_planet_sect(char *planet_symbol, int *sect_id) {
-    
+int get_planet_sect(char *planet_symbol, int *sect_id) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1385,8 +1574,7 @@ int get_planet_sect(char *planet_symbol, int *sect_id) {
 
 }
 
-int get_planet_orientality(char *planet_symbol, char **orientality) {
-    
+int get_planet_orientality(char *planet_symbol, char **orientality) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1568,7 +1756,6 @@ int get_season_temperament(char *season, char **temperament) {
     int found = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW) { 
         *temperament = strdup((char *)sqlite3_column_text(stmt, 0));
-        //snprintf(*ruler_symbol, 10, "%s", sqlite3_column_text(stmt, 0));
         found = 1;      
     }
 
@@ -1780,7 +1967,7 @@ int get_planet_speed(char *planet_symbol, double *speed) {
 
 
 
-int get_weights(double weights[50], bool show_modern_planets) {
+int get_weights(double weights[100], bool show_modern_planets) {
     
 
     sqlite3 *db;
@@ -1810,7 +1997,6 @@ int get_weights(double weights[50], bool show_modern_planets) {
         return 0;
     }
     
-    //sqlite3_bind_text(stmt, 1, planet_symbol, -1, SQLITE_STATIC);
 
     int index = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW) {            
@@ -1848,7 +2034,6 @@ int get_chart_objects(ChartObject obj[100]) {
     
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
         close_database(db);
         return 0;
     }
@@ -1921,8 +2106,7 @@ double get_antissia_orbis() {
 }
 
 
-int get_house_system_name(char house_system_id, char **house_system_name) {
-    
+int get_house_system_name(char house_system_id, char **house_system_name) {    
 
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -1930,7 +2114,8 @@ int get_house_system_name(char house_system_id, char **house_system_name) {
 
     db = open_database();
     if (!db) {
-        fprintf(stderr, "Failed to open database in get_sign_ruler_by_domicile\n");
+        fprintf(stderr, "Failed to open database in get_house_system_name\n");
+        close_database(db);
         return 0;
     }
 
@@ -1942,7 +2127,6 @@ int get_house_system_name(char house_system_id, char **house_system_name) {
 
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        close_database(db);
         return 0;
     }
 
@@ -1961,11 +2145,12 @@ int get_house_system_name(char house_system_id, char **house_system_name) {
 
 }
 
-int update_triplicity_rulers(int triplicity_system) {
-    
 
+
+int update_triplicity_rulers(int triplicity_system) {
     sqlite3 *db;
-    sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt_ram = NULL;
+    sqlite3_stmt *stmt_disc = NULL;
     int rc;
 
     db = open_database();
@@ -1974,108 +2159,70 @@ int update_triplicity_rulers(int triplicity_system) {
         return 0;
     }
 
-    // Fire
-    const char *sql_select0;
-    sql_select0 = "UPDATE elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
+    // 1. Conecta o arquivo físico do disco dinamicamente usando a política do .env
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach); 
 
-    rc = sqlite3_prepare_v2(db, sql_select0, -1, &stmt, NULL);
+    // CORREÇÃO: Definidas as queries corretas e adicionado "disco." no escopo do arquivo físico
+    const char *sql_update_ram  = "UPDATE main.elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM main.triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
+    const char *sql_update_disc = "UPDATE disco.elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM main.triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
 
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement in update_triplicity_rulers: %s\n", sqlite3_errmsg(db));
-        close_database(db);
+    // 2. Prepara os dois statements APENAS UMA VEZ antes do laço dos elementos
+    if (sqlite3_prepare_v2(db, sql_update_ram, -1, &stmt_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_update_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statements: %s\n", sqlite3_errmsg(db));
+        if (stmt_ram) sqlite3_finalize(stmt_ram);
+        if (stmt_disc) sqlite3_finalize(stmt_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
         return 0;
     }
 
-    sqlite3_bind_int(stmt, 1, triplicity_system);
-    sqlite3_bind_int(stmt, 2, 1);
-    sqlite3_bind_int(stmt, 3, 1);
+    int sucesso = 1;
+    sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
 
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed saving triplicity rulers: %s\n", sqlite3_errmsg(db));
-        return 0;
+    // 3. O TRUQUE: Um único laço que gerencia dinamicamente os 4 Elementos (1=Fire, 2=Water, 3=Air, 4=Earth)
+    for (int elemento = 1; elemento <= 4; elemento++) {
+        
+        // Passa pelos statements populando e executando um por um
+        for (int i = 0; i < 2; i++) {
+            if (!statements[i]) continue;
+
+            // Limpa os binds anteriores para permitir que novos valores sejam injetados com segurança
+            sqlite3_reset(statements[i]);
+
+            // Vincula os parâmetros corretos para o elemento da rodada atual
+            sqlite3_bind_int(statements[i], 1, triplicity_system);
+            sqlite3_bind_int(statements[i], 2, elemento);
+            sqlite3_bind_int(statements[i], 3, elemento);
+
+            rc = sqlite3_step(statements[i]);
+            if (rc != SQLITE_DONE) {
+                fprintf(stderr, "Failed saving triplicity rulers for element %d (index %d): %s\n", elemento, i, sqlite3_errmsg(db));
+                sucesso = 0;
+            }
+        }
     }
 
+    // 4. Finaliza os statements uma única vez de forma segura
+    sqlite3_finalize(stmt_ram);
+    sqlite3_finalize(stmt_disc);
 
-    // Water
-    const char *sql_select1;
-    sql_select1 = "UPDATE elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
+    // 5. CORREÇÃO: Desconecta o arquivo físico liberando o arquivo em disco
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
 
-    rc = sqlite3_prepare_v2(db, sql_select1, -1, &stmt, NULL);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement in update_triplicity_rulers: %s\n", sqlite3_errmsg(db));
-        close_database(db);
-        return 0;
-    }
-
-    sqlite3_bind_int(stmt, 1, triplicity_system);
-    sqlite3_bind_int(stmt, 2, 2);
-    sqlite3_bind_int(stmt, 3, 2);
-
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed saving triplicity rulers: %s\n", sqlite3_errmsg(db));
-        return 0;
-    }
-
-
-    // Air
-    const char *sql_select2;
-    sql_select2 = "UPDATE elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
-
-    rc = sqlite3_prepare_v2(db, sql_select2, -1, &stmt, NULL);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement in update_triplicity_rulers: %s\n", sqlite3_errmsg(db));
-        close_database(db);
-        return 0;
-    }
-
-    sqlite3_bind_int(stmt, 1, triplicity_system);
-    sqlite3_bind_int(stmt, 2, 3);
-    sqlite3_bind_int(stmt, 3, 3);
-
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed saving triplicity rulers: %s\n", sqlite3_errmsg(db));
-        return 0;
-    }
-
-
-    // Earth
-    const char *sql_select3;
-    sql_select3 = "UPDATE elements SET (ruler1, ruler2, ruler3) = (SELECT ruler1, ruler2, ruler3 FROM triplicity_rulers WHERE system = ? AND element = ?) WHERE id = ?;";
-    
-    rc = sqlite3_prepare_v2(db, sql_select3, -1, &stmt, NULL);
-
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement in update_triplicity_rulers: %s\n", sqlite3_errmsg(db));
-        close_database(db);
-        return 0;
-    }
-
-    sqlite3_bind_int(stmt, 1, triplicity_system);
-    sqlite3_bind_int(stmt, 2, 4);
-    sqlite3_bind_int(stmt, 3, 4);
-
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed saving triplicity rulers: %s\n", sqlite3_errmsg(db));
-        return 0;
-    }
-
-    sqlite3_finalize(stmt);
     close_database(db);
-
-    return 1;
-
+    return sucesso;
 }
 
+
+
+
+
 int update_settings(ChartOptions options) {
-    
     sqlite3 *db;
-    sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt_ram = NULL;
+    sqlite3_stmt *stmt_disc = NULL;
     int rc;
 
     db = open_database();
@@ -2084,43 +2231,59 @@ int update_settings(ChartOptions options) {
         return 0;
     }
 
-    const char *sql_select;
-    sql_select = "UPDATE profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ? WHERE profile = ?;";
+    char *sql_attach = sqlite3_mprintf("ATTACH DATABASE %Q AS disco;", DB_PATH);
+    sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
+    sqlite3_free(sql_attach); // Libera o ponteiro gerado pelo mprintf
 
-    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
+    const char *sql_update      = "UPDATE main.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ? WHERE profile = ?;";
+    const char *sql_update_disc = "UPDATE disco.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ? WHERE profile = ?;";
 
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-        close_database(db);
+    if (sqlite3_prepare_v2(db, sql_update, -1, &stmt_ram, NULL) != SQLITE_OK ||
+        sqlite3_prepare_v2(db, sql_update_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statements: %s\n", sqlite3_errmsg(db));
+        if (stmt_ram) sqlite3_finalize(stmt_ram);
+        if (stmt_disc) sqlite3_finalize(stmt_disc);
+        sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
         return 0;
     }
 
     char house_system[10];
     snprintf(house_system, sizeof(house_system), "%c", options.house_system);
 
-    sqlite3_bind_int(stmt, 1, options.dark_mode);    
-    sqlite3_bind_text(stmt, 2, house_system, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 3, options.triplicity_system);
-    sqlite3_bind_int(stmt, 4, options.terms_system);
-    sqlite3_bind_int(stmt, 5, options.modern_planets_rulling);
-    sqlite3_bind_int(stmt, 6, options.show_modern_planets);
-    sqlite3_bind_int(stmt, 7, options.gender);
-    sqlite3_bind_text(stmt, 8, options.language, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 9, options.time_key);
-    sqlite3_bind_int(stmt, 10, options.ant_prom);
-    sqlite3_bind_int(stmt, 11, options.zod_pd_with_lat);
-    sqlite3_bind_int(stmt, 12, options.pd_arc_calc);
-    sqlite3_bind_text(stmt, 13, "default", -1, SQLITE_STATIC);
+    int sucesso = 1;
+    sqlite3_stmt *statements[2] = {stmt_ram, stmt_disc};
+    
+    for (int i = 0; i < 2; i++) {        
+        if (!statements[i]) continue;
 
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        fprintf(stderr, "Failed saving default options: %s\n", sqlite3_errmsg(db));
-        return 0;
+        sqlite3_bind_int(statements[i], 1, options.dark_mode);    
+        sqlite3_bind_text(statements[i], 2, house_system, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 3, options.triplicity_system);
+        sqlite3_bind_int(statements[i], 4, options.terms_system);
+        sqlite3_bind_int(statements[i], 5, options.modern_planets_rulling);
+        sqlite3_bind_int(statements[i], 6, options.show_modern_planets);
+        sqlite3_bind_int(statements[i], 7, options.gender);
+        sqlite3_bind_text(statements[i], 8, options.language, -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 9, options.time_key);
+        sqlite3_bind_int(statements[i], 10, options.ant_prom);
+        sqlite3_bind_int(statements[i], 11, options.zod_pd_with_lat);
+        sqlite3_bind_int(statements[i], 12, options.pd_arc_calc);
+        sqlite3_bind_text(statements[i], 13, "default", -1, SQLITE_STATIC);
+
+        rc = sqlite3_step(statements[i]);
+        if (rc != SQLITE_DONE) {
+            fprintf(stderr, "Failed saving profile options (index %d): %s\n", i, sqlite3_errmsg(db));
+            sucesso = 0;
+        }
     }
 
-    sqlite3_finalize(stmt);
+    sqlite3_finalize(stmt_ram);
+    sqlite3_finalize(stmt_disc);
+
+    // 3. Desconecta o arquivo físico liberando o arquivo em disco
+    sqlite3_exec(db, "DETACH DATABASE disco;", NULL, NULL, NULL);
+
     close_database(db);
-
-    return 1;
-
+    return sucesso;
 }
+
