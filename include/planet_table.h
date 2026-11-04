@@ -105,7 +105,7 @@ typedef struct {
     char orientality_str[30];
     int orientality_color_pair; 
     char rulers_str[30];     // String combinada dos regentes por domicílio e exaltação
-    char mutual_reception[32];
+    char mutual_reception[50];
 } PlanetRowData;
 
 typedef struct {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 01:47-0300\n"
+"POT-Creation-Date: 2026-11-04 04:38-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -2808,35 +2808,35 @@ msgstr ""
 "       Ascensão                  Ocaso                     "
 "Culminação                   Fuso Horário: Local"
 
-#: src/draw-chart.c:8843
+#: src/draw-chart.c:8842
 msgid "Dom "
 msgstr "Dom "
 
-#: src/draw-chart.c:8859
+#: src/draw-chart.c:8858
 msgid "Exalt "
 msgstr "Exalt "
 
-#: src/draw-chart.c:8875
+#: src/draw-chart.c:8874
 msgid "Tri "
 msgstr "Tri "
 
-#: src/draw-chart.c:8889
+#: src/draw-chart.c:8888
 msgid "Dec "
 msgstr "Dec "
 
-#: src/draw-chart.c:8903
+#: src/draw-chart.c:8902
 msgid "Term "
 msgstr "Term "
 
-#: src/draw-chart.c:8919
+#: src/draw-chart.c:8918
 msgid "Exile "
 msgstr "Exílio "
 
-#: src/draw-chart.c:8931
+#: src/draw-chart.c:8930
 msgid "Fall "
 msgstr "Queda "
 
-#: src/draw-chart.c:8951
+#: src/draw-chart.c:8950
 msgid "pilgrim "
 msgstr "peregrino "
 
@@ -4926,10 +4926,6 @@ msgstr " Texto para Busca "
 msgid "Enter location's name or a fragment to search for:"
 msgstr "Digite o nome da localidade ou um fragmento para busca:"
 
-#: src/selections.c:5735 src/selections.c:6142
-msgid "Somewhere"
-msgstr "Algum Lugar"
-
 #: src/selections.c:5798
 msgid " Location Name "
 msgstr " Nome da Localidade "
@@ -4937,6 +4933,10 @@ msgstr " Nome da Localidade "
 #: src/selections.c:5827
 msgid "Enter the Name of the Location"
 msgstr "Digite o Nome da Localidade"
+
+#: src/selections.c:6142
+msgid "Somewhere"
+msgstr "Algum Lugar"
 
 #: src/selections.c:6204
 msgid " State Name "

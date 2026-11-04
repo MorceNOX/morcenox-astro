@@ -59,7 +59,8 @@ void get_cities_from_db(const char *country, char ***cities, char ***states, int
 void get_cities_from_db_filter(const char *country, char ***cities, char ***states, int *count, char *location);
 void get_countries_from_db(char ***countries, int *count);
 int get_planet_orbis(int planet_ids[], double planet_orbis[], char planet_symbols[][10], int max_planets);
-int get_rulers(char *sign_symbol, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3); 
+int get_rulers(char *sign_symbol, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3);
+int get_planet_symbol(int id, char **symbol);
 int get_planet_gender(char *planet_symbol, int *gender_id);
 int get_rulers_by_lon(double longitude, bool consider_modern_planets_rulling, int *n_dom, int *n_exalted, int *n_tri1, int *n_tri2, int *n_tri3, int *n_term, int *n_dec);
 int get_rulers_by_sign_id(int sign, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3);

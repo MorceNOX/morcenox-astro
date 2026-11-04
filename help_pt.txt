@@ -908,7 +908,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Regentes por domicílio, exaltação, triplicidade, termo e decanato;
 
 • Recepção mútua: 
-Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação. Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F2 novamente para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação, ou por termo, ou por face (decanato). Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F3 para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
+
+Pode ocorrer mais de uma recepção mútua para o mesmo planeta. Neste caso, a linha do respectivo par também exibirá a recepção para o memo par de planetas.
 
 Pressionando-se F2, você verá as Medidas Equatoriais e Locais, que são dados astronômicos calculados que refletem exatamente como estavam os planetaas e outros pontos no exato momento do nascimento (o horário do mapa ativo). Os antigos chamavam tais dados de medidas esféricas do cèu, e por isso nós adotamos essa descrição como o nome da nossa tabela de medidas.
 

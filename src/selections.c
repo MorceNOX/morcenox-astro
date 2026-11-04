@@ -5732,7 +5732,7 @@ int set_location_filter(char *name, size_t max_length) {
     // Converte o buffer largo de volta para a string char* UTF-8 de saída
     if (name != NULL) {
         if (w_len == 0) {
-            strncpy(name, _("Somewhere"), max_length);
+            strncpy(name, "", max_length);
         } else {
             wcstombs(name, w_buffer, max_length);
         }

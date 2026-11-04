@@ -116,6 +116,8 @@ extern int terms_system;
 
 extern int FLAGS;
 
+extern const char *planet_symbols[7];
+
 extern const char *planet_regent_symbols[7];
 extern const char *planet_regent_names[7];
 

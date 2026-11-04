@@ -1221,6 +1221,45 @@ int get_rulers_by_lon(double longitude, bool consider_modern_planets_rulling, in
 }
 
 
+int get_planet_symbol(int id, char **symbol) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    int rc;
+
+    db = open_database();
+    if (!db) {
+        fprintf(stderr, "Failed to open database in get_planet_symbol\n");
+        return 0;
+    }
+
+    const char *sql_select = "SELECT p.symbol FROM planets p WHERE p.id = ?;";
+    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
+    
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        close_database(db);
+        return 0;
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+
+    int found = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {            
+        const char *p_symbol = (const char*)sqlite3_column_text(stmt, 0);
+        *symbol = strdup(p_symbol);
+
+        found = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    close_database(db);
+
+    return found;
+
+}
+
+
 int get_rulers_by_sign_id(int sign, int *n_ruler, int *n_exalted, int *n_exile, int *n_fall, int *n_tri1, int *n_tri2, int *n_tri3) {
 
     sqlite3 *db;

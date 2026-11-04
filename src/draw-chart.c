@@ -8632,8 +8632,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // 41. Build the Planets Main Table
         PlanetTableMatrix planet_matrix = {0};
-
-
+        
         // Iterate through the objects to calculate the dignities and to fill the main table
         for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
             PlanetRowData *row = &planet_matrix.rows[i];
@@ -8985,55 +8984,51 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             
                     char *ruler_dom_de_i = NULL; // Quem rege o signo onde 'i' está hospedado
                     char *ruler_exal_de_i = NULL; // Quem exalta no signo onde 'i' está hospedado
+                    char *ruler_ter_de_i = NULL;
+                    char *ruler_dec_de_i = NULL;
                     
                     char *ruler_dom_de_j = NULL; // Quem rege o signo onde 'j' está hospedado
                     char *ruler_exal_de_j = NULL; // Quem exalta no signo onde 'j' está hospedado
-
-                    // char ruler_ter_de_i[10] = "";
-                    // char ruler_dec_de_i[10] = "";
-                    
-                    // char ruler_ter_de_j[10] = "";
-                    // char ruler_dec_de_j[10] = "";
+                    char *ruler_ter_de_j = NULL;
+                    char *ruler_dec_de_j = NULL;
                     
                     // 1. Descobre os donos da casa onde o Planeta I está pisando
+                    int n_dom, n_exalted, n_tri1, n_tri2, n_tri3, n_term, n_dec;
+                    get_rulers_by_lon(plots[i].longitude, consider_modern_planets_rulling, &n_dom, &n_exalted, &n_tri1, &n_tri2, &n_tri3, &n_term, &n_dec);
+
                     get_sign_ruler_by_domicile(plots[i].sign, &ruler_dom_de_i);
                     get_sign_ruler_by_exaltation(plots[i].sign, &ruler_exal_de_i, consider_modern_planets_rulling);
 
-                    // int decan_ruleri = get_decan_ruler(get_decan(plots[i].longitude));
-                    // snprintf(ruler_dec_de_i, 10, "%s", planet_regent_symbols[decan_ruleri]);
-        
-                    // int regente_do_termoi = get_term_ruler(plots[i].longitude); 
-                    // snprintf(ruler_ter_de_i, 10, "%s", planet_regent_symbols[regente_do_termoi]);
+                    get_planet_symbol(n_term, &ruler_ter_de_i);
+                    get_planet_symbol(n_dec, &ruler_dec_de_i);
 
 
                     
                     // 2. Descobre os donos da casa onde o Planeta J está pisando
+                    get_rulers_by_lon(plots[j].longitude, consider_modern_planets_rulling, &n_dom, &n_exalted, &n_tri1, &n_tri2, &n_tri3, &n_term, &n_dec);
+
                     get_sign_ruler_by_domicile(plots[j].sign, &ruler_dom_de_j);
                     get_sign_ruler_by_exaltation(plots[j].sign, &ruler_exal_de_j, consider_modern_planets_rulling);
 
-                    // int decan_rulerj = get_decan_ruler(get_decan(plots[j].longitude));
-                    // snprintf(ruler_dec_de_i, 10, "%s", planet_regent_symbols[decan_rulerj]);
-        
-                    // int regente_do_termoj = get_term_ruler(plots[j].longitude); 
-                    // snprintf(ruler_ter_de_i, 10, "%s", planet_regent_symbols[regente_do_termoj]);
+                    get_planet_symbol(n_term, &ruler_ter_de_j);
+                    get_planet_symbol(n_dec, &ruler_dec_de_j);
+
 
 
                     
                     // 3. A VERDADEIRA RECEPÇÃO MÚTUA (CRUZADA):
                     // O Planeta J é dono do lugar onde o Planeta I está? 
                     int j_recebe_i = (ruler_dom_de_i && strcmp(plots[j].object, ruler_dom_de_i) == 0) || 
-                                    (ruler_exal_de_i && strcmp(plots[j].object, ruler_exal_de_i) == 0);
-                                    //  ||
-                                    // (strcmp(plots[j].object, ruler_ter_de_i) == 0) ||
-                                    // (strcmp(plots[j].object, ruler_dec_de_i) == 0);
-            
+                                     (ruler_exal_de_i && strcmp(plots[j].object, ruler_exal_de_i) == 0) ||
+                                     (ruler_ter_de_i && strcmp(plots[j].object, ruler_ter_de_i) == 0) ||
+                                     (ruler_dec_de_i && strcmp(plots[j].object, ruler_dec_de_i) == 0);
+                                    
                     // O Planeta I é dono do lugar onde o Planeta J está?
                     int i_recebe_j = (ruler_dom_de_j && strcmp(plots[i].object, ruler_dom_de_j) == 0) || 
-                                    (ruler_exal_de_j && strcmp(plots[i].object, ruler_exal_de_j) == 0);
-                                    //  ||
-                                    // (strcmp(plots[i].object, ruler_ter_de_j) == 0) ||
-                                    // (strcmp(plots[i].object, ruler_dec_de_j) == 0);
-            
+                                     (ruler_exal_de_j && strcmp(plots[i].object, ruler_exal_de_j) == 0) ||
+                                     (ruler_ter_de_j && strcmp(plots[i].object, ruler_ter_de_j) == 0) ||
+                                     (ruler_dec_de_j && strcmp(plots[i].object, ruler_dec_de_j) == 0);
+                                    
                     int ha_recepcao = j_recebe_i && i_recebe_j && strcmp(plots[i].sign, plots[j].sign) != 0;
             
                     if (ha_recepcao) {
@@ -9044,7 +9039,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         int tem_aspecto = matrix.grid[i][j].has_aspect || matrix.grid[j][i].has_aspect || 
                                           (sign_diff != 1 && sign_diff != 5);
                         
-                        char mut[14];
+                        char mut[30];
                         if (tem_aspecto) {
                             if (ruler_dom_de_i && strcmp(plots[j].object, ruler_dom_de_i) == 0) {
                                 dig[i].accidental += 5;
@@ -9052,23 +9047,24 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                             else if (ruler_exal_de_i && strcmp(plots[j].object, ruler_exal_de_i) == 0) {
                                 dig[i].accidental += 4;
                             }
-                            // else if (strcmp(plots[j].object, ruler_ter_de_i) == 0) {
-                            //     dig[i].accidental += 2;
-                            // }
-                            // else if (strcmp(plots[j].object, ruler_dec_de_i) == 0) {
-                            //     dig[i].accidental += 1;
-                            // }
+                            else if (ruler_ter_de_i && strcmp(plots[j].object, ruler_ter_de_i) == 0) {
+                                dig[i].accidental += 2;
+                            }
+                            else if (ruler_dec_de_i && strcmp(plots[j].object, ruler_dec_de_i) == 0) {
+                                dig[i].accidental += 1;
+                            }
+                            
 
-                            snprintf(mut, 14, "{ %s %s }", plots[i].object, plots[j].object);
-                            strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
+                            snprintf(mut, 30, "{ %s %s }", plots[i].object, plots[j].object);
+                            strncat(row->mutual_reception, mut, 50 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
                             dig[i].row.mut_reception_asp = 1;
                         } else {
                             dig[i].accidental += 1; 
 
-                            snprintf(mut, 14, "( %s %s )", plots[i].object, plots[j].object);
-                            strncat(row->mutual_reception, mut, 32 - strlen(row->mutual_reception) - 1);
+                            snprintf(mut, 30, "( %s %s )", plots[i].object, plots[j].object);
+                            strncat(row->mutual_reception, mut, 50 - strlen(row->mutual_reception) - 1);
 
                             dig[i].row.mut_reception = 1;
                             dig[i].row.mut_reception_asp = 0;
@@ -9079,6 +9075,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     if (ruler_exal_de_i) free(ruler_exal_de_i);
                     if (ruler_dom_de_j) free(ruler_dom_de_j);
                     if (ruler_exal_de_j) free(ruler_exal_de_j);
+                    if (ruler_ter_de_i) free(ruler_ter_de_i);
+                    if (ruler_dec_de_i) free(ruler_dec_de_i);
+                    if (ruler_ter_de_j) free(ruler_ter_de_j);
+                    if (ruler_dec_de_j) free(ruler_dec_de_j);
                 }
             
 

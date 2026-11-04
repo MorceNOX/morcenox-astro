@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 01:47-0300\n"
+"POT-Creation-Date: 2026-11-04 04:38-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -2480,35 +2480,35 @@ msgid ""
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/draw-chart.c:8843
+#: src/draw-chart.c:8842
 msgid "Dom "
 msgstr ""
 
-#: src/draw-chart.c:8859
+#: src/draw-chart.c:8858
 msgid "Exalt "
 msgstr ""
 
-#: src/draw-chart.c:8875
+#: src/draw-chart.c:8874
 msgid "Tri "
 msgstr ""
 
-#: src/draw-chart.c:8889
+#: src/draw-chart.c:8888
 msgid "Dec "
 msgstr ""
 
-#: src/draw-chart.c:8903
+#: src/draw-chart.c:8902
 msgid "Term "
 msgstr ""
 
-#: src/draw-chart.c:8919
+#: src/draw-chart.c:8918
 msgid "Exile "
 msgstr ""
 
-#: src/draw-chart.c:8931
+#: src/draw-chart.c:8930
 msgid "Fall "
 msgstr ""
 
-#: src/draw-chart.c:8951
+#: src/draw-chart.c:8950
 msgid "pilgrim "
 msgstr ""
 
@@ -4469,10 +4469,6 @@ msgstr ""
 msgid "Enter location's name or a fragment to search for:"
 msgstr ""
 
-#: src/selections.c:5735 src/selections.c:6142
-msgid "Somewhere"
-msgstr ""
-
 #: src/selections.c:5798
 #, fuzzy
 msgid " Location Name "
@@ -4482,6 +4478,10 @@ msgstr " Chart's Name "
 #, fuzzy
 msgid "Enter the Name of the Location"
 msgstr "Enter a name for your chart (max"
+
+#: src/selections.c:6142
+msgid "Somewhere"
+msgstr ""
 
 #: src/selections.c:6204
 #, fuzzy
