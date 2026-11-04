@@ -96,6 +96,10 @@ const char* get_key_name(int key);
 double get_obliquidade(double jd);
 double obter_ano_tropical_dinamico(double jd_natal);
 
+double calcular_posicao_mundana_placidus(double ra, double ramc, SemiArcos sa, double *out_md, double *out_hd);
+double calcular_posicao_mundana_topocentrica(double ra, double dec, double ramc, double lat_geo, double *out_md, double *out_hd);
+double calcular_posicao_mundana_regiomontanus(double ra, double dec, double ramc, double lat_geo, double *out_md, double *out_hd);
+
 void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m);
 void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor *pp, bool flip, double ramc, double jd, double lat, double *cusps, Promissor *lot_m);
 void calc_mundane_lof(Promissor *sol, Promissor *lua, double ramc, double jd, double lat, double *cusps, Promissor *fortune_m);

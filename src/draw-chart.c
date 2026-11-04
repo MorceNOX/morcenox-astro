@@ -3744,10 +3744,10 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
 
         // 4. Coordenadas Básicas
         mvwprintw(scroll_pad, row_pad, 8, "%2d°", degree);
-        mvwprintw(scroll_pad, row_pad, 8 + 4, "%s", plots[i].sign);
+        mvwprintw(scroll_pad, row_pad, 8 + 3, "%s", plots[i].sign);
 
         // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
-        mvwprintw(scroll_pad, row_pad, 8 + 7, "%02d'%02d\"", min, seg);
+        mvwprintw(scroll_pad, row_pad, 8 + 5, "%02d'%02d\"", min, seg);
         
         // 3. Pontuações de Dignidade (Essencial e Acidental)
         if (dig[i].essential >= 0) {
@@ -4543,30 +4543,30 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Position"));
-    mvwprintw(table_win, 2, 26, _("House"));
-    mvwprintw(table_win, 2, 32, _("Mov"));
-    mvwprintw(table_win, 2, 37, _("Speed"));
-    mvwprintw(table_win, 2, 44, _("Dignity"));
-    mvwprintw(table_win, 2, 68, _("Gen/Sect/Quad"));
-    mvwprintw(table_win, 2, 83, _("Orient"));
+    mvwprintw(table_win, 2, 24, _("House"));
+    mvwprintw(table_win, 2, 30, _("Mov"));
+    mvwprintw(table_win, 2, 35, _("Speed"));
+    mvwprintw(table_win, 2, 42, _("Dignity"));
+    mvwprintw(table_win, 2, 66, _("Gen/Sect/Quad"));
+    mvwprintw(table_win, 2, 81, _("Orient"));
 
     wattron(table_win, COLOR_PAIR(40) | A_DIM);
-    mvwprintw(table_win, 2, 91, _("Dec"));
+    mvwprintw(table_win, 2, 89, _("Dec"));
     wattroff(table_win, COLOR_PAIR(40) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(12) | A_DIM);
-    mvwprintw(table_win, 2, 96, _("Term"));
+    mvwprintw(table_win, 2, 94, _("Term"));
     wattroff(table_win, COLOR_PAIR(12) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(7) | A_DIM);
-    mvwprintw(table_win, 2, 103, _("Trip"));
+    mvwprintw(table_win, 2, 101, _("Trip"));
     wattroff(table_win, COLOR_PAIR(7) | A_DIM);
 
     wattron(table_win, COLOR_PAIR(8) | A_DIM);        
-    mvwprintw(table_win, 2, 111, _("Dom/Ex"));
+    mvwprintw(table_win, 2, 109, _("Dom/Ex"));
     wattroff(table_win, COLOR_PAIR(8) | A_DIM);        
 
-    mvwprintw(table_win, 2, 119, _("Mut.Rec"));
+    mvwprintw(table_win, 2, 117, _("Mut.Rec"));
     wattroff(table_win, A_BOLD);
 
     wattron(table_win, COLOR_PAIR(13));
@@ -4583,14 +4583,10 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 23, c_mov = 30, c_spd = 33, c_dig = 42;
-    int c_sq = 67, c_ori = 81, c_dec_t = 89, c_trm = 94, c_tri = 99, c_rul = 109, c_mut = 115;
+    int c_obj = 0, c_pos = 8, c_hse = 21, c_mov = 28, c_spd = 31, c_dig = 40;
+    int c_sq = 65, c_ori = 79, c_dec_t = 87, c_trm = 92, c_tri = 97, c_rul = 107, c_mut = 113;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
-        // if ((show_modern_planets && (i >= 14 && i <= 17)) || 
-        //     (!show_modern_planets && (i >= 13 && i <= 14))) {
-        //     continue;
-        // }
 
         PlanetRowData data = matrix->rows[i];
 
@@ -4633,10 +4629,10 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
         // 4. Coordenadas Básicas
         mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
-        mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
+        mvwprintw(scroll_pad, row_pad, c_pos + 3, "%s", plots[i].sign);
 
         // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
-        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d\"", min, seg);
+        mvwprintw(scroll_pad, row_pad, c_pos + 5, "%02d'%02d\"", min, seg);
                        
         // 4. Casa com cor condicional
         if (data.house_color_pair > 0) {
@@ -5104,14 +5100,14 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wattron(table_win, A_BOLD);
     mvwprintw(table_win, 2, 2, _("Object"));
     mvwprintw(table_win, 2, 10, _("Zod. Long."));
-    mvwprintw(table_win, 2, 25, _("House Pos."));
-    mvwprintw(table_win, 2, 38, _("Speed"));
-    mvwprintw(table_win, 2, 45, _("Longitude"));
-    mvwprintw(table_win, 2, 57, _("Latitude"));
-    mvwprintw(table_win, 2, 69, _("Declination"));
-    mvwprintw(table_win, 2, 82, _("Right Ascension"));
-    mvwprintw(table_win, 2, 98, _("Semi-Arc (Day)"));
-    mvwprintw(table_win, 2, 117, _("Semi-Arc (Night)"));
+    mvwprintw(table_win, 2, 23, _("House Pos."));
+    mvwprintw(table_win, 2, 34, _("Longitude"));
+    mvwprintw(table_win, 2, 46, _("Latitude"));
+    mvwprintw(table_win, 2, 57, _("Declination"));
+    mvwprintw(table_win, 2, 70, _("Right Ascension"));
+    mvwprintw(table_win, 2, 87, _("Semi-Arc (Day)"));
+    mvwprintw(table_win, 2, 105, _("Mund. Pos."));
+    mvwprintw(table_win, 2, 117, _("Hourly Dist."));
            
     wattron(table_win, COLOR_PAIR(13));
     wmove(table_win, 3, 2);
@@ -5127,7 +5123,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     int row_pad = 0;
     // Ajustamos as coordenadas horizontais para casar com a PAD a partir do zero
-    int c_obj = 0, c_pos = 8, c_hse = 22, c_spd = 33, c_lon = 44, c_lat = 55, c_dec = 69, c_ra = 85, c_sad = 100, c_san = 118;
+    int c_obj = 0, c_pos = 8, c_hse = 20, c_lon = 33, c_lat = 43, c_dec = 56, c_ra = 72, c_sad = 87, c_pm = 105, c_ph = 116;
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         
@@ -5171,10 +5167,10 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
         // 4. Coordenadas Básicas
         mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
-        mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", plots[i].sign);
+        mvwprintw(scroll_pad, row_pad, c_pos + 3, "%s", plots[i].sign);
 
         // 5. Imprime minutos e segundos com zeros à esquerda com segurança absoluta
-        mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d\"", min, seg);
+        mvwprintw(scroll_pad, row_pad, c_pos + 5, "%02d'%02d\"", min, seg);
         
         // 4. Casa com cor condicional
         if (data.house_color_pair > 0) {
@@ -5186,13 +5182,13 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         }
         
         // 3. Velocidade com cor condicional
-        if (data.speed_color_pair > 0) {
-            wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
-        }
-        mvwprintw(scroll_pad, row_pad, c_spd, "%s", data.speed_str);
-        if (data.speed_color_pair > 0) {
-            wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
-        }
+        // if (data.speed_color_pair > 0) {
+        //     wattron(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        // }
+        // mvwprintw(scroll_pad, row_pad, c_spd, "%s", data.speed_str);
+        // if (data.speed_color_pair > 0) {
+        //     wattroff(scroll_pad, COLOR_PAIR(data.speed_color_pair));
+        // }
 
         wattron(scroll_pad, COLOR_PAIR(62));
         mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", plots[i].longitude);
@@ -5230,7 +5226,52 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
        
         mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", sa.sad);
-        mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", sa.san);
+
+        double pm = 0.0;
+        double md = 0.0, hd = 0.0;
+        if (i == P_ASC - object_diff || i == P_DC - object_diff || i == P_MC - object_diff || i == P_IC - object_diff) {     
+            switch ((int)plots[i].house_pos) {
+                case 1:  // Casa 1 / Ascendente (Horizonte Oriental)
+                    pm = 0.0;   hd = 1.0;       md = 90.0; break;
+                case 2:  // Casa 2
+                    pm = 30.0;  hd = 2.0 / 3.0; md = 60.0; break;
+                case 3:  // Casa 3
+                    pm = 60.0;  hd = 1.0 / 3.0; md = 30.0; break;
+                case 4:  // Casa 4 / Fundo do Céu (Meridiano Inferior)
+                    pm = 90.0;  hd = 0.0;       md = 0.0;  break;
+                case 5:  // Casa 5
+                    pm = 120.0; hd = 1.0 / 3.0; md = 30.0; break;
+                case 6:  // Casa 6
+                    pm = 150.0; hd = 2.0 / 3.0; md = 60.0; break;
+                case 7:  // Casa 7 / Descendente (Horizonte Ocidental)
+                    pm = 180.0; hd = 1.0;       md = 90.0; break;
+                case 8:  // Casa 8
+                    pm = 210.0; hd = 2.0 / 3.0; md = 60.0; break;
+                case 9:  // Casa 9
+                    pm = 240.0; hd = 1.0 / 3.0; md = 30.0; break;
+                case 10: // Casa 10 / Meio do Céu (Meridiano Superior)
+                    pm = 270.0; hd = 0.0;       md = 0.0;  break;
+                case 11: // Casa 11
+                    pm = 300.0; hd = 1.0 / 3.0; md = 30.0; break;
+                case 12: // Casa 12
+                    pm = 330.0; hd = 2.0 / 3.0; md = 60.0; break;                
+            }               
+        }
+        else {
+            if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+                pm = calcular_posicao_mundana_placidus(plots[i].ra, ramc, sa, &md, &hd);
+            }
+            else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                pm = calcular_posicao_mundana_topocentrica(plots[i].ra, plots[i].declination, ramc, lat, &md, &hd);
+            }
+            else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+                pm = calcular_posicao_mundana_regiomontanus(plots[i].ra, plots[i].declination, ramc, lat, &md, &hd);
+            }
+        }   
+         
+        
+        mvwprintw(scroll_pad, row_pad, c_pm, "%8.4f", pm);
+        mvwprintw(scroll_pad, row_pad, c_ph, "%8.4f", hd);
        
         wattroff(scroll_pad, A_BOLD);
         wattroff(scroll_pad, COLOR_PAIR(62));
@@ -5287,7 +5328,22 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     mvwprintw(scroll_pad, row_pad, c_ra, "%8.4f", fortuna_m->ra);
 
     mvwprintw(scroll_pad, row_pad, c_sad, "%8.4f", fortuna_m->sa.sad);
-    mvwprintw(scroll_pad, row_pad, c_san, "%8.4f", fortuna_m->sa.san);
+
+    double pm = 0.0;
+    double md = 0.0, hd = 0.0;
+    if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+        pm = calcular_posicao_mundana_placidus(fortuna_m->ra, ramc, fortuna_m->sa, &md, &hd);
+    }
+    else if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+        pm = calcular_posicao_mundana_topocentrica(fortuna_m->ra, fortuna_m->declination, ramc, lat, &md, &hd);
+    }
+    else if (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS) {
+        pm = calcular_posicao_mundana_regiomontanus(fortuna_m->ra, fortuna_m->declination, ramc, lat, &md, &hd);
+    }
+
+    mvwprintw(scroll_pad, row_pad, c_pm, "%8.4f", pm);
+    mvwprintw(scroll_pad, row_pad, c_ph, "%8.4f", hd);
+
     wattroff(scroll_pad, COLOR_PAIR(62));
 
     wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
@@ -7871,6 +7927,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         // 8. Set South Node positions
         double south_node = normalize360(planet_longitudes[10] - 180);
+        speed[11] = speed[10];
         planet_longitudes[11] = south_node;
         planet_latitudes[11] = -planet_latitudes[10];
 

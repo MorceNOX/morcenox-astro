@@ -490,7 +490,7 @@ double long_lat_2_dec(double lon, double lat, double e) {
 //     else if (arc == 180.0) {
 //         lot_m->longitude = cusps[7];
 //     }
-//     else (arc == 270.00)  {
+//     else if (arc == 270.00)  {
 //         lot_m->longitude = cusps[10];
 //     }
 
