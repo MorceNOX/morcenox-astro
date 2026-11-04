@@ -77,9 +77,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 🝴 Parte de Fortuna
 
-🌑 Syzygy Ante Nativitatem (SAN) (No caso de Lua Nova na sizígia pré-natal)
+🌑 ou ⏾ Syzygy Ante Nativitatem (SAN) (No caso de Lua Nova na sizígia pré-natal)
 
-🌕 Syzygy Ante Nativitatem (SAN) (No caso de Lua Cheia na sizígia pré-natal)
+🌕 ou ○ Syzygy Ante Nativitatem (SAN) (No caso de Lua Cheia na sizígia pré-natal)
 
 🜊 ou Vx Vértex
 

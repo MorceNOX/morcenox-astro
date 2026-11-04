@@ -77,9 +77,9 @@ Press Q or ESC to return to the main menu.
 
 🝴  Part of Fortune
 
-🌑 Syzygy Ante Nativitatem (SAN), for New Moon in pre-natal syzygy
+🌑 or ⏾ Syzygy Ante Nativitatem (SAN), for New Moon in pre-natal syzygy
 
-🌕 Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
+🌕 or ○ Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
 
 🜊  Vertex
 

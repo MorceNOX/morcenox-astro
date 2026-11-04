@@ -7950,7 +7950,7 @@ int set_chart_name(char *name, size_t max_length) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
-    int w_width = 55, w_height = 10;
+    int w_width = 58, w_height = 12;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
@@ -8002,23 +8002,23 @@ int set_chart_name(char *name, size_t max_length) {
 
         int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(win, attr_confirm);
-        mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
+        mvwprintw(win, 7, 9, _("[  CONFIRM  ]"));
         wattroff(win, attr_confirm);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 6, 22, "▖");
-        mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 7, 22, "▖");
+        mvwprintw(win, 8, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
 
         // Botão CANCEL
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
         wattron(win, attr_cancel);
-        mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+        mvwprintw(win, 7, 30, _("[  CANCEL  ]"));
         wattroff(win, attr_cancel);
 
         wattron(win, COLOR_PAIR(57));
-        mvwprintw(win, 6, 40, "▖");
-        mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(win, 7, 42, "▖");
+        mvwprintw(win, 8, 31,    "▀▀▀▀▀▀▀▀▀▀▀▘");
         wattroff(win, COLOR_PAIR(57));
     
     
@@ -8107,11 +8107,11 @@ int set_chart_name(char *name, size_t max_length) {
                         int col_clique_janela = event.x - getbegx(win);
                         
                         // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
-                        int linha_botao = 6;
+                        int linha_botao = 7;
                         int col_inicio_botao_ok = 9;
                         int col_fim_botao_ok = col_inicio_botao_ok + 13;
                         
-                        int col_inicio_botao_cancel = 28;
+                        int col_inicio_botao_cancel = 30;
                         int col_fim_botao_cancel = col_inicio_botao_cancel + 12;
 
                         // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
@@ -8121,10 +8121,10 @@ int set_chart_name(char *name, size_t max_length) {
                             if (col_clique_janela >= col_inicio_botao_ok && col_clique_janela < col_fim_botao_ok) {                        
                                 botao_focado = 0;
                                 if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                                    mvwprintw(win, 6, 9, "              ");
+                                    mvwprintw(win, 7, 9, "              ");
                                     int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                     wattron(win, attr_confirm);
-                                    mvwprintw(win, 7, 10, _("[  CONFIRM  ]"));
+                                    mvwprintw(win, 8, 10, _("[  CONFIRM  ]"));
                                     wattroff(win, attr_confirm);
 
                                     wnoutrefresh(win);
@@ -8133,12 +8133,12 @@ int set_chart_name(char *name, size_t max_length) {
 
                                     attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                     wattron(win, attr_confirm);
-                                    mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
+                                    mvwprintw(win, 7, 9, _("[  CONFIRM  ]"));
                                     wattroff(win, attr_confirm);
                         
                                     wattron(win, COLOR_PAIR(57));
-                                    mvwprintw(win, 6, 22, "▖");
-                                    mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                                    mvwprintw(win, 7, 22, "▖");
+                                    mvwprintw(win, 8, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
                                     wattroff(win, COLOR_PAIR(57));
 
                                     wnoutrefresh(win);
@@ -8152,11 +8152,11 @@ int set_chart_name(char *name, size_t max_length) {
                             // 🌟 CASO 2: Clicou exatamente no NO
                             else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) { 
                                 if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) { 
-                                    mvwprintw(win, 6, 28, "             ");
+                                    mvwprintw(win, 7, 30, "             ");
                                     
                                     int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                     wattron(win, attr_cancel);
-                                    mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
+                                    mvwprintw(win, 8, 31, _("[  CANCEL  ]"));
                                     wattroff(win, attr_cancel);
 
                                     wnoutrefresh(win);
@@ -8166,12 +8166,12 @@ int set_chart_name(char *name, size_t max_length) {
 
                                     attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                                     wattron(win, attr_cancel);
-                                    mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+                                    mvwprintw(win, 7, 30, _("[  CANCEL  ]"));
                                     wattroff(win, attr_cancel);
                         
                                     wattron(win, COLOR_PAIR(57));
-                                    mvwprintw(win, 6, 40, "▖");
-                                    mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                                    mvwprintw(win, 7, 42, "▖");
+                                    mvwprintw(win, 8, 31,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                                     wattroff(win, COLOR_PAIR(57));
 
                                     wnoutrefresh(win);
@@ -8195,10 +8195,10 @@ int set_chart_name(char *name, size_t max_length) {
                 case 10: // Enter (\n)
                 case 13: // Carriage Return (\r)
                     if (botao_focado == 0) {
-                        mvwprintw(win, 6, 9, "              ");
+                        mvwprintw(win, 7, 9, "              ");
                         int attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                         wattron(win, attr_confirm);
-                        mvwprintw(win, 7, 10, _("[  CONFIRM  ]"));
+                        mvwprintw(win, 8, 10, _("[  CONFIRM  ]"));
                         wattroff(win, attr_confirm);
 
                         wnoutrefresh(win);
@@ -8207,12 +8207,12 @@ int set_chart_name(char *name, size_t max_length) {
 
                         attr_confirm = (botao_focado == 0) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                         wattron(win, attr_confirm);
-                        mvwprintw(win, 6, 9, _("[  CONFIRM  ]"));
+                        mvwprintw(win, 7, 9, _("[  CONFIRM  ]"));
                         wattroff(win, attr_confirm);
             
                         wattron(win, COLOR_PAIR(57));
-                        mvwprintw(win, 6, 22, "▖");
-                        mvwprintw(win, 7, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
+                        mvwprintw(win, 7, 22, "▖");
+                        mvwprintw(win, 8, 10,    "▀▀▀▀▀▀▀▀▀▀▀▀▘");
                         wattroff(win, COLOR_PAIR(57));
 
                         wnoutrefresh(win);
@@ -8222,11 +8222,11 @@ int set_chart_name(char *name, size_t max_length) {
                         confirmado = 1;
                         break;
                     } else {
-                        mvwprintw(win, 6, 28, "             ");
+                        mvwprintw(win, 7, 30, "             ");
                                     
                         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                         wattron(win, attr_cancel);
-                        mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
+                        mvwprintw(win, 8, 31, _("[  CANCEL  ]"));
                         wattroff(win, attr_cancel);
 
                         wnoutrefresh(win);
@@ -8235,12 +8235,12 @@ int set_chart_name(char *name, size_t max_length) {
 
                         attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                         wattron(win, attr_cancel);
-                        mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+                        mvwprintw(win, 7, 30, _("[  CANCEL  ]"));
                         wattroff(win, attr_cancel);
             
                         wattron(win, COLOR_PAIR(57));
-                        mvwprintw(win, 6, 40, "▖");
-                        mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                        mvwprintw(win, 7, 42, "▖");
+                        mvwprintw(win, 8, 31,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                         wattroff(win, COLOR_PAIR(57));
 
                         wnoutrefresh(win);
@@ -8255,11 +8255,11 @@ int set_chart_name(char *name, size_t max_length) {
                     break;
                     
                 case 27: // ESC
-                    mvwprintw(win, 6, 28, "             ");
+                    mvwprintw(win, 7, 30, "             ");
                                         
                     int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                     wattron(win, attr_cancel);
-                    mvwprintw(win, 7, 29, _("[  CANCEL  ]"));
+                    mvwprintw(win, 8, 31, _("[  CANCEL  ]"));
                     wattroff(win, attr_cancel);
 
                     wnoutrefresh(win);
@@ -8268,12 +8268,12 @@ int set_chart_name(char *name, size_t max_length) {
 
                     attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(23);
                     wattron(win, attr_cancel);
-                    mvwprintw(win, 6, 28, _("[  CANCEL  ]"));
+                    mvwprintw(win, 7, 30, _("[  CANCEL  ]"));
                     wattroff(win, attr_cancel);
 
                     wattron(win, COLOR_PAIR(57));
-                    mvwprintw(win, 6, 40, "▖");
-                    mvwprintw(win, 7, 29,    "▀▀▀▀▀▀▀▀▀▀▀▘");
+                    mvwprintw(win, 7, 42, "▖");
+                    mvwprintw(win, 8, 31,    "▀▀▀▀▀▀▀▀▀▀▀▘");
                     wattroff(win, COLOR_PAIR(57));
 
                     wnoutrefresh(win);

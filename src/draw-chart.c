@@ -522,6 +522,23 @@ void get_terms_longitude_to_print(Termo tabela_termos[12][5], Termo termos_lon[1
 
 
 
+
+long long obter_tempo_ms() {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return (long long)ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+}
+
+
+long long obter_tempo_ns() {
+    struct timespec ts;
+    // CLOCK_MONOTONIC garante que o tempo sempre avança e é imune a ajustes de relógio do sistema
+    clock_gettime(CLOCK_MONOTONIC, &ts); 
+    return (long long)ts.tv_sec * 1000000000LL + ts.tv_nsec;
+}
+
+
+
 int obter_idade_padrao_mapa() {
     // 1. Captura o tempo atual do sistema
     time_t tempo_bruto = time(NULL);
@@ -2342,10 +2359,6 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     float base_radius = (max_r_y < max_r_x) ? max_r_y : max_r_x;
 
-    // char c_asp[10] = "";
-    // snprintf(c_asp, 10, "%7.4f", base_radius);
-    // show_alert_popup(_("base_radius:"), c_asp);
-    
     //Radius 20 as the reference for scaling
     float scale = base_radius / 20.0;
     
@@ -4299,7 +4312,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     mouseinterval(100);
 
 
-
+    wattron(table_win, A_BOLD);
     mvwprintw(table_win, 5, 2, "%s", chart_name); 
     wattroff(table_win, A_BOLD);
 
@@ -5039,20 +5052,8 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     (void)ramc;
     (void)lat;
     (void)jd;
-    // Promissor sol = {0};
-    // Promissor lua = {0};
-
-    // sol.ra = plots[0].ra;
-    // sol.declination = plots[0].declination;
-
-    // lua.ra = plots[1].ra;
-    // lua.declination = plots[1].declination;
-
+    
     int object_diff = show_modern_planets ? 0 : 3;
-
-    // double ra_asc = plots[P_ASC - object_diff].ra;
-
-    // calc_mundane_lot_of_fortune(&sol, &lua, ra_asc, ramc, lat, jd, fortuna_m);
 
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -5268,13 +5269,14 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
                 pm = calcular_posicao_mundana_regiomontanus(plots[i].ra, plots[i].declination, ramc, lat, &md, &hd);
             }
         }   
-         
+        wattroff(scroll_pad, COLOR_PAIR(62));
+        wattron(scroll_pad, COLOR_PAIR(65)); 
         
         mvwprintw(scroll_pad, row_pad, c_pm, "%8.4f", pm);
         mvwprintw(scroll_pad, row_pad, c_ph, "%8.4f", hd);
        
         wattroff(scroll_pad, A_BOLD);
-        wattroff(scroll_pad, COLOR_PAIR(62));
+        wattroff(scroll_pad, COLOR_PAIR(65));
 
         wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
         wmove(scroll_pad, row_pad + 1, c_obj);
@@ -5355,8 +5357,6 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     mvwprintw(table_win, table_height - 2, 2, "(*)%s = %s.", fortuna_m->object, fortuna_m->object_name);
 
-
-    // Adiciona as instruções fixas no rodapé da janela externa (table_win)
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to return - [↓↑/JK] Scroll"));
     
 
@@ -5365,7 +5365,6 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     int max_scroll_y = row_pad - max_linhas_dados_visiveis;
     if (max_scroll_y < 0) max_scroll_y = 0;
 
-    // Vincula o teclado à PAD virtual
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
 
@@ -7423,6 +7422,9 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
 #define COLOR_BACK_DARK_1 234
 #define COLOR_BACK_DARK_2 235
 
+#define TABLE_BKGD 187 //223
+#define TABLE_BKGD_DARK 235
+
 int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
     int n = 1;
 
@@ -7476,17 +7478,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(66, COLOR_MAGENTA, COLOR_BACK_DARK_2_SIGN);
 
         
-        init_pair(6, COLOR_WHITE, COLOR_BLACK);
-        init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(8, 33, COLOR_BLACK); // blue
+        init_pair(6, COLOR_WHITE, TABLE_BKGD_DARK);
+        init_pair(7, COLOR_MAGENTA, TABLE_BKGD_DARK);
+        init_pair(8, 33, TABLE_BKGD_DARK); // blue
         init_pair(9, 232, 232);
 
-        init_pair(10, 247, COLOR_BLACK);
-        init_pair(50, COLOR_WHITE, COLOR_BACK_DARK_2);
+        init_pair(10, TABLE_BKGD_DARK, TABLE_BKGD_DARK);
+        init_pair(50, TABLE_BKGD_DARK, COLOR_BACK_DARK_2);
 
-        init_pair(11, COLOR_RED, COLOR_BLACK);
-        init_pair(12, 82, COLOR_BLACK); // green
-        init_pair(13, COLOR_WHITE, COLOR_BLACK);
+        init_pair(11, COLOR_RED, TABLE_BKGD_DARK);
+        init_pair(12, 82, TABLE_BKGD_DARK); // green
+        init_pair(13, COLOR_WHITE, TABLE_BKGD_DARK);
 
         init_pair(14, COLOR_BLUE, COLOR_BLACK);
         init_pair(15, COLOR_YELLOW, 18); // yellow, blue
@@ -7505,7 +7507,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
         init_pair(22, 230, COLOR_BLACK);
-        init_pair(23, COLOR_RED, 230);
+        init_pair(23, COLOR_RED, TABLE_BKGD_DARK);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); //yellow
         init_pair(26, 230, 24); // Teal
@@ -7523,7 +7525,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(37, COLOR_MAGENTA, COLOR_WHITE);
         init_pair(38, 28, COLOR_WHITE); // green
         init_pair(39, COLOR_GREEN, COLOR_BLACK);
-        init_pair(40, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(40, COLOR_YELLOW, TABLE_BKGD_DARK);
         init_pair(41, COLOR_BACK_DARK_2, COLOR_BACK_DARK_2); // branco
 
         init_pair(51, 242, COLOR_BACK_DARK_1);
@@ -7535,12 +7537,15 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(57, 243, 248);
         init_pair(58, COLOR_WHITE, COLOR_BLACK);
         init_pair(59, 242, COLOR_BLACK);
-        init_pair(60, 25, 18);
+        init_pair(60, 25, TABLE_BKGD_DARK);
         init_pair(61, 61, 54); // magenta
-        init_pair(62, 60, 223);
+        init_pair(62, 60, TABLE_BKGD_DARK);
 
         init_pair(63, COLOR_WHITE, COLOR_BACK_DARK_1);
         init_pair(64, COLOR_WHITE, COLOR_BACK_DARK_2);
+
+        init_pair(65, 66, TABLE_BKGD_DARK);
+
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1_SIGN);
@@ -7563,20 +7568,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         
         
-        init_pair(6, COLOR_BLACK, 223);
-        init_pair(7, COLOR_MAGENTA, 223); // magenta
-        init_pair(8, 21, 223); // azul
+        init_pair(6, COLOR_BLACK, TABLE_BKGD);
+        init_pair(7, COLOR_MAGENTA, TABLE_BKGD); // magenta
+        init_pair(8, 21, TABLE_BKGD); // azul
         init_pair(9, 232, 232);
         
-        init_pair(10, 223, 223);
-        init_pair(50, 223, COLOR_BACK_2);
+        init_pair(10, TABLE_BKGD, TABLE_BKGD);
+        init_pair(50, TABLE_BKGD, COLOR_BACK_2);
 
-        init_pair(11, COLOR_RED, 223); // red
-        init_pair(12, 28, 223); // green
-        init_pair(13, COLOR_BLACK, 223);
+        init_pair(11, COLOR_RED, TABLE_BKGD); // red
+        init_pair(12, 28, TABLE_BKGD); // green
+        init_pair(13, COLOR_BLACK, TABLE_BKGD);
         
         init_pair(14, COLOR_WHITE, COLOR_BLACK);
-        init_pair(15, 226, 25); // amarelo / azul
+        init_pair(15, 226, 24); // amarelo / azul
 
 
 
@@ -7595,11 +7600,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         init_pair(21, COLOR_BLUE, COLOR_YELLOW);
         init_pair(22, COLOR_BLACK, 230);
-        init_pair(23, COLOR_RED, 223);
+        init_pair(23, COLOR_RED, TABLE_BKGD);
         init_pair(24, 232, 232);
         init_pair(25, 226, COLOR_BLACK); // yellow
-        init_pair(26, COLOR_BLACK, 44); // Verde quase ciano
-        init_pair(27, COLOR_RED, 44);
+        init_pair(26, COLOR_BLACK, 73); // Verde quase ciano
+        init_pair(27, COLOR_RED, 73);
         init_pair(28, COLOR_MAGENTA, 224);
         init_pair(29, 230, 230);
         init_pair(30, COLOR_CYAN, COLOR_MAGENTA);
@@ -7613,7 +7618,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(37, COLOR_MAGENTA, 15);
         init_pair(38, 18, COLOR_WHITE);
         init_pair(39, 28, 211); // verde, magenta
-        init_pair(40, COLOR_YELLOW, 223);
+        init_pair(40, COLOR_YELLOW, TABLE_BKGD);
         init_pair(41, 87, COLOR_BACK_2); // verde bem clarinho
 
         init_pair(51, 139, COLOR_BACK_1);
@@ -7625,12 +7630,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
         init_pair(58, 242, COLOR_WHITE); 
         init_pair(59, 242, COLOR_CYAN);
-        init_pair(60, 31, 25); // amarelo / azul
+        init_pair(60, 31, 24); // amarelo / azul
         init_pair(61, 97, 91); // magenta, magenta
-        init_pair(62, 60, 223);
+        init_pair(62, 60, TABLE_BKGD);
 
         init_pair(63, COLOR_BLACK, 194);
         init_pair(64, COLOR_BLACK, 193);
+
+        init_pair(65, 66, TABLE_BKGD);
     }
     
     FLAGS = 0;
@@ -7824,15 +7831,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     bool backup_mapa_diurno = false;
     bool backup_mapa_diurno_geo = false;
 
-     
 
-    int TIMEOUT = 976; //974;
+    const long long INTERVALO_ALVO_NS = 1000000000LL; 
+    //int TIMEOUT = 976;
     
     // Set a timeout for getch() - this adds the pause functionality
     // 1000ms = 1 second timeout
     timeout(0); // This will make getch() wait for 1 second max
     
     while (running) {
+        long long inicio_ciclo = obter_tempo_ns();
+
         int max_y, max_x;
         getmaxyx(stdscr, max_y, max_x);
         
@@ -7975,12 +7984,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         char san[10];
         
         if (last_conj > last_opp) {
-            snprintf(san, sizeof(san), "%s", "🌑");
+            snprintf(san, sizeof(san), "%s", "⏾"); //🌑
             jdSAN = last_conj;
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "🌕");
+            snprintf(san, sizeof(san), "%s", "○"); //🌕
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }
@@ -10023,6 +10032,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         // Aries offset to draw the chart (deprecated code)
         n = mod_a(13 - ((int)ascendant / 30), 12);
+
              
         // Draw the chart
         draw_chart(center_y, center_x, max_y, max_x, aspect_ratio, zoom_factor, pan_x, pan_y, n - 1, local_time, lat, lon, elev, tz_offset, plots, cusps,
@@ -10031,6 +10041,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                    dark_mode, animated, anim_interval, mapa_retorno, chart_name, house_system, gender_id, 
                    house_div, last_hr, last_min, last_sec, show_dec, 
                    (terms_system == 1) ? tabela_termos_egipcios : tabela_termos_ptolomeu, show_terms);
+
         
         bool saiu_retorno = false;
 
@@ -10164,7 +10175,21 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ctx.fortuna_m = fortuna_m;
         ctx.obj_dir = obj_dir;
         ctx.object_diff = object_diff;
-        
+    
+
+
+
+
+
+        long long tempo_gasto_total = obter_tempo_ns() - inicio_ciclo;
+        long long tempo_restante_ns = INTERVALO_ALVO_NS - tempo_gasto_total;
+
+        if (tempo_restante_ns < 0) {
+            tempo_restante_ns = 0;
+        }
+
+        int timeout_ms = (int)(tempo_restante_ns / 1000000LL);
+
 
         // Handle input with timeout
         ch = getch();
@@ -10202,7 +10227,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 start_mouse_y = 0;
                 start_pan_x = 0;
                 start_pan_y = 0;
-                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, TIMEOUT);
+                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, timeout_ms);
                 break;
             case KEY_UP:
                 pan_y -= 1.0; // Move up
@@ -10590,7 +10615,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 running = false;
                 break;
             case KEY_RESIZE:
-                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, TIMEOUT);
+                aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, timeout_ms);
                 break;
             case 10:
             case ERR: // No key pressed within timeout (1 second)
@@ -10790,8 +10815,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         free(house_ruler_str);
 
-        timeout(TIMEOUT);
 
+
+        timeout(timeout_ms);
+
+        
     }
 
     MAPA_DIURNO_CIVIL = backup_mapa_diurno;

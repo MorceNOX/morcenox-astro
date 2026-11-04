@@ -308,7 +308,7 @@ const char *capricorn_[] = {
 };
 
      
-     
+WINDOW *shadow_bar, *bar_win;    
      
 
 const char *LOGO[] = {
@@ -404,6 +404,10 @@ void set_data() {
 
         touchwin(stdscr);
         wnoutrefresh(stdscr);
+        touchwin(shadow_bar);
+        wnoutrefresh(shadow_bar);
+        touchwin(bar_win);
+        wnoutrefresh(bar_win);
         doupdate();
 
         if (!found_city) {
@@ -416,6 +420,10 @@ void set_data() {
 
                 touchwin(stdscr);
                 wnoutrefresh(stdscr);
+                touchwin(shadow_bar);
+                wnoutrefresh(shadow_bar);
+                touchwin(bar_win);
+                wnoutrefresh(bar_win);
                 doupdate();
             }
         } else {
@@ -430,17 +438,30 @@ void set_data() {
 
             touchwin(stdscr);
             wnoutrefresh(stdscr);
+            touchwin(shadow_bar);
+            wnoutrefresh(shadow_bar);
+            touchwin(bar_win);
+            wnoutrefresh(bar_win);
             doupdate();
             
             GrausEdition ed_lon = set_lon();
             touchwin(stdscr);
             wnoutrefresh(stdscr);
+            touchwin(shadow_bar);
+            wnoutrefresh(shadow_bar);
+            touchwin(bar_win);
+            wnoutrefresh(bar_win);
             doupdate();
 
             if (ed_lon.changed) {
                 GrausEdition ed_lat = set_lat();
+
                 touchwin(stdscr);
                 wnoutrefresh(stdscr);
+                touchwin(shadow_bar);
+                wnoutrefresh(shadow_bar);
+                touchwin(bar_win);
+                wnoutrefresh(bar_win);
                 doupdate();
                 
                 if (ed_lat.changed) {                    
@@ -518,11 +539,20 @@ void set_data() {
                     set_location_name(location, sizeof(location));
                     touchwin(stdscr);
                     wnoutrefresh(stdscr);
+                    touchwin(shadow_bar);
+                    wnoutrefresh(shadow_bar);
+                    touchwin(bar_win);
+                    wnoutrefresh(bar_win);
                     doupdate();
     
                     set_chart_name(chart_name, sizeof(chart_name));
+                    
                     touchwin(stdscr);
                     wnoutrefresh(stdscr);
+                    touchwin(shadow_bar);
+                    wnoutrefresh(shadow_bar);
+                    touchwin(bar_win);
+                    wnoutrefresh(bar_win);
                     doupdate();   
 
                     snprintf(CITY, sizeof(CITY), "%s", location);
@@ -590,6 +620,10 @@ void set_data() {
 
         touchwin(stdscr);
         wnoutrefresh(stdscr);
+        touchwin(shadow_bar);
+        wnoutrefresh(shadow_bar);
+        touchwin(bar_win);
+        wnoutrefresh(bar_win);
         doupdate();
 
         USAR_COORDENADAS = false;
@@ -1627,8 +1661,8 @@ void load_chart() {
 
 
 int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
-    WINDOW *menu_win, *shadow_win, *shadow_bar, *bar_win;
-    
+    WINDOW *main_menu_win, *shadow_win;
+
     int choice = -1;
     int c;
 
@@ -1685,13 +1719,13 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         int logo_lines = ARRAY_SIZE(LOGO);
         int menu_y_start = logo_lines + 2;
 
-        menu_win = newwin(n_choices + 2, box_width, menu_y_start, box_padding_x);
+        main_menu_win = newwin(n_choices + 2, box_width, menu_y_start, box_padding_x);
         shadow_win = newwin(n_choices + 2, box_width, menu_y_start + 1, box_padding_x + 1);
         bar_win = newwin(3, term_w - 3, term_h - 5, 1);
         shadow_bar = newwin(3, term_w - 3, term_h - 4, 2);
             
 
-        keypad(menu_win, TRUE);
+        keypad(main_menu_win, TRUE);
                         
             
         // 1. Draw Logo
@@ -1882,25 +1916,25 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
     
         // Draw Menu Border
         // 5. Apply the rounded border to the window
-        wborder_set(menu_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
+        wborder_set(main_menu_win, &ls, &rs, &ts, &bs, &tl, &tr, &bl, &br);
 
         int cor_menu = 10;
         if (DARK_MODE) {
             cor_menu = 10;
         }
 
-        wattron(menu_win, COLOR_PAIR(cor_menu) | A_DIM);
-        wbkgd(menu_win, COLOR_PAIR(cor_menu));
-        wattroff(menu_win, COLOR_PAIR(cor_menu) | A_DIM);
+        wattron(main_menu_win, COLOR_PAIR(cor_menu) | A_DIM);
+        wbkgd(main_menu_win, COLOR_PAIR(cor_menu));
+        wattroff(main_menu_win, COLOR_PAIR(cor_menu) | A_DIM);
         
         // 3. Draw Menu Options
         for(int i = 0; i < n_choices; i++) {
             int attr = (i == *highlight) ? (COLOR_PAIR(3) | A_REVERSE | A_BOLD) : COLOR_PAIR(cor_menu);
             
             // The usable width inside the box is box_width - 2 (to account for borders)
-            draw_centered_text(menu_win, i + 1, 1, box_width - 2, options[i].option, attr);
+            draw_centered_text(main_menu_win, i + 1, 1, box_width - 2, options[i].option, attr);
         }
-        wnoutrefresh(menu_win);
+        wnoutrefresh(main_menu_win);
         
         // 4. Draw Description Text using the new function
         //int desc_y = menu_y_start + (n_choices + 2) + 2;
@@ -2005,7 +2039,7 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         snprintf(MESSAGE, sizeof(MESSAGE), "%s", "");
         
         
-        c = wgetch(menu_win);
+        c = wgetch(main_menu_win);
         switch(c) {
             case KEY_UP:
             case KEY_LEFT:
@@ -2025,10 +2059,10 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
             case KEY_MOUSE: {
                 MEVENT event;
                 if (getmouse(&event) == OK) {
-                    int start_x_absoluto = getbegx(menu_win);
-                    int end_x_absoluto = start_x_absoluto + getmaxx(menu_win);
+                    int start_x_absoluto = getbegx(main_menu_win);
+                    int end_x_absoluto = start_x_absoluto + getmaxx(main_menu_win);
                     
-                    int linha_clique_janela = event.y - getbegy(menu_win);
+                    int linha_clique_janela = event.y - getbegy(main_menu_win);
                     int offset_inicio_dados = 1; // As opções começam na linha 1 devido à borda superior
                     int linha_clique_dados = linha_clique_janela - offset_inicio_dados;
 
@@ -2059,10 +2093,8 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
         if(choice != -1) break; 
     }
 
-    delwin(menu_win);
-    delwin(bar_win);
+    delwin(main_menu_win);
     delwin(shadow_win);
-    delwin(shadow_bar);
     
     return choice;
 }
@@ -2070,6 +2102,9 @@ int menu(MenuOption *options, int n_choices, int *highlight, int *delay) {
 
 void action_exit() {
     printf("Exiting program...\n");
+
+    delwin(bar_win);
+    delwin(shadow_bar);
     
     endwin();    
     terminate_database();
@@ -2399,7 +2434,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     keypad(help_win, TRUE);
 
     // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(help_win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(help_win) - 4;
 
     mvwprintw(help_win, 0, col_fechar, "[");
     mvwprintw(help_win, 0, col_fechar + 2, "]");
@@ -2424,7 +2459,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
         mvwprintw(help_win, 0, col_fechar, "[");
         mvwprintw(help_win, 0, col_fechar + 2, "]");
     
-        wattron(help_win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        wattron(help_win, A_BOLD);
         mvwprintw(help_win, 0, col_fechar + 1, "✖");
         wattroff(help_win, A_BOLD);
         
@@ -2991,6 +3026,9 @@ int main() {
         if (options[choice].command != NULL) options[choice].command();
 
     }
+
+    delwin(bar_win);
+    delwin(shadow_bar);
 
     endwin();
     terminate_database();
