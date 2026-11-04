@@ -106,12 +106,12 @@ int show_confirm_yesno(const char *name, const char *text) {
         // Botão CANCEL
         int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
         wattron(pop_win, attr_cancel);
-        mvwprintw(pop_win, 5, 32, _("    NO    "));
+        mvwprintw(pop_win, 5, pop_w - 17, _("    NO    "));
         wattroff(pop_win, attr_cancel);
 
         wattron(pop_win, COLOR_PAIR(26));
-        mvwprintw(pop_win, 5, 42, "▖");
-        mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘");
+        mvwprintw(pop_win, 5, pop_w - 7, "▖");
+        mvwprintw(pop_win, 6, pop_w - 16,    "▀▀▀▀▀▀▀▀▀▘");
         wattroff(pop_win, COLOR_PAIR(26));
 
         wnoutrefresh(pop_win);
@@ -154,11 +154,11 @@ int show_confirm_yesno(const char *name, const char *text) {
                 napms(125);
             }
             else {
-                mvwprintw(pop_win, 5, 32, "           ");
+                mvwprintw(pop_win, 5, pop_w - 17, "           ");
 
                 int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
                 wattron(pop_win, attr_cancel);
-                mvwprintw(pop_win, 6, 33, _("    NO    "));
+                mvwprintw(pop_win, 6, pop_w - 16, _("    NO    "));
                 wattroff(pop_win, attr_cancel);
 
                 wnoutrefresh(pop_win);                    
@@ -167,12 +167,12 @@ int show_confirm_yesno(const char *name, const char *text) {
 
                 attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
                 wattron(pop_win, attr_cancel);
-                mvwprintw(pop_win, 5, 32, _("    NO    "));
+                mvwprintw(pop_win, 5, pop_w - 17, _("    NO    "));
                 wattroff(pop_win, attr_cancel);
 
                 wattron(pop_win, COLOR_PAIR(26));
-                mvwprintw(pop_win, 5, 42, "▖");
-                mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+                mvwprintw(pop_win, 5, pop_w - 7, "▖");
+                mvwprintw(pop_win, 6, pop_w -16,    "▀▀▀▀▀▀▀▀▀▘ ");
                 wattroff(pop_win, COLOR_PAIR(26));
         
                 wnoutrefresh(pop_win);                    
@@ -184,11 +184,11 @@ int show_confirm_yesno(const char *name, const char *text) {
             break;
         } 
         else if (ch == 'n' || ch == 'N' || ch == 27) { // Atalhos para cancelar direto
-            mvwprintw(pop_win, 5, 32, "           ");
+            mvwprintw(pop_win, 5, pop_w - 17, "           ");
 
             int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
             wattron(pop_win, attr_cancel);
-            mvwprintw(pop_win, 6, 33, _("    NO    "));
+            mvwprintw(pop_win, 6, pop_w - 16, _("    NO    "));
             wattroff(pop_win, attr_cancel);
 
             wnoutrefresh(pop_win);                    
@@ -197,12 +197,12 @@ int show_confirm_yesno(const char *name, const char *text) {
 
             attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
             wattron(pop_win, attr_cancel);
-            mvwprintw(pop_win, 5, 32, _("    NO    "));
+            mvwprintw(pop_win, 5, pop_w - 17, _("    NO    "));
             wattroff(pop_win, attr_cancel);
 
             wattron(pop_win, COLOR_PAIR(26));
-            mvwprintw(pop_win, 5, 42, "▖");
-            mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+            mvwprintw(pop_win, 5, pop_w - 7, "▖");
+            mvwprintw(pop_win, 6, pop_w -16,    "▀▀▀▀▀▀▀▀▀▘ ");
             wattroff(pop_win, COLOR_PAIR(26));
     
             wnoutrefresh(pop_win);                    
@@ -253,7 +253,7 @@ int show_confirm_yesno(const char *name, const char *text) {
                 int col_inicio_botao_ok = 9;
                 int col_fim_botao_ok = col_inicio_botao_ok + 11;
                 
-                int col_inicio_botao_cancel = 32;
+                int col_inicio_botao_cancel = pop_w - 17;
                 int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
 
                 // 3. Verifica se o clique acertou a "caixa" (bounding box) do botão OK
@@ -296,11 +296,11 @@ int show_confirm_yesno(const char *name, const char *text) {
                     else if (col_clique_janela >= col_inicio_botao_cancel && col_clique_janela < col_fim_botao_cancel) {                        
                         botao_focado = 1;
                         if (event.bstate & (BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED)) {
-                            mvwprintw(pop_win, 5, 32, "           ");
+                            mvwprintw(pop_win, 5, pop_w - 17, "           ");
 
                             int attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
                             wattron(pop_win, attr_cancel);
-                            mvwprintw(pop_win, 6, 33, _("    NO    "));
+                            mvwprintw(pop_win, 6, pop_w - 16, _("    NO    "));
                             wattroff(pop_win, attr_cancel);
 
                             wnoutrefresh(pop_win);                    
@@ -309,12 +309,12 @@ int show_confirm_yesno(const char *name, const char *text) {
 
                             attr_cancel = (botao_focado == 1) ? (COLOR_PAIR(36) | A_REVERSE | A_BOLD) : (COLOR_PAIR(23));
                             wattron(pop_win, attr_cancel);
-                            mvwprintw(pop_win, 5, 32, _("    NO    "));
+                            mvwprintw(pop_win, 5, pop_w - 17, _("    NO    "));
                             wattroff(pop_win, attr_cancel);
 
                             wattron(pop_win, COLOR_PAIR(26));
-                            mvwprintw(pop_win, 5, 42, "▖");
-                            mvwprintw(pop_win, 6, 33,    "▀▀▀▀▀▀▀▀▀▘ ");
+                            mvwprintw(pop_win, 5, pop_w - 7, "▖");
+                            mvwprintw(pop_win, 6, pop_w -16,    "▀▀▀▀▀▀▀▀▀▘ ");
                             wattroff(pop_win, COLOR_PAIR(26));
                     
                             wnoutrefresh(pop_win);                    
@@ -3739,7 +3739,7 @@ int select_location_type(char *type) {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w);
     
-    int w_width = 50, w_height = 10;
+    int w_width = 60, w_height = 12;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     
@@ -3765,7 +3765,8 @@ int select_location_type(char *type) {
         _("setlement"),
         _("subdistrict"),
         _("town"),
-        _("village")
+        _("village"),
+        _("small village")
     };
 
     char *loc_types[] = {
@@ -3784,7 +3785,8 @@ int select_location_type(char *type) {
         "setlement",
         "subdistrict",
         "town",
-        "village"
+        "village",
+        "small village"
     };
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
