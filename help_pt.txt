@@ -79,7 +79,7 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 🌑 ou ⏾ Syzygy Ante Nativitatem (SAN) (No caso de Lua Nova na sizígia pré-natal)
 
-🌕 ou ○ Syzygy Ante Nativitatem (SAN) (No caso de Lua Cheia na sizígia pré-natal)
+🌕 ou ⨷ Syzygy Ante Nativitatem (SAN) (No caso de Lua Cheia na sizígia pré-natal)
 
 🜊 ou Vx Vértex
 

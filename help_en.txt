@@ -79,7 +79,7 @@ Press Q or ESC to return to the main menu.
 
 🌑 or ⏾ Syzygy Ante Nativitatem (SAN), for New Moon in pre-natal syzygy
 
-🌕 or ○ Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
+🌕 or ⨷ Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
 
 🜊  Vertex
 

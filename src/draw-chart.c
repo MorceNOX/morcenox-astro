@@ -2422,7 +2422,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
         Hora hs = get_fmt_hour(sanHour);
         
-        mvprintw(2, max_x - 39, "%s %s: %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
+        mvprintw(2, max_x - 39, "%s %s %d/%d/%d %02d:%02d:%02d Local", _("Syzygy"), plots[P_SAN - object_diff].object, sanYear, sanMon, sanDay, hs.hora, hs.min, hs.sec);
         mvprintw(3, max_x - 35, "%s: %s", _("Moon Phase"), phase);
         mvprintw(5, max_x - 35, "%s %s(%d)/%s(%d): %s / %s", _("Planetary"), (MAPA_DIURNO_CIVIL)?_("Day"):_("Night"), week_day, _("Hour"), planetary_hour, planet_regent_symbols[get_hour_regent(week_day - 1, (MAPA_DIURNO_CIVIL)?0:12)], planet_regent_symbols[get_hour_regent(week_day - 1, planetary_hour - 1)]);
         
@@ -7989,7 +7989,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "○"); //🌕
+            snprintf(san, sizeof(san), "%s", "⨷"); //🌕⦿︎
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }
