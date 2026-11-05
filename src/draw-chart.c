@@ -1122,7 +1122,7 @@ void draw_circle_filled(int center_y, int center_x, float radius,
                         const wchar_t* character) {
     float r = radius * current_scale;
     
-    for (int y_offset = (int)-r; y_offset <= (int)r; y_offset++) {
+    for (float y_offset = -r * current_scale; y_offset <= r * current_scale; y_offset += 0.5) {
         int y = center_y + y_offset;
         if (y >= 0 && y < LINES) {
             float x_offset_max = get_x_width(r, (float)y_offset, aspect_ratio);
@@ -1892,96 +1892,6 @@ void draw_cusps_div(int object_count,
     }
 }
 
-// void draw_cusps_div_axis(int object_count, 
-//                 double *cusps, int n, 
-//                 int display_center_y, int display_center_x, 
-//                 float current_scale, float aspect_ratio) {
-    
-//     int asc = (int)cusps[1];
-//     (void)n;
-
-//     attron(A_BOLD);
-
-//     for (float radius = 6.5 * current_scale; radius < 20 * current_scale; radius += 0.5 ) {    
-//         //float radius = r * current_scale;
-        
-//         int imin;
-//         int imax;
-//         if (fmod(cusps[1], 30) < 15 ) {
-//             imin = -75;
-//             imax = 285;
-//         }
-//         else {
-//             imin = -105;
-//             imax = 255; 
-//         }
-
-//         for (int i = imin; i < imax; i++) {
-//             float angle = i * PI / 180.0;
-//             int y = (int)(display_center_y + radius * sin(angle));
-//             int x = (int)(display_center_x + aspect_ratio * radius * cos(angle));
-            
-//             if (y >= 0 && y < LINES && x >= 0 && x < COLS) {    
-//                 for (int j = 1; j <= object_count; j += 3) {
-//                     if (i == (180 - ((int)(cusps[j]) - asc) % 360) || 
-//                         i == (180 - ((int)(cusps[j]) - asc) % 360) + 360 ||
-//                         i == (180 - ((int)(cusps[j]) - asc) % 360) - 360) {
-                                                    
-//                         int sign = (int)(cusps[j] / 30);
-
-//                         if (sign % 2 == 1) {
-//                             attron(COLOR_PAIR(1));                            
-//                         }
-//                         else {
-//                             attron(COLOR_PAIR(46));                            
-//                         }
-                        
-//                             // Draw the appropriate text
-//                         if (j == 1 || j == 4 || j == 7 || j == 10) {            
-//                             if (angle <= -1.79) {
-//                                 safe_mvprintw_clip(y, x, "⧹");  // casa 11 // ⧹⧸
-//                             } else if (angle <= -1.35 || (angle >= 4.5 && angle < 4.93)) {
-//                                 //mvaddstr(y, x, "▎"); // casa 10
-//                                 safe_mvprintw_clip(y, x-1, "▕▎");                            
-//                             } else if (angle <= -0.8 || angle >= 4.93) {
-//                                 safe_mvprintw_clip(y, x, "⧸");  // casa 9
-//                             } else if (angle <= -0.2) {
-//                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 8
-//                             } else if (angle <= 0.2) {
-//                                 //mvaddstr(y, x, "▔");  // casa 7
-//                                 safe_mvprintw_clip(y-1, x, "▁▁");
-//                                 safe_mvprintw_clip(y,   x, "▔▔");
-//                             } else if (angle <= 0.95) {
-//                                 safe_mvprintw_clip(y, x, "▀▄");  // casa 6
-//                             } else if (angle < 1.35) {
-//                                 safe_mvprintw_clip(y, x, "⧹"); // casa 5
-//                             } else if (angle < 1.79) {
-//                                 //mvaddstr(y, x, "▕");  // casa 4
-//                                 safe_mvprintw_clip(y, x, "▕▎");                            
-//                             } else if (angle < 2.30) {
-//                                 safe_mvprintw_clip(y, x, "⧸");  // casa 3
-//                             } else if (angle < 2.99) {
-//                                 safe_mvprintw_clip(y, x, "▄▀");  // casa 2
-//                             } else if (angle <= 3.25) {
-//                                 //mvaddstr(y, x, "▁");  // casa 1
-//                                 safe_mvprintw_clip(y,   x, "▁▁");
-//                                 safe_mvprintw_clip(y+1, x, "▔▔");
-
-//                             } else if (angle <= 4.1) {
-//                                 safe_mvprintw_clip(y, x, "▀▄");  // casa 12
-//                             } else {
-//                                 safe_mvprintw_clip(y, x, "⧹"); // casa 11
-//                             }
-//                         }
-
-//                         attroff(COLOR_PAIR(1) | COLOR_PAIR(46));
-//                     }                
-//                 }
-//             }
-//         }
-//     }
-//     attroff(A_BOLD);     
-// }
 
 void draw_cusps_div_axis(int object_count, 
                 double *cusps, int n, 
@@ -2546,20 +2456,21 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     // attroff(COLOR_PAIR(9));
     
     
-    // Draw the outer circle filled
-    attron(COLOR_PAIR(19) | FLAGS);
-    draw_circle_filled(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L" ");
-    attroff(COLOR_PAIR(19) | FLAGS);
-    
-
     // shadow
     if (mapa_retorno) attron(COLOR_PAIR(56));
     else attron(COLOR_PAIR(55));
-    draw_circle_points(display_center_y + 1, display_center_x + 1, 19, aspect_ratio, current_scale, L"▒▒▒▒");
-    draw_circle_points(display_center_y + 1, display_center_x + 2, 20, aspect_ratio, current_scale, L"▒▒");
+    draw_circle_filled(display_center_y + 1, display_center_x + 2 * current_scale, 20, aspect_ratio, current_scale, L"▒▒");
+    draw_circle_points(display_center_y + 1, display_center_x + current_scale, 19, aspect_ratio, current_scale, L"▒▒▒▒");
+    draw_circle_points(display_center_y + 1, display_center_x + 2 * current_scale, 20, aspect_ratio, current_scale, L"▒▒");
     if (mapa_retorno) attroff(COLOR_PAIR(56));
     else attroff(COLOR_PAIR(55));
 
+
+    // Draw the outer circle filled
+    attron(COLOR_PAIR(19) | FLAGS);
+    draw_circle_filled(display_center_y, display_center_x, 19, aspect_ratio, current_scale, L" ");
+    attroff(COLOR_PAIR(19) | FLAGS);
+       
     
     if (dark_mode) attron(COLOR_PAIR(52) | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
@@ -2589,7 +2500,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 46 : 46; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 7.0 * current_scale; r <= 19.75 * current_scale; r += 0.125) {
+    for (float r = 7.0 * current_scale; r <= 19.875 * current_scale; r += 0.125) {
         for (int i = 0 + asc; i < 360 + asc; i++) {
             
             int indice_relativo = i - (asc);
@@ -5270,13 +5181,13 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
             }
         }   
         wattroff(scroll_pad, COLOR_PAIR(62));
-        wattron(scroll_pad, COLOR_PAIR(65)); 
+        wattron(scroll_pad, COLOR_PAIR(67)); 
         
         mvwprintw(scroll_pad, row_pad, c_pm, "%8.4f", pm);
         mvwprintw(scroll_pad, row_pad, c_ph, "%8.4f", hd);
        
         wattroff(scroll_pad, A_BOLD);
-        wattroff(scroll_pad, COLOR_PAIR(65));
+        wattroff(scroll_pad, COLOR_PAIR(67));
 
         wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
         wmove(scroll_pad, row_pad + 1, c_obj);
@@ -7413,8 +7324,8 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
 #define COLOR_BACK_1_SIGN  217
 #define COLOR_BACK_2_SIGN  181
 
-#define COLOR_BACK_1  218 //218 //147 //219 //219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
-#define COLOR_BACK_2  182 //217 //141 //217 //218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
+#define COLOR_BACK_1  219 //218 //218 //147 //219 //219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
+#define COLOR_BACK_2  183 //182 //217 //141 //217 //218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
 
 #define COLOR_BACK_DARK_1_SIGN 237
 #define COLOR_BACK_DARK_2_SIGN 238
@@ -7544,7 +7455,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(63, COLOR_WHITE, COLOR_BACK_DARK_1);
         init_pair(64, COLOR_WHITE, COLOR_BACK_DARK_2);
 
-        init_pair(65, 66, TABLE_BKGD_DARK);
+        init_pair(67, 66, TABLE_BKGD_DARK);
 
     } 
     else {
@@ -7624,20 +7535,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(51, 139, COLOR_BACK_1);
         init_pair(52, 139, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
-        init_pair(54, COLOR_GREEN, 91); // green, magenta
+        init_pair(54, COLOR_GREEN, 89); // green, magenta
         init_pair(55, 232, 25); // dark / azul
         init_pair(56, 232, 91); // dark, magenta
         init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
         init_pair(58, 242, COLOR_WHITE); 
         init_pair(59, 242, COLOR_CYAN);
         init_pair(60, 31, 24); // amarelo / azul
-        init_pair(61, 97, 91); // magenta, magenta
+        init_pair(61, 97, 89); // magenta, magenta
         init_pair(62, 60, TABLE_BKGD);
 
         init_pair(63, COLOR_BLACK, 194);
         init_pair(64, COLOR_BLACK, 193);
 
-        init_pair(65, 66, TABLE_BKGD);
+        init_pair(67, 66, TABLE_BKGD);
     }
     
     FLAGS = 0;
@@ -7984,12 +7895,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         char san[10];
         
         if (last_conj > last_opp) {
-            snprintf(san, sizeof(san), "%s", "⏾"); //🌑
+            snprintf(san, sizeof(san), "%s", "⏾"); //🌑⦿
             jdSAN = last_conj;
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "⨷"); //🌕⦿︎
+            snprintf(san, sizeof(san), "%s", "❍"); //🌕⨷⦾
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }
