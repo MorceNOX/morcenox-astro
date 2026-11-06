@@ -2474,7 +2474,6 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     
     if (dark_mode) attron(COLOR_PAIR(52) | FLAGS); else attron(COLOR_PAIR(1));
     draw_circle_points(display_center_y, display_center_x, 20, aspect_ratio, current_scale, L"▒");  // ▓
-    draw_circle_points(display_center_y, display_center_x, 6, aspect_ratio, current_scale, L"▒");
     if (dark_mode) attroff(COLOR_PAIR(52) | FLAGS);
     wnoutrefresh(stdscr);
 
@@ -2527,7 +2526,17 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
-    draw_houses_shaded(6.5, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
+    draw_houses_shaded(6.0, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
+
+
+
+    if (dark_mode) attron(COLOR_PAIR(52) | FLAGS); else attron(COLOR_PAIR(1));
+    draw_circle_points(display_center_y, display_center_x, 6, aspect_ratio, current_scale, L"▒");
+    if (dark_mode) attroff(COLOR_PAIR(52) | FLAGS);
+    wnoutrefresh(stdscr);
+
+
+
 
     //draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
