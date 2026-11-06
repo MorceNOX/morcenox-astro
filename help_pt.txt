@@ -1736,7 +1736,7 @@ Idêntico ao módulo anterior, mas aqui calculamos e exibimos as direções apen
 
 Em um mapa masculino, apenas partes masculinas e neutras são exibidas; para mapas noturnos, as partes exibidas são calculadas de acordo com suas fórmulas noturnas.
 
-As Partes Árabes neste módulo são calculadas de acordo com as fórmulas das Posições Mundanas de Placidus para Partes Árabes. Portanto, as longitudes destas partes são diferentes das suas contrapartes eclípticas.
+As Partes Árabes neste módulo são calculadas de acordo com as fórmulas das Posições Mundanas de Placidus para Partes Árabes ou Regiomontanus, de acordo com o método de cálculo das direções primárias selecionado (Placidus para direções Placidus e Regiomontanus para direções Regiomontanus ou Topocêntricas). Portanto, as longitudes destas partes são diferentes das suas contrapartes eclípticas.
 
 O mesmo código de cores das direções gerais pode ser visto neste módulo.
 

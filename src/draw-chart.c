@@ -1735,7 +1735,7 @@ void draw_cusps(int radius_multiplier, int object_count,
     
 }
 
-void draw_houses_shaded(int radius_start_multiplier, int radius_end_multiplier, 
+void draw_houses_shaded(float radius_start_multiplier, float radius_end_multiplier, 
                         double *cusps, int house_count, 
                         int display_center_y, int display_center_x, 
                         float current_scale, float aspect_ratio,
@@ -2500,7 +2500,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
     int par_tom_B = dark_mode ? 46 : 46; 
 
     // Camada de Fundo: Desenha as fatias primeiro
-    for (float r = 7.0 * current_scale; r <= 19.875 * current_scale; r += 0.125) {
+    for (float r = 14.0 * current_scale; r <= 19.875 * current_scale; r += 0.125) {
         for (int i = 0 + asc; i < 360 + asc; i++) {
             
             int indice_relativo = i - (asc);
@@ -2527,7 +2527,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
     attroff(COLOR_PAIR(par_tom_A) | COLOR_PAIR(par_tom_B) | FLAGS);
 
-    draw_houses_shaded(7, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
+    draw_houses_shaded(6.5, 15, cusps, 12, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
 
     //draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio);
     draw_cusps_div_axis(12, cusps, n, display_center_y, display_center_x, current_scale, aspect_ratio, 16, 47);
@@ -5232,8 +5232,8 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wattron(scroll_pad, COLOR_PAIR(62));
     mvwprintw(scroll_pad, row_pad, c_obj + 2, "%s", fortuna_m->object);
     mvwprintw(scroll_pad, row_pad, c_pos, "%2d°", degree);
-    mvwprintw(scroll_pad, row_pad, c_pos + 4, "%s", get_sign((int)(fortuna_m->longitude / 30)));
-    mvwprintw(scroll_pad, row_pad, c_pos + 7, "%02d'%02d", min, seg);
+    mvwprintw(scroll_pad, row_pad, c_pos + 3, "%s", get_sign((int)(fortuna_m->longitude / 30)));
+    mvwprintw(scroll_pad, row_pad, c_pos + 5, "%02d'%02d", min, seg);
     mvwprintw(scroll_pad, row_pad, c_hse + 1, "%8.4f", fortuna_m->house_pos);
     mvwprintw(scroll_pad, row_pad, c_lon, "%8.4f", fortuna_m->longitude);
     mvwprintw(scroll_pad, row_pad, c_lat, "%8.4f", fortuna_m->latitude);
