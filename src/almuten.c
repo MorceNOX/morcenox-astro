@@ -95,12 +95,6 @@ int get_governed_points_count(int id_planeta, PlotObject *plots) {
 
     for (int i = 0; i < NUM_OBJECTS - object_diff; i++) {
         
-        // Ignoramos apenas o Vertex
-        // Planetas modernos serão considerados caso estejam sendo usados
-        // if (i > 6 && plots[i].id != P_VERTEX - object_diff) {
-        //     continue;
-        // }
-
         int n_ruler, n_exalted, n_exile, n_fall, r1, r2, r3;
         int sign = (int)floor(plots[i].longitude / 30.0) + 1;
         

@@ -4282,7 +4282,7 @@ DateEdition selecionar_data() {
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
                     int linha_botao = 5;
                     int col_inicio_botao_ok = 9;
-                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 13;
                     
                     int col_inicio_botao_cancel = 28;
                     int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
@@ -4607,7 +4607,7 @@ HoraEdition selecionar_hora() {
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
                     int linha_botao = 5;
                     int col_inicio_botao_ok = 9;
-                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 13;
                     
                     int col_inicio_botao_cancel = 28;
                     int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
@@ -4939,7 +4939,7 @@ GrausEdition set_lon() {
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
                     int linha_botao = 5;
                     int col_inicio_botao_ok = 9;
-                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 13;
                     
                     int col_inicio_botao_cancel = 28;
                     int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
@@ -5268,7 +5268,7 @@ GrausEdition set_lat() {
                     // 2. Define matematicamente as coordenadas exatas onde o botão "OK" reside
                     int linha_botao = 5;
                     int col_inicio_botao_ok = 9;
-                    int col_fim_botao_ok = col_inicio_botao_ok + 11;
+                    int col_fim_botao_ok = col_inicio_botao_ok + 13;
                     
                     int col_inicio_botao_cancel = 28;
                     int col_fim_botao_cancel = col_inicio_botao_cancel + 11;
@@ -8530,37 +8530,30 @@ int select_topic(char *file, int max_width) {
     int topic_selected = 0;
     int key;
 
-    // Clear and draw shadow
-    //werase(shadow);
-    //wattron(shadow, COLOR_PAIR(24));
-    //box(shadow, 0, 0);
     wbkgd(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
     wbkgd(win, COLOR_PAIR(22) | FLAGS);
 
-    // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(win) - 4;
 
     mvwprintw(win, 0, col_fechar, "[");
     mvwprintw(win, 0, col_fechar + 2, "]");
 
-    wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(win, A_BOLD);
     mvwprintw(win, 0, col_fechar + 1, "✖");
     wattroff(win, A_BOLD);
 
     mousemask(BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED, NULL);
-    mouseinterval(188);
+    mouseinterval(100);
         
     while (!topic_selected) {
 
-        // Clear and redraw main menu
         werase(win);
         wattron(win, COLOR_PAIR(22) | A_DIM);
         box(win, 0, 0);        
         
         wattroff(win, COLOR_PAIR(22) | A_DIM);
-        //wrefresh(win);
         
         wattron(win, A_BOLD);
         const char *title = _(" Select a Topic ");
@@ -8570,11 +8563,10 @@ int select_topic(char *file, int max_width) {
         mvwprintw(win, 0, col_fechar, "[");
         mvwprintw(win, 0, col_fechar + 2, "]");
     
-        wattron(win, A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        wattron(win, A_BOLD);
         mvwprintw(win, 0, col_fechar + 1, "✖");
         wattroff(win, A_BOLD);
         
-        // Draw topic items with proper scrolling
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + topic_scroll_offset;
             if (item_index < topic_count) {

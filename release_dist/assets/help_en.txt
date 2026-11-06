@@ -79,7 +79,7 @@ Press Q or ESC to return to the main menu.
 
 🌑 or ⏾ Syzygy Ante Nativitatem (SAN), for New Moon in pre-natal syzygy
 
-🌕 or ○ Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
+🌕 or ❍ Syzygy Ante Nativitatem (SAN), for Full Moon in pre-natal syzygy
 
 🜊  Vertex
 
@@ -1007,7 +1007,11 @@ Mutual Reception without Aspect*** → +1 point
 • Spherical Measurements of the Sky (F2 in the Dignities Table)
 ───────────────────────────────────────────────────────────────────
 
-This table displays astronomical calculated metrics of the planets and other point and bodies.
+This table displays astronomical calculated metrics of the planets and other points and bodies.
+
+You can see position in the house, longitude, latitude, declination, right ascension, semi-arcs, mundane positions and hourly distance of the planets and celestial bodies. 
+
+The last 2 columns are calculated according to the selected method of Primary Directions.
 
 
 

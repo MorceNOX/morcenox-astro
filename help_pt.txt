@@ -1016,6 +1016,10 @@ Use [↓↑] para deslizar a tabela.
 
 Esta tabela exibe dados astronômicos equatoriais e locais dos planetaas no exato horário do corrente mapa.
 
+Você pode ver nesta tabela a posição por casa, a longitude, a latitude, a declinação, a ascensão reta, o semi-arco diurno, a posição mundana e a distância horária dos planetas e corpos celestes do mapa.
+
+As duas últimas colunas são calculadas de acordo com o método de cálculo de direções primárias que estiver selecionado.
+
 
 
 

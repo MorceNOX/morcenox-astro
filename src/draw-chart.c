@@ -2081,7 +2081,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(A_DIM);
                     attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, libra[j]);
-                    attroff(COLOR_PAIR(44) | A_DIM);
+                    attroff(COLOR_PAIR(44) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 1 ) {
 
@@ -2089,7 +2089,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 
                     attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, virgo[j]);
-                    attroff(COLOR_PAIR(3) | A_DIM);
+                    attroff(COLOR_PAIR(3));
                 }
                 else if ( (k + offset) % 12 == 2 ) {
                     attron(COLOR_PAIR(42) | A_BOLD);
@@ -2108,12 +2108,12 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(A_DIM);
                     attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, gemini[j]);
-                    attroff(COLOR_PAIR(44) | A_DIM);
+                    attroff(COLOR_PAIR(44) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 5 ) {
                     attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, taurus[j]);
-                    attroff(COLOR_PAIR(3) | A_DIM);
+                    attroff(COLOR_PAIR(3));
                 }
                 else if ( (k + offset) % 12 == 6 ) {
 
@@ -2135,7 +2135,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
                     attroff(A_DIM);
                     attron(COLOR_PAIR(44) | A_NORMAL);
                     safe_mvprintw_clip(y - 2 + j, x - 2, aquarius[j]);
-                    attroff(COLOR_PAIR(44) | A_DIM);
+                    attroff(COLOR_PAIR(44) | A_NORMAL);
                 }
                 else if ( (k + offset) % 12 == 9 ) {
 
@@ -2143,7 +2143,7 @@ void draw_zodiac_signs(int display_center_y, int display_center_x,
 
                     attron(COLOR_PAIR(3));
                     safe_mvprintw_clip(y - 2 + j, x - 2, capricorn[j]);
-                    attroff(COLOR_PAIR(3) | A_DIM);
+                    attroff(COLOR_PAIR(3));
                 }
                 else if ( (k + offset) % 12 == 10 ) {
                     attron(COLOR_PAIR(42) | A_BOLD);
@@ -5264,7 +5264,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     whline(scroll_pad, ACS_HLINE, table_width - 4);
     wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
 
-    row_pad += 2;
+    if (!show_modern_planets) row_pad += 2;
 
     mvwprintw(table_win, table_height - 2, 2, "(*)%s = %s.", fortuna_m->object, fortuna_m->object_name);
 
@@ -7324,8 +7324,8 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
 #define COLOR_BACK_1_SIGN  217
 #define COLOR_BACK_2_SIGN  181
 
-#define COLOR_BACK_1  219 //218 //218 //147 //219 //219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
-#define COLOR_BACK_2  183 //182 //217 //141 //217 //218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
+#define COLOR_BACK_1 218 //219 //218 //218 //147 //219 //219 //193 //224 //182 //181 //225 //195 //230 // 194 //159
+#define COLOR_BACK_2 182 //183 //182 //217 //141 //217 //218 //194 //225 //181 //217 //224 //194 //229 // 193 //123
 
 #define COLOR_BACK_DARK_1_SIGN 237
 #define COLOR_BACK_DARK_2_SIGN 238
@@ -7340,15 +7340,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     int n = 1;
 
    
-    // Adicione essas duas variáveis como STATIC no início da sua FUNÇÃO (ou globais) 
-    // para que elas mantenham o valor guardado entre as iterações do loop:
     static clock_t ultimo_clique_tempo = 0;
     static int ultimo_clique_x = 0;
     static int ultimo_clique_y = 0;
     
     bool dark_mode = (darkmode)?true:false;
 
-    keypad(stdscr, TRUE); // Enable keypad for special keys
+    keypad(stdscr, TRUE);
 
     
 
@@ -7361,11 +7359,6 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     flushinp();
 
     float aspect_ratio = get_exact_aspect_ratio_ncurses(stdscr, 0);
-
-    // // DEBUG: Aspect Ratio verification
-    // char c_asp[10] = "";
-    // snprintf(c_asp, 10, "%7.4f", aspect_ratio);
-    // show_alert_popup(_("Aspect Ratio:"), c_asp);
 
     use_default_colors();
 
@@ -7499,11 +7492,11 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(16, COLOR_BLACK, COLOR_BACK_1);
         init_pair(47, COLOR_BLACK, COLOR_BACK_2);
 
-        init_pair(17, 199, COLOR_BACK_1); // magenta
-        init_pair(48, 199, COLOR_BACK_2); // magenta
+        init_pair(17, 196, COLOR_BACK_1); // magenta
+        init_pair(48, 196, COLOR_BACK_2); // magenta
 
-        init_pair(18, 21, COLOR_BACK_1); // azul
-        init_pair(49, 21, COLOR_BACK_2); // azul
+        init_pair(18, 57, COLOR_BACK_1); // azul
+        init_pair(49, 57, COLOR_BACK_2); // azul
 
 
         init_pair(19, COLOR_BACK_1, COLOR_BACK_1); // branco/cinza claro
@@ -9626,11 +9619,40 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             sig_id++;
         }
         
-        
-        // Mundane Part of Fortune
-        calc_mundane_lot(&sig[0], &sig[1], &sig[0], &sig[P_ASC - object_diff], true, armc, julian_day, lat, cusps, &fortuna_m);
+        Promissor pp = sig[P_ASC - object_diff];
+        Promissor significador = (MAPA_DIURNO_GEOMETRICO ? sig[1] : sig[0]);
+        Promissor trig = (MAPA_DIURNO_GEOMETRICO ? sig[0] : sig[1]);
 
+        ArabicPartCalculadaDirections for_m = {0};
         
+        for_m.pp_o         = pp;
+        for_m.sig_o        = significador;
+        for_m.trig_o       = trig;
+        snprintf(for_m.name, sizeof(for_m.name), "%s", _("Part of Fortune"));
+        for_m.longitude    = fortuna_m.longitude;
+        for_m.latitude     = fortuna_m.latitude;;
+        for_m.declination  = fortuna_m.declination;
+        for_m.ra           = fortuna_m.ra;
+        for_m.house_pos    = fortuna_m.house_pos;
+
+        // Mundane Part of Fortune
+
+        //calc_mundane_lot(&sig[0], &sig[1], &sig[0], &sig[P_ASC - object_diff], true, armc, julian_day, lat, cusps, &fortuna_m);
+        
+        if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+            calc_mundane_part_placidus(&significador, &trig, &pp, armc, julian_day, lat, cusps, &for_m);
+        }
+        else {
+            calc_mundane_part_regiomontanus(&significador, &trig, &pp, armc, julian_day, lat, cusps, &for_m);
+        }
+        
+        fortuna_m.longitude = for_m.longitude;
+        fortuna_m.latitude = for_m.latitude;
+        fortuna_m.declination = for_m.declination;
+        fortuna_m.ra = for_m.ra;
+        fortuna_m.house = (int)for_m.house_pos;
+        fortuna_m.house_pos = for_m.house_pos;
+
 
         sig[idx_fortuna].longitude = fortuna_m.longitude;
         sig[idx_fortuna].latitude = fortuna_m.latitude;

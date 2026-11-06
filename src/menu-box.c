@@ -2444,7 +2444,7 @@ void show_text_file(const char* filename, const char* title, int from_line) {
     wattroff(help_win, A_BOLD);
 
     mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
-    mouseinterval(100);
+    mouseinterval(166);
 
     drag_and_drop_on();
 

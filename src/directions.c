@@ -437,18 +437,31 @@ int processar_astro(double ramc, double lat_geo, Promissor *astro) {
 double ra_2_long(double ra, double e) {
     if (ra == 90 || ra == 270) return ra;
 
-    double x = atan(tan(ra * DEG_TO_RAD) / cos(e * DEG_TO_RAD)) * RAD_TO_DEG;
+    double x = atan2(tan(ra * DEG_TO_RAD), cos(e * DEG_TO_RAD)) * RAD_TO_DEG;
 
     if (ra < 0) ra += 360;
     if (ra > 360) ra -= 360;
 
-    if (ra >= 0 && ra < 90) return x;
-    if (ra > 90 && ra < 270) return x + 180;
-    if (ra > 270 && ra < 360) return x + 360;
+    if (ra >= 0 && ra < 90) return normalize360(x);
+    if (ra > 90 && ra < 270) return normalize360(x + 180);
+    if (ra > 270 && ra < 360) return normalize360(x + 360);
 
     return 0.0;
 }
 
+
+double long_2_ra(double lon, double e) {
+    if (lon == 90 || lon == 270) return lon;
+
+    double x = atan(sin(lon * DEG_TO_RAD) * cos(e * DEG_TO_RAD)) * RAD_TO_DEG;
+
+    if (lon >= 0 && lon < 90) return normalize360(x);
+    if (lon > 90 && lon < 270) return normalize360(x + 180);
+    if (lon > 270 && lon < 360) return normalize360(x + 360);
+
+    return 0.0;
+
+}
 
 double long_2_dec(double lon, double e) {
     return asin(sin(lon * DEG_TO_RAD) * sin(e * DEG_TO_RAD)) * RAD_TO_DEG;
@@ -461,117 +474,233 @@ double long_lat_2_dec(double lon, double lat, double e) {
 
 
 
-// void calc_mundane_part_regiomontanus(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
-//     double obl = get_obliquidade(jd);
-//     double lat_rad = lat * M_PI / 180.0;
-
-//     double arc = 0.0;
-//     double j = 0.0;
-//     double h = 0.0;
-//     double w = 0.0;
-//     double m = 0.0;
-//     double z = 0.0;
-//     double r = 0.0;
-//     double x = 0.0;
-    
-//     processar_astro(ramc, lat, pp);
-//     processar_astro(ramc, lat, sig);
-//     processar_astro(ramc, lat, trig);
-
-//     arc = pp->pm + sig->longitude - trig->longitude;
-
-//     double ra_ic = ramc + 180.0;
-//     if (arc == 0.0) {
-//         lot_m->longitude = cusps[1];
-//     } 
-//     else if (arc == 90.0) {
-//         lot_m->longitude = cusps[4];    
-//     } 
-//     else if (arc == 180.0) {
-//         lot_m->longitude = cusps[7];
-//     }
-//     else if (arc == 270.00)  {
-//         lot_m->longitude = cusps[10];
-//     }
-
-//     if (arc < 90.0) {
-//         j = arc;
-//     }
-//     else if (arc > 90.0 && arc < 180.0) {
-//         j = 180 - arc;
-//     }
-//     else if (arc > 180 && arc < 270) {
-//         j = arc - 180;
-//     }
-//     else if (arc > 270 && arc < 360) {
-//         j = 360 - arc;
-//     }
-
-//     h    = atan( tan(j * DEG_TO_RAD) * cos(lat_rad) ) * RAD_TO_DEG;
-//     w    = ramc - 90 - j;
-//     pole = asin( cos(h * DEG_TO_RAD) * sin(lat_rad) ) * RAD_TO_DEG;
-//     m    = atan( -tan(pole * DEG_TO_RAD) / cos(w * DEG_TO_RAD) ) * RAD_TO_DEG;
-
-//     x    = atan( cos(m * DEG_TO_RAD) * tan(w * DEG_TO_RAD) ) * RAD_TO_DEG; 
-
-//     if (w == 90) {
-//         r = atan(sin(obl * DEG_TO_RAD) * tan(pole * DEG_TO_RAD)) * RAD_TO_DEG;
-//     }
 
 
-// }
-
-
-
-// Placidus Mundane Positions for Mundane Arabic Parts (one formula: or diurnal, or nocturnal)
-void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
+void calc_mundane_part_regiomontanus(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
     double obl = get_obliquidade(jd);
-    double lat_rad = lat * M_PI / 180.0;
+    
+    processar_astro(ramc, lat, pp);
+    processar_astro(ramc, lat, sig);
+    processar_astro(ramc, lat, trig);
 
-    double arc = 0.0;
-    double k = 0.0;
-    double t = 0.0;
-    double r = 0.0;
+
+    // 1. Calculate Arc
+    double arc = pp->pm + sig->longitude - trig->longitude;
+    while (arc < 0) arc += 360.0;
+    while (arc >= 360.0) arc -= 360.0;
+    
+    // 2. Handle specific cusps
+    if (arc == 0.0 || arc == 90.0 || arc == 180.0 || arc == 270.0) {
+        double r = 0.0;
+        if (arc == 0.0) {
+            lot_m->longitude = pp->longitude; // ASC
+        }      
+        else if (arc == 90.0) { 
+            r = normalize360(pp->ra + 90.0);  // IC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        else if (arc == 180.0) {
+            r = normalize360(pp->ra + 180.0); // DESC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        else if (arc == 270.0) {
+            r = normalize360(pp->ra + 270.0); // MC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        
+    }
+    else {
+    
+        // 3. Calculate J (Regiomontanus/Campanus Step 3)
+        double j;
+        if (arc < 90.0)         j = arc;
+        else if (arc < 180.0)   j = 180.0 - arc;
+        else if (arc < 270.0)   j = arc - 180.0;
+        else                    j = 360.0 - arc;
+        
+        // Prepare for the Regiomontanus condition: If phi < 0, use -phi, 
+        // substitute RAIC for RAMC, and add 180 to Lpof at the end.
+        double calc_lat = lat;
+        double calc_ramc = ramc;
+        double l_pof_offset = 0.0;
+        double raic = normalize360(ramc + 180.0);
+        
+        if (lat < 0) {
+            calc_lat = -lat;
+            calc_ramc = raic;
+            l_pof_offset = 180.0;
+        }
+        
+        double lat_rad = calc_lat * M_PI / 180.0;
+        double j_rad = j * M_PI / 180.0;
+        //double ramc_rad = calc_ramc * M_PI / 180.0;
+        //double obl_rad = obl * M_PI / 180.0;
+        
+        // 4. Calculate H (Regiomontanus Step 4)
+        double h = atan(tan(j_rad) * cos(lat_rad)) * RAD_TO_DEG;
+        
+        // 5. Calculate pole, W (Campanus Step 4 & 5)
+        double pole = asin(cos(h * M_PI / 180.0) * sin(lat_rad)) * RAD_TO_DEG;
+        double w;
+        if (arc < 90.0 || arc > 270.0) w = calc_ramc - 90.0 - j;
+        else                           w = calc_ramc - 90.0 + j; // Note: text implies logic variation based on arc
+        
+        // Re-calculating W based on the specific Campanus Step 5 branches
+        if (arc < 90.0)         w = calc_ramc - 90.0 - j;
+        else if (arc < 180.0)   w = calc_ramc - 90.0 - j;
+        else if (arc < 270.0)   w = calc_ramc - 90.0 + j;
+        else                    w = calc_ramc - 90.0 + j;
+        
+        // 6. Calculate M and Z (Campanus Step 7 & 8)
+        double w_rad = w * M_PI / 180.0;
+        double pole_rad = pole * M_PI / 180.0;
+        double m = atan2(-tan(pole_rad), cos(w_rad)) * RAD_TO_DEG;
+        
+        // Determine Z based on segments
+        double z;
+        // Simplified segment check: are arc and W in the same 90-degree quadrant?
+        double arc_seg = floor(arc / 90.0);
+        double w_seg = floor(w / 90.0);
+        if (arc_seg == w_seg) z = m + obl;
+        else                   z = m - obl;
+        
+        // 7. Calculate R (Campanus Step 10)
+        double z_rad = z * M_PI / 180.0;
+        double r = atan( fabs(cos(m * M_PI / 180.0) * tan(w_rad) / cos(z_rad))) * RAD_TO_DEG;
+        
+        // 8. Calculate Lpof Step 11 (The "Base" Lpof)
+        double l_pof_base;
+        if (w < 90.0)           l_pof_base = r;
+        else if (w < 180.0)     l_pof_base = 180.0 - r;
+        else if (w < 270.0)     l_pof_base = 180.0 + r;
+        else                    l_pof_base = 360.0 - r;
+        
+        // 9. The "Other Way" Correction (Campanus Step 9)
+        // If Z > 90, the value must be mirrored across the 270 line.
+        double l_pof_final = l_pof_base;
+        if (z > 90.0) {
+            l_pof_final = 540.0 - l_pof_base; 
+        }
+        
+        // 10. Apply Regiomontanus final offset and normalize
+        lot_m->longitude = l_pof_final + l_pof_offset;
+        while (lot_m->longitude >= 360.0) lot_m->longitude -= 360.0;
+        while (lot_m->longitude < 0.0)    lot_m->longitude += 360.0;
+    }
+    lot_m->ra = long_2_ra(lot_m->longitude, obl);
+    lot_m->declination = long_2_dec(lot_m->longitude, obl);
+ 
+    lot_m->latitude = 0.0; 
+
+    snprintf(lot_m->house, sizeof(lot_m->house), "%s", get_house_roman(lot_m->longitude, cusps));
+    int n_house = get_house(lot_m->longitude, cusps);;
+    lot_m->house_pos = (double)n_house + normalize360(lot_m->longitude - cusps[n_house]) / normalize360(cusps[(n_house == 12) ? 1 : n_house + 1] - cusps[n_house]);
+
+    lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+
+    lot_m->md = fabs(lot_m->ra - ramc);
+    if (lot_m->md > 180.0) lot_m->md = 360.0 - lot_m->md;
+
+    double sa_lot = (lot_m->house_pos >= 7.0 && lot_m->house_pos < 13.0) ? lot_m->sa.sad : lot_m->sa.san;
+    lot_m->pm = (sa_lot > 0.0) ? (lot_m->md / sa_lot) : 0.0;
+}
+
+
+void calc_mundane_part_placidus(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
+    double obl = get_obliquidade(jd);
+
+    double obl_rad = obl * M_PI / 180.0;
+    double lat_rad = lat * DEG_TO_RAD;
 
     processar_astro(ramc, lat, pp);
     processar_astro(ramc, lat, sig);
     processar_astro(ramc, lat, trig);
 
-    //if (pp->pm == 0.0) show_alert_popup(pp->object, "zero pm");
 
-    arc = pp->pm + sig->longitude - trig->longitude;
+    // 1. Calculate Arc
+    double arc = pp->pm + sig->longitude - trig->longitude;
+    while (arc < 0) arc += 360.0;
+    while (arc >= 360.0) arc -= 360.0;
     
-    if (arc == 0.0) {
-        lot_m->longitude = cusps[1];
-    } 
-    else if (arc == 90.0) {
-        lot_m->longitude = cusps[4];    
-    } 
-    else if (arc == 180.0) {
-        lot_m->longitude = cusps[7];
+    // 2. Handle specific cusps
+    if (arc == 0.0 || arc == 90.0 || arc == 180.0 || arc == 270.0) {
+        double r = 0.0;
+        if (arc == 0.0) {
+            lot_m->longitude = pp->longitude; // ASC
+        }      
+        else if (arc == 90.0) { 
+            r = normalize360(pp->ra + 90.0);  // IC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        else if (arc == 180.0) {
+            r = normalize360(pp->ra + 180.0); // DESC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        else if (arc == 270.0) {
+            r = normalize360(pp->ra + 270.0); // MC
+            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
+
+        }
+        lot_m->ra = long_2_ra(lot_m->longitude, obl);
     }
-    else if (arc == 270.00)  {
-        lot_m->longitude = cusps[10];
+    else {
+    
+        // 3. Setup Iteration Variables
+        double R, K, T, initial_RA_PoF;
+        double ra_ic = normalize360(ramc + 180.0);
+        
+        if (arc < 180.0) {
+            R = ra_ic;
+            K = (arc - 90.0) / 90.0;
+            T = 1.0;
+            initial_RA_PoF = ra_ic + (arc - 90.0);
+        } else {
+            R = ramc;
+            K = (arc - 270.0) / 90.0;
+            T = -1.0;
+            initial_RA_PoF = ramc + (arc - 270.0);
+        }
+        
+        // 4. The Iteration (The "Recycle" part)
+        double current_ra = initial_RA_PoF;
+        double prev_ra = 0.0;
+        int max_iterations = 100; // Use more than 10 to ensure convergence
+        int iterations = 0;
+        
+        do {
+            prev_ra = current_ra;
+            
+            // Convert current_ra to radians for the trig functions
+            double ra_rad = current_ra * DEG_TO_RAD;
+            
+            // The core formula: RA = R + K * arccos(T * sin(RA) * tan(obl) * tan(lat))
+            double argument = T * sin(ra_rad) * tan(obl_rad) * tan(lat_rad);
+            
+            // Clamp argument to [-1, 1] to prevent NaN from floating point errors
+            if (argument > 1.0) argument = 1.0;
+            if (argument < -1.0) argument = -1.0;
+        
+            current_ra = R + K * (acos(argument) * RAD_TO_DEG);
+            
+            // Normalize current_ra
+            while (current_ra >= 360.0) current_ra -= 360.0;
+            while (current_ra < 0.0) current_ra += 360.0;
+        
+            iterations++;
+        } while (fabs(current_ra - prev_ra) > 0.00001 && iterations < max_iterations);
+        
+        // 5. Final conversion
+        lot_m->ra = current_ra;
+        lot_m->longitude = ra_2_long(current_ra, obl);
+
     }
 
-    double ra_ic = ramc + 180.0;
-    if (arc < 180.0) {
-        r = ra_ic;
-        k = (arc - 90.0) / 90.0;
-        t = 1.0;
-        lot_m->ra = ra_ic + arc - 90.0;
-    }
-    else if (arc > 180.0) {
-        r = ramc;
-        k = (arc -270.0) / 90.0;
-        t = -1.0;
-        lot_m->ra = ramc + arc - 270.0;
-    }
 
-    for (int i = 0; i < 10; i++) {    
-        lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
-    }
-    lot_m->longitude = normalize360(ra_2_long(lot_m->ra, obl));
     lot_m->declination = long_2_dec(lot_m->longitude, obl);
  
     lot_m->latitude = 0.0; 
@@ -620,7 +749,57 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
     } else if (!flip) {
         arc = pp->pm + sig->longitude - trig->longitude;
     }
+    while (arc < 0) arc += 360.0;
+    while (arc >= 360.0) arc -= 360.0;
 
+    double ra_ic = normalize360(ramc + 180.0);
+    if (arc < 180.0) {
+        r = ra_ic;
+        k = (arc - 90.0) / 90.0;
+        t = 1.0;
+        lot_m->ra = normalize360(ra_ic + arc - 90.0);
+    }
+    else if (arc > 180.0) {
+        r = ramc;
+        k = (arc -270.0) / 90.0;
+        t = -1.0;
+        lot_m->ra = normalize360(ramc + arc - 270.0);
+    }
+
+    for (int i = 0; i < 10; i++) {    
+        lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+    }
+    lot_m->longitude = ra_2_long(lot_m->ra, obl);
+    lot_m->declination = long_2_dec(lot_m->longitude, obl);
+ 
+    lot_m->latitude = 0.0; 
+
+    lot_m->house = (int)get_house(lot_m->longitude, cusps);
+    lot_m->house_pos = (double)lot_m->house + normalize360(lot_m->longitude - cusps[lot_m->house]) / normalize360(cusps[(lot_m->house == 12) ? 1 : lot_m->house + 1] - cusps[lot_m->house]);
+
+    lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+}
+
+
+
+// Placidus Mundane Positions for Mundane Arabic Parts (one formula: or diurnal, or nocturnal)
+void calc_mundane_part(Promissor *sig, Promissor *trig, Promissor *pp, double ramc, double jd, double lat, double *cusps, ArabicPartCalculadaDirections *lot_m) {
+    double obl = get_obliquidade(jd);
+    double lat_rad = lat * M_PI / 180.0;
+
+    double arc = 0.0;
+    double k = 0.0;
+    double t = 0.0;
+    double r = 0.0;
+
+    processar_astro(ramc, lat, pp);
+    processar_astro(ramc, lat, sig);
+    processar_astro(ramc, lat, trig);
+
+    //if (pp->pm == 0.0) show_alert_popup(pp->object, "zero pm");
+
+    arc = pp->pm + sig->longitude - trig->longitude;
+    
     if (arc == 0.0) {
         lot_m->longitude = cusps[1];
     } 
@@ -648,7 +827,7 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
         lot_m->ra = ramc + arc - 270.0;
     }
 
-    for (int i = 0; i < 10; i++) {    
+    for (int i = 0; i < 10; i++) { 
         lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
     }
     lot_m->longitude = normalize360(ra_2_long(lot_m->ra, obl));
@@ -656,13 +835,91 @@ void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor
  
     lot_m->latitude = 0.0; 
 
-    lot_m->house = (int)get_house(lot_m->longitude, cusps);
-    lot_m->house_pos = (double)lot_m->house + normalize360(lot_m->longitude - cusps[lot_m->house]) / normalize360(cusps[(lot_m->house == 12) ? 1 : lot_m->house + 1] - cusps[lot_m->house]);
+    snprintf(lot_m->house, sizeof(lot_m->house), "%s", get_house_roman(lot_m->longitude, cusps));
+    int n_house = get_house(lot_m->longitude, cusps);;
+    lot_m->house_pos = (double)n_house + normalize360(lot_m->longitude - cusps[n_house]) / normalize360(cusps[(n_house == 12) ? 1 : n_house + 1] - cusps[n_house]);
 
     lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+
+    lot_m->md = fabs(lot_m->ra - ramc);
+    if (lot_m->md > 180.0) lot_m->md = 360.0 - lot_m->md;
+
+    double sa_lot = (lot_m->house_pos >= 7.0 && lot_m->house_pos < 13.0) ? lot_m->sa.sad : lot_m->sa.san;
+    lot_m->pm = (sa_lot > 0.0) ? (lot_m->md / sa_lot) : 0.0;
 }
 
 
+
+
+// // Placidus Mundane Positions for Mundane Lots (passes both formulae: diurnal and nocturnal and the code calculates the correct)
+// void calc_mundane_lot(Promissor *sol, Promissor *sig, Promissor *trig, Promissor *pp, bool flip, double ramc, double jd, double lat, double *cusps, Promissor *lot_m) {
+//     double obl = get_obliquidade(jd);
+//     double lat_rad = lat * M_PI / 180.0;
+
+//     double sol_md = fabs(sol->ra - ramc);
+//     if (sol_md > 180.0) sol_md = 360.0 - sol_md;
+//     double sol_dec_rad = sol->declination * M_PI / 180.0;
+//     double sol_cos_h = -tan(lat_rad) * tan(sol_dec_rad);
+//     double sol_sad = (sol_cos_h >= 1.0) ? 0.0 : (sol_cos_h <= -1.0) ? 180.0 : acos(sol_cos_h) * 180.0 / M_PI;
+//     int sol_acima = (sol_md <= sol_sad) ? 1 : 0;
+
+//     double arc = 0.0;
+//     double k = 0.0;
+//     double t = 0.0;
+//     double r = 0.0;
+
+//     processar_astro(ramc, lat, pp);
+//     processar_astro(ramc, lat, sig);
+//     processar_astro(ramc, lat, trig);
+
+//     if (flip && sol_acima) {
+//         arc = pp->pm + sig->longitude - trig->longitude;
+//     } else if (flip && !sol_acima) {
+//         arc = pp->pm + trig->longitude - sig->longitude;
+//     } else if (!flip) {
+//         arc = pp->pm + sig->longitude - trig->longitude;
+//     }
+
+//     if (arc == 0.0) {
+//         lot_m->longitude = cusps[1];
+//     } 
+//     else if (arc == 90.0) {
+//         lot_m->longitude = cusps[4];    
+//     } 
+//     else if (arc == 180.0) {
+//         lot_m->longitude = cusps[7];
+//     }
+//     else if (arc == 270.00)  {
+//         lot_m->longitude = cusps[10];
+//     }
+
+//     double ra_ic = ramc + 180.0;
+//     if (arc < 180.0) {
+//         r = ra_ic;
+//         k = (arc - 90.0) / 90.0;
+//         t = 1.0;
+//         lot_m->ra = ra_ic + arc - 90.0;
+//     }
+//     else if (arc > 180.0) {
+//         r = ramc;
+//         k = (arc -270.0) / 90.0;
+//         t = -1.0;
+//         lot_m->ra = ramc + arc - 270.0;
+//     }
+
+//     for (int i = 0; i < 10; i++) {    
+//         lot_m->ra = normalize360(r + k * acos(t * sin(lot_m->ra * DEG_TO_RAD) * tan(obl * DEG_TO_RAD) * tan(lat_rad)) * RAD_TO_DEG);
+//     }
+//     lot_m->longitude = normalize360(ra_2_long(lot_m->ra, obl));
+//     lot_m->declination = long_2_dec(lot_m->longitude, obl);
+ 
+//     lot_m->latitude = 0.0; 
+
+//     lot_m->house = (int)get_house(lot_m->longitude, cusps);
+//     lot_m->house_pos = (double)lot_m->house + normalize360(lot_m->longitude - cusps[lot_m->house]) / normalize360(cusps[(lot_m->house == 12) ? 1 : lot_m->house + 1] - cusps[lot_m->house]);
+
+//     lot_m->sa = calcular_semi_arcos(lat, lot_m->declination);
+// }
 
 
 

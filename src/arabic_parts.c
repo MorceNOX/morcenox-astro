@@ -355,7 +355,6 @@ int load_and_calculate_mundane_arabic_parts(ChartObject *obj, int num_objects, d
             case OBJ_DISPOSITOR:    p->trig_o.type = PROM_PLANET; break;
         }
 
-        // Busca as longitudes físicas no seu array plots usando a função utilitária que criamos
         double lon_personal = get_longitude_by_id(id_personal, num_objects, obj);
         double lon_sig      = get_longitude_by_id(id_sig, num_objects, obj);
         double lon_trigger  = get_longitude_by_id(id_trigger, num_objects, obj);
@@ -396,8 +395,12 @@ int load_and_calculate_mundane_arabic_parts(ChartObject *obj, int num_objects, d
         p->sig_o.house = get_house(lon_sig, cusps);
         p->trig_o.house = get_house(lon_trigger, cusps);
 
-        calc_mundane_part(&p->sig_o, &p->trig_o, &p->pp_o, ramc, jd, lat, cusps, p);
-
+        if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+            calc_mundane_part_placidus(&p->sig_o, &p->trig_o, &p->pp_o, ramc, jd, lat, cusps, p);
+        }
+        else {
+            calc_mundane_part_regiomontanus(&p->sig_o, &p->trig_o, &p->pp_o, ramc, jd, lat, cusps, p);
+        }
         // char c_lon[50] = "";
         // snprintf(c_lon, 50, "%8.4f", p->longitude);
         // show_alert_popup(p->name, c_lon);
