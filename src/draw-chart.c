@@ -4978,7 +4978,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 24;
+    int table_height = 26;
     if (table_height > max_y - 2) table_height = max_y - 2;
     int table_width = max_x - 5;
 
@@ -5038,7 +5038,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     // 1. CRIAÇÃO DA PAD VIRTUAL DE ROLAGEM
     // Definimos uma largura horizontal abundante (145 colunas) para acomodar os dados na horizontal
-    int max_linhas_dados_visiveis = table_height - 8; 
+    int max_linhas_dados_visiveis = table_height - 10; 
     WINDOW *scroll_pad = newpad(40, 145); 
     wbkgd(scroll_pad, COLOR_PAIR(13) | FLAGS);
 
@@ -5275,7 +5275,8 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
     if (!show_modern_planets) row_pad += 2;
 
-    mvwprintw(table_win, table_height - 2, 2, "(*)%s = %s.", fortuna_m->object, fortuna_m->object_name);
+    mvwprintw(table_win, table_height - 3, 2, "(*)%s = %s (%s).", fortuna_m->object, fortuna_m->object_name, METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO ? _("Placidus") : _("Regiomontanus"));
+    mvwprintw(table_win, table_height - 3, table_width - 50, _("PM & HD according to %s."), (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO ? _("Method Placidus") : (METODO_CALCULO_ATIVO == METODO_REGIOMONTANUS ? _("Method Regiomontanus") : _("Method Topocentric"))));
 
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to return - [↓↑/JK] Scroll"));
     
@@ -5298,7 +5299,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     mvwaddstr(table_win, 4, table_width - 2, "▲");
     mvwaddstr(table_win, 4 + max_linhas_dados_visiveis + 1, table_width - 2, "▼");
     
-    prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+    prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
 
     doupdate();
 
@@ -5371,7 +5372,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
                                         wattroff(table_win, COLOR_PAIR(28) | flag);
 
                                         wnoutrefresh(table_win);
-                                        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+                                        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
                                         doupdate();
                                     }
 
@@ -5407,7 +5408,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
                                         wattroff(table_win, COLOR_PAIR(28) | flag);
 
                                         wnoutrefresh(table_win);
-                                        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+                                        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
                                         doupdate();
                                     } else {
                                         break;
@@ -5481,7 +5482,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
                                     wattroff(table_win, COLOR_PAIR(28) | flag);
 
                                     wnoutrefresh(table_win);
-                                    prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+                                    prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
                                     doupdate();
                                 }
     
@@ -5520,7 +5521,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
         wattroff(table_win, COLOR_PAIR(28) | flag);
         wnoutrefresh(table_win);
         doupdate();
-        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 3, start_x + table_width - 3);
+        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
     }
     
     delwin(scroll_pad);
@@ -5592,9 +5593,43 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
         snprintf(house_num, sizeof(house_num), "%02d", i);
 
         char sign_str[10];
-        double sign_remainder = fmod(cusps[i], 30.0);
-        int deg_cusp = (int)sign_remainder;        
-        double min_cusp = (int)((sign_remainder - deg_cusp) * 60.0);
+
+
+
+
+        int degree = (int)fmod(cusps[i], 30.0);
+
+        // 1. Pega apenas a fração decimal do grau
+        double graus_decimais = cusps[i];
+        double fracao_grau = graus_decimais - (int)graus_decimais;
+
+        // 2. Calcula minutos decimais e extrai os segundos com arredondamento
+        double minutos_decimais = fracao_grau * 60.0;
+        int min = (int)minutos_decimais;
+        
+        double segundos_decimais = (minutos_decimais - min) * 60.0;
+        int seg = (int)round(segundos_decimais);
+
+        // 3. TRATAMENTO CRÍTICO DE ESTOURO (O Efeito Cascata de Arredondamento)
+        if (seg >= 60) {
+            seg = 0;
+            min++;
+            if (min >= 60) {
+                min = 0;
+                degree++;
+                
+                // TRAVA EXTRA DE BORDA DO SIGNO:
+                // Se o arredondamento jogou o planeta para 30°, nós seguramos ele em 29°59'59"
+                // para não exibir "30°" na tela e não dessincronizar com a string do signo natal.
+                if (degree >= 30) {
+                    degree = 29;
+                    min = 59;
+                    seg = 59;
+                }
+            }
+        }
+
+        
 
         snprintf(sign_str, sizeof(sign_str), "%s", get_sign((int)(cusps[i] / 30)));
         
@@ -5621,7 +5656,7 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
                 break;
         }
                 
-        mvwprintw(table_win, row, 3, "%s %s      %02d° %s %02.0f'      %s\t\t%s", angle, house_num, deg_cusp, sign_str, min_cusp, house_ruler[i], pHouse[i - 1]);
+        mvwprintw(table_win, row, 3, "%s %s      %02d°%s%02d'%02d\"      %s\t\t%s", angle, house_num, degree, sign_str, min, seg, house_ruler[i], pHouse[i - 1]);
         wattroff(table_win, A_BOLD);
 
         row += 2;
@@ -7537,7 +7572,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(51, 139, COLOR_BACK_1);
         init_pair(52, 139, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
-        init_pair(54, COLOR_GREEN, 89); // green, magenta
+        init_pair(54, 76, 89); // green, magenta
         init_pair(55, 232, 25); // dark / azul
         init_pair(56, 232, 91); // dark, magenta
         init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
@@ -7897,12 +7932,12 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         char san[10];
         
         if (last_conj > last_opp) {
-            snprintf(san, sizeof(san), "%s", "⏾"); //🌑⦿
+            snprintf(san, sizeof(san), "%s", "🌑"); //⦿⏾
             jdSAN = last_conj;
             tipo_san = SAN_CONJUNCIONAL;
         } 
         else {
-            snprintf(san, sizeof(san), "%s", "❍"); //🌕⨷⦾
+            snprintf(san, sizeof(san), "%s", "🌕"); //⨷⦾❍
             jdSAN = last_opp;
             tipo_san = SAN_PREVENCIONAL;
         }

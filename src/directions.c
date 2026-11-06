@@ -497,20 +497,23 @@ void calc_mundane_part_regiomontanus(Promissor *sig, Promissor *trig, Promissor 
         }      
         else if (arc == 90.0) { 
             r = normalize360(pp->ra + 90.0);  // IC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
         else if (arc == 180.0) {
             r = normalize360(pp->ra + 180.0); // DESC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
         else if (arc == 270.0) {
             r = normalize360(pp->ra + 270.0); // MC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
-        
+        lot_m->ra = long_2_ra(lot_m->longitude, obl);
     }
     else {
     
@@ -633,18 +636,21 @@ void calc_mundane_part_placidus(Promissor *sig, Promissor *trig, Promissor *pp, 
         }      
         else if (arc == 90.0) { 
             r = normalize360(pp->ra + 90.0);  // IC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
         else if (arc == 180.0) {
             r = normalize360(pp->ra + 180.0); // DESC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
         else if (arc == 270.0) {
             r = normalize360(pp->ra + 270.0); // MC
-            lot_m->longitude = normalize360(atan2( sin(r * DEG_TO_RAD), (cos(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD)) ) * RAD_TO_DEG);
-
+            double y = sin(r * DEG_TO_RAD) * cos(obl * DEG_TO_RAD) + tan(pp->declination * DEG_TO_RAD) * sin(obl * DEG_TO_RAD);
+            double x = cos(r * DEG_TO_RAD);
+            lot_m->longitude = normalize360( atan2(y, x) * RAD_TO_DEG );
         }
         lot_m->ra = long_2_ra(lot_m->longitude, obl);
     }
@@ -3786,7 +3792,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         wattron(table_win, A_BOLD | COLOR_PAIR(8));
         if (idx_atual_calculo != -1) {
             wprintw(table_win, "%s %s", sig[idx_atual_calculo].object, sig[idx_atual_calculo].object_name);
-            if (seletor_alvo_atual == 0) wprintw(table_win, _(" [EMPHASIZED HYLEG]"));
+            if (seletor_alvo_atual == 0) wprintw(table_win, _(" [HYLEG] "));
         } else {
             wprintw(table_win, _("Point not calculated in this chart"));
         }

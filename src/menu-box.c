@@ -2930,7 +2930,7 @@ int main() {
     int delay = 1;
     
     initscr();
-
+    
     curs_set(0);
     noecho();
     cbreak();
@@ -2942,6 +2942,7 @@ int main() {
     //desativar_arrasto_mouse();
 
     start_color();
+    use_default_colors();
     
     while(1) {
 
