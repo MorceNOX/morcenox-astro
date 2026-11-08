@@ -21,7 +21,64 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <unistd.h>
 #include "environment.h"
+
+#ifndef APP_CONFIG_DIR
+#define APP_CONFIG_DIR "/tmp/fallback_path" // Fallback for local testing
+#endif
+
+/**
+* Checks if a directory exists. 
+* Returns 1 if it exists, 0 if it doesn't, -1 on error.
+*/
+int directory_exists(const char *path) {
+    struct stat info;
+    if (stat(path, &info) != 0) {
+        if (errno == ENOENT) return 0; // Path does not exist
+        return -1; // A real error occurred (e.g., permission denied)
+    }
+    return S_ISDIR(info.st_mode);
+}
+
+
+// /**
+// * The core initialization logic.
+// * This should be called at the very beginning of main().
+// */
+// void initialize_application_environment() {
+//     printf("[INFO] Checking configuration directory: %s\n", APP_CONFIG_DIR);
+
+//     // 1. Check if the config directory exists
+//     int exists = directory_exists(APP_CONFIG_DIR);
+
+//     if (exists == -1) {
+//         fprintf(stderr, "[ERROR] Critical error accessing path: %s\n", APP_CONFIG_DIR);
+//         exit(EXIT_FAILURE);
+//     }
+
+//     if (exists == 0) {
+//         printf("[INFO] Configuration directory not found. Creating it...\n");
+        
+//         // 2. Create the directory
+//         // 0700 permissions: Read/Write/Execute only for the owner (Standard for XDG)
+//         if (mkdir(APP_CONFIG_DIR, 0700) != 0) {
+//             fprintf(stderr, "[ERROR] Failed to create directory %s: %s\n", 
+//                     APP_CONFIG_DIR, strerror(errno));
+//             exit(EXIT_FAILURE);
+//         }
+//         printf("[INFO] Directory created successfully.\n");
+
+//     } else {
+//         printf("[INFO] Configuration directory is already present.\n");
+//     }
+// }
+
+
+
 
 // Function to expand environment variables in a string
 char* expand_env_vars(const char* input) {

@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.49.8
+VERSION = 1.49.9
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -44,10 +44,11 @@ POT_FILE   = $(PO_DIR)/$(DOMAIN).pot
 PREFIX   ?= /usr/local
 BINDIR   := $(PREFIX)/bin
 LIBEXECDIR ?= $(PREFIX)/libexec/$(APP_NAME)
+LOCALEDIR := $(PREFIX)/share/locale
 
 # Caminhos do Usuário (Configuração e Banco de Dados no XDG)
-XDG_CONFIG_HOME ?= $(HOME)/.config
-APP_CONFIG_DIR  := $(XDG_CONFIG_HOME)/$(APP_NAME)
+CONFIG_HOME := $(HOME)/.config
+APP_CONFIG_DIR  := $(CONFIG_HOME)/$(APP_NAME)
 DB_FILE         := $(APP_CONFIG_DIR)/astro.db
 
 CFLAGS +=  -DVERSION=\"$(VERSION)\"
@@ -76,6 +77,10 @@ src/%.o: src/%.c
 # Regra para criar a estrutura de diretórios e injetar o banco no $HOME do usuário
 setup-dir:
 	@echo "Criando diretórios de configuração em $(APP_CONFIG_DIR)..."
+	@mkdir -p $(CONFIG_HOME)
+	@sleep 0.1
+	@mkdir -p $(APP_CONFIG_DIR)
+	@sleep 0.1
 	@mkdir -p $(APP_CONFIG_DIR)/export
 	@sleep 0.1
 	@mkdir -p $(APP_CONFIG_DIR)/ephe
@@ -141,7 +146,7 @@ $(POT_FILE): $(SRCS)
 	@if [ -f $(PO_DIR)/es.po ]; then msgmerge --update $(PO_DIR)/es.po $(POT_FILE); else msginit --no-translator --input=$(PO_DIR)/es.po --locale=es --output=$(PO_DIR)/es.po; fi
 
 # Regra de instalação atualizada para copiar os arquivos pt.mo e en.mo fixos
-install: all setup-dir
+install: all
 	@echo "Instalando o executável em $(DESTDIR)$(BINDIR)..."
 	@mkdir -p $(DESTDIR)$(BINDIR)
 	@cp $(TARGET) $(DESTDIR)$(BINDIR)/

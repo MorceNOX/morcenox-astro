@@ -19,6 +19,8 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
+int directory_exists(const char *path);
+//void initialize_application_environment();
 char* expand_env_vars(const char* input);
 int load_env_file(char *env_path);
 float get_env_float(const char *key, float default_value);

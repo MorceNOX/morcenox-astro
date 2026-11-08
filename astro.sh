@@ -19,8 +19,8 @@
 # astro.sh - Entry point for portable MorceNOX-Astro
 
 APP_NAME="MorceNOX-Astro"
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-APP_CONFIG_DIR="$XDG_CONFIG_HOME/$APP_NAME"
+CONFIG_HOME="$HOME/.config"
+APP_CONFIG_DIR="$CONFIG_HOME/$APP_NAME"
 DB_FILE="$APP_CONFIG_DIR/astro.db"
 
 # Get the directory where this script is located
@@ -31,12 +31,20 @@ echo "Launching $APP_NAME..."
 # 1. Check if the config directory exists, if not, initialize it from the package
 if [ ! -d "$APP_CONFIG_DIR" ]; then
     echo "First run detected. Initializing configuration in $APP_CONFIG_DIR..."
+    mkdir -p "$CONFIG_HOME"
+    mkdir -p "$APP_CONFIG_DIR"
     mkdir -p "$APP_CONFIG_DIR/ephe"
+    mkdir -p "$APP_CONFIG_DIR/database"
+    mkdir -p "$APP_CONFIG_DIR/export"
     sleep 0.1 # Garante a consolidação do diretório no disco
     
     # Copy Ephemeris files from the 'assets' folder in the package
     if [ -d "$SELF_DIR/assets/ephe" ]; then
         cp -r "$SELF_DIR/assets/ephe/"* "$APP_CONFIG_DIR/ephe/"
+    fi
+
+    if [ -d "$SELF_DIR/assets/database" ]; then
+        cp -r "$SELF_DIR/assets/database/"* "$APP_CONFIG_DIR/database/"
     fi
 
     # Copy Text/Env files from the 'assets' folder (CORRIGIDO: Asteriscos fora das aspas)
