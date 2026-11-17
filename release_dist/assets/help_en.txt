@@ -287,7 +287,17 @@ Press Q or ESC to return to the main menu.
         
         P - Arabic Parts Solar Return Radix Confrontation
         
+        O - Activation of the Solar Return Fixed Stars & Verification in the Radical Chart
+        
     • F20 (shift+F8) or 8 - Planetary Energy Profile
+    
+    • F21 (shift+F9) or F - Heliacal Phases & Visibility of Fixed Stars
+    
+    • 9 - Fixed Stars Parans
+    
+    • S - Longitudinal Aspects with Fixed Stars
+    
+    • V - Declination Aspects with Fixed Stars
     
     • 0 - Primary Motivation
        
@@ -385,15 +395,17 @@ The interface was designed to offer efficiency and beauty; most actions require 
  
 To save a custom chart, simply enter the data and select the save option from the main menu.
 
-To view and interact with the action modules hit the function or numeric keys of the keyboard while the chart wheel is being displayed, or the key [M] to open the action menu and choosing the desired one. 
+To view and interact with the action modules hit the function or numeric keys of the keyboard while the chart wheel is being displayed, or the key [M] to open the action menu and choosing the desired one. You can also click over the [  MENU  ] button access any available action module.
 
 Some tables and panels have more options accessible while they are open.
 
 Whenever you wish you can open this help screen and see immediately the keys and their respective table or panel, or go directly to the desired topic.
 
+From version v1.50.0 onwards you can interact with Fixed Stars. There is a corresponding section below exclusively about the Fixed Stars.
+
 This application is developed in C, utilizing the ncurses library for visual elements and the Swiss Ephemeris for astronomical calculations. This ensures a fast, solid, and accurate system that is precise and visually appealing, even within a terminal environment.
 
-For accurate charts and tables, all astronomical calculations are performed based on the topocentric system, taking into account the coordinates of the location for the loaded map.
+For accurate charts and tables, all astronomical calculations concerned to the positions of the planet and bodies are performed based on the topocentric system, taking into account the coordinates of the location for the loaded map.
 
 All data is stored in an SQLite database provided by this application.
 
@@ -575,6 +587,12 @@ You can set:
 
    • Triplicity System: 
      Choose between Morinus, Dorotheus, and Ptolemy to determine the rulership of the elements.
+     
+   • Terms System:
+     Set the terms system used by the application. You can choose between Egyptian System and Ptolemaic System.
+     
+   • Star Classes:
+     Choose which stars will be calculated according to the categories selected in this option.
     
    • Planetary orb: 
      Modify the orb value for all planets, luminaries and the lunar nodes used in aspect calculations. Note: We do not use "orb by aspect"; each planet has a fixed orb applied to all its aspects.
@@ -596,6 +614,9 @@ You can set:
 
    • Antiscia/Contra-antiscia as Promissors in Primary Directions:
      You can choose "yes" or "no" to include the Antiscion and Contra-antiscion of the base promissors—namely the planets, lunar nodes, and the Part of Fortune—in the list of promissors, along with their respective aspects.
+   
+   • Fixed Stars as Promissors in Primary Directions:
+     This option allows you to enable or disable the directions of the fixed stars as promissors. If enabled, the significators will be directed alo to the most relevant fixed stars by conjunction, opposition, parallel and rapt-parallel, excluiding other longitudinal aspects. 
 
    • Primary Direction Arc Calculation Method:
      Choose between:
@@ -755,9 +776,17 @@ All commands in this menu can also be executed using shortcut keys, which includ
 
 To easily differentiate celestial bodies, the chart uses color coding:
 
-   • The 7 Main Planets (Sun, Moon, Mercury, Venus, Mars, Jupiter, and Saturn) are displayed in Blue.
+   • The 7 Main Planets:
+      - Sun is displayed in dark orange, 
+      - Moon is displayed in turquoise blue, 
+      - Mercury is displayed in purple, 
+      - Venus is displayed in violet blue or indigo, 
+      - Mars is displayed in red, 
+      - Jupiter is displayed in dark green, and  
+      - Saturn is displayed in green,
+      - North and South Node are displayed in grey.
     
-   • The 3 Modern Planets (Uranus, Neptune, and Pluto) are displayed in Magenta.
+   • The 3 Modern Planets (Uranus, Neptune, and Pluto) are displayed each one in a different shade of magenta.
     
    • Points and Angles (Asc, Desc, IC, MC, Vertex, Part of Fortune, Syzygy Ante Nativitatem, North/South Node) are in Black.
    
@@ -822,7 +851,7 @@ Press Q or ESC to return to the main menu.
 • The Available Modules, the Tables and Panels:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Function keys F1 to F9 and F12, F13 to F20 (or 1 to 8) load the following modules that calculate and create tables, panels and reports when the respective key is pressed in the Chart Wheel screen. 
+Function keys F1 to F9 and F12, F13 to F21, numerals from 0 to 9, and the letters i, x, s, v, f, c, t & o load the following modules that calculate and create tables, panels and reports when the respective key is pressed in the Chart Wheel screen. 
 
 The keys are shortcuts, but you can also access the modules by pressing [M] in the Chart Wheel screen and choose the desired one with the arrow keys and [ENTER].
 
@@ -1009,7 +1038,7 @@ Mutual Reception without Aspect*** → +1 point
 
 This table displays astronomical calculated metrics of the planets and other points and bodies.
 
-You can see position in the house, longitude, latitude, declination, right ascension, semi-arcs, mundane positions and hourly distance of the planets and celestial bodies. 
+You can see position in the house, longitude, latitude, declination, right ascension, semi-arcs, mundane positions and horary distance of the planets and celestial bodies. 
 
 The last 2 columns are calculated according to the selected method of Primary Directions.
 
@@ -1291,7 +1320,7 @@ In addition to the interpretation, the module analyzes the strength and operatio
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 13: Rising, Setting, and Culmination Times
+Index 13: Rising, Setting, Culmination & Anticulmination Times
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -1310,10 +1339,10 @@ Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 13
 
-• Rising, Setting, and Culmination Times (F5)
+• Rising, Setting, Culmination & Anticulmination Times (F5)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Displays the times (in local time) of Rising (crossing the Ascendant), Culmination (crossing the MC), and Setting (crossing the Descendant) for the luminaries, planets, and lunar nodes.
+Displays the times (in local time) of Rising (crossing the Ascendant), Culmination (crossing the MC), Setting (crossing the Descendant) and Anticulmination (crossing the IC) for the luminaries, planets, and lunar nodes.
 
 It is important to determine the orientality or occidentality of the planets relative to other bodies—primarily the Sun—as
 this counts as accidental dignity. The body that rises (ascends) first is oriental relative to the other.
@@ -1678,9 +1707,9 @@ Directions are displayed in chronological order for a single significator at a t
 
 Use the right and left arrows to change the significator and scroll through the table to view all directions for the selected point.
 
-The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, and the Antiscia and Contrantiscia of the planets and lunar nodes.
+The Promissors—those that move toward the significators—include the following, along with their aspects: the 7 traditional planets, the 3 modern planets (if in use), the Part of Fortune, the North and South Lunar Nodes, the Terms, the Antiscia and Contrantiscia of the planets and lunar nodes, and the Fixed Stars.
 
-Antiscia/Contrantiscia are optional; You can select the corresponding option in the settings menu item.
+Antiscia/Contrantiscia, as well as Fixed Stars, are optional; You can select the corresponding options in the settings menu item.
 
 By default, the table displays both, Direct and Converse directions. You can filter the results by pressing [C] to see only Converse diretions, [D] for Direct, and [A] to see all directions in the table.
 
@@ -1749,7 +1778,9 @@ directions and a period of alert.
     
     • When the promissor is a term, the direction is displayed underlined and dimmed.
     
-    • Antiscion and Contrantiscion as promissor, the direction will be displayed dimmed and italic. 
+    • Antiscion and Contrantiscion as promissor, the direction will be displayed dimmed and italic.
+    
+    • For the Fixed Stars as promissors, all their directions will be displayed in italic and in a light shade of purple.
     
 The same color coding is applied to both, Direct and Converse directions.
 
@@ -2137,7 +2168,7 @@ motivation is applied or pointed to.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 27: Licenses
+Index 27: Fixed Stars
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
@@ -2155,6 +2186,80 @@ Index 27: Licenses
 Press Q or ESC to return to the main menu.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 27
+
+• The Fixed Stars Module
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Fixed Stars module provides a comprehensive analysis based on the principles of Traditional Astrology (Hellenistic, Arabic, and Renaissance), allowing for the assessment of the impact that major stars and nebulae have on a natal chart and within predictive techniques.
+
+Selected Catalog (51 Classic Objects)
+
+Rather than displaying hundreds of faint stars that create "noise" in the reading, this catalog brings together 51 stars and clusters that are fundamental to the tradition:
+
+• The 4 Royal Stars of Persia: Aldebaran, Regulus, Antares, and Fomalhaut (the Guardians of the Sky).
+
+• The 15 Behenian Stars: The core set from the medieval tradition and astrological magic (including Algol, Alcyone, Capella, Sirius, Procyon, Spica, Arcturus, and Vega).
+
+• Stars from Ptolemy and the Anonymous of 379: Stars of the 1st and 2nd magnitude with an extensive history of interpretation.
+
+• Classic Nebulae and Clusters: Praesepe (M44), Facies (M22), Capulus (M34), Aculeus (M6), and Acumen (M7).
+
+Module Features and Displays
+
+1. Natal Aspects (Ecliptic and Declination):
+
+	• Displays longitudinal conjunctions with orbs adjusted according to the brightness (magnitude) of each star, ranging from 1°00' to 2°30'.
+
+	• Calculates parallels and contra-parallels of declination, indicating alignments on the equatorial plane.
+
+	• Provides the Ptolemaic temperament for each star (e.g., Mars/Jupiter, Saturn/Venus) to guide interpretation.
+
+2. Primary Directions with Fixed Stars:
+
+	• When enabled in the settings, fixed stars act as promissors (both zodiacal and mundane) in relation to the chart’s significators and angles. 
+	
+	• Following the strictest classical doctrine, only Conjunctions, Parallels of Declination, and Parallel Rapti are considered, thereby avoiding the noise of major aspects that are not cast by stars.
+	
+3. Parans (Paranatellonta):
+
+	• Shows which stars cross the four local angles (Rising, Culminating at the MC, Setting, or at the IC) simultaneously with the planets on the date of birth, calculated for the chart’s exact geographic latitude.
+
+	• Press the 'S' key to toggle the sorting order between Planet, Smallest Orb, and Bernadette Brady’s "Phases of Life."
+
+4. Heliacal Phases and Visibility:
+
+	• Indicates whether each star was visible in the sky on the date of birth or if it was "under the Sun’s rays" (hidden/combust); also identifies circumpolar stars.
+
+	• Displays the dates for the Last Heliacal Rising, Last Heliacal Setting, and Next Heliacal Rising, with the star associated with the Natal Heliacal Rising highlighted at the top.
+
+5. Activations in the Solar Return (in the Solar Return Chart) - Press the letter [O]:
+	
+	• Check whether the angles (ASC, MC, DSC, IC) or planets of the Solar Return fall in exact conjunction with fixed stars for the year of the return.
+	
+	• Mark with the label [Active in Natal] those stars that already have a strong connection within the natal chart, indicating whether the star was visible or "under the rays" (sub radiis) at the time of birth.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 28: Licenses
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+28
 
 • Licenses:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

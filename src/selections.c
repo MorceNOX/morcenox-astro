@@ -791,11 +791,13 @@ ChartOptions load_default_options() {
     options.modern_planets_rulling = false;
     options.show_modern_planets = false;
     options.ant_prom = false;
+    options.star_prom = false;
     options.gender = GENDER;
     options.time_key = TIME_KEY;
     snprintf(options.language, 10, "%s", LANGUAGE);
     options.zod_pd_with_lat = ZOD_PD_WITH_LAT;
     options.pd_arc_calc = METODO_CALCULO_ATIVO;
+    options.star_classes = 1;
 
 
     sqlite3 *db;
@@ -808,7 +810,7 @@ ChartOptions load_default_options() {
         return options;
     }
 
-    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key, antiscia_as_promissor, pd_arc_calc, zod_pd_with_lat FROM profiles WHERE profile = ?;";
+    const char *sql_select = "SELECT dark_mode, house_system, triplicity_system, terms_system, modern_planets_rulling, show_modern_planets, gender, language, time_key, antiscia_as_promissor, pd_arc_calc, zod_pd_with_lat, stars_as_promissor, star_classes_selection FROM profiles WHERE profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (load_default_options): %s\n", sqlite3_errmsg(db));
@@ -831,6 +833,8 @@ ChartOptions load_default_options() {
         int ant_prom = sqlite3_column_int(stmt, 9);
         int pd_arc_calc = sqlite3_column_int(stmt, 10);
         int zod_pd_with_lat = sqlite3_column_int(stmt, 11);
+        int star_prom = sqlite3_column_int(stmt, 12);
+        int star_classes = sqlite3_column_int(stmt, 13);
 
         options.dark_mode = dark_mode;
         options.house_system = house_system[0];
@@ -844,6 +848,8 @@ ChartOptions load_default_options() {
         options.time_key = key;
         options.pd_arc_calc = pd_arc_calc;
         options.zod_pd_with_lat = zod_pd_with_lat;
+        options.star_prom = star_prom;
+        options.star_classes = star_classes;
 
         found = 1;
     }
@@ -861,7 +867,7 @@ ChartOptions load_default_options() {
 
 
 
-int save_orbis_settings(double planet_orbis[], double parallel_orbis, double antissia_orbis) {
+int save_orbis_settings(double planet_orbis[], double parallel_orbis, double antissia_orbis, double paran_orbis) {
     sqlite3 *db;
     sqlite3_stmt *stmt_plan_ram = NULL;
     sqlite3_stmt *stmt_plan_disc = NULL;
@@ -881,8 +887,8 @@ int save_orbis_settings(double planet_orbis[], double parallel_orbis, double ant
     const char *sql_plan_disc = "UPDATE disco.planets SET orbis = ? WHERE id = ?;";
 
     // Queries espelhadas para o perfil
-    const char *sql_prof_ram  = "UPDATE main.profiles SET parallel_orbis = ?, antissia_orb = ? WHERE profile = 'default';";
-    const char *sql_prof_disc = "UPDATE disco.profiles SET parallel_orbis = ?, antissia_orb = ? WHERE profile = 'default';";
+    const char *sql_prof_ram  = "UPDATE main.profiles SET parallel_orbis = ?, antissia_orb = ?, paran_orb = ? WHERE profile = 'default';";
+    const char *sql_prof_disc = "UPDATE disco.profiles SET parallel_orbis = ?, antissia_orb = ?, paran_orb = ? WHERE profile = 'default';";
 
     // 2. Prepara todos os statements lógicos de forma independente
     if (sqlite3_prepare_v2(db, sql_plan_ram, -1, &stmt_plan_ram, NULL) != SQLITE_OK ||
@@ -928,6 +934,7 @@ int save_orbis_settings(double planet_orbis[], double parallel_orbis, double ant
         
         sqlite3_bind_double(prof_statements[j], 1, parallel_orbis);
         sqlite3_bind_double(prof_statements[j], 2, antissia_orbis);
+        sqlite3_bind_double(prof_statements[j], 3, paran_orbis);
         
         if (sqlite3_step(prof_statements[j]) != SQLITE_DONE) {
             sucesso = 0;
@@ -968,7 +975,7 @@ OptionsEdition select_options() {
     unsigned short term_w = 80, term_h = 24;
     getmaxyx(stdscr, term_h, term_w); // Captura o tamanho do terminal atual
     
-    int w_width = 95, w_height = 33;
+    int w_width = 95, w_height = 35;
     WINDOW *win = newwin(w_height, w_width, (term_h - w_height)/2, (term_w - w_width)/2);
     WINDOW *shadow = newwin(w_height, w_width, (term_h - w_height)/2 + 1, (term_w - w_width)/2 + 1);
     keypad(win, TRUE);
@@ -1181,6 +1188,39 @@ OptionsEdition select_options() {
 
 
 
+    // loading the star classes selections
+    unsigned int *star_classes_ids = NULL;
+    char **star_classes_names = NULL;
+    int star_classes_count = 0;
+
+    db = open_database();
+    if (db) {
+        const char *sql_select_star_classes = "SELECT opt, classes FROM star_classes_selection ORDER BY opt;";
+        rc = sqlite3_prepare_v2(db, sql_select_star_classes, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                int id = sqlite3_column_int(stmt, 0);
+                const char *name = (const char*)sqlite3_column_text(stmt, 1);
+                
+                // Resize arrays
+                star_classes_ids = realloc(star_classes_ids, (star_classes_count + 1) * sizeof(int));
+                star_classes_names = realloc(star_classes_names, (star_classes_count + 1) * sizeof(char*));
+                
+                // Store terms system ID and name
+                star_classes_ids[star_classes_count] = id;
+                
+                star_classes_names[star_classes_count] = malloc(strlen(name) + 1);
+                strcpy(star_classes_names[star_classes_count], name);
+                
+                star_classes_count++;
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+
+
 
     // Load planet orbis values from database
     double planet_orbis[12] = {0.0}; // Sun through Pluto
@@ -1223,6 +1263,22 @@ OptionsEdition select_options() {
         if (rc == SQLITE_OK) {
             while (sqlite3_step(stmt) == SQLITE_ROW) {
                 antissia_orbis = sqlite3_column_double(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+
+    // Load paran orbis from database
+    double paran_orbis = 0.0;
+    db = open_database();
+    if (db) {
+        const char *sql_select_p_orbis = "SELECT paran_orb FROM profiles WHERE profile = 'default';";
+        rc = sqlite3_prepare_v2(db, sql_select_p_orbis, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                paran_orbis = sqlite3_column_double(stmt, 0);
             }
             sqlite3_finalize(stmt);
         }
@@ -1345,7 +1401,7 @@ OptionsEdition select_options() {
         wattroff(win, COLOR_PAIR(22));     
 
         // Renderização dos campos com destaque no selecionado
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 27; i++) {
             if (i == campo_atual) wattron(win, COLOR_PAIR(23) | A_BOLD | A_REVERSE);
             else wattron(win, COLOR_PAIR(22));
             
@@ -1402,78 +1458,99 @@ OptionsEdition select_options() {
                 const char *terms_text = _("Terms (bounds) System");
                 mvwprintw(win, 4, 2, " ◦ %s: %s ", terms_text, terms_system_name);
             }
-            
-            
             else if (i == 3) {
-                const char *orb1 = _("Sun orb");
-                mvwprintw(win, 6, 2, " ◦ %s: %.1f ", orb1, planet_orbis[0]);
+                char star_classes_name[128];
+                snprintf(star_classes_name, 128, "%s", _("Unknown"));
+                if (star_classes_count > 0) {
+                    for (int j = 0; j < star_classes_count; j++) {
+                        if (star_classes_ids[j] == options.star_classes) {
+                            snprintf(star_classes_name, sizeof(star_classes_name), "%d (%s)", 
+                                    options.star_classes, star_classes_names[j]);
+                            break;
+                        }
+                    }
+                }
+
+                const char *star_classes_text = _("Calculated Stars Classes");
+                mvwprintw(win, 5, 2, " ◦ %s: %s ", star_classes_text, star_classes_name);
             }
+            
+            
             else if (i == 4) {
-                const char *orb2 = _("Moon orb");
-                mvwprintw(win, 7, 2, " ◦ %s: %.1f ", orb2, planet_orbis[1]);
+                const char *orb1 = _("Sun orb");
+                mvwprintw(win, 7, 2, " ◦ %s: %.1f° ", orb1, planet_orbis[0]);
             }
             else if (i == 5) {
-                const char *orb3 = _("Mercury orb");
-                mvwprintw(win, 8, 2, " ◦ %s: %.1f ", orb3, planet_orbis[2]);
+                const char *orb2 = _("Moon orb");
+                mvwprintw(win, 8, 2, " ◦ %s: %.1f° ", orb2, planet_orbis[1]);
             }
             else if (i == 6) {
-                const char *orb4 = _("Venus orb");
-                mvwprintw(win, 9, 2, " ◦ %s: %.1f ", orb4, planet_orbis[3]);
+                const char *orb3 = _("Mercury orb");
+                mvwprintw(win, 9, 2, " ◦ %s: %.1f° ", orb3, planet_orbis[2]);
             }
             else if (i == 7) {
-                const char *orb5 = _("Mars orb");
-                mvwprintw(win, 10, 2, " ◦ %s: %.1f ", orb5, planet_orbis[4]);
+                const char *orb4 = _("Venus orb");
+                mvwprintw(win, 10, 2, " ◦ %s: %.1f° ", orb4, planet_orbis[3]);
             }
             else if (i == 8) {
-                const char *orb6 = _("Jupiter orb");
-                mvwprintw(win, 11, 2, " ◦ %s: %.1f ", orb6, planet_orbis[5]);
+                const char *orb5 = _("Mars orb");
+                mvwprintw(win, 11, 2, " ◦ %s: %.1f° ", orb5, planet_orbis[4]);
             }
             else if (i == 9) {
-                const char *orb7 = _("Saturn orb");
-                mvwprintw(win, 12, 2, " ◦ %s: %.1f ", orb7, planet_orbis[6]);
+                const char *orb6 = _("Jupiter orb");
+                mvwprintw(win, 12, 2, " ◦ %s: %.1f° ", orb6, planet_orbis[5]);
             }
             else if (i == 10) {
-                const char *orb8 = _("Uranus orb");
-                mvwprintw(win, 13, 2, " ◦ %s: %.1f ", orb8, planet_orbis[7]);
+                const char *orb7 = _("Saturn orb");
+                mvwprintw(win, 13, 2, " ◦ %s: %.1f° ", orb7, planet_orbis[6]);
             }
             else if (i == 11) {
-                const char *orb9 = _("Neptune orb");
-                mvwprintw(win, 14, 2, " ◦ %s: %.1f ", orb9, planet_orbis[8]);
+                const char *orb8 = _("Uranus orb");
+                mvwprintw(win, 14, 2, " ◦ %s: %.1f° ", orb8, planet_orbis[7]);
             }
             else if (i == 12) {
-                const char *orb10 = _("Pluto orb");
-                mvwprintw(win, 15, 2, " ◦ %s: %.1f ", orb10, planet_orbis[9]);
+                const char *orb9 = _("Neptune orb");
+                mvwprintw(win, 15, 2, " ◦ %s: %.1f° ", orb9, planet_orbis[8]);
             }
             else if (i == 13) {
-                const char *orb11 = _("Lunar Nodes orb");
-                mvwprintw(win, 16, 2, " ◦ %s: %.1f ", orb11, planet_orbis[10]);
+                const char *orb10 = _("Pluto orb");
+                mvwprintw(win, 16, 2, " ◦ %s: %.1f° ", orb10, planet_orbis[9]);
             }
-
             else if (i == 14) {
-                const char *orb12 = _("Parallel / Contra-parallel orb");
-                mvwprintw(win, 17, 2, " ◦ %s: %.1f ", orb12, parallel_orbis);
+                const char *orb11 = _("Lunar Nodes orb");
+                mvwprintw(win, 17, 2, " ◦ %s: %.1f° ", orb11, planet_orbis[10]);
             }
 
             else if (i == 15) {
-                const char *orb13 = _("Antiscia / Contrantiscia orb");
-                mvwprintw(win, 18, 2, " ◦ %s: %.1f ", orb13, antissia_orbis);
+                const char *orb12 = _("Parallel / Contra-parallel orb");
+                mvwprintw(win, 18, 2, " ◦ %s: %.1f° ", orb12, parallel_orbis);
             }
 
             else if (i == 16) {
-                // Show 'yes' or 'no' instead of 0 or 1
-                const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
-                const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
-                mvwprintw(win, 20, 2, " ◦ %s %s ", consider_text, consider_modern_planets_str);
+                const char *orb13 = _("Antiscia / Contrantiscia orb");
+                mvwprintw(win, 19, 2, " ◦ %s: %.1f° ", orb13, antissia_orbis);
             }
 
             else if (i == 17) {
+                const char *orb14 = _("Paran orb (time in minutes)");
+                mvwprintw(win, 20, 2, " ◦ %s: %.1f min ", orb14, paran_orbis);
+            }
+
+            else if (i == 18) {
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *consider_modern_planets_str = options.modern_planets_rulling ? _("yes") : _("no");
+                const char *consider_text = _("Consider Modern Planets Rulling by Exaltation?");
+                mvwprintw(win, 22, 2, " ◦ %s %s ", consider_text, consider_modern_planets_str);
+            }
+
+            else if (i == 19) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *show_modern_planets_str = options.show_modern_planets ? _("yes") : _("no");
                 const char *use_text = _("Use Modern Planets?");
 
-                mvwprintw(win, 21, 2, " ◦ %s %s ", use_text, show_modern_planets_str);
+                mvwprintw(win, 23, 2, " ◦ %s %s ", use_text, show_modern_planets_str);
             }
-            else if (i == 18) {
+            else if (i == 20) {
                 // Show the name of the time key instead of just the number
                 char time_key_name[128];
                 snprintf(time_key_name, 128, "%s", _("Unknown"));
@@ -1498,15 +1575,23 @@ OptionsEdition select_options() {
                 }
 
                 const char *key_text = _("Time Key (Prim. Directions)");
-                mvwprintw(win, 23, 2, " ◦ %s: %s ", key_text, time_key_name);
+                mvwprintw(win, 25, 2, " ◦ %s: %s ", key_text, time_key_name);
             }
-            else if (i == 19) {
+            else if (i == 21) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *ant_prom_str = options.ant_prom ? _("yes") : _("no");
 
                 const char *ant_prom_text = _("Antiscia/Contrantiscia as Promissors in Primary Directions?");
-                mvwprintw(win, 24, 2, " ◦ %s %s ", ant_prom_text, ant_prom_str);
+                mvwprintw(win, 26, 2, " ◦ %s %s ", ant_prom_text, ant_prom_str);
             }
+            else if (i == 22) {
+                // Show 'yes' or 'no' instead of 0 or 1
+                const char *star_prom_str = options.star_prom ? _("yes") : _("no");
+
+                const char *star_prom_text = _("Fixed Stars as Promissors in Primary Directions?");
+                mvwprintw(win, 27, 2, " ◦ %s %s ", star_prom_text, star_prom_str);
+            }
+
             // else if (i == 20) {
             //     char pd_zod_lat_name[128];
             //     snprintf(pd_zod_lat_name, 128, "%s", _("Unknown"));
@@ -1523,7 +1608,7 @@ OptionsEdition select_options() {
 
             //     mvwprintw(win, 24, 2, " ◦ %s: %s ", pd_zod_lat_text, pd_zod_lat_name);
             // }
-            else if (i == 20) {
+            else if (i == 23) {
                 char pd_arc_calc_name[128];
                 snprintf(pd_arc_calc_name, 128, "%s", _("Unknown"));
                 if (pd_arc_calc_count > 0) {
@@ -1537,9 +1622,9 @@ OptionsEdition select_options() {
                 }
                 const char *pd_arc_calc_text = _("Prim Dir Arc Calculation Method");
 
-                mvwprintw(win, 25, 2, " ◦ %s: %s ", pd_arc_calc_text, pd_arc_calc_name);
+                mvwprintw(win, 28, 2, " ◦ %s: %s ", pd_arc_calc_text, pd_arc_calc_name);
             }
-            else if (i == 21) {
+            else if (i == 24) {
                 char language_name[128];
                 snprintf(language_name, 128, "%s", _("Unknown"));
                 if (lang_count > 0) {
@@ -1553,20 +1638,20 @@ OptionsEdition select_options() {
                 }
                 const char *lang_text = _("Interface Language");
 
-                mvwprintw(win, 27, 2, " ◦ %s: %s ", lang_text, language_name);
+                mvwprintw(win, 30, 2, " ◦ %s: %s ", lang_text, language_name);
             }
-            else if (i == 22) {
+            else if (i == 25) {
                 // Show 'yes' or 'no' instead of 0 or 1
                 const char *dark_mode_str = options.dark_mode ? _("yes") : _("no");
 
                 const char *dark_mode_text = _("Dark Mode");
-                mvwprintw(win, 28, 2, " ◦ %s: %s ", dark_mode_text, dark_mode_str);
+                mvwprintw(win, 31, 2, " ◦ %s: %s ", dark_mode_text, dark_mode_str);
             }
-            else if (i == 23) {
+            else if (i == 26) {
                 const char *gender_str = options.gender == 1 ? _("Male") : (options.gender == 2 ? _("Female") : _("Neuter"));
                 const char *gen_text = _("Default Gender");
 
-                mvwprintw(win, 29, 2, " ◦ %s: %s ", gen_text, gender_str);
+                mvwprintw(win, 32, 2, " ◦ %s: %s ", gen_text, gender_str);
             }
 
 
@@ -1582,10 +1667,10 @@ OptionsEdition select_options() {
 
         switch (key) {
             case KEY_UP:
-                campo_atual = (campo_atual - 1 + 24) % 24; // Now 25 fields
+                campo_atual = (campo_atual - 1 + 27) % 27; // Now 27 fields
                 break;
             case KEY_DOWN:
-                campo_atual = (campo_atual + 1) % 24;
+                campo_atual = (campo_atual + 1) % 27;
                 break;
             case KEY_RIGHT:
                 
@@ -1655,30 +1740,56 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual >= 3 && campo_atual <= 13) {
+                else if (campo_atual == 3) {
+                    if (star_classes_count > 0) {
+                        // Find current position
+                        int current_pos = -1;
+                        for (int j = 0; j < star_classes_count; j++) {
+                            if (star_classes_ids[j] == options.star_classes) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        // Move to next system
+                        if (current_pos >= 0) {
+                            int next_pos = (current_pos + 1) % star_classes_count;
+                            options.star_classes = star_classes_ids[next_pos];
+                        } else {
+                            // If not found, start with first
+                            options.star_classes = star_classes_ids[0];
+                        }
+                    }
+                }
+                else if (campo_atual >= 4 && campo_atual <= 14) {
                     // Increment planet orbis value
-                    int planet_index = campo_atual - 3;
+                    int planet_index = campo_atual - 4;
                     if (planet_orbis[planet_index] < 30.0) {
                         planet_orbis[planet_index] += 0.5;
                     }
                 }
-                else if (campo_atual == 14) {
+                else if (campo_atual == 15) {
                     if (parallel_orbis < 5.0) {
                         parallel_orbis += 0.5;
                     }
                 }
-                else if (campo_atual == 15) {
+                else if (campo_atual == 16) {
                     if (antissia_orbis < 5.0) {
                         antissia_orbis += 0.5;
                     }
                 }
-                else if (campo_atual == 16) {
-                    options.modern_planets_rulling = !options.modern_planets_rulling;
-                }
                 else if (campo_atual == 17) {
-                    options.show_modern_planets = !options.show_modern_planets;
+                    if (paran_orbis < MAX_ORB_PARAN) {
+                        paran_orbis += 0.5;
+                    }
                 }
                 else if (campo_atual == 18) {
+                    options.modern_planets_rulling = !options.modern_planets_rulling;
+                }
+                else if (campo_atual == 19) {
+                    options.show_modern_planets = !options.show_modern_planets;
+                }
+                else if (campo_atual == 20) {
                     if (key_count > 0) {
                         int current_pos = -1;
                         for (int j = 0; j < key_count; j++) {
@@ -1698,9 +1809,12 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 19) {
+                else if (campo_atual == 21) {
                     // Toggle antiscia as promissor
                     options.ant_prom = !options.ant_prom;
+                }
+                else if (campo_atual == 22) {
+                    options.star_prom = !options.star_prom;
                 }
                 // else if (campo_atual == 20) {
                 //     if (pd_zod_lat_count > 0) {
@@ -1723,7 +1837,7 @@ OptionsEdition select_options() {
                 //         }
                 //     }
                 // }
-                else if (campo_atual == 20) {
+                else if (campo_atual == 23) {
                     if (pd_arc_calc_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1744,7 +1858,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 21) {
+                else if (campo_atual == 24) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1763,11 +1877,11 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 22) {
+                else if (campo_atual == 25) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
-                else if (campo_atual == 23) {
+                else if (campo_atual == 25) {
                     if (options.gender < 4) options.gender++;
                     if (options.gender == 4) options.gender = 1;            
                 }
@@ -1841,30 +1955,53 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual >= 3 && campo_atual <= 13) {
+                else if (campo_atual == 3) {
+                    if (star_classes_count > 0) {
+                        int current_pos = -1;
+                        for (int j = 0; j < star_classes_count; j++) {
+                            if (star_classes_ids[j] == options.star_classes) {
+                                current_pos = j;
+                                break;
+                            }
+                        }
+                        
+                        if (current_pos >= 0) {
+                            int prev_pos = (current_pos - 1 + star_classes_count) % star_classes_count;
+                            options.star_classes = star_classes_ids[prev_pos];
+                        } else {
+                            options.star_classes = star_classes_ids[0];
+                        }
+                    }
+                }
+                else if (campo_atual >= 4 && campo_atual <= 14) {
                     // Decrement planet orbis value
-                    int planet_index = campo_atual - 3;
+                    int planet_index = campo_atual - 4;
                     if (planet_orbis[planet_index] > 2.0) {
                         planet_orbis[planet_index] -= 0.5;
                     }
                 }
-                else if (campo_atual == 14) {
+                else if (campo_atual == 15) {
                     if (parallel_orbis > 1.0) {
                         parallel_orbis -= 0.5;
                     }
                 }
-                else if (campo_atual == 15) {
+                else if (campo_atual == 16) {
                     if (antissia_orbis > 1.0) {
                         antissia_orbis -= 0.5;
                     }
                 }
-                else if (campo_atual == 16) {
-                    options.modern_planets_rulling = !options.modern_planets_rulling;
-                }
                 else if (campo_atual == 17) {
-                    options.show_modern_planets = !options.show_modern_planets;
+                    if (paran_orbis > ORB_PARAN_EXACT) {
+                        paran_orbis -= 0.5;
+                    }
                 }
                 else if (campo_atual == 18) {
+                    options.modern_planets_rulling = !options.modern_planets_rulling;
+                }
+                else if (campo_atual == 19) {
+                    options.show_modern_planets = !options.show_modern_planets;
+                }
+                else if (campo_atual == 20) {
                     if (key_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1886,9 +2023,12 @@ OptionsEdition select_options() {
                     }
 
                 }
-                else  if (campo_atual == 19) {
+                else  if (campo_atual == 21) {
                     // Toggle antiscia / c.antiscia as promissor
                     options.ant_prom = !options.ant_prom;
+                }
+                else  if (campo_atual == 22) {
+                    options.star_prom = !options.star_prom;
                 }
                 // else if (campo_atual == 20) {
                 //     // Cycle backwards through triplicity systems
@@ -1912,7 +2052,7 @@ OptionsEdition select_options() {
                 //         }
                 //     }
                 // }
-                else if (campo_atual == 20) {
+                else if (campo_atual == 23) {
                     if (pd_arc_calc_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1933,7 +2073,7 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else if (campo_atual == 21) {
+                else if (campo_atual == 24) {
                     if (lang_count > 0) {
                         // Find current position
                         int current_pos = -1;
@@ -1953,11 +2093,11 @@ OptionsEdition select_options() {
                         }
                     }
                 }
-                else  if (campo_atual == 22) {
+                else  if (campo_atual == 25) {
                     // Toggle dark mode
                     options.dark_mode = !options.dark_mode;
                 }
-                else if (campo_atual == 23) {
+                else if (campo_atual == 26) {
                     if (options.gender > 0) options.gender--;
                     if (options.gender == 0) options.gender = 3;
                 }
@@ -1987,7 +2127,7 @@ OptionsEdition select_options() {
                 napms(125); 
             
                 // CHAMA A FUNÇÃO ENCAPSULADA: Salva na RAM e no Disco de uma vez só!
-                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis)) {
+                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis, paran_orbis)) {
                     // Opcional: mostrar um alerta se falhar o salvamento
                 }
             
@@ -2050,6 +2190,15 @@ OptionsEdition select_options() {
                                     free(terms_names[i]);
                                 }
                                 free(terms_names);
+                            }
+                            if (star_classes_ids) {
+                                free(star_classes_ids);
+                            }
+                            if (star_classes_names) {
+                                for (int i = 0; i < star_classes_count; i++) {
+                                    free(star_classes_names[i]);
+                                }
+                                free(star_classes_names);
                             }
                             if (lang_names) {
                                 for (int i = 0; i < lang_count; i++) {
@@ -2133,7 +2282,7 @@ OptionsEdition select_options() {
                                 napms(125); 
                             
                                 // CHAMA A FUNÇÃO ENCAPSULADA: Salva na RAM e no Disco de uma vez só!
-                                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis)) {
+                                if (!save_orbis_settings(planet_orbis, parallel_orbis, antissia_orbis, paran_orbis)) {
                                     // Opcional: mostrar um alerta se falhar o salvamento
                                 }
                             
@@ -2206,6 +2355,15 @@ OptionsEdition select_options() {
                                         free(terms_names[i]);
                                     }
                                     free(terms_names);
+                                }
+                                if (star_classes_ids) {
+                                    free(star_classes_ids);
+                                }
+                                if (star_classes_names) {
+                                    for (int i = 0; i < star_classes_count; i++) {
+                                        free(star_classes_names[i]);
+                                    }
+                                    free(star_classes_names);
                                 }
                                 if (lang_names) {
                                     for (int i = 0; i < lang_count; i++) {
@@ -2321,6 +2479,15 @@ OptionsEdition select_options() {
                     }
                     free(terms_names);
                 }
+                if (star_classes_ids) {
+                    free(star_classes_ids);
+                }
+                if (star_classes_names) {
+                    for (int i = 0; i < star_classes_count; i++) {
+                        free(star_classes_names[i]);
+                    }
+                    free(star_classes_names);
+                }
                 if (lang_names) {
                     for (int i = 0; i < lang_count; i++) {
                         free(lang_names[i]);
@@ -2400,6 +2567,15 @@ OptionsEdition select_options() {
             free(terms_names[i]);
         }
         free(terms_names);
+    }
+    if (star_classes_ids) {
+        free(star_classes_ids);
+    }
+    if (star_classes_names) {
+        for (int i = 0; i < star_classes_count; i++) {
+            free(star_classes_names[i]);
+        }
+        free(star_classes_names);
     }
     if (lang_names) {
         for (int i = 0; i < lang_count; i++) {

@@ -54,6 +54,7 @@
 #include "mind.h"
 #include "solar_return.h"
 #include "motivation.h"
+#include "fixed_stars.h"
 
 #ifndef SE_KEEP_GREG_CAL
 #define SE_KEEP_GREG_CAL 2  /* 0 = Juliano, 1 = Gregoriano, 2 = Misto automático */
@@ -1618,9 +1619,8 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                         strcmp(plots[j].object_name, _("Descendant")) == 0 ||
                         strcmp(plots[j].object_name, _("Part of Fortune")) == 0 ||
                         strcmp(plots[j].object_name, _("SAN")) == 0 ||
-                        strcmp(plots[j].object_name, _("South Node")) == 0 ||
-                        strcmp(plots[j].object_name, _("Vertex")) == 0 ||
-                        strcmp(plots[j].object_name, _("North Node")) == 0) {
+                        strcmp(plots[j].object_name, _("Vertex")) == 0)
+                    {
 
                         if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                             attron(COLOR_PAIR(16) | A_BOLD);
@@ -1629,9 +1629,7 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                             attron(COLOR_PAIR(47) | A_BOLD);
                         }
                     }
-                    else if (strcmp(plots[j].object_name, _("Neptune")) == 0 ||
-                            strcmp(plots[j].object_name, _("Uranus")) == 0 ||
-                            strcmp(plots[j].object_name, _("Pluto")) == 0) {
+                    else if (strcmp(plots[j].object_name, _("Pluto")) == 0) {
                         if (show_modern_planets) {
                             if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                                 attron(COLOR_PAIR(17) | A_BOLD);
@@ -1646,12 +1644,98 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                         }
                         
                     }
-                    else {
+                    else if (strcmp(plots[j].object_name, _("Neptune")) == 0) {
+                        if (show_modern_planets) {
+                            if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                                attron(COLOR_PAIR(80) | A_BOLD);
+                            }
+                            else {
+                                attron(COLOR_PAIR(81) | A_BOLD);
+                            }
+                        }
+                        else {
+                            //attron(COLOR_PAIR(10) | A_BOLD);
+                            continue;
+                        }
+                        
+                    }
+                    else if (strcmp(plots[j].object_name, _("Uranus")) == 0) {
+                        if (show_modern_planets) {
+                            if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                                attron(COLOR_PAIR(82) | A_BOLD);
+                            }
+                            else {
+                                attron(COLOR_PAIR(83) | A_BOLD);
+                            }
+                        }
+                        else {
+                            //attron(COLOR_PAIR(10) | A_BOLD);
+                            continue;
+                        }
+                        
+                    }
+                    else if (strcmp(plots[j].object_name, _("Venus")) == 0) {
                         if (get_house(plots[j].longitude, cusps) % 2 == 0) {
                             attron(COLOR_PAIR(18) | A_BOLD);
                         }
                         else {
                             attron(COLOR_PAIR(49) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Luna")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(68) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(69) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Sol")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(72) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(73) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Mars")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(70) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(71) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Jupiter")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(74) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(75) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Saturn")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(76) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(77) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("Mercury")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(78) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(79) | A_BOLD);
+                        }
+                    }
+                    else if (strcmp(plots[j].object_name, _("South Node")) == 0 || strcmp(plots[j].object_name, _("North Node")) == 0) {
+                        if (get_house(plots[j].longitude, cusps) % 2 == 0) {
+                            attron(COLOR_PAIR(81) | A_BOLD);
+                        }
+                        else {
+                            attron(COLOR_PAIR(82) | A_BOLD);
                         }
                     }
                     
@@ -1784,7 +1868,7 @@ void draw_houses_shaded(float radius_start_multiplier, float radius_end_multipli
             double angle_rad = a * M_PI / 180.0;
             
             // Varre do Raio Inicial ao Raio Final para preencher a fatia
-            for (float r = r_start; r <= r_end; r += 0.5f) {
+            for (float r = r_start; r <= r_end; r += 0.25f) {
                 int y = (int)(display_center_y + r * sin(angle_rad));
                 int x = (int)(display_center_x + aspect_ratio * r * cos(angle_rad));
                 
@@ -2341,7 +2425,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
 
         if (mapa_retorno) {
             mvprintw(LINES - 4, 1, _("Radix Confrontation: C | Annual Transits: T "));
-            mvprintw(LINES - 3, 1, _("Anim: A | Parts Radix Confrontation: P ")); 
+            mvprintw(LINES - 3, 1, _("Anim: A | Parts SR/Radix: P | Stars Activ: O ")); 
         }
         else {
             mvprintw(LINES - 3, 1, _("Anim: A ␣  | Menu: M "));
@@ -2363,7 +2447,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         else attroff(COLOR_PAIR(55));
 
 
-        mvprintw(LINES - 4, max_x - 26, _(" Action: F1..F9, F12, 0-8 "));
+        mvprintw(LINES - 4, max_x - 32, _(" Action: F1..F12, 0..9, V, S, F "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
 
@@ -6721,8 +6805,8 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
     mvwprintw(table_win, 0, (table_width - 56) / 2, title);
 
-    mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination                   Time zone: Local"));
-    mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
+    mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination          Anti-Culminatin         Time zone: Local"));
+    mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────────────────────"); 
     wattroff(table_win, A_BOLD);
 
 
@@ -6796,12 +6880,30 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
         int mid_s = h_mid.sec;
 
 
+        double inf_hours = plots[i].inf_time + tz_offset;
+        const char* inf_obs = "";
+        if (inf_hours < 0.0) {
+            inf_obs = " (-1d)"; // Indicador de dia anterior
+            inf_hours += 24.0;
+        } 
+        else if (inf_hours >= 24.0) {
+            inf_obs = " (+1d)"; // Indicador de dia seguinte
+            inf_hours -= 24.0;
+        }
+
+        Hora h_inf = get_fmt_hour(inf_hours);
+        int inf_h = h_inf.hora;
+        int inf_m = h_inf.min;
+        int inf_s = h_inf.sec;
+
+
         mvwprintw(table_win, row, 4, "%s      %02d:%02d:%02d %s", plots[i].object, rise_h, rise_m, rise_s, rise_obs);
         mvwprintw(table_win, row, 37, "%02d:%02d:%02d %s", set_h, set_m, set_s, set_obs);
         mvwprintw(table_win, row, 63, "%02d:%02d:%02d %s", mid_h, mid_m, mid_s, mid_obs);
+        mvwprintw(table_win, row, 87, "%02d:%02d:%02d %s", inf_h, inf_m, inf_s, inf_obs);
 
         wattron(table_win, COLOR_PAIR(10) | A_DIM);
-        mvwprintw(table_win, row + 1, 3, "────────────────────────────────────────────────────────────────────────────────────"); 
+        mvwprintw(table_win, row + 1, 3, "────────────────────────────────────────────────────────────────────────────────────────────────────"); 
         wattroff(table_win, COLOR_PAIR(10) | A_DIM);
 
         row += 2;
@@ -7158,7 +7260,7 @@ char* format_min(double longitude) {
 }
 
 
-void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitudes, double *speeds, double *rising, double *setting, double *mid, double *declin, double *lat, double *ra, double *houses, char *SAN, double *cusps) {
+void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitudes, double *speeds, double *rising, double *setting, double *mid, double *inf, double *declin, double *lat, double *ra, double *houses, char *SAN, double *cusps) {
     PlotMetadata meta[] = {
         {"☉", _("Sol"), 1}, {"☾", _("Luna"), 1}, {"☿", _("Mercury"), 1},
         {"♀", _("Venus"), 1}, {"♂", _("Mars"), 1}, {"♃", _("Jupiter"), 1},
@@ -7193,6 +7295,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
         plots[idx].rising_time = rising[i];
         plots[idx].setting_time = setting[i];
         plots[idx].mid_time = mid[i];
+        plots[idx].inf_time = inf[i];
         plots[idx].declination = declin[i];
         plots[idx].latitude = lat[i];
         plots[idx].ra = ra[i];
@@ -7216,6 +7319,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[12];
     plots[idx].latitude = lat[12];
     plots[idx].ra = ra[12];
@@ -7238,6 +7342,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[13];
     plots[idx].latitude = lat[13];
     plots[idx].ra = ra[13];
@@ -7260,6 +7365,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[14];
     plots[idx].latitude = lat[14];
     plots[idx].ra = ra[14];
@@ -7282,6 +7388,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[15];
     plots[idx].latitude = lat[15];
     plots[idx].ra = ra[15];
@@ -7304,6 +7411,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[16];
     plots[idx].latitude = lat[16];
     plots[idx].ra = ra[16];
@@ -7326,6 +7434,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[17];
     plots[idx].latitude = lat[17];
     plots[idx].ra = ra[17];
@@ -7348,6 +7457,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
     plots[idx].rising_time = 0.0;
     plots[idx].setting_time = 0.0;
     plots[idx].mid_time = 0.0;
+    plots[idx].inf_time = 0.0;
     plots[idx].declination = declin[18];
     plots[idx].latitude = lat[18];
     plots[idx].ra = ra[18];
@@ -7380,7 +7490,7 @@ void populate_plots(PlotObject *plots, bool show_modern_planets, double *longitu
 #define TABLE_BKGD 187 //223
 #define TABLE_BKGD_DARK 235
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade) {
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade, bool *natal_star_active, CalculatedStar *natal_stars, double lon_natal, double elev_natal) {
     int n = 1;
 
    
@@ -7444,11 +7554,41 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(16, COLOR_WHITE, COLOR_BACK_DARK_1);
         init_pair(47, COLOR_WHITE, COLOR_BACK_DARK_2);
 
-        init_pair(17, COLOR_MAGENTA, COLOR_BACK_DARK_1);
-        init_pair(48, COLOR_MAGENTA, COLOR_BACK_DARK_2);
+        init_pair(17, 201, COLOR_BACK_DARK_1);
+        init_pair(48, 201, COLOR_BACK_DARK_2);
+
+        init_pair(80, 165, COLOR_BACK_DARK_1); // magenta
+        init_pair(81, 165, COLOR_BACK_DARK_2); // magenta
+
+        init_pair(82, 199, COLOR_BACK_DARK_1); // magenta
+        init_pair(83, 199, COLOR_BACK_DARK_2); // magenta
 
         init_pair(18, 39, COLOR_BACK_DARK_1); // blue
         init_pair(49, 39, COLOR_BACK_DARK_2); // blue
+
+        init_pair(68, 25, COLOR_BACK_DARK_1); // azul claro
+        init_pair(69, 25, COLOR_BACK_DARK_2); // azul claro
+
+        init_pair(70, 124, COLOR_BACK_DARK_1); // red
+        init_pair(71, 124, COLOR_BACK_DARK_2); // red
+
+        init_pair(72, 196, COLOR_BACK_DARK_1); // abóbora
+        init_pair(73, 196, COLOR_BACK_DARK_2); // abóbora
+
+        init_pair(74, 22, COLOR_BACK_DARK_1); // verde
+        init_pair(75, 22, COLOR_BACK_DARK_2); // verde
+
+        init_pair(76, 28, COLOR_BACK_DARK_1); // grey
+        init_pair(77, 28, COLOR_BACK_DARK_2); // grey
+
+        init_pair(78, 54, COLOR_BACK_DARK_1); // purple
+        init_pair(79, 54, COLOR_BACK_DARK_2); // purple
+
+        init_pair(81, 241, COLOR_BACK_DARK_1); // grey
+        init_pair(82, 241, COLOR_BACK_DARK_2); // grey
+
+        init_pair(80, 135, TABLE_BKGD_DARK);
+
 
         init_pair(19, COLOR_BACK_DARK_1, COLOR_BACK_DARK_1);
         init_pair(20, COLOR_BLUE, COLOR_BACK_DARK_2);
@@ -7536,12 +7676,40 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(16, COLOR_BLACK, COLOR_BACK_1);
         init_pair(47, COLOR_BLACK, COLOR_BACK_2);
 
-        init_pair(17, 196, COLOR_BACK_1); // magenta
-        init_pair(48, 196, COLOR_BACK_2); // magenta
+        init_pair(17, 201, COLOR_BACK_1); // magenta
+        init_pair(48, 201, COLOR_BACK_2); // magenta
+
+        init_pair(80, 165, COLOR_BACK_1); // magenta
+        init_pair(81, 165, COLOR_BACK_2); // magenta
+
+        init_pair(82, 199, COLOR_BACK_1); // magenta
+        init_pair(83, 199, COLOR_BACK_2); // magenta
 
         init_pair(18, 57, COLOR_BACK_1); // azul
         init_pair(49, 57, COLOR_BACK_2); // azul
 
+        init_pair(68, 25, COLOR_BACK_1); // azul claro
+        init_pair(69, 25, COLOR_BACK_2); // azul claro
+
+        init_pair(70, 124, COLOR_BACK_1); // red
+        init_pair(71, 124, COLOR_BACK_2); // red
+
+        init_pair(72, 196, COLOR_BACK_1); // abóbora
+        init_pair(73, 196, COLOR_BACK_2); // abóbora
+
+        init_pair(74, 22, COLOR_BACK_1); // verde
+        init_pair(75, 22, COLOR_BACK_2); // verde
+
+        init_pair(76, 28, COLOR_BACK_1); // grey
+        init_pair(77, 28, COLOR_BACK_2); // grey
+
+        init_pair(78, 54, COLOR_BACK_1); // purple
+        init_pair(79, 54, COLOR_BACK_2); // purple
+
+        init_pair(81, 241, COLOR_BACK_1); // grey
+        init_pair(82, 241, COLOR_BACK_2); // grey
+
+        init_pair(80, 135, TABLE_BKGD);
 
         init_pair(19, COLOR_BACK_1, COLOR_BACK_1); // branco/cinza claro
         init_pair(20, COLOR_WHITE, COLOR_BLUE);
@@ -7628,7 +7796,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     planet_regent_names[5] = _("Jupiter"); 
     planet_regent_names[6] = _("Mars");
 
-    
+  
     sqlite3 *db2 = open_database();
     if (db2) {
         sqlite3_stmt *stmt;
@@ -7699,6 +7867,23 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
     }
 
 
+    // Carrega dados do banco - paran orbis
+    double paran_orbis = ORB_PARAN_EXACT;  // Orbe padrão se o banco falhar
+    sqlite3 *db3 = open_database();
+    if (db3) {
+        sqlite3_stmt *stmt;
+        const char *sql_select_p_orbis = "SELECT paran_orb FROM profiles WHERE profile = 'default';";
+        int rc = sqlite3_prepare_v2(db3, sql_select_p_orbis, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                paran_orbis = sqlite3_column_double(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db3);
+    }
+    
+
 
     // Carrega dados do banco - consider_modern_planets_rulling
     consider_modern_planets_rulling = 1;
@@ -7719,6 +7904,22 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
     // Carrega dados do banco - get_default_terms_system
     terms_system = get_default_terms_system();
+
+
+
+    unsigned int flag_stars = CAT_BEHENIAN | CAT_ROYAL | CAT_PTOLEMAIC | CAT_NEBULA;
+    sqlite3 *db4 = open_database();
+    if (db4) {
+        sqlite3_stmt *stmt;
+        const char *sql_select = "SELECT s.bits FROM star_classes_selection s INNER JOIN profiles p ON s.opt = p.star_classes_selection WHERE profile = 'default';";
+        if (sqlite3_prepare_v2(db4, sql_select, -1, &stmt, NULL) == SQLITE_OK) {
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                flag_stars = sqlite3_column_int(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db4);
+    }
 
 
 
@@ -7826,6 +8027,65 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
 
+        
+        CalculatedStar stars[TRADITIONAL_STARS_COUNT];
+        char err_log[AS_MAXCH * 2] = {0};
+        
+        // 4a. Calculate Fixed Stars
+        int total_stars = calculate_traditional_stars(julian_day, flag_stars, SEFLG_SWIEPH | SEFLG_TOPOCTR, stars, err_log);
+        
+        // DEBUG:
+        // char bits[10];
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_ROYAL | CAT_PTOLEMAIC | CAT_NEBULA);
+        // show_alert_popup(bits, "1");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_ROYAL | CAT_PTOLEMAIC);
+        // show_alert_popup(bits, "2");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_ROYAL | CAT_NEBULA);
+        // show_alert_popup(bits, "3");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_PTOLEMAIC | CAT_NEBULA);
+        // show_alert_popup(bits, "4");
+
+        // snprintf(bits, 10, "%d", CAT_ROYAL | CAT_PTOLEMAIC | CAT_NEBULA);
+        // show_alert_popup(bits, "5");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_ROYAL);
+        // show_alert_popup(bits, "6");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_PTOLEMAIC);
+        // show_alert_popup(bits, "7");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN | CAT_NEBULA);
+        // show_alert_popup(bits, "8");
+
+        // snprintf(bits, 10, "%d", CAT_ROYAL | CAT_PTOLEMAIC);
+        // show_alert_popup(bits, "9");
+
+        // snprintf(bits, 10, "%d", CAT_ROYAL | CAT_NEBULA);
+        // show_alert_popup(bits, "10");
+
+        // snprintf(bits, 10, "%d", CAT_PTOLEMAIC | CAT_NEBULA);
+        // show_alert_popup(bits, "11");
+
+        // snprintf(bits, 10, "%d", CAT_BEHENIAN);
+        // show_alert_popup(bits, "12");
+
+        // snprintf(bits, 10, "%d", CAT_ROYAL);
+        // show_alert_popup(bits, "13");
+
+        // snprintf(bits, 10, "%d", CAT_PTOLEMAIC);
+        // show_alert_popup(bits, "14");
+
+        // snprintf(bits, 10, "%d", CAT_NEBULA);
+        // show_alert_popup(bits, "15");
+
+
+
+        
+        
+        
         // 4. Calculate Ascendant, MC and houses        
         int result = swe_houses_ex(julian_day, FLAGS_ecliptic, lat, lon, house_system, cusps, ascmc);
         
@@ -8391,18 +8651,57 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         }
         
 
-
+        // 27a. Mid Lower Times
+        double inf_times[12];
+        
+        for (int i = 0; i < 11; i++) {
+            double geopos[3];
+            
+            geopos[0] = lon;
+            geopos[1] = lat;
+            geopos[2] = elev;
+    
+            int epheflag = SEFLG_SWIEPH | SEFLG_TOPOCTR;
+            int rsmi = SE_CALC_ITRANSIT;
+    
+            double tret;
+            char serr[256];
+    
+            int result = swe_rise_trans(jd, planets[i], NULL, epheflag, rsmi, geopos, 0, 0, &tret, serr);
+    
+            if (result == ERR) {
+                fprintf(stderr, "Erro no calculo: %s\n", serr);
+                exit(1);
+            }
+                
+            // O resultado 'tret' vem em Dia Juliano. Podemos converter para horas
+            double jd_diff = tret - jd;
+            double inf_hours = jd_diff * 24.0;
+            
+            inf_times[i] = inf_hours;
+    
+        }
+        {
+            double geopos[3] = {lon, lat, elev}; // Latitude NORMAL
+            double tret;
+            char serr[256];
+            // O Nadir do Nodo Sul é o Meio do Céu (SE_CALC_MTRANSIT) do Nodo Norte
+            int result = swe_rise_trans(jd, planets[10], NULL, SEFLG_SWIEPH | SEFLG_TOPOCTR, SE_CALC_MTRANSIT, geopos, 0, 0, &tret, serr);
+            if (result != ERR) {
+                inf_times[11] = (tret - jd) * 24.0;
+            }
+        }
 
                 
         // 28. Building the PlotObject
 
         PlotObject plotsA[19];
-        populate_plots(plotsA, true, planet_longitudes, speed, rising_times, set_times, mid_times,
+        populate_plots(plotsA, true, planet_longitudes, speed, rising_times, set_times, mid_times, inf_times,
                        planet_declinations, planet_latitudes, planet_ra, planet_houses,
                        san, cusps);
 
         PlotObject plotsB[16];
-        populate_plots(plotsB, false, planet_longitudes, speed, rising_times, set_times, mid_times,
+        populate_plots(plotsB, false, planet_longitudes, speed, rising_times, set_times, mid_times, inf_times,
                        planet_declinations, planet_latitudes, planet_ra, planet_houses,
                        san, cusps);
 
@@ -8464,6 +8763,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             memset(matrix.grid[i], 0, sizeof(AspectCell));
         }
 
+        // 30a. Initialize the Aspects Matrix Stars
+        AspectStarMatrix matrix_stars = {0};
+        for (int i = 0; i < 100; i++) {
+            memset(matrix.grid[i], 0, sizeof(AspectCell));
+        }
+
+
+
 
         // 31. Create the feral and void of course arrays
         int feral[12 - object_diff];
@@ -8478,6 +8785,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         
         // 33. Calculate aspects
         matrix = calculate_aspects(plots, planet_orbis, dig, feral, vazio_de_curso, retro);
+
+
+        // 33a. Calculate aspects stars
+        matrix_stars = calculate_aspects_stars(plots, stars, total_stars);
      
         
 
@@ -8640,6 +8951,20 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // 40. Calculate the declination aspects
         matrix_decl = calculate_declination_aspects(plots, decl_orbis);
+
+
+
+
+
+        // 39a. Initialize Declination Aspects Matrix Stars
+        DeclStarMatrix matrix_stars_decl = {0};
+        for (int i = 0; i < 100; i++) {
+            memset(matrix_stars_decl.grid[i], 0, sizeof(DeclCell));
+        }
+        
+
+        // 40a. Calculate the declination aspects stars
+        matrix_stars_decl = calculate_declination_aspects_stars(plots, stars, decl_orbis, total_stars);
 
 
 
@@ -9763,7 +10088,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         // 72. Array de Promissores
         //     criar Promissor objects array com as coordenadas dos 7 planetas, antiscia, contrantiscia e termos
-        Promissor prom[100] = {0};
+        Promissor prom[200] = {0};
         prom_id = 0;
 
         for (int i = 0; i < NUM_OBJECTS - object_diff - 5; i++) {
@@ -9995,6 +10320,24 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     
         }
 
+        for (int i = 0; i < total_stars; i++) {
+            snprintf(prom[prom_id].object, 10, "%s", stars[i].meta->object);
+            snprintf(prom[prom_id].object_name, 30, "%s", stars[i].meta->swe_name);
+            prom[prom_id].id = prom_id;
+            prom[prom_id].longitude = stars[i].longitude;
+            prom[prom_id].latitude = stars[i].latitude;
+            prom[prom_id].declination = stars[i].declination;
+            prom[prom_id].ra = stars[i].ra;
+            prom[prom_id].house = get_house(stars[i].longitude, cusps);
+            prom[prom_id].type = PROM_STAR;
+
+            x_sn[0] = prom[prom_id].longitude;
+            x_sn[1] = prom[prom_id].latitude;
+            prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
+            
+            prom_id++;
+        }
+
 
         // DEBUG
         // terminate_database();
@@ -10152,8 +10495,21 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ctx.fortuna_m = fortuna_m;
         ctx.obj_dir = obj_dir;
         ctx.object_diff = object_diff;
-    
 
+        ctx.stars = stars;
+        ctx.matrix_stars = matrix_stars;
+        ctx.matrix_stars_decl = matrix_stars_decl;
+        ctx.total_stars = total_stars;
+        ctx.planet_ids = planet_ids;
+        ctx.paran_orbis = paran_orbis;
+        ctx.lon_natal = lon_natal;
+        ctx.elev_natal = elev_natal;
+        ctx.natal_star_active = natal_star_active;
+        ctx.natal_stars = natal_stars;
+
+        ctx.mc = mc;
+        ctx.descendant = descendant;
+        ctx.ic = ic;
 
 
 
@@ -10331,6 +10687,67 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     flushinp();
                 }
                 break;
+            case 'o':
+            case 'O':
+                if (mapa_retorno) {
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    }
+
+                    double angles[] = {ascendant, mc, descendant, ic};
+
+                    SRFixedStarHit out_hits[200];
+                    memset(out_hits, 0, sizeof(out_hits));
+                                        
+                    int hit_count = compute_sr_fixed_stars(
+                        angles,                        
+                        plots,
+                        NUM_OBJECTS - object_diff,
+                        stars,
+                        total_stars,
+                        natal_star_active,
+                        out_hits,
+                        natal_stars,
+                        jd_natal,
+                        lon_natal,
+                        lat_natal,
+                        elev_natal,
+                        200
+                    );
+                    
+                    display_sr_fixed_stars_table(out_hits, hit_count);
+
+                    ativar_arrasto_mouse();
+                    flushinp();
+                }
+                break;
+            case 'v':
+            case 'V':
+                desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
+                display_declination_aspects_stars(plots, stars, &matrix_stars_decl, total_stars);
+
+                ativar_arrasto_mouse();
+                flushinp();
+                break;            
+            case 's':
+            case 'S':
+                desativar_arrasto_mouse();
+                if (animated) {
+                    mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                    wnoutrefresh(stdscr);
+                } 
+                
+                display_aspects_stars(plots, stars, &matrix_stars, total_stars);
+
+                ativar_arrasto_mouse();
+                flushinp();
+                break;
             case 'i':
             case 'I':
             case KEY_F(1):
@@ -10360,6 +10777,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 flushinp();
                 break;    
             case 'x':
+            case 'X':
             case KEY_F(3):
                 desativar_arrasto_mouse();
                 if (animated) {
@@ -10551,9 +10969,17 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     if (animated) {
                         mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
                         wnoutrefresh(stdscr);
-                    } 
+                    }
+                    ParanEntry parans[200];
+                    memset(parans, 0, sizeof(parans));
+                
+                    int max_entries = 200;
+                    double max_orb_minutes = ORB_PARAN_EXACT;
+                    int paran_count = 0;
+
+                    paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries); 
                     
-                    if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO_GEOMETRICO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects)) {
+                    if (disparar_revolucao_solar(julian_day, CHART_NAME, cusps, MAPA_DIURNO_GEOMETRICO, lat, armc, dig, nome_anareta, nome_senhor_da_casa8, tipo_h, idx_objeto_h, planet_longitudes, strength_planets, obj, total_objects, stars, total_stars, parans, paran_count, &matrix_stars, &matrix_stars_decl, lon, elev)) {
                         saiu_retorno = true;
                     } else {
                         saiu_retorno = true;
@@ -10574,6 +11000,42 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 display_planetary_energy_profile(plots, strength_planets);
                 ativar_arrasto_mouse();
                 flushinp();
+                break;
+            
+            case '9':  {                     
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+                    ParanEntry parans[200];
+                    memset(parans, 0, sizeof(parans));
+                
+                    int max_entries = 200;
+                    double max_orb_minutes = paran_orbis;
+                    int paran_count = 0;
+
+                    paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries);
+                    display_parans_table(parans, paran_count, stars, tz_offset, max_orb_minutes);
+
+                    ativar_arrasto_mouse();
+                    flushinp();
+                }
+                break;
+            case 'f':
+            case 'F':
+            case KEY_F(21): {
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    } 
+
+                    display_heliacal_phases_table(julian_day, lon, lat, elev, tz_offset, stars, total_stars);
+
+                    ativar_arrasto_mouse();
+                    flushinp();
+                }
                 break;
             case '0':
                 if (!mapa_retorno) {
@@ -10826,20 +11288,24 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("10. Aspects by Sign"),
         _("11. Aspects to Antiscia"),
         _("12. Aspects to Contrantiscia"),
-        _("13. Rising, Setting & Culmination Times"),        
-        _("14. Hylegiacal & Figuris Almuten"),
-        _("15. Temperament Analysis"),
-        _("16. Mind Analysis"),
-        _("17. Primary Motivation"),
-        _("18. Planetary Hours"),               
-        _("19. Arabic Parts"),
-        _("20. Annual Profections"),
-        _("21. Firdaria"),
-        _("22. Vital Chronocrators: Life Givers"),
-        _("23. Vital Threats: The Anareta"),
-        _("24. Primary Directions"),
-        _("25. Prymary Directions to Arabic Parts"),               
-        _("26. Solar Revolution")        
+        _("13. Conjunctions with Fixed Stars"),
+        _("14. Declination Aspects with Fixed Stars"),   
+        _("15. Rising, Setting & Culmination Times"),        
+        _("16. Hylegiacal & Figuris Almuten"),
+        _("17. Temperament Analysis"),
+        _("18. Mind Analysis"),
+        _("19. Primary Motivation"),
+        _("20. Planetary Hours"),               
+        _("21. Arabic Parts"),
+        _("22. Annual Profections"),
+        _("23. Firdaria"),
+        _("24. Vital Chronocrators: Life Givers"),
+        _("25. Vital Threats: The Anareta"),
+        _("26. Primary Directions"),
+        _("27. Prymary Directions to Arabic Parts"),               
+        _("28. Solar Revolution"),
+        _("29. Fixed Stars Parans"),
+        _("30. Heliacal Phases & Stars Visibility")      
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes1 = sizeof(opcoes1) / sizeof(opcoes1[0]);
@@ -10857,13 +11323,18 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("10. Aspects by Sign"),
         _("11. Aspects to Antiscia"),
         _("12. Aspects to Contrantiscia"),
-        _("13. Rising, Setting & Culmination Times"),        
-        _("14. Hylegiacal & Figuris Almuten"),         
-        _("15. Planetary Hours"),
-        _("16. Arabic Parts"),
-        _("17. Arabic Parts Solar Return Radix Confrontation"),       
-        _("18. Radix Confrontation: Solar Return Integration"),
-        _("19. Annual Transits & Radical Projections")
+        _("13. Conjunctions with Fixed Stars"),
+        _("14. Declination Aspects with Fixed Stars"),
+        _("15. Rising, Setting & Culmination Times"),        
+        _("16. Hylegiacal & Figuris Almuten"),         
+        _("17. Planetary Hours"),
+        _("18. Arabic Parts"),
+        _("19. Arabic Parts Solar Return Radix Confrontation"),       
+        _("20. Radix Confrontation: Solar Return Integration"),
+        _("21. Annual Transits & Radical Projections"),
+        _("22. Fixed Stars Parans"),
+        _("23. Heliacal Phases & Stars Visibility"),
+        _("24. Activated Stars On Solar Revolution")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -11180,34 +11651,40 @@ void open_menu_tables(ContextoMenu *ctx) {
             matrix_ants = calculate_aspects_antiscium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, get_antissia_orbis(), CONTRANTISSIUM);
             display_aspects_antissium(ctx->plots, &ctx->ants[ctx->num_ants / 2], ctx->num_ants / 2, &matrix_ants, CONTRANTISSIUM);
             break;
-        case 12:
-            display_rising_times(ctx->plots, ctx->tz_offset);
+        case 12:    
+            display_aspects_stars(ctx->plots, ctx->stars, &ctx->matrix_stars, ctx->total_stars);
             break;
         case 13:
-            display_almutens(ctx->pontos_calculados, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->mapa_retorno);
+            display_declination_aspects_stars(ctx->plots, ctx->stars, &ctx->matrix_stars_decl, ctx->total_stars);
             break;
         case 14:
+            display_rising_times(ctx->plots, ctx->tz_offset);
+            break;
+        case 15:
+            display_almutens(ctx->pontos_calculados, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->mapa_retorno);
+            break;
+        case 16:
             if (!ctx->mapa_retorno) {
                 display_temperament(ctx->plots, &ctx->matrix, ctx->phase_id, ctx->season_id, ctx->week_day + 1, ctx->planetary_hour + 1);
             } else {           
                 display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
             }
             break;
-        case 15:
+        case 17:
             if (!ctx->mapa_retorno) {
                 display_natal_mind_analysis(ctx->mercurio, ctx->lua, ctx->mercury_retro, ctx->phase_id, &ctx->matrix, ctx->pontos_calculados, ctx->plots);
             } else {           
                 display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
             }
             break;
-        case 16:
+        case 18:
             if (!ctx->mapa_retorno) {
                 display_motivation(ctx->plots, ctx->house_rulers, &ctx->matrix);
             } else {           
                 display_arabic_parts_solar_natal_confrontation(ctx->obj, ctx->cusps, ctx->total_objects, ctx->cusps_natal, ctx->obj_natal);
             }
             break;
-        case 17:
+        case 19:
             if (!ctx->mapa_retorno) {
                 display_hours(ctx->week_day + 1, ctx->hours, ctx->planetary_hour + 1, ctx->daytime_hour, ctx->nighttime_hour, ctx->strength_planets, ctx->dig);
             } else {
@@ -11234,50 +11711,113 @@ void open_menu_tables(ContextoMenu *ctx) {
                 );
             }
             break;
-        case 18:
+        case 20:
             if (!ctx->mapa_retorno) {
                 display_arabic_parts(ctx->obj, ctx->cusps, ctx->total_objects);
             } else {
                 process_revolution_transits(ctx->jd_natal, ctx->planet_longitudes, ctx->planet_latitudes, ctx->armc_natal, ctx->lat_natal, ctx->house_system, ctx->tipo_h_natal, ctx->idx_hyleg_natal, ctx->longitudes_natal, ctx->cusps_natal, ctx->obj_natal, ctx->total_obj_natal);
             }    
             break;
-        case 19:
-            if (!ctx->mapa_retorno) {
-                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects, ctx->julian_day);
-            }
-            break;
-        case 20:
-            if (!ctx->mapa_retorno) {
-                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
-            }
-            break;            
         case 21:
             if (!ctx->mapa_retorno) {
-                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
+                display_profections(ctx->plots, ctx->anos_alcochoden, ctx->cusps, ctx->obj, ctx->total_objects, ctx->julian_day);
+            } else {
+                ParanEntry parans[200];
+                memset(parans, 0, sizeof(parans));
+            
+                int max_entries = 200;
+                double max_orb_minutes = ctx->paran_orbis;
+                int paran_count = 0;
+
+                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                display_parans_table(parans, paran_count, ctx->stars, ctx->tz_offset, max_orb_minutes);
             }
             break;
         case 22:
             if (!ctx->mapa_retorno) {
-                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
+                display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
+            } else {
+                display_heliacal_phases_table(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, ctx->tz_offset, ctx->stars, ctx->total_stars);
             }
-            break;
+            break;            
         case 23:
             if (!ctx->mapa_retorno) {
-                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom, ctx->obj_dir[P_FORTUNA - ctx->object_diff]);
+                display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
+            } else {
+                double angles[] = {ctx->ascendant, ctx->mc, ctx->descendant, ctx->ic};
+
+                SRFixedStarHit out_hits[200];
+                memset(out_hits, 0, sizeof(out_hits));
+                                    
+                int hit_count = compute_sr_fixed_stars(
+                    angles,                        
+                    ctx->plots,
+                    NUM_OBJECTS - ctx->object_diff,
+                    ctx->stars,
+                    ctx->total_stars,
+                    ctx->natal_star_active,
+                    out_hits,
+                    ctx->natal_stars,
+                    ctx->jd_natal,
+                    ctx->lon_natal,
+                    ctx->lat_natal,
+                    ctx->elev_natal,
+                    200
+                );
+                
+                display_sr_fixed_stars_table(out_hits, hit_count);   
             }
             break;
         case 24:
             if (!ctx->mapa_retorno) {
-                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj_dir, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
-            }           
+                display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
+            }
             break;
         case 25:
             if (!ctx->mapa_retorno) {
-                if (disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO_GEOMETRICO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects)) {
+                display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom, ctx->obj_dir[P_FORTUNA - ctx->object_diff]);
+            }
+            break;
+        case 26:
+            if (!ctx->mapa_retorno) {
+                display_primary_directions_parts(ctx->prom, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->obj_dir, ctx->total_objects, ctx->cusps, ctx->julian_day, ctx->armc, ctx->lat);
+            }           
+            break;
+        case 27:
+            if (!ctx->mapa_retorno) {
+                ParanEntry parans[200];
+                memset(parans, 0, sizeof(parans));
+            
+                int max_entries = 200;
+                double max_orb_minutes = ORB_PARAN_EXACT;
+                int paran_count = 0;
+
+                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                
+                if (disparar_revolucao_solar(ctx->julian_day, ctx->chart_name, ctx->cusps, MAPA_DIURNO_GEOMETRICO, ctx->lat, ctx->armc, ctx->dig, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->planet_longitudes, ctx->strength_planets, ctx->obj, ctx->total_objects, ctx->stars, ctx->total_stars, parans, paran_count, &ctx->matrix_stars, &ctx->matrix_stars_decl, ctx->lon, ctx->elev)) {
                     saiu_retorno = true;
                 } else {
                     saiu_retorno = true;
                 }              
+            }
+            break;
+        case 28:
+            if (!ctx->mapa_retorno) {
+                ParanEntry parans[200];
+                memset(parans, 0, sizeof(parans));
+            
+                int max_entries = 200;
+                double max_orb_minutes = ctx->paran_orbis;
+                int paran_count = 0;
+
+                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                display_parans_table(parans, paran_count, ctx->stars, ctx->tz_offset, max_orb_minutes);
+
+            }
+            break;
+        case 29:
+            if (!ctx->mapa_retorno) {
+                display_heliacal_phases_table(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, ctx->tz_offset, ctx->stars, ctx->total_stars);
             }
             break;
         default:

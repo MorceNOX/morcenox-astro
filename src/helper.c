@@ -40,6 +40,7 @@
 #include "helper.h"
 #include "planet_table.h"
 #include "directions.h"
+#include "fixed_stars.h"
 
 
 
@@ -519,6 +520,56 @@ int comparar_doubles(const void *a, const void *b) {
     if (da > db) return 1;
     return 0; // Se forem iguais
 }
+
+
+
+int compare_parans_by_brady(const void *a, const void *b) {
+    const ParanEntry *pa = (const ParanEntry *)a;
+    const ParanEntry *pb = (const ParanEntry *)b;
+
+    // 1. Primeiro separa pela fase cronológica (Nascendo -> Culminando -> Pondo-se -> IC)
+    if (pa->brady_phase != pb->brady_phase) {
+        return (pa->brady_phase - pb->brady_phase);
+    }
+
+    // 2. Dentro da mesma fase, ordena pela menor orbe (mais exato primeiro)
+    if (pa->diff_minutes < pb->diff_minutes) return -1;
+    if (pa->diff_minutes > pb->diff_minutes) return 1;
+
+    // 3. Desempate final pela ordem dos planetas
+    return (pa->planet_order - pb->planet_order);
+}
+
+
+
+
+int compare_parans_by_planet(const void *a, const void *b) {
+    const ParanEntry *pa = (const ParanEntry *)a;
+    const ParanEntry *pb = (const ParanEntry *)b;
+
+    // 1. Primeiro agrupa pelo planeta (na ordem do array planets: Sol, Lua, Mercúrio...)
+    if (pa->planet_order != pb->planet_order) {
+        return (pa->planet_order - pb->planet_order);
+    }
+
+    // 2. Dentro do mesmo planeta, coloca os Parans mais exatos (menor orbe) no topo
+    if (pa->diff_minutes < pb->diff_minutes) return -1;
+    if (pa->diff_minutes > pb->diff_minutes) return 1;
+    return 0;
+}
+
+
+
+int compare_parans_by_orb(const void *a, const void *b) {
+    const ParanEntry *pa = (const ParanEntry *)a;
+    const ParanEntry *pb = (const ParanEntry *)b;
+
+    if (pa->diff_minutes < pb->diff_minutes) return -1;
+    if (pa->diff_minutes > pb->diff_minutes) return 1;
+    return (pa->planet_order - pb->planet_order);
+}
+
+
 
 
 int comparar_directions_por_idade(const void *a, const void *b) {

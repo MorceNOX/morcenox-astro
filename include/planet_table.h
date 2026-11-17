@@ -69,6 +69,7 @@ typedef struct {
     double rising_time;
     double setting_time;
     double mid_time;
+    double inf_time;
     double declination;
     double latitude;
     double ra;

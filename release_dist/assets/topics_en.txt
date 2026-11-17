@@ -48,6 +48,10 @@ This guide will cover the following topics:
 
 • Arabic Parts
 
+• Primary Motivation
+
+• The Fixed Stars
+
 • Copyright
 
 
@@ -1893,7 +1897,70 @@ SR Ruler   │What is the condition of  │It shows whether the annual
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 17: Copyright
+Index 17: Fixed Stars
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Fixed Stars
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+Technical Notes — Fixed Stars in Traditional Astrology
+
+
+Optical Nature and Aspect Restrictions
+
+In the cosmology of traditional astrology, the planets (wandering stars) project rays through the geometry of the zodiac, whereas the fixed stars are static points of light belonging to the eighth sphere. For this doctrinal reason, fixed stars act exclusively through bodily conjunction (on the ecliptic, the horizon, or the meridian) and through equatorial/diurnal encounters (parallels of declination and parallels of right ascension/oblique ascension). Aspects such as the sextile, square, trine, and opposition are omitted—both in natal analysis and in Primary Directions—thereby maintaining strict fidelity to classical treatises.
+
+Planetary Temperament and Orbs
+
+• Ptolemaic Temperament. Each star possesses a nature composed of one or two planets (e.g., Regulus = Mars/Jupiter; Algol = Saturn/Jupiter), as systematized by Claudius Ptolemy in the *Tetrabiblos*. Traditional judgment evaluates the compatibility between the star’s temperament, the planet in conjunction with it, and the dignities involved.
+
+• Orbs Proportional to Magnitude. The efficacy of a fixed star is directly linked to its apparent brightness. First-magnitude stars operate with orbs of up to 2°00' (reaching 2°30' in the case of Sirius); second-magnitude stars, with 1°30'; and third-magnitude stars or nebulae, with 1°00'.
+
+Parans (Paranatellonta) and Life Phases
+
+• The distinction between Ecliptic Projection and Parans. Stars with high celestial latitude (such as Vega or Sirius) are projected perpendicularly onto the ecliptic, yet they do not rise or set in conjunction with the zodiacal degree onto which they have been projected. The *paran* recovers the actual visual phenomenon occurring on the local sphere by linking a star and a planet that simultaneously occupy the angles of the horizon (Ascendant/Descendant) or the meridian (MC/IC) within a 24-hour cycle.
+
+• Bernadette Brady’s Chronology. When arranged by life phases, the table organizes *parans* according to the angle occupied by the planet within the alignment: Rising (youth and early development), Culminating (maturity and public expression), Setting (the harvest and the second half of life), and at the IC/Anticulmination (family roots, hidden motivations, and closures).
+
+Heliacal Phases and Solar Condition
+
+• Visibility vs. Combustion. Much like planets, a fixed star undergoes an annual period of occultation when the Sun approaches its longitude, causing it to vanish within the glare of twilight.
+
+• Heliacal Rising. This is the first visible reappearance of a star on the eastern horizon shortly before sunrise, following its period of occultation. In the Hellenistic tradition (notably in the *Treatise of 379*), a star that has just emerged from the Sun’s rays is considered to be at the peak of its manifest power.
+
+• Heliacal Setting and "Under the Rays." The heliacal setting marks the final appearance of a star on the western horizon, occurring just after sunset. Between the heliacal setting and the subsequent heliacal rising, the star remains "under the rays" of the Sun—operating in a latent, hidden, or weakened state within the natal chart. Circumpolar stars never cross the horizon at a given latitude and, therefore, do not undergo heliacal occultation.
+
+Activations in the Solar Return and Double Confirmation
+
+• Annual Trigger. According to the traditional doctrine of revolutions (as found in the works of Abu Ma'shar, Bonatti, and Morin de Villefranche), a natal fixed star manifests concrete events in a specific year when the angles or planets of the Solar Return form an exact conjunction with it.
+
+• Criterion for Natal Connection. To avoid false positives, a star is only designated as "active natally" if it possesses a verified root in the natal chart: an ecliptic conjunction within its nominal orb, a parallel or contra-parallel in declination (up to 1°00'), or a natal *paran* with a narrow temporal orb (up to 6 minutes). When an active star is "Under the Rays" in a natal chart, its expression during the year tends to manifest in private, internal, or behind-the-scenes matters.
+
+A Note on Astronomical Rigor
+
+All calculations account for the precession of the equinoxes and true nutation for the exact date of the chart, utilizing actual Right Ascension and Declination (including the star’s specific celestial latitude) for equatorial coordinates, the rational horizon (excluding atmospheric refraction) for *parans*, and Bradley Schaefer’s physical model of atmospheric extinction and twilight brightness for heliacal phases.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 18: Copyright
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             

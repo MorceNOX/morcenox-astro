@@ -31,6 +31,7 @@
 #define PROM_CUSP 6
 #define PROM_ANGLE 7
 #define PROM_PART 8
+#define PROM_STAR 9
 
 
 #define DIRECT 0

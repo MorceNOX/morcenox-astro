@@ -198,6 +198,21 @@ typedef struct {
     ChartObject *obj_dir;
     int object_diff;
 
+    CalculatedStar *stars;
+    AspectStarMatrix matrix_stars;
+    DeclStarMatrix matrix_stars_decl;
+    int total_stars;
+    int *planet_ids;
+    double paran_orbis;
+    double lon_natal;
+    double elev_natal;
+    bool *natal_star_active;
+    CalculatedStar *natal_stars;
+
+    double mc;
+    double descendant;
+    double ic;
+
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);
@@ -236,7 +251,7 @@ double normalize_angle(double angle);
 double get_sun_moon_diff(double jd);
 double find_last_astrological_event(double start_jd, bool is_opposition);
 
-int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade);
+int chart(struct tm *local_time, double lat, double lon, double elev, double tz_offset, char *city, char *country, bool animated, int anim_interval, char *chart_name, char house_system, int gender_id, int darkmode, int mapa_retorno, int senhor_da_profeccao, int id_senhor_firdaria, int id_senhor_subfirdaria, double armc_natal, double lat_natal, PlanetDignities *dig_natal, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, double jd_natal, int *strength_natal, double asc_natal, double *cusps_natal, ChartObject *obj_natal, int total_obj_natal, double idade, bool *natal_star_active, CalculatedStar *natal_stars, double lon_natal, double elev_natal);
 void draw_circle_points(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);
 void draw_circle_points_delay(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character, int delay_ms, bool clockwise);
 void draw_circle_outline(int center_y, int center_x, float radius, float aspect_ratio, float current_scale, const wchar_t* character);

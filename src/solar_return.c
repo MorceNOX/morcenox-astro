@@ -293,7 +293,7 @@ void processar_confronto_natal_revolucao(
 }
 
 
-int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects) {
+int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_natal, bool mapa_diurno, double lat_natal, double armc, PlanetDignities *dig, char *nome_anareta_natal, char *nome_s8_natal, int tipo_h_natal, int idx_hyleg_natal, double *longitudes_natal, int *strength_planets, ChartObject *obj_natal, int num_objects, CalculatedStar *natal_stars, int total_natal_stars, ParanEntry *natal_parans, int total_natal_parans, AspectStarMatrix *natal_star_matrix, DeclStarMatrix *natal_decl_star_matrix, double lon_natal, double elev_natal) {
     
     double idade_padrao = obter_idade_padrao_mapa_double();
     double idade_escolhida = selecionar_idade_visual_fracionada(idade_padrao);
@@ -358,6 +358,58 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
     dst_offset = (double)obter_segundos_dst_na_data(tz_iana_retorno, tempo_retorno.tm_year + 1900, tempo_retorno.tm_mon + 1, tempo_retorno.tm_mday, tempo_retorno.tm_hour, tempo_retorno.tm_min) / 3600; 
 
     tz_offset_retorno += dst_offset;
+
+
+
+
+    bool natal_star_active[TRADITIONAL_STARS_COUNT];
+    memset(natal_star_active, 0, sizeof(natal_star_active));
+    
+    int object_diff = show_modern_planets ? 0 : 3;
+
+    for (int i = 0; i < total_natal_stars; i++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+
+            AspectCell c = natal_star_matrix->grid[i][j];
+
+            if (c.has_aspect) {
+                natal_star_active[i] = true;
+                break;
+            }
+
+        }
+    }
+    for (int i = 0; i < total_natal_stars; i++) {
+        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+            
+            DeclCell c = natal_decl_star_matrix->grid[i][j];
+
+            if (c.has_aspect) {
+                natal_star_active[i] = true;
+                break;
+            }
+
+        }
+    }
+    for (int i = 0; i < total_natal_parans; i++) {
+        natal_star_active[natal_parans[i].star_index] = true;        
+    }
+    
+
+    // for (int i = 0; i < total_natal_stars; i++) {
+    //     if (!natal_stars[i].heliacal_calculated) {
+    //         HeliacalInfo hinfo = get_star_heliacal_info(
+    //             julian_day, lon_natal, lat_natal, elev_natal, &natal_stars[i]
+    //         );
+    //         natal_stars[i].heliacal_state = hinfo.state;
+    //         natal_stars[i].heliacal_calculated = true;
+    //     }
+    // }
+    
+
+
+
+
     // 4. Dispara a função chart de forma recursiva passando os dados locais do retorno
     // O parâmetro 'chart_name' receberá o 'novo_nome_chart'
     chart(
@@ -392,7 +444,11 @@ int disparar_revolucao_solar(double julian_day, char *chart_name, double *cusps_
         cusps_natal,
         obj_natal,
         num_objects,
-        idade_escolhida
+        idade_escolhida,
+        natal_star_active,
+        natal_stars,
+        lon_natal,
+        elev_natal
     );
 
     return 1;
@@ -1968,4 +2024,532 @@ void abrir_janela_transitos_revolucao(
     delwin(shadow_win);
 
     drag_and_drop_off();
+}
+
+
+
+static int compare_sr_hits(const void *a, const void *b) {
+    const SRFixedStarHit *ha = (const SRFixedStarHit *)a;
+    const SRFixedStarHit *hb = (const SRFixedStarHit *)b;
+
+    if (ha->is_natal_active && !hb->is_natal_active) return -1;
+    if (!ha->is_natal_active && hb->is_natal_active) return 1;
+
+    if (ha->orb_deg < hb->orb_deg) return -1;
+    if (ha->orb_deg > hb->orb_deg) return 1;
+    return 0;
+}
+
+
+
+
+// Calcula as ativações de estrelas fixas na Revolução Solar
+int compute_sr_fixed_stars(
+    const double sr_angles[4],        // Array com {SR_ASC, SR_MC, SR_DSC, SR_IC}
+    const PlotObject *sr_plots,       // Planetas da Revolução Solar
+    int sr_plot_count,
+    CalculatedStar *sr_stars,
+    int star_count,
+    const bool natal_star_active[],   // Array booleano indicando quais das 51 estrelas são ativas no natal
+    SRFixedStarHit *out_hits,
+    CalculatedStar *natal_stars,
+    double tjd_ut_natal, 
+    double lon_natal, 
+    double lat_natal, 
+    double elev_natal,
+    int max_hits
+) {
+    
+    int object_diff = (show_modern_planets) ? 0 : 3;
+
+    const char *angle_names[4] = {
+        _("Ascendant"),
+        _("Midheaven"),
+        _("Descendant"),
+        _("Nadir")
+    };
+
+    const char *angle_glyphs[4] = {
+        "AC",
+        "MC",
+        "DC",
+        "IC"
+    };
+
+    int hits = 0;
+
+    for (int s = 0; s < star_count; s++) {
+        // Verifica primeiro os 4 Ângulos da Revolução Solar (prioridade máxima)
+        for (int a = 0; a < 4; a++) {
+            double diff = fabs(swe_difdeg2n(sr_stars[s].longitude, sr_angles[a]));
+            if (diff <= sr_stars[s].meta->default_orb && hits < max_hits) {
+                out_hits[hits].object          = angle_glyphs[a];
+                out_hits[hits].object_name     = angle_names[a];
+                out_hits[hits].star            = sr_stars[s].meta;
+                out_hits[hits].star_longitude  = sr_stars[s].longitude;
+                out_hits[hits].orb_deg         = diff;
+                out_hits[hits].is_natal_active = (natal_star_active != NULL) ? natal_star_active[s] : false;
+                if (natal_stars[s].heliacal_calculated) {
+                    out_hits[hits].natal_heliacal  = natal_stars[s].heliacal_state;
+                } else {
+                    HeliacalInfo hinfo = get_star_heliacal_info(tjd_ut_natal, lon_natal, lat_natal, elev_natal, &natal_stars[s]);
+                    natal_stars[s].heliacal_state      = hinfo.state;
+                    natal_stars[s].heliacal_calculated = true;
+                    out_hits[hits].natal_heliacal      = hinfo.state;
+                }
+                    
+                hits++;
+            }
+        }
+
+        // Verifica os Planetas da Revolução Solar (Sol até Saturno)
+        for (int p = 0; p < sr_plot_count; p++) {
+            if (p == P_ASC - object_diff || p == P_MC - object_diff || p == P_DC - object_diff || p == P_IC - object_diff) {
+                continue;
+            }
+            double diff = fabs(swe_difdeg2n(sr_stars[s].longitude, sr_plots[p].longitude));
+            if (diff <= sr_stars[s].meta->default_orb && hits < max_hits) {
+                out_hits[hits].object          = sr_plots[p].object;
+                out_hits[hits].object_name     = sr_plots[p].object_name;
+                out_hits[hits].star            = sr_stars[s].meta;
+                out_hits[hits].star_longitude  = sr_stars[s].longitude;
+                out_hits[hits].orb_deg         = diff;
+                out_hits[hits].is_natal_active = (natal_star_active != NULL) ? natal_star_active[s] : false;
+                if (natal_stars[s].heliacal_calculated) {
+                    out_hits[hits].natal_heliacal  = natal_stars[s].heliacal_state;
+                } else {
+                    HeliacalInfo hinfo = get_star_heliacal_info(tjd_ut_natal, lon_natal, lat_natal, elev_natal, &natal_stars[s]);
+                    natal_stars[s].heliacal_state      = hinfo.state;
+                    natal_stars[s].heliacal_calculated = true;
+                    out_hits[hits].natal_heliacal      = hinfo.state;
+                }
+                hits++;
+            }
+        }
+    }
+
+    return hits;
+}
+
+
+
+
+static void draw_sr_stars_footer(WINDOW *table_win, int table_height, int table_width, int offset_y, int itens_visiveis, int hit_count) {
+    mvwhline(table_win, table_height - 1, 1, ACS_HLINE, table_width - 2);
+    if (hit_count > itens_visiveis) {
+        int primeiro = (offset_y / 2) + 1;
+        int ultimo   = (offset_y / 2) + itens_visiveis;
+        if (ultimo > hit_count) ultimo = hit_count;
+
+        mvwprintw(table_win, table_height - 1, 2,
+                  _("ESC: Return | ↓/↑: Scroll (%d-%d of %d)"),
+                  primeiro, ultimo, hit_count);
+    } else {
+        mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
+    }
+}
+
+void display_sr_fixed_stars_table(SRFixedStarHit *hits, int hit_count) {
+    if (hit_count > 1) {
+        qsort(hits, hit_count, sizeof(SRFixedStarHit), compare_sr_hits);
+    }
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    int table_height = 24;
+    if (table_height > max_y - 2) table_height = max_y - 2;
+    int table_width = max_x - 5;
+
+    int start_y = (max_y - table_height) / 2;
+    int start_x = (max_x - table_width) / 2;
+
+    WINDOW *table_win  = newwin(table_height, table_width, start_y, start_x);
+    WINDOW *shadow_win = newwin(table_height, table_width, start_y + 1, start_x + 1);
+
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wnoutrefresh(shadow_win);
+
+    box(table_win, 0, 0);
+    wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
+
+    // Título centralizado
+    char title[200];
+    snprintf(title, sizeof(title), _("Solar Return Fixed Star Activations (Total: %d)"), hit_count);
+    int title_x = (table_width - (int)strlen(title)) / 2;
+    if (title_x < 2) title_x = 2;
+
+    wattron(table_win, A_BOLD);
+    mvwprintw(table_win, 0, title_x, "%s", title);
+
+    // Cabeçalho das colunas
+    mvwprintw(table_win, 2, 4,   "%-18s", _("SR Point"));
+    mvwprintw(table_win, 2, 24,  "%-20s", _("Fixed Star"));
+    mvwprintw(table_win, 2, 46,  "%-10s", _("Nature"));
+    mvwprintw(table_win, 2, 58,  "%-15s", _("Longitude"));
+    mvwprintw(table_win, 2, 75,  "%-10s", _("Orb"));
+    mvwprintw(table_win, 2, 87,  "%-28s", _("Natal Link / Status"));
+    mvwhline(table_win, 3, 3, ACS_HLINE, table_width - 6);
+    wattroff(table_win, A_BOLD);
+
+    // Botão [✖] no canto superior direito
+    int col_fechar = getmaxx(table_win) - 4;
+    wattron(table_win, COLOR_PAIR(13));
+    mvwprintw(table_win, 0, col_fechar, "[");
+    mvwprintw(table_win, 0, col_fechar + 2, "]");
+    wattroff(table_win, COLOR_PAIR(13));
+
+    wattron(table_win, COLOR_PAIR(13) | A_BOLD);
+    mvwprintw(table_win, 0, col_fechar + 1, "✖");
+    wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
+
+    // Área visível para o pad: de (start_y + 4) até (start_y + table_height - 5)
+    // Altura total da viewport = (table_height - 5) - 4 + 1 = table_height - 8
+    int max_linhas_dados_visiveis = table_height - 8;
+    if (max_linhas_dados_visiveis < 2) max_linhas_dados_visiveis = 2;
+
+    // Cada item ocupa 2 linhas (dados + separador) dentro do scroll_pad
+    int total_pad_rows = (hit_count > 0) ? (hit_count * 2) : max_linhas_dados_visiveis;
+    if (total_pad_rows < max_linhas_dados_visiveis) {
+        total_pad_rows = max_linhas_dados_visiveis;
+    }
+
+    int pad_width = table_width - 5;
+    WINDOW *scroll_pad = newpad(total_pad_rows, pad_width);
+    wbkgd(scroll_pad, COLOR_PAIR(8) | FLAGS);
+    
+    int running = 1;
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
+    mouseinterval(100);
+
+    drag_and_drop_on();
+
+    const char *sign_glyphs[] = {
+            "♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"
+    };
+
+    while (running) {
+
+        int row_pad = 0;
+        if (hit_count == 0) {
+            mvwprintw(scroll_pad, 1, 2, _("No Fixed Star conjunctions found in this Solar Return."));
+            row_pad = 2;
+        } else {
+            for (int idx = 0; idx < hit_count; idx++) {
+                // Formata longitude zodiacal (ex: 00° Vir 12')
+                double lon = swe_degnorm(hits[idx].star_longitude);
+                int sign_idx = (int)(lon / 30.0);
+                double deg_in_sign = lon - (sign_idx * 30.0);
+                int deg = (int)deg_in_sign;
+                int min = (int)round((deg_in_sign - deg) * 60.0);
+                if (min == 60) { deg++; min = 0; }
+
+                // Formata orbe em graus e minutos
+                int orb_d = (int)hits[idx].orb_deg;
+                int orb_m = (int)round((hits[idx].orb_deg - orb_d) * 60.0);
+                if (orb_m == 60) { orb_d++; orb_m = 0; }
+
+                // Monta o rótulo de vínculo natal + estado helíaco
+                char status_buf[100];
+                if (hits[idx].is_natal_active) {
+                    if (hits[idx].natal_heliacal == HELIACAL_HIDDEN) {
+                        snprintf(status_buf, sizeof(status_buf), "[%s · %s]", _("Natal Active"), _("Under Beams"));
+                    } else {
+                        snprintf(status_buf, sizeof(status_buf), "[%s]", _("Natal Active"));
+                    }
+                } else {
+                    if (hits[idx].natal_heliacal == HELIACAL_HIDDEN) {
+                        snprintf(status_buf, sizeof(status_buf), "(%s)", _("Under Beams"));
+                    } else {
+                        snprintf(status_buf, sizeof(status_buf), "-");
+                    }
+                }
+
+                // Destaque visual: negrito se ativa no natal (e não sob os raios), atenuado se sob os raios
+                if (hits[idx].is_natal_active && hits[idx].natal_heliacal != HELIACAL_HIDDEN) {
+                    wattron(scroll_pad, A_BOLD);
+                } else if (hits[idx].natal_heliacal == HELIACAL_HIDDEN) {
+                    wattron(scroll_pad, A_DIM);
+                }
+
+                mvwprintw(scroll_pad, row_pad, 2,  "%-3s %-13s", hits[idx].object, hits[idx].object_name);
+                mvwprintw(scroll_pad, row_pad, 22, "%-20s", hits[idx].star->display_name);
+                mvwprintw(scroll_pad, row_pad, 44, "%-10s", hits[idx].star->nature);
+                mvwprintw(scroll_pad, row_pad, 56, "%02d° %s %02d'", deg, sign_glyphs[sign_idx], min);
+                mvwprintw(scroll_pad, row_pad, 73, "%d°%02d'", orb_d, orb_m);
+                mvwprintw(scroll_pad, row_pad, 85, "%-28s", status_buf);
+
+                wattroff(scroll_pad, A_BOLD | A_DIM);
+
+                wattron(scroll_pad, COLOR_PAIR(10) | A_DIM);
+                mvwhline(scroll_pad, row_pad + 1, 1, ACS_HLINE, pad_width - 2);
+                wattroff(scroll_pad, COLOR_PAIR(10) | A_DIM);
+
+                row_pad += 2;
+            }
+        }
+        
+        int offset_y = 0;
+        int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+        if (max_scroll_y < 0) max_scroll_y = 0;
+
+        keypad(table_win, TRUE);
+        nodelay(table_win, FALSE);
+
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(table_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+        wattroff(table_win, COLOR_PAIR(28) | flag);
+        wnoutrefresh(table_win);
+
+        mvwaddstr(table_win, 3, table_width - 2, "▲");
+        mvwaddstr(table_win, 4 + max_linhas_dados_visiveis, table_width - 2, "▼");
+        
+        int itens_visiveis = max_linhas_dados_visiveis / 2;
+
+        draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+
+        wnoutrefresh(table_win);
+        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
+        doupdate();
+
+        int ch;
+        int need_resort = 0; // Flag para sair do loop interno e reordenar
+
+        while (running && !need_resort) {
+            ch = wgetch(table_win);
+
+            if (ch == 27 || ch == 'q' || ch == 'Q') {
+                running = 0; // Garante que sairá também do while (running) externo!
+                break;
+            }    
+
+            switch (ch) {
+                case KEY_UP:
+                case 'k':
+                case 'K':
+                    if (offset_y > 0) offset_y -= 2;
+                    draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                
+                    wnoutrefresh(table_win);
+                    break;
+
+                case KEY_DOWN:
+                case 'j':
+                case 'J':
+                    if (offset_y < max_scroll_y) offset_y += 2;
+                    draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                
+                    wnoutrefresh(table_win);
+                    break;
+
+                case KEY_PPAGE:
+                    offset_y -= (max_linhas_dados_visiveis / 2) * 2;
+                    if (offset_y < 0) offset_y = 0;
+                    draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                
+                    wnoutrefresh(table_win);
+                    break;
+
+                case KEY_NPAGE:
+                    offset_y += (max_linhas_dados_visiveis / 2) * 2;
+                    if (offset_y > max_scroll_y) offset_y = max_scroll_y;
+                    
+                    draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                
+                    wnoutrefresh(table_win);
+                    break;
+
+                case KEY_MOUSE: {
+                    MEVENT event;
+                    if (getmouse(&event) == OK) {
+                        int linha_clique_janela = event.y - getbegy(table_win);
+                        int col_clique_janela = event.x - getbegx(table_win);
+
+                        int col_inicio_fechar = getmaxx(table_win) - 4;
+                        int col_fim_fechar = col_inicio_fechar + 3;
+
+                        if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                            if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                                running = 0;
+                                break;
+                            }
+                        }
+
+                        int col_scrollbar_absoluta = getbegx(table_win) + (getmaxx(table_win) - 2);
+
+                        if (event.x == col_scrollbar_absoluta) {
+                            int linha_seta_cima = 3;
+                            int offset_inicio_barra = 4;
+                            int linha_seta_baixo = offset_inicio_barra + max_linhas_dados_visiveis;
+
+                            int max_scroll_y = row_pad - max_linhas_dados_visiveis;
+                            if (max_scroll_y < 0) max_scroll_y = 0;
+
+                            if (linha_clique_janela == linha_seta_cima) {
+                                if (event.bstate & BUTTON1_PRESSED) {
+                                    nodelay(table_win, TRUE);
+                                    while (1) {
+                                        if (offset_y > 1) {
+                                            offset_y -= 2;
+
+                                            int flag = 0;
+                                            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                            wattron(table_win, COLOR_PAIR(28) | flag);
+                                            desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+                                            wattroff(table_win, COLOR_PAIR(28) | flag);
+                                            mvwaddstr(table_win, 4 + max_linhas_dados_visiveis, table_width - 2, "▼");
+                                            draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                                        
+                                            wnoutrefresh(table_win);
+
+                                            wnoutrefresh(table_win);
+                                            prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
+                                            doupdate();
+                                        } else {
+                                            break;
+                                        }
+
+                                        napms(80);
+
+                                        int ch_check = wgetch(table_win);
+                                        if (ch_check == KEY_MOUSE) {
+                                            MEVENT check_event;
+                                            if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    nodelay(table_win, FALSE);
+                                }
+                            } else if (linha_clique_janela == linha_seta_baixo) {
+                                if (event.bstate & BUTTON1_PRESSED) {
+                                    nodelay(table_win, TRUE);
+
+                                    while (1) {
+                                        if (offset_y < max_scroll_y - 1) {
+
+                                            offset_y += 2;
+                                            int flag = 0;
+
+                                            if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+
+                                            draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                                        
+                                            wnoutrefresh(table_win);
+
+                                            wattron(table_win, COLOR_PAIR(28) | flag);
+                                            desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+                                            mvwaddstr(table_win, 4 + max_linhas_dados_visiveis, table_width - 2, "▼");
+                                            wattroff(table_win, COLOR_PAIR(28) | flag);
+                                            wnoutrefresh(table_win);
+                                            prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
+                                            doupdate();
+                                        } else {
+                                            break;
+                                        }
+                                        napms(80);
+                                        int ch_check = wgetch(table_win);
+                                        if (ch_check == KEY_MOUSE) {
+                                            MEVENT check_event;
+                                            if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    nodelay(table_win, FALSE);
+                                }
+                            } else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                                nodelay(table_win, TRUE);
+                                int linha_trilho_atual = 0;
+                                if (max_scroll_y > 0 && (max_linhas_dados_visiveis - 1) > 0) {
+                                    linha_trilho_atual = (offset_y * (max_linhas_dados_visiveis - 1)) / max_scroll_y;
+                                }
+                                int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+                                int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                                int linha_inicial_mouse = linha_clique_janela;
+                                int pad_line_pos_original = offset_y;
+                                while (1) {
+                                    int novo_offset = offset_y;
+                                    int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+                                    if (modo_arrasto_trilho) {
+                                        int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                        if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                            int delta_scroll = (delta_mouse * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                            novo_offset = pad_line_pos_original + delta_scroll;
+                                        }
+                                    } else {
+                                        if (linha_clique_barra >= 0 && linha_clique_barra < max_linhas_dados_visiveis) {
+                                            if ((max_linhas_dados_visiveis - 1) > 0 && max_scroll_y > 0) {
+                                                novo_offset = (linha_clique_barra * max_scroll_y) / (max_linhas_dados_visiveis - 1);
+                                            }
+                                        }
+                                    }
+                                    novo_offset = (novo_offset / 2) * 2;
+                                    if (novo_offset < 0) novo_offset = 0;
+                                    if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+                                    if (offset_y != novo_offset) {
+                                        offset_y = novo_offset;
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(table_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+                                        wattroff(table_win, COLOR_PAIR(28) | flag);
+                                        mvwaddstr(table_win, 4 + max_linhas_dados_visiveis, table_width - 2, "▼");
+
+                                        draw_sr_stars_footer(table_win, table_height, table_width, offset_y, itens_visiveis, hit_count);
+                                    
+                                        wnoutrefresh(table_win);
+                                        prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
+                                        doupdate();
+                                    }
+                                    if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                        break;
+                                    }
+                                    napms(10);
+                                    int ch_check = wgetch(table_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK) {
+                                            if (check_event.bstate & BUTTON1_RELEASED) {
+                                                break;
+                                            }
+                                            linha_clique_janela = check_event.y - getbegy(table_win);
+                                        }
+                                    } else if (ch_check != ERR) {
+                                        ungetch(ch_check);
+                                        break;
+                                    }
+                                }
+                                nodelay(table_win, FALSE);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            if (running && !need_resort) {
+                int flag = 0;
+                if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                wattron(table_win, COLOR_PAIR(28) | flag);
+                desenhar_scrollbar(table_win, offset_y, row_pad, max_linhas_dados_visiveis, 3);
+                wattroff(table_win, COLOR_PAIR(28) | flag);
+                mvwaddstr(table_win, 4 + max_linhas_dados_visiveis, table_width - 2, "▼");
+                wnoutrefresh(table_win);
+                prefresh(scroll_pad, offset_y, 0, start_y + 4, start_x + 2, start_y + table_height - 5, start_x + table_width - 3);
+                doupdate();
+            }
+        }
+    }
+    delwin(scroll_pad);
+    delwin(shadow_win);
+    delwin(table_win);
+    drag_and_drop_off();
+    touchwin(stdscr);
+    refresh();
 }

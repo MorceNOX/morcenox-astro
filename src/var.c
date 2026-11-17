@@ -82,6 +82,7 @@ int terms_system = 0;
 
 int TIME_KEY = TIME_KEY_NAIBOD;
 int ANT_PROM = false;
+int STAR_PROM = false;
 
 int FLAGS = 0;
 
@@ -94,6 +95,9 @@ const int MAX_HELP_LINE_WIDTH = 68;
 const int MAX_LINE_WIDTH = 80;
 
 const double ASP_MAJOR_EXACT = 1.0;
+
+const double ORB_PARAN_EXACT = 6.0;
+const double MAX_ORB_PARAN = 15.0;
 
 const double TEMPERAMENT_RANK_PROPORTION = 0.6666;
 

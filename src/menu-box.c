@@ -2196,7 +2196,7 @@ void call_chart_now() {
 
     QUICK_CHART = true;
 
-    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
+    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
 }
 
 
@@ -2227,7 +2227,7 @@ void call_chart() {
 
     QUICK_CHART = false;
 
-    chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0);
+    chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
 }
 
 
@@ -2252,7 +2252,7 @@ void load_default_values() {
         return;
     }
 
-    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key, p.antiscia_as_promissor, p.pd_arc_calc, p.zod_pd_with_lat FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
+    const char *sql_select_city = "SELECT c.city, c.country, c.state, c.timezone, p.dst, p.dark_mode, p.house_system, p.triplicity_system, p.gender, p.show_modern_planets, p.language, p.time_key, p.antiscia_as_promissor, p.pd_arc_calc, p.zod_pd_with_lat, p.stars_as_promissor FROM profiles p INNER JOIN cities c ON p.city_id = c.id WHERE p.profile = ?;";
     rc = sqlite3_prepare_v2(db, sql_select_city, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement (main): %s\n", sqlite3_errmsg(db));
@@ -2278,6 +2278,7 @@ void load_default_values() {
         int ant_prom = sqlite3_column_int(stmt, 12);
         int pd_arc_calc = sqlite3_column_int(stmt, 13);
         int zod_pd_with_lat = sqlite3_column_int(stmt, 14);
+        int star_prom = sqlite3_column_int(stmt, 15);
     
         if (city) snprintf(DEFAULT_CITY, sizeof(DEFAULT_CITY), "%s", city);
         if (country) snprintf(DEFAULT_COUNTRY, sizeof(DEFAULT_COUNTRY), "%s", country);
@@ -2296,6 +2297,7 @@ void load_default_values() {
 
         TIME_KEY = key;
         ANT_PROM = ant_prom;
+        STAR_PROM = star_prom;
         METODO_CALCULO_ATIVO = pd_arc_calc;
         ZOD_PD_WITH_LAT = zod_pd_with_lat;
 
@@ -2863,6 +2865,7 @@ void set_options() {
 
     DARK_MODE = ed.options.dark_mode;
     ANT_PROM = ed.options.ant_prom;
+    STAR_PROM = ed.options.star_prom;
     ZOD_PD_WITH_LAT = ed.options.zod_pd_with_lat;
     METODO_CALCULO_ATIVO = ed.options.pd_arc_calc;
 

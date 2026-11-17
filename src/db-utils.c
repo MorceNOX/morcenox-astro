@@ -2145,6 +2145,27 @@ double get_antissia_orbis() {
 }
 
 
+
+double get_paran_orbis() {
+    double paran_orbis = ORB_PARAN_EXACT;  // Orbe padrão se o banco falhar
+    sqlite3 *db = open_database();
+    if (db) {
+        sqlite3_stmt *stmt;
+        const char *sql_select_p_orbis = "SELECT paran_orb FROM profiles WHERE profile = 'default';";
+        int rc = sqlite3_prepare_v2(db, sql_select_p_orbis, -1, &stmt, NULL);
+        if (rc == SQLITE_OK) {
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                paran_orbis = sqlite3_column_double(stmt, 0);
+            }
+            sqlite3_finalize(stmt);
+        }
+        close_database(db);
+    }
+
+    return paran_orbis;
+}
+
+
 int get_house_system_name(char house_system_id, char **house_system_name) {    
 
     sqlite3 *db;
@@ -2274,8 +2295,8 @@ int update_settings(ChartOptions options) {
     sqlite3_exec(db, sql_attach, NULL, NULL, NULL);
     sqlite3_free(sql_attach); // Libera o ponteiro gerado pelo mprintf
 
-    const char *sql_update      = "UPDATE main.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ? WHERE profile = ?;";
-    const char *sql_update_disc = "UPDATE disco.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ? WHERE profile = ?;";
+    const char *sql_update      = "UPDATE main.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ?, stars_as_promissor = ?, star_classes_selection = ? WHERE profile = ?;";
+    const char *sql_update_disc = "UPDATE disco.profiles SET dark_mode = ?, house_system = ?, triplicity_system = ?, terms_system = ?, modern_planets_rulling = ?, show_modern_planets = ?, gender = ?, language = ?, time_key = ?, antiscia_as_promissor = ?, zod_pd_with_lat = ?, pd_arc_calc = ?, stars_as_promissor = ?, star_classes_selection = ?   WHERE profile = ?;";
 
     if (sqlite3_prepare_v2(db, sql_update, -1, &stmt_ram, NULL) != SQLITE_OK ||
         sqlite3_prepare_v2(db, sql_update_disc, -1, &stmt_disc, NULL) != SQLITE_OK) {
@@ -2307,7 +2328,9 @@ int update_settings(ChartOptions options) {
         sqlite3_bind_int(statements[i], 10, options.ant_prom);
         sqlite3_bind_int(statements[i], 11, options.zod_pd_with_lat);
         sqlite3_bind_int(statements[i], 12, options.pd_arc_calc);
-        sqlite3_bind_text(statements[i], 13, "default", -1, SQLITE_STATIC);
+        sqlite3_bind_int(statements[i], 13, options.star_prom);
+        sqlite3_bind_int(statements[i], 14, options.star_classes);
+        sqlite3_bind_text(statements[i], 15, "default", -1, SQLITE_STATIC);
 
         rc = sqlite3_step(statements[i]);
         if (rc != SQLITE_DONE) {

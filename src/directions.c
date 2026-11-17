@@ -1212,7 +1212,8 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
         ) continue;
 
         if ((prom->type == PROM_ANTISCIUM || prom->type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
-        if ((prom->type == PROM_ANTISCIUM || prom->type == PROM_CONTRANTISCIUM) && strstr(prom->object, "🝴") != NULL) continue;
+        else if ((prom->type == PROM_ANTISCIUM || prom->type == PROM_CONTRANTISCIUM) && strstr(prom->object, "🝴") != NULL) continue;
+        else if ((prom->type == PROM_STAR) && !STAR_PROM) continue;
 
         processar_astro(ramc, lat_geografica, prom);
 
@@ -1224,6 +1225,8 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                 if (!mundane_aspects[a]) continue;
 
                 if ((sig->type == PROM_ANGLE || sig->type == PROM_CUSP) && (a > 0 && a < 7)) continue;
+                else if ((prom->type == PROM_STAR) && (a > 0 && a < 8)) continue;
+
 
                 double arco = 0.0;
 
@@ -1391,7 +1394,7 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                     d->tipo_direcao_id = DIRECAO_MUNDANA;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 600) goto fim_calculo;
+                    if (qtd_direcoes >= 800) goto fim_calculo;
                 }
             }
         }
@@ -2206,6 +2209,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
     for (int p = 0; p < total_promissores; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
         else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if ((prom[p].type == PROM_STAR) && !STAR_PROM) continue;
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
@@ -2219,6 +2223,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                         
             for (int a = 0; a < total_aspects; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
+                else if (prom[p].type == PROM_STAR && (a > 0 && a < 8)) continue;
 
                 double arco = 0.0;
                 int eh_paralelo = (a == 8 || a == 9);
@@ -2349,7 +2354,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             (*qtd_direcoes)++;
-                            if (*qtd_direcoes >= 600) goto fim_calculo;
+                            if (*qtd_direcoes >= 800) goto fim_calculo;
                         }
                     }
                     continue;
@@ -2461,7 +2466,7 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
                     
                     (*qtd_direcoes)++;
-                    if (*qtd_direcoes >= 600) goto fim_calculo;
+                    if (*qtd_direcoes >= 800) goto fim_calculo;
                 }
             }
         }
@@ -2536,6 +2541,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
     for (int p = 0; p < total_promissores; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
         else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if ((prom[p].type == PROM_STAR) && !STAR_PROM) continue;
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
@@ -2549,6 +2555,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                         
             for (int a = 0; a < total_aspects; a++) {
                 if (prom[p].type == PROM_TERM && a > 0) break;
+                else if (prom[p].type == PROM_STAR && (a > 0 && a < 8)) continue;
 
                 double arco = 0.0;
                 int eh_paralelo = (a == 8 || a == 9);
@@ -2672,7 +2679,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             (*qtd_direcoes)++;
-                            if (*qtd_direcoes >= 600) goto fim_calculo;
+                            if (*qtd_direcoes >= 800) goto fim_calculo;
                         }
                     }
                     continue;
@@ -2788,7 +2795,7 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
                     
                     (*qtd_direcoes)++;
-                    if (*qtd_direcoes >= 600) goto fim_calculo;
+                    if (*qtd_direcoes >= 800) goto fim_calculo;
                 }
             }
         }
@@ -2853,6 +2860,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
     for (int p = 0; p < prom_id; p++) {
         if ((prom[p].type == PROM_ANTISCIUM || prom[p].type == PROM_CONTRANTISCIUM) && !ANT_PROM) continue;
         else if (prom[p].type == PROM_POINT || prom[p].type == PROM_ANGLE) continue;
+        else if ((prom[p].type == PROM_STAR) && !STAR_PROM) continue;
         else if (!is_part) {
             if ((p == idx_alvo && p < NUM_OBJECTS - object_diff - (show_modern_planets ? 5 : 4))) continue;
         }
@@ -2867,6 +2875,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
             for (int a = 0; a < total_aspects; a++) {
 
                 if (prom[p].type == PROM_TERM && a > 0) break; // apenas conjunções para termos
+                else if (prom[p].type == PROM_STAR && (a > 0 && a < 8)) continue;
 
                 double arco = 0.0;
                 int eh_paralelo = (a == 8 || a == 9);
@@ -2979,7 +2988,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                             qtd_direcoes++;
-                            if (qtd_direcoes >= 600) goto fim_calculo;
+                            if (qtd_direcoes >= 800) goto fim_calculo;
                         }
                     }
                     continue;
@@ -3098,7 +3107,7 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     d->tipo_direcao_id = DIRECAO_ZODIACAL;
 
                     qtd_direcoes++;
-                    if (qtd_direcoes >= 600) goto fim_calculo;
+                    if (qtd_direcoes >= 800) goto fim_calculo;
                 }
             }
         }
@@ -3521,7 +3530,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
     int loop_interativo = 1;
 
     int max_linhas_exibicao = (table_height / 2) * 2 - 14;
-    WINDOW *scroll_pad = newpad(2400, table_width - 8); 
+    WINDOW *scroll_pad = newpad(3200, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
     wattron(shadow_win, COLOR_PAIR(9));
@@ -3556,7 +3565,23 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
     bool PART_DIRECTIONS = false;
 
+    
+    int qtd_direcoes_zod = 0;
+    int qtd_direcoes_mun = 0;
+    int qtd_direcoes_asc = 0;
+
+    LinhaDirecao cronograma_z[800];
+    LinhaDirecao cronograma_m[800];
+    LinhaDirecao cronograma_asc[800]; 
+    
+
+    int qtd_direcoes_real = 0;
+    int qtd_direcoes = 0;
+    int qtd_direcoes_calculo = 0;
+
     int mundane_aspects[12] = {1,1,1,1,1,1,1,1,1,1,1,1};
+
+    bool recalculate = true;
 
     while (loop_interativo) {
         werase(table_win);
@@ -3576,54 +3601,55 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
         mvwprintw(table_win, 0, col_fechar + 1, "✖");
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
-        int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
-
+        int idx_atual_calculo = indices_significadores[seletor_alvo_atual];      
         
-        int qtd_direcoes_zod = 0;
-        int qtd_direcoes_mun = 0;
-        int qtd_direcoes_asc = 0;
         
-        LinhaDirecao cronograma_z[600];
-        LinhaDirecao cronograma_m[600];
-        LinhaDirecao cronograma_asc[600];
+        
+        if (recalculate) {
 
-        memset(cronograma_asc, 0, sizeof(cronograma_asc));
-        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-            qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
-        }
-        else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
-            qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, PART_DIRECTIONS);
-        }
-        else {
-            qtd_direcoes_asc = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
-        }
+            qtd_direcoes_zod = 0;
+            qtd_direcoes_mun = 0;
+            qtd_direcoes_asc = 0;
 
-        if (tipo != 1) {
-            memset(cronograma_z, 0, sizeof(cronograma_z));
+            
+            memset(cronograma_asc, 0, sizeof(cronograma_asc));
             if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                qtd_direcoes_asc = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
             }
             else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
+                qtd_direcoes_asc = calcular_direcoes_zodiacais_geral(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, PART_DIRECTIONS);
             }
             else {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                qtd_direcoes_asc = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[3], cronograma_asc, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_asc, PART_DIRECTIONS);
             }
-        }
-        if (tipo != 0) {   
-            memset(cronograma_m, 0, sizeof(cronograma_m));            
-            qtd_direcoes_mun = calc_mundane_directions(&sig[idx_atual_calculo], cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
-            //qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
-        }
+
+            if (tipo != 1) {
+                memset(cronograma_z, 0, sizeof(cronograma_z));
+                if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                }
+                else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
+                }
+                else {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                }
+            }
+            if (tipo != 0) {   
+                memset(cronograma_m, 0, sizeof(cronograma_m));            
+                qtd_direcoes_mun = calc_mundane_directions(&sig[idx_atual_calculo], cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
+                //qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
+            }
         
-        int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
-        int qtd_direcoes = qtd_direcoes_real;
-        int qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_asc;
 
+            qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
+            qtd_direcoes = qtd_direcoes_real;
+            qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_asc;
 
+        }
         LinhaDirecao *cronograma_a = (LinhaDirecao *)calloc(qtd_direcoes_calculo, sizeof(LinhaDirecao));
 
-        
+    
 
         int index = 0;
         if (cronograma_a) {    
@@ -3686,8 +3712,9 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             }
         }
         qtd_direcoes = index;
+        free(cronograma_a);
 
-
+        
 
 
 
@@ -3771,7 +3798,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
 
 
-        free(cronograma_a);
+        
 
 
 
@@ -3954,6 +3981,8 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
                 bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
 
+                bool eh_star = (d->promissor_type == PROM_STAR);
+
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
 
@@ -3974,7 +4003,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                     par_cor_ativo = COLOR_PAIR(11); 
                     atributo_extra |= A_BOLD;
                 }
-                else if (!eh_malefico_essencial && eh_aspecto_tenso) {
+                else if (!eh_malefico_essencial && eh_aspecto_tenso && !eh_star) {
                     par_cor_ativo = COLOR_PAIR(25);
                     atributo_extra |= A_REVERSE;
                 }
@@ -3990,13 +4019,19 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                     par_cor_ativo = COLOR_PAIR(8);
                     atributo_extra |= A_NORMAL;
                 }
+                
+                if (eh_star) {
+                    par_cor_ativo = COLOR_PAIR(80);
+                    atributo_extra |= A_ITALIC;
+                }
 
                 if (eh_termo) {
                    atributo_extra |= A_UNDERLINE;
                 }
                 else if (eh_antiscia) {
                     atributo_extra |= A_DIM | A_ITALIC;
-                } 
+                }
+                
 
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
@@ -4108,33 +4143,41 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
             case 'C':
             case 'c':
                 sentido = 1;
+                recalculate = true;
                 break;
             case 'd':
             case 'D':
                 sentido = 0;
+                recalculate = true;
                 break;
             case 'a':
             case 'A':
                 sentido = 2;
+                recalculate = true;
                 break;
             case 'Z':
             case 'z':
                 tipo = 0;
+                recalculate = true;
                 break;
             case 'm':
             case 'M':
                 tipo = 1;
+                recalculate = true;
                 break;
             case 'b':
             case 'B':
                 tipo = 2;
+                recalculate = true;
                 break;
             case 'P':
             case 'p':
                 print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                recalculate = false;
                 break;
             case '1':
                 for (int i = 0; i < 12; i++) mundane_aspects[i] = 1;
+                recalculate = true;
                 break;
             case '2':
                 for (int i = 0; i < 12; i++) {
@@ -4144,6 +4187,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case '3':
                 for (int i = 0; i < 12; i++) {
@@ -4153,6 +4197,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case '4':
                 for (int i = 0; i < 12; i++) {
@@ -4162,24 +4207,29 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % (TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1));
                 scroll_offset = 0;
+                recalculate = true;
                 break;
             case KEY_LEFT:
                 seletor_alvo_atual = (seletor_alvo_atual - 1 + TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1)) % (TOTAL_SIGNIFICADORES - object_diff - (show_modern_planets?0:1));
                 scroll_offset = 0;
+                recalculate = true;
                 break;
             case KEY_DOWN:
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
                     scroll_offset += 2;
                 }
+                recalculate = false;
                 break;
             case KEY_UP:
                 if (scroll_offset > 0) {
                     scroll_offset -= 2;
                 }
+                recalculate = false;
                 break;
             case KEY_NPAGE:
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
@@ -4188,6 +4238,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 else {
                     scroll_offset = qtd_direcoes * 2 - 1;
                 }
+                recalculate = false;
                 break;
             case KEY_PPAGE:
                 if (scroll_offset >= 0) {
@@ -4196,8 +4247,10 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                         scroll_offset = 0;
                     }
                 }
+                recalculate = false;
                 break;
             case KEY_MOUSE: {
+                recalculate = false;
                 MEVENT event;
                 if (getmouse(&event) == OK) {
                     // Coordenadas do clique convertidas para o plano local da janela
@@ -4534,7 +4587,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
     // ────────────────────────────────────────────────────────────────────────
     // Criamos um espaço de 180 linhas de altura (cabe qualquer volume de direções)
     int max_linhas_exibicao = (table_height / 2) * 2 - 14; // Espaço físico real na janela para os dados
-    WINDOW *scroll_pad = newpad(2400, table_width - 8); 
+    WINDOW *scroll_pad = newpad(3200, table_width - 8); 
 
     // Desenha sombra e frame fixo de fundo
     wattron(shadow_win, COLOR_PAIR(9));
@@ -4568,6 +4621,20 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
     drag_and_drop_on();
 
+    int qtd_direcoes_zod = 0;
+    int qtd_direcoes_mun = 0;
+    int qtd_direcoes_for = 0;
+    
+    LinhaDirecao cronograma_z[800];
+    LinhaDirecao cronograma_m[800];
+    LinhaDirecao cronograma_for[800];
+
+    int qtd_direcoes_real = 0;
+    int qtd_direcoes = 0;
+    int qtd_direcoes_calculo = 0;
+
+    bool recalculate = true;
+
     int mundane_aspects[12] = {1,1,1,1,1,1,1,1,1,1,1,1};
 
     while (loop_interativo) {
@@ -4592,58 +4659,57 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
         int idx_atual_calculo = indices_significadores[seletor_alvo_atual];
 
-        int qtd_direcoes_zod = 0;
-        int qtd_direcoes_mun = 0;
-        int qtd_direcoes_for = 0;
         
-        LinhaDirecao cronograma_z[600];
-        LinhaDirecao cronograma_m[600];
-        LinhaDirecao cronograma_for[600];
+        if (recalculate) {
+            qtd_direcoes_zod = 0;
+            qtd_direcoes_mun = 0;
+            qtd_direcoes_for = 0;
 
-        memset(cronograma_for, 0, sizeof(cronograma_for));
-        if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-            qtd_direcoes_for = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
-        }
-        else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
-            qtd_direcoes_for = calcular_direcoes_zodiacais_geral(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, PART_DIRECTIONS);
-        }
-        else {
-            qtd_direcoes_for = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
-        }
-
-        if (tipo != 1) {
-            memset(cronograma_z, 0, sizeof(cronograma_z));
+            memset(cronograma_for, 0, sizeof(cronograma_for));
             if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                qtd_direcoes_for = calcular_direcoes_zodiacais_topocentrico(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
             }
             else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
+                qtd_direcoes_for = calcular_direcoes_zodiacais_geral(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, PART_DIRECTIONS);
             }
             else {
-                qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                qtd_direcoes_for = calcular_direcoes_zodiacais_regiomontanus(sig, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom, prom_id, ramc, lat, &qtd_direcoes_for, PART_DIRECTIONS);
             }
+
+            if (tipo != 1) {
+                memset(cronograma_z, 0, sizeof(cronograma_z));
+                if (METODO_CALCULO_ATIVO == METODO_TOPOCENTRICO) {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_topocentrico(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                }
+                else if (METODO_CALCULO_ATIVO == METODO_PLACIDUS_SEMI_ARCO) {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_geral(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, PART_DIRECTIONS);
+                }
+                else {
+                    qtd_direcoes_zod = calcular_direcoes_zodiacais_regiomontanus(sig, idx_atual_calculo, cronograma_z, jd, sentido, prom, prom_id, ramc, lat, &qtd_direcoes_zod, PART_DIRECTIONS);
+                }
+            }
+            if (tipo != 0) {   
+                memset(cronograma_m, 0, sizeof(cronograma_m));            
+                qtd_direcoes_mun = calc_mundane_directions(&sig[idx_atual_calculo], cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
+                //qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
+            }
+        
+
+            // qtd_direcoes_for = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom);
+
+            // if (tipo != 1) {
+            //     memset(cronograma_z, 0, sizeof(cronograma_z));
+            //     qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, sentido, prom);
+            // }
+            // if (tipo != 0) {   
+            //     memset(cronograma_m, 0, sizeof(cronograma_m));
+            //     qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
+            // }
+            qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
+            qtd_direcoes = qtd_direcoes_real;
+            qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_for;
+
         }
-        if (tipo != 0) {   
-            memset(cronograma_m, 0, sizeof(cronograma_m));            
-            qtd_direcoes_mun = calc_mundane_directions(&sig[idx_atual_calculo], cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
-            //qtd_direcoes_mun = calcular_direcoes_mundanas_geral(sig, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom, mundane_aspects);            
-        }
-
-        // qtd_direcoes_for = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, indices_significadores[idx_fortuna], cronograma_for, jd, 2, prom);
-
-        // if (tipo != 1) {
-        //     memset(cronograma_z, 0, sizeof(cronograma_z));
-        //     qtd_direcoes_zod = calcular_direcoes_zodiacais_partes(lista_partes, qtd_partes, idx_atual_calculo, cronograma_z, jd, sentido, prom);
-        // }
-        // if (tipo != 0) {   
-        //     memset(cronograma_m, 0, sizeof(cronograma_m));
-        //     qtd_direcoes_mun = calcular_direcoes_mundanas_partes(lista_partes, idx_atual_calculo, cronograma_m, jd, ramc, lat, sentido, prom);
-        // }
-        int qtd_direcoes_real = qtd_direcoes_zod + qtd_direcoes_mun; // guarda para depois
-        int qtd_direcoes = qtd_direcoes_real;
-        int qtd_direcoes_calculo = qtd_direcoes + qtd_direcoes_for;
-
-
 
 
         LinhaDirecao *cronograma_a = (LinhaDirecao *)calloc(qtd_direcoes_calculo, sizeof(LinhaDirecao));
@@ -4988,6 +5054,8 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
                 //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
 
+                bool eh_star = (d->promissor_type == PROM_STAR);
+
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
                 bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
@@ -5014,7 +5082,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                     par_cor_ativo = COLOR_PAIR(11); 
                     atributo_extra |= A_BOLD;
                 }
-                else if (!eh_malefico_essencial && eh_aspecto_tenso) {
+                else if (!eh_malefico_essencial && eh_aspecto_tenso && !eh_star) {
                     par_cor_ativo = COLOR_PAIR(25);
                     atributo_extra |= A_REVERSE;
                 }
@@ -5029,6 +5097,11 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
                     atributo_extra |= A_NORMAL;
+                }                
+                
+                if (eh_star) {
+                    par_cor_ativo = COLOR_PAIR(80);
+                    atributo_extra |= A_ITALIC;
                 }
 
                 if (eh_termo) {
@@ -5147,33 +5220,41 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
             case 'C':
             case 'c':
                 sentido = 1;
+                recalculate = true;
                 break;
             case 'd':
             case 'D':
                 sentido = 0;
+                recalculate = true;
                 break;
             case 'a':
             case 'A':
                 sentido = 2;
+                recalculate = true;
                 break;
             case 'Z':
             case 'z':
                 tipo = 0;
+                recalculate = true;
                 break;
             case 'm':
             case 'M':
                 tipo = 1;
+                recalculate = true;
                 break;
             case 'b':
             case 'B':
                 tipo = 2;
+                recalculate = true;
                 break;
             case 'P':
             case 'p':
                 print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                recalculate = false;
                 break;
             case '1':
                 for (int i = 0; i < 12; i++) mundane_aspects[i] = 1;
+                recalculate = true;
                 break;
             case '2':
                 for (int i = 0; i < 12; i++) {
@@ -5183,6 +5264,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case '3':
                 for (int i = 0; i < 12; i++) {
@@ -5192,6 +5274,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case '4':
                 for (int i = 0; i < 12; i++) {
@@ -5201,24 +5284,29 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         mundane_aspects[i] = 1;
                     }
                 }
+                recalculate = true;
                 break;
             case KEY_RIGHT:
                 seletor_alvo_atual = (seletor_alvo_atual + 1) % qtd_partes;
                 scroll_offset = 0;
+                recalculate = true;
                 break;
             case KEY_LEFT:
                 seletor_alvo_atual = (seletor_alvo_atual - 1 + qtd_partes) % qtd_partes;
                 scroll_offset = 0;
+                recalculate = true;
                 break;
             case KEY_DOWN:
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
                     scroll_offset += 2;
                 }
+                recalculate = false;
                 break;
             case KEY_UP:
                 if (scroll_offset > 0) {
                     scroll_offset -= 2;
                 }
+                recalculate = false;
                 break;
             case KEY_NPAGE:
                 if (scroll_offset < (qtd_direcoes * 2 - max_linhas_exibicao)) {
@@ -5227,6 +5315,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 else {
                     scroll_offset = qtd_direcoes * 2 - 1;
                 }
+                recalculate = false;
                 break;
             case KEY_PPAGE:
                 if (scroll_offset >= 0) {
@@ -5235,8 +5324,10 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                         scroll_offset = 0;
                     }
                 }
+                recalculate = false;
                 break;
             case KEY_MOUSE: {
+                recalculate = false;
                 MEVENT event;
                 if (getmouse(&event) == OK) {
                     // Coordenadas do clique convertidas para o plano local da janela

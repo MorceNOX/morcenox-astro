@@ -61,11 +61,13 @@ typedef struct {
     int modern_planets_rulling;
     int show_modern_planets;
     int ant_prom;
+    int star_prom;
     int gender;
     char language[10];
     int time_key;
     DirZodLatitude zod_pd_with_lat;
     MetodoDirecaoGlobal pd_arc_calc;
+    unsigned int star_classes;
 } ChartOptions;
 
 typedef struct {

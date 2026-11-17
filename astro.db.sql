@@ -254,12 +254,16 @@ CREATE TABLE IF NOT EXISTS "profiles" (
 	"antiscia_as_promissor"	INTEGER DEFAULT 0,
 	"zod_pd_with_lat"	INTEGER DEFAULT 1,
 	"pd_arc_calc"	INTEGER DEFAULT 1,
+	"stars_as_promissor"	INTEGER DEFAULT 0,
+	"paran_orb"	REAL,
+	"star_classes_selection"	INTEGER DEFAULT 1,
 	PRIMARY KEY("id"),
 	FOREIGN KEY("city_id") REFERENCES "cities"("id"),
 	FOREIGN KEY("gender") REFERENCES "gender"("id"),
 	FOREIGN KEY("house_system") REFERENCES "house_system"("id"),
 	FOREIGN KEY("language") REFERENCES "languages"("cod"),
 	FOREIGN KEY("pd_arc_calc") REFERENCES "pd_arc_calc"("id"),
+	FOREIGN KEY("star_classes_selection") REFERENCES "star_classes_selection"("opt"),
 	FOREIGN KEY("terms_system") REFERENCES "terms_systems"("id"),
 	FOREIGN KEY("time_key") REFERENCES "time_keys"("id"),
 	FOREIGN KEY("triplicity_system") REFERENCES "triplicity_systems"("id"),
@@ -310,6 +314,17 @@ CREATE TABLE IF NOT EXISTS "signs" (
 	FOREIGN KEY("opposite_sign") REFERENCES "signs"("id"),
 	FOREIGN KEY("ruler") REFERENCES "planets"("id"),
 	FOREIGN KEY("season") REFERENCES "seasons"("id")
+);
+CREATE TABLE IF NOT EXISTS "star_classes_selection" (
+	"opt"	INTEGER,
+	"classes"	TEXT,
+	"bits"	INTEGER,
+	PRIMARY KEY("opt" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "stars_classes" (
+	"id"	INTEGER,
+	"class"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "temperament" (
 	"id"	INTEGER NOT NULL,
@@ -203508,7 +203523,7 @@ INSERT INTO "planets" ("id","name","symbol","orbis","speed","gender","sect","dom
 INSERT INTO "position" ("id","name") VALUES (1,'Angular'),
  (2,'Succedent'),
  (3,'Cadent');
-INSERT INTO "profiles" ("id","profile","dst","dark_mode","house_system","triplicity_system","terms_system","parallel_orbis","antissia_orb","modern_planets_rulling","city_id","show_modern_planets","gender","language","time_key","antiscia_as_promissor","zod_pd_with_lat","pd_arc_calc") VALUES (1,'default',-1,0,'T',2,1,2.0,2.0,0,12070,0,1,'pt',7,0,1,2);
+INSERT INTO "profiles" ("id","profile","dst","dark_mode","house_system","triplicity_system","terms_system","parallel_orbis","antissia_orb","modern_planets_rulling","city_id","show_modern_planets","gender","language","time_key","antiscia_as_promissor","zod_pd_with_lat","pd_arc_calc","stars_as_promissor","paran_orb","star_classes_selection") VALUES (1,'default',-1,0,'T',2,1,2.0,2.0,0,12070,0,1,'pt',7,0,1,2,0,6.0,1);
 INSERT INTO "quadrant" ("id","name","gender","temperament") VALUES (1,'Eastern or Vernal',1,1),
  (2,'Southern or Summery',2,2),
  (3,'Western or Autumnal',1,3),
@@ -203531,6 +203546,25 @@ INSERT INTO "signs" ("id","symbol","name","ruler","exalted","exile","fall","oppo
  (10,'♑','Capricorn',7,5,2,6,4,1,2,4,4,'Firm and enterprising behavior. Pragmatic motivation, focused on practical and useful actions, combining objectivity and dynamism. Restrained emotional expression, oscillating between sobriety and reserve.'),
  (11,'♒','Aquarius',7,9,1,8,5,2,1,3,4,'A fondness for concepts and ideas, to which the mind adheres persistently and sometimes stubbornly. Cultivates a unique way of acting, distancing itself from everything that is part of the general mentality. Not very emotional, it tends to be more theoretical than practical.'),
  (12,'♓','Pisces',6,4,3,3,6,3,2,2,4,'A placid, receptive, and sentimental demeanor. A malleable, adaptable, sometimes fickle nature, as actions are based on feelings and sensitivities of the moment. A relaxed attitude that can lead to distraction and carelessness.');
+INSERT INTO "star_classes_selection" ("opt","classes","bits") VALUES (1,'Behenian, Royal, Classic, Nebula',15),
+ (2,'Behenian, Royal, Classic',7),
+ (3,'Behenian, Royal, Nebula ',11),
+ (4,'Behenian, Classic, Nebula',13),
+ (5,'Royal, Classic, Nebula ',14),
+ (6,'Behenian, Royal',3),
+ (7,'Behenian, Classic ',5),
+ (8,'Behenian, Nebula ',9),
+ (9,'Royal, Classic ',6),
+ (10,'Royal, Nebula ',10),
+ (11,'Classic, Nebula ',12),
+ (12,'Behenian',1),
+ (13,'Royal',2),
+ (14,'Classic',4),
+ (15,'Nebula',8);
+INSERT INTO "stars_classes" ("id","class") VALUES (1,'Behenian'),
+ (2,'Royal'),
+ (3,'Classic'),
+ (4,'Nebula');
 INSERT INTO "temperament" ("id","name","description","element") VALUES (1,'Sanguine','Versatile and adaptable. Lively, spontaneous, and enthusiastic. Communicative and sociable. Sensitive, cheerful, and affable.',3),
  (2,'Choleric','Enthusiasm, energy, and quick action. Rigid, insensitive, impatient.',1),
  (3,'Melancholic','Reflection, concentration. Reserved and moderate in their outward expression. Not very exuberant in their speech, but decisive in their actions. Susceptibility, sadness, pessimism, depression.',4),

@@ -48,6 +48,10 @@ Este guia cobrirá os tópicos a seguir:
 
 • Partes Árabes
 
+• Motivação Primária 
+
+• Estrelas Fixas
+
 • Direitos Autorais
 
 Estes tópicos ajudarão em certas configurações e
@@ -1839,7 +1843,70 @@ da RS      │planeta que rege a nova   │se manifestará com fluidez
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Index 17: Copyright
+Index 17: Estrelas Fixas
+                    ▖  ▖        ▖ ▖▄▖▖▖TM           
+                    ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
+                    ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             
+                                                    
+       ▄▄▄        ██████ ▄▄▄█████▓ ██▀███   ▒█████  
+      ▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+      ▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+      ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+       ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+       ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+        ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+        ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  
+            ░  ░      ░              ░         ░ ░  
+    
+Press Q or ESC to return to the main menu.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+• Estrelas Fixas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+Notas Técnicas — Estrelas Fixas na Astrologia Tradicional
+
+
+Natureza Óptica e Restrição de Aspectos
+
+Na cosmologia da astrologia tradicional, os planetas (estrelas errantes) projetam raios através da geometria zodiacal, enquanto as estrelas fixas são pontos de luz estáticos pertencentes à oitava esfera. Por essa razão doutrinária, as estrelas fixas atuam exclusivamente por Conjunção corporal (na eclíptica, no horizonte ou no meridiano) e por encontros equatoriais/diurnos (Paralelos de Declinação e Raptos Paralelos). Aspectos de sextil, quadratura, trígono e oposição são omitidos tanto na análise natal quanto nas Direções Primárias, preservando estrita fidelidade aos tratados clássicos.
+
+Temperamento Planetário e Orbes
+
+• Temperamento Ptolomaico. Cada estrela possui uma natureza composta por um ou dois planetas (ex.: Regulus = Marte/Júpiter; Algol = Saturno/Júpiter), conforme sistematizado por Cláudio Ptolomeu no Tetrabiblos. O julgamento tradicional avalia a compatibilidade entre o temperamento da estrela, o planeta conjunto e as dignidades envolvidas.
+
+• Orbes Proporcionais à Magnitude. A eficácia de uma estrela fixa está diretamente ligada ao seu brilho aparente. Estrelas de 1ª magnitude operam com orbes de até 2°00' (chegando a 2°30' no caso de Sirius), estrelas de 2ª magnitude com 1°30', e estrelas de 3ª magnitude ou nebulosas com 1°00'.
+
+Parans (Paranatellonta) e Fases da Vida
+
+• Diferença entre Projeção Eclíptica e Paran. Estrelas com elevada latitude celeste (como Vega ou Sirius) são projetadas perpendicularmente na eclíptica, mas não nascem nem se põem junto com o grau zodiacal onde foram projetadas. O Paran resgata o fenômeno visual real da esfera local, conectando uma estrela e um planeta que ocupam simultaneamente os ângulos do horizonte (Ascendente/Descendente) ou do meridiano (MC/IC) dentro de um ciclo de 24 horas.
+
+• Cronologia de Bernadette Brady. Quando ordenada por fases da vida, a tabela organiza os Parans conforme o ângulo ocupado pelo planeta no alinhamento: Nascendo (Juventude e formação inicial), Culminando (Maturidade e expressão pública), Pondo-se (Colheita e segunda metade da vida) e No IC / Anticulminação (Raízes familiares, motivações ocultas e encerramentos).
+
+Fases Helíacas e Condição Solar
+
+• Visibilidade vs. Combustão. Assim como os planetas, uma estrela fixa sofre ocultação anual quando o Sol se aproxima de sua longitude, desaparecendo no brilho do crepúsculo.
+
+• Nascer Helíaco (Heliacal Rising). É o primeiro reaparecimento visível da estrela no horizonte leste pouco antes do nascer do Sol, após seu período de ocultação. Na tradição helenística (especialmente no Tratado de 379), uma estrela recém-saída dos raios solares encontra-se no auge de sua potência manifesta.
+
+• Pôr Helíaco (Heliacal Setting) e Sob os Raios. O pôr helíaco marca a última aparição da estrela no horizonte oeste logo após o pôr do Sol. Entre o pôr helíaco e o próximo nascer helíaco, a estrela permanece Sob os Raios do Sol, operando de forma latente, oculta ou enfraquecida no mapa natal. Estrelas Circumpolares nunca cruzam o horizonte na latitude observada e, portanto, não passam por ocultação helíaca.
+
+Ativações na Revolução Solar e Dupla Confirmação
+
+• Gatilho Anual. Segundo a doutrina tradicional de revoluções (Abu Ma'shar, Bonatti e Morin de Villefranche), uma estrela fixa natal manifesta acontecimentos concretos em um determinado ano quando os ângulos ou planetas da Revolução Solar formam conjunção exata com ela.
+
+• Critério de Vínculo Natal. Para evitar falsos positivos, uma estrela só recebe a marcação [Ativa no Natal] se possuir enraizamento comprovado na carta natal: conjunção eclíptica dentro de sua orbe nominal, paralelo/contraparalelo de declinação (até 1°00') ou Paran natal com orbe temporal estreita (até 6 minutos). Quando a estrela ativa encontra-se Sob os Raios no mapa natal, sua expressão no ano tende a ocorrer em assuntos reservados, internos ou de bastidores.
+
+Nota sobre o Rigor Astronômico
+
+Todos os cálculos consideram a precessão dos equinócios e a nutação verdadeira para a data exata do mapa, utilizando a Ascensão Reta e Declinação reais (com latitude celeste própria) para coordenadas equatoriais, o horizonte racional (sem refração atmosférica) para Parans e o modelo físico de extinção atmosférica e brilho crepuscular de Bradley Schaefer para as fases helíacas.
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Index 18: Copyright
                     ▖  ▖        ▖ ▖▄▖▖▖TM           
                     ▛▖▞▌▛▌▛▘▛▘█▌▛▖▌▌▌▚▘             
                     ▌▝ ▌▙▌▌ ▙▖▙▖▌▝▌▙▌▌▌             

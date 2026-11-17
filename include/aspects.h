@@ -20,6 +20,7 @@
 #define ASPECTS_H
 
 #include "planet_table.h"
+#include "fixed_stars.h"
 
 typedef struct { 
     double angle; 
@@ -45,6 +46,13 @@ typedef struct {
     AspectCell grid[19][19];
 } AspectMatrix;
 
+
+typedef struct {
+    AspectCell grid[100][19];
+} AspectStarMatrix;
+
+
+
 typedef struct {
     bool has_aspect;       // Indica se há paralelo ou contra-paralelo válido
     char symbol[10];        // Símbolo Unicode do aspecto ("∥", "∦")
@@ -57,6 +65,13 @@ typedef struct {
     DeclCell grid[19][19];
 } DeclMatrix;
 
+
+typedef struct {
+    DeclCell grid[100][19];
+} DeclStarMatrix;
+
+
+
 double ASP_ANTISSIA_EXACT();
 double ASP_PARALLEL_EXACT();
 
@@ -68,6 +83,11 @@ bool has_aspect_separative(int id1, int id2, AspectMatrix *matrix);
 
 bool is_under_siege(int planet_id, AspectMatrix *matrix);
 bool is_under_assistance(int planet_id, AspectMatrix *matrix);
+
+DeclStarMatrix calculate_declination_aspects_stars(PlotObject *plots, CalculatedStar *stars, double decl_orbis, int total_stars);
+void display_declination_aspects_stars(PlotObject *plots, CalculatedStar *stars, DeclStarMatrix *matrix, int total_stars);
+void display_aspects_stars(PlotObject *plots, CalculatedStar *stars, AspectStarMatrix *matrix, int total_stars);
+AspectStarMatrix calculate_aspects_stars(PlotObject *plots, CalculatedStar *stars, int total_stars);
 
 AspectMatrix calculate_aspects(PlotObject *plots, double *planet_orbis, PlanetDignities *dig, int *feral, int *vazio_de_curso, int *retro);
 DeclMatrix calculate_declination_aspects(PlotObject *plots, double decl_orbis);

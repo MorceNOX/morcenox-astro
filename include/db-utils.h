@@ -84,6 +84,7 @@ int get_default_gender();
 int get_default_terms_system();
 double get_decl_orbis();
 double get_antissia_orbis();
+double get_paran_orbis();
 int update_triplicity_rulers(int triplicity_system);
 int update_settings(ChartOptions options);
 int get_moon_temperament(const char *phase, char **temperament);

@@ -134,6 +134,10 @@ extern int NUM_OBJECTS;
 
 extern int TIME_KEY;
 extern int ANT_PROM;
+extern int STAR_PROM;
+
+extern const double MAX_ORB_PARAN;
+extern const double ORB_PARAN_EXACT;
 
 void update_interface_language();
 
