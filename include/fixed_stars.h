@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include "planet_table.h"
+
 
 
 typedef enum {
@@ -30,12 +32,13 @@ typedef enum {
 
 typedef struct {
     const char *object;
-    const char *swe_name;      // Nome exato para passar em swe_fixstar2_ut()
-    const char *display_name;  // Nome tradicional exibido no software
-    const char *bayer;         // Designação Bayer/Flamsteed de referência
-    const char *nature;        // Temperamento planetário clássico
-    double default_orb;        // Orbe sugerida em graus (baseada na magnitude)
-    unsigned int categories;   // Bitmask de StarCategory
+    const char *swe_name;
+    const char *display_name;
+    const char *bayer;
+    const char *nature;
+    double default_orb;
+    unsigned int categories;
+    const char *delineation; // Texto interpretativo tradicional
 } TraditionalStar;
 
 
@@ -122,4 +125,23 @@ void display_parans_table(ParanEntry *parans, int paran_count, CalculatedStar *s
 int compute_parans(double tjd_ut, double geo_lon, double geo_lat, double geo_alt, int iflag, int *planets, int planet_count, CalculatedStar *stars, int star_count, double max_orb_minutes, ParanEntry *out_list, int max_entries);
 HeliacalInfo get_star_heliacal_info(double tjd_ut, double geo_lon, double geo_lat, double geo_alt, const CalculatedStar *star);
 void display_heliacal_phases_table(double tjd_ut, double geo_lon, double geo_lat, double geo_alt, double tz_offset, const CalculatedStar *stars, int star_count);
+
+void abrir_janela_interpretacao_estrelas(
+    const PlotObject *plots,
+    int plot_count,
+    CalculatedStar *stars,
+    int star_count,
+    const bool star_active[],
+    const ParanEntry *parans,
+    int paran_count,
+    double lon_hyleg_natal,
+    const char *nome_hyleg_natal,
+    const char *glifo_hyleg_natal,
+    double tjd_ut,
+    double lon,
+    double lat,
+    double elev,
+    bool is_solar_return,            // <-- false no Mapa Radical | true na Revolução Solar
+    const bool radix_star_active[]
+);
 #endif // FIXED_STARS_H

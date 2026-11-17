@@ -22,6 +22,8 @@
 #include "swephexp.h" // Cabeçalho da Swiss Ephemeris
 #include <string.h>
 #include <ncursesw/curses.h>
+#include <float.h>
+
 #include "var.h"
 #include "helper.h"
 #include "draw-chart.h"
@@ -1876,7 +1878,7 @@ void abrir_janela_transitos_revolucao(
                                         wattroff(border_win, COLOR_PAIR(28) | flag);
 
                                         wnoutrefresh(border_win);
-                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
                                         doupdate();
                                     }
 
@@ -1912,7 +1914,7 @@ void abrir_janela_transitos_revolucao(
                                         wattroff(border_win, COLOR_PAIR(28) | flag);
 
                                         wnoutrefresh(border_win);
-                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
                                         doupdate();
                                     } else {
                                         break;
@@ -1984,7 +1986,7 @@ void abrir_janela_transitos_revolucao(
                                     wattroff(border_win, COLOR_PAIR(28) | flag);
 
                                     wnoutrefresh(border_win);
-                                    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 3, i_start_x + i_width - 4);
+                                    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
                                     doupdate();
                                 }
     
@@ -2045,7 +2047,6 @@ static int compare_sr_hits(const void *a, const void *b) {
 
 // Calcula as ativações de estrelas fixas na Revolução Solar
 int compute_sr_fixed_stars(
-    const double sr_angles[4],        // Array com {SR_ASC, SR_MC, SR_DSC, SR_IC}
     const PlotObject *sr_plots,       // Planetas da Revolução Solar
     int sr_plot_count,
     CalculatedStar *sr_stars,
@@ -2059,56 +2060,15 @@ int compute_sr_fixed_stars(
     double elev_natal,
     int max_hits
 ) {
-    
-    int object_diff = (show_modern_planets) ? 0 : 3;
-
-    const char *angle_names[4] = {
-        _("Ascendant"),
-        _("Midheaven"),
-        _("Descendant"),
-        _("Nadir")
-    };
-
-    const char *angle_glyphs[4] = {
-        "AC",
-        "MC",
-        "DC",
-        "IC"
-    };
 
     int hits = 0;
 
-    for (int s = 0; s < star_count; s++) {
-        // Verifica primeiro os 4 Ângulos da Revolução Solar (prioridade máxima)
-        for (int a = 0; a < 4; a++) {
-            double diff = fabs(swe_difdeg2n(sr_stars[s].longitude, sr_angles[a]));
-            if (diff <= sr_stars[s].meta->default_orb && hits < max_hits) {
-                out_hits[hits].object          = angle_glyphs[a];
-                out_hits[hits].object_name     = angle_names[a];
-                out_hits[hits].star            = sr_stars[s].meta;
-                out_hits[hits].star_longitude  = sr_stars[s].longitude;
-                out_hits[hits].orb_deg         = diff;
-                out_hits[hits].is_natal_active = (natal_star_active != NULL) ? natal_star_active[s] : false;
-                if (natal_stars[s].heliacal_calculated) {
-                    out_hits[hits].natal_heliacal  = natal_stars[s].heliacal_state;
-                } else {
-                    HeliacalInfo hinfo = get_star_heliacal_info(tjd_ut_natal, lon_natal, lat_natal, elev_natal, &natal_stars[s]);
-                    natal_stars[s].heliacal_state      = hinfo.state;
-                    natal_stars[s].heliacal_calculated = true;
-                    out_hits[hits].natal_heliacal      = hinfo.state;
-                }
-                    
-                hits++;
-            }
-        }
-
-        // Verifica os Planetas da Revolução Solar (Sol até Saturno)
+   for (int s = 0; s < star_count; s++) {
         for (int p = 0; p < sr_plot_count; p++) {
-            if (p == P_ASC - object_diff || p == P_MC - object_diff || p == P_DC - object_diff || p == P_IC - object_diff) {
-                continue;
-            }
+            
             double diff = fabs(swe_difdeg2n(sr_stars[s].longitude, sr_plots[p].longitude));
-            if (diff <= sr_stars[s].meta->default_orb && hits < max_hits) {
+
+            if (diff < sr_stars[s].meta->default_orb + DBL_EPSILON && hits < max_hits) {
                 out_hits[hits].object          = sr_plots[p].object;
                 out_hits[hits].object_name     = sr_plots[p].object_name;
                 out_hits[hits].star            = sr_stars[s].meta;
@@ -2126,6 +2086,7 @@ int compute_sr_fixed_stars(
                 hits++;
             }
         }
+        
     }
 
     return hits;

@@ -33,7 +33,6 @@ typedef struct {
 
 
 int compute_sr_fixed_stars(
-    const double sr_angles[4],        // Array com {SR_ASC, SR_MC, SR_DSC, SR_IC}
     const PlotObject *sr_plots,       // Planetas da Revolução Solar
     int sr_plot_count,
     CalculatedStar *sr_stars,

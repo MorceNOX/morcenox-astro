@@ -293,9 +293,11 @@ Pressione Q ou ESC para retornar ao menu principal.
     
 • 9 - Parans das Estrelas Fixas
 
-• S - Aspectos Longitudinais com as Estrelas Fixas
+• S - Conjunções com as Estrelas Fixas
 
 • V - Aspectos de Declinação com as Estrelas Fixas
+
+• Y - Estrelas Fixas Ativas & Delineação
 
 • 0 - Motivação Primária
    

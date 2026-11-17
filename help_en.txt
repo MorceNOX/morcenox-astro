@@ -295,9 +295,11 @@ Press Q or ESC to return to the main menu.
     
     • 9 - Fixed Stars Parans
     
-    • S - Longitudinal Aspects with Fixed Stars
+    • S - Conjunctions with Fixed Stars
     
     • V - Declination Aspects with Fixed Stars
+    
+    • Y - Active Fixed Stars & Delineation
     
     • 0 - Primary Motivation
        

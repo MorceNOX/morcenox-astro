@@ -213,6 +213,11 @@ typedef struct {
     double descendant;
     double ic;
 
+    double lon_hyleg;
+    char *nome_hyleg;
+    char *glifo_hyleg;
+    
+
 } ContextoMenu;
 
 void open_menu_tables(ContextoMenu *ctx);

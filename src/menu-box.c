@@ -2977,10 +2977,10 @@ int main() {
             init_pair(26, 230, COLOR_BLACK);
             init_pair(27, COLOR_RED, COLOR_BLACK);
             init_pair(28, COLOR_MAGENTA, 249);
-            init_pair(29, 230, COLOR_BLACK);
+            init_pair(29, COLOR_BLACK, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
             init_pair(36, COLOR_RED, COLOR_WHITE);
-            init_pair(57, COLOR_BLACK, 232);
+            init_pair(57, 243, COLOR_BLACK);
             init_pair(58, COLOR_WHITE, COLOR_BLACK);
             init_pair(59, 242, COLOR_BLACK);
         }

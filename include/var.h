@@ -29,6 +29,7 @@
 
 //#define _(String) gettext(String)
 #define _(String) dgettext(LANGUAGE, String)
+#define N_(String) (String)
 
 #define MAX_AGE 105.0
 

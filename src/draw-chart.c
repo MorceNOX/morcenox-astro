@@ -2447,7 +2447,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         else attroff(COLOR_PAIR(55));
 
 
-        mvprintw(LINES - 4, max_x - 32, _(" Action: F1..F12, 0..9, V, S, F "));
+        mvprintw(LINES - 4, max_x - 34, _(" Action: F1..F12, 0..9, V, S, F, Y "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
 
@@ -7622,7 +7622,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(54, COLOR_GREEN, 91); // green, magenta
         init_pair(55, 232, 18); // dark, blue
         init_pair(56, 232, 54); // dark, magenta
-        init_pair(57, 243, 248);
+        init_pair(57, 243, COLOR_BLACK);
         init_pair(58, COLOR_WHITE, COLOR_BLACK);
         init_pair(59, 242, COLOR_BLACK);
         init_pair(60, 25, TABLE_BKGD_DARK);
@@ -9732,6 +9732,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         int tipo_h = -1;
         int idx_objeto_h = -1;
 
+              
         if (!mapa_retorno) {
             tipo_h = get_hyleg(pontos_calculados, plots, &matrix, &id_almuten_ref, regente_dia, regente_hora, tipo_san, dig);
                     
@@ -9751,6 +9752,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             tipo_h = tipo_h_natal;
             idx_objeto_h = idx_hyleg_natal;
         }
+
+
+        double lon_hyleg = plots[idx_objeto_h].longitude;
+        char *nome_hyleg = plots[idx_objeto_h].object_name;
+        char *glifo_hyleg = plots[idx_objeto_h].object; 
+
+
       
         alco = calcular_alcochoden(tipo_h, idx_objeto_h + 1, &matrix, plots, dig, regente_dia, regente_hora, pontos_calculados);
 
@@ -10511,6 +10519,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         ctx.descendant = descendant;
         ctx.ic = ic;
 
+        ctx.lon_hyleg = lon_hyleg;
+        ctx.nome_hyleg = nome_hyleg;
+        ctx.glifo_hyleg = glifo_hyleg;
+
 
 
 
@@ -10695,13 +10707,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     }
 
-                    double angles[] = {ascendant, mc, descendant, ic};
-
                     SRFixedStarHit out_hits[200];
                     memset(out_hits, 0, sizeof(out_hits));
                                         
                     int hit_count = compute_sr_fixed_stars(
-                        angles,                        
                         plots,
                         NUM_OBJECTS - object_diff,
                         stars,
@@ -10747,6 +10756,78 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
                 ativar_arrasto_mouse();
                 flushinp();
+                break;
+            case 'y':
+            case 'Y':
+                {
+                    desativar_arrasto_mouse();
+                    if (animated) {
+                        mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
+                        wnoutrefresh(stdscr);
+                    }
+                    ParanEntry parans[200];
+                    memset(parans, 0, sizeof(parans));
+                
+                    int max_entries = 200;
+                    double max_orb_minutes = ORB_PARAN_EXACT;
+                    int paran_count = 0;
+
+                    paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries); 
+                    
+                    bool stars_active[total_stars];
+                    memset(stars_active, 0, sizeof(stars_active));
+                    
+                
+                    for (int i = 0; i < total_stars; i++) {
+                        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+                
+                            AspectCell c = matrix_stars.grid[i][j];
+                
+                            if (c.has_aspect) {
+                                stars_active[i] = true;
+                                break;
+                            }
+                
+                        }
+                    }
+                    for (int i = 0; i < total_stars; i++) {
+                        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+                            
+                            DeclCell c = matrix_stars_decl.grid[i][j];
+                
+                            if (c.has_aspect) {
+                                stars_active[i] = true;
+                                break;
+                            }
+                
+                        }
+                    }
+                    for (int i = 0; i < paran_count; i++) {
+                        stars_active[parans[i].star_index] = true;        
+                    }
+
+                    abrir_janela_interpretacao_estrelas(
+                        plots,
+                        NUM_OBJECTS - object_diff,
+                        stars,
+                        total_stars,
+                        stars_active,
+                        parans,
+                        paran_count,
+                        lon_hyleg,
+                        nome_hyleg,
+                        glifo_hyleg,
+                        julian_day,
+                        lon,
+                        lat,
+                        elev,
+                        mapa_retorno,
+                        mapa_retorno ? natal_star_active : NULL
+                    );
+
+                    ativar_arrasto_mouse();
+                    flushinp();
+                }                                            
                 break;
             case 'i':
             case 'I':
@@ -11305,7 +11386,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("27. Prymary Directions to Arabic Parts"),               
         _("28. Solar Revolution"),
         _("29. Fixed Stars Parans"),
-        _("30. Heliacal Phases & Stars Visibility")      
+        _("30. Heliacal Phases & Stars Visibility"),
+        _("31. Activated Fixed Stars & Delineation")     
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes1 = sizeof(opcoes1) / sizeof(opcoes1[0]);
@@ -11334,7 +11416,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("21. Annual Transits & Radical Projections"),
         _("22. Fixed Stars Parans"),
         _("23. Heliacal Phases & Stars Visibility"),
-        _("24. Activated Stars On Solar Revolution")
+        _("24. Activated Stars On Solar Revolution"),
+        _("25. Activated Fixed Stars in SR & Delineation")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -11744,13 +11827,10 @@ void open_menu_tables(ContextoMenu *ctx) {
             if (!ctx->mapa_retorno) {
                 display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             } else {
-                double angles[] = {ctx->ascendant, ctx->mc, ctx->descendant, ctx->ic};
-
                 SRFixedStarHit out_hits[200];
                 memset(out_hits, 0, sizeof(out_hits));
                                     
                 int hit_count = compute_sr_fixed_stars(
-                    angles,                        
                     ctx->plots,
                     NUM_OBJECTS - ctx->object_diff,
                     ctx->stars,
@@ -11771,6 +11851,66 @@ void open_menu_tables(ContextoMenu *ctx) {
         case 24:
             if (!ctx->mapa_retorno) {
                 display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
+            } else {
+                ParanEntry parans[200];
+                memset(parans, 0, sizeof(parans));
+            
+                int max_entries = 200;
+                double max_orb_minutes = ORB_PARAN_EXACT;
+                int paran_count = 0;
+
+                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                
+                bool stars_active[ctx->total_stars];
+                memset(stars_active, 0, sizeof(stars_active));
+                
+            
+                for (int i = 0; i < ctx->total_stars; i++) {
+                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+            
+                        AspectCell c = ctx->matrix_stars.grid[i][j];
+            
+                        if (c.has_aspect) {
+                            stars_active[i] = true;
+                            break;
+                        }
+            
+                    }
+                }
+                for (int i = 0; i < ctx->total_stars; i++) {
+                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+                        
+                        DeclCell c = ctx->matrix_stars_decl.grid[i][j];
+            
+                        if (c.has_aspect) {
+                            stars_active[i] = true;
+                            break;
+                        }
+            
+                    }
+                }
+                for (int i = 0; i < paran_count; i++) {
+                    stars_active[parans[i].star_index] = true;        
+                }
+
+                abrir_janela_interpretacao_estrelas(
+                    ctx->plots,
+                    NUM_OBJECTS - ctx->object_diff,
+                    ctx->stars,
+                    ctx->total_stars,
+                    stars_active,
+                    parans,
+                    paran_count,
+                    ctx->lon_hyleg,
+                    ctx->nome_hyleg,
+                    ctx->glifo_hyleg,
+                    ctx->julian_day,
+                    ctx->lon,
+                    ctx->lat,
+                    ctx->elev,
+                    ctx->mapa_retorno,
+                    ctx->mapa_retorno ? ctx->natal_star_active : NULL
+                );
             }
             break;
         case 25:
@@ -11818,6 +11958,70 @@ void open_menu_tables(ContextoMenu *ctx) {
         case 29:
             if (!ctx->mapa_retorno) {
                 display_heliacal_phases_table(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, ctx->tz_offset, ctx->stars, ctx->total_stars);
+            }
+            break;
+        case 30:
+            if (!ctx->mapa_retorno) {
+                
+                ParanEntry parans[200];
+                memset(parans, 0, sizeof(parans));
+            
+                int max_entries = 200;
+                double max_orb_minutes = ORB_PARAN_EXACT;
+                int paran_count = 0;
+
+                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                
+                bool stars_active[ctx->total_stars];
+                memset(stars_active, 0, sizeof(stars_active));
+                
+            
+                for (int i = 0; i < ctx->total_stars; i++) {
+                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+            
+                        AspectCell c = ctx->matrix_stars.grid[i][j];
+            
+                        if (c.has_aspect) {
+                            stars_active[i] = true;
+                            break;
+                        }
+            
+                    }
+                }
+                for (int i = 0; i < ctx->total_stars; i++) {
+                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+                        
+                        DeclCell c = ctx->matrix_stars_decl.grid[i][j];
+            
+                        if (c.has_aspect) {
+                            stars_active[i] = true;
+                            break;
+                        }
+            
+                    }
+                }
+                for (int i = 0; i < paran_count; i++) {
+                    stars_active[parans[i].star_index] = true;        
+                }
+
+                abrir_janela_interpretacao_estrelas(
+                    ctx->plots,
+                    NUM_OBJECTS - ctx->object_diff,
+                    ctx->stars,
+                    ctx->total_stars,
+                    stars_active,
+                    parans,
+                    paran_count,
+                    ctx->lon_hyleg,
+                    ctx->nome_hyleg,
+                    ctx->glifo_hyleg,
+                    ctx->julian_day,
+                    ctx->lon,
+                    ctx->lat,
+                    ctx->elev,
+                    ctx->mapa_retorno,
+                    ctx->mapa_retorno ? ctx->natal_star_active : NULL
+                );
             }
             break;
         default:

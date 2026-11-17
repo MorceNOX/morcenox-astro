@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ncurses.h>
 #include <math.h>
+#include <float.h>
 #include <string.h>
 #include <libintl.h>
 #include "swephexp.h"
@@ -11,85 +12,217 @@
 #include "helper.h"
 #include "draw-chart.h"
 #include "selections.h"
+#include "planet_table.h"
 
 #include "var.h"
 
+// const TraditionalStar TRADITIONAL_STARS[] = {
+//     // ÁRIES
+//     {"ALB", "Algenib",       "Algenib",         "gaPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
+//     {"ALF", "Alpheratz",     "Alpheratz",       "alAnd", "Jup/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"BKA", "Baten Kaitos",  "Baten Kaitos",    "zeCet", "Sat",     1.0, CAT_PTOLEMAIC},
+//     {"MIR", "Mirach",        "Mirach",          "beAnd", "Ven",     1.5, CAT_PTOLEMAIC},
+//     {"HAM", "Hamal",         "Hamal",           "alAri", "Mar/Sat", 1.5, CAT_PTOLEMAIC},
+//     {"SCH", "Schedar",       "Schedar",         "alCas", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"ALM", "Almach",        "Almach",          "gaAnd", "Ven",     1.5, CAT_PTOLEMAIC},
+
+//     // TOURO
+//     {"MKR", "Menkar",        "Menkar",          "alCet", "Sat",     1.5, CAT_PTOLEMAIC},
+//     {"CPU", "Capulus",       "Capulus (M34)",   "M34",   "Mar/Mer", 1.0, CAT_NEBULA},
+//     {"ALG", "Algol",         "Algol",           "bePer", "Sat/Jup", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"ALC", "Alcyone",       "Alcyone (Plêiades)", "etTau", "Moo/Mar", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC | CAT_NEBULA},
+//     {"ALD", "Aldebaran",     "Aldebaran",       "alTau", "Mar",     2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // GÊMEOS
+//     {"RIG", "Rigel",         "Rigel",           "beOri", "Jup/Mar", 2.0, CAT_PTOLEMAIC},
+//     {"BEL", "Bellatrix",     "Bellatrix",       "gaOri", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
+//     {"CAP", "Capella",       "Capella",         "alAur", "Mar/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"ALN", "Alnilam",       "Alnilam",         "epOri", "Jup/Sat", 1.5, CAT_PTOLEMAIC},
+//     {"BTL", "Betelgeuse",    "Betelgeuse",      "alOri", "Mar/Mer", 2.0, CAT_PTOLEMAIC},
+//     {"MEN", "Menkalinan",    "Menkalinan",      "beAur", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
+
+//     // CÂNCER
+//     {"SIR", "Sirius",        "Sirius",          "alCMa", "Jup/Mar", 2.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"CAN", "Canopus",       "Canopus",         "alCar", "Sat/Jup", 2.0, CAT_PTOLEMAIC},
+//     {"CAS", "Castor",        "Castor",          "alGem", "Mer",     1.5, CAT_PTOLEMAIC},
+//     {"POL", "Pollux",        "Pollux",          "beGem", "Mar",     2.0, CAT_PTOLEMAIC},
+//     {"PRO", "Procyon",       "Procyon",         "alCMi", "Mer/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // LEÃO
+//     {"PRA", "Praesepe",      "Praesepe (M44)",  "M44",   "Mar/Moo", 1.0, CAT_NEBULA | CAT_PTOLEMAIC},
+//     {"ALP", "Alphard",       "Alphard",         "alHya", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"REG", "Regulus",       "Regulus",         "alLeo", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // VIRGEM
+//     {"ZOS", "Zosma",         "Zosma",           "deLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"DEN", "Denebola",      "Denebola",        "beLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"ALK", "Alkaid",        "Alkaid (Benetnasch)", "etUMa", "Moo/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"VIX", "Vindemiatrix",  "Vindemiatrix",    "epVir", "Sat/Mer", 1.5, CAT_PTOLEMAIC},
+
+//     // LIBRA
+//     {"AGO", "Algorab",       "Algorab",         "deCrv", "Mar/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"SPI", "Spica",         "Spica",           "alVir", "Ven/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"ARC", "Arcturus",      "Arcturus",        "alBoo", "Jup/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // ESCORPIÃO
+//     {"ACA", "Alphecca",      "Alphecca (Gemma)","alCrB", "Ven/Mer", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"ZBI", "Zubenelgenubi", "Zubenelgenubi",   "alLib", "Sat/Mar", 1.5, CAT_PTOLEMAIC},
+//     {"ZLI", "Zubeneschamali","Zubeneschamali",  "beLib", "Jup/Mer", 1.5, CAT_PTOLEMAIC},
+//     {"UNU", "Unukalhai",     "Unukalhai",       "alSer", "Sat/Mar", 1.5, CAT_PTOLEMAIC},
+
+//     // SAGITÁRIO
+//     {"ANT", "Antares",       "Antares",         "alSco", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
+//     {"RAS", "Rasalhague",    "Rasalhague",      "alOph", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
+//     {"LES", "Lesath",        "Lesath",          "upSco", "Mer/Mar", 1.5, CAT_PTOLEMAIC},
+//     {"ACS", "Aculeus",       "Aculeus (M6)",    "M6",    "Mar/Moo", 1.0, CAT_NEBULA},
+//     {"ACU", "Acumen",        "Acumen (M7)",     "M7",    "Mar/Moo", 1.0, CAT_NEBULA},
+
+//     // CAPRICÓRNIO
+//     {"FAC", "Facies",        "Facies (M22)",    "M22",   "Sun/Mar", 1.0, CAT_NEBULA | CAT_PTOLEMAIC},
+//     {"VEG", "Vega",          "Vega",            "alLyr", "Ven/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // AQUÁRIO
+//     {"ALT", "Altair",        "Altair",          "alAql", "Mar/Jup", 2.0, CAT_PTOLEMAIC},
+//     {"DBA", "Deneb Algedi",  "Deneb Algedi",    "deCap", "Sat/Jup", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+
+//     // PEIXES
+//     {"FOM", "Fomalhaut",     "Fomalhaut",       "alPsA", "Ven/Mer", 2.0, CAT_ROYAL | CAT_PTOLEMAIC},
+//     {"DBD", "Deneb Adige",   "Deneb Adige",     "alCyg", "Ven/Mer", 2.0, CAT_PTOLEMAIC},
+//     {"ACH", "Achernar",      "Achernar",        "alEri", "Jup",     2.0, CAT_PTOLEMAIC},
+//     {"MKB", "Markab",        "Markab",          "alPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
+//     {"SCT", "Scheat",        "Scheat",          "bePeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC}
+// };
+
+
 const TraditionalStar TRADITIONAL_STARS[] = {
     // ÁRIES
-    {"ALB", "Algenib",       "Algenib",         "gaPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
-    {"ALF", "Alpheratz",     "Alpheratz",       "alAnd", "Jup/Ven", 1.5, CAT_PTOLEMAIC},
-    {"BKA", "Baten Kaitos",  "Baten Kaitos",    "zeCet", "Sat",     1.0, CAT_PTOLEMAIC},
-    {"MIR", "Mirach",        "Mirach",          "beAnd", "Ven",     1.5, CAT_PTOLEMAIC},
-    {"HAM", "Hamal",         "Hamal",           "alAri", "Mar/Sat", 1.5, CAT_PTOLEMAIC},
-    {"SCH", "Schedar",       "Schedar",         "alCas", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
-    {"ALM", "Almach",        "Almach",          "gaAnd", "Ven",     1.5, CAT_PTOLEMAIC},
+    {"ALB", "Algenib",       "Algenib",            "gaPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Wing of Pegasus. Bestows keen intellect, eloquence, ambition, and quick perception, though warning against impulsiveness or sharp disputes.")},
+    {"ALF", "Alpheratz",     "Alpheratz",          "alAnd", "Jup/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Head of Andromeda. Confers independence, grace, honor, freedom of action, and harmony in public or social relationships.")},
+    {"BKA", "Baten Kaitos",  "Baten Kaitos",       "zeCet", "Sat",     1.0, CAT_PTOLEMAIC,
+     N_("Belly of the Sea Monster. Brings isolation, forced changes of residence, or trials through travel and sudden obstacles.")},
+    {"MIR", "Mirach",        "Mirach",             "beAnd", "Ven",     1.5, CAT_PTOLEMAIC,
+     N_("Girdle of Andromeda. Grants personal charm, artistic talent, devotion, marital happiness, and reconciliation.")},
+    {"HAM", "Hamal",         "Hamal",              "alAri", "Mar/Sat", 1.5, CAT_PTOLEMAIC,
+     N_("Head of the Ram. Confers fierce independence, pioneering courage, and leadership, but requires restraint against headstrong behavior.")},
+    {"SCH", "Schedar",       "Schedar",            "alCas", "Sat/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Breast of Cassiopeia. Bestows dignity, royal poise, quiet authority, and honor earned through gravitas and self-command.")},
+    {"ALM", "Almach",        "Almach",             "gaAnd", "Ven",     1.5, CAT_PTOLEMAIC,
+     N_("Foot of Andromeda. Brings artistic distinction, popularity, elegance, and favorable support from influential allies.")},
 
     // TOURO
-    {"MKR", "Menkar",        "Menkar",          "alCet", "Sat",     1.5, CAT_PTOLEMAIC},
-    {"CPU", "Capulus",       "Capulus (M34)",   "M34",   "Mar/Mer", 1.0, CAT_NEBULA},
-    {"ALG", "Algol",         "Algol",           "bePer", "Sat/Jup", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"ALC", "Alcyone",       "Alcyone (Plêiades)", "etTau", "Moo/Mar", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC | CAT_NEBULA},
-    {"ALD", "Aldebaran",     "Aldebaran",       "alTau", "Mar",     2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"MKR", "Menkar",        "Menkar",             "alCet", "Sat",     1.5, CAT_PTOLEMAIC,
+     N_("Jaw of the Whale. Indicates deep collective currents, endurance through trials, and sudden reversals if acting without foresight.")},
+    {"CPU", "Capulus",       "Capulus (M34)",      "M34",   "Mar/Mer", 1.0, CAT_NEBULA,
+     N_("Sword Hilt of Perseus. Concentrates sharp, penetrating action and decisiveness; traditionally linked to eye strain or acute physical risks.")},
+    {"ALG", "Algol",         "Algol",              "bePer", "Sat/Jup", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Head of Medusa (Caput Algol). The most intense star in classical astrology; channels raw, uncompromising power and fierce protection when mastered, or sudden crises if unchecked.")},
+    {"ALC", "Alcyone",       "Alcyone (Plêiades)", "etTau", "Moo/Mar", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC | CAT_NEBULA,
+     N_("Central star of the Pleiades. Confers mystical insight, deep emotional sensitivity, and inner vision, traditionally associated with ocular sensitivity or sorrow.")},
+    {"ALD", "Aldebaran",     "Aldebaran",          "alTau", "Mar",     2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Royal Star of the Bull (Watcher of the East). Grants high honor, courage, and public elevation, provided strict integrity is maintained without compromise.")},
 
     // GÊMEOS
-    {"RIG", "Rigel",         "Rigel",           "beOri", "Jup/Mar", 2.0, CAT_PTOLEMAIC},
-    {"BEL", "Bellatrix",     "Bellatrix",       "gaOri", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
-    {"CAP", "Capella",       "Capella",         "alAur", "Mar/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"ALN", "Alnilam",       "Alnilam",         "epOri", "Jup/Sat", 1.5, CAT_PTOLEMAIC},
-    {"BTL", "Betelgeuse",    "Betelgeuse",      "alOri", "Mar/Mer", 2.0, CAT_PTOLEMAIC},
-    {"MEN", "Menkalinan",    "Menkalinan",      "beAur", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
+    {"RIG", "Rigel",         "Rigel",              "beOri", "Jup/Mar", 2.0, CAT_PTOLEMAIC,
+     N_("Foot of Orion. Bestows technical mastery, teaching ability, inventive brilliance, and lasting achievement through disciplined effort.")},
+    {"BEL", "Bellatrix",     "Bellatrix",          "gaOri", "Mar/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Left Shoulder of Orion. Confers rapid decision-making, strategic courage, and eloquence, though cautioning against recklessness after early victories.")},
+    {"CAP", "Capella",       "Capella",            "alAur", "Mar/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("The Little She-Goat. Grants intellectual curiosity, love of learning, independence, and unconventional honors in scholarly or inventive fields.")},
+    {"ALN", "Alnilam",       "Alnilam",            "epOri", "Jup/Sat", 1.5, CAT_PTOLEMAIC,
+     N_("Belt of Orion. Brings fleeting public honors, organizational command, and strong ideals that require solid grounding to endure.")},
+    {"BTL", "Betelgeuse",    "Betelgeuse",         "alOri", "Mar/Mer", 2.0, CAT_PTOLEMAIC,
+     N_("Right Shoulder of Orion. One of the most fortunate martial stars, conferring unblocked advancement, executive command, and military or civic honors.")},
+    {"MEN", "Menkalinan",    "Menkalinan",         "beAur", "Mar/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Shoulder of the Charioteer. Gives dexterity, adaptability, and skill in managing complex systems, requiring balance to avoid overextension.")},
 
     // CÂNCER
-    {"SIR", "Sirius",        "Sirius",          "alCMa", "Jup/Mar", 2.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"CAN", "Canopus",       "Canopus",         "alCar", "Sat/Jup", 2.0, CAT_PTOLEMAIC},
-    {"CAS", "Castor",        "Castor",          "alGem", "Mer",     1.5, CAT_PTOLEMAIC},
-    {"POL", "Pollux",        "Pollux",          "beGem", "Mar",     2.0, CAT_PTOLEMAIC},
-    {"PRO", "Procyon",       "Procyon",         "alCMi", "Mer/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"SIR", "Sirius",        "Sirius",             "alCMa", "Jup/Mar", 2.5, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("The Dog Star, brightest in the heavens. Magnifies all it touches, bestowing brilliance, guardianship, renown, and extraordinary achievement through devotion.")},
+    {"CAN", "Canopus",       "Canopus",            "alCar", "Sat/Jup", 2.0, CAT_PTOLEMAIC,
+     N_("Helmsman of the Ship Argo. Grants broad philosophical vision, mastery over long journeys or complex enterprises, and conservative wisdom.")},
+    {"CAS", "Castor",        "Castor",             "alGem", "Mer",     1.5, CAT_PTOLEMAIC,
+     N_("The Mortal Twin. Bestows sharp wit, literary or intellectual distinction, and communicative skill, though marked by sudden shifts of fortune.")},
+    {"POL", "Pollux",        "Pollux",             "beGem", "Mar",     2.0, CAT_PTOLEMAIC,
+     N_("The Immortal Twin. Confers fearless tenacity, athletic or strategic strength, and the resilience to prevail after hard struggles.")},
+    {"PRO", "Procyon",       "Procyon",            "alCMi", "Mer/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("The Lesser Dog. Brings quick wit, rapid rise, and decisive action, with the classical warning against haste and carelessness once success is reached.")},
 
     // LEÃO
-    {"PRA", "Praesepe",      "Praesepe (M44)",  "M44",   "Mar/Moo", 1.0, CAT_NEBULA | CAT_PTOLEMAIC},
-    {"ALP", "Alphard",       "Alphard",         "alHya", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
-    {"REG", "Regulus",       "Regulus",         "alLeo", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"PRA", "Praesepe",      "Praesepe (M44)",     "M44",   "Mar/Moo", 1.0, CAT_NEBULA | CAT_PTOLEMAIC,
+     N_("The Beehive Cluster in Cancer. Indicates inner retreat, sensitivity, and protective instincts; traditionally associated with eye strain or hidden vulnerabilities.")},
+    {"ALP", "Alphard",       "Alphard",            "alHya", "Sat/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Heart of the Hydra. Grants deep artistic passion, wisdom in human nature, and self-reliance, requiring moderation to avoid emotional excess.")},
+    {"REG", "Regulus",       "Regulus",            "alLeo", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Royal Star of the Lion (Watcher of the North). Confers nobility, leadership, and high preferment, provided one avoids vindictiveness or thirst for revenge.")},
 
     // VIRGEM
-    {"ZOS", "Zosma",         "Zosma",           "deLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
-    {"DEN", "Denebola",      "Denebola",        "beLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
-    {"ALK", "Alkaid",        "Alkaid (Benetnasch)", "etUMa", "Moo/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"VIX", "Vindemiatrix",  "Vindemiatrix",    "epVir", "Sat/Mer", 1.5, CAT_PTOLEMAIC},
+    {"ZOS", "Zosma",         "Zosma",              "deLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Back of the Lion. Gives keen discernment, prophetic sensitivity, and service to others, though occasionally carrying burdens on behalf of the collective.")},
+    {"DEN", "Denebola",      "Denebola",           "beLeo", "Sat/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Tail of the Lion. Bestows independent judgment, unconventional insight, and swift turns of fortune that reward swimming against the tide.")},
+    {"ALK", "Alkaid",        "Alkaid (Benetnasch)","etUMa", "Moo/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("End of the Great Bear's Tail. Confers solemnity, endurance, and deep ancestral awareness; traditionally linked to mourning or profound life transitions.")},
+    {"VIX", "Vindemiatrix",  "Vindemiatrix",       "epVir", "Sat/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("The Grape Gatherer. Grants analytical precision and gathering of resources, though traditionally connected to separations or widowhood in close bonds.")},
 
     // LIBRA
-    {"AGO", "Algorab",       "Algorab",         "deCrv", "Mar/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"SPI", "Spica",         "Spica",           "alVir", "Ven/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"ARC", "Arcturus",      "Arcturus",        "alBoo", "Jup/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"AGO", "Algorab",       "Algorab",            "deCrv", "Mar/Sat", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Wing of the Raven. Confers shrewdness, realism, and strategic scavenging in difficult environments, requiring ethical clarity.")},
+    {"SPI", "Spica",         "Spica",              "alVir", "Ven/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Ear of Wheat of the Virgin. One of the premier fortunate stars, bestowing artistic or scientific brilliance, protection, and enduring honors.")},
+    {"ARC", "Arcturus",      "Arcturus",           "alBoo", "Jup/Mar", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("The Bear Guardian. Grants pioneering leadership, justice, pathfinding ability, and prosperity earned through self-determined action.")},
 
     // ESCORPIÃO
-    {"ACA", "Alphecca",      "Alphecca (Gemma)","alCrB", "Ven/Mer", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"ZBI", "Zubenelgenubi", "Zubenelgenubi",   "alLib", "Sat/Mar", 1.5, CAT_PTOLEMAIC},
-    {"ZLI", "Zubeneschamali","Zubeneschamali",  "beLib", "Jup/Mer", 1.5, CAT_PTOLEMAIC},
-    {"UNU", "Unukalhai",     "Unukalhai",       "alSer", "Sat/Mar", 1.5, CAT_PTOLEMAIC},
+    {"ACA", "Alphecca",      "Alphecca (Gemma)",   "alCrB", "Ven/Mer", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("The Northern Crown. Bestows poetic gifts, grace, social distinction, and quiet dignity earned through artistic or intellectual merit.")},
+    {"ZBI", "Zubenelgenubi", "Zubenelgenubi",      "alLib", "Sat/Mar", 1.5, CAT_PTOLEMAIC,
+     N_("Southern Scale. Calls for rigorous fairness and social responsibility; warns against exacting penalties that rebound upon oneself.")},
+    {"ZLI", "Zubeneschamali","Zubeneschamali",     "beLib", "Jup/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Northern Scale. Confers civic honor, intellectual breadth, eloquence, and lasting advancement through constructive alliances.")},
+    {"UNU", "Unukalhai",     "Unukalhai",          "alSer", "Sat/Mar", 1.5, CAT_PTOLEMAIC,
+     N_("Neck of the Serpent. Grants deep psychological insight and healing wisdom, though testing emotional self-control in crises.")},
 
     // SAGITÁRIO
-    {"ANT", "Antares",       "Antares",         "alSco", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC},
-    {"RAS", "Rasalhague",    "Rasalhague",      "alOph", "Sat/Ven", 1.5, CAT_PTOLEMAIC},
-    {"LES", "Lesath",        "Lesath",          "upSco", "Mer/Mar", 1.5, CAT_PTOLEMAIC},
-    {"ACS", "Aculeus",       "Aculeus (M6)",    "M6",    "Mar/Moo", 1.0, CAT_NEBULA},
-    {"ACU", "Acumen",        "Acumen (M7)",     "M7",    "Mar/Moo", 1.0, CAT_NEBULA},
+    {"ANT", "Antares",       "Antares",            "alSco", "Mar/Jup", 2.0, CAT_ROYAL | CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Royal Star of the Scorpion (Watcher of the West). Bestows intensity, courage, and strategic brilliance, warning against obsession and extremism.")},
+    {"RAS", "Rasalhague",    "Rasalhague",         "alOph", "Sat/Ven", 1.5, CAT_PTOLEMAIC,
+     N_("Head of the Serpent Bearer. Confers therapeutic skill, diagnostic insight, and mastery over poisons, remedies, and hidden ailments.")},
+    {"LES", "Lesath",        "Lesath",             "upSco", "Mer/Mar", 1.5, CAT_PTOLEMAIC,
+     N_("Sting of the Scorpion. Grants razor-sharp mental penetration and boldness, requiring caution against corrosive speech or rashness.")},
+    {"ACS", "Aculeus",       "Aculeus (M6)",       "M6",    "Mar/Moo", 1.0, CAT_NEBULA,
+     N_("Upper Sting Cluster. Sharpens perception and resilience under verbal or mental attacks; traditionally linked to visual sensitivity.")},
+    {"ACU", "Acumen",        "Acumen (M7)",        "M7",    "Mar/Moo", 1.0, CAT_NEBULA,
+     N_("Lower Sting Cluster. Gives tenacity and endurance through adversity, though requiring vigilance regarding eyesight and nervous strain.")},
 
     // CAPRICÓRNIO
-    {"FAC", "Facies",        "Facies (M22)",    "M22",   "Sun/Mar", 1.0, CAT_NEBULA | CAT_PTOLEMAIC},
-    {"VEG", "Vega",          "Vega",            "alLyr", "Ven/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"FAC", "Facies",        "Facies (M22)",       "M22",   "Sun/Mar", 1.0, CAT_NEBULA | CAT_PTOLEMAIC,
+     N_("Eye of the Archer. Projects intense, focused willpower and piercing vision, demanding discipline to avoid harshness or ocular strain.")},
+    {"VEG", "Vega",          "Vega",               "alLyr", "Ven/Mer", 2.0, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Star of the Lyre. Bestows artistic charisma, musical or poetic refinement, idealism, and quiet magnetic authority.")},
 
     // AQUÁRIO
-    {"ALT", "Altair",        "Altair",          "alAql", "Mar/Jup", 2.0, CAT_PTOLEMAIC},
-    {"DBA", "Deneb Algedi",  "Deneb Algedi",    "deCap", "Sat/Jup", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC},
+    {"ALT", "Altair",        "Altair",             "alAql", "Mar/Jup", 2.0, CAT_PTOLEMAIC,
+     N_("The Flying Eagle. Confers boldness, swift ascent, generosity, and fearless action in moments demanding decisive leadership.")},
+    {"DBA", "Deneb Algedi",  "Deneb Algedi",       "deCap", "Sat/Jup", 1.5, CAT_BEHENIAN | CAT_PTOLEMAIC,
+     N_("Tail of the Sea-Goat. Grants judicial wisdom, integrity, and the ability to bring order, law, and fair counsel to communities.")},
 
     // PEIXES
-    {"FOM", "Fomalhaut",     "Fomalhaut",       "alPsA", "Ven/Mer", 2.0, CAT_ROYAL | CAT_PTOLEMAIC},
-    {"DBD", "Deneb Adige",   "Deneb Adige",     "alCyg", "Ven/Mer", 2.0, CAT_PTOLEMAIC},
-    {"ACH", "Achernar",      "Achernar",        "alEri", "Jup",     2.0, CAT_PTOLEMAIC},
-    {"MKB", "Markab",        "Markab",          "alPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC},
-    {"SCT", "Scheat",        "Scheat",          "bePeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC}
+    {"FOM", "Fomalhaut",     "Fomalhaut",          "alPsA", "Ven/Mer", 2.0, CAT_ROYAL | CAT_PTOLEMAIC,
+     N_("Royal Star of the Southern Fish (Watcher of the South). Brings charisma, artistic or spiritual eminence, and high ideals requiring purity of motive.")},
+    {"DBD", "Deneb Adige",   "Deneb Adige",        "alCyg", "Ven/Mer", 2.0, CAT_PTOLEMAIC,
+     N_("Tail of the Swan. Bestows quick comprehension, artistic grace, idealism, and elevation through intellect or creative mastery.")},
+    {"ACH", "Achernar",      "Achernar",           "alEri", "Jup",     2.0, CAT_PTOLEMAIC,
+     N_("End of the River. Confers philosophical dignity, moral authority, public honor, and success in high office or spiritual leadership.")},
+    {"MKB", "Markab",        "Markab",             "alPeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Saddle of Pegasus. Grants mental vigor, ambition, and literary or practical drive, though advising prudence against avoidable hazards.")},
+    {"SCT", "Scheat",        "Scheat",             "bePeg", "Mar/Mer", 1.5, CAT_PTOLEMAIC,
+     N_("Leg of Pegasus. Bestows original, avant-garde intellect and deep poetic or philosophical insight, warning against extreme risks.")}
 };
+
+
 
 const size_t TRADITIONAL_STARS_COUNT = sizeof(TRADITIONAL_STARS) / sizeof(TRADITIONAL_STARS[0]);
 
@@ -298,7 +431,7 @@ int compute_parans(double tjd_ut, double geo_lon, double geo_lat, double geo_alt
         _("Rising"),
         _("Setting"),
         _("Culminating"),
-        _("Anti-Culmination")
+        _("Anti-Culminating")
     };
 
     char star_buf[SE_MAX_STNAME];
@@ -379,6 +512,7 @@ int compute_parans(double tjd_ut, double geo_lon, double geo_lat, double geo_alt
                             stars[s].heliacal_calculated = true;
                         }
 
+                        out_list[count].star_index      = s;
                         out_list[count].object          = *planet_glyphs[p];
                         out_list[count].planet_name     = _(planet_names[p]);
                         out_list[count].planet_angle    = angle_labels[pa];
@@ -1697,3 +1831,604 @@ void display_heliacal_phases_table(double tjd_ut, double geo_lon, double geo_lat
     refresh();
 }
 
+
+
+
+
+
+static const char *get_temperament_meaning(const char *nature) {
+    if (strcmp(nature, "Mar/Jup") == 0 || strcmp(nature, "Jup/Mar") == 0) {
+        return _("Combines martial courage and initiative with Jupiterian nobility, leadership, and expansion.");
+    }
+    if (strcmp(nature, "Sat/Jup") == 0 || strcmp(nature, "Jup/Sat") == 0) {
+        return _("Blends Saturnian endurance, gravity, and structure with Jupiterian authority and prudence.");
+    }
+    if (strcmp(nature, "Mar/Mer") == 0 || strcmp(nature, "Mer/Mar") == 0) {
+        return _("Unites sharp intellect, speed, and incisive speech with boldness, strategy, and executive drive.");
+    }
+    if (strcmp(nature, "Ven/Mer") == 0 || strcmp(nature, "Mer/Ven") == 0) {
+        return _("Harmonizes artistic grace, charm, and social refinement with eloquence, wit, and versatility.");
+    }
+    if (strcmp(nature, "Ven/Mar") == 0 || strcmp(nature, "Mar/Ven") == 0) {
+        return _("Fuses aesthetic magnetism and desire with passion, creative drive, and strong interpersonal energy.");
+    }
+    if (strcmp(nature, "Sat/Ven") == 0 || strcmp(nature, "Ven/Sat") == 0) {
+        return _("Tempers affection and artistic taste with loyalty, restraint, realism, and lasting commitment.");
+    }
+    if (strcmp(nature, "Sat/Mar") == 0 || strcmp(nature, "Mar/Sat") == 0) {
+        return _("Concentrates disciplined force, resilience under pressure, and austerity; requires patience to avoid harshness.");
+    }
+    if (strcmp(nature, "Sat/Mer") == 0 || strcmp(nature, "Mer/Sat") == 0) {
+        return _("Gives deep concentration, analytical rigor, skepticism, and serious scholarly or technical focus.");
+    }
+    if (strcmp(nature, "Moo/Mar") == 0 || strcmp(nature, "Mar/Moo") == 0) {
+        return _("Heightens emotional intensity, instinctual courage, and sensitivity, requiring emotional balance.");
+    }
+    if (strcmp(nature, "Moo/Sat") == 0 || strcmp(nature, "Sat/Moo") == 0) {
+        return _("Brings emotional sobriety, historical memory, endurance, and introspective depth.");
+    }
+    if (strcmp(nature, "Sun/Mar") == 0) {
+        return _("Radiates solar vitality, command, and fierce willpower, demanding self-control to avoid excess.");
+    }
+    if (strcmp(nature, "Mar") == 0) {
+        return _("Pure martial temperament: courage, decisiveness, conquest, and direct action.");
+    }
+    if (strcmp(nature, "Ven") == 0) {
+        return _("Pure Venusian temperament: harmony, grace, beauty, and relational attraction.");
+    }
+    if (strcmp(nature, "Mer") == 0) {
+        return _("Pure Mercurial temperament: agility of mind, communication, skill, and adaptability.");
+    }
+    if (strcmp(nature, "Jup") == 0) {
+        return _("Pure Jupiterian temperament: wisdom, generosity, protection, and dignified elevation.");
+    }
+    if (strcmp(nature, "Sat") == 0) {
+        return _("Pure Saturnian temperament: gravity, perseverance, detachment, and structural mastery.");
+    }
+    return _("Classical planetary temperament governing how the star channels its influence.");
+}
+
+
+
+void abrir_janela_interpretacao_estrelas(
+    const PlotObject *plots,
+    int plot_count,
+    CalculatedStar *stars,
+    int star_count,
+    const bool star_active[],
+    const ParanEntry *parans,
+    int paran_count,
+    double lon_hyleg_natal,
+    const char *nome_hyleg_natal,
+    const char *glifo_hyleg_natal,
+    double tjd_ut,
+    double lon,
+    double lat,
+    double elev,
+    bool is_solar_return,            // <-- false no Mapa Radical | true na Revolução Solar
+    const bool radix_star_active[]
+) {
+    int p_max_y, p_max_x;
+    getmaxyx(stdscr, p_max_y, p_max_x);
+
+    int i_height = p_max_y - 6;
+    if (i_height > 26) i_height = 26;
+    int i_width = p_max_x - 12;
+    if (i_width > 102) i_width = 102;
+
+    int i_start_y = (p_max_y - i_height) / 2;
+    int i_start_x = (p_max_x - i_width) / 2;
+
+    WINDOW *shadow_win = newwin(i_height, i_width, i_start_y + 1, i_start_x + 1);
+    werase(shadow_win);
+    wattron(shadow_win, COLOR_PAIR(9));
+    box(shadow_win, 0, 0);
+    wattroff(shadow_win, COLOR_PAIR(9));
+    wnoutrefresh(shadow_win);
+
+    WINDOW *border_win = newwin(i_height, i_width, i_start_y, i_start_x);
+    wbkgd(border_win, COLOR_PAIR(13) | FLAGS);
+    box(border_win, 0, 0);
+    wattron(border_win, A_BOLD);
+    const char *title = is_solar_return
+    ? _(" Solar Return Fixed Stars & Delineation ")
+    : _(" Radical Fixed Stars & Delineation ");
+    mvwprintw(border_win, 0, (i_width - get_visual_width(title)) / 2, "%s", title);
+
+
+    // Botão [✖] no canto superior direito
+    int col_fechar = getmaxx(border_win) - 4;
+    wattron(border_win, COLOR_PAIR(13));
+    mvwprintw(border_win, 0, col_fechar, "[");
+    mvwprintw(border_win, 0, col_fechar + 2, "]");
+    wattroff(border_win, COLOR_PAIR(13));
+
+    wattron(border_win, COLOR_PAIR(13) | A_BOLD);
+    mvwprintw(border_win, 0, col_fechar + 1, "✖");
+    wattroff(border_win, COLOR_PAIR(13) | A_BOLD);
+
+    mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_CLICKED | BUTTON1_DOUBLE_CLICKED | REPORT_MOUSE_POSITION, NULL);
+    mouseinterval(100);
+    drag_and_drop_on();
+
+    mvwprintw(border_win, i_height - 1, (i_width - 44) / 2, _(" [↓↑|JK: Scroll | Q|ESC: Return to Chart] "));
+    wnoutrefresh(border_win);
+    doupdate();
+
+    int pad_cols = i_width - 6;
+
+    // 1. Conta quantas estrelas estão ativas neste mapa
+    int active_stars_count = 0;
+    for (int s = 0; s < star_count; s++) {
+        if (star_active[s]) {
+            active_stars_count++;
+        }
+    }
+
+    // 2. Calcula a altura exata necessária com folga de segurança:
+    // - 45 linhas fixas para cabeçalho inicial, introdução, Monitor Crítico do Hyleg e rodapé
+    // - 30 linhas por estrela ativa (média real ~21 linhas + margem de segurança para múltiplos contatos)
+    int pad_lines = 45 + (active_stars_count * 30);
+
+    // Garante que o pad tenha no mínimo a altura da janela visível
+    if (pad_lines < i_height) {
+        pad_lines = i_height;
+    }
+
+    WINDOW *pad = newpad(pad_lines, pad_cols);
+
+    wbkgd(pad, COLOR_PAIR(13) | FLAGS);
+    keypad(pad, TRUE);
+    idlok(pad, TRUE);
+    scrollok(pad, TRUE);
+
+    int line_count = 0;
+    char str[512] = "";
+
+    wprintw(pad, "\n");
+    wattron(pad, A_BOLD | COLOR_PAIR(15));
+    if (is_solar_return) {
+        wprintw(pad, _("FIXED STARS ACTIVATED IN THE SOLAR RETURN\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(15));
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        line_count += 2;
+        line_count += print_split_lines(
+            pad,
+            _("Below is the classical delineation of the fixed stars anchored by conjunction, parallel, "
+              "or local paran in your Solar Return chart, governing prominent themes for this annual cycle.\n\n"),
+            MAX_LINE_WIDTH
+        );
+    } else {
+        wprintw(pad, _("FIXED STARS ACTIVATED IN THE RADIX BLUEPRINT\n"));
+        wattroff(pad, A_BOLD | COLOR_PAIR(15));
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        line_count += 2;
+        line_count += print_split_lines(
+            pad,
+            _("In traditional astrology, fixed stars do not cast rays like wandering planets; they act through "
+              "bodily conjunction, equatorial parallel, or local horizon/meridian parans. Below is the "
+              "delineation of the stars anchored in your natal chart.\n\n"),
+            MAX_LINE_WIDTH
+        );
+    }
+    
+
+    /* ======================================================================
+       SEÇÃO 1: MONITOR CRÍTICO — ESTRELAS FIXAS SOBRE O HYLEG NATAL
+       ====================================================================== */
+    if (!is_solar_return) {
+       if (lon_hyleg_natal >= 0.0 && nome_hyleg_natal != NULL) {
+            wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+            wattron(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE);
+            line_count++;
+
+            snprintf(str, sizeof(str), _("[CRITICAL MONITOR] FIXED STARS CONJUNCT NATAL HYLEG (%s %s)\n"),
+                    glifo_hyleg_natal ? glifo_hyleg_natal : "", nome_hyleg_natal);
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
+            wattroff(pad, A_BOLD | COLOR_PAIR(11) | A_REVERSE);
+            wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+            line_count++;
+
+            bool hyleg_star_found = false;
+            for (int s = 0; s < star_count; s++) {
+                double diff = fabs(swe_difdeg2n(stars[s].longitude, lon_hyleg_natal));
+                if (diff <= stars[s].meta->default_orb + DBL_EPSILON) {
+                    hyleg_star_found = true;
+
+                    if ((stars[s].meta->categories & CAT_NEBULA) ||
+                        strcmp(stars[s].meta->swe_name, "Algol") == 0 ||
+                        strcmp(stars[s].meta->swe_name, "Scheat") == 0) {
+                        wattron(pad, A_BOLD | COLOR_PAIR(11));
+                    } else {
+                        wattron(pad, A_BOLD | COLOR_PAIR(32));
+                    }
+
+                    snprintf(str, sizeof(str), _("[*] %s (%s) IS CONJUNCT YOUR NATAL HYLEG (Orb: %.2f°)\n"),
+                            stars[s].meta->display_name, stars[s].meta->nature, diff);
+                    line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+                    wattroff(pad, A_BOLD | COLOR_PAIR(11) | COLOR_PAIR(32));
+
+                    if (stars[s].meta->delineation != NULL) {
+                        line_count += print_split_lines(pad, _(stars[s].meta->delineation), MAX_LINE_WIDTH);
+                        wprintw(pad, "\n");
+                        line_count++;
+                    }
+                }
+            }
+
+            if (!hyleg_star_found) {
+                line_count += print_split_lines(
+                    pad,
+                    _("No fixed stars from the classical catalog fall in direct bodily conjunction with your Natal Hyleg.\n\n"),
+                    MAX_LINE_WIDTH
+                );
+            }
+        }
+    }
+
+    /* ======================================================================
+       SEÇÃO 2: DOSSIÊ INDIVIDUAL DAS ESTRELAS ATIVADAS NO MAPA RADICAL
+       ====================================================================== */
+    int active_found = 0;
+
+    for (int s = 0; s < star_count; s++) {
+        if (!star_active[s]) {
+            continue;
+        }
+        active_found++;
+
+        if (!stars[s].heliacal_calculated) {
+            HeliacalInfo hinfo = get_star_heliacal_info(
+                tjd_ut, lon, lat, elev, &stars[s]
+            );
+            stars[s].heliacal_state = hinfo.state;
+            stars[s].heliacal_calculated = true;
+        }
+
+        // Cabeçalho reverso idêntico ao padrão dos planetas
+        int header_color = COLOR_PAIR(32);
+        const char *badge = _("CLASSICAL");
+        if (stars[s].meta->categories & CAT_ROYAL) {
+            header_color = COLOR_PAIR(25);
+            badge = _("ROYAL STAR");
+        } else if (strcmp(stars[s].meta->swe_name, "Algol") == 0 || 
+                   (stars[s].meta->categories & CAT_NEBULA)) {
+            header_color = COLOR_PAIR(11);
+            badge = _("CRITICAL / NEBULA");
+        } else if (stars[s].meta->categories & CAT_BEHENIAN) {
+            badge = _("BEHENIAN");
+        }
+
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        wattron(pad, A_BOLD | header_color | A_REVERSE);
+        char str_aux[128];
+        snprintf(str_aux, sizeof(str_aux), _("    ★  %s (%s) — %s | Nature: %s | Mag: %.2f"),
+                 stars[s].meta->display_name,
+                 stars[s].meta->object,
+                 badge,
+                 stars[s].meta->nature,
+                 stars[s].magnitude);
+        wprintw(pad, "%s%*.s\n", str_aux, pad_cols - get_visual_width(str_aux) - 1, " ");
+        wattroff(pad, A_BOLD | header_color | A_REVERSE);
+        wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+        line_count += 4;
+
+        // Condição Helíaca
+        const char *vis_label = _("Visible in Sky (Direct, public, and manifest expression)");
+        if (stars[s].heliacal_state == HELIACAL_HIDDEN) {
+            vis_label = _("Under the Sun's Beams (Latent, private, or internal expression)");
+        } else if (stars[s].heliacal_state == HELIACAL_CIRCUMPOLAR) {
+            vis_label = _("Circumpolar (Continuously above the local horizon)");
+        }
+
+        wattron(pad, A_BOLD);
+        wprintw(pad, _(" • Heliacal Condition: %s\n"), vis_label);
+        wattroff(pad, A_BOLD);
+        wprintw(pad, "\n");
+        line_count += 2;
+
+        // Contatos Natais Ativos (Conjunções, Paralelos e Parans estreitos)
+        wattron(pad, A_BOLD);
+        wprintw(pad, is_solar_return ? _(" • Active Solar Return Connections:\n") : _(" • Active Radical Connections:\n"));
+        wattroff(pad, A_BOLD);
+        line_count++;
+
+        for (int p = 0; p < plot_count; p++) {
+            double lon_diff = fabs(swe_difdeg2n(stars[s].longitude, plots[p].longitude));
+            if (lon_diff <= stars[s].meta->default_orb + DBL_EPSILON) {
+                wattron(pad, A_BOLD | COLOR_PAIR(25));
+                snprintf(str, sizeof(str), _("   [*] BODILY CONJUNCTION WITH %s %s (Orb: %.2f°)\n"),
+                         plots[p].object, plots[p].object_name, lon_diff);
+                line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+                wattroff(pad, A_BOLD | COLOR_PAIR(25));
+            }
+
+            double par_diff = fabs(stars[s].declination - plots[p].declination);
+            double cpar_diff = fabs(stars[s].declination + plots[p].declination);
+            if (par_diff <= 1.0 + DBL_EPSILON) {
+                snprintf(str, sizeof(str), _("   [*] PARALLEL OF DECLINATION WITH %s %s (Orb: %.2f°)\n"),
+                         plots[p].object, plots[p].object_name, par_diff);
+                line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+            } else if (cpar_diff <= 1.0 + DBL_EPSILON) {
+                snprintf(str, sizeof(str), _("   [*] CONTRA-PARALLEL OF DECLINATION WITH %s %s (Orb: %.2f°)\n"),
+                         plots[p].object, plots[p].object_name, cpar_diff);
+                line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+            }
+        }
+
+        for (int pr = 0; pr < paran_count; pr++) {
+            if (parans[pr].star_index == s && parans[pr].diff_minutes <= 6.0) {
+                wattron(pad, A_BOLD | COLOR_PAIR(32));
+                const char *paran_scope = is_solar_return ? _("SOLAR RETURN PARAN") : _("NATAL PARAN");
+                snprintf(str, sizeof(str), _("   [*] %s: Star %s while %s %s is %s (Orb: %.1f min)\n"),
+                        paran_scope,
+                        parans[pr].star_angle,
+                        parans[pr].object,
+                        parans[pr].planet_name,
+                        parans[pr].planet_angle,
+                        parans[pr].diff_minutes);
+                line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+                wattroff(pad, A_BOLD | COLOR_PAIR(32));
+            }
+        }
+
+        wprintw(pad, "\n");
+        line_count++;
+
+        // Temperamento Ptolomaico
+        wattron(pad, A_BOLD);
+        wprintw(pad, _(" • Planetary Temperament (%s):\n"), stars[s].meta->nature);
+        wattroff(pad, A_BOLD);
+        line_count++;
+
+        snprintf(str, sizeof(str), "%s\n\n", get_temperament_meaning(stars[s].meta->nature));
+        line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+
+        // Delineamento Tradicional da Estrela
+        if (stars[s].meta->delineation != NULL) {
+            wattron(pad, A_BOLD);
+            wprintw(pad, _(" • Traditional Delineation:\n"));
+            wattroff(pad, A_BOLD);
+            line_count++;
+
+            snprintf(str, sizeof(str), "%s\n\n", _(stars[s].meta->delineation));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+        }
+
+        wprintw(pad, "\n");
+        line_count++;
+
+        if (is_solar_return && radix_star_active != NULL && radix_star_active[s]) {
+            wattron(pad, A_BOLD | COLOR_PAIR(25) | A_REVERSE);
+            snprintf(str, sizeof(str), _("   [★ RADIX REINFORCEMENT] This star is also anchored in your Natal Chart!\n"));
+            line_count += print_split_lines(pad, str, MAX_LINE_WIDTH);
+            wattroff(pad, A_BOLD | COLOR_PAIR(25) | A_REVERSE);
+        }
+        
+    }
+
+    if (active_found == 0) {
+        line_count += print_split_lines(
+            pad,
+            _("No fixed stars form tight conjunctions, parallels, or narrow-orb parans in this natal chart.\n\n"),
+            MAX_LINE_WIDTH
+        );
+    }
+
+    wattron(pad, A_DIM);
+    wprintw(pad, "───────────────────────────────────────────────────────────────────────────────────────────────\n");
+    wprintw(pad, _("  [FIXED STARS END] - Press 'Q' or ESC to return to the Chart interface.\n"));
+    wattroff(pad, A_DIM);
+    line_count += 3;
+
+    /* ======================================================================
+    LOOP DE ROLAGEM E MOUSE (Exatamente idêntico ao seu padrão)
+    ====================================================================== */
+    int pad_line_pos = 0;
+    int ch;
+    int visible_height = (i_start_y + i_height - 4) - (i_start_y + 1) + 1;
+
+    keypad(border_win, TRUE);
+
+    int running = 1;
+    while (running) {
+        int flag = 0;
+        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+        wattron(border_win, COLOR_PAIR(28) | flag);
+        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+        wattroff(border_win, COLOR_PAIR(28) | flag);
+
+        mvwaddstr(border_win, 1, i_width - 2, "▲");
+        mvwaddstr(border_win, 2 + visible_height, i_width - 2, "▼");
+
+        wnoutrefresh(border_win);
+        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+        doupdate();
+
+        ch = wgetch(border_win);
+        if (ch == 27 || ch == 'q' || ch == 'Q') {
+            break;
+        }
+
+        switch (ch) {
+            case KEY_UP: case 'k': case 'K':
+                if (pad_line_pos > 0) pad_line_pos--;
+                break;
+            case KEY_DOWN: case 'j': case 'J':
+                if (pad_line_pos < (line_count - visible_height)) pad_line_pos++;
+                break;
+            case KEY_PPAGE:
+                pad_line_pos -= visible_height;
+                if (pad_line_pos < 0) pad_line_pos = 0;
+                break;
+            case KEY_NPAGE:
+                pad_line_pos += visible_height;
+                if (pad_line_pos > (line_count - visible_height)) {
+                    pad_line_pos = (line_count > visible_height) ? (line_count - visible_height) : 0;
+                }
+                break;
+
+            case KEY_MOUSE: {
+                MEVENT event;
+                if (getmouse(&event) == OK) {
+                    int linha_clique_janela = event.y - getbegy(border_win);
+                    int col_clique_janela = event.x - getbegx(border_win);
+
+                    int col_inicio_fechar = getmaxx(border_win) - 4;
+                    int col_fim_fechar = col_inicio_fechar + 3;
+
+                    if (linha_clique_janela == 0 && col_clique_janela >= col_inicio_fechar && col_clique_janela < col_fim_fechar) {
+                        if (event.bstate & (BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON1_DOUBLE_CLICKED)) {
+                            running = 0;
+                            break;
+                        }
+                    }
+
+                    int col_scrollbar_absoluta = getbegx(border_win) + (getmaxx(border_win) - 2);
+                    if (event.x == col_scrollbar_absoluta) {
+                        int linha_seta_cima = 1;
+                        int offset_inicio_barra = 2;
+                        int linha_seta_baixo = offset_inicio_barra + visible_height;
+
+                        int max_scroll_y = line_count - visible_height;
+                        if (max_scroll_y < 0) max_scroll_y = 0;
+
+                        if (linha_clique_janela == linha_seta_cima) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(border_win, TRUE);
+                                while (1) {
+                                    if (pad_line_pos > 0) {
+                                        pad_line_pos--;
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(border_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                        wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(border_win);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+                                    napms(80);
+                                    int ch_check = wgetch(border_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(border_win, FALSE);
+                            }
+                        } else if (linha_clique_janela == linha_seta_baixo) {
+                            if (event.bstate & BUTTON1_PRESSED) {
+                                nodelay(border_win, TRUE);
+                                while (1) {
+                                    if (pad_line_pos < max_scroll_y) {
+                                        pad_line_pos++;
+                                        int flag = 0;
+                                        if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                        wattron(border_win, COLOR_PAIR(28) | flag);
+                                        desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                        wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                        wnoutrefresh(border_win);
+                                        prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+                                        doupdate();
+                                    } else {
+                                        break;
+                                    }
+                                    napms(80);
+                                    int ch_check = wgetch(border_win);
+                                    if (ch_check == KEY_MOUSE) {
+                                        MEVENT check_event;
+                                        if (getmouse(&check_event) == OK && (check_event.bstate & BUTTON1_RELEASED)) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                nodelay(border_win, FALSE);
+                            }
+                        } else if (event.bstate & (BUTTON1_PRESSED | BUTTON1_CLICKED | REPORT_MOUSE_POSITION)) {
+                            nodelay(border_win, TRUE);
+                            int linha_trilho_atual = 0;
+                            if (max_scroll_y > 0 && (visible_height - 1) > 0) {
+                                linha_trilho_atual = (pad_line_pos * (visible_height - 1)) / max_scroll_y;
+                            }
+                            int linha_trilho_janela = linha_trilho_atual + offset_inicio_barra;
+                            int modo_arrasto_trilho = (linha_clique_janela == linha_trilho_janela);
+                            int linha_inicial_mouse = linha_clique_janela;
+                            int pad_line_pos_original = pad_line_pos;
+
+                            while (1) {
+                                int novo_offset = pad_line_pos;
+                                int linha_clique_barra = linha_clique_janela - offset_inicio_barra;
+
+                                if (modo_arrasto_trilho) {
+                                    int delta_mouse = linha_clique_janela - linha_inicial_mouse;
+                                    if ((visible_height - 1) > 0 && max_scroll_y > 0) {
+                                        int delta_scroll = (delta_mouse * max_scroll_y) / (visible_height - 1);
+                                        novo_offset = pad_line_pos_original + delta_scroll;
+                                    }
+                                } else {
+                                    if (linha_clique_barra >= 0 && linha_clique_barra < visible_height) {
+                                        if ((visible_height - 1) > 0 && max_scroll_y > 0) {
+                                            novo_offset = (linha_clique_barra * max_scroll_y) / (visible_height - 1);
+                                        }
+                                    }
+                                }
+
+                                if (novo_offset < 0) novo_offset = 0;
+                                if (novo_offset > max_scroll_y) novo_offset = max_scroll_y;
+
+                                if (pad_line_pos != novo_offset) {
+                                    pad_line_pos = novo_offset;
+                                    int flag = 0;
+                                    if (DARK_MODE) flag |= A_DIM | A_REVERSE;
+                                    wattron(border_win, COLOR_PAIR(28) | flag);
+                                    desenhar_scrollbar(border_win, pad_line_pos, line_count, visible_height, 1);
+                                    wattroff(border_win, COLOR_PAIR(28) | flag);
+
+                                    wnoutrefresh(border_win);
+                                    prefresh(pad, pad_line_pos, 0, i_start_y + 1, i_start_x + 3, i_start_y + i_height - 2, i_start_x + i_width - 4);
+                                    doupdate();
+                                }
+
+                                if ((event.bstate & BUTTON1_CLICKED) && !modo_arrasto_trilho) {
+                                    break;
+                                }
+                                napms(10);
+                                int ch_check = wgetch(border_win);
+                                if (ch_check == KEY_MOUSE) {
+                                    MEVENT check_event;
+                                    if (getmouse(&check_event) == OK) {
+                                        if (check_event.bstate & BUTTON1_RELEASED) {
+                                            break;
+                                        }
+                                        linha_clique_janela = check_event.y - getbegy(border_win);
+                                    }
+                                } else if (ch_check != ERR) {
+                                    ungetch(ch_check);
+                                    break;
+                                }
+                            }
+                            nodelay(border_win, FALSE);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    delwin(pad);
+    delwin(shadow_win);
+    delwin(border_win);
+
+    drag_and_drop_off();
+    touchwin(stdscr);
+    refresh();
+}

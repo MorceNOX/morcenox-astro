@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.50.0
+VERSION = 1.51.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -139,7 +139,7 @@ translate: $(POT_FILE)
 $(POT_FILE): $(SRCS)
 	@mkdir -p $(PO_DIR)
 	@echo "Atualizando modelo de tradução (POT)..."
-	xgettext --keyword=_ --language=C --from-code=UTF-8 --output=$(POT_FILE) $(SRCS)
+	xgettext --keyword=_  --keyword=N_ --language=C --from-code=UTF-8 --output=$(POT_FILE) $(SRCS)
 	@echo "Mesclando novidades nos arquivos .po..."
 	@if [ -f $(PO_DIR)/pt.po ]; then msgmerge --update $(PO_DIR)/pt.po $(POT_FILE); else msginit --no-translator --input=$(POT_FILE) --locale=pt --output=$(PO_DIR)/pt.po; fi
 	@if [ -f $(PO_DIR)/en.po ]; then msgmerge --update $(PO_DIR)/en.po $(POT_FILE); else msginit --no-translator --input=$(POT_FILE) --locale=en --output=$(PO_DIR)/en.po; fi
