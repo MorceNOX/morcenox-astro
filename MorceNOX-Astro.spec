@@ -9,7 +9,6 @@ License:        GPL-3.0-or-later
 URL:            https://github.com
 VCS:            {{{ git_dir_vcs }}}
 Source0:        {{{ git_dir_pack }}}
-ExclusiveArch:  x86_64
 
 BuildRequires:  gcc
 BuildRequires:  make
