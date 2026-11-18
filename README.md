@@ -111,9 +111,21 @@ sudo make install
 
 ## 🚀 Getting Started
 
-There are two ways to use MorceNOX™ ASTRO.
+There are three ways to use MorceNOX™ ASTRO.
 
-### 🌟 Option 1: Portable Release (Recommended)
+### 🐧 Option 1: Installation from package file (recommended)
+**A single package file to install the whole application.** This is the easiest way. You download the package and execute the command to install it.
+Currently only **.rpm** file is available, which is supported by **Fedora**, **RedHat**, **CentOS**. In the next version we can make available packages for other distros, like **Debian**, or **Arch Linux**.
+
+1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
+2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.rpm`, or something like that.
+3. Then run the installation commands:
+```bash
+sudo dnf install ncurses-devel libicu-devel shapelib-devel
+sudo dnf install MorceNOX-Astro-vX.Y.Z-linux.rpm
+```
+
+### 🌟 Option 2: Portable Release
 **No installation, no compiler, and no dependencies required.** Use this if you just want to run the app immediately (you have to install the SQLite first as demonstrated above).
 
 1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
@@ -129,7 +141,7 @@ There are two ways to use MorceNOX™ ASTRO.
    ```
 The first time you run it, the application will automatically set up your configuration and database in $HOME/.config/MorceNOX-Astro.
 
-### 🛠 Option 2: Building from Source
+### 🛠 Option 3: Building from Source
 
 Use this if you want to customize the code or are working on a custom Linux distribution.
 
