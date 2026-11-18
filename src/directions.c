@@ -4021,7 +4021,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 }
                 
                 if (eh_star) {
-                    par_cor_ativo = COLOR_PAIR(80);
+                    par_cor_ativo = COLOR_PAIR(84);
                     atributo_extra |= A_ITALIC;
                 }
 
@@ -5100,7 +5100,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 }                
                 
                 if (eh_star) {
-                    par_cor_ativo = COLOR_PAIR(80);
+                    par_cor_ativo = COLOR_PAIR(84);
                     atributo_extra |= A_ITALIC;
                 }
 

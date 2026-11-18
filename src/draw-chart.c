@@ -1732,10 +1732,10 @@ void draw_objects_at_radius(int radius_multiplier, int object_count,
                     }
                     else if (strcmp(plots[j].object_name, _("South Node")) == 0 || strcmp(plots[j].object_name, _("North Node")) == 0) {
                         if (get_house(plots[j].longitude, cusps) % 2 == 0) {
-                            attron(COLOR_PAIR(81) | A_BOLD);
+                            attron(COLOR_PAIR(85) | A_BOLD);
                         }
                         else {
-                            attron(COLOR_PAIR(82) | A_BOLD);
+                            attron(COLOR_PAIR(86) | A_BOLD);
                         }
                     }
                     
@@ -7584,10 +7584,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(78, 54, COLOR_BACK_DARK_1); // purple
         init_pair(79, 54, COLOR_BACK_DARK_2); // purple
 
-        init_pair(81, 241, COLOR_BACK_DARK_1); // grey
-        init_pair(82, 241, COLOR_BACK_DARK_2); // grey
+        init_pair(85, 241, COLOR_BACK_DARK_1); // grey
+        init_pair(86, 241, COLOR_BACK_DARK_2); // grey
 
-        init_pair(80, 135, TABLE_BKGD_DARK);
+        init_pair(84, 53, TABLE_BKGD_DARK);
 
 
         init_pair(19, COLOR_BACK_DARK_1, COLOR_BACK_DARK_1);
@@ -7706,10 +7706,10 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(78, 54, COLOR_BACK_1); // purple
         init_pair(79, 54, COLOR_BACK_2); // purple
 
-        init_pair(81, 241, COLOR_BACK_1); // grey
-        init_pair(82, 241, COLOR_BACK_2); // grey
+        init_pair(85, 241, COLOR_BACK_1); // grey
+        init_pair(86, 241, COLOR_BACK_2); // grey
 
-        init_pair(80, 135, TABLE_BKGD);
+        init_pair(84, 53, TABLE_BKGD);
 
         init_pair(19, COLOR_BACK_1, COLOR_BACK_1); // branco/cinza claro
         init_pair(20, COLOR_WHITE, COLOR_BLUE);
