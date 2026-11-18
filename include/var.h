@@ -21,6 +21,7 @@
 
 #include <sqlite3.h>
 #include <libintl.h>
+#include <stdbool.h>
 #include "zonedetect.h"
 
 #ifndef LOCALEDIR

@@ -7,11 +7,13 @@ url="https://github.com"
 license=('GPL3')
 depends=('ncurses' 'icu')
 makedepends=('gcc' 'make' 'gettext')
+options=('!debug')
 source=("MorceNOX-Astro-$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 build() {
     cd "MorceNOX-Astro-$pkgver"
+    make clean
     make PREFIX=/usr
 }
 

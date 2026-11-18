@@ -24,7 +24,6 @@
 #include <locale.h>
 #include <math.h>
 #include "draw-chart.h"
-#include "ini.h"
 #include "selections.h"
 #include "db-utils.h"
 #include "var.h"

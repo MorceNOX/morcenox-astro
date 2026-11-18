@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 14:42-0300\n"
+"POT-Creation-Date: 2026-11-17 21:44-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1103,44 +1103,44 @@ msgstr " Matriz de Aspectos com Antiscia "
 msgid " Contrantiscia Aspect Matrix Grid "
 msgstr " Matriz de Aspectos com Contrantiscia "
 
-#: src/db-utils.c:552
+#: src/db-utils.c:551
 msgid "No city found in 50km!"
 msgstr "Nenhuma cidade encontrada em 50km!"
 
-#: src/db-utils.c:552
+#: src/db-utils.c:551
 msgid "Trying 200km."
 msgstr "Tentando 200km!"
 
-#: src/db-utils.c:557
+#: src/db-utils.c:556
 msgid "No city found in 200km!"
 msgstr "Nenhuma cidade encontrada em 200km!"
 
-#: src/db-utils.c:557
+#: src/db-utils.c:556
 msgid "Trying 1000km."
 msgstr "Tentando 1000km."
 
-#: src/db-utils.c:562
+#: src/db-utils.c:561
 msgid "No city found in 1000km!"
 msgstr "Nenhuma cidade encontrada em 1000km!"
 
-#: src/db-utils.c:585 src/db-utils.c:622
+#: src/db-utils.c:584 src/db-utils.c:621
 msgid "Failed prepare statement!"
 msgstr "Falha ao preparar statement"
 
-#: src/db-utils.c:628 src/db-utils.c:633 src/db-utils.c:638 src/db-utils.c:643
-#: src/db-utils.c:648
+#: src/db-utils.c:627 src/db-utils.c:632 src/db-utils.c:637 src/db-utils.c:642
+#: src/db-utils.c:647
 msgid "Operation canceled by user!"
 msgstr "Operação cancelada pelo usuário!"
 
-#: src/db-utils.c:672
+#: src/db-utils.c:671
 msgid "Failed saving city! (Country/State not found)"
 msgstr "Falha ao salvar cidade! (País/Estado não encontrado)"
 
-#: src/db-utils.c:730
+#: src/db-utils.c:729
 msgid "City saved to RAM and Disk!"
 msgstr "Cidade salva na memória RAM e no Disco!"
 
-#: src/db-utils.c:732
+#: src/db-utils.c:731
 msgid "Failed to persist data correctly!"
 msgstr "Falha ao persistir os dados!"
 
@@ -4280,246 +4280,246 @@ msgid ""
 msgstr ""
 "Sua ativação requer conjunções explícitas ou direções primárias hostis."
 
-#: src/menu-box.c:612
+#: src/menu-box.c:615
 msgid "Location not found!"
 msgstr "Localidade não encontrada!"
 
-#: src/menu-box.c:612
+#: src/menu-box.c:615
 msgid "Do you want to search for location again?"
 msgstr "Você quer procurar pela localidade novamente?"
 
-#: src/menu-box.c:633
+#: src/menu-box.c:636
 msgid "To continue you have to enter the coordinates or restart the operation."
 msgstr ""
 "Para continuar você deve informar as coordenadas ou reiniciar a operação."
 
-#: src/menu-box.c:633
+#: src/menu-box.c:636
 msgid "Do you want to enter the coordinates of the location?"
 msgstr "Você quer digitar as coordenadas da localidade?"
 
-#: src/menu-box.c:680
+#: src/menu-box.c:683
 msgid "Timezone:"
 msgstr "Fuso-Horário:"
 
-#: src/menu-box.c:694
+#: src/menu-box.c:697
 msgid "Country not found!"
 msgstr "País não encontrado!"
 
-#: src/menu-box.c:694
+#: src/menu-box.c:697
 msgid "Please, verify the coordinates!"
 msgstr "Por favor, verifique as coordenadas!"
 
-#: src/menu-box.c:708 src/menu-box.c:778 src/menu-box.c:794 src/menu-box.c:810
+#: src/menu-box.c:711 src/menu-box.c:781 src/menu-box.c:797 src/menu-box.c:813
 msgid "Data have not been changed."
 msgstr "Os dados não foram alterados"
 
-#: src/menu-box.c:718
+#: src/menu-box.c:721
 msgid "Country:"
 msgstr "País:"
 
-#: src/menu-box.c:731
+#: src/menu-box.c:734
 msgid "State:"
 msgstr "Estado:"
 
-#: src/menu-box.c:732
+#: src/menu-box.c:735
 msgid "Elevation:"
 msgstr "Elevação:"
 
-#: src/menu-box.c:847
+#: src/menu-box.c:850
 msgid "City could not be saved!"
 msgstr "Falha ao tentar salvar cidade!"
 
-#: src/menu-box.c:847 src/menu-box.c:848 src/menu-box.c:869
+#: src/menu-box.c:850 src/menu-box.c:851 src/menu-box.c:872
 #, c-format
 msgid "Chart not saved!"
 msgstr "O mapa não foi salvo"
 
-#: src/menu-box.c:867
+#: src/menu-box.c:870
 msgid "Are you sure you want to SAVE the chart"
 msgstr "Você tem certeza que quer SALVAR o mapa"
 
-#: src/menu-box.c:914
+#: src/menu-box.c:917
 msgid "Chart not saved! (Prepare error)"
 msgstr "O mapa não foi salvo (Erro na preparação)"
 
-#: src/menu-box.c:963
+#: src/menu-box.c:966
 msgid "Chart saved!"
 msgstr "Mapa salvo!"
 
-#: src/menu-box.c:964
+#: src/menu-box.c:967
 msgid "Chart saved successfully!"
 msgstr "Mapa salvo com sucesso."
 
-#: src/menu-box.c:966
+#: src/menu-box.c:969
 msgid "Chart not saved completely!"
 msgstr "O mapa não foi completamente salvo"
 
-#: src/menu-box.c:967
+#: src/menu-box.c:970
 msgid "Failed saving chart to Disk!"
 msgstr "Falha ao salvar o mapa em disco!"
 
-#: src/menu-box.c:1011 src/menu-box.c:1457
+#: src/menu-box.c:1014 src/menu-box.c:1460
 msgid "No charts available."
 msgstr "Não há mapas disponíveis."
 
-#: src/menu-box.c:1091
+#: src/menu-box.c:1094
 msgid "Select Chart to Delete"
 msgstr "Selecionar Mapa para Excluir"
 
-#: src/menu-box.c:1393
+#: src/menu-box.c:1396
 msgid "Error deleting chart."
 msgstr "Erro ao excluir mapa."
 
-#: src/menu-box.c:1402
+#: src/menu-box.c:1405
 msgid "Chart deleted successfully."
 msgstr "Mapa excluído com sucesso."
 
-#: src/menu-box.c:1540
+#: src/menu-box.c:1543
 msgid "Select Chart to Load"
 msgstr "Selecionar Mapa para Carregar"
 
-#: src/menu-box.c:1851
+#: src/menu-box.c:1854
 msgid "Chart not found!"
 msgstr "Mapa não encontrado!"
 
-#: src/menu-box.c:2163
+#: src/menu-box.c:2166
 msgid "Location: "
 msgstr "  Cidade: "
 
-#: src/menu-box.c:2171
+#: src/menu-box.c:2174
 msgid "┃ Date/Time: "
 msgstr "┃ Data/Hora: "
 
-#: src/menu-box.c:2179
+#: src/menu-box.c:2182
 msgid "┃ Dst: "
 msgstr "┃ HDV: "
 
-#: src/menu-box.c:2183 src/selections.c:7569 src/selections.c:7719
+#: src/menu-box.c:2186 src/selections.c:7569 src/selections.c:7719
 msgid "Yes "
 msgstr "Sim "
 
-#: src/menu-box.c:2183 src/selections.c:7568 src/selections.c:7722
+#: src/menu-box.c:2186 src/selections.c:7568 src/selections.c:7722
 msgid "No  "
 msgstr "Não "
 
-#: src/menu-box.c:2183 src/selections.c:7567
+#: src/menu-box.c:2186 src/selections.c:7567
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:2187
+#: src/menu-box.c:2190
 msgid "┃ Gen: "
 msgstr "┃ Gên: "
 
-#: src/menu-box.c:2393
+#: src/menu-box.c:2396
 #, c-format
 msgid "Here And Now"
 msgstr "Aqui e Agora"
 
-#: src/menu-box.c:2757
+#: src/menu-box.c:2760
 msgid "Are you sure you want to OPEN this link?"
 msgstr "Você tem certeza que quer ABRIR este link?"
 
-#: src/menu-box.c:3023
+#: src/menu-box.c:3026
 msgid "Help file could not be loaded!"
 msgstr "O arquivo de ajuda não pôde ser carregado."
 
-#: src/menu-box.c:3027 src/menu-box.c:3245
+#: src/menu-box.c:3030 src/menu-box.c:3248
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/menu-box.c:3045
+#: src/menu-box.c:3048
 msgid "Topics file could not be loaded!"
 msgstr "O arquivo de tópicos não pôde ser carregado."
 
-#: src/menu-box.c:3049 src/menu-box.c:3246
+#: src/menu-box.c:3052 src/menu-box.c:3249
 msgid "Technical Topics"
 msgstr "Tópicos de Caráter Técnico"
 
-#: src/menu-box.c:3060
+#: src/menu-box.c:3063
 msgid "Settings unchanged!"
 msgstr "Configurações não foram modificadas!"
 
-#: src/menu-box.c:3096
+#: src/menu-box.c:3099
 msgid "Settings updated!"
 msgstr "Configurações atualizadas!"
 
-#: src/menu-box.c:3237
+#: src/menu-box.c:3240
 msgid "Quick Chart"
 msgstr "Mapa Rápido"
 
-#: src/menu-box.c:3237
+#: src/menu-box.c:3240
 msgid "View the chart for the current moment in the default city."
 msgstr "Veja o mapa para o presente momento na localidade padrão."
 
-#: src/menu-box.c:3238
+#: src/menu-box.c:3241
 msgid "New Chart"
 msgstr "Gerar um Novo Mapa"
 
-#: src/menu-box.c:3238
+#: src/menu-box.c:3241
 msgid "Set the data to load a new chart."
 msgstr "Defina os dados para criar um novo mapa."
 
-#: src/menu-box.c:3239
+#: src/menu-box.c:3242
 msgid "Load Chart"
 msgstr "Abrir um Mapa"
 
-#: src/menu-box.c:3239
+#: src/menu-box.c:3242
 msgid "Load a previously saved chart."
 msgstr "Abrir um mapa previamente salvo."
 
-#: src/menu-box.c:3240
+#: src/menu-box.c:3243
 msgid "Save the Chart"
 msgstr "Salvar o Mapa"
 
-#: src/menu-box.c:3240
+#: src/menu-box.c:3243
 msgid "Save the current chart."
 msgstr "Salvar o mapa aberto."
 
-#: src/menu-box.c:3241
+#: src/menu-box.c:3244
 msgid "Delete Chart"
 msgstr "Excluir um Mapa"
 
-#: src/menu-box.c:3241
+#: src/menu-box.c:3244
 msgid "Delete a previously saved chart."
 msgstr "Escolha um mapa previamente salvo para excluir."
 
-#: src/menu-box.c:3242
+#: src/menu-box.c:3245
 msgid "Display Chart"
 msgstr "Exibir Mapa"
 
-#: src/menu-box.c:3242
+#: src/menu-box.c:3245
 msgid "Display the current chart."
 msgstr "Exibir o mapa que está aberto."
 
-#: src/menu-box.c:3243
+#: src/menu-box.c:3246
 msgid "Change the Default Location"
 msgstr "Mudar a Localidade Padrão"
 
-#: src/menu-box.c:3243
+#: src/menu-box.c:3246
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Selecione uma nova cidade como padrão para o Mapa Rápido."
 
-#: src/menu-box.c:3244
+#: src/menu-box.c:3247
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/menu-box.c:3244
+#: src/menu-box.c:3247
 msgid "Modify the default settings."
 msgstr "Modifica as configurações padrão."
 
-#: src/menu-box.c:3245
+#: src/menu-box.c:3248
 msgid "See the help window for this application."
 msgstr "Abre a janela de ajuda deste programa."
 
-#: src/menu-box.c:3246
+#: src/menu-box.c:3249
 msgid "Some technical topics used in this program."
 msgstr "Tópicos de caráter técnico usados neste programa."
 
-#: src/menu-box.c:3247
+#: src/menu-box.c:3250
 msgid "Exit"
 msgstr "Sair"
 
-#: src/menu-box.c:3247
+#: src/menu-box.c:3250
 msgid "Exit the program."
 msgstr "Sair do programa."
 

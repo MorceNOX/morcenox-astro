@@ -34,6 +34,7 @@
 #include <regex.h>
 #include <stdio.h>
 #include <libintl.h>
+#include <wctype.h>
 
 #include "helper.h"
 #include "selections.h"

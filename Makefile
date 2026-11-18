@@ -16,13 +16,13 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.0
+VERSION = 1.52.1
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
 CFLAGS   = -Wall -Wextra -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math -Iinclude
 LDFLAGS  = 
-LIBS     = lib/libswe.a -lm -lncursesw lib/libsqlite3.a -licui18n -licuuc -licudata -lpthread -ldl
+LIBS     = lib/libswe.a -lm -lncursesw -lmenuw lib/libsqlite3.a -licui18n -licuuc -licudata -lpthread -ldl
 
 APP_NAME = MorceNOX-Astro
 
@@ -48,8 +48,10 @@ LOCALEDIR := $(PREFIX)/share/locale
 DATADIR ?= $(PREFIX)/share/$(APP_NAME)
 CFLAGS  += -DDATADIR=\"$(DATADIR)\" -DLOCALEDIR=\"$(LOCALEDIR)\"
 
-override CFLAGS += -Iinclude -DVERSION=\"$(VERSION)\" -DAPPLICATION_NAME=\"$(APP_NAME)\" \
+override CFLAGS += -Iinclude -D_DEFAULT_SOURCE -Wno-format-security \
+                   -DVERSION=\"$(VERSION)\" -DAPPLICATION_NAME=\"$(APP_NAME)\" \
                    -DDATADIR=\"$(DATADIR)\" -DLOCALEDIR=\"$(LOCALEDIR)\"
+
 
 
 # Caminhos do Usuário (Configuração e Banco de Dados no XDG)
@@ -270,9 +272,6 @@ PKGBUILD_TPL := packaging/PKGBUILD
 
 .PHONY: deb arch release-all
 
-# ==============================================================================
-# GERADOR DE PACOTE .DEB (DEBIAN / UBUNTU) VIA PODMAN
-# ==============================================================================
 deb:
 	@echo "======================================================================="
 	@echo " Gerando pacote DEB para $(APP_NAME) v$(VERSION) via Podman..."
@@ -285,14 +284,18 @@ deb:
 	@podman run --rm -v $(abspath $(DEB_TMP_DIR)):/build:Z -w /build/src docker.io/library/ubuntu:24.04 bash -c "\
 		export DEBIAN_FRONTEND=noninteractive && \
 		apt-get update -qq && \
-		apt-get install -y -qq gcc make gettext libncursesw5-dev libicu-dev dpkg-dev >/dev/null && \
+		apt-get install -y -qq apt-utils gcc make gettext libncurses-dev libicu-dev libinih-dev dpkg-dev >/dev/null && \
+		gcc -c -DSQLITE_ENABLE_ICU lib/sqlite3.c -o lib/sqlite3.o && \
+		ar rcs lib/libsqlite3.a lib/sqlite3.o && \
 		make clean && \
 		make PREFIX=/usr && \
 		make install DESTDIR=/build/pkg PREFIX=/usr && \
-		mkdir -p /build/pkg/DEBIAN && \
+		mkdir -p /build/pkg/DEBIAN debian && \
+		printf 'Source: morcenox-astro\nSection: science\nPriority: optional\nMaintainer: MorceNOX <morcenox@example.com>\n\nPackage: morcenox-astro\nArchitecture: amd64\n' > debian/control && \
 		DEPS=\$$(dpkg-shlibdeps -O /build/pkg/usr/bin/$(TARGET) | sed 's/shlibs:Depends=//') && \
 		printf 'Package: morcenox-astro\nVersion: $(VERSION)\nSection: science\nPriority: optional\nArchitecture: amd64\nDepends: %s\nMaintainer: MorceNOX <morcenox@example.com>\nDescription: Traditional Astrology calculation engine and TUI\n Terminal-based Traditional Astrology suite written in C and ncurses,\n powered by Swiss Ephemeris, ZoneDetect, and SQLite.\n' \"\$$DEPS\" > /build/pkg/DEBIAN/control && \
-		dpkg-deb --build /build/pkg /build/morcenox-astro_$(VERSION)_amd64.deb"
+		dpkg-deb --root-owner-group --build /build/pkg /build/morcenox-astro_$(VERSION)_amd64.deb && \
+		rm -rf /build/pkg /build/src"
 	@cp -f $(DEB_TMP_DIR)/morcenox-astro_$(VERSION)_amd64.deb $(PKG_DIR)/
 	@rm -rf $(DEB_TMP_DIR)
 	@echo "======================================================================="
@@ -307,7 +310,7 @@ arch:
 	@echo "======================================================================="
 	@echo " Gerando pacote Arch Linux para $(APP_NAME) v$(VERSION) via Podman..."
 	@echo "======================================================================="
-	@rm -rf $(ARCH_TMP_DIR)
+	@podman unshare rm -rf $(ARCH_TMP_DIR) 2>/dev/null || rm -rf $(ARCH_TMP_DIR)
 	@mkdir -p $(ARCH_TMP_DIR) $(PKG_DIR)
 	@tar --transform 's,^\.,$(APP_NAME)-$(VERSION),' \
 	     -czf $(ARCH_TMP_DIR)/$(APP_NAME)-$(VERSION).tar.gz \
@@ -316,12 +319,15 @@ arch:
 	     --exclude='*.o' --exclude=$(TARGET) .
 	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
 	@podman run --rm -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/library/archlinux:latest bash -c "\
-		pacman -Sy --noconfirm --needed base-devel gettext ncurses icu >/dev/null && \
+		pacman -Sy --noconfirm archlinux-keyring && \
+		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu libinih && \
+		ln -sfn /usr/include /usr/include/ncursesw && \
 		useradd -m builder && \
 		chown -R builder:builder /build && \
-		su builder -c 'makepkg -f'"
+		su builder -c 'makepkg -f' && \
+		chown -R 0:0 /build"
 	@cp -f $(ARCH_TMP_DIR)/morcenox-astro-$(VERSION)-*.pkg.tar.zst $(PKG_DIR)/
-	@rm -rf $(ARCH_TMP_DIR)
+	@podman unshare rm -rf $(ARCH_TMP_DIR) 2>/dev/null || rm -rf $(ARCH_TMP_DIR)
 	@echo "======================================================================="
 	@echo " Pacote Arch gerado com sucesso em: $(PKG_DIR)/"
 	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*.pkg.tar.zst

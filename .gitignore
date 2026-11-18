@@ -7,3 +7,8 @@ atlas/*
 astro
 build_rpm_tmp/
 *.rpm
+*.deb
+*.tar.zst
+*.bkp
+*.bak
+*.old
