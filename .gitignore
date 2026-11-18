@@ -6,3 +6,4 @@
 atlas/*
 astro
 build_rpm_tmp/
+*.rpm
