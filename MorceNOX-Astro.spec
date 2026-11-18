@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           MorceNOX-Astro
-Version:        {{{ git_dir_version }}}
+Version:        {{{ git_dir_version lead='v' }}}
 Release:        1%{?dist}
 Summary:        Traditional Astrology calculation engine and TUI powered by Swiss Ephemeris
 
@@ -9,6 +9,7 @@ License:        GPL-3.0-or-later
 URL:            https://github.com
 VCS:            {{{ git_dir_vcs }}}
 Source0:        {{{ git_dir_pack }}}
+ExclusiveArch:  x86_64
 
 BuildRequires:  gcc
 BuildRequires:  make
