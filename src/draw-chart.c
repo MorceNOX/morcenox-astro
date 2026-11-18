@@ -11437,7 +11437,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     int term_w, term_h;
     getmaxyx(stdscr, term_h, term_w);
     
-    int menu_width = 55;
+    int menu_width = 65;
     int menu_height = 15;
     int menu_start_x = (term_w - menu_width) / 2;
     int menu_start_y = (term_h - menu_height) / 2;

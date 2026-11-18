@@ -16,13 +16,27 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.2
+VERSION = 1.52.4
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
 CFLAGS   = -Wall -Wextra -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math -Iinclude
 LDFLAGS  = 
-LIBS     = lib/libswe.a -lm -lncursesw -lmenuw lib/libsqlite3.a -licui18n -licuuc -licudata -lpthread -ldl
+
+STRICT_MATH_FLAGS = -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math
+
+override CFLAGS   = -Wall -Wextra $(STRICT_MATH_FLAGS) -Iinclude
+
+
+SQLITE_SRC := vendor/sqlite/sqlite3.c
+SQLITE_OBJ := vendor/sqlite/sqlite3.o
+
+SWE_SRCS := $(wildcard vendor/swisseph/*.c)
+SWE_OBJS := $(SWE_SRCS:.c=.o)
+
+override CFLAGS += -Iinclude -Ivendor/sqlite -Ivendor/swisseph
+
+LIBS     = -lm -lncursesw -lmenuw -licui18n -licuuc -licudata -lpthread -ldl
 
 APP_NAME = MorceNOX-Astro
 
@@ -52,8 +66,6 @@ override CFLAGS += -Iinclude -D_DEFAULT_SOURCE -Wno-format-security \
                    -DVERSION=\"$(VERSION)\" -DAPPLICATION_NAME=\"$(APP_NAME)\" \
                    -DDATADIR=\"$(DATADIR)\" -DLOCALEDIR=\"$(LOCALEDIR)\"
 
-
-
 # Caminhos do Usuário (Configuração e Banco de Dados no XDG)
 CONFIG_HOME := $(HOME)/.config
 APP_CONFIG_DIR  := $(CONFIG_HOME)/$(APP_NAME)
@@ -74,13 +86,23 @@ PKG_DIR      = release_dist
 # Regra principal (padrão - apenas compila o binário localmente)
 all: $(TARGET) translate
 
-# Regra para linkar o binário final
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) $(LIBS)
+# 1. Regra específica do SQLite (sem warnings)
+vendor/sqlite/%.o: vendor/sqlite/%.c
+	$(CC) -O2 -w -DSQLITE_ENABLE_ICU -Ivendor/sqlite -c $< -o $@
 
-# Regra genérica para compilar arquivos .c em .o
+# 2. Regra específica da Swiss Ephemeris (sem warnings e compatível com GCC 14+)
+vendor/swisseph/%.o: vendor/swisseph/%.c
+	$(CC) $(STRICT_MATH_FLAGS) -w -std=gnu11 -Ivendor/swisseph -c $< -o $@
+
+# 3. Regra normal para os arquivos do seu projeto (com -Wall -Wextra)
 src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+
+# Regra para linkar o binário final
+$(TARGET): $(OBJS) $(SQLITE_OBJ) $(SWE_OBJS)
+	$(CC) $(OBJS) $(SQLITE_OBJ) $(SWE_OBJS) -o $(TARGET) $(LDFLAGS) $(LIBS)
+
 
 # Regra para criar a estrutura de diretórios e injetar o banco no $HOME do usuário
 setup-dir:
@@ -195,6 +217,9 @@ uninstall:
 clean:
 	rm -f src/*.o $(TARGET)
 
+distclean: clean
+	rm -f $(SQLITE_OBJ) $(SWE_OBJS)
+
 # Regra para resetar o banco de dados do usuário ativo
 reset-db: clean
 	@if [ -f "$(DB_FILE)" ]; then \
@@ -206,18 +231,14 @@ reset-db: clean
 
 package: all translate
 	@echo "Packaging version $(VERSION) into $(PKG_DIR)..."
-	@rm -rf $(PKG_DIR)
+	@rm -rf $(PKG_DIR)/bin $(PKG_DIR)/locale $(PKG_DIR)/assets $(PKG_DIR)/astro.sh
 	@mkdir -p $(PKG_DIR)/bin
 	@mkdir -p $(PKG_DIR)/locale
 	@mkdir -p $(PKG_DIR)/assets
-	
-	# 1. Copy the executable
+
 	@cp $(TARGET) $(PKG_DIR)/bin/
-	
-	# 3. Copy the translations
 	@cp -r locale/* $(PKG_DIR)/locale/ 2>/dev/null || true
 
-	# 4. Copy the "Assets" (GARANTINDO QUE O SQL DO BANCO VAI JUNTO PARA O ASTRO.SH MOVER)
 	@if [ -f ".env" ]; then cp .env $(PKG_DIR)/assets/ ; fi
 	@if [ -f "$(DB_SQL)" ]; then cp $(DB_SQL) $(PKG_DIR)/assets/ ; fi
 	@cp help_en.txt help_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
@@ -226,7 +247,6 @@ package: all translate
 	@if [ -d "database" ]; then cp -r database $(PKG_DIR)/assets/ ; fi
 	@mkdir -p $(PKG_DIR)/assets/export 2>/dev/null || true
 
-	# 5. Copy the Launcher script
 	@if [ -f "astro.sh" ]; then \
 		cp astro.sh $(PKG_DIR)/; \
 		chmod +x $(PKG_DIR)/astro.sh; \
@@ -234,12 +254,14 @@ package: all translate
 		echo "ERROR: astro.sh not found! Package creation failed."; exit 1; \
 	fi
 
-	# 6. Create the compressed tarball
-	tar -czf $(PACKAGE_NAME) -C $(PKG_DIR) .
-	
+	# Compacta diretamente dentro de $(PKG_DIR)/$(PACKAGE_NAME) e limpa os temporários
+	tar -czf $(PKG_DIR)/$(PACKAGE_NAME) -C $(PKG_DIR) bin locale assets astro.sh
+	@rm -rf $(PKG_DIR)/bin $(PKG_DIR)/locale $(PKG_DIR)/assets $(PKG_DIR)/astro.sh
+
 	@echo "======================================================================="
-	@echo " Package created with database blueprints: $(PACKAGE_NAME)"
+	@echo " Package created: $(PKG_DIR)/$(PACKAGE_NAME)"
 	@echo "======================================================================="
+
 
 RPM_TMP_DIR  := build_rpm_tmp
 SPEC_FILE    := packaging/$(APP_NAME).spec
@@ -272,6 +294,9 @@ PKGBUILD_TPL := packaging/PKGBUILD
 
 .PHONY: deb arch release-all
 
+# ==============================================================================
+# GERADOR DE PACOTE .DEB (DEBIAN / UBUNTU) VIA PODMAN
+# ==============================================================================
 deb:
 	@echo "======================================================================="
 	@echo " Gerando pacote DEB para $(APP_NAME) v$(VERSION) via Podman..."
@@ -280,15 +305,12 @@ deb:
 	@mkdir -p $(DEB_TMP_DIR)/src $(PKG_DIR)
 	@tar --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
 	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
-	     --exclude='*.o' --exclude=$(TARGET) -cf - . | tar -xf - -C $(DEB_TMP_DIR)/src
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) -cf - . | tar -xf - -C $(DEB_TMP_DIR)/src
 	@podman run --rm -v $(abspath $(DEB_TMP_DIR)):/build:Z -w /build/src docker.io/library/ubuntu:24.04 bash -c "\
 		export DEBIAN_FRONTEND=noninteractive && \
 		apt-get update -qq && \
-		apt-get install -y -qq apt-utils gcc make gettext libncurses-dev libicu-dev libinih-dev dpkg-dev >/dev/null && \
-		gcc -c -DSQLITE_ENABLE_ICU lib/sqlite3.c -o lib/sqlite3.o && \
-		ar rcs lib/libsqlite3.a lib/sqlite3.o && \
-		make clean && \
-		make PREFIX=/usr && \
+		apt-get install -y -qq apt-utils gcc make gettext libncurses-dev libicu-dev dpkg-dev >/dev/null && \
+		make PREFIX=/usr -j\$$(nproc) && \
 		make install DESTDIR=/build/pkg PREFIX=/usr && \
 		mkdir -p /build/pkg/DEBIAN debian && \
 		printf 'Source: morcenox-astro\nSection: science\nPriority: optional\nMaintainer: MorceNOX <morcenox@example.com>\n\nPackage: morcenox-astro\nArchitecture: amd64\n' > debian/control && \
@@ -316,11 +338,11 @@ arch:
 	     -czf $(ARCH_TMP_DIR)/$(APP_NAME)-$(VERSION).tar.gz \
 	     --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
 	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
-	     --exclude='*.o' --exclude=$(TARGET) .
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) .
 	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
 	@podman run --rm -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/library/archlinux:latest bash -c "\
 		pacman -Sy --noconfirm archlinux-keyring && \
-		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu libinih && \
+		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
 		ln -sfn /usr/include /usr/include/ncursesw && \
 		useradd -m builder && \
 		chown -R builder:builder /build && \
@@ -333,9 +355,10 @@ arch:
 	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*.pkg.tar.zst
 	@echo "======================================================================="
 
-# Gera todos os formatos de distribuição de uma só vez
-release-all: package rpm deb arch
+release-all:
+	@rm -rf $(PKG_DIR)
+	@$(MAKE) package rpm deb arch
 	@echo "======================================================================="
 	@echo " TODOS OS PACOTES DA VERSAO $(VERSION) FORAM GERADOS EM $(PKG_DIR)/:"
-	@ls -lh $(PKG_DIR)/
+	@ls -lh $(PKG_DIR)/*
 	@echo "======================================================================="
