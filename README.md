@@ -121,7 +121,7 @@ Currently only **.rpm** file is available, which is supported by **Fedora**, **R
 2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.rpm`, or something like that.
 3. Then run the installation commands:
 ```bash
-sudo dnf install ncurses-devel libicu-devel shapelib-devel
+sudo dnf install ncurses-libs libicu shapelib
 sudo dnf install MorceNOX-Astro-vX.Y.Z-linux.rpm
 ```
 
