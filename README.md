@@ -56,77 +56,44 @@ Features a stunning ASCII-art interface, real-motion animation, and deep advance
 * **Data Source:** Enhanced `countries-states-cities-database` (approx. 153k cities).
 * **Internationalization:** `libicu` (Unicode/ICU support) and `ZoneDetect` (https://github.com/BertoldVdb/ZoneDetect).
 
-## 🚀 Installation & Requirements
-
-*Note: As this is a C-based application, you will need a C compiler and the necessary development libraries installed on your system.*
-`gcc` (for building from source)
-`make` (for all running options)
-
-### Prerequisites
-Ensure you have the following libraries installed:
-
-#### Swiss Ephemeris
-
-Clone and build the Swiss Ephemeris repository (optional, but desirable):
-```
-git clone https://github.com/aloistr/swisseph.git
-
-cd swisseph
-make -j$(nproc)
-
-# copy the ephemeris files to your home directory
-cp -r ephe ~/ephe
-
-# create the environment variable
-echo "export SE_EPHE_PATH="$HOME"/ephe >> .bashrc
-```
-
-#### For Ubuntu/Debian based systems
-* `libncurses-dev`
-* `libicu-dev`
-* `libshp-dev`
-
-```
-sudo apt-get install build-essentials gcc make libncurses-dev libicu-dev libshp-dev
-```
-
-#### For Fedora/Red-Hat/CentOS
-* `ncurses-devel`
-* `libicu-devel`
-* `shapelib-devel`
-```
-sudo dnf install gcc make ncurses-devel libicu-devel shapelib-devel
-```
-
-Clone and Build the SQLite database with libicu
-```
-git clone https://github.com/sqlite/sqlite.git
-cd sqlite
-
-export CFLAGS="-DSQLITE_ENABLE_ICU -DSQLITE_ENABLE_MATH_FUNCTIONS -licui18n -licuuc -licudata"
-../configure --enable-fts5 --with-icu-config --enable-icu-collations
-make -j$(nproc)
-sudo make install
-```
-
 ## 🚀 Getting Started
 
-There are three ways to use MorceNOX™ ASTRO.
+There are three ways to install and run **MorceNOX™ ASTRO** on Linux.
 
-### 🐧 Option 1: Installation from package file (recommended)
-**A single package file to install the whole application.** This is the easiest way. You download the package and execute the command to install it.
-Currently only **.rpm** file is available, which is supported by **Fedora**, **RedHat**, **CentOS**. In the next version we can make available packages for other distros, like **Debian**, or **Arch Linux**.
+### 🐧 Option 1: Native Linux Packages (Recommended)
 
-1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
-2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.rpm`, or something like that.
-3. Then run the installation commands:
+Pre-built packages are available for the major Linux distribution families. Both **Swiss Ephemeris** and **SQLite3** (with ICU support) are statically embedded in the binary, and all required runtime libraries (`ncurses` and `libicu`) are resolved automatically by your package manager.
+
+1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page and download the package for your distribution.
+2. Install using your system's package manager:
+
+#### Fedora / RHEL / CentOS (`.rpm`)
 ```bash
-sudo dnf install ncurses-libs libicu shapelib
-sudo dnf install MorceNOX-Astro-vX.Y.Z-linux.rpm
+sudo dnf install ./MorceNOX-Astro-X.Y.Z-1.*.x86_64.rpm
 ```
 
+#### Debian / Ubuntu / Linux Mint / Pop!_OS (`.deb`)
+```bash
+sudo apt update
+sudo apt install ./morcenox-astro_X.Y.Z_amd64.deb
+```
+
+#### Arch Linux / Manjaro / EndeavourOS (`.pkg.tar.zst`)
+```bash
+sudo pacman -U ./morcenox-astro-X.Y.Z-1-x86_64.pkg.tar.zst
+```
+
+3. Launch the application from any terminal:
+```bash
+astro
+```
+> **Note:** On the very first run, `astro` automatically creates `$HOME/.config/MorceNOX-Astro`, sets up your configuration files, and initializes the SQLite city database.
+
+---
+
 ### 🌟 Option 2: Portable Release
-**No installation, no compiler, and no dependencies required.** Use this if you just want to run the app immediately (you have to install the SQLite first as demonstrated above).
+
+Use this if you prefer to run the application from a self-contained folder without system-wide installation (requires `ncurses` and `libicu` runtime libraries on the host).
 
 1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page.
 2. Download the latest `MorceNOX-Astro-vX.Y.Z-linux.tar.gz`.
@@ -135,38 +102,46 @@ sudo dnf install MorceNOX-Astro-vX.Y.Z-linux.rpm
    tar -xzvf MorceNOX-Astro-vX.Y.Z-linux.tar.gz
    ```
 4. Run the launcher:
-   ```
+   ```bash
    cd MorceNOX-Astro-vX.Y.Z-linux
    ./astro.sh
    ```
-The first time you run it, the application will automatically set up your configuration and database in $HOME/.config/MorceNOX-Astro.
+
+---
 
 ### 🛠 Option 3: Building from Source
 
-Use this if you want to customize the code or are working on a custom Linux distribution.
+Use this if you want to customize the code or build for a custom Linux setup.
 
-#### Prerequisites (Ubuntu/Debian):
-```
-sudo apt-get install build-essential libncurses-dev libicu-dev
-```
+#### Prerequisites:
+* **Fedora / RHEL:**
+  ```bash
+  sudo dnf install gcc make gettext ncurses-devel libicu-devel inih-devel
+  ```
+* **Ubuntu / Debian:**
+  ```bash
+  sudo apt-get install build-essential gettext libncurses-dev libicu-dev libinih-dev
+  ```
+* **Arch Linux:**
+  ```bash
+  sudo pacman -S base-devel gettext ncurses icu libinih
+  ```
 
-#### Build Steps:
-```
+#### Build & Install Steps:
+```bash
 # Clone the repository
 git clone https://github.com/MorceNOX/morcenox-astro.git
 cd morcenox-astro
 
-# Compile the engine
-make -j$(nproc)
+# Compile the engine and translations
+make -j\$(nproc)
 
-# Initialize your local user environment
-make setup-dir
-
-# Install to the system
+# Install to the system (default prefix: /usr/local)
 sudo make install
 ```
 
 Then run the application simply by typing: `astro`
+
 
 ## ⌨️ Usage & Navigation
 
