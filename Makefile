@@ -20,13 +20,17 @@ VERSION = 1.52.4
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
-CFLAGS   = -Wall -Wextra -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math -Iinclude
+CFLAGS   = -Iinclude
 LDFLAGS  = 
 
-STRICT_MATH_FLAGS = -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M),x86_64)
+    STRICT_MATH_FLAGS = -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math
+else
+    STRICT_MATH_FLAGS = -O0 -frounding-math -fexcess-precision=standard -fno-associative-math -fno-fast-math
+endif
 
 override CFLAGS   = -Wall -Wextra $(STRICT_MATH_FLAGS) -Iinclude
-
 
 SQLITE_SRC := vendor/sqlite/sqlite3.c
 SQLITE_OBJ := vendor/sqlite/sqlite3.o
