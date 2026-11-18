@@ -24,6 +24,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <libintl.h>
+#include <unistd.h>  // Para access() e F_OK
+
 #include "zonedetect.h"
 
 #include "var.h"
@@ -120,19 +122,35 @@ int NUM_OBJECTS = 19;
 //     textdomain("astro");
 // }
 
+// void update_interface_language() {
+//     // 1. Atualiza as variáveis de ambiente para o sistema operacional
+//     setenv("LANGUAGE", LANGUAGE, 1);
+//     setenv("LC_ALL", LANGUAGE, 1);
+//     setlocale(LC_ALL, "");
+
+//     // 2. Limpa o cache do gettext desvinculando o domínio antigo antes de registrar o novo
+//     bindtextdomain(LANGUAGE, NULL); 
+    
+//     // 3. Vincula o domínio (pt ou en) à pasta de traduções oficial
+//     bindtextdomain(LANGUAGE, LOCALEDIR); 
+//     bind_textdomain_codeset(LANGUAGE, "UTF-8");
+    
+//     // 4. Define o domínio ativo (faz o gettext buscar por pt.mo ou en.mo)
+//     textdomain(LANGUAGE);
+// }
+
 void update_interface_language() {
-    // 1. Atualiza as variáveis de ambiente para o sistema operacional
     setenv("LANGUAGE", LANGUAGE, 1);
     setenv("LC_ALL", LANGUAGE, 1);
     setlocale(LC_ALL, "");
 
-    // 2. Limpa o cache do gettext desvinculando o domínio antigo antes de registrar o novo
-    bindtextdomain(LANGUAGE, NULL); 
-    
-    // 3. Vincula o domínio (pt ou en) à pasta de traduções oficial
-    bindtextdomain(LANGUAGE, LOCALEDIR); 
+    bindtextdomain(LANGUAGE, NULL);
+
+    // Se estiver rodando da pasta de desenvolvimento (onde ./locale existe), usa ela.
+    // Caso contrário (instalado via .rpm/.deb/make install), usa o LOCALEDIR do sistema.
+    const char *active_locale_dir = (access("./locale", F_OK) == 0) ? "./locale" : LOCALEDIR;
+
+    bindtextdomain(LANGUAGE, active_locale_dir);
     bind_textdomain_codeset(LANGUAGE, "UTF-8");
-    
-    // 4. Define o domínio ativo (faz o gettext buscar por pt.mo ou en.mo)
     textdomain(LANGUAGE);
 }

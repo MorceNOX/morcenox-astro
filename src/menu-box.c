@@ -40,6 +40,11 @@
 #include "var.h"
 #include "environment.h"
 #include "zonedetect.h"
+#include <errno.h>
+#include <stdio.h>     // fopen, fread, fwrite, fclose, fseek, ftell, snprintf
+#include <stdbool.h>   // bool, true, false
+#include <sys/types.h> // Tipos de sistema para stat/mkdir
+
 
 #ifndef VERSION
 #define VERSION "0.0.0-unknown"
@@ -47,6 +52,10 @@
 
 #ifndef APPLICATION_NAME
 #define APPLICATION_NAME "MorceNOX-Astro"
+#endif
+
+#ifndef DATADIR
+#define DATADIR "/usr/share/MorceNOX-Astro"
 #endif
 
 
@@ -199,9 +208,9 @@ const char *caput_draconis_7lines[] = {
 
 const char *fortuna_7lines[] = {
     "       ",
-    " ▞▛▀▛▖ ",
-    "▐ ▝▞ ▐ ",
-    "▝▖▞▝▖▞ ",
+    " ▟▀▀▀▄ ",
+    "▐ ▀▄▀ ▌",
+    "▝▄▀ ▀▄▘",
     " ▝▀▀▀  ",
     "       ",
     "       "
@@ -326,6 +335,198 @@ const char *LOGO[] = {
     "  ░   ▒   ░  ░  ░    ░        ░░   ░ ░ ░ ░ ▒  ",
     "      ░  ░      ░              ░         ░ ░  "
 };
+
+
+
+
+
+
+// Cria diretórios recursivamente (equivalente a mkdir -p)
+static void mkdir_p(const char *dir) {
+    char tmp[512];
+    char *p = NULL;
+    size_t len;
+
+    snprintf(tmp, sizeof(tmp), "%s", dir);
+    len = strlen(tmp);
+    if (len > 0 && tmp[len - 1] == '/') {
+        tmp[len - 1] = '\0';
+    }
+    for (p = tmp + 1; *p; p++) {
+        if (*p == '/') {
+            *p = '\0';
+            mkdir(tmp, 0755);
+            *p = '/';
+        }
+    }
+    mkdir(tmp, 0755);
+}
+
+// Copia um arquivo binário ou texto se o destino ainda não existir
+static bool copy_file_if_missing(const char *src_path, const char *dst_path) {
+    if (access(dst_path, F_OK) == 0) {
+        return true; // Já existe, preserva o arquivo do usuário
+    }
+
+    FILE *src = fopen(src_path, "rb");
+    if (!src) return false;
+
+    FILE *dst = fopen(dst_path, "wb");
+    if (!dst) {
+        fclose(src);
+        return false;
+    }
+
+    char buf[8192];
+    size_t n;
+    while ((n = fread(buf, 1, sizeof(buf), src)) > 0) {
+        fwrite(buf, 1, n, dst);
+    }
+
+    fclose(src);
+    fclose(dst);
+    return true;
+}
+
+// Localiza um arquivo base procurando primeiro em DATADIR (/usr/share) e depois localmente
+static const char *resolve_asset_path(const char *rel_path, char *out_buf, size_t buf_size) {
+    snprintf(out_buf, buf_size, "%s/%s", DATADIR, rel_path);
+    if (access(out_buf, F_OK) == 0) return out_buf;
+
+    snprintf(out_buf, buf_size, "%s", rel_path);
+    if (access(out_buf, F_OK) == 0) return out_buf;
+
+    snprintf(out_buf, buf_size, "assets/%s", rel_path);
+    if (access(out_buf, F_OK) == 0) return out_buf;
+
+    return NULL;
+}
+
+// Cria e estrutura o banco SQLite executando o arquivo .sql via API C
+static void ensure_database_initialized(const char *db_path) {
+    struct stat st;
+    if (stat(db_path, &st) == 0 && st.st_size > 0) {
+        return; 
+    }
+
+    char sql_path[512];
+    if (!resolve_asset_path("astro.db.sql", sql_path, sizeof(sql_path))) {
+        fprintf(stderr, "[ERRO DB] astro.db.sql nao encontrado! DATADIR = '%s'\n", DATADIR);
+        return;
+    }
+
+    FILE *fp = fopen(sql_path, "rb");
+    if (!fp) {
+        fprintf(stderr, "[ERRO DB] Nao foi possivel abrir %s\n", sql_path);
+        return;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long fsize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    if (fsize <= 0) {
+        fclose(fp);
+        return;
+    }
+
+    char *sql_buf = (char *)malloc((size_t)fsize + 1);
+    if (!sql_buf) {
+        fclose(fp);
+        return;
+    }
+
+    size_t n = fread(sql_buf, 1, (size_t)fsize, fp);
+    sql_buf[n] = '\0';
+    fclose(fp);
+
+    // Ignora BOM UTF-8 caso o arquivo tenha sido salvo com assinatura
+    const char *sql_start = sql_buf;
+    if (n >= 3 && (unsigned char)sql_buf[0] == 0xEF &&
+                  (unsigned char)sql_buf[1] == 0xBB &&
+                  (unsigned char)sql_buf[2] == 0xBF) {
+        sql_start += 3;
+    }
+
+    sqlite3 *db = NULL;
+    if (sqlite3_open(db_path, &db) == SQLITE_OK) {
+        // Registra a collation customizada GLOBAL_SEM_ACENTO antes de rodar o .sql!
+        configurar_banco(db);
+
+        char *err_msg = NULL;
+        if (sqlite3_exec(db, sql_start, NULL, NULL, &err_msg) != SQLITE_OK) {
+            fprintf(stderr, "[ERRO SQLITE] Falha ao executar %s: %s\n", sql_path, err_msg);
+            sqlite3_free(err_msg);
+        }
+        sqlite3_close(db);
+    } else {
+        fprintf(stderr, "[ERRO SQLITE] Falha ao abrir %s: %s\n", db_path, sqlite3_errmsg(db));
+    }
+
+    free(sql_buf);
+}
+
+
+// Prepara toda a estrutura ~/.config/MorceNOX-Astro na primeira execução
+void ensure_user_environment(const char *config_dir) {
+    char sub_dir[512];
+    char src_path[512];
+    char dst_path[512];
+
+    mkdir_p(config_dir);
+
+    snprintf(sub_dir, sizeof(sub_dir), "%s/export", config_dir);
+    mkdir_p(sub_dir);
+
+    // Copia o .env padrão (procura default.env em DATADIR ou .env local)
+    snprintf(dst_path, sizeof(dst_path), "%s/.env", config_dir);
+    if (resolve_asset_path("default.env", src_path, sizeof(src_path)) ||
+        resolve_asset_path(".env", src_path, sizeof(src_path))) {
+        copy_file_if_missing(src_path, dst_path);
+    }
+
+    // Copia os arquivos de Ajuda e Tópicos Técnicos
+    const char *text_files[] = {"help_en.txt", "topics_en.txt", "help_pt.txt", "topics_pt.txt"};
+    for (int i = 0; i < 4; i++) {
+        if (resolve_asset_path(text_files[i], src_path, sizeof(src_path))) {
+            snprintf(dst_path, sizeof(dst_path), "%s/%s", config_dir, text_files[i]);
+            copy_file_if_missing(src_path, dst_path);
+        }
+    }
+
+    // Cria out_v1/ e copia timezone21.bin e country21.bin
+    snprintf(sub_dir, sizeof(sub_dir), "%s/out_v1", config_dir);
+    mkdir_p(sub_dir);
+
+    const char *zd_files[] = {"timezone21.bin", "country21.bin"};
+    for (int i = 0; i < 2; i++) {
+        char rel[256];
+        // Tenta primeiro database/out_v1/... e depois database/...
+        snprintf(rel, sizeof(rel), "database/out_v1/%s", zd_files[i]);
+        if (!resolve_asset_path(rel, src_path, sizeof(src_path))) {
+            snprintf(rel, sizeof(rel), "database/%s", zd_files[i]);
+            resolve_asset_path(rel, src_path, sizeof(src_path));
+        }
+
+        if (src_path[0] != '\0') {
+            snprintf(dst_path, sizeof(dst_path), "%s/out_v1/%s", config_dir, zd_files[i]);
+            copy_file_if_missing(src_path, dst_path);
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2899,10 +3100,32 @@ void set_options() {
 }
 
 
+// void load_env_configuration() {
+//     const char *home_dir = getenv("HOME");
+        
+//     snprintf(CONFIG_PATH, 256, "%s/%s/%s", home_dir, ".config", APPLICATION_NAME);
+
+//     char env_path[512];
+//     snprintf(env_path, sizeof(env_path), "%s/%s", CONFIG_PATH, ".env");
+
+//     load_env_file(env_path);
+
+//     DB_PATH = getenv("DB_PATH");
+//     ZD_DATABASE_TIMEZONE_PATH = getenv("ZD_DATABASE_TIMEZONE_PATH");
+//     ZD_DATABASE_COUNTRY_PATH = getenv("ZD_DATABASE_COUNTRY_PATH");
+    
+//     const char *reindex_var = getenv("REINDEX_DB");
+//     REINDEX_DB = (reindex_var[0] == '1');    
+// }
+
 void load_env_configuration() {
     const char *home_dir = getenv("HOME");
-        
+    if (!home_dir) home_dir = ".";
+
     snprintf(CONFIG_PATH, 256, "%s/%s/%s", home_dir, ".config", APPLICATION_NAME);
+
+    // 1. Cria ~/.config/MorceNOX-Astro, export/, out_v1/, ephe/ e copia .env e helps de DATADIR
+    ensure_user_environment(CONFIG_PATH);
 
     char env_path[512];
     snprintf(env_path, sizeof(env_path), "%s/%s", CONFIG_PATH, ".env");
@@ -2912,10 +3135,16 @@ void load_env_configuration() {
     DB_PATH = getenv("DB_PATH");
     ZD_DATABASE_TIMEZONE_PATH = getenv("ZD_DATABASE_TIMEZONE_PATH");
     ZD_DATABASE_COUNTRY_PATH = getenv("ZD_DATABASE_COUNTRY_PATH");
-    
+
+    // 2. Cria e estrutura o astro.db a partir de DATADIR/astro.db.sql se ainda não existir
+    if (DB_PATH && DB_PATH[0] != '\0') {
+        ensure_database_initialized(DB_PATH);
+    }
+
     const char *reindex_var = getenv("REINDEX_DB");
-    REINDEX_DB = (reindex_var[0] == '1');    
+    REINDEX_DB = (reindex_var != NULL && reindex_var[0] == '1');
 }
+
 
 
 

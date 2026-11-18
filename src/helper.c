@@ -859,33 +859,36 @@ int inicializar_swiss_ephemeris() {
     // --- TENTATIVA 1: Variável de Ambiente SE_EPHE_PATH ---
     if (env_path != NULL && strlen(env_path) > 0) {
         swe_set_ephe_path(env_path);
-        
-        if (testar_caminho_efemerides()) {
-            fprintf(stderr, "Swiss Ephemeris inicializada via SE_EPHE_PATH: %s\n", env_path);
-            return 1; 
+        if (verificar_arquivos_efemerides()) {
+            return 1;
         }
-        fprintf(stderr, "Aviso: SE_EPHE_PATH definida, mas os arquivos de efemérides são inválidos.\n");
     }
 
-    // --- TENTATIVA 2: Fallback para CONFIG_PATH/ephe ---
-    // Monta o caminho dinamicamente combinando a sua global CONFIG_PATH com a pasta 'ephe'
+    // --- TENTATIVA 2: Pasta do usuário (CONFIG_PATH/ephe) ---
     snprintf(caminho_completo, sizeof(caminho_completo), "%s/ephe", CONFIG_PATH);
-    
     swe_set_ephe_path(caminho_completo);
-    if (testar_caminho_efemerides()) {
-        fprintf(stderr, "Swiss Ephemeris inicializada via CONFIG_PATH: %s\n", caminho_completo);
+    if (verificar_arquivos_efemerides()) {
         return 1;
     }
 
-    // --- TENTATIVA 3: Último recurso (Modelo de Moshier integrado) ---
-    // Se nenhum arquivo físico (.se1) foi achado, avisamos o usuário mas NÃO paramos a aplicação.
-    // O modelo analítico de Moshier roda sem arquivos externos e mantém o programa vivo.
-    fprintf(stderr, "Alerta: Arquivos físicos de efemérides não encontrados. Usando modelo analítico de Moshier (precisão reduzida).\n");
-    
-    // Passamos uma string vazia para forçar o Moshier nativo da biblioteca
-    swe_set_ephe_path(""); 
-    return 1; 
+    // --- TENTATIVA 3: Pasta global instalada pelo pacote .rpm / .deb (DATADIR/ephe) ---
+    snprintf(caminho_completo, sizeof(caminho_completo), "%s/ephe", DATADIR);
+    swe_set_ephe_path(caminho_completo);
+    if (verificar_arquivos_efemerides()) {
+        return 1;
+    }
+
+    // --- TENTATIVA 4: Pasta local de desenvolvimento (./ephe) ---
+    swe_set_ephe_path("./ephe");
+    if (verificar_arquivos_efemerides()) {
+        return 1;
+    }
+
+    // --- TENTATIVA 5: Último recurso (Modelo analítico de Moshier) ---
+    swe_set_ephe_path("");
+    return 1;
 }
+
 
 
 int verificar_arquivos_efemerides() {

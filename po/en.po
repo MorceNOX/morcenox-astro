@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 02:49-0300\n"
+"POT-Creation-Date: 2026-11-17 14:42-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -3803,260 +3803,260 @@ msgid ""
 "Its activation requires explicit conjunctions or hostile primary directions."
 msgstr ""
 
-#: src/menu-box.c:414
+#: src/menu-box.c:615
 #, fuzzy
 msgid "Location not found!"
 msgstr "Chart not found!"
 
-#: src/menu-box.c:414
+#: src/menu-box.c:615
 #, fuzzy
 msgid "Do you want to search for location again?"
 msgstr "Enter a name for your chart (max"
 
-#: src/menu-box.c:435
+#: src/menu-box.c:636
 #, fuzzy
 msgid "To continue you have to enter the coordinates or restart the operation."
 msgstr "Enter a name for your chart (max"
 
-#: src/menu-box.c:435
+#: src/menu-box.c:636
 #, fuzzy
 msgid "Do you want to enter the coordinates of the location?"
 msgstr "Enter a name for your chart (max"
 
-#: src/menu-box.c:482
+#: src/menu-box.c:683
 #, fuzzy
 msgid "Timezone:"
 msgstr " Time "
 
-#: src/menu-box.c:496
+#: src/menu-box.c:697
 #, fuzzy
 msgid "Country not found!"
 msgstr "Chart not found!"
 
-#: src/menu-box.c:496
+#: src/menu-box.c:697
 msgid "Please, verify the coordinates!"
 msgstr ""
 
-#: src/menu-box.c:510 src/menu-box.c:580 src/menu-box.c:596 src/menu-box.c:612
+#: src/menu-box.c:711 src/menu-box.c:781 src/menu-box.c:797 src/menu-box.c:813
 msgid "Data have not been changed."
 msgstr "Data have not been changed."
 
-#: src/menu-box.c:520
+#: src/menu-box.c:721
 #, fuzzy
 msgid "Country:"
 msgstr "Country"
 
-#: src/menu-box.c:533
+#: src/menu-box.c:734
 msgid "State:"
 msgstr ""
 
-#: src/menu-box.c:534
+#: src/menu-box.c:735
 #, fuzzy
 msgid "Elevation:"
 msgstr "Location: "
 
-#: src/menu-box.c:649
+#: src/menu-box.c:850
 #, fuzzy
 msgid "City could not be saved!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:649 src/menu-box.c:650 src/menu-box.c:671
+#: src/menu-box.c:850 src/menu-box.c:851 src/menu-box.c:872
 #, c-format
 msgid "Chart not saved!"
 msgstr "Chart not saved!"
 
-#: src/menu-box.c:669
+#: src/menu-box.c:870
 msgid "Are you sure you want to SAVE the chart"
 msgstr "Are you sure you want to SAVE the chart"
 
-#: src/menu-box.c:716
+#: src/menu-box.c:917
 #, fuzzy
 msgid "Chart not saved! (Prepare error)"
 msgstr "Chart not saved!"
 
-#: src/menu-box.c:765
+#: src/menu-box.c:966
 msgid "Chart saved!"
 msgstr "Chart saved!"
 
-#: src/menu-box.c:766
+#: src/menu-box.c:967
 #, fuzzy
 msgid "Chart saved successfully!"
 msgstr "Chart deleted successfully."
 
-#: src/menu-box.c:768
+#: src/menu-box.c:969
 #, fuzzy
 msgid "Chart not saved completely!"
 msgstr "Chart not saved!"
 
-#: src/menu-box.c:769
+#: src/menu-box.c:970
 #, fuzzy
 msgid "Failed saving chart to Disk!"
 msgstr "Failed saving chart!"
 
-#: src/menu-box.c:813 src/menu-box.c:1259
+#: src/menu-box.c:1014 src/menu-box.c:1460
 msgid "No charts available."
 msgstr "No charts available."
 
-#: src/menu-box.c:893
+#: src/menu-box.c:1094
 msgid "Select Chart to Delete"
 msgstr "Select Chart to Delete"
 
-#: src/menu-box.c:1195
+#: src/menu-box.c:1396
 msgid "Error deleting chart."
 msgstr "Error deleting chart."
 
-#: src/menu-box.c:1204
+#: src/menu-box.c:1405
 msgid "Chart deleted successfully."
 msgstr "Chart deleted successfully."
 
-#: src/menu-box.c:1342
+#: src/menu-box.c:1543
 msgid "Select Chart to Load"
 msgstr "Select Chart to Load"
 
-#: src/menu-box.c:1653
+#: src/menu-box.c:1854
 msgid "Chart not found!"
 msgstr "Chart not found!"
 
-#: src/menu-box.c:1965
+#: src/menu-box.c:2166
 msgid "Location: "
 msgstr "Location: "
 
-#: src/menu-box.c:1973
+#: src/menu-box.c:2174
 msgid "┃ Date/Time: "
 msgstr "┃ Date/Time: "
 
-#: src/menu-box.c:1981
+#: src/menu-box.c:2182
 msgid "┃ Dst: "
 msgstr "┃ Dst: "
 
-#: src/menu-box.c:1985 src/selections.c:7569 src/selections.c:7719
+#: src/menu-box.c:2186 src/selections.c:7569 src/selections.c:7719
 msgid "Yes "
 msgstr "Yes "
 
-#: src/menu-box.c:1985 src/selections.c:7568 src/selections.c:7722
+#: src/menu-box.c:2186 src/selections.c:7568 src/selections.c:7722
 msgid "No  "
 msgstr "No  "
 
-#: src/menu-box.c:1985 src/selections.c:7567
+#: src/menu-box.c:2186 src/selections.c:7567
 msgid "Auto"
 msgstr "Auto"
 
-#: src/menu-box.c:1989
+#: src/menu-box.c:2190
 msgid "┃ Gen: "
 msgstr "┃ Gen: "
 
-#: src/menu-box.c:2195
+#: src/menu-box.c:2396
 #, c-format
 msgid "Here And Now"
 msgstr ""
 
-#: src/menu-box.c:2559
+#: src/menu-box.c:2760
 #, fuzzy
 msgid "Are you sure you want to OPEN this link?"
 msgstr "Are you sure you want to SAVE the chart"
 
-#: src/menu-box.c:2825
+#: src/menu-box.c:3026
 msgid "Help file could not be loaded!"
 msgstr "Help file could not be loaded."
 
-#: src/menu-box.c:2829 src/menu-box.c:3019
+#: src/menu-box.c:3030 src/menu-box.c:3248
 msgid "Help"
 msgstr "Help"
 
-#: src/menu-box.c:2847
+#: src/menu-box.c:3048
 msgid "Topics file could not be loaded!"
 msgstr "Topics file could not be loaded."
 
-#: src/menu-box.c:2851 src/menu-box.c:3020
+#: src/menu-box.c:3052 src/menu-box.c:3249
 msgid "Technical Topics"
 msgstr "Technical Topics"
 
-#: src/menu-box.c:2862
+#: src/menu-box.c:3063
 msgid "Settings unchanged!"
 msgstr "Settings unchanged!"
 
-#: src/menu-box.c:2898
+#: src/menu-box.c:3099
 msgid "Settings updated!"
 msgstr "Settings updated!"
 
-#: src/menu-box.c:3011
+#: src/menu-box.c:3240
 msgid "Quick Chart"
 msgstr "Quick Chart"
 
-#: src/menu-box.c:3011
+#: src/menu-box.c:3240
 msgid "View the chart for the current moment in the default city."
 msgstr "View the chart for the current moment in the default city."
 
-#: src/menu-box.c:3012
+#: src/menu-box.c:3241
 msgid "New Chart"
 msgstr "New Chart"
 
-#: src/menu-box.c:3012
+#: src/menu-box.c:3241
 msgid "Set the data to load a new chart."
 msgstr "Set the data to load a new chart."
 
-#: src/menu-box.c:3013
+#: src/menu-box.c:3242
 msgid "Load Chart"
 msgstr "Load Chart"
 
-#: src/menu-box.c:3013
+#: src/menu-box.c:3242
 msgid "Load a previously saved chart."
 msgstr "Load a previously saved chart."
 
-#: src/menu-box.c:3014
+#: src/menu-box.c:3243
 msgid "Save the Chart"
 msgstr "Save the Chart"
 
-#: src/menu-box.c:3014
+#: src/menu-box.c:3243
 msgid "Save the current chart."
 msgstr "Save the current chart."
 
-#: src/menu-box.c:3015
+#: src/menu-box.c:3244
 msgid "Delete Chart"
 msgstr "Delete Chart"
 
-#: src/menu-box.c:3015
+#: src/menu-box.c:3244
 msgid "Delete a previously saved chart."
 msgstr "Delete a previously saved chart."
 
-#: src/menu-box.c:3016
+#: src/menu-box.c:3245
 msgid "Display Chart"
 msgstr "Display Chart"
 
-#: src/menu-box.c:3016
+#: src/menu-box.c:3245
 msgid "Display the current chart."
 msgstr "Display the current chart."
 
-#: src/menu-box.c:3017
+#: src/menu-box.c:3246
 msgid "Change the Default Location"
 msgstr "Change the Default Location"
 
-#: src/menu-box.c:3017
+#: src/menu-box.c:3246
 msgid "Select a new city as default for the Quick Chart."
 msgstr "Select a new city as default for the Quick Chart."
 
-#: src/menu-box.c:3018
+#: src/menu-box.c:3247
 msgid "Settings"
 msgstr "Settings"
 
-#: src/menu-box.c:3018
+#: src/menu-box.c:3247
 msgid "Modify the default settings."
 msgstr "Modify the default settings."
 
-#: src/menu-box.c:3019
+#: src/menu-box.c:3248
 msgid "See the help window for this application."
 msgstr "See the help window for this application."
 
-#: src/menu-box.c:3020
+#: src/menu-box.c:3249
 #, fuzzy
 msgid "Some technical topics used in this program."
 msgstr "Technical topics used in this program."
 
-#: src/menu-box.c:3021
+#: src/menu-box.c:3250
 msgid "Exit"
 msgstr "Exit"
 
-#: src/menu-box.c:3021
+#: src/menu-box.c:3250
 msgid "Exit the program."
 msgstr "Exit the program."
 

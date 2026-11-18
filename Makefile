@@ -16,13 +16,13 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.51.0
+VERSION = 1.52.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
 CFLAGS   = -Wall -Wextra -O0 -frounding-math -fexcess-precision=standard -ffloat-store -fno-associative-math -fno-fast-math -Iinclude
-LDFLAGS  = -Llib -Wl,-rpath,lib:/usr/local/lib:'$(LIBEXECDIR)'
-LIBS     = -lm -lswe -lncursesw -lsqlite3 -licui18n -licuuc -licudata -lpthread -ldl
+LDFLAGS  = 
+LIBS     = lib/libswe.a -lm -lncursesw lib/libsqlite3.a -licui18n -licuuc -licudata -lpthread -ldl
 
 APP_NAME = MorceNOX-Astro
 
@@ -41,10 +41,16 @@ POT_FILE   = $(PO_DIR)/$(DOMAIN).pot
 
 
 # Caminhos de Instalação do Sistema
-PREFIX   ?= /usr/local
+PREFIX   ?= /usr
 BINDIR   := $(PREFIX)/bin
-LIBEXECDIR ?= $(PREFIX)/libexec/$(APP_NAME)
 LOCALEDIR := $(PREFIX)/share/locale
+
+DATADIR ?= $(PREFIX)/share/$(APP_NAME)
+CFLAGS  += -DDATADIR=\"$(DATADIR)\" -DLOCALEDIR=\"$(LOCALEDIR)\"
+
+override CFLAGS += -Iinclude -DVERSION=\"$(VERSION)\" -DAPPLICATION_NAME=\"$(APP_NAME)\" \
+                   -DDATADIR=\"$(DATADIR)\" -DLOCALEDIR=\"$(LOCALEDIR)\"
+
 
 # Caminhos do Usuário (Configuração e Banco de Dados no XDG)
 CONFIG_HOME := $(HOME)/.config
@@ -145,38 +151,39 @@ $(POT_FILE): $(SRCS)
 	@if [ -f $(PO_DIR)/en.po ]; then msgmerge --update $(PO_DIR)/en.po $(POT_FILE); else msginit --no-translator --input=$(POT_FILE) --locale=en --output=$(PO_DIR)/en.po; fi
 	@if [ -f $(PO_DIR)/es.po ]; then msgmerge --update $(PO_DIR)/es.po $(POT_FILE); else msginit --no-translator --input=$(PO_DIR)/es.po --locale=es --output=$(PO_DIR)/es.po; fi
 
-# Regra de instalação atualizada para copiar os arquivos pt.mo e en.mo fixos
 install: all
 	@echo "Instalando o executável em $(DESTDIR)$(BINDIR)..."
-	@mkdir -p $(DESTDIR)$(BINDIR)
-	@cp $(TARGET) $(DESTDIR)$(BINDIR)/
-	@chmod 755 $(DESTDIR)$(BINDIR)/$(TARGET)
-	@install -d $(DESTDIR)$(LIBEXECDIR)
-	@cp -r lib/* $(DESTDIR)$(LIBEXECDIR)/
-	
-	@echo "Instalando arquivos de tradução fixa do Gettext..."
-	@if [ -f locale/pt/LC_MESSAGES/pt.mo ]; then \
-		install -d $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES; \
-		install -m 644 locale/pt/LC_MESSAGES/pt.mo $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES/pt.mo; \
+	@install -d $(DESTDIR)$(BINDIR)
+	@install -m 755 $(TARGET) $(DESTDIR)$(BINDIR)/$(TARGET)
+
+	@echo "Instalando recursos e bases de dados em $(DESTDIR)$(DATADIR)..."
+	@install -d $(DESTDIR)$(DATADIR)
+	@if [ -f ".env" ]; then install -m 644 .env $(DESTDIR)$(DATADIR)/default.env; fi
+	@if [ -f "$(DB_SQL)" ]; then install -m 644 $(DB_SQL) $(DESTDIR)$(DATADIR)/$(DB_SQL); fi
+
+	@cp -f help_en.txt help_pt.txt topics_en.txt topics_pt.txt $(DESTDIR)$(DATADIR)/ 2>/dev/null || true
+
+	@if [ -d "ephe" ]; then \
+		cp -r ephe $(DESTDIR)$(DATADIR)/; \
 	fi
-	@if [ -f locale/en/LC_MESSAGES/en.mo ]; then \
-		install -d $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES; \
-		install -m 644 locale/en/LC_MESSAGES/en.mo $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES/en.mo; \
-	fi
-	@if [ -f locale/es/LC_MESSAGES/es.mo ]; then \
-		install -d $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES; \
-		install -m 644 locale/es/LC_MESSAGES/es.mo $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES/es.mo; \
+	@if [ -d "database" ]; then \
+		cp -r database $(DESTDIR)$(DATADIR)/; \
 	fi
 
-	@echo ""
-	@echo "======================================================================="
-	@echo " Instalação do AstroMorce concluída com sucesso!"
-	@echo "======================================================================="
+	@echo "Instalando arquivos de tradução fixa do Gettext..."
+	@for lang in pt en es; do \
+		if [ -f locale/$$lang/LC_MESSAGES/$$lang.mo ]; then \
+			install -d $(DESTDIR)$(LOCALEDIR)/$$lang/LC_MESSAGES; \
+			install -m 644 locale/$$lang/LC_MESSAGES/$$lang.mo $(DESTDIR)$(LOCALEDIR)/$$lang/LC_MESSAGES/$$lang.mo; \
+		fi; \
+	done
 
 # Regra de desinstalação limpa
 uninstall:
 	@echo "Removendo o executável de $(DESTDIR)$(BINDIR)..."
 	@rm -f $(DESTDIR)$(BINDIR)/$(TARGET)
+	@echo "Removendo recursos de $(DESTDIR)$(DATADIR)..."
+	@rm -rf $(DESTDIR)$(DATADIR)
 	@echo "Removendo arquivos de tradução..."
 	@rm -f $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES/pt.mo
 	@rm -f $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES/en.mo
@@ -199,15 +206,11 @@ package: all translate
 	@echo "Packaging version $(VERSION) into $(PKG_DIR)..."
 	@rm -rf $(PKG_DIR)
 	@mkdir -p $(PKG_DIR)/bin
-	@mkdir -p $(PKG_DIR)/lib
 	@mkdir -p $(PKG_DIR)/locale
 	@mkdir -p $(PKG_DIR)/assets
 	
 	# 1. Copy the executable
 	@cp $(TARGET) $(PKG_DIR)/bin/
-	
-	# 2. Copy the shared libraries
-	@if [ -d "lib" ]; then cp -r lib/* $(PKG_DIR)/lib/ ; fi
 	
 	# 3. Copy the translations
 	@cp -r locale/* $(PKG_DIR)/locale/ 2>/dev/null || true
@@ -234,4 +237,99 @@ package: all translate
 	
 	@echo "======================================================================="
 	@echo " Package created with database blueprints: $(PACKAGE_NAME)"
+	@echo "======================================================================="
+
+RPM_TMP_DIR  := build_rpm_tmp
+SPEC_FILE    := packaging/$(APP_NAME).spec
+
+.PHONY: rpm
+
+rpm:
+	@echo "======================================================================="
+	@echo " Gerando pacote RPM isolado para $(APP_NAME) v$(VERSION)..."
+	@echo "======================================================================="
+	@rm -rf $(RPM_TMP_DIR)
+	@mkdir -p $(RPM_TMP_DIR)/{BUILD,RPMS,SOURCES,SPECS,SRPMS} $(PKG_DIR)
+	@tar --transform 's,^\.,$(APP_NAME)-$(VERSION),' \
+	     -czf $(RPM_TMP_DIR)/SOURCES/$(APP_NAME)-$(VERSION).tar.gz \
+	     --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude='*.o' --exclude=$(TARGET) .
+	@rpmbuild --define "_topdir $(abspath $(RPM_TMP_DIR))" \
+	          --define "_version $(VERSION)" \
+	          -ba $(SPEC_FILE)
+	@cp -f $(RPM_TMP_DIR)/RPMS/x86_64/$(APP_NAME)-$(VERSION)-*.rpm $(PKG_DIR)/
+	@rm -rf $(RPM_TMP_DIR)
+	@echo "======================================================================="
+	@echo " RPM gerado com sucesso em: $(PKG_DIR)/"
+	@ls -lh $(PKG_DIR)/$(APP_NAME)-$(VERSION)-*.rpm
+	@echo "======================================================================="
+
+DEB_TMP_DIR  := build_deb_tmp
+ARCH_TMP_DIR := build_arch_tmp
+PKGBUILD_TPL := packaging/PKGBUILD
+
+.PHONY: deb arch release-all
+
+# ==============================================================================
+# GERADOR DE PACOTE .DEB (DEBIAN / UBUNTU) VIA PODMAN
+# ==============================================================================
+deb:
+	@echo "======================================================================="
+	@echo " Gerando pacote DEB para $(APP_NAME) v$(VERSION) via Podman..."
+	@echo "======================================================================="
+	@rm -rf $(DEB_TMP_DIR)
+	@mkdir -p $(DEB_TMP_DIR)/src $(PKG_DIR)
+	@tar --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude=$(TARGET) -cf - . | tar -xf - -C $(DEB_TMP_DIR)/src
+	@podman run --rm -v $(abspath $(DEB_TMP_DIR)):/build:Z -w /build/src docker.io/library/ubuntu:24.04 bash -c "\
+		export DEBIAN_FRONTEND=noninteractive && \
+		apt-get update -qq && \
+		apt-get install -y -qq gcc make gettext libncursesw5-dev libicu-dev dpkg-dev >/dev/null && \
+		make clean && \
+		make PREFIX=/usr && \
+		make install DESTDIR=/build/pkg PREFIX=/usr && \
+		mkdir -p /build/pkg/DEBIAN && \
+		DEPS=\$$(dpkg-shlibdeps -O /build/pkg/usr/bin/$(TARGET) | sed 's/shlibs:Depends=//') && \
+		printf 'Package: morcenox-astro\nVersion: $(VERSION)\nSection: science\nPriority: optional\nArchitecture: amd64\nDepends: %s\nMaintainer: MorceNOX <morcenox@example.com>\nDescription: Traditional Astrology calculation engine and TUI\n Terminal-based Traditional Astrology suite written in C and ncurses,\n powered by Swiss Ephemeris, ZoneDetect, and SQLite.\n' \"\$$DEPS\" > /build/pkg/DEBIAN/control && \
+		dpkg-deb --build /build/pkg /build/morcenox-astro_$(VERSION)_amd64.deb"
+	@cp -f $(DEB_TMP_DIR)/morcenox-astro_$(VERSION)_amd64.deb $(PKG_DIR)/
+	@rm -rf $(DEB_TMP_DIR)
+	@echo "======================================================================="
+	@echo " DEB gerado com sucesso em: $(PKG_DIR)/"
+	@ls -lh $(PKG_DIR)/morcenox-astro_$(VERSION)_amd64.deb
+	@echo "======================================================================="
+
+# ==============================================================================
+# GERADOR DE PACOTE ARCH LINUX (.PKG.TAR.ZST) VIA PODMAN
+# ==============================================================================
+arch:
+	@echo "======================================================================="
+	@echo " Gerando pacote Arch Linux para $(APP_NAME) v$(VERSION) via Podman..."
+	@echo "======================================================================="
+	@rm -rf $(ARCH_TMP_DIR)
+	@mkdir -p $(ARCH_TMP_DIR) $(PKG_DIR)
+	@tar --transform 's,^\.,$(APP_NAME)-$(VERSION),' \
+	     -czf $(ARCH_TMP_DIR)/$(APP_NAME)-$(VERSION).tar.gz \
+	     --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude=$(TARGET) .
+	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
+	@podman run --rm -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/library/archlinux:latest bash -c "\
+		pacman -Sy --noconfirm --needed base-devel gettext ncurses icu >/dev/null && \
+		useradd -m builder && \
+		chown -R builder:builder /build && \
+		su builder -c 'makepkg -f'"
+	@cp -f $(ARCH_TMP_DIR)/morcenox-astro-$(VERSION)-*.pkg.tar.zst $(PKG_DIR)/
+	@rm -rf $(ARCH_TMP_DIR)
+	@echo "======================================================================="
+	@echo " Pacote Arch gerado com sucesso em: $(PKG_DIR)/"
+	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*.pkg.tar.zst
+	@echo "======================================================================="
+
+# Gera todos os formatos de distribuição de uma só vez
+release-all: package rpm deb arch
+	@echo "======================================================================="
+	@echo " TODOS OS PACOTES DA VERSAO $(VERSION) FORAM GERADOS EM $(PKG_DIR)/:"
+	@ls -lh $(PKG_DIR)/
 	@echo "======================================================================="

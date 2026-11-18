@@ -18,68 +18,36 @@
 #
 # astro.sh - Entry point for portable MorceNOX-Astro
 
+#!/usr/bin/env bash
+
 APP_NAME="MorceNOX-Astro"
-CONFIG_HOME="$HOME/.config"
+CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 APP_CONFIG_DIR="$CONFIG_HOME/$APP_NAME"
 DB_FILE="$APP_CONFIG_DIR/astro.db"
 
-# Get the directory where this script is located
-SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 
 echo "Launching $APP_NAME..."
 
-# 1. Check if the config directory exists, if not, initialize it from the package
 if [ ! -d "$APP_CONFIG_DIR" ]; then
     echo "First run detected. Initializing configuration in $APP_CONFIG_DIR..."
-    mkdir -p "$CONFIG_HOME"
-    mkdir -p "$APP_CONFIG_DIR"
-    mkdir -p "$APP_CONFIG_DIR/ephe"
-    mkdir -p "$APP_CONFIG_DIR/database"
-    mkdir -p "$APP_CONFIG_DIR/export"
-    sleep 0.1 # Garante a consolidação do diretório no disco
-    
-    # Copy Ephemeris files from the 'assets' folder in the package
-    if [ -d "$SELF_DIR/assets/ephe" ]; then
-        cp -r "$SELF_DIR/assets/ephe/"* "$APP_CONFIG_DIR/ephe/"
-    fi
+    mkdir -p "$APP_CONFIG_DIR/ephe" "$APP_CONFIG_DIR/database" "$APP_CONFIG_DIR/export"
 
-    if [ -d "$SELF_DIR/assets/database" ]; then
-        cp -r "$SELF_DIR/assets/database/"* "$APP_CONFIG_DIR/database/"
-    fi
+    [ -d "$SELF_DIR/assets/ephe" ]     && cp -r "$SELF_DIR/assets/ephe/"* "$APP_CONFIG_DIR/ephe/"
+    [ -d "$SELF_DIR/assets/database" ] && cp -r "$SELF_DIR/assets/database/"* "$APP_CONFIG_DIR/database/"
+    [ -f "$SELF_DIR/assets/.env" ]     && cp "$SELF_DIR/assets/.env" "$APP_CONFIG_DIR/"
+    cp "$SELF_DIR/assets"/help_*.txt "$APP_CONFIG_DIR/" 2>/dev/null || true
+    cp "$SELF_DIR/assets"/topics_*.txt "$APP_CONFIG_DIR/" 2>/dev/null || true
+fi
 
-    # Copy Text/Env files from the 'assets' folder (CORRIGIDO: Asteriscos fora das aspas)
-    cp "$SELF_DIR/assets/.env" "$APP_CONFIG_DIR/" 2>/dev/null
-    cp "$SELF_DIR/assets"/help_*.txt "$APP_CONFIG_DIR/" 2>/dev/null
-    cp "$SELF_DIR/assets"/topics_*.txt "$APP_CONFIG_DIR/" 2>/dev/null  # CORRIGIDO: APP_DIR para APP_CONFIG_DIR
-    
-    # NOVO: Inicialização do Banco de Dados via SQLite3 no modo portátil
-    if [ ! -f "$DB_FILE" ]; then
-        if [ -f "$SELF_DIR/assets/astro.db.sql" ]; then
-            echo "Creating and structuring database from assets..."
-            sqlite3 "$DB_FILE" < "$SELF_DIR/assets/astro.db.sql"
-        else
-            echo "Warning: astro.db.sql not found in assets. Creating an empty database."
-            sqlite3 "$DB_FILE" "VACUUM;"
-        fi
-    fi
-
-    echo "Initialization complete."
-else
-    echo "Configuration already exists in $APP_CONFIG_DIR. Using existing files."
-    
-    # GARANTIA DE SEGURANÇA: Se o usuário já abriu o app antes, mas por algum bug o banco 
-    # não foi criado ou sumiu, cria ele aqui para o binário nunca quebrar.
-    if [ ! -f "$DB_FILE" ]; then
-        echo "Database missing! Recovering..."
-        if [ -f "$SELF_DIR/assets/astro.db.sql" ]; then
-            sqlite3 "$DB_FILE" < "$SELF_DIR/assets/astro.db.sql"
-        else
-            sqlite3 "$DB_FILE" "VACUUM;"
-        fi
+if [ ! -f "$DB_FILE" ]; then
+    if command -v sqlite3 >/dev/null 2>&1 && [ -f "$SELF_DIR/assets/astro.db.sql" ]; then
+        echo "Creating and structuring database from assets..."
+        sqlite3 "$DB_FILE" < "$SELF_DIR/assets/astro.db.sql"
     fi
 fi
 
-# 2. Run the actual binary
-# We use the absolute path to the binary inside the package
-"$SELF_DIR/bin/astro"
+# Substitui o processo do script pelo binário nativo
+exec "$SELF_DIR/bin/astro" "$@"
+
 

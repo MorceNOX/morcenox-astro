@@ -5,3 +5,4 @@
 *.tar.gz
 atlas/*
 astro
+build_rpm_tmp/
