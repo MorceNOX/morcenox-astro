@@ -3,18 +3,20 @@
 
 **Your advanced, terminal-based astrological companion.**
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
-[![Platform: Terminal](https://img.shields.io/badge/Platform-Terminal-lightgrey.svg)](https://en.wikipedia.org/wiki/Terminal)
+[![License: GPL v3](https://shields.io)](https://gnu.org)
+![Language: C](https://shields.io)
+![Platform: Linux Terminal](https://shields.io)
+[![GitHub Release](https://shields.io)](https://github.com)
+[![Copr build status](https://fedorainfracloud.org)](https://fedorainfracloud.org)
 
-A Traditional Astrology application running in your terminal! Calculate your birth chart or quickly visualize the chart for the moment. See the planetary hours table and choose the best time to carry out an activity. Know your mental and temperament analysis, navigate into your past and future events in a Primary Directions table, and many more!
+A Traditional Astrology application running in your terminal! Calculate your birth chart or quickly visualize the chart for the current moment. Check the planetary hours table to choose the best time for an activity, explore your mental and temperament analysis, navigate past and future events in a Primary Directions table, and much more!
 
-MorceNOX™ ASTRO is a high-performance, beautiful and accurate astrological engine designed for the terminal environment. Built with C and the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical astrological charts, from Natal and Solar Revolution to advanced time-lord techniques like Firdaria and Primary Directions.
+**MorceNOX™ ASTRO** is a high-performance, visually striking, and accurate astrological engine designed for the terminal environment. Built in C with the Swiss Ephemeris, it provides astrologers with a powerful tool for calculating and visualizing complex classical charts—from Natal and Solar Return to advanced time-lord techniques like Firdaria and Primary Directions—alongside exact calculations for Pre-Natal Syzygy, Arabic Parts, and Fixed Stars.
 
-Features a stunning ASCII-art interface, real-motion animation, and deep advanced calculation engines.
+Features a rich ASCII-art interface, real-motion celestial animation, and offline precision.
 
 <hr>
-<img width="2560" height="1600" alt="02a-chart_wheel_example" src="https://github.com/user-attachments/assets/4ed47dbc-d74a-4d20-8923-1e53fa8c19f6" />
+<img width="2560" height="1600" alt="00-chart-wheel-v1 52 4" src="https://github.com/user-attachments/assets/db254bae-55d5-4eef-8d6e-b2e389bb62bf" />
 <hr>
 
 ## 🌌 Key Features
@@ -62,23 +64,34 @@ There are three ways to install and run **MorceNOX™ ASTRO** on Linux.
 
 ### 🐧 Option 1: Native Linux Packages (Recommended)
 
-Pre-built packages are available for the major Linux distribution families. Both **Swiss Ephemeris** and **SQLite3** (with ICU support) are statically embedded in the binary, and all required runtime libraries (`ncurses` and `libicu`) are resolved automatically by your package manager.
+#### Fedora / RHEL / CentOS — Via Fedora COPR (Automatic Updates)
+For Fedora users, we recommend enabling our official [Fedora COPR repository](https://copr.fedorainfracloud.org/coprs/morcenox/morcenox-astro/) (`x86_64` and `aarch64`) and installing the program directly via `dnf` to receive automatic updates:
+
+```bash
+sudo dnf copr enable morcenox/morcenox-astro
+sudo dnf install MorceNOX-Astro
+```
+
+---
+
+#### Manual Package Installation (`.rpm`, `.deb`, `.pkg.tar.zst`)
+Alternatively, pre-built packages are available for the major Linux distribution families. Both **Swiss Ephemeris** and **SQLite3** (with ICU support) are statically embedded in the binary, and all required runtime libraries (`ncurses` and `libicu`) are resolved automatically by your package manager.
 
 1. Go to the [Releases](https://github.com/MorceNOX/morcenox-astro/releases) page and download the package for your distribution.
 2. Install using your system's package manager:
 
-#### Fedora / RHEL / CentOS (`.rpm`)
+##### Fedora / RHEL / CentOS (`.rpm`)
 ```bash
 sudo dnf install ./MorceNOX-Astro-X.Y.Z-1.*.x86_64.rpm
 ```
 
-#### Debian / Ubuntu / Linux Mint / Pop!_OS (`.deb`)
+##### Debian / Ubuntu / Linux Mint / Pop!_OS (`.deb`)
 ```bash
 sudo apt update
 sudo apt install ./morcenox-astro_X.Y.Z_amd64.deb
 ```
 
-#### Arch Linux / Manjaro / EndeavourOS (`.pkg.tar.zst`)
+##### Arch Linux / Manjaro / EndeavourOS (`.pkg.tar.zst`)
 ```bash
 sudo pacman -U ./morcenox-astro-X.Y.Z-1-x86_64.pkg.tar.zst
 ```
@@ -116,15 +129,15 @@ Use this if you want to customize the code or build for a custom Linux setup.
 #### Prerequisites:
 * **Fedora / RHEL:**
   ```bash
-  sudo dnf install gcc make gettext ncurses-devel libicu-devel inih-devel
+  sudo dnf install gcc make gettext ncurses-devel libicu-devel
   ```
 * **Ubuntu / Debian:**
   ```bash
-  sudo apt-get install build-essential gettext libncurses-dev libicu-dev libinih-dev
+  sudo apt-get install build-essential gettext libncurses-dev libicu-dev
   ```
 * **Arch Linux:**
   ```bash
-  sudo pacman -S base-devel gettext ncurses icu libinih
+  sudo pacman -S base-devel gettext ncurses icu
   ```
 
 #### Build & Install Steps:
@@ -173,7 +186,7 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### The Chart Wheel
 <hr>
 
-<img width="2560" height="1600" alt="02a-chart_wheel_example2" src="https://github.com/user-attachments/assets/390d0ab1-ed6f-45c7-82b9-78426f2c9485" />
+<img width="2560" height="1600" alt="00-chart-wheel-v1 52 4" src="https://github.com/user-attachments/assets/0e532721-9b87-4b2a-81fb-2de8eaac64e6" />
 
 <img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/09071b05-dc95-4f32-9dd3-dfe858b83a76" />
 
