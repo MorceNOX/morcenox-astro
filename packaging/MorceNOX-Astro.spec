@@ -52,6 +52,8 @@ Core capabilities include:
 %{_bindir}/astro
 %{_datadir}/%{name}/
 %{_datadir}/locale/*/LC_MESSAGES/*.mo
+%{_datadir}/applications/morcenox-astro.desktop
+%{_datadir}/icons/hicolor/256x256/apps/morcenox-astro.png
 
 %changelog
 * Tue Nov 17 2026 Amilcar Antonio Mesquita Rizk <amilcar.rizk@gmail.com>

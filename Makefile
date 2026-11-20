@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.7
+VERSION = 1.52.8
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -208,6 +208,12 @@ install: all
 		fi; \
 	done
 
+	@install -d $(DESTDIR)$(PREFIX)/share/applications
+	@install -m 644 packaging/morcenox-astro.desktop $(DESTDIR)$(PREFIX)/share/applications/morcenox-astro.desktop
+	@install -d $(DESTDIR)$(PREFIX)/share/icons/hicolor/256x256/apps
+	@install -m 644 packaging/morcenox-astro.png $(DESTDIR)$(PREFIX)/share/icons/hicolor/256x256/apps/morcenox-astro.png
+
+
 # Regra de desinstalação limpa
 uninstall:
 	@echo "Removendo o executável de $(DESTDIR)$(BINDIR)..."
@@ -218,6 +224,10 @@ uninstall:
 	@rm -f $(DESTDIR)$(LOCALEDIR)/pt/LC_MESSAGES/pt.mo
 	@rm -f $(DESTDIR)$(LOCALEDIR)/en/LC_MESSAGES/en.mo
 	@rm -f $(DESTDIR)$(LOCALEDIR)/es/LC_MESSAGES/es.mo
+
+	@rm -f $(DESTDIR)$(PREFIX)/share/applications/morcenox-astro.desktop
+	@rm -f $(DESTDIR)$(PREFIX)/share/icons/hicolor/256x256/apps/morcenox-astro.png
+
 
 # Regra para limpar os arquivos temporários de compilação locais
 clean:

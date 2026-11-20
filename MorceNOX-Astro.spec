@@ -2,7 +2,7 @@
 
 Name:           MorceNOX-Astro
 Epoch:          1
-Version:        1.52.7
+Version:        1.52.8
 Release:        1%{?dist}
 Summary:        Traditional Astrology calculation engine and TUI powered by Swiss Ephemeris
 
@@ -51,6 +51,8 @@ Core capabilities include:
 %{_bindir}/astro
 %{_datadir}/%{name}/
 %{_datadir}/locale/*/LC_MESSAGES/*.mo
+%{_datadir}/applications/morcenox-astro.desktop
+%{_datadir}/icons/hicolor/256x256/apps/morcenox-astro.png
 
 %changelog
 * Wed Nov 18 2026 Amilcar Antonio Mesquita Rizk <morcenox@example.com>
