@@ -3,11 +3,9 @@
 
 **Your advanced, terminal-based astrological companion.**
 
-[![License: GPL v3](img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-![Language: C](img.shields.io/badge/Language-C-A8B9CC?logo=c&logoColor=white)
-![Platform: Linux Terminal](img.shields.io/badge/Platform-Linux_Terminal-FCC624?logo=linux&logoColor=black)
-[![GitHub Release](img.shields.io/github/v/release/MorceNOX/morcenox-astro?logo=github&label=Release)]([https://github.com/MorceNOX/morcenox-astro/releases)
-[![Copr build status](copr.fedorainfracloud.org/coprs/morcenox/morcenox-astro/package/MorceNOX-Astro/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/morcenox/morcenox-astro/package/MorceNOX-Astro/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Platform: Terminal](https://img.shields.io/badge/Platform-Terminal-lightgrey.svg)](https://en.wikipedia.org/wiki/Terminal)
 
 A Traditional Astrology application running in your terminal! Calculate your birth chart or quickly visualize the chart for the current moment. Check the planetary hours table to choose the best time for an activity, explore your mental and temperament analysis, navigate past and future events in a Primary Directions table, and much more!
 
