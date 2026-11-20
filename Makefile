@@ -57,7 +57,6 @@ LOCALES    = pt es en
 POT_FILE   = $(PO_DIR)/$(DOMAIN).pot
 # ==============================================================================
 
-
 # Caminhos de Instalação do Sistema
 PREFIX   ?= /usr
 BINDIR   := $(PREFIX)/bin
