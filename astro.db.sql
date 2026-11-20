@@ -203603,4 +203603,5 @@ INSERT INTO "triplicity_systems" ("id","name") VALUES (1,'Morinus'),
  (3,'Ptolemy');
 CREATE INDEX idx_chart_search ON charts (chart_name COLLATE GLOBAL_SEM_ACENTO);
 CREATE INDEX idx_city_search ON cities (country, state COLLATE GLOBAL_SEM_ACENTO, city COLLATE GLOBAL_SEM_ACENTO);
+PRAGMA user_version = 1;
 COMMIT;

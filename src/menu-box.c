@@ -32,6 +32,7 @@
 #include <ctype.h>
 #include <sys/stat.h>
 #include <libintl.h>
+#include <limits.h>
 #include "draw-chart.h"
 #include "fuso-horario.h"
 #include "db-utils.h"
@@ -337,8 +338,27 @@ const char *LOGO[] = {
 };
 
 
+// Copia um arquivo sobrescrevendo o destino (usado para o backup .bak antes de migrar)
+static bool copy_file_overwrite(const char *src_path, const char *dst_path) {
+    FILE *src = fopen(src_path, "rb");
+    if (!src) return false;
 
+    FILE *dst = fopen(dst_path, "wb");
+    if (!dst) {
+        fclose(src);
+        return false;
+    }
 
+    char buf[1024];
+    size_t n;
+    while ((n = fread(buf, 1, sizeof(buf), src)) > 0) {
+        fwrite(buf, 1, n, dst);
+    }
+
+    fclose(src);
+    fclose(dst);
+    return true;
+}
 
 
 // Cria diretórios recursivamente (equivalente a mkdir -p)
@@ -387,6 +407,38 @@ static bool copy_file_if_missing(const char *src_path, const char *dst_path) {
     fclose(dst);
     return true;
 }
+
+
+// Cria ou atualiza um link simbólico apontando para o arquivo mestre (DATADIR ou local)
+static void update_symlink_asset(const char *src_path, const char *dst_path) {
+    char abs_src[1024];
+    // Converte src_path para caminho absoluto (essencial se estiver rodando ./astro na pasta local)
+    if (realpath(src_path, abs_src) == NULL) {
+        return;
+    }
+
+    // Remove arquivo físico antigo ou link quebrado caso exista no destino
+    unlink(dst_path);
+
+    // Cria o novo link simbólico atualizado
+    if (symlink(abs_src, dst_path) != 0) {
+        // Fallback: se o sistema de arquivos não suportar symlinks, copia o arquivo
+        copy_file_overwrite(abs_src, dst_path);
+    }
+}
+
+static int get_db_user_version(sqlite3 *db) {
+    sqlite3_stmt *stmt = NULL;
+    int version = 0;
+    if (sqlite3_prepare_v2(db, "PRAGMA user_version;", -1, &stmt, NULL) == SQLITE_OK) {
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            version = sqlite3_column_int(stmt, 0);
+        }
+        sqlite3_finalize(stmt);
+    }
+    return version;
+}
+
 
 // Localiza um arquivo base procurando primeiro em DATADIR (/usr/share) e depois localmente
 static const char *resolve_asset_path(const char *rel_path, char *out_buf, size_t buf_size) {
@@ -489,7 +541,7 @@ void ensure_user_environment(const char *config_dir) {
     for (int i = 0; i < 4; i++) {
         if (resolve_asset_path(text_files[i], src_path, sizeof(src_path))) {
             snprintf(dst_path, sizeof(dst_path), "%s/%s", config_dir, text_files[i]);
-            copy_file_if_missing(src_path, dst_path);
+            update_symlink_asset(src_path, dst_path);
         }
     }
 
@@ -514,6 +566,93 @@ void ensure_user_environment(const char *config_dir) {
     }
 
 }
+
+
+// Executa migrações SQL incrementais (migrations/002.sql, 003.sql...) preservando dados do usuário
+void run_database_migrations(const char *db_path) {
+    sqlite3 *db = NULL;
+    if (sqlite3_open(db_path, &db) != SQLITE_OK) {
+        if (db) sqlite3_close(db);
+        return;
+    }
+
+    int current_ver = get_db_user_version(db);
+    if (current_ver >= CURRENT_DB_SCHEMA_VERSION) {
+        sqlite3_close(db);
+        return;
+    }
+
+    // Cria backup preventivo antes de aplicar alterações no esquema
+    char backup_path[512];
+    snprintf(backup_path, sizeof(backup_path), "%s.bak", db_path);
+    copy_file_overwrite(db_path, backup_path);
+
+    configurar_banco(db);
+
+    for (int v = current_ver + 1; v <= CURRENT_DB_SCHEMA_VERSION; v++) {
+        char rel_mig[128];
+        char full_mig_path[512];
+        snprintf(rel_mig, sizeof(rel_mig), "migrations/%03d.sql", v);
+
+        if (!resolve_asset_path(rel_mig, full_mig_path, sizeof(full_mig_path))) {
+            continue;
+        }
+
+        FILE *fp = fopen(full_mig_path, "rb");
+        if (!fp) continue;
+
+        fseek(fp, 0, SEEK_END);
+        long fsize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+        if (fsize <= 0) {
+            fclose(fp);
+            continue;
+        }
+
+        char *sql_buf = (char *)malloc((size_t)fsize + 1);
+        if (!sql_buf) {
+            fclose(fp);
+            break;
+        }
+
+        size_t n = fread(sql_buf, 1, (size_t)fsize, fp);
+        sql_buf[n] = '\0';
+        fclose(fp);
+
+        // Ignora BOM UTF-8 se houver
+        const char *sql_start = sql_buf;
+        if (n >= 3 && (unsigned char)sql_buf[0] == 0xEF &&
+                      (unsigned char)sql_buf[1] == 0xBB &&
+                      (unsigned char)sql_buf[2] == 0xBF) {
+            sql_start += 3;
+        }
+
+        char *err_msg = NULL;
+        sqlite3_exec(db, "BEGIN TRANSACTION;", NULL, NULL, NULL);
+
+        if (sqlite3_exec(db, sql_start, NULL, NULL, &err_msg) == SQLITE_OK) {
+            char pragma_cmd[128];
+            snprintf(pragma_cmd, sizeof(pragma_cmd), "PRAGMA user_version = %d;", v);
+            sqlite3_exec(db, pragma_cmd, NULL, NULL, NULL);
+            sqlite3_exec(db, "COMMIT;", NULL, NULL, NULL);
+        } else {
+            fprintf(stderr, "[MIGRATION ERROR v%d] %s\n", v, err_msg);
+            sqlite3_free(err_msg);
+            sqlite3_exec(db, "ROLLBACK;", NULL, NULL, NULL);
+            free(sql_buf);
+            break;
+        }
+
+        free(sql_buf);
+    }
+
+    sqlite3_close(db);
+}
+
+
+
+
+
 
 
 
@@ -3142,8 +3281,9 @@ void load_env_configuration() {
     // 2. Cria e estrutura o astro.db a partir de DATADIR/astro.db.sql se ainda não existir
     if (DB_PATH && DB_PATH[0] != '\0') {
         ensure_database_initialized(DB_PATH);
+        run_database_migrations(DB_PATH);
     }
-
+    
     const char *reindex_var = getenv("REINDEX_DB");
     REINDEX_DB = (reindex_var != NULL && reindex_var[0] == '1');
 }

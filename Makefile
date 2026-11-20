@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.6
+VERSION = 1.52.7
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -196,6 +196,9 @@ install: all
 	@if [ -d "database" ]; then \
 		cp -r database $(DESTDIR)$(DATADIR)/; \
 	fi
+	@if [ -d "migrations" ]; then \
+		cp -r migrations $(DESTDIR)$(DATADIR)/; \
+	fi
 
 	@echo "Instalando arquivos de tradução fixa do Gettext..."
 	@for lang in pt en es; do \
@@ -248,6 +251,8 @@ package: all translate
 	@cp topics_en.txt topics_pt.txt $(PKG_DIR)/assets/ 2>/dev/null || true
 	@if [ -d "ephe" ]; then cp -r ephe $(PKG_DIR)/assets/ ; fi
 	@if [ -d "database" ]; then cp -r database $(PKG_DIR)/assets/ ; fi
+	@if [ -d "migrations" ]; then cp -r migrations $(PKG_DIR)/assets/ ; fi
+
 	@mkdir -p $(PKG_DIR)/assets/export 2>/dev/null || true
 
 	@if [ -f "astro.sh" ]; then \

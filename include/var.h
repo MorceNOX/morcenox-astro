@@ -28,6 +28,13 @@
 #define LOCALEDIR "./locale"
 #endif
 
+
+
+#define CURRENT_DB_SCHEMA_VERSION 1
+
+
+
+
 //#define _(String) gettext(String)
 #define _(String) dgettext(LANGUAGE, String)
 #define N_(String) (String)
