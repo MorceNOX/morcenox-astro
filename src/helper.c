@@ -43,7 +43,6 @@
 #include "fixed_stars.h"
 
 
-
 void abrir_no_navegador(const char *url) {
     #if defined(_WIN32) || defined(_WIN64)
         // No Windows, o 'start' precisa do cmd. Usamos spawn ou mantemos um comando em thread.
@@ -852,72 +851,96 @@ int testar_caminho_efemerides() {
     return 1; // Sucesso: Caminho funcional
 }
 
-int inicializar_swiss_ephemeris() {
-    char caminho_completo[1024];
-    char *env_path = getenv("SE_EPHE_PATH");
 
-    // --- TENTATIVA 1: Variável de Ambiente SE_EPHE_PATH ---
-    if (env_path != NULL && strlen(env_path) > 0) {
-        swe_set_ephe_path(env_path);
+int verificar_arquivos_efemerides(void) {
+    double julian_day = 2461215.0;
+    double xx[6];
+    char serr[AS_MAXCH]; // Use a constante oficial da Swiss Ephemeris (256)
+
+    int32 return_flags = swe_calc_ut(julian_day, SE_SUN, SEFLG_SWIEPH, xx, serr);
+
+    if (return_flags < 0 || (return_flags & SEFLG_MOSEPH)) {
+        return 0;
+    }
+
+    return (return_flags & SEFLG_SWIEPH) ? 1 : 0;
+}
+
+static EpheInitStatus status_ephe_atual = EPHE_INIT_ERROR;
+static char caminho_efemerides_ativo[1024] = "";
+
+EpheInitStatus obter_status_ephemeris(void) {
+    return status_ephe_atual;
+}
+
+const char* obter_caminho_efemerides(void) {
+    return caminho_efemerides_ativo;
+}
+
+int estrelas_fixas_disponiveis(void) {
+    return (status_ephe_atual == EPHE_INIT_OK);
+}
+
+int verificar_estrelas_fixas(void) {
+    char star_name[AS_MAXCH] = "Sirius";
+    double xx[6];
+    char serr[AS_MAXCH];
+    
+    // Testa se a Swiss Ephemeris consegue localizar e ler o sefstars.txt
+    int32 ret = swe_fixstar2(star_name, 2461215.0, SEFLG_SWIEPH, xx, serr);
+    return (ret >= 0) ? 1 : 0;
+}
+
+
+EpheInitStatus inicializar_swiss_ephemeris(void) {
+    char lista_caminhos[2048] = "";
+    char candidato[1024];
+    const char *env_path = getenv("SE_EPHE_PATH");
+
+    // 1. Variável de ambiente SE_EPHE_PATH
+    if (env_path != NULL && env_path[0] != '\0') {
+        strncat(lista_caminhos, env_path, sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+    }
+
+    // 2. CONFIG_PATH/ephe
+    snprintf(candidato, sizeof(candidato), "%s/ephe", CONFIG_PATH);
+    if (access(candidato, R_OK | X_OK) == 0) {
+        if (lista_caminhos[0] != '\0') strncat(lista_caminhos, ":", sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+        strncat(lista_caminhos, candidato, sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+    }
+
+    // 3. DATADIR/ephe (/usr/share/MorceNOX-Astro/ephe)
+    snprintf(candidato, sizeof(candidato), "%s/ephe", DATADIR);
+    if (access(candidato, R_OK | X_OK) == 0) {
+        if (lista_caminhos[0] != '\0') strncat(lista_caminhos, ":", sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+        strncat(lista_caminhos, candidato, sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+    }
+
+    // 4. ./ephe
+    if (access("./ephe", R_OK | X_OK) == 0) {
+        if (lista_caminhos[0] != '\0') strncat(lista_caminhos, ":", sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+        strncat(lista_caminhos, "./ephe", sizeof(lista_caminhos) - strlen(lista_caminhos) - 1);
+    }
+
+    // Testa os caminhos encontrados
+    if (lista_caminhos[0] != '\0') {
+        swe_set_ephe_path(lista_caminhos);
         if (verificar_arquivos_efemerides()) {
-            return 1;
+            strncpy(caminho_efemerides_ativo, lista_caminhos, sizeof(caminho_efemerides_ativo) - 1);
+            caminho_efemerides_ativo[sizeof(caminho_efemerides_ativo) - 1] = '\0';
+
+            status_ephe_atual = verificar_estrelas_fixas() ? EPHE_INIT_OK : EPHE_INIT_NO_STARS;
+            return status_ephe_atual;
         }
     }
 
-    // --- TENTATIVA 2: Pasta do usuário (CONFIG_PATH/ephe) ---
-    snprintf(caminho_completo, sizeof(caminho_completo), "%s/ephe", CONFIG_PATH);
-    swe_set_ephe_path(caminho_completo);
-    if (verificar_arquivos_efemerides()) {
-        return 1;
-    }
-
-    // --- TENTATIVA 3: Pasta global instalada pelo pacote .rpm / .deb (DATADIR/ephe) ---
-    snprintf(caminho_completo, sizeof(caminho_completo), "%s/ephe", DATADIR);
-    swe_set_ephe_path(caminho_completo);
-    if (verificar_arquivos_efemerides()) {
-        return 1;
-    }
-
-    // --- TENTATIVA 4: Pasta local de desenvolvimento (./ephe) ---
-    swe_set_ephe_path("./ephe");
-    if (verificar_arquivos_efemerides()) {
-        return 1;
-    }
-
-    // --- TENTATIVA 5: Último recurso (Modelo analítico de Moshier) ---
+    // Fallback Moshier:
     swe_set_ephe_path("");
-    return 1;
+    strcpy(caminho_efemerides_ativo, "Moshier (Built-in)");
+    status_ephe_atual = EPHE_INIT_MOSHIER;
+    return status_ephe_atual;
 }
 
-
-
-int verificar_arquivos_efemerides() {
-    double julian_day = 2461215.0; 
-    int32 ipl = SE_SUN;            
-    int32 iflag = SEFLG_SWIEPH;    
-    double xx[6]; // Array obrigatório de 6 posições para evitar crash
-    char serr[256];
-
-    // Executa o cálculo teste
-    int32 return_flags = swe_calc_ut(julian_day, ipl, iflag, xx, serr);
-
-    // Cenário 1: Erro crítico na biblioteca (data impossível, etc)
-    if (return_flags < 0) {
-        return 0; 
-    }
-
-    // Cenário 2: O arquivo .se1 NÃO foi encontrado e a lib usou Moshier de fallback
-    if (return_flags & SEFLG_MOSEPH) {
-        return 0; // Alta precisão falhou!
-    } 
-    
-    // Cenário 3: O bit SEFLG_SWIEPH se manteve ativo (arquivos físicos carregados com sucesso)
-    if (return_flags & SEFLG_SWIEPH) {
-        return 1; // Alta precisão confirmada!
-    }
-
-    return 0;
-}
     
 
 int get_visual_width(const char *str) {

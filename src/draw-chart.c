@@ -7924,16 +7924,26 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
 
     if (!mapa_retorno) {
-        swe_set_ephe_path(getenv("SE_EPHE_PATH"));
-    
-        if (!inicializar_swiss_ephemeris()) {
-            fprintf(stderr, "Erro Fatal: Ephemerides não inicializada!\n");
-            fprintf(stderr, "Abandono da execucao.\n");
-            terminate_database();
+        EpheInitStatus status_ephe = inicializar_swiss_ephemeris();
+
+        if (status_ephe == EPHE_INIT_ERROR) {
             endwin();
-            exit(1); 
+            fprintf(stderr, _("Fatal Error: Ephemeris not initialized!\n"));
+            terminate_database();
+            exit(1);
+        } else if (status_ephe == EPHE_INIT_MOSHIER) {
+            show_alert_popup(
+                _("Using Moshier fallback (reduced precision, no Fixed Stars)."),
+                _("Warning: Ephemeris files (.se1) not found!")
+            );
+        } else if (status_ephe == EPHE_INIT_NO_STARS) {
+            show_alert_popup(
+                _("Fixed Stars and Parans calculations will be unavailable."),
+                _("Warning: Star catalog (sefstars.txt) not found!")
+            );
         }
     }
+
 
     // DEBUG
     // char delta_t_str[50];
@@ -10714,25 +10724,33 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     }
 
-                    SRFixedStarHit out_hits[200];
-                    memset(out_hits, 0, sizeof(out_hits));
-                                        
-                    int hit_count = compute_sr_fixed_stars(
-                        plots,
-                        NUM_OBJECTS - object_diff,
-                        stars,
-                        total_stars,
-                        natal_star_active,
-                        out_hits,
-                        natal_stars,
-                        jd_natal,
-                        lon_natal,
-                        lat_natal,
-                        elev_natal,
-                        200
-                    );
-                    
-                    display_sr_fixed_stars_table(out_hits, hit_count);
+                    if (!estrelas_fixas_disponiveis()) {
+                        show_alert_popup(
+                            _("Check if 'sefstars.txt' is inside your ephe folder."),
+                            _("Fixed Stars catalog not loaded!")
+                        );
+                        
+                    } else {
+                        SRFixedStarHit out_hits[200];
+                        memset(out_hits, 0, sizeof(out_hits));
+                                            
+                        int hit_count = compute_sr_fixed_stars(
+                            plots,
+                            NUM_OBJECTS - object_diff,
+                            stars,
+                            total_stars,
+                            natal_star_active,
+                            out_hits,
+                            natal_stars,
+                            jd_natal,
+                            lon_natal,
+                            lat_natal,
+                            elev_natal,
+                            200
+                        );
+                        
+                        display_sr_fixed_stars_table(out_hits, hit_count);
+                    }
 
                     ativar_arrasto_mouse();
                     flushinp();
@@ -10772,65 +10790,74 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
                         wnoutrefresh(stdscr);
                     }
-                    ParanEntry parans[200];
-                    memset(parans, 0, sizeof(parans));
-                
-                    int max_entries = 200;
-                    double max_orb_minutes = ORB_PARAN_EXACT;
-                    int paran_count = 0;
-
-                    paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries); 
                     
-                    bool stars_active[total_stars];
-                    memset(stars_active, 0, sizeof(stars_active));
+                    if (!estrelas_fixas_disponiveis()) {
+                        show_alert_popup(
+                            _("Check if 'sefstars.txt' is inside your ephe folder."),
+                            _("Fixed Stars catalog not loaded!")
+                        );
+                        
+                    } else {
+                        ParanEntry parans[200];
+                        memset(parans, 0, sizeof(parans));
                     
-                
-                    for (int i = 0; i < total_stars; i++) {
-                        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
-                
-                            AspectCell c = matrix_stars.grid[i][j];
-                
-                            if (c.has_aspect) {
-                                stars_active[i] = true;
-                                break;
-                            }
-                
-                        }
-                    }
-                    for (int i = 0; i < total_stars; i++) {
-                        for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
-                            
-                            DeclCell c = matrix_stars_decl.grid[i][j];
-                
-                            if (c.has_aspect) {
-                                stars_active[i] = true;
-                                break;
-                            }
-                
-                        }
-                    }
-                    for (int i = 0; i < paran_count; i++) {
-                        stars_active[parans[i].star_index] = true;        
-                    }
+                        int max_entries = 200;
+                        double max_orb_minutes = ORB_PARAN_EXACT;
+                        int paran_count = 0;
 
-                    abrir_janela_interpretacao_estrelas(
-                        plots,
-                        NUM_OBJECTS - object_diff,
-                        stars,
-                        total_stars,
-                        stars_active,
-                        parans,
-                        paran_count,
-                        lon_hyleg,
-                        nome_hyleg,
-                        glifo_hyleg,
-                        julian_day,
-                        lon,
-                        lat,
-                        elev,
-                        mapa_retorno,
-                        mapa_retorno ? natal_star_active : NULL
-                    );
+                        paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries); 
+                        
+                        bool stars_active[total_stars];
+                        memset(stars_active, 0, sizeof(stars_active));
+                        
+                    
+                        for (int i = 0; i < total_stars; i++) {
+                            for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+                    
+                                AspectCell c = matrix_stars.grid[i][j];
+                    
+                                if (c.has_aspect) {
+                                    stars_active[i] = true;
+                                    break;
+                                }
+                    
+                            }
+                        }
+                        for (int i = 0; i < total_stars; i++) {
+                            for (int j = 0; j < NUM_OBJECTS - object_diff; j++) {
+                                
+                                DeclCell c = matrix_stars_decl.grid[i][j];
+                    
+                                if (c.has_aspect) {
+                                    stars_active[i] = true;
+                                    break;
+                                }
+                    
+                            }
+                        }
+                        for (int i = 0; i < paran_count; i++) {
+                            stars_active[parans[i].star_index] = true;        
+                        }
+
+                        abrir_janela_interpretacao_estrelas(
+                            plots,
+                            NUM_OBJECTS - object_diff,
+                            stars,
+                            total_stars,
+                            stars_active,
+                            parans,
+                            paran_count,
+                            lon_hyleg,
+                            nome_hyleg,
+                            glifo_hyleg,
+                            julian_day,
+                            lon,
+                            lat,
+                            elev,
+                            mapa_retorno,
+                            mapa_retorno ? natal_star_active : NULL
+                        );
+                    }
 
                     ativar_arrasto_mouse();
                     flushinp();
@@ -11058,6 +11085,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
                         wnoutrefresh(stdscr);
                     }
+                    
                     ParanEntry parans[200];
                     memset(parans, 0, sizeof(parans));
                 
@@ -11096,15 +11124,24 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         mvprintw(LINES - 1, max_x - 37, "%s", _("⏸️  Stopped"));
                         wnoutrefresh(stdscr);
                     } 
-                    ParanEntry parans[200];
-                    memset(parans, 0, sizeof(parans));
-                
-                    int max_entries = 200;
-                    double max_orb_minutes = paran_orbis;
-                    int paran_count = 0;
+                    
+                    if (!estrelas_fixas_disponiveis()) {
+                        show_alert_popup(
+                            _("Check if 'sefstars.txt' is inside your ephe folder."),
+                            _("Fixed Stars catalog not loaded!")
+                        );
+                        
+                    } else {
+                        ParanEntry parans[200];
+                        memset(parans, 0, sizeof(parans));
+                    
+                        int max_entries = 200;
+                        double max_orb_minutes = paran_orbis;
+                        int paran_count = 0;
 
-                    paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries);
-                    display_parans_table(parans, paran_count, stars, tz_offset, max_orb_minutes);
+                        paran_count = compute_parans(julian_day, lon, lat, elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, planet_ids, 9 - object_diff, stars, total_stars, max_orb_minutes, parans, max_entries);
+                        display_parans_table(parans, paran_count, stars, tz_offset, max_orb_minutes);
+                    }
 
                     ativar_arrasto_mouse();
                     flushinp();
@@ -11119,7 +11156,15 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                         wnoutrefresh(stdscr);
                     } 
 
-                    display_heliacal_phases_table(julian_day, lon, lat, elev, tz_offset, stars, total_stars);
+                    if (!estrelas_fixas_disponiveis()) {
+                        show_alert_popup(
+                            _("Check if 'sefstars.txt' is inside your ephe folder."),
+                            _("Fixed Stars catalog not loaded!")
+                        );
+                        
+                    } else {
+                        display_heliacal_phases_table(julian_day, lon, lat, elev, tz_offset, stars, total_stars);
+                    }
 
                     ativar_arrasto_mouse();
                     flushinp();
@@ -11826,97 +11871,123 @@ void open_menu_tables(ContextoMenu *ctx) {
             if (!ctx->mapa_retorno) {
                 display_firdaria(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->regente_dia, ctx->regente_hora, ctx->tipo_san);
             } else {
-                display_heliacal_phases_table(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, ctx->tz_offset, ctx->stars, ctx->total_stars);
+                if (!estrelas_fixas_disponiveis()) {
+                    show_alert_popup(
+                        _("Check if 'sefstars.txt' is inside your ephe folder."),
+                        _("Fixed Stars catalog not loaded!")
+                    );
+                    
+                } else {
+                    display_heliacal_phases_table(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, ctx->tz_offset, ctx->stars, ctx->total_stars);
+                }
             }
             break;            
         case 23:
             if (!ctx->mapa_retorno) {
                 display_life_givers(ctx->pontos_calculados, ctx->dig, ctx->plots, &ctx->matrix, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             } else {
-                SRFixedStarHit out_hits[200];
-                memset(out_hits, 0, sizeof(out_hits));
-                                    
-                int hit_count = compute_sr_fixed_stars(
-                    ctx->plots,
-                    NUM_OBJECTS - ctx->object_diff,
-                    ctx->stars,
-                    ctx->total_stars,
-                    ctx->natal_star_active,
-                    out_hits,
-                    ctx->natal_stars,
-                    ctx->jd_natal,
-                    ctx->lon_natal,
-                    ctx->lat_natal,
-                    ctx->elev_natal,
-                    200
-                );
+                if (!estrelas_fixas_disponiveis()) {
+                    show_alert_popup(
+                        _("Check if 'sefstars.txt' is inside your ephe folder."),
+                        _("Fixed Stars catalog not loaded!")
+                    );
+                    
+                } else {
                 
-                display_sr_fixed_stars_table(out_hits, hit_count);   
+                    SRFixedStarHit out_hits[200];
+                    memset(out_hits, 0, sizeof(out_hits));
+                                        
+                    int hit_count = compute_sr_fixed_stars(
+                        ctx->plots,
+                        NUM_OBJECTS - ctx->object_diff,
+                        ctx->stars,
+                        ctx->total_stars,
+                        ctx->natal_star_active,
+                        out_hits,
+                        ctx->natal_stars,
+                        ctx->jd_natal,
+                        ctx->lon_natal,
+                        ctx->lat_natal,
+                        ctx->elev_natal,
+                        200
+                    );
+                    
+                    display_sr_fixed_stars_table(out_hits, hit_count);
+                }
             }
             break;
         case 24:
             if (!ctx->mapa_retorno) {
                 display_anareta(ctx->plots, &ctx->matrix, ctx->dig, ctx->pontos_calculados, ctx->signo_da_casa_8, ctx->week_day + 1, ctx->planetary_hour + 1, ctx->tipo_san);
             } else {
-                ParanEntry parans[200];
-                memset(parans, 0, sizeof(parans));
-            
-                int max_entries = 200;
-                double max_orb_minutes = ORB_PARAN_EXACT;
-                int paran_count = 0;
-
-                paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                if (!estrelas_fixas_disponiveis()) {
+                    show_alert_popup(
+                        _("Check if 'sefstars.txt' is inside your ephe folder."),
+                        _("Fixed Stars catalog not loaded!")
+                    );
+                    
+                } else {               
                 
-                bool stars_active[ctx->total_stars];
-                memset(stars_active, 0, sizeof(stars_active));
+                    ParanEntry parans[200];
+                    memset(parans, 0, sizeof(parans));
                 
-            
-                for (int i = 0; i < ctx->total_stars; i++) {
-                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
-            
-                        AspectCell c = ctx->matrix_stars.grid[i][j];
-            
-                        if (c.has_aspect) {
-                            stars_active[i] = true;
-                            break;
-                        }
-            
-                    }
-                }
-                for (int i = 0; i < ctx->total_stars; i++) {
-                    for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
-                        
-                        DeclCell c = ctx->matrix_stars_decl.grid[i][j];
-            
-                        if (c.has_aspect) {
-                            stars_active[i] = true;
-                            break;
-                        }
-            
-                    }
-                }
-                for (int i = 0; i < paran_count; i++) {
-                    stars_active[parans[i].star_index] = true;        
-                }
+                    int max_entries = 200;
+                    double max_orb_minutes = ORB_PARAN_EXACT;
+                    int paran_count = 0;
 
-                abrir_janela_interpretacao_estrelas(
-                    ctx->plots,
-                    NUM_OBJECTS - ctx->object_diff,
-                    ctx->stars,
-                    ctx->total_stars,
-                    stars_active,
-                    parans,
-                    paran_count,
-                    ctx->lon_hyleg,
-                    ctx->nome_hyleg,
-                    ctx->glifo_hyleg,
-                    ctx->julian_day,
-                    ctx->lon,
-                    ctx->lat,
-                    ctx->elev,
-                    ctx->mapa_retorno,
-                    ctx->mapa_retorno ? ctx->natal_star_active : NULL
-                );
+                    paran_count = compute_parans(ctx->julian_day, ctx->lon, ctx->lat, ctx->elev, SEFLG_SWIEPH | SEFLG_TOPOCTR, ctx->planet_ids, 9 - ctx->object_diff, ctx->stars, ctx->total_stars, max_orb_minutes, parans, max_entries);
+                    
+                    bool stars_active[ctx->total_stars];
+                    memset(stars_active, 0, sizeof(stars_active));
+                    
+                
+                    for (int i = 0; i < ctx->total_stars; i++) {
+                        for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+                
+                            AspectCell c = ctx->matrix_stars.grid[i][j];
+                
+                            if (c.has_aspect) {
+                                stars_active[i] = true;
+                                break;
+                            }
+                
+                        }
+                    }
+                    for (int i = 0; i < ctx->total_stars; i++) {
+                        for (int j = 0; j < NUM_OBJECTS - ctx->object_diff; j++) {
+                            
+                            DeclCell c = ctx->matrix_stars_decl.grid[i][j];
+                
+                            if (c.has_aspect) {
+                                stars_active[i] = true;
+                                break;
+                            }
+                
+                        }
+                    }
+                    for (int i = 0; i < paran_count; i++) {
+                        stars_active[parans[i].star_index] = true;        
+                    }
+
+                    abrir_janela_interpretacao_estrelas(
+                        ctx->plots,
+                        NUM_OBJECTS - ctx->object_diff,
+                        ctx->stars,
+                        ctx->total_stars,
+                        stars_active,
+                        parans,
+                        paran_count,
+                        ctx->lon_hyleg,
+                        ctx->nome_hyleg,
+                        ctx->glifo_hyleg,
+                        ctx->julian_day,
+                        ctx->lon,
+                        ctx->lat,
+                        ctx->elev,
+                        ctx->mapa_retorno,
+                        ctx->mapa_retorno ? ctx->natal_star_active : NULL
+                    );
+                }
             }
             break;
         case 25:

@@ -28,6 +28,24 @@ typedef struct {
     int type;
 } AuxOrdenacao;
 
+// Enum opcional para exibir na tela de "Sobre" ou barra de status do ncurses
+typedef enum {
+    EPHE_MODE_NONE = 0,
+    EPHE_MODE_SWIEPH,
+    EPHE_MODE_MOSHIER
+} EpheMode;
+
+typedef enum {
+    EPHE_INIT_ERROR = 0,
+    EPHE_INIT_OK = 1,          // .se1 e sefstars.txt carregados
+    EPHE_INIT_NO_STARS = 2,    // .se1 carregados, mas sefstars.txt ausente
+    EPHE_INIT_MOSHIER = 3      // Fallback Moshier (sem arquivos)
+} EpheInitStatus;
+
+EpheInitStatus inicializar_swiss_ephemeris(void);
+EpheInitStatus obter_status_ephemeris(void);
+int estrelas_fixas_disponiveis(void);
+
 void abrir_no_navegador(const char *url);
 int converter_coluna_para_indice_byte(const char *str, int col_alvo);
 char* extrair_url_da_posicao(const char *linha_texto, int col_clique);
@@ -63,7 +81,7 @@ int comparar_directions_por_idade_termo(const void *a, const void *b);
 int comparar_distantes(const void *a, const void *b);
 int comparar_doubles(const void *a, const void *b);
 int testar_caminho_efemerides();
-int inicializar_swiss_ephemeris();
+int verificar_estrelas_fixas(void);
 int verificar_arquivos_efemerides();
 int get_visual_width(const char *str);
 unsigned short get_terminal_width(void);

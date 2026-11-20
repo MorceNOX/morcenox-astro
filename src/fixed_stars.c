@@ -235,6 +235,14 @@ int calculate_traditional_stars(
     char *err_log                   // Buffer opcional para erros
 ) {
     int count = 0;
+
+    if (!estrelas_fixas_disponiveis()) {
+        show_alert_popup(
+            _("Check if 'sefstars.txt' is inside your ephe folder."),
+            _("Fixed Stars catalog not loaded!")
+        );
+        return 0;
+    }
     
     char star_buf[SE_MAX_STNAME]; // Tamanho seguro da própria Swiss Ephemeris
     char serr[AS_MAXCH];
@@ -416,6 +424,14 @@ static double tjd_to_ut_hours(double tjd) {
 }
 
 int compute_parans(double tjd_ut, double geo_lon, double geo_lat, double geo_alt, int iflag, int *planets, int planet_count, CalculatedStar *stars, int star_count, double max_orb_minutes, ParanEntry *out_list, int max_entries) {
+
+    if (!estrelas_fixas_disponiveis()) {
+        show_alert_popup(
+            _("Check if 'sefstars.txt' is inside your ephe folder."),
+            _("Fixed Stars catalog not loaded!")
+        );
+        return 0;
+    }
 
     double geopos[3] = {geo_lon, geo_lat, geo_alt};
     double tjd_start = tjd_ut - 0.5; // Janela de 24h centrada no nascimento
