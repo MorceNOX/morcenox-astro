@@ -1,5 +1,5 @@
 # MorceNOX™ ASTRO
-<img width="720" height="720" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
+<img width="580" height="580" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
 
 **Your advanced, terminal-based astrological companion.**
 
