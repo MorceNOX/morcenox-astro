@@ -2313,43 +2313,148 @@ void action_exit() {
     exit(0);
 }
 
-void call_chart_now() {
-    struct tm *local_time;
-    double lat = 0.0, lon = 0.0, elev = 0.0; // Initialized to default values
-    double tz_offset = 0.0;
-    char country[100];
-    char tz_iana[100];
+// void call_chart_now() {
+//     struct tm *local_time;
+//     double lat = 0.0, lon = 0.0, elev = 0.0; // Initialized to default values
+//     double tz_offset = 0.0;
+//     char country[100];
+//     char tz_iana[100];
 
+//     time_t raw_time;
+//     time(&raw_time);
+
+//     local_time = localtime(&raw_time);
+
+//     YY = local_time->tm_year + 1900;
+//     MM = local_time->tm_mon + 1;
+//     DD = local_time->tm_mday;
+//     HH = local_time->tm_hour;
+//     MIN = local_time->tm_min;
+//     SEC = local_time->tm_sec;
+
+//     timegm(local_time);
+
+//     sqlite3 *db;
+//     sqlite3_stmt *stmt;
+//     int rc;
+
+//     db = open_database();
+//     if (!db) {
+//         fprintf(stderr, "Failed to open database in call_chart_now\n");
+//         return;
+//     }
+    
+//     const char *sql_select = "SELECT lat, lon, elev, country, gmt_offset_secs, timezone FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
+//     rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
+
+//     if (rc != SQLITE_OK) {
+//         fprintf(stderr, "Failed to prepare statement in call_chart_now: %s\n", sqlite3_errmsg(db));
+//         sqlite3_close(db);
+//         return;
+//     }
+
+//     char city[100];
+//     snprintf(city, sizeof(city), "%s", DEFAULT_CITY);
+
+//     sqlite3_bind_text(stmt, 1, DEFAULT_COUNTRY, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 2, DEFAULT_STATE, -1, SQLITE_STATIC);
+//     sqlite3_bind_text(stmt, 3, city, -1, SQLITE_STATIC);
+
+//     int found = 0;
+//     while (sqlite3_step(stmt) == SQLITE_ROW) {
+//         lat = sqlite3_column_double(stmt, 0);
+//         lon = sqlite3_column_double(stmt, 1);
+//         elev = sqlite3_column_double(stmt, 2);
+//         snprintf(country, sizeof(country), "%s", sqlite3_column_text(stmt, 3));
+//         tz_offset = sqlite3_column_double(stmt, 4) / 3600;
+//         snprintf(tz_iana, sizeof(tz_iana), "%s", sqlite3_column_text(stmt, 5));
+//         found = 1;
+//     }
+    
+//     sqlite3_finalize(stmt);
+//     close_database(db);
+
+//     if (!found) {
+//         fprintf(stderr, "Warning: City '%s' not found in database.\n", city);
+//     }
+
+//     double dst_offset = 0.0;
+//     dst_offset = (double)obter_segundos_dst_na_data(tz_iana, YY, MM, DD, HH, MIN) / 3600;        
+    
+//     TZ_OFFSET = tz_offset;
+//     DST_OFFSET = dst_offset;
+
+//     tz_offset = tz_offset + dst_offset;
+
+//     GENDER = get_default_gender();
+
+//     snprintf(COUNTRY, sizeof(COUNTRY), "%s", country);
+//     snprintf(CITY, sizeof(CITY), "%s", city);
+//     snprintf(STATE, sizeof(STATE), "%s", DEFAULT_STATE);
+//     snprintf(TZ_IANA, sizeof(TZ_IANA), "%s", tz_iana);
+
+//     snprintf(CHART_NAME, 100, _("Here And Now"));
+
+//     QUICK_CHART = true;
+
+//     chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
+// }
+
+
+
+// void call_chart() {
+//     struct tm local_time_struct;
+//     time_t raw_time;
+//     time(&raw_time);
+
+//     struct tm *temp_tm = localtime(&raw_time);
+//     local_time_struct = *temp_tm;
+
+//     local_time_struct.tm_year = YY - 1900;
+//     local_time_struct.tm_mon = MM - 1;
+//     local_time_struct.tm_mday = DD;
+//     local_time_struct.tm_hour = HH;
+//     local_time_struct.tm_min = MIN;
+//     local_time_struct.tm_sec = SEC;
+//     local_time_struct.tm_isdst = DST;
+
+//     timegm(&local_time_struct);
+
+       
+//     double dst_offset = (double)obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600; 
+//     double tz_offset = (double)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;   
+
+//     tz_offset = tz_offset + dst_offset;
+
+//     QUICK_CHART = false;
+
+//     chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
+// }
+
+void call_chart_now() {
+    struct tm city_time;
+    double lat = 0.0, lon = 0.0, elev = 0.0;
+    double tz_offset = 0.0;
+    char country[100] = "";
+    char tz_iana[100] = "";
+
+    // 1. Captura o instante atual universal (UTC), independente do fuso da máquina
     time_t raw_time;
     time(&raw_time);
+    gmtime_r(&raw_time, &city_time);
 
-    local_time = localtime(&raw_time);
-
-    YY = local_time->tm_year + 1900;
-    MM = local_time->tm_mon + 1;
-    DD = local_time->tm_mday;
-    HH = local_time->tm_hour;
-    MIN = local_time->tm_min;
-    SEC = local_time->tm_sec;
-
-    timegm(local_time);
-
-    sqlite3 *db;
-    sqlite3_stmt *stmt;
-    int rc;
-
-    db = open_database();
+    // 2. Busca as coordenadas e o fuso da DEFAULT_CITY no banco
+    sqlite3 *db = open_database();
     if (!db) {
         fprintf(stderr, "Failed to open database in call_chart_now\n");
         return;
     }
-    
-    const char *sql_select = "SELECT lat, lon, elev, country, gmt_offset_secs, timezone FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
-    rc = sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL);
 
-    if (rc != SQLITE_OK) {
+    const char *sql_select = "SELECT lat, lon, elev, country, gmt_offset_secs, timezone FROM cities WHERE country = ? AND state = ? COLLATE GLOBAL_SEM_ACENTO AND city = ? COLLATE GLOBAL_SEM_ACENTO;";
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(db, sql_select, -1, &stmt, NULL) != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement in call_chart_now: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
+        close_database(db);
         return;
     }
 
@@ -2362,15 +2467,15 @@ void call_chart_now() {
 
     int found = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
-        lat = sqlite3_column_double(stmt, 0);
-        lon = sqlite3_column_double(stmt, 1);
+        lat  = sqlite3_column_double(stmt, 0);
+        lon  = sqlite3_column_double(stmt, 1);
         elev = sqlite3_column_double(stmt, 2);
-        snprintf(country, sizeof(country), "%s", sqlite3_column_text(stmt, 3));
-        tz_offset = sqlite3_column_double(stmt, 4) / 3600;
-        snprintf(tz_iana, sizeof(tz_iana), "%s", sqlite3_column_text(stmt, 5));
+        snprintf(country, sizeof(country), "%s", (const char *)sqlite3_column_text(stmt, 3));
+        tz_offset = sqlite3_column_double(stmt, 4) / 3600.0;
+        snprintf(tz_iana, sizeof(tz_iana), "%s", (const char *)sqlite3_column_text(stmt, 5));
         found = 1;
     }
-    
+
     sqlite3_finalize(stmt);
     close_database(db);
 
@@ -2378,13 +2483,32 @@ void call_chart_now() {
         fprintf(stderr, "Warning: City '%s' not found in database.\n", city);
     }
 
-    double dst_offset = 0.0;
-    dst_offset = (double)obter_segundos_dst_na_data(tz_iana, YY, MM, DD, HH, MIN) / 3600;        
-    
-    TZ_OFFSET = tz_offset;
-    DST_OFFSET = dst_offset;
+    // 1. Converte UTC para o horário padrão local da DEFAULT_CITY (sem DST ainda)
+    city_time.tm_sec += (int)(tz_offset * 3600.0);
+    timegm(&city_time);
 
-    tz_offset = tz_offset + dst_offset;
+    // 2. Agora city_time está no horário local da cidade! Consulta o DST nesse horário local:
+    int dst_secs = obter_segundos_dst_na_data(
+        tz_iana,
+        city_time.tm_year + 1900,
+        city_time.tm_mon + 1,
+        city_time.tm_mday,
+        city_time.tm_hour,
+        city_time.tm_min
+    );
+
+    double dst_offset = (dst_secs > -9000) ? ((double)dst_secs / 3600.0) : 0.0;
+
+    // 3. Se houver horário de verão ativo na cidade, avança o relógio local pelo DST
+    if (dst_secs > 0) {
+        city_time.tm_sec += dst_secs;
+        timegm(&city_time);
+    }
+
+    TZ_OFFSET  = tz_offset;
+    DST_OFFSET = dst_offset;
+    tz_offset  = tz_offset + dst_offset;
+
 
     GENDER = get_default_gender();
 
@@ -2392,37 +2516,32 @@ void call_chart_now() {
     snprintf(CITY, sizeof(CITY), "%s", city);
     snprintf(STATE, sizeof(STATE), "%s", DEFAULT_STATE);
     snprintf(TZ_IANA, sizeof(TZ_IANA), "%s", tz_iana);
-
     snprintf(CHART_NAME, 100, _("Here And Now"));
 
     QUICK_CHART = true;
 
-    chart(local_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
+    chart(&city_time, lat, lon, elev, tz_offset, city, country, true, 1, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
 }
 
 
 
 void call_chart() {
     struct tm local_time_struct;
-    time_t raw_time;
-    time(&raw_time);
+    memset(&local_time_struct, 0, sizeof(struct tm));
 
-    struct tm *temp_tm = localtime(&raw_time);
-    local_time_struct = *temp_tm;
-
-    local_time_struct.tm_year = YY - 1900;
-    local_time_struct.tm_mon = MM - 1;
-    local_time_struct.tm_mday = DD;
-    local_time_struct.tm_hour = HH;
-    local_time_struct.tm_min = MIN;
-    local_time_struct.tm_sec = SEC;
+    local_time_struct.tm_year  = YY - 1900;
+    local_time_struct.tm_mon   = MM - 1;
+    local_time_struct.tm_mday  = DD;
+    local_time_struct.tm_hour  = HH;
+    local_time_struct.tm_min   = MIN;
+    local_time_struct.tm_sec   = SEC;
     local_time_struct.tm_isdst = DST;
 
+    // Normaliza tm_wday e tm_yday de forma neutra (sem depender do fuso da máquina)
     timegm(&local_time_struct);
 
-       
-    double dst_offset = (double)obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600; 
-    double tz_offset = (double)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600;   
+    double dst_offset = (double)obter_segundos_dst_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600.0; 
+    double tz_offset  = (double)obter_segundos_gmt_na_data(TZ_IANA, YY, MM, DD, HH, MIN) / 3600.0;   
 
     tz_offset = tz_offset + dst_offset;
 
@@ -2430,6 +2549,7 @@ void call_chart() {
 
     chart(&local_time_struct, LAT, LON, ELEV, tz_offset, CITY, COUNTRY, false, 0, CHART_NAME, HOUSE_SYSTEM, GENDER, DARK_MODE, false, 0, 0, 0, 0.0, 0.0, NULL, NULL, NULL, -1, -1, NULL, 0.0, NULL, 0.0, NULL, NULL, 0, 0, NULL, NULL, 0.0, 0.0);
 }
+
 
 
 void load_default_values() {
