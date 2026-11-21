@@ -3039,7 +3039,7 @@ void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants,
     }
     if (row_pad % 2 == 1) row_pad++; 
 
-    mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular distance in degrees"));
+    mvwprintw(aspects_win, table_height - 2, 6, _("(*) Numbers = angular difference in degrees"));
     mvwprintw(aspects_win, table_height - 1, 2, _("Press ESC to return - [↓↑|JK] Scroll"));
 
     // 5. MOTOR DE CONTROLE E TRAVAMENTO DE SCROLL AUTOMÁTICO
