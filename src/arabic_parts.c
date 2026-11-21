@@ -139,7 +139,6 @@ double get_ra_by_symbol(char *s, int num_objects, ChartObject *obj) {
 
 
 
-// Função utilitária para rastrear a longitude de um objeto pelo ID (1 a 16)
 double get_longitude_by_symbol(char *s, int num_objects, ChartObject *obj) {
   
     for (int i = 0; i < num_objects; i++) {        
@@ -2462,7 +2461,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
 
     // --- VARIÁVEIS DE CONTROLE DA PAGINAÇÃO E SCROLL ---
     int pagina_offset = 0;
-    int max_partes_tela = (table_width - 64) / 6;
+    int max_partes_tela = (table_width - 64) / 8;
     
     int row_offset = 0; // Deslocamento vertical inicial
     // Cada planeta ocupa 2 linhas físicas na tabela. Descontamos 5 linhas de cabeçalho/rodapé.
@@ -2547,26 +2546,34 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
             char abreviacao[6];
             get_part_abbreviation(lista[pagina_offset + j].name, abreviacao);
             wattron(aspects_win, A_BOLD | COLOR_PAIR(13));
-            mvwprintw(aspects_win, 2, 14 + 6 * j, "%s", abreviacao); // Movido para X=14 para alinhar com o grid
+            mvwprintw(aspects_win, 2, 14 + 8 * j, "%s", abreviacao); // Movido para X=14 para alinhar com o grid
             wattroff(aspects_win, A_BOLD | COLOR_PAIR(13));
 
-            int degree = (int)fmod(lista[pagina_offset + j].longitude, 30);
-            const char *sign_str = get_sign((int)(lista[pagina_offset + j].longitude / 30));
-            char text[10];
-            snprintf(text, 10, "%d%s", degree, sign_str); 
+            int degree = (int)fmod(lista[pagina_offset + j].longitude, 30.0);
+            
+            double graus_decimais = lista[pagina_offset + j].longitude;
+            double fracao_grau = graus_decimais - (int)graus_decimais;    
+            double minutos_decimais = fracao_grau * 60.0;
+            
+            int min = (int)round(minutos_decimais);
 
-            mvwprintw(aspects_win, 3, 14 + 6 * j, text);
+            const char *sign_str = get_sign((int)(lista[pagina_offset + j].longitude / 30.0));
+
+            char text[12];
+            snprintf(text, 12, "%d%s%02d", degree, sign_str, min); 
+
+            mvwprintw(aspects_win, 3, 14 + 8 * j, text);
 
             // B) Desenha o Grid Estrutural desta coluna (Linhas horizontais e verticais)
             for (int i = 0; i < (linhas_nesta_tela * 2); i++) {
-                mvwprintw(aspects_win, 5 + i, 12 + 6 * j, "│");
+                mvwprintw(aspects_win, 5 + i, 12 + 8 * j, "│");
                 if (j == partes_nesta_pagina - 1) {
-                    mvwprintw(aspects_win, 5 + i, 12 + 6 * (j + 1), "│");
+                    mvwprintw(aspects_win, 5 + i, 12 + 8 * (j + 1), "│");
                 }
             }
 
             for (int i = 0; i < linhas_nesta_tela + 1; i++) {
-                mvwprintw(aspects_win, 4 + 2 * i, 12 + 6 * j, (i == 0) ? "┼─────┼" : "┼─────┼");
+                mvwprintw(aspects_win, 4 + 2 * i, 12 + 8 * j, (i == 0) ? "┼───────┼" : "┼───────┼");
             }
             
             // C) Preenche os dados astrológicos baseados no deslocamento vertical
@@ -2575,7 +2582,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                 int p_idx = mapeamento_planetas[idx_p_matriz]; // Posição real no objeto astronômico
 
                 PartAspectCell cell = m_part.grid[idx_p_matriz][j];
-                int x_pos = 14 + 6 * j;
+                int x_pos = 14 + 8 * j;
                 int y_pos_simbolo = 5 + 2 * r;
                 int y_pos_angulo  = 6 + 2 * r;
 
@@ -2598,7 +2605,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     if (!cell.is_reverse) {
                         wattron(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
                     }
-                    mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "  %s  ", cell.symbol);
+                    mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "   %s   ", cell.symbol);
                     
                     if (!cell.is_reverse) {
                         wattroff(aspects_win, COLOR_PAIR(cell.color_pair) | A_DIM);
@@ -2625,7 +2632,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     if (cell.is_reverse && DARK_MODE) {
                         wattron(aspects_win, COLOR_PAIR(35));
                     }
-                    mvwprintw(aspects_win, y_pos_angulo, x_pos - 1, "%s", ag_txt);
+                    mvwprintw(aspects_win, y_pos_angulo, x_pos - 1, " %s ", ag_txt);
                     wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
 
                     if (cell.is_reverse) {
@@ -2645,7 +2652,7 @@ void display_part_aspects(ChartObject *obj, int num_objects, ArabicPartCalculada
                     }
                 } else {
                     wattron(aspects_win, COLOR_PAIR(10) | A_DIM);
-                    mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "░░░░░");
+                    mvwprintw(aspects_win, y_pos_simbolo, x_pos - 1, "░░░░░░░");
                     wattroff(aspects_win, COLOR_PAIR(10) | A_DIM);
                 }
             }
