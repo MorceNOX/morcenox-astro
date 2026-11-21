@@ -155,6 +155,15 @@ sudo make install
 
 Then run the application simply by typing: `astro`
 
+---
+
+### 🖥️ Desktop Integration
+
+Although **MorceNOX™ ASTRO** is a terminal-based (`ncurses`) application, it includes full Freedesktop (`.desktop`) and high-resolution icon integration:
+
+* **System Packages (`.rpm`, `.deb`, Arch):** Automatically installs the application shortcut and icon into `/usr/share/applications` and `/usr/share/icons`, making **MorceNOX Astro** immediately searchable from your desktop environment's application menu (GNOME, KDE, XFCE, etc.).
+* **Portable Release (`.tar.gz`):** On the first run of `./astro.sh`, the launcher automatically registers a local desktop entry and icon inside `~/.local/share/applications` pointing to your extracted folder—no `root` privileges required.
+
 
 ## ⌨️ Usage & Navigation
 

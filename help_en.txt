@@ -279,7 +279,7 @@ Press Q or ESC to return to the main menu.
     
     • F18 (shift+F6) or 6 - Mind Analysis
     
-    • F19 (shift+F7) or 7 - Solar Revolution Chart
+    • F19 (shift+F7) or 7 - Solar Return Chart
     
         C - Radix Confrontation: Solar Return Integration
         
@@ -593,8 +593,8 @@ You can set:
    • Terms System:
      Set the terms system used by the application. You can choose between Egyptian System and Ptolemaic System.
      
-   • Star Classes:
-     Choose which stars will be calculated according to the categories selected in this option.
+   • Fixed Stars Classes:
+     Choose the fixed stars to work with by selecting their categories. So only stars which are part of the selected classes will be calculated in the chart.
     
    • Planetary orb: 
      Modify the orb value for all planets, luminaries and the lunar nodes used in aspect calculations. Note: We do not use "orb by aspect"; each planet has a fixed orb applied to all its aspects.
@@ -887,7 +887,7 @@ Here you can see the basic information of your chart.
 
 • Chart's Name;
 
-• Chart's Type (Radix or Solar Revolution);
+• Chart's Type (Radix or Solar Return);
 
 • Chart location and time;
 
@@ -1147,7 +1147,7 @@ assessing a planet's capacity and conditions to successfully carry
 out — or not — the actions assigned to it.
 
 The calculated strength of the planets is also taken into account 
-in measuring the relevance of the planets of the Solar Revolution
+in measuring the relevance of the planets of the Solar Return
 when confrontating with the Radix Chart.
 
 Use [↓↑] to scroll the table.
@@ -1433,7 +1433,7 @@ After these criteria, if the tie prevails, both (or more) elected planets are di
 
 A report showing the meaning and interpretation of the Almuten Figuris.
 
-The interpretation of the Almuten Figuris depends on the type of the chart: Radix or Solar Revolution.
+The interpretation of the Almuten Figuris depends on the type of the chart: Radix or Solar Return.
 
 
 
@@ -1568,7 +1568,7 @@ An alert will appear when the age corresponds to the anaretic return cycle.
 
 The anaretic subperiod will be indicated as a trigger zone.
 
-The Firdaria's calculated regent and sub-regent will be confrontated with the Solar Return's data automatically in the Solar Revolution module.
+The Firdaria's calculated regent and sub-regent will be confrontated with the Solar Return's data automatically in the Solar Return module.
 
 Note: When opening the Firdaria's module you will be 
       asked for the age and this age is a floating point number 

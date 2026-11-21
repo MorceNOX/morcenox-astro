@@ -40,6 +40,18 @@ if [ ! -d "$APP_CONFIG_DIR" ]; then
     cp "$SELF_DIR/assets"/topics_*.txt "$APP_CONFIG_DIR/" 2>/dev/null || true
 fi
 
+USER_APPS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+USER_ICONS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor/256x256/apps"
+
+if [ -f "$SELF_DIR/assets/morcenox-astro.desktop" ] && [ -f "$SELF_DIR/assets/morcenox-astro.png" ]; then
+    mkdir -p "$USER_APPS_DIR" "$USER_ICONS_DIR"
+    cp -f "$SELF_DIR/assets/morcenox-astro.png" "$USER_ICONS_DIR/morcenox-astro.png"
+    sed "s|^Exec=.*|Exec=\"$SELF_DIR/astro.sh\"|" "$SELF_DIR/assets/morcenox-astro.desktop" > "$USER_APPS_DIR/morcenox-astro.desktop"
+    chmod +x "$USER_APPS_DIR/morcenox-astro.desktop"
+    command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "$USER_APPS_DIR" 2>/dev/null || true
+fi
+
+
 if [ ! -f "$DB_FILE" ]; then
     if command -v sqlite3 >/dev/null 2>&1 && [ -f "$SELF_DIR/assets/astro.db.sql" ]; then
         echo "Creating and structuring database from assets..."

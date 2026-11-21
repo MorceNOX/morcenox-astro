@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.8
+VERSION = 1.52.9
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
@@ -272,10 +272,14 @@ package: all translate
 		echo "ERROR: astro.sh not found! Package creation failed."; exit 1; \
 	fi
 
+	@if [ -f "packaging/morcenox-astro.png" ]; then cp packaging/morcenox-astro.png $(PKG_DIR)/assets/ ; fi
+	@if [ -f "packaging/morcenox-astro.desktop" ]; then cp packaging/morcenox-astro.desktop $(PKG_DIR)/assets/ ; fi
+	chmod +x $(PKG_DIR)/assets/morcenox-astro.desktop
+
 	# Compacta diretamente dentro de $(PKG_DIR)/$(PACKAGE_NAME) e limpa os temporários
 	tar -czf $(PKG_DIR)/$(PACKAGE_NAME) -C $(PKG_DIR) bin locale assets astro.sh
 	@rm -rf $(PKG_DIR)/bin $(PKG_DIR)/locale $(PKG_DIR)/assets $(PKG_DIR)/astro.sh
-
+	
 	@echo "======================================================================="
 	@echo " Package created: $(PKG_DIR)/$(PACKAGE_NAME)"
 	@echo "======================================================================="
