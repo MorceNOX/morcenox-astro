@@ -79,7 +79,7 @@ jobs:
             "dnf install -y -q rpm-build gcc make gettext ncurses-devel libicu-devel && \
              rpmbuild --define '_topdir /rpmbuild' --define '_version ${{ steps.meta.outputs.VERSION }}' -ba /rpmbuild/SPECS/MorceNOX-Astro.spec"
           cp rpm_tmp/RPMS/${{ matrix.rpm_arch }}/*.rpm release_dist/
-          rm -rf rpm_tmp
+          sudo rm -rf rpm_tmp
 
       - name: 4. Build Arch Linux Package (.pkg.tar.zst) via Container
         run: |
@@ -97,7 +97,7 @@ jobs:
              useradd -m builder && chown -R builder:builder /build && \
              su builder -c 'makepkg -f'"
           cp arch_tmp/*.pkg.tar.zst release_dist/
-          rm -rf arch_tmp
+          sudo rm -rf arch_tmp
 
       - name: Upload artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
