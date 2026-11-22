@@ -474,6 +474,7 @@ arch-arm64:
 	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) .
 	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
 	@podman run --rm --platform linux/arm64 -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/menci/archlinuxarm:latest bash -c "\
+		sed -i 's/^DownloadUser/#DownloadUser/' /etc/pacman.conf && \
 		pacman -Sy --noconfirm archlinuxarm-keyring && \
 		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
 		ln -sfn /usr/include /usr/include/ncursesw && \
