@@ -18,7 +18,7 @@
 ** separate file. This file contains only code for the core SQLite library.
 **
 ** The content in this amalgamation comes from Fossil check-in
-** b36768c4676b5163652c1944ffa7a6a6d398 with changes in files:
+** 35d5fd41ed66c0c8978d9cefd4e2e84f680a with changes in files:
 **
 **    
 */
@@ -469,10 +469,10 @@ extern "C" {
 */
 #define SQLITE_VERSION        "3.55.0"
 #define SQLITE_VERSION_NUMBER 3055000
-#define SQLITE_SOURCE_ID      "2026-11-20 10:07:47 b36768c4676b5163652c1944ffa7a6a6d398e3003604734e28b10a0fb7c11709"
+#define SQLITE_SOURCE_ID      "2026-11-22 11:35:01 35d5fd41ed66c0c8978d9cefd4e2e84f680aeb9c78dcbe4b82f4f577d971457c"
 #define SQLITE_SCM_BRANCH     "trunk"
 #define SQLITE_SCM_TAGS       ""
-#define SQLITE_SCM_DATETIME   "2026-11-20T10:07:47.969Z"
+#define SQLITE_SCM_DATETIME   "2026-11-22T11:35:01.188Z"
 
 /*
 ** CAPI3REF: Run-Time Library Version Numbers
@@ -2980,18 +2980,15 @@ struct sqlite3_mem_methods {
 **
 ** [[SQLITE_DBCONFIG_FP_DIGITS]]
 ** <dt>SQLITE_DBCONFIG_FP_DIGITS</dt>
-** <dd>The SQLITE_DBCONFIG_FP_DIGITS setting is a small integer that determines
-** the number of significant digits that SQLite will attempt to preserve when
-** converting floating point numbers (IEEE 754 "doubles") into text.  The
-** default value 17, as of SQLite version 3.52.0.  The value was 15 in all
-** prior versions.<p>
-** This option takes two arguments which are an integer and a pointer
-** to an integer.  The first argument is a small integer, between 4 and 23, or
-** zero.  The FP_DIGITS setting is changed to that small integer, or left
-** unaltered if the first argument is zero or out of range. The second argument
-** is a pointer to an integer.  If the pointer is not NULL, then the value of
-** the FP_DIGITS setting, after possibly being modified by the first
-** arguments, is written into the integer to which the second argument points.
+** <dd>The configuration settings is a no-op as of 2026-11-20 (first
+** release 3.55.0). Originally, the SQLITE_DBCONFIG_FP_DIGITS
+** setting was is a small integer that determines the number of significant
+** digits that SQLite will attempt to preserve when converting floating point
+** numbers (IEEE 754 "doubles") into text.  However, later discovered
+** that changing this value from its default can cause stale indexes.  For
+** that reason, the setting was removed.  There is still a test-control that
+** can be used to change the value for testing purposes, but as with all
+** test-controls, it should not be used by ordinary application.
 **
 ** [[SQLITE_DBCONFIG_VDBE_TRACE]]
 ** <dt>SQLITE_DBCONFIG_VDBE_TRACE</dt>
@@ -9124,7 +9121,8 @@ SQLITE_API int sqlite3_test_control(int op, ...);
 #define SQLITE_TESTCTRL_USELONGDOUBLE           34  /* NOT USED */
 #define SQLITE_TESTCTRL_ATOF                    34
 #define SQLITE_TESTCTRL_EXPIRE_STMTS            35
-#define SQLITE_TESTCTRL_LAST                    35  /* Largest TESTCTRL */
+#define SQLITE_TESTCTRL_FP_DIGITS               36
+#define SQLITE_TESTCTRL_LAST                    36  /* Largest TESTCTRL */
 
 /*
 ** CAPI3REF: SQL Keyword Checking
@@ -25185,7 +25183,7 @@ struct Vdbe {
   u8 minWriteFileFormat;  /* Minimum file format for writable database files */
   u8 prepFlags;           /* SQLITE_PREPARE_* flags */
   u8 eVdbeState;          /* On of the VDBE_*_STATE values */
-  bft expired:2;          /* 1: recompile VM immediately  2: when convenient */
+  u8 expired;             /* 1: recompile VM immediately  2: when convenient */
   bft explain:2;          /* 0: normal, 1: EXPLAIN, 2: EXPLAIN QUERY PLAN */
   bft changeCntOn:1;      /* True to update the change-counter */
   bft usesStmtJournal:1;  /* True if uses a statement journal */
@@ -42876,7 +42874,7 @@ static struct vxworksFileId *vxworksFindFileId(const char *zAbsoluteName){
   struct vxworksFileId *pCandidate;   /* For looping over existing file IDs */
   int n;                              /* Length of zAbsoluteName string */
 
-  if( zAbsoluteName==0 || zAbsoluteName[0]=='/' );
+  assert( zAbsoluteName!=0 && zAbsoluteName[0]=='/' );
   n = (int)strlen(zAbsoluteName);
   pNew = sqlite3_malloc64( sizeof(*pNew) + (n+1) );
   if( pNew==0 ) return 0;
@@ -44100,11 +44098,12 @@ static int unixClose(sqlite3_file *id){
   */
   assert( pFile->pInode->nLock>0 || pFile->pInode->bProcessLock==0 );
   sqlite3_mutex_enter(pInode->pLockMutex);
-  if( pInode->nLock ){
+  if( pInode->nLock && pFile->h>=0 ){
     /* If there are outstanding locks, do not actually close the file just
     ** yet because that would clear those locks.  Instead, add the file
     ** descriptor to pInode->pUnused list.  It will be automatically closed
-    ** when the last lock is cleared.
+    ** when the last lock is cleared.  Skip this if the file descriptor
+    ** was already closed by SQLITE_FCNTL_NULL_IO.
     */
     setPendingFd(pFile);
   }
@@ -86405,6 +86404,7 @@ copy_finished:
 */
 /* #include "sqliteInt.h" */
 /* #include "vdbeInt.h" */
+/* #include <math.h> */
 
 /* True if X is a power of two.  0 is considered a power of two here.
 ** In other words, return true if X has at most one bit set.
@@ -87235,6 +87235,7 @@ SQLITE_PRIVATE void sqlite3VdbeIntegerAffinity(Mem *pMem, int bFromText){
     */
     if( pMem->u.r==ix && ix<LARGEST_INT64
      && (!bFromText || ix>SMALLEST_INT64)
+     && (ix || !signbit(pMem->u.r))
     ){
       pMem->u.i = ix;
       MemSetTypeFlag(pMem, MEM_Int);
@@ -97957,6 +97958,7 @@ static void applyNumericAffinity(Mem *pRec, int bTryForInt){
   assert( (pRec->flags & (MEM_Str|MEM_Int|MEM_Real|MEM_IntReal))==MEM_Str );
   rc = sqlite3MemRealValueRC(pRec, &rValue);
   if( rc<=0 ) return;
+  if( rc&0x10 ) return;
   if( (rc&2)==0 && alsoAnInt(pRec, rValue, &pRec->u.i) ){
     pRec->flags |= MEM_Int;
   }else{
@@ -101194,7 +101196,7 @@ case OP_MakeRecord: {
   i64 nByte;             /* Data space required for this record */
   i64 nZero;             /* Number of zero bytes at the end of the record */
   int nVarint;           /* Number of bytes in a varint */
-  u32 serial_type;       /* Type field */
+  u64 serial_type;       /* Type field */
   Mem *pData0;           /* First field to be combined into the record */
   Mem *pLast;            /* Last field of the record */
   int nField;            /* Number of fields in the record */
@@ -101380,7 +101382,10 @@ case OP_MakeRecord: {
       }
       nData += len;
       nHdr += sqlite3VarintLen(serial_type);
-      pRec->uTemp = serial_type;
+      pRec->uTemp = (u32)serial_type;
+      /*            ^^^^^---  If the serial_type is too large, then nData
+      ** will be too large too, and we'll get an SQLITE_TOOBIG error below,
+      ** before this truncation does any harm. */
     }
     if( pRec==pData0 ) break;
     pRec--;
@@ -107380,6 +107385,20 @@ static int blobSeekToRow(Incrblob *p, sqlite3_int64 iRow, char **pzErr){
 }
 
 /*
+** Expression-walker callback used by sqlite3_blob_open().  Set
+** pWalker->eCode to 1 and abort the walk if the expression is a reference
+** to column pWalker->u.n of the table.  A WHERE clause on a partial index
+** refers only to columns of the indexed table.
+*/
+static int blobColumnRef(Walker *pWalker, Expr *pExpr){
+  if( pExpr->op==TK_COLUMN && pExpr->iColumn==pWalker->u.n ){
+    pWalker->eCode = 1;
+    return WRC_Abort;
+  }
+  return WRC_Continue;
+}
+
+/*
 ** Open a blob handle.
 */
 SQLITE_API int sqlite3_blob_open(
@@ -107500,6 +107519,16 @@ SQLITE_API int sqlite3_blob_open(
           if( pIdx->aiColumn[j]==iCol || pIdx->aiColumn[j]==XN_EXPR ){
             zFault = "indexed";
           }
+        }
+        if( pIdx->pPartIdxWhere ){
+          /* A column read by a partial index WHERE clause determines which
+          ** rows belong in the index, so it cannot be changed either. */
+          Walker w;
+          memset(&w, 0, sizeof(w));
+          w.xExprCallback = blobColumnRef;
+          w.u.n = iCol;
+          sqlite3WalkExpr(&w, pIdx->pPartIdxWhere);
+          if( w.eCode ) zFault = "indexed";
         }
       }
       if( zFault ){
@@ -147742,6 +147771,11 @@ static int invalidateTempStorage(Parse *pParse){
         "from within a transaction");
       return SQLITE_ERROR;
     }
+    if( sqlite3BtreeIsInBackup(db->aDb[1].pBt) ){
+      sqlite3ErrorMsg(pParse, "temporary storage cannot be changed "
+        "while a backup is running");
+      return SQLITE_ERROR;
+    }
     sqlite3BtreeClose(db->aDb[1].pBt);
     db->aDb[1].pBt = 0;
     sqlite3ResetAllSchemasOfConnection(db);
@@ -152553,6 +152587,7 @@ static int sqlite3ProcessJoin(Parse *pParse, Select *p){
           pEq->w.iJoin = pE2->iTable;
         }
         p->pWhere = sqlite3ExprAnd(pParse, p->pWhere, pEq);
+        if( pParse->nErr ) return 1;
       }
     }
 
@@ -167279,6 +167314,7 @@ SQLITE_PRIVATE Bitmask sqlite3WhereExprListUsage(WhereMaskSet*, ExprList*);
 SQLITE_PRIVATE void sqlite3WhereExprAnalyze(SrcList*, WhereClause*);
 SQLITE_PRIVATE void sqlite3WhereTabFuncArgs(Parse*, SrcItem*, WhereClause*);
 SQLITE_PRIVATE int sqlite3WhereLoopBloomable(const WhereLoop*);
+SQLITE_PRIVATE int sqlite3WhereMightRerunAfterWrite(const WhereInfo*);
 
 /*
 ** Bitmasks for the operators on WhereTerm objects.  These are all
@@ -168956,6 +168992,7 @@ static int findNoMatchContinuation(
   pParent = &pWInfo->a[iParent];
   if( (pParent->pWLoop->wsFlags & WHERE_AUTO_INDEX)!=0
    && (mKey & (mKey-1))==0
+   && !sqlite3WhereMightRerunAfterWrite(pWInfo)
   ){
     for(i=0; i<pLoop->nLTerm; i++){
       Expr *pX = pLoop->aLTerm[i]->pExpr;
@@ -172633,6 +172670,19 @@ SQLITE_PRIVATE LogEst sqlite3WhereOutputRowCount(WhereInfo *pWInfo){
 */
 SQLITE_PRIVATE int sqlite3WhereIsDistinct(WhereInfo *pWInfo){
   return pWInfo->eDistinct;
+}
+
+/*
+** Return true if pWInfo is for a correlated subquery inside of a statement
+** that writes to the database.  Such a subquery runs once for each row
+** and can see rows that earlier runs caused to be written.  Structures
+** built on the first run, such as Bloom filters and automatic indexes,
+** might be out of date by the time a later run uses them.
+*/
+SQLITE_PRIVATE int sqlite3WhereMightRerunAfterWrite(const WhereInfo *pWInfo){
+  if( NEVER(pWInfo->pSelect==0) ) return 0;
+  if( (pWInfo->pSelect->selFlags & SF_Correlated)==0 ) return 0;
+  return DbMaskNonZero(sqlite3ParseToplevel(pWInfo->pParse)->writeMask);
 }
 
 /*
@@ -179423,6 +179473,7 @@ static SQLITE_NOINLINE void whereAddIndexedExpr(
   pTab = pIdx->pTable;
   for(i=0; i<pIdx->nColumn; i++){
     Expr *pExpr;
+    Expr *pX;
     int j = pIdx->aiColumn[i];
     if( j==XN_EXPR ){
       pExpr = pIdx->aColExpr->a[i].pExpr;
@@ -179432,6 +179483,11 @@ static SQLITE_NOINLINE void whereAddIndexedExpr(
       ** numeric affinities, so check for that mismatch here. */
       if( (pTab->aCol[j].affinity==SQLITE_AFF_REAL)
            !=(sqlite3ExprAffinity(pExpr)==SQLITE_AFF_REAL) ) continue;
+      /* CAST(x AS NUMERIC) leaves a large REAL value unchanged, but
+      ** storing that value in the column converts it to INTEGER. */
+      pX = sqlite3ExprSkipCollateAndLikely(pExpr);
+      if( ALWAYS(pX) && pX->op==TK_CAST
+       && sqlite3ExprAffinity(pX)==SQLITE_AFF_NUMERIC ) continue;
     }else{
       continue;
     }
@@ -179932,6 +179988,7 @@ SQLITE_PRIVATE WhereInfo *sqlite3WhereBegin(
   */
   if( pWInfo->nLevel>=2
    && OptimizationEnabled(db, SQLITE_BloomFilter)
+   && !sqlite3WhereMightRerunAfterWrite(pWInfo)
   ){
     whereCheckIfBloomFilterIsUseful(pWInfo);
   }
@@ -180274,6 +180331,29 @@ whereBeginError:
 #endif
 
 /*
+** Disable all entries on the Parse.pIdxEpr list that use index cursor
+** iIdxCur.  This is done when the loop that owns the cursor ends, since
+** the cursor is not valid, and might never have been opened, after that.
+*/
+static void disableIndexedExprs(Parse *pParse, int iIdxCur){
+  IndexedExpr *p = pParse->pIdxEpr;
+  while( p ){
+    if( p->iIdxCur==iIdxCur ){
+#ifdef WHERETRACE_ENABLED
+      if( sqlite3WhereTrace & 0x200 ){
+        sqlite3DebugPrintf("Disable pParse->pIdxEpr term {%d,%d}\n",
+                            p->iIdxCur, p->iIdxCol);
+        if( sqlite3WhereTrace & 0x5000 ) sqlite3ShowExpr(p->pExpr);
+      }
+#endif
+      p->iDataCur = -1;
+      p->iIdxCur = -1;
+    }
+    p = p->pIENext;
+  }
+}
+
+/*
 ** Generate the end of the WHERE loop.  See comments on
 ** sqlite3WhereBegin() for additional information.
 */
@@ -180532,6 +180612,11 @@ SQLITE_PRIVATE void sqlite3WhereEnd(WhereInfo *pWInfo){
     */
     if( pLevel->pRJ ){
       sqlite3WhereRightJoinLoop(pWInfo, i, pLevel);
+      if( (pLoop->wsFlags & WHERE_INDEXED)!=0
+       && pLoop->u.btree.pIndex->bHasExpr
+      ){
+        disableIndexedExprs(pParse, pLevel->iIdxCur);
+      }
       continue;
     }
 
@@ -180572,23 +180657,7 @@ SQLITE_PRIVATE void sqlite3WhereEnd(WhereInfo *pWInfo){
       }else{
         last = pWInfo->iEndWhere;
       }
-      if( pIdx->bHasExpr ){
-        IndexedExpr *p = pParse->pIdxEpr;
-        while( p ){
-          if( p->iIdxCur==pLevel->iIdxCur ){
-#ifdef WHERETRACE_ENABLED
-            if( sqlite3WhereTrace & 0x200 ){
-              sqlite3DebugPrintf("Disable pParse->pIdxEpr term {%d,%d}\n",
-                                  p->iIdxCur, p->iIdxCol);
-              if( sqlite3WhereTrace & 0x5000 ) sqlite3ShowExpr(p->pExpr);
-            }
-#endif
-            p->iDataCur = -1;
-            p->iIdxCur = -1;
-          }
-          p = p->pIENext;
-        }
-      }
+      if( pIdx->bHasExpr ) disableIndexedExprs(pParse, pLevel->iIdxCur);
       k = pLevel->addrBody + 1;
 #ifdef SQLITE_DEBUG
       if( db->flags & SQLITE_VdbeAddopTrace ){
@@ -192423,7 +192492,7 @@ SQLITE_API int sqlite3_db_cacheflush(sqlite3 *db){
 */
 SQLITE_API int sqlite3_db_config(sqlite3 *db, int op, ...){
   va_list ap;
-  int rc;
+  int rc = SQLITE_ERROR;
 
 #ifdef SQLITE_ENABLE_API_ARMOR
   if( !sqlite3SafetyCheckOk(db) ) return SQLITE_MISUSE_BKPT;
@@ -192446,11 +192515,10 @@ SQLITE_API int sqlite3_db_config(sqlite3 *db, int op, ...){
       break;
     }
     case SQLITE_DBCONFIG_FP_DIGITS: {
-      int nIn = va_arg(ap, int);
-      int *pOut = va_arg(ap, int*);
-      if( nIn>3 && nIn<24 ) db->nFpDigit = (u8)nIn;
-      if( pOut ) *pOut = db->nFpDigit;
-      rc = SQLITE_OK;
+      /* Deliberate no-op as of 2026-11-20, as changing the float->text
+      ** algorithm can cause stale indexes in schemas that misuse
+      ** floating point values.  SQLITE_TESTCTRL_FP_DIGITS is provided
+      ** as an alternative, for testing purposes only. */
       break;
     }
     default: {
@@ -192485,7 +192553,6 @@ SQLITE_API int sqlite3_db_config(sqlite3 *db, int op, ...){
 #endif
       };
       unsigned int i;
-      rc = SQLITE_ERROR; /* IMP: R-42790-23372 */
       for(i=0; i<ArraySize(aFlagOp); i++){
         if( aFlagOp[i].op==op ){
           int onoff = va_arg(ap, int);
@@ -196349,6 +196416,24 @@ SQLITE_API int sqlite3_test_control(int op, ...){
         sqlite3Config.bJsonSelfcheck = (u8)((*pOnOff)&0xff);
       }
 #endif
+      break;
+    }
+
+    /* sqlite3_test_control(SQLITE_TESTCTRL_FP_DIGITS,db,nIn,pnOut)
+    **
+    ** Change the number of digits of precision used for float->text
+    ** conversions for database connection db to nIn (range 4..23).
+    ** If nIn is out of range, make no changes.
+    ** If pnOut is not NULL, write value after changes into *pnOut.
+    **
+    ** This replaces SQLITE_DBCONFIG_FP_DIGITS as of 2026-11-20.
+    */
+    case SQLITE_TESTCTRL_FP_DIGITS: {
+      sqlite3 *db = va_arg(ap, sqlite3*);
+      int nIn = va_arg(ap, int);
+      int *pOut = va_arg(ap, int*);
+      if( db && nIn>3 && nIn<24 ) db->nFpDigit = (u8)nIn;
+      if( pOut ) *pOut = db ? db->nFpDigit : 0;
       break;
     }
   }
@@ -212842,6 +212927,13 @@ static int fts3IncrmergeLoad(
       iStart = sqlite3_column_int64(pSelect, 1);
       iLeafEnd = sqlite3_column_int64(pSelect, 2);
       fts3ReadEndBlockField(pSelect, 3, &iEnd, &pWriter->nLeafData);
+      if( pWriter->nLeafData==SMALLEST_INT64 ){
+        /* The value cannot be negated, here or by the caller. The record
+        ** is corrupt. */
+        pWriter->nLeafData = 0;
+        sqlite3_reset(pSelect);
+        return FTS_CORRUPT_VTAB;
+      }
       if( pWriter->nLeafData<0 ){
         pWriter->nLeafData = pWriter->nLeafData * -1;
       }
@@ -212892,7 +212984,14 @@ static int fts3IncrmergeLoad(
         return FTS_CORRUPT_VTAB;
       }
 
-      pWriter->nLeafEst = (int)(((iEnd - iStart)+1)/FTS_MAX_APPENDABLE_HEIGHT);
+      /* Block numbers are never negative and iEnd is never less than iStart.
+      ** Check this so that the arithmetic below cannot overflow. */
+      if( iStart<0 || iEnd<iStart || iEnd==LARGEST_INT64 ){
+        sqlite3_reset(pSelect);
+        return FTS_CORRUPT_VTAB;
+      }
+
+      pWriter->nLeafEst = ((iEnd - iStart)+1)/FTS_MAX_APPENDABLE_HEIGHT;
       pWriter->iStart = iStart;
       pWriter->iEnd = iEnd;
       pWriter->iAbsLevel = iAbsLevel;
@@ -220493,6 +220592,16 @@ static void jsonReturnFromBlob(
       if( k==0 ){
         sqlite3_result_int64(pCtx, ival);
       }else if( k==1 ){
+        const char *zInt = (const char*)&pParse->aBlob[i+n];
+        int iX = (zInt[0]=='-' || zInt[0]=='+');
+        if( zInt[iX]!='0' || (zInt[iX+1]!='x' && zInt[iX+1]!='X') ){
+          /* A decimal integer too big for 64 bits.  Convert it the same
+          ** way as CAST(x AS REAL), with a single rounding. */
+          char *z = sqlite3DbStrNDup(db, zInt, (int)sz);
+          if( z==0 ) goto returnfromblob_oom;
+          sqlite3AtoF(z, &rval);
+          sqlite3DbFree(db, z);
+        }
         sqlite3_result_double(pCtx, rval);
       }else{
         goto returnfromblob_malformed;
@@ -241130,7 +241239,7 @@ static void sessionAppendIdent(
   const char *zStr,               /* String to quote, escape and append */
   int *pRc                        /* IN/OUT: Error code */
 ){
-  int nStr = sqlite3Strlen30(zStr)*2 + 2 + 2;
+  i64 nStr = (i64)sqlite3Strlen30(zStr)*2 + 2 + 2;
   if( 0==sessionBufferGrow(p, nStr, pRc) ){
     char *zOut = (char *)&p->aBuf[p->nBuf];
     const char *zIn = zStr;
@@ -246060,9 +246169,13 @@ SQLITE_API int sqlite3changegroup_change_blob(
   const void *pVal,
   int nVal
 ){
-  sqlite3_int64 nByte = 1 + sessionVarintLen(nVal) + (i64)nVal;
+  sqlite3_int64 nByte;
   int rc = SQLITE_OK;
   SessionBuffer *pBuf = 0;
+
+  /* Unlike text, a blob has no terminator from which to infer a length. */
+  if( nVal<0 ) return SQLITE_RANGE;
+  nByte = 1 + sessionVarintLen(nVal) + (i64)nVal;
 
   if( SQLITE_OK!=(rc = checkChangeParams(pGrp, bNew, iCol, nByte, &pBuf)) ){
     return rc;
@@ -255455,6 +255568,7 @@ static int sqlite3Fts5HashWrite(
   Fts5HashEntry *p;
   u8 *pPtr;
   int nIncr = 0;                  /* Amount to increment (*pHash->pnByte) by */
+  i64 nNew;                       /* New value for (*pHash->pnByte) */
   int bNew;                       /* If non-delete entry should be written */
 
   bNew = (pHash->eDetail==FTS5_DETAIL_FULL);
@@ -255524,12 +255638,13 @@ static int sqlite3Fts5HashWrite(
     **     + 5 bytes for the new position offset (32-bit max).
     */
     if( (p->nAlloc - p->nData) < (9 + 4 + 1 + 3 + 5) ){
-      sqlite3_int64 nNew = (i64)p->nAlloc * 2;
+      sqlite3_int64 nNewSz = (i64)p->nAlloc * 2;
       Fts5HashEntry *pNew;
       Fts5HashEntry **pp;
-      pNew = (Fts5HashEntry*)sqlite3_realloc64(p, nNew);
+      pNew = (Fts5HashEntry*)sqlite3_realloc64(p, nNewSz);
       if( pNew==0 ) return SQLITE_NOMEM;
-      pNew->nAlloc = (int)nNew;
+      assert( nNewSz<=0x7fffffff ); /* Otherwise realloc() would have failed */
+      pNew->nAlloc = (int)nNewSz;
       for(pp=&pHash->aSlot[iHash]; *pp!=p; pp=&(*pp)->pHashNext);
       *pp = pNew;
       p = pNew;
@@ -255586,7 +255701,8 @@ static int sqlite3Fts5HashWrite(
   }
 
   nIncr += p->nData;
-  *pHash->pnByte += nIncr;
+  nNew = (i64)*pHash->pnByte + nIncr;
+  *pHash->pnByte = (int)(nNew>0x7FFFFFFF ? 0x7FFFFFFF : nNew);
   return SQLITE_OK;
 }
 
@@ -264516,6 +264632,10 @@ static void fts5IndexIntegrityCheckSegment(
     /* If the leaf in question has already been trimmed from the segment,
     ** ignore this b-tree entry. Otherwise, load it into memory. */
     if( iIdxLeaf<pSeg->pgnoFirst ) continue;
+    if( iIdxLeaf>pSeg->pgnoLast ){
+      FTS5_CORRUPT_ROWID(p, FTS5_SEGMENT_ROWID(pSeg->iSegid, iIdxLeaf));
+      break;
+    }
     iRow = FTS5_SEGMENT_ROWID(pSeg->iSegid, iIdxLeaf);
     pLeaf = fts5LeafRead(p, iRow);
     if( pLeaf==0 ) break;
@@ -269209,7 +269329,7 @@ static void fts5SourceIdFunc(
 ){
   assert( nArg==0 );
   UNUSED_PARAM2(nArg, apUnused);
-  sqlite3_result_text(pCtx, "fts5: 2026-11-20 10:07:47 b36768c4676b5163652c1944ffa7a6a6d398e3003604734e28b10a0fb7c11709", -1, SQLITE_TRANSIENT);
+  sqlite3_result_text(pCtx, "fts5: 2026-11-22 11:35:01 35d5fd41ed66c0c8978d9cefd4e2e84f680aeb9c78dcbe4b82f4f577d971457c", -1, SQLITE_TRANSIENT);
 }
 
 /*
