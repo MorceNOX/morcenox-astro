@@ -3,10 +3,16 @@ name: Build & Publish Universal Linux Packages
 on:
   push:
     tags:
-      - 'v*' # Dispara automaticamente sempre que você enviar uma tag começando com 'v' (ex: v1.53.1)
+      - 'v*' # Dispara automaticamente ao enviar uma tag (ex: v1.53.1)
+  workflow_dispatch: # Habilita o botão "Run workflow" na aba Actions do GitHub
+    inputs:
+      version:
+        description: 'Version number to build (e.g., 1.53.1)'
+        required: true
+        default: '1.53.1'
 
 permissions:
-  contents: write # Permissão necessária para criar a Release e anexar os arquivos
+  contents: write
 
 jobs:
   build-packages:
@@ -31,9 +37,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract version from Git tag
+      - name: Extract version from Git tag or manual input
         id: meta
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+          fi      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install host build dependencies (for Portable Tarball & .deb)
         run: |
@@ -91,6 +103,7 @@ jobs:
       - name: Upload artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.meta.outputs.VERSION }}
           files: |
             release_dist/*.tar.gz
             release_dist/*.deb
