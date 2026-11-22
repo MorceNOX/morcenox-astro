@@ -12,6 +12,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Terminal](https://img.shields.io/badge/Platform-Terminal-lightgrey.svg)](https://en.wikipedia.org/wiki/Terminal)
 [![GitHub Release](https://img.shields.io/github/v/release/MorceNOX/morcenox-astro?logo=github&label=Release)](https://github.com/MorceNOX/morcenox-astro/releases)
+[![Build & Publish Universal Linux Packages](https://github.com/MorceNOX/morcenox-astro/actions/workflows/release.yml/badge.svg)](https://github.com/MorceNOX/morcenox-astro/actions/workflows/release.yml)
 [![Copr build status](https://copr.fedorainfracloud.org/coprs/morcenox/morcenox-astro/package/MorceNOX-Astro/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/morcenox/morcenox-astro/package/MorceNOX-Astro/)
 
 A Traditional Astrology application running in your terminal! Calculate your birth chart or quickly visualize the chart for the current moment. Check the planetary hours table to choose the best time for an activity, explore your mental and temperament analysis, navigate past and future events in a Primary Directions table, and much more!
