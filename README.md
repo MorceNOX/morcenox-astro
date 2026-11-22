@@ -1,5 +1,8 @@
 # MorceNOX™ ASTRO
-<img width="866" height="509" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
+
+<p align="center">
+    <img height="509" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
+</p>
 
 <p align="right">
   <a href="README.md"><img src="https://flagcdn.com/w40/gb.png" width="25" alt="English"></a>
@@ -22,8 +25,11 @@ A Traditional Astrology application running in your terminal! Calculate your bir
 Features a rich ASCII-art interface, real-motion celestial animation, and offline precision.
 
 <hr>
-<img width="2048" height="1233" alt="01-chart-wheel-pres-en" src="https://github.com/user-attachments/assets/7cba1e55-06ab-4388-897a-650f84a2cd2b" />
+
+![01-chart-wheel-pres-en](https://github.com/user-attachments/assets/7cba1e55-06ab-4388-897a-650f84a2cd2b)
+
 <hr>
+
 
 ## 🌌 Key Features
 
@@ -166,7 +172,7 @@ git clone https://github.com/MorceNOX/morcenox-astro.git
 cd morcenox-astro
 
 # Compile the engine and translations
-make -j\$(nproc)
+make -j $(nproc)
 
 # Install to the system (default prefix: /usr/local)
 sudo make install
@@ -207,92 +213,92 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### Main Menu
 <hr>
 
-<img width="2048" height="1233" alt="00-main-menu-en" src="https://github.com/user-attachments/assets/5aec2f79-b6a9-4e13-8196-1aba264a4ebd" />
+![00-main-menu-en](https://github.com/user-attachments/assets/5aec2f79-b6a9-4e13-8196-1aba264a4ebd)
 
 <hr>
 
 ### The Chart Wheel
 <hr>
 
-<img width="2048" height="1233" alt="01-chart-wheel-en" src="https://github.com/user-attachments/assets/972de35e-63a7-4a76-953f-8f15d6fa0f00" />
+![01-chart-wheel-en](https://github.com/user-attachments/assets/972de35e-63a7-4a76-953f-8f15d6fa0f00)
 
-<img width="2048" height="1233" alt="01-chart-zoom-en" src="https://github.com/user-attachments/assets/e16ab238-4b77-40a4-bae7-d204d172cda9" />
+![01-chart-zoom-en](https://github.com/user-attachments/assets/e16ab238-4b77-40a4-bae7-d204d172cda9)
 
-<img width="2048" height="1233" alt="01-chart-zoom-house-div-en" src="https://github.com/user-attachments/assets/8cf21e65-39a1-4cde-8749-985e0d73aa05" />
+![01-chart-zoom-house-div-en](https://github.com/user-attachments/assets/8cf21e65-39a1-4cde-8749-985e0d73aa05)
 
 <hr>
 
 ### Aspects Table
 <hr>
 
-<img width="2048" height="1233" alt="10-aspects-en" src="https://github.com/user-attachments/assets/f57e087c-a478-49bb-ba23-9712ed9422c4" />
+![10-aspects-en](https://github.com/user-attachments/assets/f57e087c-a478-49bb-ba23-9712ed9422c4)
 
-<img width="2048" height="1233" alt="10-aspects-parallel-en" src="https://github.com/user-attachments/assets/1684cdbf-fce3-401c-91fb-995b1f44d8dd" />
+![10-aspects-parallel-en](https://github.com/user-attachments/assets/1684cdbf-fce3-401c-91fb-995b1f44d8dd)
 
-<img width="2048" height="1280" alt="09-houses-aspects-en" src="https://github.com/user-attachments/assets/29b042f0-d563-460f-812f-e9acafe751b8" />
+![09-houses-aspects-en](https://github.com/user-attachments/assets/29b042f0-d563-460f-812f-e9acafe751b8)
 
 <hr>
 
 ### Primary Directions
 <hr>
 
-<img width="2048" height="1233" alt="02-directions-en" src="https://github.com/user-attachments/assets/8873b918-6861-4b89-930f-bb95382b958e" />
+![02-directions-en](https://github.com/user-attachments/assets/8873b918-6861-4b89-930f-bb95382b958e)
 
 <hr>
 
 ### Firdaria
 <hr>
 
-<img width="2048" height="1233" alt="04-firdaria-en" src="https://github.com/user-attachments/assets/e91b3015-3f8d-494c-be7b-b3732c962cf1" />
+![04-firdaria-en](https://github.com/user-attachments/assets/e91b3015-3f8d-494c-be7b-b3732c962cf1)
 
 <hr>
 
 ### Energy Profile Chart
 <hr>
 
-<img width="2048" height="1233" alt="06-energy-en" src="https://github.com/user-attachments/assets/0e293615-7b0a-4ac0-97d5-32678fc7cb08" />
+![06-energy-en](https://github.com/user-attachments/assets/0e293615-7b0a-4ac0-97d5-32678fc7cb08)
 
 <hr>
 
 ### Temperament Chart
 <hr>
 
-<img width="2048" height="1233" alt="08-temperament-en" src="https://github.com/user-attachments/assets/f7a9f5ae-0aa0-435e-a06a-1a2a1ba53234" />
+![08-temperament-en](https://github.com/user-attachments/assets/f7a9f5ae-0aa0-435e-a06a-1a2a1ba53234)
 
 <hr>
 
 ### Temperament Interpretation
 <hr>
 
-<img width="2048" height="1233" alt="08-temperament-interpretation-en" src="https://github.com/user-attachments/assets/cc22feec-5ebb-487d-b279-703bcf4a38e3" />
+![08-temperament-interpretation-en](https://github.com/user-attachments/assets/cc22feec-5ebb-487d-b279-703bcf4a38e3)
 
 <hr>
 
 ### Solar Return Chart
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-chart-en" src="https://github.com/user-attachments/assets/32f08cc4-c36c-4943-8c09-2bc3bed9d365" />
+![03-solar-return-chart-en](https://github.com/user-attachments/assets/32f08cc4-c36c-4943-8c09-2bc3bed9d365)
 
 <hr>
 
 ### Solar Return Radix Confrontation
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-confront-en" src="https://github.com/user-attachments/assets/9c43b115-d1f2-436b-a4ef-6fabf32106f7" />
+![03-solar-return-confront-en](https://github.com/user-attachments/assets/9c43b115-d1f2-436b-a4ef-6fabf32106f7)
 
 <hr>
 
 ### Solar Return Transit Projection
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-transit-en" src="https://github.com/user-attachments/assets/9259b159-2e0f-4b46-951d-e1fd6f6f4230" />
+![03-solar-return-transit-en](https://github.com/user-attachments/assets/9259b159-2e0f-4b46-951d-e1fd6f6f4230)
 
 <hr>
 
 ### Planetary Hours
 <hr>
 
-<img width="2048" height="1233" alt="07-planetary-hours-en" src="https://github.com/user-attachments/assets/022414d3-15bd-4ed3-891d-56acb215c72e" />
+![07-planetary-hours-en](https://github.com/user-attachments/assets/022414d3-15bd-4ed3-891d-56acb215c72e)
 
 <hr>
 

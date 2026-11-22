@@ -1,6 +1,8 @@
 # MorceNOX™ ASTRO
 
-<img width="866" height="509" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
+<p align="center">
+    <img height="509" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
+</p>
 
 <p align="right">
   <a href="README.md"><img src="https://flagcdn.com/w40/gb.png" width="25" alt="English"></a>
@@ -23,8 +25,11 @@ Um aplicativo de Astrologia Tradicional rodando no seu terminal! Calcule seu map
 Possui uma interface rica em arte ASCII, animação celestial em tempo real e capacidade total offline.
 
 <hr>
-<img width="2048" height="1233" alt="01-chart-wheel-pres-pt" src="https://github.com/user-attachments/assets/7652045b-9baf-4068-ae31-edcb7a2c5653" />
+
+![01-chart-wheel-pres-pt](https://github.com/user-attachments/assets/7652045b-9baf-4068-ae31-edcb7a2c5653)
+
 <hr>
+
 
 ## 🌌 Principais Recursos
 
@@ -168,7 +173,7 @@ git clone https://github.com/MorceNOX/morcenox-astro.git
 cd morcenox-astro
 
 # Compile o motor e as traduções
-make -j\$(nproc)
+make -j $(nproc)
 
 # Instale no sistema (prefixo padrão: /usr/local)
 sudo make install
@@ -209,96 +214,96 @@ Aqui estão algumas capturas de tela. Você pode ter uma ideia do que esperar de
 ### Menu Principal
 <hr>
 
-<img width="2048" height="1233" alt="00-main-menu-pt" src="https://github.com/user-attachments/assets/a32fd8ea-11b0-417b-9a6e-f8dd8922cbf8" />
+![00-main-menu-pt](https://github.com/user-attachments/assets/a32fd8ea-11b0-417b-9a6e-f8dd8922cbf8)
 
 <hr>
 
 ### A Roda do Mapa (Chart Wheel)
 <hr>
 
-<img width="2048" height="1233" alt="01-chart-wheel-pt" src="https://github.com/user-attachments/assets/cbc8815a-3943-434b-b646-295078dcbbb6" />
+![01-chart-wheel-pt](https://github.com/user-attachments/assets/cbc8815a-3943-434b-b646-295078dcbbb6)
 
-<img width="2048" height="1233" alt="01-chart-zoom-pt" src="https://github.com/user-attachments/assets/65f7682d-0548-4dcb-971f-c7203f8eede8" />
+![01-chart-zoom-pt](https://github.com/user-attachments/assets/65f7682d-0548-4dcb-971f-c7203f8eede8)
 
-<img width="2048" height="1233" alt="01-chart-zoom-house-div-pt" src="https://github.com/user-attachments/assets/cddcb583-53d2-4362-ab7a-cd1c3eb0d81e" />
+![01-chart-zoom-house-div-pt](https://github.com/user-attachments/assets/cddcb583-53d2-4362-ab7a-cd1c3eb0d81e)
 
-<img width="2048" height="1233" alt="01-chart-menu-actions-pt" src="https://github.com/user-attachments/assets/bd80d6a2-12d7-415e-8318-7ca53cdff2de" />
+![01-chart-menu-actions-pt](https://github.com/user-attachments/assets/bd80d6a2-12d7-415e-8318-7ca53cdff2de)
 
 <hr>
 
 ### Tabelas de Aspectos
 <hr>
 
-<img width="2048" height="1233" alt="10-aspects-pt" src="https://github.com/user-attachments/assets/403c4fc0-c66f-42df-a45a-5a27953d05b0" />
+![10-aspects-pt](https://github.com/user-attachments/assets/403c4fc0-c66f-42df-a45a-5a27953d05b0)
 
-<img width="2048" height="1233" alt="10-aspects-parallel-pt" src="https://github.com/user-attachments/assets/174f1c03-d35d-4fd4-b7b7-a980fca85d07" />
+![10-aspects-parallel-pt](https://github.com/user-attachments/assets/174f1c03-d35d-4fd4-b7b7-a980fca85d07)
 
-<img width="2048" height="1233" alt="09-houses-aspects-pt" src="https://github.com/user-attachments/assets/b17f7725-326c-46eb-a8e5-8f707447b9f8" />
+![09-houses-aspects-pt](https://github.com/user-attachments/assets/b17f7725-326c-46eb-a8e5-8f707447b9f8)
 
-<img width="2048" height="1233" alt="05-stars-aspects-conjunctions-pt" src="https://github.com/user-attachments/assets/0dbd3de5-c021-41a5-a871-2e1e9d209902" />
+![05-stars-aspects-conjunctions-pt](https://github.com/user-attachments/assets/0dbd3de5-c021-41a5-a871-2e1e9d209902)
 
 <hr>
 
 ### Direções Primárias
 <hr>
 
-<img width="2048" height="1233" alt="02-directions-pt" src="https://github.com/user-attachments/assets/65e60e2d-7a35-4aaa-b322-79849e1c85bc" />
+![02-directions-pt](https://github.com/user-attachments/assets/65e60e2d-7a35-4aaa-b322-79849e1c85bc)
 
 <hr>
 
 ### Firdária
 <hr>
 
-<img width="2048" height="1233" alt="04-firdaria-pt" src="https://github.com/user-attachments/assets/4a2cc27b-9889-40da-b313-d357384e812e" />
+![04-firdaria-pt](https://github.com/user-attachments/assets/4a2cc27b-9889-40da-b313-d357384e812e)
 
 <hr>
 
 ### Gráfico de Perfil Energético
 <hr>
 
-<img width="2048" height="1233" alt="06-energy-pt" src="https://github.com/user-attachments/assets/24ea3cc2-6193-47db-925d-4f4d0cc94f1d" />
+![06-energy-pt](https://github.com/user-attachments/assets/24ea3cc2-6193-47db-925d-4f4d0cc94f1d)
 
 <hr>
 
 ### Gráfico de Temperamento
 <hr>
 
-<img width="2048" height="1233" alt="08-temperament-pt" src="https://github.com/user-attachments/assets/91b33811-14a7-472b-8211-ac981f6b21e1" />
+![08-temperament-pt](https://github.com/user-attachments/assets/91b33811-14a7-472b-8211-ac981f6b21e1)
 
 <hr>
 
 ### Interpretação de Temperamento
 <hr>
 
-<img width="2048" height="1233" alt="08-temperament-interpretation-pt" src="https://github.com/user-attachments/assets/d72724da-0bfc-4304-ada3-fc40a606d646" />
+![08-temperament-interpretation-pt](https://github.com/user-attachments/assets/d72724da-0bfc-4304-ada3-fc40a606d646)
 
 <hr>
 
 ### Retorno Solar
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-chart-pt" src="https://github.com/user-attachments/assets/d2532083-0994-4ab5-9165-bea4209f0782" />
+![03-solar-return-chart-pt](https://github.com/user-attachments/assets/d2532083-0994-4ab5-9165-bea4209f0782)
 
 <hr>
 
 ### Confrontação de Radix no Retorno Solar
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-confront-pt" src="https://github.com/user-attachments/assets/53e7c252-8341-4f8d-b337-1c3c2cffe36e" />
+![03-solar-return-confront-pt](https://github.com/user-attachments/assets/53e7c252-8341-4f8d-b337-1c3c2cffe36e)
 
 <hr>
 
 ### Projeção de Trânsito no Retorno Solar
 <hr>
 
-<img width="2048" height="1233" alt="03-solar-return-transit-pt" src="https://github.com/user-attachments/assets/2bd6e89d-a3e7-4e9d-9d63-db87201e9bcd" />
+![03-solar-return-transit-pt](https://github.com/user-attachments/assets/2bd6e89d-a3e7-4e9d-9d63-db87201e9bcd)
 
 <hr>
 
 ### Horas Planetárias
 <hr>
 
-<img width="2048" height="1233" alt="07-planetary-hours-pt" src="https://github.com/user-attachments/assets/dce8ed4c-d869-496e-aa0d-1be4bdd66894" />
+![07-planetary-hours-pt](https://github.com/user-attachments/assets/dce8ed4c-d869-496e-aa0d-1be4bdd66894)
 
 <hr>
 
