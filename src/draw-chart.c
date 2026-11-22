@@ -6815,7 +6815,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
 
     wattron(table_win, A_BOLD);
     const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
-    mvwprintw(table_win, 0, (table_width - 56) / 2, title);
+    mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination          Anti-Culminatin         Time zone: Local"));
     mvwprintw(table_win, 3, 3, "────────────────────────────────────────────────────────────────────────────────────────────────────"); 
@@ -11558,8 +11558,9 @@ void open_menu_tables(ContextoMenu *ctx) {
         wattron(win, COLOR_PAIR(26) | A_DIM);
         box(win, 0, 0);
         
+        char *title = _(" Select a Module or Action ");
         wattron(win, A_BOLD);
-        mvwprintw(win, 0, (menu_width - 17) / 2, _(" Select a Module or Action "));
+        mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
         wattroff(win, COLOR_PAIR(26) | A_DIM);
 

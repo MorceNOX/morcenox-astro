@@ -2742,7 +2742,7 @@ msgid "26. Aspects to House Cusps"
 msgstr ""
 
 #: src/draw-chart.c:11562
-msgid " Select a Module "
+msgid " Select a Module or Action "
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:720
