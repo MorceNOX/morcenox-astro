@@ -97,7 +97,7 @@ jobs:
              ln -sfn /usr/include /usr/include/ncursesw && \
              useradd -m builder && chown -R builder:builder /build && \
              su builder -c 'makepkg -f'"
-          cp arch_tmp/*.pkg.tar.zst release_dist/
+          cp arch_tmp/*.pkg.tar.* release_dist/
           sudo rm -rf arch_tmp
 
       - name: Upload artifacts to GitHub Release
@@ -108,5 +108,5 @@ jobs:
             release_dist/*.tar.gz
             release_dist/*.deb
             release_dist/*.rpm
-            release_dist/*.pkg.tar.zst
+            release_dist/*.pkg.tar.*
           generate_release_notes: true
