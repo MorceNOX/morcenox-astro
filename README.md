@@ -90,16 +90,29 @@ Alternatively, pre-built packages are available for the major Linux distribution
 ```bash
 sudo dnf install ./MorceNOX-Astro-X.Y.Z-1.*.x86_64.rpm
 ```
+or
+```bash
+sudo dnf install ./MorceNOX-Astro-X.Y.Z-1.*.aarch64.rpm
+```
 
 ##### Debian / Ubuntu / Linux Mint / Pop!_OS (`.deb`)
 ```bash
 sudo apt update
 sudo apt install ./morcenox-astro_X.Y.Z_amd64.deb
 ```
+or
+```bash
+sudo apt update
+sudo apt install ./morcenox-astro_X.Y.Z_arm64.deb
+```
 
 ##### Arch Linux / Manjaro / EndeavourOS (`.pkg.tar.zst`)
 ```bash
 sudo pacman -U ./morcenox-astro-X.Y.Z-1-x86_64.pkg.tar.zst
+```
+or
+```bash
+sudo pacman -U ./morcenox-astro-X.Y.Z-1-aarch64.pkg.tar.xz
 ```
 
 3. Launch the application from any terminal:
