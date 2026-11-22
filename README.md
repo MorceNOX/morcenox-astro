@@ -1,6 +1,11 @@
 # MorceNOX™ ASTRO
 <img width="866" height="509" alt="MorceNOX-ASTRO-logo" src="MorceNOX-Astro.png" />
 
+<p align="right">
+  <a href="README.md"><img src="https://flagcdn.com/w40/gb.png" width="25" alt="English"></a>
+  <a href="README-pt.md"><img src="https://flagcdn.com/w40/br.png" width="25" alt="Português"></a>
+</p>
+
 **Your advanced, terminal-based astrological companion.**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -293,9 +298,9 @@ Here are some screenshots of the application. You can have an idea of what you e
 #### • Swiss Ephemeris
 
   https://github.com/aloistr/swisseph
-  
+
   GNU Affero General Public License (AGPL)
-  
+
   <https://www.gnu.org/licenses/agpl-3.0.ca.html>
 
 
@@ -304,51 +309,51 @@ Here are some screenshots of the application. You can have an idea of what you e
 #### • countries-states-cities-database
 
   https://github.com/dr5hn/countries-states-cities-database
-  
+
   ODbL-1.0 license
-  
+
   <https://opendatacommons.org/licenses/odbl/1.0/>
-  
+
 
 
 
 #### • SQLite
 
   https://sqlite.org/
-  
+
   Public Domain
 
 
- 
+
 
 #### • ncurses
 
   https://invisible-island.net/ncurses/
-  
+
   NCURSES License
-  
+
   <https://invisible-island.net/ncurses/ncurses-license.html>
 
 
-  
+
 
 #### • ICU library (libicu)
 
   https://icu.unicode.org/
-  
+
   (https://github.com/unicode-org/icu/blob/main/LICENSE)
 
 
 
-  
+
 #### • ZoneDetect
 
   https://github.com/BertoldVdb/ZoneDetect
-  
+
   <https://github.com/BertoldVdb/ZoneDetect#BSD-3-Clause-1-ov-file>
-  
+
   Copyright (c) 2018-2019, Bertold Van den Bergh
-  
+
   (vandenbergh@bertold.org) All rights reserved.
 
 <hr>
