@@ -11559,7 +11559,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         box(win, 0, 0);
         
         wattron(win, A_BOLD);
-        mvwprintw(win, 0, (menu_width - 17) / 2, " Select a Module ");
+        mvwprintw(win, 0, (menu_width - 17) / 2, _(" Select a Module or Action "));
         wattroff(win, A_BOLD);
         wattroff(win, COLOR_PAIR(26) | A_DIM);
 

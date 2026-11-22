@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 22:26-0300\n"
+"POT-Creation-Date: 2026-11-21 23:59-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -2827,6 +2827,11 @@ msgstr "Error deleting chart."
 #: src/draw-chart.c:11485
 msgid "26. Aspects to House Cusps"
 msgstr ""
+
+#: src/draw-chart.c:11562
+#, fuzzy
+msgid " Select a Module or Action "
+msgstr " Select a Topic "
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:720
 #: src/hyleg.c:889

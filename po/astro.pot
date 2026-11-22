@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 22:26-0300\n"
+"POT-Creation-Date: 2026-11-21 23:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2739,6 +2739,10 @@ msgstr ""
 
 #: src/draw-chart.c:11485
 msgid "26. Aspects to House Cusps"
+msgstr ""
+
+#: src/draw-chart.c:11562
+msgid " Select a Module or Action "
 msgstr ""
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:720

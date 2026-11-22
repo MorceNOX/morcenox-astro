@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 22:26-0300\n"
+"POT-Creation-Date: 2026-11-21 23:59-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -2636,83 +2636,83 @@ msgid "Cusp %d"
 msgstr ""
 
 #: src/draw-chart.c:10741 src/draw-chart.c:10808 src/draw-chart.c:11142
-#: src/draw-chart.c:11173 src/draw-chart.c:11888 src/draw-chart.c:11903
-#: src/draw-chart.c:11937 src/fixed_stars.c:241 src/fixed_stars.c:430
+#: src/draw-chart.c:11173 src/draw-chart.c:11890 src/draw-chart.c:11905
+#: src/draw-chart.c:11939 src/fixed_stars.c:241 src/fixed_stars.c:430
 msgid "Check if 'sefstars.txt' is inside your ephe folder."
 msgstr ""
 
 #: src/draw-chart.c:10742 src/draw-chart.c:10809 src/draw-chart.c:11143
-#: src/draw-chart.c:11174 src/draw-chart.c:11889 src/draw-chart.c:11904
-#: src/draw-chart.c:11938 src/fixed_stars.c:242 src/fixed_stars.c:431
+#: src/draw-chart.c:11174 src/draw-chart.c:11891 src/draw-chart.c:11906
+#: src/draw-chart.c:11940 src/fixed_stars.c:242 src/fixed_stars.c:431
 msgid "Fixed Stars catalog not loaded!"
 msgstr ""
 
-#: src/draw-chart.c:11423 src/draw-chart.c:11459
+#: src/draw-chart.c:11423 src/draw-chart.c:11460
 #, fuzzy
 msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
-#: src/draw-chart.c:11424 src/draw-chart.c:11460
+#: src/draw-chart.c:11424 src/draw-chart.c:11461
 msgid "02. Spherical Measurements of the Sky"
 msgstr ""
 
-#: src/draw-chart.c:11425 src/draw-chart.c:11461
+#: src/draw-chart.c:11425 src/draw-chart.c:11462
 msgid "03. Dignities & Rulerships"
 msgstr ""
 
-#: src/draw-chart.c:11426 src/draw-chart.c:11462
+#: src/draw-chart.c:11426 src/draw-chart.c:11463
 msgid "04. Accidental Dignities"
 msgstr ""
 
-#: src/draw-chart.c:11427 src/draw-chart.c:11463
+#: src/draw-chart.c:11427 src/draw-chart.c:11464
 msgid "05. Strength of the Planets"
 msgstr ""
 
-#: src/draw-chart.c:11428 src/draw-chart.c:11464
+#: src/draw-chart.c:11428 src/draw-chart.c:11465
 msgid "06. Planetary Energy Profile"
 msgstr ""
 
-#: src/draw-chart.c:11429 src/draw-chart.c:11465
+#: src/draw-chart.c:11429 src/draw-chart.c:11466
 #, fuzzy
 msgid "07. Houses"
 msgstr "House System"
 
-#: src/draw-chart.c:11430 src/draw-chart.c:11466
+#: src/draw-chart.c:11430 src/draw-chart.c:11467
 msgid "08. Aspects"
 msgstr ""
 
-#: src/draw-chart.c:11431 src/draw-chart.c:11467
+#: src/draw-chart.c:11431 src/draw-chart.c:11468
 #, fuzzy
 msgid "09. Declination Aspects"
 msgstr "Location: "
 
-#: src/draw-chart.c:11432 src/draw-chart.c:11468
+#: src/draw-chart.c:11432 src/draw-chart.c:11469
 msgid "10. Aspects by Sign"
 msgstr ""
 
-#: src/draw-chart.c:11433 src/draw-chart.c:11469
+#: src/draw-chart.c:11433 src/draw-chart.c:11470
 msgid "11. Aspects to Antiscia"
 msgstr ""
 
-#: src/draw-chart.c:11434 src/draw-chart.c:11470
+#: src/draw-chart.c:11434 src/draw-chart.c:11471
 msgid "12. Aspects to Contrantiscia"
 msgstr ""
 
-#: src/draw-chart.c:11435 src/draw-chart.c:11471
+#: src/draw-chart.c:11435 src/draw-chart.c:11472
 #, fuzzy
 msgid "13. Conjunctions with Fixed Stars"
 msgstr "Location: "
 
-#: src/draw-chart.c:11436 src/draw-chart.c:11472
+#: src/draw-chart.c:11436 src/draw-chart.c:11473
 #, fuzzy
 msgid "14. Declination Aspects with Fixed Stars"
 msgstr "Location: "
 
-#: src/draw-chart.c:11437 src/draw-chart.c:11473
+#: src/draw-chart.c:11437 src/draw-chart.c:11474
 msgid "15. Rising, Setting & Culmination Times"
 msgstr ""
 
-#: src/draw-chart.c:11438 src/draw-chart.c:11474
+#: src/draw-chart.c:11438 src/draw-chart.c:11475
 msgid "16. Hylegiacal & Figuris Almuten"
 msgstr ""
 
@@ -2782,43 +2782,56 @@ msgstr ""
 msgid "31. Activated Fixed Stars & Delineation"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:11475
-msgid "17. Planetary Hours"
+#: src/draw-chart.c:11454
+msgid "32. Aspects to House Cusps"
 msgstr ""
 
 #: src/draw-chart.c:11476
-msgid "18. Arabic Parts"
+msgid "17. Planetary Hours"
 msgstr ""
 
 #: src/draw-chart.c:11477
-msgid "19. Arabic Parts Solar Return Radix Confrontation"
+msgid "18. Arabic Parts"
 msgstr ""
 
 #: src/draw-chart.c:11478
-msgid "20. Radix Confrontation: Solar Return Integration"
+msgid "19. Arabic Parts Solar Return Radix Confrontation"
 msgstr ""
 
 #: src/draw-chart.c:11479
-msgid "21. Annual Transits & Radical Projections"
+msgid "20. Radix Confrontation: Solar Return Integration"
 msgstr ""
 
 #: src/draw-chart.c:11480
-msgid "22. Fixed Stars Parans"
+msgid "21. Annual Transits & Radical Projections"
 msgstr ""
 
 #: src/draw-chart.c:11481
-msgid "23. Heliacal Phases & Stars Visibility"
+msgid "22. Fixed Stars Parans"
 msgstr ""
 
 #: src/draw-chart.c:11482
+msgid "23. Heliacal Phases & Stars Visibility"
+msgstr ""
+
+#: src/draw-chart.c:11483
 #, fuzzy
 msgid "24. Activated Stars On Solar Revolution"
 msgstr "Error deleting chart."
 
-#: src/draw-chart.c:11483
+#: src/draw-chart.c:11484
 #, fuzzy
 msgid "25. Activated Fixed Stars in SR & Delineation"
 msgstr "Error deleting chart."
+
+#: src/draw-chart.c:11485
+msgid "26. Aspects to House Cusps"
+msgstr ""
+
+#: src/draw-chart.c:11562
+#, fuzzy
+msgid " Select a Module "
+msgstr " Select a Topic "
 
 #: src/firdaria.c:106 src/hyleg.c:353 src/hyleg.c:354 src/hyleg.c:720
 #: src/hyleg.c:889
