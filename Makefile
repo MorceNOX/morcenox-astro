@@ -384,3 +384,110 @@ release-all:
 	@echo " TODOS OS PACOTES DA VERSAO $(VERSION) FORAM GERADOS EM $(PKG_DIR)/:"
 	@ls -lh $(PKG_DIR)/*
 	@echo "======================================================================="
+
+.PHONY: package-arm64 rpm-arm64 deb-arm64 arch-arm64 release-arm64
+
+# ==============================================================================
+# 1. PACOTE PORTÁTIL .TAR.GZ (AARCH64) VIA PODMAN + QEMU
+# ==============================================================================
+package-arm64:
+	@echo "======================================================================="
+	@echo " Gerando pacote portátil TAR.GZ (aarch64) para $(APP_NAME) v$(VERSION)..."
+	@echo "======================================================================="
+	@rm -rf $(DEB_TMP_DIR)
+	@mkdir -p $(DEB_TMP_DIR)/src $(PKG_DIR)
+	@tar --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) -cf - . | tar -xf - -C $(DEB_TMP_DIR)/src
+	@podman run --rm --platform linux/arm64 -v $(abspath $(DEB_TMP_DIR)):/build:Z -w /build/src registry.fedoraproject.org/fedora:latest bash -c "\
+		dnf install -y -q gcc make gettext ncurses-devel libicu-devel && \
+		make all translate -j\$$(nproc) && \
+		make package PACKAGE_NAME=$(APP_NAME)-v$(VERSION)-linux-aarch64.tar.gz && \
+		cp -f $(PKG_DIR)/$(APP_NAME)-v$(VERSION)-linux-aarch64.tar.gz /build/"
+	@cp -f $(DEB_TMP_DIR)/$(APP_NAME)-v$(VERSION)-linux-aarch64.tar.gz $(PKG_DIR)/
+	@rm -rf $(DEB_TMP_DIR)
+	@ls -lh $(PKG_DIR)/$(APP_NAME)-v$(VERSION)-linux-aarch64.tar.gz
+
+# ==============================================================================
+# 2. PACOTE .RPM (AARCH64) VIA PODMAN + QEMU
+# ==============================================================================
+rpm-arm64:
+	@echo "======================================================================="
+	@echo " Gerando pacote RPM (aarch64) para $(APP_NAME) v$(VERSION)..."
+	@echo "======================================================================="
+	@rm -rf $(RPM_TMP_DIR)
+	@mkdir -p $(RPM_TMP_DIR)/{BUILD,RPMS,SOURCES,SPECS,SRPMS} $(PKG_DIR)
+	@tar --transform 's,^\.,$(APP_NAME)-$(VERSION),' \
+	     -czf $(RPM_TMP_DIR)/SOURCES/$(APP_NAME)-$(VERSION).tar.gz \
+	     --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) .
+	@cp -f $(SPEC_FILE) $(RPM_TMP_DIR)/SPECS/
+	@podman run --rm --platform linux/arm64 -v $(abspath $(RPM_TMP_DIR)):/rpmbuild:Z registry.fedoraproject.org/fedora:latest bash -c "\
+		dnf install -y -q rpm-build gcc make gettext ncurses-devel libicu-devel && \
+		rpmbuild --define '_topdir /rpmbuild' --define '_version $(VERSION)' -ba /rpmbuild/SPECS/$(APP_NAME).spec"
+	@cp -f $(RPM_TMP_DIR)/RPMS/aarch64/$(APP_NAME)-$(VERSION)-*.aarch64.rpm $(PKG_DIR)/
+	@rm -rf $(RPM_TMP_DIR)
+	@ls -lh $(PKG_DIR)/$(APP_NAME)-$(VERSION)-*.aarch64.rpm
+
+# ==============================================================================
+# 3. PACOTE .DEB (ARM64) VIA PODMAN + QEMU
+# ==============================================================================
+deb-arm64:
+	@echo "======================================================================="
+	@echo " Gerando pacote DEB (arm64) para $(APP_NAME) v$(VERSION)..."
+	@echo "======================================================================="
+	@rm -rf $(DEB_TMP_DIR)
+	@mkdir -p $(DEB_TMP_DIR)/src $(PKG_DIR)
+	@tar --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) -cf - . | tar -xf - -C $(DEB_TMP_DIR)/src
+	@podman run --rm --platform linux/arm64 -v $(abspath $(DEB_TMP_DIR)):/build:Z -w /build/src docker.io/library/ubuntu:24.04 bash -c "\
+		export DEBIAN_FRONTEND=noninteractive && \
+		apt-get update -qq && \
+		apt-get install -y -qq apt-utils gcc make gettext libncurses-dev libicu-dev dpkg-dev >/dev/null && \
+		make PREFIX=/usr -j\$$(nproc) && \
+		make install DESTDIR=/build/pkg PREFIX=/usr && \
+		mkdir -p /build/pkg/DEBIAN debian && \
+		printf 'Source: morcenox-astro\nSection: science\nPriority: optional\nMaintainer: MorceNOX <morcenox@example.com>\n\nPackage: morcenox-astro\nArchitecture: arm64\n' > debian/control && \
+		DEPS=\$$(dpkg-shlibdeps -O /build/pkg/usr/bin/$(TARGET) | sed 's/shlibs:Depends=//') && \
+		printf 'Package: morcenox-astro\nVersion: $(VERSION)\nSection: science\nPriority: optional\nArchitecture: arm64\nDepends: %s\nMaintainer: MorceNOX <morcenox@example.com>\nDescription: Traditional Astrology calculation engine and TUI\n Terminal-based Traditional Astrology suite written in C and ncurses,\n powered by Swiss Ephemeris, ZoneDetect, and SQLite.\n' \"\$$DEPS\" > /build/pkg/DEBIAN/control && \
+		dpkg-deb --root-owner-group --build /build/pkg /build/morcenox-astro_$(VERSION)_arm64.deb && \
+		rm -rf /build/pkg /build/src"
+	@cp -f $(DEB_TMP_DIR)/morcenox-astro_$(VERSION)_arm64.deb $(PKG_DIR)/
+	@rm -rf $(DEB_TMP_DIR)
+	@ls -lh $(PKG_DIR)/morcenox-astro_$(VERSION)_arm64.deb
+
+# ==============================================================================
+# 4. PACOTE ARCH LINUX (AARCH64) VIA PODMAN + QEMU
+# ==============================================================================
+arch-arm64:
+	@echo "======================================================================="
+	@echo " Gerando pacote Arch Linux (aarch64) para $(APP_NAME) v$(VERSION)..."
+	@echo "======================================================================="
+	@podman unshare rm -rf $(ARCH_TMP_DIR) 2>/dev/null || rm -rf $(ARCH_TMP_DIR)
+	@mkdir -p $(ARCH_TMP_DIR) $(PKG_DIR)
+	@tar --transform 's,^\.,$(APP_NAME)-$(VERSION),' \
+	     -czf $(ARCH_TMP_DIR)/$(APP_NAME)-$(VERSION).tar.gz \
+	     --exclude=.git --exclude=$(PKG_DIR) --exclude=$(RPM_TMP_DIR) \
+	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
+	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) .
+	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
+	@podman run --rm --platform linux/arm64 -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/menci/archlinuxarm:latest bash -c "\
+		pacman -Sy --noconfirm archlinuxarm-keyring && \
+		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
+		ln -sfn /usr/include /usr/include/ncursesw && \
+		useradd -m builder && \
+		chown -R builder:builder /build && \
+		su builder -c 'makepkg -f' && \
+		chown -R 0:0 /build"
+	@cp -f $(ARCH_TMP_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.zst $(PKG_DIR)/
+	@podman unshare rm -rf $(ARCH_TMP_DIR) 2>/dev/null || rm -rf $(ARCH_TMP_DIR)
+	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.zst
+
+# Gera todos os pacotes ARM64 de uma só vez
+release-arm64: package-arm64 rpm-arm64 deb-arm64 arch-arm64
+	@echo "======================================================================="
+	@echo " PACOTES ARM64 (AARCH64) DA VERSAO $(VERSION) PRONTOS EM $(PKG_DIR)/:"
+	@ls -lh $(PKG_DIR)/*aarch64* $(PKG_DIR)/*arm64*
+	@echo "======================================================================="
