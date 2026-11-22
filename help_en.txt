@@ -217,11 +217,11 @@ Press Q or ESC to return to the main menu.
     
     • F1 or i - Data Info 
        
-    • F2 - Planet Positions and Dignities
+    • F2 - Planet Dignities & Rulerships
     
-        - F2 - Spherical Measurements of the Sky
+        - F2 - Speculum
        
-        - F3 - Accidental Dignities Details
+        - F3 - Accidental Dignities
         
         - F4 - Strength
         
@@ -805,9 +805,11 @@ The zodiac sign symbols are color-coded by element:
    • Air (Gemini, Libra, Aquarius): Yellow
    • Earth (Taurus, Virgo, Capricorn): Green
    
-The 30-degree segments defining the area of ​​each sign are colored in two alternating colors, so that the division between the signs is identified by the change in color.
+The 30-degree segments defining the area of ​​each sign are colored in two alternating colors, so that the division between the signs is identified by the change in color. In this area are plotted the symbol os the Zodiac Signs, each opne in its proper segment.
 
-The background color of the symbol, degree, and minute for each planet or point matches the color of the sign it occupies; thus, if two or more planets or points are conjunct—or very close together—near the boundary between two signs, and one or more of them happen to be plotted outside their actual sign, the background color will indicate the correct sign.
+Below the Zodiac Signs circle is another circle also divided into 12 unequal segments, which represent the Houses. There are also 2 alternating colors in order to allow distinguish the house limits and their zodiacal positions. 
+
+The background color of the symbol, degree, and minute for each planet or point matches the color of the house it occupies; thus, if two or more planets or points are conjunct—or very close together—near the boundary between two houses, and one or more of them happen to be plotted outside their actual house, the background color will indicate the correct house.
 
 
 
@@ -942,7 +944,7 @@ Press Q or ESC to return to the main menu.
   
   It is possible more than one mutual reception for one planet. In this case you will see the line of the corresponding pair display the same pair of planets on mutual reception.
 
-By pressing F2 in this table you can see what the ancient called Spherical Measurements of the Sky. They are Local and Equatorial Astronomic Measurements which shows data about the actual state and coordinates of the planets and other points in the exact moment of the birthday (the time of the radical chart).
+By pressing F2 in this table you can see the table usually known as Speculum, what the ancient called Spherical Measurements of the Sky. They are Local and Equatorial Astronomic Measurements which shows data about the actual state and coordinates of the planets and other points in the exact moment of the birthday (the time of the radical chart).
 
 Pressing F3 and you can see details of the accidental dignities and the state of the planets and bodies.
 
@@ -1037,7 +1039,8 @@ Mutual Reception without Aspect*** → +1 point
 
 
 
-• Spherical Measurements of the Sky (F2 in the Dignities Table)
+• Speculum, or Spherical Measurements of the Sky 
+  (F2 in the Dignities Table)
 ───────────────────────────────────────────────────────────────────
 
 This table displays astronomical calculated metrics of the planets and other points and bodies.

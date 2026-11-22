@@ -215,9 +215,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F1 ou i - Dados do Mapa
    
-• F2 - Posições e Dignidades dos Planetas
+• F2 - Dignidades e Regências dos Planetas
 
-    - F2 - Medidas Esféricas do Céu 
+    - F2 - Speculum 
    
     - F3 - Detalhes das Dignidades Acidentais
     
@@ -805,9 +805,11 @@ Os signos são codificados por elemento:
 • Ar (Gêmeos, Libra, Aquário): Amarelo
 • Terra (Touro, Virgem, Capricórnio): Verde
 
-Os segmentos de 30 graus que configuram a área de cada signo são coloridos em duas cores que se alternam, de modo que a divisão entre os signos seja identificada pela mudança de cor.
+Os segmentos de 30 graus que configuram a área de cada signo são coloridos em duas cores que se alternam, de modo que a divisão entre os signos seja identificada pela mudança de cor. Nesta área estão desenhados os símbolos dos signos do zodíaco, cada um em seu próprio segmento.
 
-A cor de fundo do símbolo, do grau e do minuto de cada planeta ou ponto segue a cor do signo em que se encontra, de modo que, caso 2 (dois) ou mais planetas/pontos estejam conjuntos, ou muito próximos, e perto da fronteira entre dois signos e porventura um ou mais deles forem plotados fora de seu signo, a cor de fundo indicará o signo correto.
+Logo abaixo, onde são plotados os planetas e objetos celestes, também vemos um círculo dividido em fatias ou segmentos desiguais que representam as Casas. A área das casas também é colorida em duas cores alternadas, de modo a facilitar a visualização dos limites e da posição por signo de cada casa.
+
+A cor de fundo do símbolo, do grau e do minuto de cada planeta ou ponto segue a cor da casa em que se encontra, de modo que, caso 2 (dois) ou mais planetas/pontos estejam conjuntos, ou muito próximos, e perto da fronteira entre duas casas e porventura um ou mais deles forem plotados fora de sua posição angular, a cor de fundo indicará a casa correta.
 
 
 
@@ -942,9 +944,9 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Recepção mútua: 
 Esta coluna mostra o par de planetas que estão recebendo um ao outro, ou por domicílio, ou por exaltação, ou por termo, ou por face (decanato). Quando há aspecto entre os planetas, o programa exibe os dois juntos entre chaves "{ }"; se não houver aspecto, estarão representados entre parênteses. Na próxima tabela - pressionando F3 para ter acesso - podemos ver a flag (Asp) se houver aspecto, além de outras informações mais detalhadas sobre as dignidades acidentais.
 
-Pode ocorrer mais de uma recepção mútua para o mesmo planeta. Neste caso, a linha do respectivo par também exibirá a recepção para o memo par de planetas.
+Pode ocorrer mais de uma recepção mútua para o mesmo planeta. Neste caso, a linha do respectivo par também exibirá a recepção para o mesmo par de planetas.
 
-Pressionando-se F2, você verá as Medidas Equatoriais e Locais, que são dados astronômicos calculados que refletem exatamente como estavam os planetaas e outros pontos no exato momento do nascimento (o horário do mapa ativo). Os antigos chamavam tais dados de medidas esféricas do cèu, e por isso nós adotamos essa descrição como o nome da nossa tabela de medidas.
+Pressionando-se F2, você verá as Medidas Equatoriais e Locais, que são dados astronômicos calculados que refletem exatamente como estavam os planetaas e outros pontos no exato momento do nascimento (o horário do mapa ativo). Os antigos chamavam tais dados de medidas esféricas do cèu, e usualmente chamada de Sepeculum.
 
 Ao pressionar F3, você pode ver detalhes sobre as dignidades acidentais e o estado dos planetas e corpos.
 
@@ -1042,8 +1044,8 @@ Use [↓↑] para deslizar a tabela.
 
 
 
-• Medidas Astronômicas do Céu
-(F2 na Tabela de Dignidades)
+• Speculum, ou Medidas Astronômicas do Céu
+  (F2 na Tabela de Dignidades)
 ───────────────────────────────────────────────────────────────────
 
 Esta tabela exibe dados astronômicos equatoriais e locais dos planetaas no exato horário do corrente mapa.
@@ -1056,7 +1058,7 @@ As duas últimas colunas são calculadas de acordo com o método de cálculo de 
 
 
 • Detalhes das Dignidades Acidentais
-(F3 na Tabela de Dignidades)
+  (F3 na Tabela de Dignidades)
 ───────────────────────────────────────────────────────────────────
 
 Você pode ver as condições acidentais de todos
