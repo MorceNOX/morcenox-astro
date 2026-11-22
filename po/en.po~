@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 05:42-0300\n"
+"POT-Creation-Date: 2026-11-22 09:25-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/almuten.c:527
-msgid "Hylegiacal & Figuris Almutens"
+msgid " Hylegiacal & Figuris Almutens "
 msgstr ""
 
 #: src/almuten.c:553
@@ -61,7 +61,7 @@ msgid "Planetary"
 msgstr ""
 
 #: src/almuten.c:606 src/directions.c:3915 src/directions.c:4999
-#: src/draw-chart.c:2421 src/draw-chart.c:5957 src/selections.c:4304
+#: src/draw-chart.c:2421 src/draw-chart.c:5957 src/selections.c:4305
 msgid "Day"
 msgstr "Day"
 
@@ -71,7 +71,7 @@ msgid "Night"
 msgstr ""
 
 #: src/almuten.c:606 src/draw-chart.c:2421 src/draw-chart.c:5957
-#: src/draw-chart.c:5985 src/selections.c:4613
+#: src/draw-chart.c:5985 src/selections.c:4614
 msgid "Hour"
 msgstr "Hour"
 
@@ -651,22 +651,22 @@ msgstr "Display Chart"
 msgid "Nocturnal Formulae"
 msgstr ""
 
-#: src/arabic_parts.c:517 src/arabic_parts.c:1092 src/selections.c:3700
+#: src/arabic_parts.c:517 src/arabic_parts.c:1092 src/selections.c:3701
 msgid "Gender"
 msgstr "Gender"
 
 #: src/arabic_parts.c:517 src/arabic_parts.c:1092 src/arabic_parts.c:1874
-#: src/draw-chart.c:2374 src/selections.c:3701
+#: src/draw-chart.c:2374 src/selections.c:3702
 msgid "Masculine"
 msgstr "Masculine"
 
 #: src/arabic_parts.c:517 src/arabic_parts.c:1092 src/arabic_parts.c:1874
-#: src/draw-chart.c:2374 src/selections.c:3701
+#: src/draw-chart.c:2374 src/selections.c:3702
 msgid "Feminine"
 msgstr "Feminine"
 
 #: src/arabic_parts.c:517 src/arabic_parts.c:1092 src/draw-chart.c:2374
-#: src/selections.c:1652 src/selections.c:3701
+#: src/selections.c:1653 src/selections.c:3702
 msgid "Neuter"
 msgstr "Neuter"
 
@@ -819,11 +819,11 @@ msgstr ""
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:3058 src/selections.c:371
+#: src/arabic_parts.c:3058 src/selections.c:372
 msgid " CONFIRM DELETE "
 msgstr " CONFIRM DELETE "
 
-#: src/arabic_parts.c:3062 src/selections.c:375
+#: src/arabic_parts.c:3062 src/selections.c:376
 msgid "Are you sure you want to permanently delete:"
 msgstr "Are you sure you want to permanently delete:"
 
@@ -833,13 +833,13 @@ msgid "   YES   "
 msgstr "    YES    "
 
 #: src/arabic_parts.c:3079 src/arabic_parts.c:3168 src/arabic_parts.c:3177
-#: src/selections.c:401 src/selections.c:453 src/selections.c:462
-#: src/selections.c:482 src/selections.c:491 src/selections.c:594
-#: src/selections.c:603 src/selections.c:2689 src/selections.c:2787
-#: src/selections.c:2798 src/selections.c:2821 src/selections.c:2832
-#: src/selections.c:2907 src/selections.c:2918 src/selections.c:3008
-#: src/selections.c:3093 src/selections.c:3104 src/selections.c:3128
-#: src/selections.c:3139 src/selections.c:3213 src/selections.c:3224
+#: src/selections.c:402 src/selections.c:454 src/selections.c:463
+#: src/selections.c:483 src/selections.c:492 src/selections.c:595
+#: src/selections.c:604 src/selections.c:2690 src/selections.c:2788
+#: src/selections.c:2799 src/selections.c:2822 src/selections.c:2833
+#: src/selections.c:2908 src/selections.c:2919 src/selections.c:3009
+#: src/selections.c:3094 src/selections.c:3105 src/selections.c:3129
+#: src/selections.c:3140 src/selections.c:3214 src/selections.c:3225
 msgid "  CANCEL  "
 msgstr "  CANCEL  "
 
@@ -855,7 +855,7 @@ msgstr "Chart deleted successfully."
 
 #: src/aspects.c:483
 #, fuzzy
-msgid "Parallel & Contra-Parallel"
+msgid " Parallel & Contra-Parallel Aspects "
 msgstr "Parallel / Contra-parallel orb"
 
 #: src/aspects.c:614 src/aspects.c:1030 src/aspects.c:2107 src/aspects.c:2530
@@ -866,13 +866,12 @@ msgstr "Press [ESC] to cancel"
 
 #: src/aspects.c:897
 #, fuzzy
-msgid "Parallel & Contra-Parallel with Fixed Stars"
+msgid " Parallel & Contra-Parallel Aspects with Fixed Stars "
 msgstr "Parallel / Contra-parallel orb"
 
 #: src/aspects.c:1313
-#, fuzzy
-msgid "Aspects Table"
-msgstr "House System"
+msgid " Aspects Matrix Grid "
+msgstr ""
 
 #: src/aspects.c:1459 src/aspects.c:2106
 msgid "(*) Numbers = angular distance in degrees"
@@ -886,12 +885,13 @@ msgstr ""
 
 #: src/aspects.c:1944
 #, fuzzy
-msgid "Conjunctions with Fixed Stars"
+msgid " Conjunctions with Fixed Stars "
 msgstr "Location: "
 
 #: src/aspects.c:2392
-msgid "Aspects by Sign Table"
-msgstr ""
+#, fuzzy
+msgid " Aspects by Sign Table "
+msgstr "House System"
 
 #: src/aspects.c:2950
 msgid " House Cusps Aspects Matrix Grid "
@@ -1109,12 +1109,12 @@ msgid "[←/→] Signif."
 msgstr ""
 
 #: src/directions.c:3912 src/directions.c:4996 src/profections.c:235
-#: src/selections.c:2704 src/selections.c:3022
+#: src/selections.c:2705 src/selections.c:3023
 msgid "Age"
 msgstr "Age"
 
 #: src/directions.c:3913 src/directions.c:4997 src/profections.c:236
-#: src/selections.c:4302
+#: src/selections.c:4303
 msgid "Year"
 msgstr "Year"
 
@@ -1817,8 +1817,8 @@ msgstr ""
 
 #: src/draw-chart.c:4726
 msgid ""
-"Press ESC/Q to close ─ F2 Celestial Measurements ─ F3 Dignities ─ F4 "
-"Strength ─ F5 Energy Profile ─ [↓↑/JK] Scroll"
+"Press ESC/Q to close ─ F2 Speculum ─ F3 Dignities ─ F4 Strength ─ F5 Energy "
+"Profile ─ [↓↑/JK] Scroll"
 msgstr ""
 
 #: src/draw-chart.c:5086
@@ -3258,7 +3258,7 @@ msgstr "Location: "
 
 #: src/fixed_stars.c:589
 #, c-format
-msgid "Fixed Stars Parans (Max Orb: %.0f min | Total: %d)"
+msgid " Fixed Stars Parans (Max Orb: %.0f min | Total: %d) "
 msgstr ""
 
 #: src/fixed_stars.c:597 src/fixed_stars.c:636 src/fixed_stars.c:648
@@ -3301,7 +3301,7 @@ msgstr ""
 
 #: src/fixed_stars.c:670
 #, c-format
-msgid "Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s)"
+msgid " Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s) "
 msgstr ""
 
 #: src/fixed_stars.c:698
@@ -3331,7 +3331,7 @@ msgstr ""
 
 #: src/fixed_stars.c:1393
 #, c-format
-msgid "Heliacal Phases & Visibility (Stars: %d | Sorted by: %s)"
+msgid " Heliacal Phases & Visibility (Stars: %d | Sorted by: %s) "
 msgstr ""
 
 #: src/fixed_stars.c:1414
@@ -3953,7 +3953,8 @@ msgid "No charts available."
 msgstr "No charts available."
 
 #: src/menu-box.c:1233
-msgid "Select Chart to Delete"
+#, fuzzy
+msgid " Select Chart to Delete "
 msgstr "Select Chart to Delete"
 
 #: src/menu-box.c:1535
@@ -3965,7 +3966,8 @@ msgid "Chart deleted successfully."
 msgstr "Chart deleted successfully."
 
 #: src/menu-box.c:1682
-msgid "Select Chart to Load"
+#, fuzzy
+msgid " Select Chart to Load "
 msgstr "Select Chart to Load"
 
 #: src/menu-box.c:1993
@@ -3984,15 +3986,15 @@ msgstr "┃ Date/Time: "
 msgid "┃ Dst: "
 msgstr "┃ Dst: "
 
-#: src/menu-box.c:2325 src/selections.c:7570 src/selections.c:7720
+#: src/menu-box.c:2325 src/selections.c:7571 src/selections.c:7721
 msgid "Yes "
 msgstr "Yes "
 
-#: src/menu-box.c:2325 src/selections.c:7569 src/selections.c:7723
+#: src/menu-box.c:2325 src/selections.c:7570 src/selections.c:7724
 msgid "No  "
 msgstr "No  "
 
-#: src/menu-box.c:2325 src/selections.c:7568
+#: src/menu-box.c:2325 src/selections.c:7569
 msgid "Auto"
 msgstr "Auto"
 
@@ -4837,8 +4839,9 @@ msgid "Press ESC to return to chart ─ [P] Export to CSV"
 msgstr "Press [ESC] to cancel"
 
 #: src/profections.c:671
-msgid "Annual Profections Panel"
-msgstr ""
+#, fuzzy
+msgid " Annual Profections Panel "
+msgstr "Location: "
 
 #: src/profections.c:713
 msgid "  [CRITICAL ALCOCHODEN RETURN YEAR!]"
@@ -4907,552 +4910,553 @@ msgstr "Press [ESC] to cancel"
 msgid " CONFIRM "
 msgstr " CONFIRM "
 
-#: src/selections.c:99 src/selections.c:136 src/selections.c:145
-#: src/selections.c:221 src/selections.c:230 src/selections.c:271
-#: src/selections.c:280
+#: src/selections.c:100 src/selections.c:137 src/selections.c:146
+#: src/selections.c:222 src/selections.c:231 src/selections.c:272
+#: src/selections.c:281
 msgid "    YES    "
 msgstr "    YES    "
 
-#: src/selections.c:110 src/selections.c:162 src/selections.c:171
-#: src/selections.c:192 src/selections.c:201 src/selections.c:304
-#: src/selections.c:313
+#: src/selections.c:111 src/selections.c:163 src/selections.c:172
+#: src/selections.c:193 src/selections.c:202 src/selections.c:305
+#: src/selections.c:314
 msgid "    NO    "
 msgstr "    NO    "
 
-#: src/selections.c:390 src/selections.c:427 src/selections.c:436
-#: src/selections.c:511 src/selections.c:520 src/selections.c:561
-#: src/selections.c:570 src/selections.c:2678 src/selections.c:2760
-#: src/selections.c:2769 src/selections.c:2875 src/selections.c:2884
-#: src/selections.c:2997 src/selections.c:3065 src/selections.c:3074
-#: src/selections.c:3182 src/selections.c:3191
+#: src/selections.c:391 src/selections.c:428 src/selections.c:437
+#: src/selections.c:512 src/selections.c:521 src/selections.c:562
+#: src/selections.c:571 src/selections.c:2679 src/selections.c:2761
+#: src/selections.c:2770 src/selections.c:2876 src/selections.c:2885
+#: src/selections.c:2998 src/selections.c:3066 src/selections.c:3075
+#: src/selections.c:3183 src/selections.c:3192
 msgid "  CONFIRM  "
 msgstr "  CONFIRM  "
 
-#: src/selections.c:665
+#: src/selections.c:666
 msgid " ALERT "
 msgstr " ALERT "
 
-#: src/selections.c:681 src/selections.c:699 src/selections.c:708
-#: src/selections.c:744 src/selections.c:753
+#: src/selections.c:682 src/selections.c:700 src/selections.c:709
+#: src/selections.c:745 src/selections.c:754
 msgid "    OK    "
 msgstr "    OK    "
 
-#: src/selections.c:1334 src/selections.c:1366
+#: src/selections.c:1335 src/selections.c:1367
 msgid " Settings "
 msgstr " Settings "
 
-#: src/selections.c:1350 src/selections.c:1401
+#: src/selections.c:1351 src/selections.c:1402
 #, fuzzy
 msgid "[↓↑] Select. [← →] Adjust. [Enter] Confirm. [ESC] Cancel."
 msgstr "Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."
 
-#: src/selections.c:1381 src/selections.c:2110 src/selections.c:2118
-#: src/selections.c:2265 src/selections.c:2273
+#: src/selections.c:1382 src/selections.c:2111 src/selections.c:2119
+#: src/selections.c:2266 src/selections.c:2274
 #, fuzzy
 msgid "[ CONFIRM  ]"
 msgstr "  CONFIRM  "
 
-#: src/selections.c:1392 src/selections.c:2305 src/selections.c:2316
-#: src/selections.c:2428 src/selections.c:2439 src/selections.c:3315
-#: src/selections.c:3436 src/selections.c:3445 src/selections.c:3469
-#: src/selections.c:3478 src/selections.c:3556 src/selections.c:3566
-#: src/selections.c:3684 src/selections.c:3756 src/selections.c:3765
-#: src/selections.c:3787 src/selections.c:3796 src/selections.c:3869
-#: src/selections.c:3879 src/selections.c:4004 src/selections.c:4076
-#: src/selections.c:4085 src/selections.c:4107 src/selections.c:4116
-#: src/selections.c:4189 src/selections.c:4199 src/selections.c:4326
-#: src/selections.c:4393 src/selections.c:4402 src/selections.c:4426
-#: src/selections.c:4435 src/selections.c:4511 src/selections.c:4521
-#: src/selections.c:4639 src/selections.c:4717 src/selections.c:4726
-#: src/selections.c:4751 src/selections.c:4760 src/selections.c:4836
-#: src/selections.c:4846 src/selections.c:4965 src/selections.c:5050
-#: src/selections.c:5059 src/selections.c:5083 src/selections.c:5092
-#: src/selections.c:5168 src/selections.c:5178 src/selections.c:5294
-#: src/selections.c:5379 src/selections.c:5388 src/selections.c:5412
-#: src/selections.c:5421 src/selections.c:5497 src/selections.c:5507
-#: src/selections.c:5608 src/selections.c:5751 src/selections.c:5761
-#: src/selections.c:5821 src/selections.c:5830 src/selections.c:5854
-#: src/selections.c:5863 src/selections.c:5994 src/selections.c:6137
-#: src/selections.c:6147 src/selections.c:6214 src/selections.c:6223
-#: src/selections.c:6254 src/selections.c:6263 src/selections.c:6400
-#: src/selections.c:6543 src/selections.c:6553 src/selections.c:6619
-#: src/selections.c:6628 src/selections.c:6658 src/selections.c:6667
-#: src/selections.c:6803 src/selections.c:6946 src/selections.c:6956
-#: src/selections.c:7022 src/selections.c:7031 src/selections.c:7061
-#: src/selections.c:7070 src/selections.c:7806 src/selections.c:7949
-#: src/selections.c:7959 src/selections.c:8019 src/selections.c:8028
-#: src/selections.c:8052 src/selections.c:8061 src/selections.c:8193
-#: src/selections.c:8336 src/selections.c:8346 src/selections.c:8406
-#: src/selections.c:8415 src/selections.c:8439 src/selections.c:8448
+#: src/selections.c:1393 src/selections.c:2306 src/selections.c:2317
+#: src/selections.c:2429 src/selections.c:2440 src/selections.c:3316
+#: src/selections.c:3437 src/selections.c:3446 src/selections.c:3470
+#: src/selections.c:3479 src/selections.c:3557 src/selections.c:3567
+#: src/selections.c:3685 src/selections.c:3757 src/selections.c:3766
+#: src/selections.c:3788 src/selections.c:3797 src/selections.c:3870
+#: src/selections.c:3880 src/selections.c:4005 src/selections.c:4077
+#: src/selections.c:4086 src/selections.c:4108 src/selections.c:4117
+#: src/selections.c:4190 src/selections.c:4200 src/selections.c:4327
+#: src/selections.c:4394 src/selections.c:4403 src/selections.c:4427
+#: src/selections.c:4436 src/selections.c:4512 src/selections.c:4522
+#: src/selections.c:4640 src/selections.c:4718 src/selections.c:4727
+#: src/selections.c:4752 src/selections.c:4761 src/selections.c:4837
+#: src/selections.c:4847 src/selections.c:4966 src/selections.c:5051
+#: src/selections.c:5060 src/selections.c:5084 src/selections.c:5093
+#: src/selections.c:5169 src/selections.c:5179 src/selections.c:5295
+#: src/selections.c:5380 src/selections.c:5389 src/selections.c:5413
+#: src/selections.c:5422 src/selections.c:5498 src/selections.c:5508
+#: src/selections.c:5609 src/selections.c:5752 src/selections.c:5762
+#: src/selections.c:5822 src/selections.c:5831 src/selections.c:5855
+#: src/selections.c:5864 src/selections.c:5995 src/selections.c:6138
+#: src/selections.c:6148 src/selections.c:6215 src/selections.c:6224
+#: src/selections.c:6255 src/selections.c:6264 src/selections.c:6401
+#: src/selections.c:6544 src/selections.c:6554 src/selections.c:6620
+#: src/selections.c:6629 src/selections.c:6659 src/selections.c:6668
+#: src/selections.c:6804 src/selections.c:6947 src/selections.c:6957
+#: src/selections.c:7023 src/selections.c:7032 src/selections.c:7062
+#: src/selections.c:7071 src/selections.c:7807 src/selections.c:7950
+#: src/selections.c:7960 src/selections.c:8020 src/selections.c:8029
+#: src/selections.c:8053 src/selections.c:8062 src/selections.c:8194
+#: src/selections.c:8337 src/selections.c:8347 src/selections.c:8407
+#: src/selections.c:8416 src/selections.c:8440 src/selections.c:8449
 #, fuzzy
 msgid "[  CANCEL  ]"
 msgstr "  CANCEL  "
 
-#: src/selections.c:1412 src/selections.c:1429 src/selections.c:1447
-#: src/selections.c:1464 src/selections.c:1557 src/selections.c:1614
-#: src/selections.c:1630
+#: src/selections.c:1413 src/selections.c:1430 src/selections.c:1448
+#: src/selections.c:1465 src/selections.c:1558 src/selections.c:1615
+#: src/selections.c:1631
 msgid "Unknown"
 msgstr "Unknown"
 
-#: src/selections.c:1423
+#: src/selections.c:1424
 msgid "House System"
 msgstr "House System"
 
-#: src/selections.c:1440
+#: src/selections.c:1441
 msgid "Triplicity System"
 msgstr "Triplicity System"
 
-#: src/selections.c:1459
+#: src/selections.c:1460
 msgid "Terms (bounds) System"
 msgstr "Terms (bounds) System"
 
-#: src/selections.c:1475
+#: src/selections.c:1476
 #, fuzzy
 msgid "Calculated Stars Classes"
 msgstr "Chart saved!"
 
-#: src/selections.c:1481
+#: src/selections.c:1482
 msgid "Sun orb"
 msgstr "Sun orb"
 
-#: src/selections.c:1485
+#: src/selections.c:1486
 msgid "Moon orb"
 msgstr "Moon orb"
 
-#: src/selections.c:1489
+#: src/selections.c:1490
 msgid "Mercury orb"
 msgstr "Mercury orb"
 
-#: src/selections.c:1493
+#: src/selections.c:1494
 msgid "Venus orb"
 msgstr "Venus orb"
 
-#: src/selections.c:1497
+#: src/selections.c:1498
 msgid "Mars orb"
 msgstr "Mars orb"
 
-#: src/selections.c:1501
+#: src/selections.c:1502
 msgid "Jupiter orb"
 msgstr "Jupiter orb"
 
-#: src/selections.c:1505
+#: src/selections.c:1506
 msgid "Saturn orb"
 msgstr "Saturn orb"
 
-#: src/selections.c:1509
+#: src/selections.c:1510
 msgid "Uranus orb"
 msgstr "Uranus orb"
 
-#: src/selections.c:1513
+#: src/selections.c:1514
 msgid "Neptune orb"
 msgstr "Neptune orb"
 
-#: src/selections.c:1517
+#: src/selections.c:1518
 msgid "Pluto orb"
 msgstr "Pluto orb"
 
-#: src/selections.c:1521
+#: src/selections.c:1522
 msgid "Lunar Nodes orb"
 msgstr "Lunar Nodes orb"
 
-#: src/selections.c:1526
+#: src/selections.c:1527
 msgid "Parallel / Contra-parallel orb"
 msgstr "Parallel / Contra-parallel orb"
 
-#: src/selections.c:1531
+#: src/selections.c:1532
 msgid "Antiscia / Contrantiscia orb"
 msgstr ""
 
-#: src/selections.c:1536
+#: src/selections.c:1537
 msgid "Paran orb (time in minutes)"
 msgstr ""
 
-#: src/selections.c:1542 src/selections.c:1549 src/selections.c:1583
-#: src/selections.c:1590 src/selections.c:1646
+#: src/selections.c:1543 src/selections.c:1550 src/selections.c:1584
+#: src/selections.c:1591 src/selections.c:1647
 msgid "yes"
 msgstr "yes"
 
-#: src/selections.c:1542 src/selections.c:1549 src/selections.c:1583
-#: src/selections.c:1590 src/selections.c:1646
+#: src/selections.c:1543 src/selections.c:1550 src/selections.c:1584
+#: src/selections.c:1591 src/selections.c:1647
 msgid "no"
 msgstr "no"
 
-#: src/selections.c:1543
+#: src/selections.c:1544
 msgid "Consider Modern Planets Rulling by Exaltation?"
 msgstr "Consider Modern Planets Rulling by Exaltation?"
 
-#: src/selections.c:1550
+#: src/selections.c:1551
 msgid "Use Modern Planets?"
 msgstr "Use Modern Planets?"
 
-#: src/selections.c:1570
+#: src/selections.c:1571
 msgid "Dynamic"
 msgstr ""
 
-#: src/selections.c:1578
+#: src/selections.c:1579
 #, fuzzy
 msgid "Time Key (Prim. Directions)"
 msgstr "Location: "
 
-#: src/selections.c:1585
+#: src/selections.c:1586
 msgid "Antiscia/Contrantiscia as Promissors in Primary Directions?"
 msgstr ""
 
-#: src/selections.c:1592
+#: src/selections.c:1593
 msgid "Fixed Stars as Promissors in Primary Directions?"
 msgstr ""
 
-#: src/selections.c:1624
+#: src/selections.c:1625
 msgid "Prim Dir Arc Calculation Method"
 msgstr ""
 
-#: src/selections.c:1640
+#: src/selections.c:1641
 msgid "Interface Language"
 msgstr "Interface Language"
 
-#: src/selections.c:1648
+#: src/selections.c:1649
 msgid "Dark Mode"
 msgstr "Dark Mode"
 
-#: src/selections.c:1652
+#: src/selections.c:1653
 msgid "Male"
 msgstr "Male"
 
-#: src/selections.c:1652
+#: src/selections.c:1653
 msgid "Female"
 msgstr "Female"
 
-#: src/selections.c:1653
+#: src/selections.c:1654
 msgid "Default Gender"
 msgstr "Default Gender"
 
-#: src/selections.c:2671 src/selections.c:2990
+#: src/selections.c:2672 src/selections.c:2991
 msgid " Target Age Selection "
 msgstr " Target Age Selection "
 
-#: src/selections.c:2697
+#: src/selections.c:2698
 #, fuzzy
 msgid "Use [↑/↓] [PgUp/PgDn] to adjust."
 msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
-#: src/selections.c:2698
+#: src/selections.c:2699
 #, fuzzy
 msgid "[Enter] confirm | [ESC] cancel."
 msgstr "Use [←↓↑→] to ajust. [Enter] confirm. [ESC] Cancel."
 
-#: src/selections.c:2705 src/selections.c:3023
+#: src/selections.c:2706 src/selections.c:3024
 msgid "years"
 msgstr "years"
 
-#: src/selections.c:3016 src/selections.c:3693 src/selections.c:4013
+#: src/selections.c:3017 src/selections.c:3694 src/selections.c:4014
 msgid "Use [↑/↓] to adjust. [Enter] to confirm."
 msgstr "Use [↑/↓] to adjust. [Enter] to confirm."
 
-#: src/selections.c:3017 src/selections.c:3324 src/selections.c:3694
-#: src/selections.c:4014 src/selections.c:5617 src/selections.c:6003
-#: src/selections.c:6409 src/selections.c:6812 src/selections.c:7815
-#: src/selections.c:8202
+#: src/selections.c:3018 src/selections.c:3325 src/selections.c:3695
+#: src/selections.c:4015 src/selections.c:5618 src/selections.c:6004
+#: src/selections.c:6410 src/selections.c:6813 src/selections.c:7816
+#: src/selections.c:8203
 msgid "[ESC] to cancel."
 msgstr "[ESC] to cancel."
 
-#: src/selections.c:3298 src/selections.c:7193
+#: src/selections.c:3299 src/selections.c:7194
 msgid " Elevation "
 msgstr ""
 
-#: src/selections.c:3304 src/selections.c:3406 src/selections.c:3415
-#: src/selections.c:3520 src/selections.c:3529 src/selections.c:3673
-#: src/selections.c:3729 src/selections.c:3738 src/selections.c:3836
-#: src/selections.c:3845 src/selections.c:3993 src/selections.c:4049
-#: src/selections.c:4058 src/selections.c:4156 src/selections.c:4165
-#: src/selections.c:4315 src/selections.c:4363 src/selections.c:4372
-#: src/selections.c:4477 src/selections.c:4486 src/selections.c:4628
-#: src/selections.c:4687 src/selections.c:4696 src/selections.c:4802
-#: src/selections.c:4811 src/selections.c:4954 src/selections.c:5020
-#: src/selections.c:5029 src/selections.c:5134 src/selections.c:5143
-#: src/selections.c:5283 src/selections.c:5349 src/selections.c:5358
-#: src/selections.c:5463 src/selections.c:5472 src/selections.c:5597
-#: src/selections.c:5719 src/selections.c:5728 src/selections.c:5793
-#: src/selections.c:5802 src/selections.c:5983 src/selections.c:6105
-#: src/selections.c:6114 src/selections.c:6186 src/selections.c:6195
-#: src/selections.c:6389 src/selections.c:6511 src/selections.c:6520
-#: src/selections.c:6591 src/selections.c:6600 src/selections.c:6792
-#: src/selections.c:6914 src/selections.c:6923 src/selections.c:6994
-#: src/selections.c:7003 src/selections.c:7795 src/selections.c:7917
-#: src/selections.c:7926 src/selections.c:7991 src/selections.c:8000
-#: src/selections.c:8182 src/selections.c:8304 src/selections.c:8313
-#: src/selections.c:8378 src/selections.c:8387
+#: src/selections.c:3305 src/selections.c:3407 src/selections.c:3416
+#: src/selections.c:3521 src/selections.c:3530 src/selections.c:3674
+#: src/selections.c:3730 src/selections.c:3739 src/selections.c:3837
+#: src/selections.c:3846 src/selections.c:3994 src/selections.c:4050
+#: src/selections.c:4059 src/selections.c:4157 src/selections.c:4166
+#: src/selections.c:4316 src/selections.c:4364 src/selections.c:4373
+#: src/selections.c:4478 src/selections.c:4487 src/selections.c:4629
+#: src/selections.c:4688 src/selections.c:4697 src/selections.c:4803
+#: src/selections.c:4812 src/selections.c:4955 src/selections.c:5021
+#: src/selections.c:5030 src/selections.c:5135 src/selections.c:5144
+#: src/selections.c:5284 src/selections.c:5350 src/selections.c:5359
+#: src/selections.c:5464 src/selections.c:5473 src/selections.c:5598
+#: src/selections.c:5720 src/selections.c:5729 src/selections.c:5794
+#: src/selections.c:5803 src/selections.c:5984 src/selections.c:6106
+#: src/selections.c:6115 src/selections.c:6187 src/selections.c:6196
+#: src/selections.c:6390 src/selections.c:6512 src/selections.c:6521
+#: src/selections.c:6592 src/selections.c:6601 src/selections.c:6793
+#: src/selections.c:6915 src/selections.c:6924 src/selections.c:6995
+#: src/selections.c:7004 src/selections.c:7796 src/selections.c:7918
+#: src/selections.c:7927 src/selections.c:7992 src/selections.c:8001
+#: src/selections.c:8183 src/selections.c:8305 src/selections.c:8314
+#: src/selections.c:8379 src/selections.c:8388
 #, fuzzy
 msgid "[  CONFIRM  ]"
 msgstr "  CONFIRM  "
 
-#: src/selections.c:3326
+#: src/selections.c:3327
 #, fuzzy
 msgid "Enter the Elevation Value"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:3667
+#: src/selections.c:3668
 msgid " Gender Selection "
 msgstr " Gender Selection "
 
-#: src/selections.c:3930
+#: src/selections.c:3931
 msgid "abandoned"
 msgstr ""
 
-#: src/selections.c:3931
+#: src/selections.c:3932
 msgid "adm"
 msgstr ""
 
-#: src/selections.c:3932
+#: src/selections.c:3933
 msgid "city"
 msgstr ""
 
-#: src/selections.c:3933
+#: src/selections.c:3934
 #, fuzzy
 msgid "county"
 msgstr "Country"
 
-#: src/selections.c:3934
+#: src/selections.c:3935
 msgid "destroyed"
 msgstr ""
 
-#: src/selections.c:3935
+#: src/selections.c:3936
 msgid "district"
 msgstr ""
 
-#: src/selections.c:3936
+#: src/selections.c:3937
 msgid "locality"
 msgstr ""
 
-#: src/selections.c:3937
+#: src/selections.c:3938
 msgid "oblast"
 msgstr ""
 
-#: src/selections.c:3938
+#: src/selections.c:3939
 msgid "parish"
 msgstr ""
 
-#: src/selections.c:3939
+#: src/selections.c:3940
 msgid "province"
 msgstr ""
 
-#: src/selections.c:3940
+#: src/selections.c:3941
 msgid "regency"
 msgstr ""
 
-#: src/selections.c:3941
+#: src/selections.c:3942
 #, fuzzy
 msgid "section"
 msgstr "Location: "
 
-#: src/selections.c:3942
+#: src/selections.c:3943
 msgid "setlement"
 msgstr ""
 
-#: src/selections.c:3943
+#: src/selections.c:3944
 msgid "subdistrict"
 msgstr ""
 
-#: src/selections.c:3944
+#: src/selections.c:3945
 msgid "town"
 msgstr ""
 
-#: src/selections.c:3945
+#: src/selections.c:3946
 msgid "village"
 msgstr ""
 
-#: src/selections.c:3946
+#: src/selections.c:3947
 msgid "small village"
 msgstr ""
 
-#: src/selections.c:3987
+#: src/selections.c:3988
 #, fuzzy
 msgid " Location Type Selection "
 msgstr " Target Age Selection "
 
-#: src/selections.c:4020
+#: src/selections.c:4021
 #, fuzzy
 msgid "Location Type"
 msgstr "Location: "
 
-#: src/selections.c:4281
+#: src/selections.c:4282
 msgid " Date "
 msgstr " Date "
 
-#: src/selections.c:4285 src/selections.c:4601 src/selections.c:4927
-#: src/selections.c:5256
+#: src/selections.c:4286 src/selections.c:4602 src/selections.c:4928
+#: src/selections.c:5257
 msgid "Use [←↓↑→] to ajust. [Enter] confirm."
 msgstr "Use [←↓↑→] to ajust. [Enter] confirm."
 
-#: src/selections.c:4286 src/selections.c:4602 src/selections.c:4928
-#: src/selections.c:5257
+#: src/selections.c:4287 src/selections.c:4603 src/selections.c:4929
+#: src/selections.c:5258
 msgid "[ESC] Cancel."
 msgstr "[ESC] Cancel."
 
-#: src/selections.c:4303
+#: src/selections.c:4304
 msgid "Month"
 msgstr "Month"
 
-#: src/selections.c:4597
+#: src/selections.c:4598
 msgid " Time "
 msgstr " Time "
 
-#: src/selections.c:4614 src/selections.c:4940 src/selections.c:5269
+#: src/selections.c:4615 src/selections.c:4941 src/selections.c:5270
 msgid "Min"
 msgstr "Min"
 
-#: src/selections.c:4615 src/selections.c:4941 src/selections.c:5270
+#: src/selections.c:4616 src/selections.c:4942 src/selections.c:5271
 msgid "Sec"
 msgstr "Sec"
 
-#: src/selections.c:4923
+#: src/selections.c:4924
 msgid " Longitude "
 msgstr ""
 
-#: src/selections.c:4939 src/selections.c:5268
+#: src/selections.c:4940 src/selections.c:5269
 msgid "Degree"
 msgstr ""
 
-#: src/selections.c:5252
+#: src/selections.c:5253
 msgid " Latitude "
 msgstr ""
 
-#: src/selections.c:5591
+#: src/selections.c:5592
 msgid " Text to Search For "
 msgstr ""
 
-#: src/selections.c:5620
+#: src/selections.c:5621
 msgid "Enter location's name or a fragment to search for:"
 msgstr ""
 
-#: src/selections.c:5977
+#: src/selections.c:5978
 #, fuzzy
 msgid " Location Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:6006
+#: src/selections.c:6007
 #, fuzzy
 msgid "Enter the Name of the Location"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:6321
+#: src/selections.c:6322
 msgid "Somewhere"
 msgstr ""
 
-#: src/selections.c:6383
+#: src/selections.c:6384
 #, fuzzy
 msgid " State Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:6412
+#: src/selections.c:6413
 #, fuzzy
 msgid "Enter the Name of the State"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:6724
+#: src/selections.c:6725
 msgid "Some State"
 msgstr ""
 
-#: src/selections.c:6786
+#: src/selections.c:6787
 #, fuzzy
 msgid " Country Name "
 msgstr "Country"
 
-#: src/selections.c:6815
+#: src/selections.c:6816
 #, fuzzy
 msgid "Enter the Name of the Country"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:7128
+#: src/selections.c:7129
 #, fuzzy
 msgid "Some Country"
 msgstr "Select Country"
 
-#: src/selections.c:7204 src/selections.c:7418 src/selections.c:7420
+#: src/selections.c:7205 src/selections.c:7419 src/selections.c:7421
 msgid "Press [Enter] to save"
 msgstr "Press [Enter] to save"
 
-#: src/selections.c:7206 src/selections.c:7423
+#: src/selections.c:7207 src/selections.c:7424
 msgid "Press [ESC] to cancel"
 msgstr "Press [ESC] to cancel"
 
-#: src/selections.c:7207 src/selections.c:7424
+#: src/selections.c:7208 src/selections.c:7425
 msgid "Value: "
 msgstr "Value: "
 
-#: src/selections.c:7402
+#: src/selections.c:7403
 msgid " Enter TZ Offset "
 msgstr " Enter TZ Offset "
 
-#: src/selections.c:7416
+#: src/selections.c:7417
 msgid "Error: Max -12 to +14"
 msgstr "Error: Max -12 to +14"
 
-#: src/selections.c:7621
+#: src/selections.c:7622
 msgid " Select DST "
 msgstr " Select DST "
 
-#: src/selections.c:7789
+#: src/selections.c:7790
 msgid " Exporting To .csv File "
 msgstr ""
 
-#: src/selections.c:7818
+#: src/selections.c:7819
 #, fuzzy
 msgid "Enter the File Name"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:8112
+#: src/selections.c:8113
 #, fuzzy
 msgid "primary_directions"
 msgstr "Location: "
 
-#: src/selections.c:8176
+#: src/selections.c:8177
 msgid " Chart's Name "
 msgstr " Chart's Name "
 
-#: src/selections.c:8205
+#: src/selections.c:8206
 #, fuzzy
 msgid "Enter the Name for your Chart"
 msgstr "Enter a name for your chart (max"
 
-#: src/selections.c:8499
+#: src/selections.c:8500
 msgid "Unnamed Chart"
 msgstr "Unnamed Chart"
 
-#: src/selections.c:8736
+#: src/selections.c:8737
 msgid " Select a Topic "
 msgstr " Select a Topic "
 
-#: src/selections.c:9041 src/selections.c:9367
-msgid "Select Country"
+#: src/selections.c:9042 src/selections.c:9368
+#, fuzzy
+msgid " Select Country "
 msgstr "Select Country"
 
-#: src/selections.c:9043 src/selections.c:9369
+#: src/selections.c:9044 src/selections.c:9370
 msgid "Country"
 msgstr "Country"
 
-#: src/selections.c:9670
+#: src/selections.c:9671
 msgid "Select City in"
 msgstr "Select City in"
 
-#: src/selections.c:9672
+#: src/selections.c:9673
 msgid ""
 "City                                          State/County/Region/Province"
 msgstr ""
 "City                                          State/County/Region/Province"
 
-#: src/selections.c:9936
+#: src/selections.c:9937
 msgid "Failed to prepare statement:"
 msgstr "Failed to prepare statement:"
 
-#: src/selections.c:9983
+#: src/selections.c:9984
 msgid "Warning: City not found in database."
 msgstr "Warning: City not found in database."
 
-#: src/selections.c:10025
+#: src/selections.c:10026
 msgid "Default city has not changed"
 msgstr "Default city has not changed"
 
-#: src/selections.c:10087
+#: src/selections.c:10088
 msgid "Default city has changed"
 msgstr "Default city has changed"
 
@@ -6458,7 +6462,7 @@ msgstr ""
 
 #: src/solar_return.c:2142
 #, c-format
-msgid "Solar Return Fixed Star Activations (Total: %d)"
+msgid " Solar Return Fixed Star Activations (Total: %d) "
 msgstr ""
 
 #: src/solar_return.c:2150
@@ -6478,7 +6482,7 @@ msgid "Natal Active"
 msgstr ""
 
 #: src/temperament.c:515
-msgid "Natal Temperament Analysis"
+msgid " Natal Temperament Analysis "
 msgstr ""
 
 #: src/temperament.c:536

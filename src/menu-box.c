@@ -3346,13 +3346,13 @@ int main() {
             init_pair(23, COLOR_RED, 230);
             init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_BLACK, COLOR_YELLOW);
-            init_pair(26, 230, COLOR_BLACK);
+            init_pair(26, 242, COLOR_BLACK);
             init_pair(27, COLOR_RED, COLOR_BLACK);
             init_pair(28, COLOR_MAGENTA, 249);
             init_pair(29, COLOR_BLACK, COLOR_BLACK);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
             init_pair(36, COLOR_RED, COLOR_WHITE);
-            init_pair(57, 243, COLOR_BLACK);
+            init_pair(57, 242, COLOR_BLACK);
             init_pair(58, COLOR_WHITE, COLOR_BLACK);
             init_pair(59, 242, COLOR_BLACK);
         }
@@ -3363,8 +3363,8 @@ int main() {
             init_pair(23, COLOR_RED, 230);
             init_pair(24, 232, 232); // pure black
             init_pair(25, COLOR_YELLOW, COLOR_BLACK);
-            init_pair(26, COLOR_BLACK, COLOR_CYAN);
-            init_pair(27, COLOR_RED, COLOR_CYAN);
+            init_pair(26, COLOR_BLACK, 73);
+            init_pair(27, COLOR_RED, 73);
             init_pair(28, COLOR_MAGENTA, 230);
             init_pair(29, 230, 230);
             init_pair(30, COLOR_MAGENTA, COLOR_CYAN);
