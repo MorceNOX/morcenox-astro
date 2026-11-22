@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 23:59-0300\n"
+"POT-Creation-Date: 2026-11-22 05:01-0300\n"
 "PO-Revision-Date: 2026-08-12 22:00-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2562,14 +2562,14 @@ msgid "Cusp %d"
 msgstr ""
 
 #: src/draw-chart.c:10741 src/draw-chart.c:10808 src/draw-chart.c:11142
-#: src/draw-chart.c:11173 src/draw-chart.c:11890 src/draw-chart.c:11905
-#: src/draw-chart.c:11939 src/fixed_stars.c:241 src/fixed_stars.c:430
+#: src/draw-chart.c:11173 src/draw-chart.c:11891 src/draw-chart.c:11906
+#: src/draw-chart.c:11940 src/fixed_stars.c:241 src/fixed_stars.c:430
 msgid "Check if 'sefstars.txt' is inside your ephe folder."
 msgstr ""
 
 #: src/draw-chart.c:10742 src/draw-chart.c:10809 src/draw-chart.c:11143
-#: src/draw-chart.c:11174 src/draw-chart.c:11891 src/draw-chart.c:11906
-#: src/draw-chart.c:11940 src/fixed_stars.c:242 src/fixed_stars.c:431
+#: src/draw-chart.c:11174 src/draw-chart.c:11892 src/draw-chart.c:11907
+#: src/draw-chart.c:11941 src/fixed_stars.c:242 src/fixed_stars.c:431
 msgid "Fixed Stars catalog not loaded!"
 msgstr ""
 
@@ -2741,7 +2741,7 @@ msgstr ""
 msgid "26. Aspects to House Cusps"
 msgstr ""
 
-#: src/draw-chart.c:11562
+#: src/draw-chart.c:11561
 msgid " Select a Module or Action "
 msgstr ""
 

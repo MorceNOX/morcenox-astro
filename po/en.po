@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 05:01-0300\n"
+"POT-Creation-Date: 2026-11-22 05:42-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -1590,7 +1590,7 @@ msgid "Press Q or ESC to return - [↓↑] to scroll"
 msgstr ""
 
 #: src/draw-chart.c:3666
-msgid "Accidental Dignities"
+msgid " Accidental Dignities "
 msgstr ""
 
 #: src/draw-chart.c:3689 src/draw-chart.c:4561 src/draw-chart.c:5106
@@ -1667,7 +1667,7 @@ msgstr ""
 
 #: src/draw-chart.c:4299
 #, fuzzy
-msgid "Chart Data"
+msgid " Chart Data "
 msgstr "Chart saved!"
 
 #: src/draw-chart.c:4331
@@ -1787,7 +1787,7 @@ msgid "Neuter gender chart"
 msgstr "Default Gender"
 
 #: src/draw-chart.c:4540
-msgid "Dignities & Rulership Table"
+msgid " Dignities & Rulership "
 msgstr ""
 
 #: src/draw-chart.c:4566
@@ -1822,7 +1822,7 @@ msgid ""
 msgstr ""
 
 #: src/draw-chart.c:5086
-msgid " Spherical Measurements of the Sky "
+msgid " Speculum "
 msgstr ""
 
 #: src/draw-chart.c:5107
@@ -1896,7 +1896,7 @@ msgstr "Press [ESC] to cancel"
 
 #: src/draw-chart.c:5644
 #, fuzzy
-msgid "Houses Table"
+msgid " Houses "
 msgstr "House System"
 
 #: src/draw-chart.c:5665
@@ -1913,7 +1913,7 @@ msgid "           Press F3 or [x]: Aspects with Cusps"
 msgstr ""
 
 #: src/draw-chart.c:5842
-msgid "Planetary Hours"
+msgid " Planetary Hours "
 msgstr ""
 
 #: src/draw-chart.c:5862
@@ -2526,7 +2526,7 @@ msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the table.\n"
 msgstr ""
 
 #: src/draw-chart.c:6817
-msgid "Rising Times | Setting Times | Upper Culmination Times"
+msgid " Rising, Setting, Culmination & Anti-Culmination Times "
 msgstr ""
 
 #: src/draw-chart.c:6820
@@ -2653,7 +2653,7 @@ msgid "01. Chart Data Panel"
 msgstr "Chart saved!"
 
 #: src/draw-chart.c:11424 src/draw-chart.c:11461
-msgid "02. Spherical Measurements of the Sky"
+msgid "02. Speculum"
 msgstr ""
 
 #: src/draw-chart.c:11425 src/draw-chart.c:11462
@@ -7042,6 +7042,10 @@ msgstr ""
 #: src/temperament.c:1267
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Houses Table"
+#~ msgstr "House System"
 
 #, fuzzy, c-format
 #~ msgid "House %d"

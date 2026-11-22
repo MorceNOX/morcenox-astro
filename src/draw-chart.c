@@ -3663,7 +3663,7 @@ void display_dignities(PlotObject *plots, PlanetDignities *dig, int *strength_pl
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
-    const char *title = _("Accidental Dignities");
+    const char *title = _(" Accidental Dignities ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
@@ -4296,7 +4296,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
     
     // Add title
     wattron(table_win, A_BOLD);
-    const char *title = _("Chart Data");
+    const char *title = _(" Chart Data ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
@@ -4537,7 +4537,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
 
     // Cabeçalho Fixo na Janela de Borda (Não rola)
     wattron(table_win, A_BOLD);
-    const char *title = _("Dignities & Rulership Table");
+    const char *title = _(" Dignities & Rulership ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -5083,7 +5083,7 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     wattron(table_win, A_BOLD);
-    const char *title = _(" Spherical Measurements of the Sky ");
+    const char *title = _(" Speculum ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     int col_fechar = getmaxx(table_win) - 4;
@@ -5641,7 +5641,7 @@ void display_houses(PlotObject *plots, double *cusps, char pHouse[12][100], char
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
-    const char *title = _("Houses Table");
+    const char *title = _(" Houses ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
 
@@ -5839,7 +5839,7 @@ void display_hours(int week_day, double *hours, int planetary_hour, double dayti
     wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(table_win, A_BOLD);
-    const char *title = _("Planetary Hours");
+    const char *title = _(" Planetary Hours ");
     mvwprintw(table_win, 0, (table_width - 17) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -6814,7 +6814,7 @@ void display_rising_times(PlotObject *plots, double tz_offset) {
     wbkgd(table_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(table_win, A_BOLD);
-    const char *title = _("Rising Times | Setting Times | Upper Culmination Times");
+    const char *title = _(" Rising, Setting, Culmination & Anti-Culmination Times ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     mvwprintw(table_win, 2, 4, _("       Rising                    Setting                   Culmination          Anti-Culminatin         Time zone: Local"));
@@ -11421,7 +11421,7 @@ void open_menu_tables(ContextoMenu *ctx) {
     // 1. Definição estática das diversas opções de funções
     const char *opcoes1[] = {
         _("01. Chart Data Panel"),
-        _("02. Spherical Measurements of the Sky"),
+        _("02. Speculum"),
         _("03. Dignities & Rulerships"),        
         _("04. Accidental Dignities"),
         _("05. Strength of the Planets"),
@@ -11458,7 +11458,7 @@ void open_menu_tables(ContextoMenu *ctx) {
 
     const char *opcoes2[] = {
         _("01. Chart Data Panel"),
-        _("02. Spherical Measurements of the Sky"),
+        _("02. Speculum"),
         _("03. Dignities & Rulerships"),        
         _("04. Accidental Dignities"),
         _("05. Strength of the Planets"),

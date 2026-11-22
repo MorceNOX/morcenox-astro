@@ -2,7 +2,7 @@
 
 Name:           MorceNOX-Astro
 Epoch:          1
-Version:        1.53.0
+Version:        1.53.1
 Release:        1%{?dist}
 Summary:        Traditional Astrology calculation engine and TUI powered by Swiss Ephemeris
 
