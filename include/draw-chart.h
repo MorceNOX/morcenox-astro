@@ -303,7 +303,7 @@ void display_table_data(bool mapa_retorno, double jd, struct tm *local_time, dou
 
 void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities *dig, int *strength_planets, double ramc, double lat, double jd, Promissor *fortuna_m);
 void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc, double lat, double jd, Promissor *fortuna_m);
-void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, char *house_system);
+void display_houses(PlotObject *plots, double *cusps, char pHouse[12][100], char **house_ruler, char *house_system);
 
 void display_hours(int week_day, double *hours, int planetary_hour, double daytime_hour, double nighttime_hour, int *strength_planets, PlanetDignities *dig);
 void abrir_janela_interpretacao_horas(int regente_dia, int regente_hora, const char *regent_day_str, const char *regent_hour_str, int strength_reg_day, int strength_reg_hour, int dig_reg_day, int dig_reg_hour);

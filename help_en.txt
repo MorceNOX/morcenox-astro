@@ -245,6 +245,8 @@ Press Q or ESC to return to the main menu.
     
     • F6 - Houses
     
+        - F3 or x - House Cusps Aspects Matrix Grid
+    
     • F7 - Almuten
     
         i - Almuten Figuris Interpretation 
@@ -1380,6 +1382,8 @@ Press Q or ESC to return to the main menu.
 • House cusps, their positions, rulers and the planets and objects within the houses.
 
 The table also indicates the house system in use by the chart, which can be chosen in the settings.
+
+With this table open, press [F3] or [x] to see the Aspects of the Planets with the House Cusps with the fixed orb of 5.0 degrees.
 
 
 

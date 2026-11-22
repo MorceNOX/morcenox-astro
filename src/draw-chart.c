@@ -5618,12 +5618,12 @@ void display_positions(PlotObject *plots, PlanetTableMatrix *matrix, double ramc
 
 
 
-void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, char *house_system) {
+void display_houses(PlotObject *plots, double *cusps, char pHouse[12][100], char **house_ruler, char *house_system) {
     
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
     
-    int table_height = 31;
+    int table_height = 33;
     int table_width = max_x - 60 > 90 ? max_x - 60 : 90;
     int start_y = (max_y - table_height) / 2;
     int start_x = (max_x - table_width) / 2;
@@ -5750,13 +5750,14 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     whline(table_win, ACS_HLINE, table_width - 4);
 
     wattron(table_win, A_BOLD);
-    mvwprintw(table_win, table_height - 3, 2, _("House System: "));
+    mvwprintw(table_win, table_height - 4, 2, _("House System: "));
     wattroff(table_win, A_BOLD);
 
     wprintw(table_win, "%s", house_system);
 
 
     // Add instructions
+    mvwprintw(table_win, table_height - 2, table_width - 47, _("           Press F3 or [x]: Aspects with Cusps"));
     mvwprintw(table_win, table_height - 1, 2, _("Press ESC to return to chart"));
     
     // Refresh the window
@@ -5767,12 +5768,23 @@ void display_houses(double *cusps, char pHouse[12][100], char **house_ruler, cha
     keypad(table_win, TRUE);
     nodelay(table_win, FALSE);
     
-    // Wait for ESC key press
     int ch;
+
     do {
         ch = wgetch(table_win);
+        
+        if (ch == KEY_F(3) || ch == 'x' || ch == 'X') {
+            AspectHouseMatrix matrix = {0}; 
+            matrix = calculate_aspects_with_cusps(plots, cusps);
 
-        if (ch == KEY_MOUSE) {
+            display_aspects_with_cusps(plots, cusps, &matrix);
+            
+            touchwin(shadow_win);
+            wrefresh(shadow_win);
+            touchwin(table_win);
+            wrefresh(table_win);
+        }
+        else if (ch == KEY_MOUSE) {
             MEVENT event;
             if (getmouse(&event) == OK) {
                 // Coordenadas do clique convertidas para o plano local da janela
@@ -10933,7 +10945,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                     wnoutrefresh(stdscr);
                 } 
                 
-                display_houses(cusps, pHouse, house_ruler_str, house_system_str);
+                display_houses(plots, cusps, pHouse, house_ruler_str, house_system_str);
                 ativar_arrasto_mouse();
                 flushinp();
                 break;
@@ -11421,7 +11433,7 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("11. Aspects to Antiscia"),
         _("12. Aspects to Contrantiscia"),
         _("13. Conjunctions with Fixed Stars"),
-        _("14. Declination Aspects with Fixed Stars"),   
+        _("14. Declination Aspects with Fixed Stars"),
         _("15. Rising, Setting & Culmination Times"),        
         _("16. Hylegiacal & Figuris Almuten"),
         _("17. Temperament Analysis"),
@@ -11438,7 +11450,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("28. Solar Revolution"),
         _("29. Fixed Stars Parans"),
         _("30. Heliacal Phases & Stars Visibility"),
-        _("31. Activated Fixed Stars & Delineation")     
+        _("31. Activated Fixed Stars & Delineation"),
+        _("32. Aspects to House Cusps")  
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes1 = sizeof(opcoes1) / sizeof(opcoes1[0]);
@@ -11468,7 +11481,8 @@ void open_menu_tables(ContextoMenu *ctx) {
         _("22. Fixed Stars Parans"),
         _("23. Heliacal Phases & Stars Visibility"),
         _("24. Activated Stars On Solar Revolution"),
-        _("25. Activated Fixed Stars in SR & Delineation")
+        _("25. Activated Fixed Stars in SR & Delineation"),
+        _("26. Aspects to House Cusps")
     };
     // Calcula automaticamente o total de opções adicionadas ao array
     int total_opcoes2 = sizeof(opcoes2) / sizeof(opcoes2[0]);
@@ -11764,7 +11778,7 @@ void open_menu_tables(ContextoMenu *ctx) {
             display_planetary_energy_profile(ctx->plots, ctx->strength_planets);
             break;
         case 6:
-            display_houses(ctx->cusps, (char (*)[100])ctx->pHouse, ctx->house_ruler_str, ctx->house_system_str);
+            display_houses(ctx->plots, ctx->cusps, (char (*)[100])ctx->pHouse, ctx->house_ruler_str, ctx->house_system_str);
             break;
         case 7:    
             display_aspects(ctx->plots, &ctx->matrix, &ctx->matrix_decl, ctx->ants, ctx->num_ants);
@@ -11993,6 +12007,11 @@ void open_menu_tables(ContextoMenu *ctx) {
         case 25:
             if (!ctx->mapa_retorno) {
                 display_primary_directions(ctx->plots, ctx->sig, &ctx->matrix, ctx->pontos_calculados, ctx->regente_dia, ctx->regente_hora, ctx->nome_anareta, ctx->nome_senhor_da_casa8, ctx->tipo_h, ctx->idx_objeto_h, ctx->mapa_retorno, ctx->julian_day, ctx->tipo_san, ctx->dig, ctx->armc, ctx->lat, ctx->prom, ctx->obj_dir[P_FORTUNA - ctx->object_diff]);
+            } else {
+                AspectHouseMatrix matrix = {0}; 
+                matrix = calculate_aspects_with_cusps(ctx->plots, ctx->cusps);
+
+                display_aspects_with_cusps(ctx->plots, ctx->cusps, &matrix);
             }
             break;
         case 26:
@@ -12101,6 +12120,13 @@ void open_menu_tables(ContextoMenu *ctx) {
                 );
             }
             break;
+        case 31:
+            if (!ctx->mapa_retorno) {
+                AspectHouseMatrix matrix = {0}; 
+                matrix = calculate_aspects_with_cusps(ctx->plots, ctx->cusps);
+
+                display_aspects_with_cusps(ctx->plots, ctx->cusps, &matrix);
+            }
         default:
             break;
     }

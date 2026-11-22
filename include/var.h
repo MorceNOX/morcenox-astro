@@ -134,6 +134,7 @@ extern const int MAX_HELP_LINE_WIDTH;
 extern const int MAX_LINE_WIDTH;
 
 extern const double ASP_MAJOR_EXACT;
+extern const double CUSP_ORB;
 
 extern const double TEMPERAMENT_RANK_PROPORTION;
 

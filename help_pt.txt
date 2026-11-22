@@ -243,6 +243,8 @@ Pressione Q ou ESC para retornar ao menu principal.
 
 • F6 - Casas
 
+    F3 ou x - Matriz de Aspectos com as Cúspides
+
 • F7 - Almuten
 
     i - Interpretação do Almuten Figuris
@@ -1364,6 +1366,8 @@ Pressione Q ou ESC para retornar ao menu principal.
 • Cúspides das casas, suas posições, regentes e os planetas e objetos dentro das casas.
 
 A tabela também indica o sistema de casas em uso pelo mapa, o qual pode ser escolhido nas configurações.
+
+Nesta tela você pode pressionar [F3] ou [x] para ver a Matriz de Aspectos com as Cúspides, calculados considerando-se um orbe fixo de 5.0 graus.
 
 
 

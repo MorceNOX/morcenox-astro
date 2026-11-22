@@ -97,6 +97,7 @@ const int MAX_HELP_LINE_WIDTH = 68;
 const int MAX_LINE_WIDTH = 80;
 
 const double ASP_MAJOR_EXACT = 1.0;
+const double CUSP_ORB = 5.0;
 
 const double ORB_PARAN_EXACT = 6.0;
 const double MAX_ORB_PARAN = 15.0;

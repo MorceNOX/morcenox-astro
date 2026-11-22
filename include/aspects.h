@@ -72,6 +72,19 @@ typedef struct {
 
 
 
+typedef struct {
+    bool has_aspect;
+    char symbol[8];  // ☌, ⚹, □, △, ☍
+    int color_pair;   // Armazena a cor correspondente à natureza do aspecto
+    bool is_reverse;
+    double diff;
+} HouseAspectCell;
+
+typedef struct {
+    HouseAspectCell grid[19][13]; 
+} AspectHouseMatrix;
+
+
 double ASP_ANTISSIA_EXACT();
 double ASP_PARALLEL_EXACT();
 
@@ -95,6 +108,10 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
 void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix);
 AspectMatrix calculate_aspects_by_sign(PlotObject *plots);
 void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix);
+
+AspectHouseMatrix calculate_aspects_with_cusps(PlotObject *plots, double *cusps);
+void display_aspects_with_cusps(PlotObject *plots, double *cusps, AspectHouseMatrix *matrix);
+
 AspectMatrix calculate_aspects_antiscium(PlotObject *plots, AntObject *ants, int num_objects, double antissia_orb, int ant_type);
 void display_aspects_antissium(PlotObject *plots, AntObject *ants, int num_ants, AspectMatrix *matrix, int ant_type);
 #endif

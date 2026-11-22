@@ -16,7 +16,7 @@
 # along with this program.  If not, see <https://gnu.org>.
 #
 #
-VERSION = 1.52.11
+VERSION = 1.53.0
 
 # Variáveis de compilação (Precisão estrita e depuração ativadas)
 CC       = gcc
