@@ -473,18 +473,18 @@ arch-arm64:
 	     --exclude=$(DEB_TMP_DIR) --exclude=$(ARCH_TMP_DIR) \
 	     --exclude='*.o' --exclude='vendor/*/*.o' --exclude=$(TARGET) .
 	@sed 's/^pkgver=.*/pkgver=$(VERSION)/' $(PKGBUILD_TPL) > $(ARCH_TMP_DIR)/PKGBUILD
-	@podman run --rm --platform linux/arm64 -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/menci/archlinuxarm:latest bash -c "\
+	@podman run --rm --privileged --platform linux/arm64 -v $(abspath $(ARCH_TMP_DIR)):/build:Z -w /build docker.io/menci/archlinuxarm:latest bash -c "\
 		sed -i 's/^DownloadUser/#DownloadUser/' /etc/pacman.conf && \
-		pacman -Sy --noconfirm archlinuxarm-keyring && \
-		pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
+		pacman -Sy --noconfirm --disable-sandbox archlinuxarm-keyring && \
+		pacman -Syu --noconfirm --disable-sandbox --needed base-devel gettext ncurses icu && \
 		ln -sfn /usr/include /usr/include/ncursesw && \
 		useradd -m builder && \
 		chown -R builder:builder /build && \
 		su builder -c 'makepkg -f' && \
 		chown -R 0:0 /build"
-	@cp -f $(ARCH_TMP_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.zst $(PKG_DIR)/
+	@cp -f $(ARCH_TMP_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.* $(PKG_DIR)/
 	@podman unshare rm -rf $(ARCH_TMP_DIR) 2>/dev/null || rm -rf $(ARCH_TMP_DIR)
-	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.zst
+	@ls -lh $(PKG_DIR)/morcenox-astro-$(VERSION)-*-aarch64.pkg.tar.*
 
 # Gera todos os pacotes ARM64 de uma só vez
 release-arm64: package-arm64 rpm-arm64 deb-arm64 arch-arm64
