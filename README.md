@@ -22,7 +22,7 @@ A Traditional Astrology application running in your terminal! Calculate your bir
 Features a rich ASCII-art interface, real-motion celestial animation, and offline precision.
 
 <hr>
-<img width="2560" height="1600" alt="00-chart-wheel-v1 52 4" src="https://github.com/user-attachments/assets/db254bae-55d5-4eef-8d6e-b2e389bb62bf" />
+<img width="2048" height="1233" alt="01-chart-wheel-pres-en" src="https://github.com/user-attachments/assets/7cba1e55-06ab-4388-897a-650f84a2cd2b" />
 <hr>
 
 ## 🌌 Key Features
@@ -207,97 +207,92 @@ Here are some screenshots of the application. You can have an idea of what you e
 ### Main Menu
 <hr>
 
-<img width="2560" height="1539" alt="01-main_menu_english" src="https://github.com/user-attachments/assets/a5f2df5f-e4a8-426d-af30-58573f4c8ad5" />
+<img width="2048" height="1233" alt="00-main-menu-en" src="https://github.com/user-attachments/assets/5aec2f79-b6a9-4e13-8196-1aba264a4ebd" />
 
 <hr>
 
 ### The Chart Wheel
 <hr>
 
-<img width="2560" height="1600" alt="00-chart-wheel-v1 52 4" src="https://github.com/user-attachments/assets/0e532721-9b87-4b2a-81fb-2de8eaac64e6" />
+<img width="2048" height="1233" alt="01-chart-wheel-en" src="https://github.com/user-attachments/assets/972de35e-63a7-4a76-953f-8f15d6fa0f00" />
 
-<img width="2560" height="1600" alt="02d-chart_wheel_zoomed" src="https://github.com/user-attachments/assets/09071b05-dc95-4f32-9dd3-dfe858b83a76" />
+<img width="2048" height="1233" alt="01-chart-zoom-en" src="https://github.com/user-attachments/assets/e16ab238-4b77-40a4-bae7-d204d172cda9" />
 
-<img width="2560" height="1600" alt="02d-chart_wheel_zoomed2" src="https://github.com/user-attachments/assets/2821abc6-8e6f-4c0f-9779-a0735de5d42d" />
+<img width="2048" height="1233" alt="01-chart-zoom-house-div-en" src="https://github.com/user-attachments/assets/8cf21e65-39a1-4cde-8749-985e0d73aa05" />
 
 <hr>
 
 ### Aspects Table
 <hr>
 
-<img width="2560" height="1600" alt="03a-aspects_table" src="https://github.com/user-attachments/assets/ce3e0f8b-df08-4439-a161-ce2c3fef9456" />
+<img width="2048" height="1233" alt="10-aspects-en" src="https://github.com/user-attachments/assets/f57e087c-a478-49bb-ba23-9712ed9422c4" />
 
-<img width="2560" height="1600" alt="03c-parallel_aspects_table" src="https://github.com/user-attachments/assets/1b6d5b6b-895f-4648-816e-117da9167009" />
+<img width="2048" height="1233" alt="10-aspects-parallel-en" src="https://github.com/user-attachments/assets/1684cdbf-fce3-401c-91fb-995b1f44d8dd" />
 
-<img width="2560" height="1600" alt="03a-aspects_antissia" src="https://github.com/user-attachments/assets/7e5a1a9b-cbf7-421c-bb7f-998b25830ad3" />
+<img width="2048" height="1280" alt="09-houses-aspects-en" src="https://github.com/user-attachments/assets/29b042f0-d563-460f-812f-e9acafe751b8" />
 
 <hr>
 
 ### Primary Directions
 <hr>
 
-<img width="2560" height="1600" alt="04b-primary_directions_table" src="https://github.com/user-attachments/assets/f861727f-9b56-4ae4-a627-a8ccb3a9aa53" />
+<img width="2048" height="1233" alt="02-directions-en" src="https://github.com/user-attachments/assets/8873b918-6861-4b89-930f-bb95382b958e" />
 
 <hr>
 
 ### Firdaria
 <hr>
 
-<img width="2560" height="1600" alt="12-firdaria" src="https://github.com/user-attachments/assets/0dfcd33a-9651-4f70-b7b5-e55c2bd5bd4a" />
+<img width="2048" height="1233" alt="04-firdaria-en" src="https://github.com/user-attachments/assets/e91b3015-3f8d-494c-be7b-b3732c962cf1" />
 
 <hr>
 
 ### Energy Profile Chart
 <hr>
 
-<img width="2560" height="1600" alt="07-energy_profile_RS" src="https://github.com/user-attachments/assets/3a572fab-9fb6-4920-b78c-bd8a71a6301d" />
-
-<img width="2560" height="1600" alt="07a-energy_profile_chart" src="https://github.com/user-attachments/assets/ed1311d6-9301-48cc-9826-1c94c360d6bf" />
+<img width="2048" height="1233" alt="06-energy-en" src="https://github.com/user-attachments/assets/0e293615-7b0a-4ac0-97d5-32678fc7cb08" />
 
 <hr>
 
 ### Temperament Chart
 <hr>
 
-<img width="2560" height="1600" alt="09a-temperament_chart" src="https://github.com/user-attachments/assets/02479101-34c8-4fb6-ab9f-70ea9e580a7d" />
-
-<img width="2560" height="1600" alt="09a-temperament_chart" src="https://github.com/user-attachments/assets/0776e0fa-63e8-4359-b723-e2dae60ab2f4" />
+<img width="2048" height="1233" alt="08-temperament-en" src="https://github.com/user-attachments/assets/f7a9f5ae-0aa0-435e-a06a-1a2a1ba53234" />
 
 <hr>
 
 ### Temperament Interpretation
 <hr>
 
-<img width="2560" height="1600" alt="09a-temperament_interpretation" src="https://github.com/user-attachments/assets/77cf7624-9b49-479c-8e13-5b5d76488193" />
-
-<img width="2560" height="1600" alt="09a-temperament_interpretation" src="https://github.com/user-attachments/assets/94d814bf-1999-4f86-bbd5-98537bb2a7c4" />
+<img width="2048" height="1233" alt="08-temperament-interpretation-en" src="https://github.com/user-attachments/assets/cc22feec-5ebb-487d-b279-703bcf4a38e3" />
 
 <hr>
 
 ### Solar Return Chart
 <hr>
 
-<img width="2560" height="1600" alt="06-solar_return_chart" src="https://github.com/user-attachments/assets/e67bb184-fc01-498c-8165-6ea6f243c76a" />
+<img width="2048" height="1233" alt="03-solar-return-chart-en" src="https://github.com/user-attachments/assets/32f08cc4-c36c-4943-8c09-2bc3bed9d365" />
 
 <hr>
 
 ### Solar Return Radix Confrontation
 <hr>
 
-<img width="2560" height="1600" alt="06b-solar_return_radix_confrontation" src="https://github.com/user-attachments/assets/5a702582-b173-4d89-a39b-c4b51d8ca547" />
+<img width="2048" height="1233" alt="03-solar-return-confront-en" src="https://github.com/user-attachments/assets/9c43b115-d1f2-436b-a4ef-6fabf32106f7" />
+
 <hr>
 
 ### Solar Return Transit Projection
 <hr>
 
-<img width="2560" height="1600" alt="06a-solar_return_transit_projection" src="https://github.com/user-attachments/assets/ddd44ceb-3ab7-4b75-b2d7-ecfbe04493b4" />
+<img width="2048" height="1233" alt="03-solar-return-transit-en" src="https://github.com/user-attachments/assets/9259b159-2e0f-4b46-951d-e1fd6f6f4230" />
 
 <hr>
 
 ### Planetary Hours
 <hr>
 
-<img width="2560" height="1600" alt="10-planetary_hours" src="https://github.com/user-attachments/assets/56ffff4e-410d-45ed-aef2-cc02b5f4cb2e" />
+<img width="2048" height="1233" alt="07-planetary-hours-en" src="https://github.com/user-attachments/assets/022414d3-15bd-4ed3-891d-56acb215c72e" />
 
 <hr>
 
