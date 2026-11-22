@@ -668,7 +668,7 @@ void display_profections(PlotObject *plots, int anos_alcochoden, double *cusps, 
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
-    const char *title = _("Annual Profections Panel");
+    const char *title = _(" Annual Profections Panel ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito

@@ -480,7 +480,7 @@ void display_declination_aspects(PlotObject *plots, DeclMatrix *matrix) {
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(aspects_win, A_BOLD);
-    const char *title = _("Parallel & Contra-Parallel");
+    const char *title = _(" Parallel & Contra-Parallel Aspects ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -894,7 +894,7 @@ void display_declination_aspects_stars(PlotObject *plots, CalculatedStar *stars,
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(aspects_win, A_BOLD);
-    const char *title = _("Parallel & Contra-Parallel with Fixed Stars");
+    const char *title = _(" Parallel & Contra-Parallel Aspects with Fixed Stars ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -1310,7 +1310,7 @@ void display_aspects(PlotObject *plots, AspectMatrix *matrix, DeclMatrix *matrix
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
-    const char *title = _("Aspects Table");
+    const char *title = _(" Aspects Matrix Grid ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito
@@ -1941,7 +1941,7 @@ void display_aspects_stars(PlotObject *plots, CalculatedStar *stars, AspectStarM
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
 
     wattron(aspects_win, A_BOLD);
-    const char *title = _("Conjunctions with Fixed Stars");
+    const char *title = _(" Conjunctions with Fixed Stars ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     int col_fechar = getmaxx(aspects_win) - 4;
@@ -2389,7 +2389,7 @@ void display_aspects_by_sign(PlotObject *plots, AspectMatrix *matrix) {
     box(aspects_win, 0, 0);
     wbkgd(aspects_win, COLOR_PAIR(6) | FLAGS);
     wattron(aspects_win, A_BOLD);
-    const char *title = _("Aspects by Sign Table");
+    const char *title = _(" Aspects by Sign Table ");
     mvwprintw(aspects_win, 0, (table_width - get_visual_width(title)) / 2, title);
 
     // 2. Desenha o botão [X] no canto superior direito

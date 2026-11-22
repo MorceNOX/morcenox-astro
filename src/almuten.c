@@ -524,7 +524,7 @@ void display_almutens(PontosHylegiacos pontos, PlotObject *plots, AspectMatrix *
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
 
     wattron(table_win, A_BOLD);
-    const char *title = _("Hylegiacal & Figuris Almutens");
+    const char *title = _(" Hylegiacal & Figuris Almutens ");
     // Adiciona o Título da Tela
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
 

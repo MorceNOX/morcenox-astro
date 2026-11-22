@@ -586,7 +586,7 @@ void display_parans_table(ParanEntry *parans, int paran_count, CalculatedStar *s
     // Título centralizado
     wattron(table_win, A_BOLD);
     char title[128];
-    snprintf(title, sizeof(title), _("Fixed Stars Parans (Max Orb: %.0f min | Total: %d)"),
+    snprintf(title, sizeof(title), _(" Fixed Stars Parans (Max Orb: %.0f min | Total: %d) "),
              max_orb_minutes, paran_count);
     int title_x = (table_width - (int)strlen(title)) / 2;
     if (title_x < 2) title_x = 2;
@@ -667,7 +667,7 @@ void display_parans_table(ParanEntry *parans, int paran_count, CalculatedStar *s
         wattroff(table_win, COLOR_PAIR(13) | A_BOLD);
 
         snprintf(title, sizeof(title),
-                 _("Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s)"),
+                 _(" Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s) "),
                  max_orb_minutes, paran_count, sort_label);
 
         int title_x = (table_width - (int)strlen(title)) / 2;
@@ -1390,7 +1390,7 @@ static void draw_heliacal_header(WINDOW *table_win, int table_width, int total_s
 
     char title[160];
     snprintf(title, sizeof(title),
-             _("Heliacal Phases & Visibility (Stars: %d | Sorted by: %s)"),
+             _(" Heliacal Phases & Visibility (Stars: %d | Sorted by: %s) "),
              total_stars, sort_label);
 
     int title_x = (table_width - (int)strlen(title)) / 2;

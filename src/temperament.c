@@ -512,7 +512,7 @@ void display_temperament(PlotObject *plots, AspectMatrix *aspecto_matrix, int fa
     wbkgd(table_win, COLOR_PAIR(13) | FLAGS);
     
     wattron(table_win, A_BOLD);
-    const char *title = _("Natal Temperament Analysis");
+    const char *title = _(" Natal Temperament Analysis ");
     mvwprintw(table_win, 0, (table_width - get_visual_width(title)) / 2, title);
     wattroff(table_win, A_BOLD);
 

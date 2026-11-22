@@ -4723,7 +4723,7 @@ void display_table(PlotObject *plots, PlanetTableMatrix *matrix, PlanetDignities
     }
 
     // Adiciona as instruções fixas no rodapé da janela externa (table_win)
-    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close ─ F2 Celestial Measurements ─ F3 Dignities ─ F4 Strength ─ F5 Energy Profile ─ [↓↑/JK] Scroll"));
+    mvwprintw(table_win, table_height - 1, 2, _("Press ESC/Q to close ─ F2 Speculum ─ F3 Dignities ─ F4 Strength ─ F5 Energy Profile ─ [↓↑/JK] Scroll"));
     
 
     // MOTOR DE CONTROLE, TRAVAMENTO E ROLAGEM VERTICAL

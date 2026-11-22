@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 05:42-0300\n"
+"POT-Creation-Date: 2026-11-22 06:25-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/almuten.c:527
-msgid "Hylegiacal & Figuris Almutens"
-msgstr "Almuten Figuris & dos Pontos Hylegíacos"
+msgid " Hylegiacal & Figuris Almutens "
+msgstr " Almuten Figuris & dos Pontos Hylegíacos "
 
 #: src/almuten.c:553
 msgid "   Hylegiacal Point       Longitude       Calculated Almuten"
@@ -1060,8 +1060,8 @@ msgid "Arabic Part deleted successfully!"
 msgstr "Parte Árabe excluída com sucesso."
 
 #: src/aspects.c:483
-msgid "Parallel & Contra-Parallel"
-msgstr "Paralelo & Contra-Paralelo"
+msgid " Parallel & Contra-Parallel Aspects "
+msgstr " Aspectos Paralelo & Contra-Paralelo "
 
 #: src/aspects.c:614 src/aspects.c:1030 src/aspects.c:2107 src/aspects.c:2530
 #: src/aspects.c:3102 src/aspects.c:3544
@@ -1069,12 +1069,12 @@ msgid "Press ESC to return - [↓↑|JK] Scroll"
 msgstr "Pressione Q ou ESC para retornar - [↓↑] para rolar"
 
 #: src/aspects.c:897
-msgid "Parallel & Contra-Parallel with Fixed Stars"
-msgstr "Paralelo & Contra-Paralelo com Estrelas Fixas"
+msgid " Parallel & Contra-Parallel Aspects with Fixed Stars "
+msgstr " Aspectos Paralelo & Contra-Paralelo com Estrelas Fixas "
 
 #: src/aspects.c:1313
-msgid "Aspects Table"
-msgstr "Tabela de Aspectos"
+msgid " Aspects Matrix Grid "
+msgstr " Matriz de Aspectos com Antiscia "
 
 #: src/aspects.c:1459 src/aspects.c:2106
 msgid "(*) Numbers = angular distance in degrees"
@@ -1089,12 +1089,12 @@ msgstr ""
 "Antiscia - F6 Contrantiscia - [↓↑] Rolar"
 
 #: src/aspects.c:1944
-msgid "Conjunctions with Fixed Stars"
-msgstr "Conjunções com Estrelas Fixas"
+msgid " Conjunctions with Fixed Stars "
+msgstr " Conjunções com Estrelas Fixas "
 
 #: src/aspects.c:2392
-msgid "Aspects by Sign Table"
-msgstr "Tabela de Aspectos por Signo"
+msgid " Aspects by Sign Table "
+msgstr " Tabela de Aspectos por Signo "
 
 #: src/aspects.c:2950
 msgid " House Cusps Aspects Matrix Grid "
@@ -2001,10 +2001,10 @@ msgstr "Dom/Ex"
 
 #: src/draw-chart.c:4726
 msgid ""
-"Press ESC/Q to close ─ F2 Celestial Measurements ─ F3 Dignities ─ F4 "
-"Strength ─ F5 Energy Profile ─ [↓↑/JK] Scroll"
+"Press ESC/Q to close ─ F2 Speculum ─ F3 Dignities ─ F4 Strength ─ F5 Energy "
+"Profile ─ [↓↑/JK] Scroll"
 msgstr ""
-"Pressione Q/ESC retornar ─ F2 Medidas Celestiais ─ F3 Dignidades ─ F4 Força "
+"Pressione Q/ESC retornar ─ F2 Speculum ─ F3 Dignidades ─ F4 Força "
 "─ F5 Perfil de Energia - [↓↑/JK] Rolar"
 
 #: src/draw-chart.c:5086
@@ -3676,8 +3676,8 @@ msgstr "Anti-Culminando"
 
 #: src/fixed_stars.c:589
 #, c-format
-msgid "Fixed Stars Parans (Max Orb: %.0f min | Total: %d)"
-msgstr "Parans de Estrelas Fixas (Orbe Máximo: %.0f min | Total: %d)"
+msgid " Fixed Stars Parans (Max Orb: %.0f min | Total: %d) "
+msgstr " Parans de Estrelas Fixas (Orbe Máximo: %.0f min | Total: %d) "
 
 #: src/fixed_stars.c:597 src/fixed_stars.c:636 src/fixed_stars.c:648
 #: src/fixed_stars.c:682 src/profections.c:761
@@ -3717,10 +3717,10 @@ msgstr "Fase da Vida (Brady)"
 
 #: src/fixed_stars.c:670
 #, c-format
-msgid "Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s)"
+msgid " Fixed Stars Parans (Max Orb: %.0f min | Total: %d | Sorted by: %s) "
 msgstr ""
-"Parans de Estrelas Fixas (Orbe Máximo: %.0f min | Total: %d | Ordenado por: "
-"%s)"
+" Parans de Estrelas Fixas (Orbe Máximo: %.0f min | Total: %d | Ordenado por: "
+"%s) "
 
 #: src/fixed_stars.c:698
 #, c-format
@@ -3751,8 +3751,8 @@ msgstr ""
 
 #: src/fixed_stars.c:1393
 #, c-format
-msgid "Heliacal Phases & Visibility (Stars: %d | Sorted by: %s)"
-msgstr "Fases Heliacais & Visibilidade (Estrelas: %d | Ordenado por: %s)"
+msgid " Heliacal Phases & Visibility (Stars: %d | Sorted by: %s) "
+msgstr " Fases Heliacais & Visibilidade (Estrelas: %d | Ordenado por: %s) "
 
 #: src/fixed_stars.c:1414
 #, c-format
@@ -4417,8 +4417,8 @@ msgid "No charts available."
 msgstr "Não há mapas disponíveis."
 
 #: src/menu-box.c:1233
-msgid "Select Chart to Delete"
-msgstr "Selecionar Mapa para Excluir"
+msgid " Select Chart to Delete "
+msgstr " Selecione o Mapa para Excluir "
 
 #: src/menu-box.c:1535
 msgid "Error deleting chart."
@@ -4429,8 +4429,8 @@ msgid "Chart deleted successfully."
 msgstr "Mapa excluído com sucesso."
 
 #: src/menu-box.c:1682
-msgid "Select Chart to Load"
-msgstr "Selecionar Mapa para Carregar"
+msgid " Select Chart to Load "
+msgstr " Selecione o Mapa para Carregar "
 
 #: src/menu-box.c:1993
 msgid "Chart not found!"
@@ -5460,8 +5460,8 @@ msgid "Press ESC to return to chart ─ [P] Export to CSV"
 msgstr "Pressione ESC para retornar ao mapa ─ [P] Imprimir em Arquivo"
 
 #: src/profections.c:671
-msgid "Annual Profections Panel"
-msgstr "Painel de Profecções Anuais"
+msgid " Annual Profections Panel "
+msgstr " Painel de Profecções Anuais "
 
 #: src/profections.c:713
 msgid "  [CRITICAL ALCOCHODEN RETURN YEAR!]"
@@ -6020,8 +6020,8 @@ msgid " Select a Topic "
 msgstr " Selecione um Tópico "
 
 #: src/selections.c:9041 src/selections.c:9367
-msgid "Select Country"
-msgstr "Selecionar País"
+msgid " Select Country "
+msgstr " Selecione o País "
 
 #: src/selections.c:9043 src/selections.c:9369
 msgid "Country"
@@ -7464,8 +7464,8 @@ msgstr "ESC: Retorna | ↓/↑: Rolar (%d-%d of %d)"
 
 #: src/solar_return.c:2142
 #, c-format
-msgid "Solar Return Fixed Star Activations (Total: %d)"
-msgstr "Ativações das Estrelas Fixas do Retorno Solar (Total: %d)"
+msgid " Solar Return Fixed Star Activations (Total: %d) "
+msgstr " Ativações das Estrelas Fixas no Retorno Solar (Total: %d) "
 
 #: src/solar_return.c:2150
 msgid "SR Point"
@@ -7484,8 +7484,8 @@ msgid "Natal Active"
 msgstr "Ativa no Natal"
 
 #: src/temperament.c:515
-msgid "Natal Temperament Analysis"
-msgstr "Análise do Temperamento Natal"
+msgid " Natal Temperament Analysis "
+msgstr " Análise do Temperamento Natal "
 
 #: src/temperament.c:536
 msgid "Hot:"
@@ -8319,6 +8319,9 @@ msgstr "Classificação"
 msgid "  [NARRATIVE END] - Press 'Q' or ESC to return to the graphs.\n"
 msgstr ""
 "  [FIM DA NARRATIVA] - Pressione 'Q' ou ESC para retornar aos gráficos.\n"
+
+#~ msgid "Aspects Table"
+#~ msgstr "Tabela de Aspectos"
 
 #~ msgid "Dignities & Rulership Table"
 #~ msgstr "Tabela de Dignidades & Regentes"

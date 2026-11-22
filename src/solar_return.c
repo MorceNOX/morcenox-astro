@@ -2139,7 +2139,7 @@ void display_sr_fixed_stars_table(SRFixedStarHit *hits, int hit_count) {
 
     // Título centralizado
     char title[200];
-    snprintf(title, sizeof(title), _("Solar Return Fixed Star Activations (Total: %d)"), hit_count);
+    snprintf(title, sizeof(title), _(" Solar Return Fixed Star Activations (Total: %d) "), hit_count);
     int title_x = (table_width - (int)strlen(title)) / 2;
     if (title_x < 2) title_x = 2;
 

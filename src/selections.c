@@ -9038,7 +9038,7 @@ int select_country(char *country_chart) {
 
         wattron(country_win, A_BOLD);
 
-        const char *title1 = _("Select Country");
+        const char *title1 = _(" Select Country ");
         mvwprintw(country_win, 0, (menu_width - get_visual_width(title1)) / 2, title1);
         mvwprintw(country_win, 1, 2, _("Country"));
         wattroff(country_win, A_BOLD);
@@ -9364,7 +9364,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
 
         wattron(country_win, A_BOLD);
 
-        const char *title1 = _("Select Country");
+        const char *title1 = _(" Select Country ");
         mvwprintw(country_win, 0, (menu_width - get_visual_width(title1)) / 2, title1);
         mvwprintw(country_win, 1, 2, _("Country"));
         wattroff(country_win, A_BOLD);
@@ -9668,7 +9668,7 @@ int load_city_coordinates(char *city_chart, char *country_chart, char *state_cha
         wattron(city_win, A_BOLD);
 
         const char *title2 = _("Select City in");
-        mvwprintw(city_win, 0, (menu_width - get_visual_width(title2) - get_visual_width(selected_country_name)) / 2, "%s %s", title2, selected_country_name);
+        mvwprintw(city_win, 0, (menu_width - get_visual_width(title2) - get_visual_width(selected_country_name)) / 2, " %s %s ", title2, selected_country_name);
         mvwprintw(city_win, 1, 2, _("City                                          State/County/Region/Province"));
         wattroff(city_win, A_BOLD);
 

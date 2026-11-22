@@ -1230,7 +1230,7 @@ void del_chart() {
         wattron(chart_win, COLOR_PAIR(2) | A_DIM);
         box(chart_win, 0, 0);
                 
-        const char *title = _("Select Chart to Delete");
+        const char *title = _(" Select Chart to Delete ");
 
         mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(chart_win, COLOR_PAIR(2) | A_DIM);
@@ -1679,7 +1679,7 @@ void load_chart() {
         //wrefresh(chart_win);
 
         wattron(chart_win, A_BOLD);
-        const char *title = _("Select Chart to Load");
+        const char *title = _(" Select Chart to Load ");
         
         mvwprintw(chart_win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(chart_win, A_BOLD);
