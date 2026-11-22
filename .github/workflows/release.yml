@@ -81,7 +81,7 @@ jobs:
           cp rpm_tmp/RPMS/${{ matrix.rpm_arch }}/*.rpm release_dist/
           sudo rm -rf rpm_tmp
 
-            - name: 4. Build Arch Linux Package (.pkg.tar.zst) via Container
+      - name: 4. Build Arch Linux Package (.pkg.tar.zst) via Container
         run: |
           mkdir -p arch_tmp
           tar --transform "s,^\.,MorceNOX-Astro-${{ steps.meta.outputs.VERSION }}," \
@@ -90,16 +90,15 @@ jobs:
           sed "s/^pkgver=.*/pkgver=${{ steps.meta.outputs.VERSION }}/" packaging/PKGBUILD > arch_tmp/PKGBUILD
           IMAGE=$([ "${{ matrix.arch_name }}" = "x86_64" ] && echo "archlinux:latest" || echo "menci/archlinuxarm:latest")
           KEYRING=$([ "${{ matrix.arch_name }}" = "x86_64" ] && echo "archlinux-keyring" || echo "archlinuxarm-keyring")
-          docker run --rm --privileged -v $(pwd)/arch_tmp:/build -w /build $IMAGE bash -c \
+          docker run --rm -v $(pwd)/arch_tmp:/build -w /build $IMAGE bash -c \
             "sed -i 's/^DownloadUser/#DownloadUser/' /etc/pacman.conf && \
-             pacman -Sy --noconfirm --disable-sandbox $KEYRING && \
-             pacman -Syu --noconfirm --disable-sandbox --needed base-devel gettext ncurses icu && \
+             pacman -Sy --noconfirm $KEYRING && \
+             pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
              ln -sfn /usr/include /usr/include/ncursesw && \
              useradd -m builder && chown -R builder:builder /build && \
              su builder -c 'makepkg -f'"
           cp arch_tmp/*.pkg.tar.zst release_dist/
           sudo rm -rf arch_tmp
-
 
       - name: Upload artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
