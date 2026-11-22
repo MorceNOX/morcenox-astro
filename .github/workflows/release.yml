@@ -1,0 +1,99 @@
+name: Build & Publish Universal Linux Packages
+
+on:
+  push:
+    tags:
+      - 'v*' # Dispara automaticamente sempre que você enviar uma tag começando com 'v' (ex: v1.53.1)
+
+permissions:
+  contents: write # Permissão necessária para criar a Release e anexar os arquivos
+
+jobs:
+  build-packages:
+    name: Build (${{ matrix.arch_name }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch_name: x86_64
+            runner: ubuntu-latest
+            rpm_arch: x86_64
+            deb_arch: amd64
+            tar_arch: x86_64
+          - arch_name: aarch64
+            runner: ubuntu-24.04-arm
+            rpm_arch: aarch64
+            deb_arch: arm64
+            tar_arch: aarch64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from Git tag
+        id: meta
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Install host build dependencies (for Portable Tarball & .deb)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential gettext libncurses-dev libicu-dev dpkg-dev rpm
+
+      - name: 1. Build Portable Tarball (.tar.gz)
+        run: |
+          make VERSION=${{ steps.meta.outputs.VERSION }} all translate -j$(nproc)
+          make VERSION=${{ steps.meta.outputs.VERSION }} package PACKAGE_NAME=MorceNOX-Astro-v${{ steps.meta.outputs.VERSION }}-linux-${{ matrix.tar_arch }}.tar.gz
+
+      - name: 2. Build Debian/Ubuntu Package (.deb)
+        run: |
+          make clean
+          make VERSION=${{ steps.meta.outputs.VERSION }} PREFIX=/usr -j$(nproc)
+          make VERSION=${{ steps.meta.outputs.VERSION }} install DESTDIR=build_deb_pkg PREFIX=/usr
+          mkdir -p build_deb_pkg/DEBIAN debian
+          printf 'Source: morcenox-astro\nSection: science\nPriority: optional\nMaintainer: MorceNOX <morcenox@example.com>\n\nPackage: morcenox-astro\nArchitecture: ${{ matrix.deb_arch }}\n' > debian/control
+          DEPS=$(dpkg-shlibdeps -O build_deb_pkg/usr/bin/astro | sed 's/shlibs:Depends=//')
+          printf 'Package: morcenox-astro\nVersion: ${{ steps.meta.outputs.VERSION }}\nSection: science\nPriority: optional\nArchitecture: ${{ matrix.deb_arch }}\nDepends: %s\nMaintainer: MorceNOX <morcenox@example.com>\nDescription: Traditional Astrology calculation engine and TUI\n Terminal-based Traditional Astrology suite written in C and ncurses,\n powered by Swiss Ephemeris, ZoneDetect, and SQLite.\n' "$DEPS" > build_deb_pkg/DEBIAN/control
+          dpkg-deb --root-owner-group --build build_deb_pkg release_dist/morcenox-astro_${{ steps.meta.outputs.VERSION }}_${{ matrix.deb_arch }}.deb
+          rm -rf build_deb_pkg debian
+
+      - name: 3. Build Fedora/RHEL Package (.rpm) via Container
+        run: |
+          mkdir -p rpm_tmp/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+          tar --transform "s,^\.,MorceNOX-Astro-${{ steps.meta.outputs.VERSION }}," \
+              -czf rpm_tmp/SOURCES/MorceNOX-Astro-${{ steps.meta.outputs.VERSION }}.tar.gz \
+              --exclude=.git --exclude=release_dist --exclude=rpm_tmp --exclude='*.o' --exclude='vendor/*/*.o' --exclude=astro .
+          cp packaging/MorceNOX-Astro.spec rpm_tmp/SPECS/
+          docker run --rm -v $(pwd)/rpm_tmp:/rpmbuild registry.fedoraproject.org/fedora:latest bash -c \
+            "dnf install -y -q rpm-build gcc make gettext ncurses-devel libicu-devel && \
+             rpmbuild --define '_topdir /rpmbuild' --define '_version ${{ steps.meta.outputs.VERSION }}' -ba /rpmbuild/SPECS/MorceNOX-Astro.spec"
+          cp rpm_tmp/RPMS/${{ matrix.rpm_arch }}/*.rpm release_dist/
+          rm -rf rpm_tmp
+
+      - name: 4. Build Arch Linux Package (.pkg.tar.zst) via Container
+        run: |
+          mkdir -p arch_tmp
+          tar --transform "s,^\.,MorceNOX-Astro-${{ steps.meta.outputs.VERSION }}," \
+              -czf arch_tmp/MorceNOX-Astro-${{ steps.meta.outputs.VERSION }}.tar.gz \
+              --exclude=.git --exclude=release_dist --exclude=arch_tmp --exclude='*.o' --exclude='vendor/*/*.o' --exclude=astro .
+          sed "s/^pkgver=.*/pkgver=${{ steps.meta.outputs.VERSION }}/" packaging/PKGBUILD > arch_tmp/PKGBUILD
+          IMAGE=$([ "${{ matrix.arch_name }}" = "x86_64" ] && echo "archlinux:latest" || echo "menci/archlinuxarm:latest")
+          KEYRING=$([ "${{ matrix.arch_name }}" = "x86_64" ] && echo "archlinux-keyring" || echo "archlinuxarm-keyring")
+          docker run --rm -v $(pwd)/arch_tmp:/build -w /build $IMAGE bash -c \
+            "pacman -Sy --noconfirm $KEYRING && \
+             pacman -Syu --noconfirm --needed base-devel gettext ncurses icu && \
+             ln -sfn /usr/include /usr/include/ncursesw && \
+             useradd -m builder && chown -R builder:builder /build && \
+             su builder -c 'makepkg -f'"
+          cp arch_tmp/*.pkg.tar.zst release_dist/
+          rm -rf arch_tmp
+
+      - name: Upload artifacts to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release_dist/*.tar.gz
+            release_dist/*.deb
+            release_dist/*.rpm
+            release_dist/*.pkg.tar.zst
+          generate_release_notes: true
