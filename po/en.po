@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 16:20-0300\n"
+"POT-Creation-Date: 2026-11-21 16:31-0300\n"
 "PO-Revision-Date: 2026-08-12 22:30-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: English\n"
@@ -794,45 +794,45 @@ msgid ""
 "[ENTER] Edit Text / Save"
 msgstr ""
 
-#: src/arabic_parts.c:2473 src/arabic_parts.c:2504
+#: src/arabic_parts.c:2609 src/arabic_parts.c:2640
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr ""
 
-#: src/arabic_parts.c:2485
+#: src/arabic_parts.c:2621
 msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
 msgstr ""
 
-#: src/arabic_parts.c:2488
+#: src/arabic_parts.c:2624
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr ""
 
-#: src/arabic_parts.c:2670 src/aspects.c:613 src/aspects.c:1029
+#: src/arabic_parts.c:2681 src/aspects.c:613 src/aspects.c:1029
 #: src/aspects.c:3042
 msgid "(*) Numbers = angular difference in degrees"
 msgstr ""
 
-#: src/arabic_parts.c:2673
+#: src/arabic_parts.c:2684
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr ""
 
-#: src/arabic_parts.c:2673
+#: src/arabic_parts.c:2684
 msgid "Scroll Planets"
 msgstr ""
 
-#: src/arabic_parts.c:2840 src/selections.c:371
+#: src/arabic_parts.c:3058 src/selections.c:371
 msgid " CONFIRM DELETE "
 msgstr " CONFIRM DELETE "
 
-#: src/arabic_parts.c:2844 src/selections.c:375
+#: src/arabic_parts.c:3062 src/selections.c:375
 msgid "Are you sure you want to permanently delete:"
 msgstr "Are you sure you want to permanently delete:"
 
-#: src/arabic_parts.c:2850 src/arabic_parts.c:2917 src/arabic_parts.c:2926
+#: src/arabic_parts.c:3068 src/arabic_parts.c:3135 src/arabic_parts.c:3144
 #, fuzzy
 msgid "   YES   "
 msgstr "    YES    "
 
-#: src/arabic_parts.c:2861 src/arabic_parts.c:2950 src/arabic_parts.c:2959
+#: src/arabic_parts.c:3079 src/arabic_parts.c:3168 src/arabic_parts.c:3177
 #: src/selections.c:401 src/selections.c:453 src/selections.c:462
 #: src/selections.c:482 src/selections.c:491 src/selections.c:594
 #: src/selections.c:603 src/selections.c:2689 src/selections.c:2787
@@ -843,12 +843,12 @@ msgstr "    YES    "
 msgid "  CANCEL  "
 msgstr "  CANCEL  "
 
-#: src/arabic_parts.c:3014 src/arabic_parts.c:3040
+#: src/arabic_parts.c:3232 src/arabic_parts.c:3258
 #, fuzzy
 msgid "Failed deleting arabic part!"
 msgstr "Failed saving chart!"
 
-#: src/arabic_parts.c:3044
+#: src/arabic_parts.c:3262
 #, fuzzy
 msgid "Arabic Part deleted successfully!"
 msgstr "Chart deleted successfully."

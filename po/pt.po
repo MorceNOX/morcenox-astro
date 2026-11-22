@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 16:20-0300\n"
+"POT-Creation-Date: 2026-11-21 16:31-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1002,45 +1002,45 @@ msgstr ""
 "Use [↑/↓] Campos Verticais | [←/→] Ajustar Valor | [TAB] Campos Horizontais "
 "| [ENTER] Editar Texto / Salvar"
 
-#: src/arabic_parts.c:2473 src/arabic_parts.c:2504
+#: src/arabic_parts.c:2609 src/arabic_parts.c:2640
 msgid "[←/→] More Parts [↑/↓] Scroll"
 msgstr "[←/→] Mais Partes [↑/↓] Rolagem"
 
-#: src/arabic_parts.c:2485
+#: src/arabic_parts.c:2621
 msgid " Aspects of Radical Planets over Solar Return Arabic Parts "
 msgstr ""
 " Aspectos dos Planetas Radicais sobre as Partes Árabes do Retorno Solar "
 
-#: src/arabic_parts.c:2488
+#: src/arabic_parts.c:2624
 msgid " Arabic Parts Aspect Matrix Grid "
 msgstr " Matriz de Aspectos das Partes Árabes "
 
-#: src/arabic_parts.c:2670 src/aspects.c:613 src/aspects.c:1029
+#: src/arabic_parts.c:2681 src/aspects.c:613 src/aspects.c:1029
 #: src/aspects.c:3042
 msgid "(*) Numbers = angular difference in degrees"
 msgstr "(*) Numerais = diferença angular em graus"
 
-#: src/arabic_parts.c:2673
+#: src/arabic_parts.c:2684
 msgid "ESC: Exit - [ ←/→ ] Parts"
 msgstr "ESC: Sair - [ ←/→ ] Partes"
 
-#: src/arabic_parts.c:2673
+#: src/arabic_parts.c:2684
 msgid "Scroll Planets"
 msgstr "Rolar Planetas"
 
-#: src/arabic_parts.c:2840 src/selections.c:371
+#: src/arabic_parts.c:3058 src/selections.c:371
 msgid " CONFIRM DELETE "
 msgstr " CONFIRMA APAGAR "
 
-#: src/arabic_parts.c:2844 src/selections.c:375
+#: src/arabic_parts.c:3062 src/selections.c:375
 msgid "Are you sure you want to permanently delete:"
 msgstr "Tem certeza que você quer apagar permanentemente:"
 
-#: src/arabic_parts.c:2850 src/arabic_parts.c:2917 src/arabic_parts.c:2926
+#: src/arabic_parts.c:3068 src/arabic_parts.c:3135 src/arabic_parts.c:3144
 msgid "   YES   "
 msgstr "   SIM   "
 
-#: src/arabic_parts.c:2861 src/arabic_parts.c:2950 src/arabic_parts.c:2959
+#: src/arabic_parts.c:3079 src/arabic_parts.c:3168 src/arabic_parts.c:3177
 #: src/selections.c:401 src/selections.c:453 src/selections.c:462
 #: src/selections.c:482 src/selections.c:491 src/selections.c:594
 #: src/selections.c:603 src/selections.c:2689 src/selections.c:2787
@@ -1051,11 +1051,11 @@ msgstr "   SIM   "
 msgid "  CANCEL  "
 msgstr "  CANCELA "
 
-#: src/arabic_parts.c:3014 src/arabic_parts.c:3040
+#: src/arabic_parts.c:3232 src/arabic_parts.c:3258
 msgid "Failed deleting arabic part!"
 msgstr "Falha ao deletar parte árabe!"
 
-#: src/arabic_parts.c:3044
+#: src/arabic_parts.c:3262
 msgid "Arabic Part deleted successfully!"
 msgstr "Parte Árabe excluída com sucesso."
 
