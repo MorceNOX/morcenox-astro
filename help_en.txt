@@ -395,11 +395,11 @@ Additionally, you can access settings to configure your charts according to vari
 
 The app's core was designed to ensure accuracy in all calculations and offer the widest possible scope, making it an extremely useful astrological tool for any astrologer, from students to the most experienced professionals.   
  
-The interface was designed to offer efficiency and beauty; most actions require only one or two keystrokes, and the color system displays relevant information across all modules.
+The interface was designed to offer efficiency and beauty; most actions require only one or two keystrokes or clicks, and the color system displays relevant information across all modules.
  
 To save a custom chart, simply enter the data and select the save option from the main menu.
 
-To view and interact with the action modules hit the function or numeric keys of the keyboard while the chart wheel is being displayed, or the key [M] to open the action menu and choosing the desired one. You can also click over the [  MENU  ] button access any available action module.
+To view and interact with the action modules hit the function or numeric keys of the keyboard while the chart wheel is being displayed, or the key [M] to open the action menu and choosing the desired one. You can also click over the [  MENU  ] button and access any available action module.
 
 Some tables and panels have more options accessible while they are open.
 
@@ -409,7 +409,7 @@ From version v1.50.0 onwards you can interact with Fixed Stars. There is a corre
 
 This application is developed in C, utilizing the ncurses library for visual elements and the Swiss Ephemeris for astronomical calculations. This ensures a fast, solid, and accurate system that is precise and visually appealing, even within a terminal environment.
 
-For accurate charts and tables, all astronomical calculations concerned to the positions of the planet and bodies are performed based on the topocentric system, taking into account the coordinates of the location for the loaded map.
+For accurate charts and tables, all astronomical calculations concerned to the positions of the planets and bodies are performed based on the topocentric system, taking into account the coordinates and the elevation of the location for the loaded map. This accounts for lunar diurnal parallax (up to ~1°), ensures complete self-consistency in the Pre-Natal Syzygy (casting a chart for the exact syzygy timestamp places the Sun and Moon at the exact same degree or opposition) and strict accuracy in Primary Directions involving the Moon, in accordance with classical astronomical methodology.
 
 All data is stored in an SQLite database provided by this application.
 
@@ -750,7 +750,7 @@ Type [H] to show the houses boundaries in the chart.
 
 You can toggle the animation mode by pressing [A] or the space bar. Use ] and [ to adjust the animation speed in 60-second increments (faster or slower), or } and { for 1-second increments (faster or slower). Positive values ​​show future events; negative values ​​simulate traveling back in time.
 
-The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the terminal configured with the fonts Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono,  Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono, but any monospaced font can be used and will work nicely. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
+The wheel's aspect ratio will be set automatically when it starts and when the terminal is resized. It is set according to the dimensions of the monospaced font set for your terminal. The program has been tested with the terminal configured with the fonts Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono,  Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono, Droid Sans Mono, but any monospaced font can be used and will work nicely. Depending on the font set for your terminal, the wheel's circles may appear slightly elongated or oval-shaped. If this happens, use the [/] and [*] keys to adjust the aspect ratio. 
 
 The information displayed at the wheel's side might be covered by it when the terminal window is near to a geometrical square, because the program calculates the wheel's aspect ratio to make it, in its normal size without zoom, the largest possible inscribed circle that fits within the terminal window. 
 
@@ -758,7 +758,7 @@ Remember you can pan and zoom in and out the wheel whenever be necessary.
 
 Each planet or point displayed within the astrological wheel will be positioned as close as possible to its actual angular position, respecting sign and house boundaries as well as the actual ordinal position of each.
 
-When two or more elements are in conjunction—or at very close degrees—the program calculates the actual position of each and attempts to display them separately. Consequently, one or more elements might appear outside their sign's boundaries; however, their actual position remains easily identifiable via their degree and background color, which matches the color of the corresponding sign's segment. If an element is not visible, you can zoom in to see it plotted on the chart.
+When two or more elements are in conjunction—or at very close degrees—the program calculates the actual position of each and attempts to display them separately. Consequently, one or more elements might appear outside their sign's boundaries; however, their actual position remains easily identifiable via their degree and background color, which matches the color of the corresponding house's segment. If an element is not visible, you can zoom in to see it plotted on the chart.
 
 At the bottom, on both the left and right sides, there are labels indicating most of the keyboard shortcuts available on this screen.
 
@@ -1006,8 +1006,10 @@ Use [↓↑] to scroll the table.
    
 Mutual Reception without Aspect*** → +1 point
    Mutual Reception with Aspect*** → +4 points if by exaltation, or 
-                                     +5 points if by domicile
-(***)by Domicile/Exaltation/Mixed.
+                                     +5 points if by domicile, or
+                                     +2 points if by term, or
+                                     +1 point if by decan.
+(***)by Domicile/Exaltation/Term/Decan/Mixed.
  (***)Aspect by degree or by sign.
       
                       Joy by House → +2 points

@@ -408,13 +408,13 @@ A partir da versão v1.50.0 em diante você pode, também, interagir com as Estr
 
 Este aplicativo é desenvolvido em C, utilizando a biblioteca ncurses para elementos visuais e o Swiss Ephemeris para cálculos astronômicos. Isso garante um sistema rápido, sólido e preciso que é visualmente atraente, mesmo dentro de um ambiente de terminal.
 
-Para garantir a precisão dos dados apresentados, todos os cálculos astronômicos relativos à posição dos astros são realizados com base no sistema topocêntrico, considerando as coordenadas da localidade do mapa carregado.
+Para garantir a precisão dos dados apresentados, todos os cálculos astronômicos relativos à posição dos astros são realizados com base no sistema topocêntrico, considerando as coordenadas e a altitude da localidade do mapa carregado. Esta escolha faz com que o programa considere a paralaxe diurna da Lua (de até ~1°), garante total autoconsistência na Sizígia Pré-Natal (ao levantar o mapa para o instante exato da sizígia, Sol e Lua aparecem rigorosamente no mesmo grau ou em oposição exata) e máxima precisão nas Direções Primárias que envolvem a Lua, conforme a metodologia astronômica clássica.
 
 Todos os dados são armazenados em um banco de dados SQLite fornecido por este aplicativo.
 
 Utilizamos um banco de dados atualizado e gratuito de cidades fornecido por https://github.com/dr5hn/countries-states-cities-database, que aprimoramos com melhorias estruturais usando as bibliotecas pytz (timezonefinder) e srtm para servir melhor às necessidades do aplicativo (Essas bibliotecas foram apenas usadas para aprimorar o banco de dados durante a fase de desenvolvimento. Elas não são usadas pelo programa e você não precisa instalá-las).
 
-O banco de dados de cidades contém aproximadamente 153 mil cidades. É bom o suficiente para um banco de dados gratuito e bem estruturado, trabalhando em um software astrológico gratuito, mas vilarejos pequenos podem não estar listados. Portanto, para vilarejos, você deve procurar pelo nome da cidade onde ele está localizado, ou uma cidade muito próxima a ele. Ou então, a partir da versão v1.40.0, digitar as coordenadas manualmente e seguir os diálogos subsequentes para que a nova localização seja incorporada ao banco de dados.
+O banco de dados de cidades contém aproximadamente 153 mil cidades. É bom o suficiente para um banco de dados gratuito e bem estruturado, trabalhando em um software astrológico gratuito, mas vilarejos pequenos podem não estar listados. Portanto, para vilarejos, você deve procurar pelo nome da cidade onde ele está localizado, ou uma cidade muito próxima a ele. Ou então, a partir da versão v1.40.0, digitar as coordenadas manualmente e seguir os diálogos subsequentes para que a nova localidade seja incorporada ao banco de dados.
 
 Por exemplo, Princess Diana nasceu em Sandringham, uma pequena vila localizada no distrito de King's Lynn, no condado de Norfolk. Você verá que Sandringham não está listada. Assim, para obter o mapa dela, você deve selecionar Reino Unido como país, depois procurar por King's Lynn em Norfolk ou estado. (Condado ou Estado é a 2ª coluna na tabela de cidades). Ou fechar a janela de seleção de cidade e digitar as coordenadas manualmente.
 
@@ -742,7 +742,7 @@ Você pode ativar ou desativar o modo de animação pressionando [A] ou a barra 
 
 O aspecto da roda será atualizado automaticamente quando ela é criada e ao redimensionar o terminal. 
 
-O programa foi testado com as fontes Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono, Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono para o terminal, mas qualquer fonte mono-espaçada pode ser usada e vai funcionar corretamente. 
+O programa foi testado com as fontes Adwaita Mono, Bitstream Vera Sans Mono, Noto Sans Mono, Monospace, Source Cod Pro, Astronomic Mono, DejaVu LGC Sans Mono, DejaVu Sans Mono, Droid Sans Mono para o terminal, mas qualquer fonte mono-espaçada pode ser usada e vai funcionar corretamente. 
 
 Dependendo da fonte definida para o seu terminal, os círculos da roda podem parecer ligeiramente alongados, ou em formato oval. Se isso ocorrer, use as teclas [/] e [*] para ajustar o aspecto.
 
@@ -755,7 +755,7 @@ Quanto à plotagem dos planetas e pontos do mapa astrológico, o programa calcul
 Quanto mais determinado planeta ou ponto estiver isolado, sua posição angular na roda astrológica será tão próxima da sua posição angular real quanto maior for a resolução gráfica do terminal.
 
 Quando 2 (dois) ou mais planetas e/ou pontos estiverem em conjunção, ou em graus muito próximos, o programa vai calcular a posição real de cada um deles e tentar exibí-los separadamente, de modo que poderá ocorrer de um ou mais deles serem exibidos fora dos limites de seu signo, mas sua posição real poderá ainda assim ser facilmente identificada por meio do seu grau 
-e de sua cor de fundo, a qual corresponderá à cor da fatia do seu signo. Se algum elemento não estiver sendo exibido, você poderá aplicar o zoom e mover a roda para vê-lo grafado no mapa.
+e de sua cor de fundo, a qual corresponderá à cor da fatia de sua casa. Se algum elemento não estiver sendo exibido, você poderá aplicar o zoom e mover a roda para vê-lo grafado no mapa.
 
 Na parte inferior, tanto à esquerda como à direita, há legendas indicando a maioria das teclas de atalho disponíveis nesta tela.
 
@@ -1010,8 +1010,12 @@ Use [↓↑] para deslizar a tabela.
             Recepção mútua com Aspecto*** → +4 pontos se por
                                                exaltação, ou 
                                             +5 pontos se por 
-                                               domicílio.
-                (***)Por Domicílio/Exaltação/Misto.
+                                               domicílio, ou
+                                            +2 pontos se por 
+                                               termo, ou
+                                            +1 ponto se por 
+                                               decanato.
+                (***)Por Domicílio/Exaltação/Termo/Decanato/Misto.
                 (***)Aspecto por grau ou por signo.
 
                           Júbilo por Casa → +2 pontos
