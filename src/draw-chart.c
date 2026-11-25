@@ -2447,7 +2447,7 @@ void draw_chart(int center_y, int center_x, int max_y, int max_x, float aspect_r
         else attroff(COLOR_PAIR(55));
 
 
-        mvprintw(LINES - 4, max_x - 34, _(" Action: F1..F12, 0..9, V, S, F, Y "));
+        mvprintw(LINES - 4, max_x - 37, _(" Action: F1..F12, 0..9, I,X,V,S,F,Y "));
         mvprintw(LINES - 3, max_x - 35, _(" Houses: H | Terms: B | Decans: D "));
         mvprintw(LINES - 2, max_x - 28, "%s%.4f",_("      Aspect Ratio: "), aspect_ratio);
 
