@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 09:25-0300\n"
+"POT-Creation-Date: 2026-11-25 20:24-0300\n"
 "PO-Revision-Date: 2026-08-12 20:50-0300\n"
 "Last-Translator: morcenox <morcenox@fedora>\n"
 "Language-Team: Portuguese <translation-team-pt@googlegroups.com>\n"
@@ -1646,8 +1646,8 @@ msgid "[    MENU    ]"
 msgstr "[    MENU    ]"
 
 #: src/draw-chart.c:2450
-msgid " Action: F1..F12, 0..9, V, S, F, Y "
-msgstr " Ação: F1..F12, 0..9, V, S, F, Y "
+msgid " Action: F1..F12, 0..9, I,X,V,S,F,Y "
+msgstr " Ação: F1..F12, 0..9, I,X,V,S,F,Y "
 
 #: src/draw-chart.c:2451
 msgid " Houses: H | Terms: B | Decans: D "
