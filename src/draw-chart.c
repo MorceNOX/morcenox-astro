@@ -7553,7 +7553,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(8, 45, TABLE_BKGD_DARK); // blue
         init_pair(9, 232, 232);
 
-        init_pair(10, TABLE_BKGD_DARK, TABLE_BKGD_DARK);
+        init_pair(10, 147, TABLE_BKGD_DARK); // table line
         init_pair(50, TABLE_BKGD_DARK, COLOR_BACK_DARK_2);
 
         init_pair(11, COLOR_RED, TABLE_BKGD_DARK);
@@ -7673,7 +7673,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(8, 21, TABLE_BKGD); // azul
         init_pair(9, 232, 232);
         
-        init_pair(10, TABLE_BKGD, TABLE_BKGD);
+        init_pair(10, 111, TABLE_BKGD); // table line
         init_pair(50, TABLE_BKGD, COLOR_BACK_2);
 
         init_pair(11, COLOR_RED, TABLE_BKGD); // red
