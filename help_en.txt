@@ -2231,6 +2231,13 @@ Module Features and Displays
 	
 	• Following the strictest classical doctrine, only Conjunctions, Parallels of Declination, and Parallel Rapti are considered, thereby avoiding the noise of major aspects that are not cast by stars.
 	
+	• Directions of Fixed Stars show the following color-coding: 
+
+        a. Benefic Stars: Green Bold;
+        b. Malefic Stars: Red Bold;
+        c. Other Stars: Dark Purple;
+        d. Conjunctions: Bold.
+	
 3. Parans (Paranatellonta):
 
 	• Shows which stars cross the four local angles (Rising, Culminating at the MC, Setting, or at the IC) simultaneously with the planets on the date of birth, calculated for the chart’s exact geographic latitude.

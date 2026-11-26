@@ -2112,6 +2112,13 @@ Recursos e Telas do Módulo
 	• Quando habilitadas nas configurações, as estrelas fixas atuam como Promissores (zodiacais e mundanos) em direção aos significadores e ângulos do mapa.
 	
 	• Seguindo a doutrina clássica mais estrita, são consideradas apenas Conjunções, Paralelos de Declinação e Raptos Paralelos, evitando o ruído de aspectos maiores não emitidos por estrelas.
+	
+	• As direções das Estrelas Fixas seguem o seguinte código de cores: 
+	
+	    a. Estrelas Benéficas: Verde Negrito;
+	    b. Estrelas Maléficas: Vermelho Negrito;
+	    c. Outras Estrelas: Púrpura escuro;
+	    d. Conjunções: Negrito.
 
 3. Parans (Paranatellonta):
 
