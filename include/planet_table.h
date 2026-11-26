@@ -30,6 +30,14 @@
 #define ANTISSIUM 0
 #define CONTRANTISSIUM 1
 
+
+typedef enum {
+    MALEFIC = 1,
+    BENEFIC = 2,
+    NEUTER  = 3
+} Nature;
+
+
 typedef struct {
     int longitude;
     int type;
@@ -200,6 +208,7 @@ typedef struct {
     double md;
     double hd;
     double pm; // Posição Mundana de Placidus (0° a 360°)
+    Nature nature;
 } Promissor;
 
 

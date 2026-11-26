@@ -71,6 +71,7 @@ typedef struct {
     char promissor_name[64]; // O planeta que se move (ex: "Mars")
     char promissor_glifo[10];
     int promissor_type;
+    Nature promissor_nature;
     int aspecto_id;
     char aspecto_symbol[10]; // ☌, ⚹, □, △, ☍
     char significador_name[20]; // O ponto receptor parado (ex: "Moon" [Hyleg])

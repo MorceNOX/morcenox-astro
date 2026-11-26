@@ -1348,6 +1348,8 @@ int calc_mundane_directions(Promissor *sig, LinhaDirecao *lista_resultado, doubl
                     strcpy(d->significador_name, sig->object_name);
                     strcpy(d->significador_glifo, sig->object);
                     d->promissor_type = prom->type;
+
+                    d->promissor_nature = prom->nature;
                     
                     d->arco_graus = arco;
                     
@@ -2312,6 +2314,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                             strcpy(d->significador_name, sig[idx_alvo].object_name);
                             strcpy(d->significador_glifo, sig[idx_alvo].object);
                             d->promissor_type = prom[p].type;
+
+                            d->promissor_nature = prom[p].nature;
+
                             d->arco_graus = arco;
 
                             // 1. Obter a chave/fator do sistema usando macros estáticas
@@ -2426,6 +2431,9 @@ int calcular_direcoes_zodiacais_topocentrico(Promissor *sig, int idx_alvo, Linha
                     strcpy(d->significador_name, sig[idx_alvo].object_name);
                     strcpy(d->significador_glifo, sig[idx_alvo].object);
                     d->promissor_type = prom[p].type;
+
+                    d->promissor_nature = prom[p].nature;
+
                     d->arco_graus = arco;
 
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
@@ -2637,6 +2645,9 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                             strcpy(d->significador_name, sig[idx_alvo].object_name);
                             strcpy(d->significador_glifo, sig[idx_alvo].object);
                             d->promissor_type = prom[p].type;
+
+                            d->promissor_nature = prom[p].nature;
+
                             d->arco_graus = arco;
 
                             // 1. Obter a chave/fator do sistema usando macros estáticas
@@ -2755,6 +2766,9 @@ int calcular_direcoes_zodiacais_regiomontanus(Promissor *sig, int idx_alvo, Linh
                     strcpy(d->significador_name, sig[idx_alvo].object_name);
                     strcpy(d->significador_glifo, sig[idx_alvo].object);
                     d->promissor_type = prom[p].type;
+
+                    d->promissor_nature = prom[p].nature;
+
                     d->arco_graus = arco;
 
                     double CHAVE = get_time_key(TIME_KEY, jd, arco);
@@ -2942,6 +2956,9 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                             strcpy(d->significador_name, sig[idx_alvo].object_name);
                             strcpy(d->significador_glifo, sig[idx_alvo].object);
                             d->promissor_type = prom[p].type;
+
+                            d->promissor_nature = prom[p].nature;
+
                             d->arco_graus = arco;
 
                             // 1. Obter a chave/fator do sistema usando macros estáticas
@@ -3057,6 +3074,8 @@ int calcular_direcoes_zodiacais_geral(Promissor *sig, int idx_alvo, LinhaDirecao
                     strcpy(d->significador_glifo, sig[idx_alvo].object);
                     
                     d->promissor_type = prom[p].type;
+
+                    d->promissor_nature = prom[p].nature;
 
                     // 1. Calcula o arco e a idade do evento normalmente
                     d->arco_graus = arco;
@@ -3983,6 +4002,9 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
 
                 bool eh_star = (d->promissor_type == PROM_STAR);
 
+                bool eh_star_malefic = (d->promissor_type == PROM_STAR && d->promissor_nature == MALEFIC);
+                bool eh_star_benefic = (d->promissor_type == PROM_STAR && d->promissor_nature == BENEFIC);
+
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
 
@@ -4020,12 +4042,19 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                     atributo_extra |= A_NORMAL;
                 }
                 
-                if (eh_star) {
+                if (eh_star_benefic) {
+                    par_cor_ativo = COLOR_PAIR(12);
+                    atributo_extra |= A_ITALIC | A_BOLD;
+                }
+                else if (eh_star_malefic) {
+                    par_cor_ativo = COLOR_PAIR(11);
+                    atributo_extra |= A_ITALIC | A_BOLD;
+                }
+                else if (eh_star) {
                     par_cor_ativo = COLOR_PAIR(84);
                     atributo_extra |= A_ITALIC;
                 }
-
-                if (eh_termo) {
+                else if (eh_termo) {
                    atributo_extra |= A_UNDERLINE;
                 }
                 else if (eh_antiscia) {
@@ -5054,13 +5083,16 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 bool eh_senhor_casa8 = (strcmp(d->promissor_name, nome_senhor_da_casa8) == 0);
                 //bool eh_anareta_ou_mortis = (eh_anareta || eh_senhor_casa8);
 
-                bool eh_star = (d->promissor_type == PROM_STAR);
-
                 bool eh_jupiter   = (strcmp(d->promissor_name, _("Jupiter")) == 0);
                 bool eh_venus = (strcmp(d->promissor_name, _("Venus")) == 0);
                 bool eh_nodo_norte = (strcmp(d->promissor_name, _("North Node")) == 0);
 
                 bool eh_benefico_essencial = (eh_jupiter || eh_venus || eh_nodo_norte);
+
+                bool eh_star = (d->promissor_type == PROM_STAR);
+
+                bool eh_star_malefic = (d->promissor_type == PROM_STAR && d->promissor_nature == MALEFIC);
+                bool eh_star_benefic = (d->promissor_type == PROM_STAR && d->promissor_nature == BENEFIC);
 
                 int par_cor_ativo = COLOR_PAIR(13);
                 int atributo_extra = A_NORMAL;
@@ -5097,19 +5129,26 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 else if (!eh_aspecto_tenso) {
                     par_cor_ativo = COLOR_PAIR(8);
                     atributo_extra |= A_NORMAL;
-                }                
+                }
                 
-                if (eh_star) {
+                if (eh_star_benefic) {
+                    par_cor_ativo = COLOR_PAIR(12);
+                    atributo_extra |= A_ITALIC | A_BOLD;
+                }
+                else if (eh_star_malefic) {
+                    par_cor_ativo = COLOR_PAIR(11);
+                    atributo_extra |= A_ITALIC | A_BOLD;
+                }
+                else if (eh_star) {
                     par_cor_ativo = COLOR_PAIR(84);
                     atributo_extra |= A_ITALIC;
                 }
-
-                if (eh_termo) {
-                    atributo_extra |= A_UNDERLINE;
-                 }
-                 else if (eh_antiscia) {
-                     atributo_extra |= A_DIM | A_ITALIC;
-                 }
+                else if (eh_termo) {
+                   atributo_extra |= A_UNDERLINE;
+                }
+                else if (eh_antiscia) {
+                    atributo_extra |= A_DIM | A_ITALIC;
+                }
 
                 wattron(scroll_pad, par_cor_ativo | atributo_extra);
 

@@ -10152,6 +10152,13 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[i].type = PROM_PART;
             }
 
+            if (i == 4 || i == 6 || i == 11 - object_diff) {
+                prom[i].nature = MALEFIC;
+            } else if (i == 3 || i == 5 || i == 10 - object_diff) {
+                prom[i].nature = BENEFIC;
+            } else {
+                prom[i].nature = NEUTER;
+            }
             prom_id++;
         }
         
@@ -10270,6 +10277,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
             }
 
+            if (i == 3 || i == 5 || i == 10 - object_diff) {
+                prom[prom_id].nature = BENEFIC;
+            } else if (i == 4 || i == 6 || i == 11 - object_diff) {
+                prom[prom_id].nature = MALEFIC;
+            } else {
+                prom[prom_id].nature = NEUTER;
+            }
+
             if (strcmp(plots[i].object_name, _("Ascendant")) == 0 || strcmp(plots[i].object_name, _("Descendant")) == 0 ||
                 strcmp(plots[i].object_name, _("Midheaven")) == 0 || strcmp(plots[i].object_name, _("Nadir")) == 0
             ) {
@@ -10327,7 +10342,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             snprintf(ants[target_idx].object, 10, "CA-%s", plots[i].object);
             snprintf(ants[target_idx].object_name, 30, "Contrantiscium %s", plots[i].object_name);
 
-            // calcula o antíscio da Parte da Fortuna Mundana para promissores
+            // calcula o contrantíscio da Parte da Fortuna Mundana para promissores
             if (strcmp(plots[i].object_name, _("Part of Fortune")) == 0) {
                 prom[prom_id].longitude = calcular_contra_antiscia(fortuna_m.longitude);
                 xx_in[0] = prom[prom_id].longitude;
@@ -10338,7 +10353,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 prom[prom_id].ra = xx_out[0];
                 
                 prom[prom_id].house = get_house(prom[prom_id].longitude, cusps);
-                prom[prom_id].type = PROM_ANTISCIUM;
+                prom[prom_id].type = PROM_CONTRANTISCIUM;
 
                 x_sn[0] = prom[prom_id].longitude;
                 x_sn[1] = prom[prom_id].latitude;
@@ -10351,7 +10366,15 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
                 // does nothing, just ignore 
             } else {
                 prom_id++;
-            }                          
+            }  
+            
+            if (i == 3 || i == 5 || i == 10 - object_diff) {
+                prom[prom_id].nature = BENEFIC;
+            } else if (i == 4 || i == 6 || i == 11 - object_diff) {
+                prom[prom_id].nature = MALEFIC;
+            } else {
+                prom[prom_id].nature = NEUTER;
+            }
             
             index_cant++;
                     
@@ -10372,6 +10395,14 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
             x_sn[1] = prom[prom_id].latitude;
             prom[prom_id].house_pos = swe_house_pos(armc, lat, true_obliquity, house_system_pd, x_sn, serr);
             
+            if (strcmp(stars[i].meta->nature, "Mar") == 0 || strcmp(stars[i].meta->nature, "Sat") == 0 || strcmp(stars[i].meta->nature, "Mar/Sat") == 0 || strcmp(stars[i].meta->nature, "Sat/Mar") == 0) {
+                prom[prom_id].nature = MALEFIC;
+            } else if (strcmp(stars[i].meta->nature, "Jup") == 0 || strcmp(stars[i].meta->nature, "Ven") == 0 || strcmp(stars[i].meta->nature, "Jup/Ven") == 0 || strcmp(stars[i].meta->nature, "Ven/Jup") == 0) {
+                prom[prom_id].nature = BENEFIC;
+            } else {
+                prom[prom_id].nature = NEUTER;
+            }
+
             prom_id++;
         }
 
