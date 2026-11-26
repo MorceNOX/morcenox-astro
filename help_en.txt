@@ -2243,7 +2243,11 @@ Module Features and Displays
 
 	• Displays the dates for the Last Heliacal Rising, Last Heliacal Setting, and Next Heliacal Rising, with the star associated with the Natal Heliacal Rising highlighted at the top.
 
-5. Activations in the Solar Return (in the Solar Return Chart) - Press the letter [O]:
+5. Delineation of the Activated Stars:
+
+	• Press [Y] in the Chart Wheel to see a datailed report and delineation of the activated fixed stars in the chart;
+
+6. Activations in the Solar Return (in the Solar Return Chart) - Press the letter [O]:
 	
 	• Check whether the angles (ASC, MC, DSC, IC) or planets of the Solar Return fall in exact conjunction with fixed stars for the year of the return.
 	

@@ -2125,7 +2125,11 @@ Recursos e Telas do Módulo
 
 	• Exibe as datas do Último Nascer Helíaco, Último Pôr Helíaco e Próximo Nascer Helíaco, destacando no topo a Estrela do Nascer Helíaco Natal.
 
-5. Ativações na Revolução Solar (No mapa da revolução solar) - Pressione a tecla da letra [O]:
+5. Delineação das Estrelas Fixas Ativas no Mapa:
+
+	• Pressione [Y] na tela da Roda Astrológica para visualizar o relatório completo e a delineação das estrelas fixas que estão ativadas no mapa;
+
+6. Ativações na Revolução Solar (No mapa da revolução solar) - Pressione a tecla da letra [O]:
 
 	• Verifica se os ângulos (ASC, MC, DSC, IC) ou planetas da Revolução Solar caem em conjunção exata com estrelas fixas no ano do retorno.
 
