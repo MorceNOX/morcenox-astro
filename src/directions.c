@@ -3321,6 +3321,21 @@ const char* get_key_name(int key) {
 }
 
 
+const char* get_key_name_abbrev(int key) {
+    switch(key) {
+        case TIME_KEY_NAIBOD:                            return "Naibod";
+        case TIME_KEY_CARDANO:                           return _("Cardano");
+        case TIME_KEY_PTOLEMY:                           return _("Ptolemy");
+        case TIME_KEY_PLACIDUS:                          return "Placidus";
+        case TIME_KEY_TRUE_SOLAR_ARC_LONGITUDE_BIRTHDAY: return _("TSArcLong-Birth");           
+        case TIME_KEY_KEPLER:                            return _("TSArcLong");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA:                 return _("TSArcRA");
+        case TIME_KEY_TRUE_SOLAR_ARC_RA_BIRTHDAY:        return _("TSArcRA-Birth");
+        default: return "Naibod";
+    }
+}
+
+
 
 double obter_proporcao_polar_casa(int numero_casa) {
     switch(numero_casa) {
@@ -4201,7 +4216,7 @@ void display_primary_directions(PlotObject *plots, Promissor *sig, AspectMatrix 
                 break;
             case 'P':
             case 'p':
-                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY, tipo, sentido);
                 recalculate = false;
                 break;
             case '1':
@@ -5288,7 +5303,7 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
                 break;
             case 'P':
             case 'p':
-                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY);
+                print_directions_to_csv(cronograma, qtd_direcoes, METODO_CALCULO_ATIVO, TIME_KEY, tipo, sentido);
                 recalculate = false;
                 break;
             case '1':
@@ -5608,12 +5623,26 @@ void display_primary_directions_parts(Promissor *prom, char *nome_anareta, char 
 
 
 
-void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoGlobal method, int time_key) {
+void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoGlobal method, int time_key, int sphere, int motion) {
     
     desativar_arrasto_mouse();
 
     char file_name[120];
     memset(file_name, 0, sizeof(file_name));
+
+
+    const char *method_name = (method == METODO_TOPOCENTRICO ? _("Topo") : (method == METODO_PLACIDUS_SEMI_ARCO ? _("Placidus") : _("Regio")));
+    const char *sphere_str = (sphere == 0 ? "Z" : (sphere == 1 ? "M" : "ZM"));
+    const char *motion_str = (motion == 0 ? "D" : (motion == 1 ? "C" : "DC"));
+    const char *key_str = get_key_name_abbrev(time_key);
+
+    char sig_glyph[10];
+    char sig_name[64];
+
+    snprintf(sig_glyph, 10, "%s", dir[1].significador_glifo);
+    snprintf(sig_name, 64, "%s", dir[1].significador_name);
+
+    snprintf(file_name, 120, "%s_%s_%s_%s_%s", sig_name, motion_str, sphere_str, method_name, key_str);
 
     set_file_name(file_name, sizeof(file_name));    
     char file_path[512];
@@ -5655,12 +5684,6 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
     snprintf(file_csv, sizeof(file_csv), "%s.csv", file_name);
     show_alert_popup(_("Directions exported to file:"), file_csv);
 
-    char sig_glyph[10];
-    char sig_name[64];
-
-    snprintf(sig_glyph, 10, "%s", dir[1].significador_glifo);
-    snprintf(sig_name, 64, "%s", dir[1].significador_name);
-
     char info_path[512];
     snprintf(info_path, sizeof(info_path), "%s/export/%s.info", CONFIG_PATH, file_name);
 
@@ -5672,8 +5695,10 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
         return;
     }
 
-    fprintf(info, "%s: %s\n", _("Primary Directions Calculation Method"), (method == METODO_TOPOCENTRICO ? _("Tpocentric Method") : _("Placidus Proportional Semi-Arcs Method")));
+    fprintf(info, "%s: %s\n", _("Primary Directions Calculation Method"), (method == METODO_TOPOCENTRICO ? _("Topocentric Method") : (method == METODO_PLACIDUS_SEMI_ARCO ? _("Placidus Proportional Semi-Arcs Method") : _("Regiomontanus Method"))));
     fprintf(info, "%s: %s\n", _("Time Key"), get_key_name(time_key));
+    fprintf(info, "%s: %s\n", _("Sphere"), (sphere == 0 ? _("Zodiacal") : (sphere == 1 ? _("Mundane") : _("Zodiacal & Mundane"))));
+    fprintf(info, "%s: %s\n", _("Motion"), (motion == 0 ? _("Direct") : (motion == 1 ? _("Converse") : _("Direct & Converse"))));
     fprintf(info, "%s: %s - %s\n", _("Active Significator Target"), sig_glyph, sig_name);
     fprintf(info, "%s: %s\n", _("csv File:"), file_csv);
     fprintf(info, "%s: %d\n", _("Total Directions:"), qtd_direcoes);
