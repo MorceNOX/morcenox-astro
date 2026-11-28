@@ -7646,6 +7646,7 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
 
         init_pair(67, 66, TABLE_BKGD_DARK);
 
+        init_pair(87, COLOR_BLACK, 38); // Verde quase ciano
     } 
     else {
         init_pair(1, COLOR_BLACK, COLOR_BACK_1_SIGN);
@@ -7753,8 +7754,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(52, 139, COLOR_BACK_2);
         init_pair(53, 67, COLOR_BACK_1);
         init_pair(54, 76, 89); // green, magenta
-        init_pair(55, 232, 25); // dark / azul
-        init_pair(56, 232, 91); // dark, magenta
+        init_pair(55, 232, 24); // dark / azul
+        init_pair(56, 232, 89); // dark, magenta
         init_pair(57, 242, 230); // para meia sombra nos botões das caixinhas
         init_pair(58, 242, COLOR_WHITE); 
         init_pair(59, 242, COLOR_CYAN);
@@ -7766,6 +7767,8 @@ int chart(struct tm *local_time, double lat, double lon, double elev, double tz_
         init_pair(64, COLOR_BLACK, 193);
 
         init_pair(67, 66, TABLE_BKGD);
+
+        init_pair(87, COLOR_BLACK, 73); // Verde quase ciano
     }
     
     FLAGS = 0;
@@ -11560,19 +11563,21 @@ void open_menu_tables(ContextoMenu *ctx) {
     wattroff(shadow, COLOR_PAIR(24));
     wnoutrefresh(shadow);
 
-    wbkgd(win, COLOR_PAIR(26) | FLAGS);
+    int color_pair = (DARK_MODE ? 87 : 26);
+
+    wbkgd(win, COLOR_PAIR(color_pair) | FLAGS);
 
     // 2. Desenha o botão [X] no canto superior direito
-    int col_fechar = getmaxx(win) - 4; // Abre espaço para 3 caracteres: '[', 'X', ']'
+    int col_fechar = getmaxx(win) - 4;
 
-    wattron(win, COLOR_PAIR(26)); // Cor padrão para os colchetes
+    wattron(win, COLOR_PAIR(color_pair));
     mvwprintw(win, 0, col_fechar, "[");
     mvwprintw(win, 0, col_fechar + 2, "]");
-    wattroff(win, COLOR_PAIR(26));
+    wattroff(win, COLOR_PAIR(color_pair));
 
-    wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+    wattron(win, COLOR_PAIR(color_pair) | A_BOLD);
     mvwprintw(win, 0, col_fechar + 1, "✖");
-    wattroff(win, COLOR_PAIR(26) | A_BOLD);
+    wattroff(win, COLOR_PAIR(color_pair) | A_BOLD);
     wnoutrefresh(win);
 
 
@@ -11586,29 +11591,29 @@ void open_menu_tables(ContextoMenu *ctx) {
         
         // Clear and redraw main menu
         werase(win);
-        wattron(win, COLOR_PAIR(26) | A_DIM);
+        wattron(win, COLOR_PAIR(color_pair) | A_DIM);
         box(win, 0, 0);
         
         char *title = _(" Select a Module or Action ");
         wattron(win, A_BOLD);
         mvwprintw(win, 0, (menu_width - get_visual_width(title)) / 2, title);
         wattroff(win, A_BOLD);
-        wattroff(win, COLOR_PAIR(26) | A_DIM);
+        wattroff(win, COLOR_PAIR(color_pair) | A_DIM);
 
-        wattron(win, COLOR_PAIR(26)); // Cor padrão para os colchetes
+        wattron(win, COLOR_PAIR(color_pair));
         mvwprintw(win, 0, col_fechar, "[");
         mvwprintw(win, 0, col_fechar + 2, "]");
-        wattroff(win, COLOR_PAIR(26));
+        wattroff(win, COLOR_PAIR(color_pair));
 
-        wattron(win, COLOR_PAIR(26) | A_BOLD); // Cor de destaque (ex: Vermelho) para o X
+        wattron(win, COLOR_PAIR(color_pair) | A_BOLD);
         mvwprintw(win, 0, col_fechar + 1, "✖");
-        wattroff(win, COLOR_PAIR(26) | A_BOLD);
+        wattroff(win, COLOR_PAIR(color_pair) | A_BOLD);
         
         // Draw options items with proper scrolling (idêntico ao seu loop do chart)
         for (int i = 0; i < max_display_items; i++) {
             int item_index = i + scroll_offset;
             if (item_index < total_opcoes) {
-                int attr = (item_index == selected_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(26);
+                int attr = (item_index == selected_index) ? (COLOR_PAIR(23) | A_REVERSE | A_BOLD) : COLOR_PAIR(87);
                 wattron(win, attr);
                 mvwprintw(win, i + 1, 1, " %s%*s ", opcoes[item_index], (menu_width - 1 - 4) - get_visual_width(opcoes[item_index]), " ");
                 wattroff(win, attr);
