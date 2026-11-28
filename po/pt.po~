@@ -1273,20 +1273,20 @@ msgid "True Solar Arc in RA (Birthday)"
 msgstr "Arco Solar Verd. em RA (Aniversário)"
 
 #: src/directions.c:3330
-msgid "TSArcLong_Birth)"
-msgstr ""
+msgid "TSArcLong-Birth"
+msgstr "ArcSV-Long-Aniv"
 
 #: src/directions.c:3331
 msgid "TSArcLong"
-msgstr ""
+msgstr "ArcSV-Long"
 
 #: src/directions.c:3332
 msgid "TSArcRA"
-msgstr ""
+msgstr "ArcSV-RA"
 
 #: src/directions.c:3333
-msgid "TSArcRA_Birth)"
-msgstr ""
+msgid "TSArcRA-Birth"
+msgstr "ArcSV-RA-Aniv"
 
 #: src/directions.c:3626
 msgid " Primary Directions "

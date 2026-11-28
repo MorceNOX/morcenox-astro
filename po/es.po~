@@ -1050,7 +1050,7 @@ msgid "True Solar Arc in RA (Birthday)"
 msgstr ""
 
 #: src/directions.c:3330
-msgid "TSArcLong_Birth)"
+msgid "TSArcLong-Birth"
 msgstr ""
 
 #: src/directions.c:3331
@@ -1062,7 +1062,7 @@ msgid "TSArcRA"
 msgstr ""
 
 #: src/directions.c:3333
-msgid "TSArcRA_Birth)"
+msgid "TSArcRA-Birth"
 msgstr ""
 
 #: src/directions.c:3626

@@ -5661,7 +5661,7 @@ void print_directions_to_csv(LinhaDirecao *dir, int qtd_direcoes, MetodoDirecaoG
     for (int i = 0; i < qtd_direcoes; i++) {
         LinhaDirecao *d = &dir[i];
 
-        fprintf(file, "%8.4f;%02d/%02d/%04d;%s;%s;%s;%s;%s;%8.4f;%s;%s;%s;%s\n",
+        fprintf(file, "%f;%02d/%02d/%04d;%s;%s;%s;%s;%s;%f;%s;%s;%s;%s\n",
                        d->idade_evento,
                        d->dia_calendario,
                        d->mes_calendario,
